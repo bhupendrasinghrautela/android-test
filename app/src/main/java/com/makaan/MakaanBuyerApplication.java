@@ -1,0 +1,32 @@
+package com.makaan;
+
+import android.app.Application;
+
+import com.makaan.network.MakaanNetworkClient;
+import com.makaan.service.MakaanServiceFactory;
+import com.makaan.service.MasterDataService;
+import com.makaan.service.listing.ListingService;
+
+/**
+ * Created by vaibhav on 23/12/15.
+ *
+ */
+public class MakaanBuyerApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        MakaanNetworkClient.init(this);
+
+
+        MakaanServiceFactory.getInstance().registerService(MasterDataService.class, new MasterDataService());
+        MakaanServiceFactory.getInstance().registerService(ListingService.class , new ListingService());
+
+        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
+        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();
+        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyTypes();
+
+
+    }
+
+}
