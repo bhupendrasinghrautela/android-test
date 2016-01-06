@@ -7,6 +7,7 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.master.ApiLabel;
+import com.makaan.response.serp.FilterGroup;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -18,14 +19,10 @@ import java.util.Map;
  */
 public class MasterDataService implements MakaanService {
 
-    public static final String UNIT_TYPE = ApiConstants.BASE_URL.concat("/v1/entity/unit-types");
-    public static final String PROPERTY_STATUS = ApiConstants.BASE_URL.concat("/v1/entity/property-status");
-    public static final String API_LABEL = ApiConstants.BASE_URL.concat("/v1/entity/api-label");
-
     public void populatePropertyTypes() {
         Type listType = new TypeToken<HashMap<String, String>>() {}.getType();
 
-        MakaanNetworkClient.getInstance().get(UNIT_TYPE, listType, new ObjectGetCallback() {
+        MakaanNetworkClient.getInstance().get(ApiConstants.UNIT_TYPE, listType, new ObjectGetCallback() {
             @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
@@ -43,7 +40,7 @@ public class MasterDataService implements MakaanService {
     public void populatePropertyStatus() {
         Type listType = new TypeToken<HashMap<String, String>>() {}.getType();
 
-        MakaanNetworkClient.getInstance().get(PROPERTY_STATUS, listType, new ObjectGetCallback() {
+        MakaanNetworkClient.getInstance().get(ApiConstants.PROPERTY_STATUS, listType, new ObjectGetCallback() {
             @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
@@ -60,7 +57,7 @@ public class MasterDataService implements MakaanService {
     public void populateApiLabels() {
         Type listType = new TypeToken<HashMap<String, String>>() {}.getType();
 
-        MakaanNetworkClient.getInstance().get(API_LABEL, listType, new ObjectGetCallback() {
+        MakaanNetworkClient.getInstance().get(ApiConstants.API_LABEL, listType, new ObjectGetCallback() {
             @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
@@ -74,5 +71,23 @@ public class MasterDataService implements MakaanService {
         }, "apiLabels.json");
 
 
+    }
+
+
+    public void populateFilterGroups(){
+        Type filterGroupTypeList = new TypeToken<ArrayList<FilterGroup>>() {}.getType();
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.FILTER_GROUP, filterGroupTypeList, new ObjectGetCallback() {
+            @Override
+            @SuppressWarnings("unchecked")
+            public void onSuccess(Object responseObject) {
+                ArrayList<FilterGroup> filterGroups = ( ArrayList<FilterGroup>) responseObject;
+
+
+                for (FilterGroup filterGroup : filterGroups) {
+                    MasterDataCache.getInstance().addFilterGroup(filterGroup);
+                }
+            }
+        }, "filterGroup.json");
     }
 }

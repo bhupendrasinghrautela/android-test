@@ -1,4 +1,4 @@
-package com.makaan.response.serp;
+package com.makaan.response.listing;
 
 /**
  * Created by vaibhav on 24/12/15.

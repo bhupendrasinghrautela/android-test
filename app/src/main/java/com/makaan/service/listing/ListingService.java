@@ -1,17 +1,20 @@
 package com.makaan.service.listing;
 
-import com.makaan.network.JSONGetCallback;
 import com.makaan.network.MakaanNetworkClient;
-import com.makaan.response.listing.ApiListingDetail;
+import com.makaan.request.SerpRequest;
 import com.makaan.response.serp.event.ListingGetCallback;
 import com.makaan.service.MakaanService;
-
-import org.json.JSONObject;
 
 /**
  * Created by vaibhav on 23/12/15.
  */
 public class ListingService implements MakaanService {
+
+
+    public void getSerpResults(SerpRequest serpRequest){
+
+
+    }
 
 
     public void getListingDetail(Long listingId) {

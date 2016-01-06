@@ -60,6 +60,7 @@ public class ResponseConstants {
     public static final String FURNISHED = "furnished";
     public static final String LANDMARK_DISTANCE = "landmarkDistance";
     public static final String UNIT_TYPE = "unitType";
+    public static final String LISTING = "listing";
 
 
 

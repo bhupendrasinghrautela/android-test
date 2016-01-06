@@ -2,8 +2,11 @@ package com.makaan.cache;
 
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.master.ApiLabel;
+import com.makaan.response.serp.FilterGroup;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Filter;
 
 /**
  * Created by vaibhav on 29/12/15.
@@ -14,6 +17,7 @@ public class MasterDataCache {
     private HashMap<Integer, ApiIntLabel> idToPropertyType = new HashMap<>();
     private HashMap<Integer, ApiIntLabel> idToPropertyStatus = new HashMap<>();
     private HashMap<String, String> apiLabels = new HashMap<>();
+    private HashMap<String, FilterGroup> internalNameToFilterGrp = new HashMap<>();
 
     private MasterDataCache() {
 
@@ -39,6 +43,12 @@ public class MasterDataCache {
     public void addApiLabel(ApiLabel apiLabel) {
         if (null != apiLabel && null != apiLabel.key && null != apiLabel.value) {
             apiLabels.put(apiLabel.key, apiLabel.value);
+        }
+    }
+
+    public void addFilterGroup(FilterGroup filterGroup){
+        if(null != filterGroup && null != filterGroup.internalName){
+            internalNameToFilterGrp.put(filterGroup.internalName, filterGroup);
         }
     }
 

@@ -1,7 +1,8 @@
-package com.makaan.response.serp;
+package com.makaan.response.listing;
+
+import com.makaan.response.project.Project;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by vaibhav on 24/12/15.
@@ -53,8 +54,5 @@ public class Listing {
     public Project project ;
 
     public Long landMarkDistance;
-
-    public ArrayList<SimilarListing> similarListings = new ArrayList<>();
-
 
 }

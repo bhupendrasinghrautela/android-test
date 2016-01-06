@@ -34,10 +34,8 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
 
     @OnClick(R.id.fetch)
     public void fetch(View view) {
-        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
-        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();
-        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyTypes();
-        new ListingService().getListingDetail(1L);
+
+        ((ListingService)(MakaanServiceFactory.getInstance().getService(ListingService.class))).getListingDetail(1L);
     }
 
     @Subscribe

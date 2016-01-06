@@ -1,4 +1,6 @@
-package com.makaan.response.serp;
+package com.makaan.response.listing;
+
+import com.makaan.response.listing.Listing;
 
 import java.util.ArrayList;
 
