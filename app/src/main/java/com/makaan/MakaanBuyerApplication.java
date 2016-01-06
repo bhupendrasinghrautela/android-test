@@ -3,6 +3,7 @@ package com.makaan;
 import android.app.Application;
 
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.request.SerpRequest;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.MasterDataService;
 import com.makaan.service.listing.ListingService;
@@ -12,6 +13,8 @@ import com.makaan.service.listing.ListingService;
  *
  */
 public class MakaanBuyerApplication extends Application {
+
+    public static SerpRequest serpRequest;
 
     @Override
     public void onCreate() {
