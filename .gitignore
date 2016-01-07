@@ -45,7 +45,6 @@ app/app.iml
 *.swp
 *.iml
 .DS_Store
-assets
 /.classpath
 .gitignore
 /gradle.properties

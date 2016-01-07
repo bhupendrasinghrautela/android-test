@@ -1,0 +1,16 @@
+{
+  "data": {
+    "freehold": "Freehold",
+    "leasehold": "Leasehold",
+    "powerOfAttorney": "Power of Attorney",
+    "cooperativeSociety": "Cooperative Society",
+    "unfurnished": "Unfurnished",
+    "semiFurnished": "Semi-Furnished",
+    "fullyFurnished": "Fully Furnished",
+    "buy": "buy",
+    "rent": "rent",
+    "Semi-Furnished":"Semi-Furnished",
+    "Fully Furnished":"Fully Furnished"
+  }
+
+}
