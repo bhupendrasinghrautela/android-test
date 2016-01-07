@@ -11,16 +11,23 @@ import com.makaan.service.MakaanService;
 public class ListingService implements MakaanService {
 
 
-    public void getSerpResults(SerpRequest serpRequest){
-
+    public void handleSerpRequest(SerpRequest serpRequest){
+        /**
+         *
+         * build selector make actual network call and use ListingGetCallback
+         */
 
     }
 
 
+
+
+
     public void getListingDetail(Long listingId) {
 
-        MakaanNetworkClient.getInstance().get("https://marketplace-qa.proptiger-ws.com/app/v1/listing?selector={\"filters\":{\"and\":[{\"equal\":{\"cityId\":\"2\"}}]},\"paging\":{\"start\":0,\"rows\":10}}",
-                new ListingGetCallback());
+
+        /*MakaanNetworkClient.getInstance().get("https://marketplace-qa.proptiger-ws.com/app/v1/listing?selector={\"filters\":{\"and\":[{\"equal\":{\"cityId\":\"2\"}}]},\"paging\":{\"start\":0,\"rows\":10}}",
+                new ListingGetCallback());*/
 
     }
 

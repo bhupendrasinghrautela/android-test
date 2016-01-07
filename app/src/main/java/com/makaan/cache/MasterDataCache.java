@@ -5,6 +5,7 @@ import com.makaan.response.master.ApiLabel;
 import com.makaan.response.serp.FilterGroup;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.logging.Filter;
 
@@ -50,6 +51,10 @@ public class MasterDataCache {
         if(null != filterGroup && null != filterGroup.internalName){
             internalNameToFilterGrp.put(filterGroup.internalName, filterGroup);
         }
+    }
+
+    public Collection<FilterGroup> getAllFilterGroups(){
+        return internalNameToFilterGrp.values();
     }
 
     public String translateApiLabel(String apiLabel) {
