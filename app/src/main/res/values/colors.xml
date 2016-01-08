@@ -5,4 +5,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="listingBgColor">#f1f1f1</color>
+    <color name="listingGray">#666666</color>
+    <color name="transparent">#00000000</color>
+    <color name="listingLightGray">#999999</color>
+    <color name="listingBlack">#444444</color>
 </resources>
