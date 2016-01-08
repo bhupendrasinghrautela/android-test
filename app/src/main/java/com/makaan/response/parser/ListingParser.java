@@ -37,18 +37,15 @@ public class ListingParser {
             DAYS = " days";
 
 
-    public Listing getListingFromJson(JSONObject apiListing) {
+    public Listing getListingFromJson(JSONObject listingJson) {
         Listing listing = new Listing();
         MasterDataCache masterDataCache = MasterDataCache.getInstance();
 
         try {
 
-            apiListing = apiListing.getJSONObject(LISTING);
-
-
-            if (null != apiListing) {
-                JSONObject currentListingPrice = apiListing.getJSONObject(CURR_LISTING_PRICE);
-                JSONObject property = apiListing.optJSONObject(PROPERTY);
+            if (null != listingJson) {
+                JSONObject currentListingPrice = listingJson.getJSONObject(CURR_LISTING_PRICE);
+                JSONObject property = listingJson.optJSONObject(PROPERTY);
                 JSONObject project = property != null ? property.optJSONObject(PROJECT) : null;
                 JSONObject locality = project != null ? project.optJSONObject(LOCALITY) : null;
                 JSONObject builder = project != null ? project.optJSONObject(BUILDER) : null;
@@ -59,15 +56,15 @@ public class ListingParser {
                 if (null != currentListingPrice && null != property &&
                         null != project && null != locality && null != suburb && null != city) {
 
-                    JSONObject seller = apiListing.optJSONObject(COMPANY_SELLER);
+                    JSONObject seller = listingJson.optJSONObject(COMPANY_SELLER);
                     JSONObject sellerCompany = null != seller ? seller.optJSONObject(COMPANY) : null;
-                    JSONArray images = apiListing.optJSONArray(IMAGES);
+                    JSONArray images = listingJson.optJSONArray(IMAGES);
 
 
-                    listing.postedDate = getDateStringFromEpoch(apiListing.optString(POSTED_DATE));
-                    listing.lisitingId = apiListing.optInt(ID);
+                    listing.postedDate = getDateStringFromEpoch(listingJson.optString(POSTED_DATE));
+                    listing.lisitingId = listingJson.optInt(ID);
 
-                    listing.description = apiListing.optString(DESCRIPTION);
+                    listing.description = listingJson.optString(DESCRIPTION);
                     listing.description = stripContent(listing.description, 100, true);
 
                     listing.bedrooms = property.optInt(BEDROOMS);
@@ -76,7 +73,7 @@ public class ListingParser {
                     ApiIntLabel propertyType = masterDataCache.getPropertyType(property.optInt(UNIT_TYPE_ID));
                     listing.propertyType = null != propertyType ? propertyType.name : null;
 
-                    ApiIntLabel propertyStatus1 = masterDataCache.getPropertyStatus(apiListing.optInt(CONS_STATUS_ID));
+                    ApiIntLabel propertyStatus1 = masterDataCache.getPropertyStatus(listingJson.optInt(CONS_STATUS_ID));
                     listing.propertyStatus = null != propertyStatus1 ? propertyStatus1.name : null;
 
                     listing.size = property.optInt(SIZE);
@@ -96,12 +93,12 @@ public class ListingParser {
 
                     listing.pricePerUnitArea = currentListingPrice.optInt(PRICE_PER_UNIT_AREA);
                     listing.price = currentListingPrice.optDouble(PRICE);
-                    listing.localityAvgPrice = apiListing.optDouble(LOCALITY_AVG_PRICE);
+                    listing.localityAvgPrice = listingJson.optDouble(LOCALITY_AVG_PRICE);
 
-                    listing.relativeCreateDate = apiListing.optString(CREATED_AT) != null ? getElapsedDaysFromNow(apiListing.optString(CREATED_AT)).toString().concat(" days ago") : null;
+                    listing.relativeCreateDate = listingJson.optString(CREATED_AT) != null ? getElapsedDaysFromNow(listingJson.optString(CREATED_AT)).toString().concat(" days ago") : null;
 
-                    listing.isReadyToMove = isReadyToMove(apiListing.optInt(CONS_STATUS_ID));
-                    String possessionDateStr = apiListing.optString(POSSESSION_DATE);
+                    listing.isReadyToMove = isReadyToMove(listingJson.optInt(CONS_STATUS_ID));
+                    String possessionDateStr = listingJson.optString(POSSESSION_DATE);
                     listing.propertyAge = !isBlank(possessionDateStr) ? getElapsedDaysFromNow(possessionDateStr).toString().concat(DAYS) : null;
                     listing.possessionDate = !isBlank(possessionDateStr) ? getMMMYYYYDateStringFromEpoch(possessionDateStr) : null;
 
@@ -146,7 +143,7 @@ public class ListingParser {
                     }
 
 
-                    listing.hasOffer = apiListing.optString(IS_OFFERED) != null && apiListing.getBoolean(IS_OFFERED);
+                    listing.hasOffer = listingJson.optString(IS_OFFERED) != null && listingJson.getBoolean(IS_OFFERED);
 
                     //listing.currentServerTime = (new Date()).valueOf();
 
@@ -162,18 +159,18 @@ public class ListingParser {
                         }
                     }
 
-                    listing.floor = apiListing.optInt(FLOOR);
-                    listing.totalFloors = apiListing.optInt(TOTAL_FLOORS);
+                    listing.floor = listingJson.optInt(FLOOR);
+                    listing.totalFloors = listingJson.optInt(TOTAL_FLOORS);
 
-                    if (null != apiListing.optString(FACING_ID)) {
+                    if (null != listingJson.optString(FACING_ID)) {
                         //listing.facing = apiListing.facing.direction;   //TODO: get direction and translate facing id
                     }
 
-                    listing.furnished = masterDataCache.translateApiLabel(apiListing.optString(FURNISHED));
+                    listing.furnished = masterDataCache.translateApiLabel(listingJson.optString(FURNISHED));
 
 
-                    if (null != apiListing.optString(LANDMARK_DISTANCE)) {
-                        listing.landMarkDistance = Math.round(apiListing.optDouble(LANDMARK_DISTANCE) * 10) / 10;
+                    if (null != listingJson.optString(LANDMARK_DISTANCE)) {
+                        listing.landMarkDistance = Math.round(listingJson.optDouble(LANDMARK_DISTANCE) * 10) / 10;
                     }
                 }
             }

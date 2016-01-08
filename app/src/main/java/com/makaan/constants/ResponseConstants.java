@@ -12,6 +12,7 @@ public class ResponseConstants {
 
     public static final String TOTAL_COUNT = "totalCount";
     public static final String ITEMS = "items";
+    public static final String FILTERS = "filters";
     public static final String CURR_LISTING_PRICE = "currentListingPrice";
     public static final String PROPERTY = "property";
     public static final String PROJECT = "project";

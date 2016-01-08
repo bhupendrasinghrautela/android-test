@@ -1,92 +1,93 @@
 {
-  "data": [{
-    "displayName": "Beds",
-    "internalName": "i_beds",
-    "displayOrder": "1",
-    "termFilterValues": [{
-      "displayName": "1 BHK",
+  "data": {
+    "filters": [{
+      "displayName": "Beds",
+      "internalName": "i_beds",
       "displayOrder": "1",
-      "fieldName": "bedrooms",
-      "value": "1",
-      "selected": false
-    }, {
-      "displayName": "2 BHK",
-      "displayOrder": "2",
-      "fieldName": "bedrooms",
-      "value": "2",
-      "selected": false
-    }, {
-      "displayName": "3 BHK",
-      "displayOrder": "3",
-      "fieldName": "bedrooms",
-      "value": "3",
-      "selected": false
-    }, {
-      "displayName": "4 BHK",
-      "displayOrder": "4",
-      "fieldName": "bedrooms",
-      "value": "4",
-      "selected": false
-    }],
-    "rangeFilterValues": [
+      "termFilterValues": [{
+        "displayName": "1 BHK",
+        "displayOrder": "1",
+        "fieldName": "bedrooms",
+        "value": "1",
+        "selected": false
+      }, {
+        "displayName": "2 BHK",
+        "displayOrder": "2",
+        "fieldName": "bedrooms",
+        "value": "2",
+        "selected": false
+      }, {
+        "displayName": "3 BHK",
+        "displayOrder": "3",
+        "fieldName": "bedrooms",
+        "value": "3",
+        "selected": false
+      }, {
+        "displayName": "4 BHK",
+        "displayOrder": "4",
+        "fieldName": "bedrooms",
+        "value": "4",
+        "selected": false
+      }],
+      "rangeFilterValues": [
 
+      ]
+    },
+
+      {
+        "displayName": "Budget",
+        "internalName": "i_budget",
+        "displayOrder": "2",
+        "termFilterValues": [],
+        "rangeFilterValues": [{
+          "displayName": "",
+          "displayOrder": "1",
+          "fieldName": "price",
+          "minValue": 0,
+          "maxValue": 100000000,
+          "selected": false
+        }]
+      }, {
+        "displayName": "Property Type",
+        "internalName": "i_property_type",
+        "displayOrder": "3",
+        "termFilterValues": [{
+          "displayName": "Apartment/Flat",
+          "displayOrder": "1",
+          "fieldName": "unitTypeId",
+          "value": "1",
+          "selected": false
+        }, {
+          "displayName": "Villa",
+          "displayOrder": "2",
+          "fieldName": "unitTypeId",
+          "value": "2",
+          "selected": false
+        }, {
+          "displayName": "Independent House",
+          "displayOrder": "3",
+          "fieldName": "unitTypeId",
+          "value": "19",
+          "selected": false
+        }, {
+          "displayName": "Plot/Land",
+          "displayOrder": "4",
+          "fieldName": "unitTypeId",
+          "value": "3",
+          "selected": false
+        }, {
+          "displayName": "Builder Floor",
+          "displayOrder": "5",
+          "fieldName": "unitTypeId",
+          "value": "7",
+          "selected": false
+        }],
+        "rangeFilterValues": [
+
+        ]
+
+      }
     ]
-  }, {
-    "displayName": "Budget",
-    "internalName": "i_budget",
-    "displayOrder": "2",
-    "termFilterValues": [],
-    "rangeFilterValues": [{
-      "displayName": "",
-      "displayOrder": "1",
-      "fieldName": "price",
-      "minValue": 0,
-      "maxValue": 100000000,
-      "selected": false
-    }]
-  }, {
-    "displayName": "Property Type",
-    "internalName": "i_property_type",
-    "displayOrder": "3",
-    "termFilterValues": [{
-      "displayName": "Apartment/Flat",
-      "displayOrder": "1",
-      "fieldName": "unitTypeId",
-      "value": "1",
-      "selected": false
-    }, {
-      "displayName": "Villa",
-      "displayOrder": "2",
-      "fieldName": "unitTypeId",
-      "value": "2",
-      "selected": false
-    }, {
-      "displayName": "Independent House",
-      "displayOrder": "3",
-      "fieldName": "unitTypeId",
-      "value": "19",
-      "selected": false
-    }, {
-      "displayName": "Plot/Land",
-      "displayOrder": "4",
-      "fieldName": "unitTypeId",
-      "value": "3",
-      "selected": false
-    }, {
-      "displayName": "Builder Floor",
-      "displayOrder": "5",
-      "fieldName": "unitTypeId",
-      "value": "7",
-      "selected": false
-    }],
-    "rangeFilterValues": [
-
-    ]
-
   }
-
-
-
-  ]
 
 }

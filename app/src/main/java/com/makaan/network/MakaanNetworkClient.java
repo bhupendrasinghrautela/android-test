@@ -35,7 +35,7 @@ public class MakaanNetworkClient {
 
 
     private RequestQueue makaanGetRequestQueue;
-    private Gson gson;
+    public static Gson gson;
 
     private AssetManager assetManager;
     private static MakaanNetworkClient instance;
@@ -55,51 +55,69 @@ public class MakaanNetworkClient {
         return instance;
     }
 
+    private JSONObject readFromMockFile(String mockFile) throws JSONException, IOException {
+        BufferedReader br = null;
+        StringBuilder json = new StringBuilder();
+
+
+        br = new BufferedReader(new InputStreamReader(assetManager.open(mockFile)));
+        String line = null;
+        while ((line = br.readLine()) != null) {
+            json.append(line);
+        }
+        return new JSONObject(json.toString());
+
+    }
+
     @SuppressWarnings("unchecked")
-    public void get(String url, final JSONGetCallback jsonGetCallback) {
+    public void get(String url, final JSONGetCallback jsonGetCallback, String... mockFile) {
 
-        JsonObjectRequest jsonRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            response = response.getJSONObject(ResponseConstants.DATA);
-                            //Object objResponse = gson.fromJson(response.toString(), jsonGetCallback.getResponseClass());
-                            jsonGetCallback.onSuccess(response);
+        if (null != mockFile && mockFile.length >0) {
 
-                        } catch (JSONException e) {
-                            Log.e(TAG, "JSONException", e);
+            try {
+                JSONObject mockFileResponse = readFromMockFile(mockFile[0]);
+                JSONObject response = mockFileResponse.getJSONObject(ResponseConstants.DATA);
+                jsonGetCallback.onSuccess(response);
+            } catch (Exception e) {
+                Log.e(TAG, "Exception", e);
+            }
+
+        } else {
+            JsonObjectRequest jsonRequest = new JsonObjectRequest
+                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                response = response.getJSONObject(ResponseConstants.DATA);
+                                //Object objResponse = gson.fromJson(response.toString(), jsonGetCallback.getResponseClass());
+                                jsonGetCallback.onSuccess(response);
+
+                            } catch (JSONException e) {
+                                Log.e(TAG, "JSONException", e);
+                            }
                         }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        jsonGetCallback.onError();
-                        Log.e(TAG, "Network error", error);
-                    }
-                });
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            jsonGetCallback.onError();
+                            Log.e(TAG, "Network error", error);
+                        }
+                    });
 
-        makaanGetRequestQueue.add(jsonRequest);
+            makaanGetRequestQueue.add(jsonRequest);
+        }
+
     }
 
     public void get(String url, final Type type, final ObjectGetCallback objectGetCallback, String... mockFile) {
 
-        if (null != mockFile) {
-            BufferedReader br = null;
-            StringBuilder json = new StringBuilder();
-            try {
+        if (null != mockFile && mockFile.length >0) {
 
-                br = new BufferedReader(new InputStreamReader(assetManager.open(mockFile[0])));
-                String line = null;
-                while ((line = br.readLine()) != null) {
-                    json.append(line);
-                }
-                JSONObject jsonObject = new JSONObject(json.toString());
-                JSONObject response = jsonObject.getJSONObject(ResponseConstants.DATA);
+            try {
+                JSONObject mockFileResponse = readFromMockFile(mockFile[0]);
+                JSONObject response = mockFileResponse.getJSONObject(ResponseConstants.DATA);
 
                 Object objResponse = gson.fromJson(response.toString(), type);
-                objectGetCallback.onSuccess(objResponse);
-
                 objectGetCallback.onSuccess(objResponse);
 
             } catch (Exception e) {

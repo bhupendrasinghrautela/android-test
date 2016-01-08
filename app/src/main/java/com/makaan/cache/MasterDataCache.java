@@ -47,15 +47,22 @@ public class MasterDataCache {
         }
     }
 
-    public void addFilterGroup(FilterGroup filterGroup){
-        if(null != filterGroup && null != filterGroup.internalName){
+    public void addFilterGroup(FilterGroup filterGroup) {
+        if (null != filterGroup && null != filterGroup.internalName) {
             internalNameToFilterGrp.put(filterGroup.internalName, filterGroup);
         }
     }
 
-    public Collection<FilterGroup> getAllFilterGroups(){
+    public ArrayList<ApiIntLabel> getAllPropertyTypes() {
+        ArrayList<ApiIntLabel> propertyTypes = new ArrayList<>();
+        propertyTypes.addAll(idToPropertyType.values());
+        return propertyTypes;
+    }
+
+    public Collection<FilterGroup> getAllFilterGroups() {
         return internalNameToFilterGrp.values();
     }
+
 
     public String translateApiLabel(String apiLabel) {
         return apiLabels.get(apiLabel);
@@ -65,7 +72,7 @@ public class MasterDataCache {
         return idToPropertyType.get(id);
     }
 
-    public ApiIntLabel getPropertyStatus(Integer status){
+    public ApiIntLabel getPropertyStatus(Integer status) {
         return idToPropertyStatus.get(status);
     }
 
