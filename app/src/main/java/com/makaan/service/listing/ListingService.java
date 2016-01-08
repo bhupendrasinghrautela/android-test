@@ -26,7 +26,7 @@ public class ListingService implements MakaanService {
 
         ArrayList<String> cityList = new ArrayList<>();
         cityList.add("2");
-        selector.term("cityId", cityList).range("price", 0D, 5000000D).page(0, 5);
+        selector.term("cityId", "2").range("price", 10000D, 5000000D).page(0, 20).sort("price","desc");
 
         String selectorStr  = selector.build();
 

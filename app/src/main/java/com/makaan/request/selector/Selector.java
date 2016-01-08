@@ -35,7 +35,7 @@ public class Selector {
         if (null == termSelector) {
             termSelector = new TermSelector();
             termSelectorHashMap.put(fieldName, termSelector);
-
+            termSelector.name = fieldName;
         }
         Iterator<String> iterator = values.iterator();
         while (iterator.hasNext()) {
@@ -89,11 +89,12 @@ public class Selector {
 
 
             StringBuilder andStrBuilder = new StringBuilder();
-            andStrBuilder.append(AND).append(":[");
+            andStrBuilder.append("\"").append(AND).append("\"").append(":[");
 
             int i =0;
+            boolean termSelectorAdded = false;
             for (LinkedHashMap.Entry<String, TermSelector> entry : termSelectorHashMap.entrySet()) {
-
+                termSelectorAdded = true;
                 String k = entry.getValue().build();
                 if(null != k  && !"".equals(k)){
                     if(i !=0){
@@ -110,7 +111,7 @@ public class Selector {
 
                 String k = entry.getValue().build();
                 if(null != k  && !"".equals(k)){
-                    if(i !=0){
+                    if(i !=0 || termSelectorAdded){
                         andStrBuilder.append(",").append(k);
                     }else {
                         andStrBuilder.append(k);
