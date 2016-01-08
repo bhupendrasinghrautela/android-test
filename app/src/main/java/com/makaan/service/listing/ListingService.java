@@ -20,7 +20,7 @@ public class ListingService implements MakaanService {
          */
 
         MakaanNetworkClient.getInstance().get("https://marketplace-qa.proptiger-ws.com/app/v1/listing?selector={\"filters\":{\"and\":[{\"equal\":{\"cityId\":\"2\"}}]},\"paging\":{\"start\":0,\"rows\":10}}",
-                new SerpGetCallback());
+                new SerpGetCallback(),null);
     }
 
 
@@ -28,7 +28,7 @@ public class ListingService implements MakaanService {
 
         if (null != listingId) {
             String listingDetailURL = ApiConstants.LISTING.concat(listingId.toString());
-            MakaanNetworkClient.getInstance().get(listingDetailURL, new ListingByIdCallback());
+            MakaanNetworkClient.getInstance().get(listingDetailURL, new ListingByIdCallback(), null);
         }
 
     }

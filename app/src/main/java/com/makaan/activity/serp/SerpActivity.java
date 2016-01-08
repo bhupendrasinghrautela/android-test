@@ -2,11 +2,10 @@ package com.makaan.activity.serp;
 
 import android.os.Bundle;
 
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
-import com.makaan.response.serp.event.ListingGetEvent;
-import com.makaan.service.MakaanServiceFactory;
-import com.makaan.service.MasterDataService;
+import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.service.listing.ListingService;
 import com.squareup.otto.Subscribe;
 
@@ -27,15 +26,12 @@ public class SerpActivity extends MakaanFragmentActivity {
     }
 
     private void fetchData(){
-        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
-        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();
-        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyTypes();
-        new ListingService().getListingDetail(1L);
+        new ListingService().handleSerpRequest(MakaanBuyerApplication.serpRequest);
     }
 
     @Subscribe
-    public void onResults(ListingGetEvent listingGetEvent){
+    public void onResults(SerpGetEvent serpGetEvent){
         SerpMapFragment fragment = (SerpMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
-        fragment.setData(listingGetEvent.listingData);
+        fragment.setData(serpGetEvent.listingData);
     }
 }
