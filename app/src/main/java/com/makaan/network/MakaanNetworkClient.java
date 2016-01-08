@@ -3,16 +3,23 @@ package com.makaan.network;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.volley.*;
 import com.android.volley.Request;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.makaan.MakaanBuyerApplication;
+import com.makaan.cache.LruBitmapCache;
 import com.makaan.constants.ResponseConstants;
+import com.makaan.util.AppUtils;
+import com.makaan.util.RandomString;
 
 
 import org.json.JSONException;
@@ -24,6 +31,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -33,12 +41,15 @@ public class MakaanNetworkClient {
 
     public static final String TAG = MakaanNetworkClient.class.getSimpleName();
 
-
     private RequestQueue makaanGetRequestQueue;
     public static Gson gson;
+    private ImageLoader mImageLoader;
+
 
     private AssetManager assetManager;
     private static MakaanNetworkClient instance;
+
+    private HashMap<String, String> requestUrlToTag = new HashMap<>();
 
     private MakaanNetworkClient(Context appContext) {
         makaanGetRequestQueue = Volley.newRequestQueue(appContext);
@@ -55,27 +66,27 @@ public class MakaanNetworkClient {
         return instance;
     }
 
-    private JSONObject readFromMockFile(String mockFile) throws JSONException, IOException {
-        BufferedReader br = null;
-        StringBuilder json = new StringBuilder();
 
-
-        br = new BufferedReader(new InputStreamReader(assetManager.open(mockFile)));
-        String line = null;
-        while ((line = br.readLine()) != null) {
-            json.append(line);
-        }
-        return new JSONObject(json.toString());
-
+    public void get(String url, final JSONGetCallback jsonGetCallback, String mockFile) {
+        get(url, jsonGetCallback, mockFile, null);
     }
 
-    @SuppressWarnings("unchecked")
-    public void get(String url, final JSONGetCallback jsonGetCallback, String... mockFile) {
+    public void get(String url, final Type type, final ObjectGetCallback objectGetCallback, String mockFile) {
+        get(url, type, objectGetCallback, mockFile, null);
+    }
 
-        if (null != mockFile && mockFile.length >0) {
+    public void get(String url, final StringRequestCallback stringRequestCallback) {
+        get(url, stringRequestCallback, null);
+    }
+
+
+    @SuppressWarnings("unchecked")
+    public void get(final String url, final JSONGetCallback jsonGetCallback, String mockFile, String tag) {
+
+        if (null != mockFile) {
 
             try {
-                JSONObject mockFileResponse = readFromMockFile(mockFile[0]);
+                JSONObject mockFileResponse = readFromMockFile(mockFile);
                 JSONObject response = mockFileResponse.getJSONObject(ResponseConstants.DATA);
                 jsonGetCallback.onSuccess(response);
             } catch (Exception e) {
@@ -83,10 +94,12 @@ public class MakaanNetworkClient {
             }
 
         } else {
-            JsonObjectRequest jsonRequest = new JsonObjectRequest
+            final JsonObjectRequest jsonRequest = new JsonObjectRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
+
+                            completeRequestInQueue(url);
                             try {
                                 response = response.getJSONObject(ResponseConstants.DATA);
                                 //Object objResponse = gson.fromJson(response.toString(), jsonGetCallback.getResponseClass());
@@ -99,22 +112,22 @@ public class MakaanNetworkClient {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            completeRequestInQueue(url);
                             jsonGetCallback.onError();
                             Log.e(TAG, "Network error", error);
                         }
                     });
-
-            makaanGetRequestQueue.add(jsonRequest);
+            addToRequestQueue(jsonRequest, tag);
         }
 
     }
 
-    public void get(String url, final Type type, final ObjectGetCallback objectGetCallback, String... mockFile) {
 
-        if (null != mockFile && mockFile.length >0) {
+    public void get(final String url, final Type type, final ObjectGetCallback objectGetCallback, String mockFile, String tag) {
 
+        if (null != mockFile) {
             try {
-                JSONObject mockFileResponse = readFromMockFile(mockFile[0]);
+                JSONObject mockFileResponse = readFromMockFile(mockFile);
                 JSONObject response = mockFileResponse.getJSONObject(ResponseConstants.DATA);
 
                 Object objResponse = gson.fromJson(response.toString(), type);
@@ -129,6 +142,7 @@ public class MakaanNetworkClient {
                     (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
+                            completeRequestInQueue(url);
                             try {
                                 response = response.getJSONObject(ResponseConstants.DATA);
 
@@ -142,13 +156,93 @@ public class MakaanNetworkClient {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            completeRequestInQueue(url);
                             objectGetCallback.onError();
                             Log.e(TAG, "Network error", error);
                         }
                     });
 
-            makaanGetRequestQueue.add(jsonRequest);
+            addToRequestQueue(jsonRequest, tag);
+
         }
+    }
+
+
+    /**
+     *
+     * */
+    public void get(final String url, final StringRequestCallback stringRequestCallback, String tag) {
+
+        StringRequest stringRequest = new StringRequest
+                (Request.Method.GET, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onSuccess(response);
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onError();
+                        Log.e(TAG, "Network error", error);
+                    }
+                });
+        addToRequestQueue(stringRequest, tag);
+    }
+
+    private void addToRequestQueue(Request req, String tag) {
+        if (null == tag) {
+            tag = requestUrlToTag.get(req.getUrl());
+            if (null == tag) {
+                tag = MakaanBuyerApplication.randomString.nextString();
+                requestUrlToTag.put(req.getUrl(), tag);
+            }
+            req.setTag(tag);
+        } else {
+            req.setTag(tag);
+        }
+
+        cancelFromRequestQueue(req);
+        makaanGetRequestQueue.add(req);
+    }
+
+
+    private void cancelFromRequestQueue(Request req) {
+        if (null != makaanGetRequestQueue && null != req) {
+            String tag = requestUrlToTag.get(req.getUrl());
+            makaanGetRequestQueue.cancelAll(tag);
+        }
+    }
+
+    private void completeRequestInQueue(String url) {
+        requestUrlToTag.remove(url);
+    }
+
+
+    /**
+     * Retrieves volley image loader
+     */
+    public ImageLoader getImageLoader() {
+        if (mImageLoader == null) {
+            mImageLoader = new ImageLoader(this.makaanGetRequestQueue, new LruBitmapCache());
+        }
+        return this.mImageLoader;
+    }
+
+    private JSONObject readFromMockFile(String mockFile) throws JSONException, IOException {
+        BufferedReader br = null;
+        StringBuilder json = new StringBuilder();
+
+
+        br = new BufferedReader(new InputStreamReader(assetManager.open(mockFile)));
+        String line = null;
+        while ((line = br.readLine()) != null) {
+            json.append(line);
+        }
+        return new JSONObject(json.toString());
+
     }
 
 }

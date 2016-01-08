@@ -14,6 +14,14 @@ public class ApiConstants {
     public static final String LISTING = BASE_URL.concat("/app/v1/listing/");
     public static final String CITY = BASE_URL.concat("/app/v1/city/");
 
+    /*---Typeahead api constants*/
+    public static final String TYPEAHEAD_BASE_URL = BASE_URL.concat("/columbus/app/v4/typeahead?");
+    public static final String TYPEAHEAD_QUERY = "query=";
+    public static final String TYPEAHEAD_TYPE = "typeAheadType=";
+    public static final String TYPEAHEAD_ROWS = "&rows=5";
+    public static final String TYPEAHEAD_ENHANCE_GP = "&enhance=gp";
+    public static final String TYPEAHEAD_CITY = "&city=";
+
 
 
 
