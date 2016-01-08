@@ -3,7 +3,6 @@ package com.makaan.network;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.volley.*;
@@ -12,27 +11,20 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.cache.LruBitmapCache;
 import com.makaan.constants.ResponseConstants;
-import com.makaan.util.AppUtils;
-import com.makaan.util.RandomString;
 
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by vaibhav on 23/12/15.
@@ -42,7 +34,6 @@ public class MakaanNetworkClient {
     public static final String TAG = MakaanNetworkClient.class.getSimpleName();
 
     private RequestQueue makaanGetRequestQueue;
-    public static Gson gson;
     private ImageLoader mImageLoader;
 
 
@@ -53,7 +44,7 @@ public class MakaanNetworkClient {
 
     private MakaanNetworkClient(Context appContext) {
         makaanGetRequestQueue = Volley.newRequestQueue(appContext);
-        gson = new GsonBuilder().serializeNulls().disableHtmlEscaping().setPrettyPrinting().create();
+
         assetManager = appContext.getAssets();
     }
 
@@ -130,7 +121,7 @@ public class MakaanNetworkClient {
                 JSONObject mockFileResponse = readFromMockFile(mockFile);
                 JSONObject response = mockFileResponse.getJSONObject(ResponseConstants.DATA);
 
-                Object objResponse = gson.fromJson(response.toString(), type);
+                Object objResponse = MakaanBuyerApplication.gson.fromJson(response.toString(), type);
                 objectGetCallback.onSuccess(objResponse);
 
             } catch (Exception e) {
@@ -146,7 +137,7 @@ public class MakaanNetworkClient {
                             try {
                                 response = response.getJSONObject(ResponseConstants.DATA);
 
-                                Object objResponse = gson.fromJson(response.toString(), type);
+                                Object objResponse = MakaanBuyerApplication.gson.fromJson(response.toString(), type);
                                 objectGetCallback.onSuccess(objResponse);
 
                             } catch (JSONException e) {

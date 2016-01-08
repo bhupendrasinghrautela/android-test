@@ -7,6 +7,7 @@ import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.event.serp.SerpGetEvent;
+import com.makaan.request.selector.Selector;
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.listing.ListingService;
@@ -38,9 +39,21 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
     @OnClick(R.id.fetch)
     public void fetch(View view) {
 
-        ArrayList <ApiIntLabel> test = MasterDataCache.getInstance().getAllPropertyTypes();
+        Selector selector = new Selector();
 
-                ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getListingDetail(323996L);
+        ArrayList<String> cityList = new ArrayList<>();
+        cityList.add("2");
+        cityList.add("3");
+        selector.term("cityId", cityList).term("unitType", "apartment").range("price", 0D, 50000D).page(0, 5);
+
+
+        System.out.println(selector.build());
+        ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).handleSerpRequest(null);
+
+
+        /*ArrayList <ApiIntLabel> test = MasterDataCache.getInstance().getAllPropertyTypes();
+
+                ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getListingDetail(323996L);*/
         System.out.println("Test");
     }
 

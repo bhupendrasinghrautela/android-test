@@ -1,6 +1,13 @@
 package com.makaan.request;
 
 import com.google.gson.Gson;
+import com.makaan.request.selector.PagingSelector;
+import com.makaan.request.selector.RangeSelector;
+import com.makaan.request.selector.Selector;
+import com.makaan.request.selector.SortSelector;
+import com.makaan.request.selector.TermSelector;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,38 +21,22 @@ import static com.makaan.constants.RequestConstants.*;
  */
 public class SerpRequest {
 
-    private static final Integer PAGE_SIZE = 20;
+    private static final Integer SERP_PAGE_SIZE = 20;
 
 
-    public long cityId;
+    /*public long cityId;
     public long localityId;
     public long landMarkId;
     public int pageNo = 1;
     public int sortFieldUId;            // check enum SerpSortField
     public boolean sortAsc;
+*/
 
 
 
-    Map<String, List<Map<String, Map<String, Object>>>> filters;
-
-    //HashMap<String, List<Map<String, List<String>>>> andFilters = new HashMap();
-    Map<String, List<String>> termFilterValues = new HashMap<>();
 
 
-    public SerpRequest applyTermFilter(String fieldName, String value) {
-        List<String> values = termFilterValues.get(fieldName);
-        if (null == values) {
-            values = new ArrayList<>();
-            termFilterValues.put(fieldName, values);
-        }
-        values.add(value);
 
-        return this;
-    }
-
-    public SerpRequest applyRangeFilter(String fieldName, Double from, Double to) {
-        return this;
-    }
 
     public String getUrl(){
         return "https://marketplace-qa.proptiger-ws.com/app/v1/listing?selector=%7B%22filters%22:%7B%22and%22:[%7B%22equal%22:%7B%22cityId%22:%222%22%7D%7D]%7D,%22paging%22:%7B%22start%22:0,%22rows%22:10%7D%7D";

@@ -5,7 +5,10 @@ import com.makaan.event.listing.ListingByIdCallback;
 import com.makaan.event.serp.SerpGetCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.request.SerpRequest;
+import com.makaan.request.selector.Selector;
 import com.makaan.service.MakaanService;
+
+import java.util.ArrayList;
 
 /**
  * Created by vaibhav on 23/12/15.
@@ -19,7 +22,19 @@ public class ListingService implements MakaanService {
          * build selector make actual network call and use SerpGetCallback
          */
 
-        MakaanNetworkClient.getInstance().get("https://marketplace-qa.proptiger-ws.com/app/v1/listing?selector={\"filters\":{\"and\":[{\"equal\":{\"cityId\":\"2\"}}]},\"paging\":{\"start\":0,\"rows\":10}}",
+        Selector selector = new Selector();
+
+        ArrayList<String> cityList = new ArrayList<>();
+        cityList.add("2");
+        selector.term("cityId", cityList).range("price", 0D, 5000000D).page(0, 5);
+
+        String selectorStr  = selector.build();
+
+        System.out.println(selector.build());
+
+
+
+        MakaanNetworkClient.getInstance().get("https://marketplace-qa.proptiger-ws.com/app/v1/listing?".concat(selectorStr),
                 new SerpGetCallback(),null);
     }
 

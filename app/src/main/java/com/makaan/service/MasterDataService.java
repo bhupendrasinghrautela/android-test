@@ -2,8 +2,8 @@ package com.makaan.service;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ApiConstants;
 import com.makaan.constants.ResponseConstants;
@@ -95,7 +95,7 @@ public class MasterDataService implements MakaanService {
                 try {
                     JSONArray filters = responseObject.getJSONArray(ResponseConstants.FILTERS);
 
-                    ArrayList<FilterGroup> filterGroups  = MakaanNetworkClient.gson.fromJson(filters.toString(), filterGroupTypeList);
+                    ArrayList<FilterGroup> filterGroups  = MakaanBuyerApplication.gson.fromJson(filters.toString(), filterGroupTypeList);
 
                     for (FilterGroup filterGroup : filterGroups) {
                         MasterDataCache.getInstance().addFilterGroup(filterGroup);

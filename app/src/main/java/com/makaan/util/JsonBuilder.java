@@ -1,7 +1,6 @@
 package com.makaan.util;
 
-import com.google.gson.Gson;
-import com.makaan.network.MakaanNetworkClient;
+import com.makaan.MakaanBuyerApplication;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,7 +26,7 @@ public class JsonBuilder {
 			throw new IllegalArgumentException("Invalid argument");
 		}
 
-        String payload = MakaanNetworkClient.gson.toJson(payloadObject);
+        String payload = MakaanBuyerApplication.gson.toJson(payloadObject);
         JSONObject jObject = new JSONObject(payload);
         return jObject;
 	}
@@ -45,7 +44,7 @@ public class JsonBuilder {
 			throw new IllegalArgumentException("Invalid argument");
 		}
 
-        String payload = MakaanNetworkClient.gson.toJson(payloadObject);
+        String payload = MakaanBuyerApplication.gson.toJson(payloadObject);
         JSONArray jArray = new JSONArray(payload);
         return jArray;
 	}
