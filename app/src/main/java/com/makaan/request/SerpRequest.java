@@ -47,6 +47,10 @@ public class SerpRequest {
         return this;
     }
 
+    public String getUrl(){
+        return "https://marketplace-qa.proptiger-ws.com/app/v1/listing?selector=%7B%22filters%22:%7B%22and%22:[%7B%22equal%22:%7B%22cityId%22:%222%22%7D%7D]%7D,%22paging%22:%7B%22start%22:0,%22rows%22:10%7D%7D";
+    }
+
 
    /* private ;
 
