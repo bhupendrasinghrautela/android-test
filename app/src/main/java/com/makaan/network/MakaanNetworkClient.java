@@ -3,15 +3,19 @@ package com.makaan.network;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.volley.*;
 import com.android.volley.Request;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.makaan.cache.LruBitmapCache;
 import com.makaan.constants.ResponseConstants;
 
 
@@ -35,6 +39,7 @@ public class MakaanNetworkClient {
 
 
     private RequestQueue makaanGetRequestQueue;
+    private ImageLoader mImageLoader;
     private Gson gson;
 
     private AssetManager assetManager;
@@ -131,6 +136,62 @@ public class MakaanNetworkClient {
 
             makaanGetRequestQueue.add(jsonRequest);
         }
+    }
+
+    /**
+     *
+     * */
+    public void get(String url, final StringRequestCallback stringRequestCallback, String tag) {
+
+        StringRequest stringRequest = new StringRequest
+                (Request.Method.GET, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                            stringRequestCallback.onSuccess(response);
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        stringRequestCallback.onError();
+                        Log.e(TAG, "Network error", error);
+                    }
+                });
+
+        addToRequestQueue(stringRequest, tag);
+    }
+
+    /**
+     * Method for adding a network request to the volley Queue
+     * @param req Request object {@link Request}
+     * @param tag for this request
+     *
+     * */
+    private <T> void addToRequestQueue(Request<T> req, String tag) {
+        // set the default tag if tag is empty
+        req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
+        makaanGetRequestQueue.add(req);
+    }
+
+    /**
+     * Method for canceling all network requests associated for the given tag
+     * @param tag for which network requests need to be cancelled
+     * */
+    public void cancelPendingRequests(Object tag) {
+        if (makaanGetRequestQueue != null) {
+            makaanGetRequestQueue.cancelAll(tag);
+        }
+    }
+
+
+    /**
+     * Retrieves volley image loader
+     * */
+    public ImageLoader getImageLoader() {
+        if (mImageLoader == null) {
+            mImageLoader = new ImageLoader(this.makaanGetRequestQueue, new LruBitmapCache());
+        }
+        return this.mImageLoader;
     }
 
 }
