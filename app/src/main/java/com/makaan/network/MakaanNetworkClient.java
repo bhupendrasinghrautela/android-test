@@ -195,16 +195,21 @@ public class MakaanNetworkClient {
             req.setTag(tag);
         }
 
-        cancelFromRequestQueue(req);
+        cancelFromRequestQueue(req, tag);
         makaanGetRequestQueue.add(req);
     }
 
 
-    private void cancelFromRequestQueue(Request req) {
-        if (null != makaanGetRequestQueue && null != req) {
-            String tag = requestUrlToTag.get(req.getUrl());
-            makaanGetRequestQueue.cancelAll(tag);
+    private void cancelFromRequestQueue(Request req, String tag) {
+        if(null != makaanGetRequestQueue){
+            if(tag == null && null != req){
+                tag = requestUrlToTag.get(req.getUrl());
+                makaanGetRequestQueue.cancelAll(tag);
+            }else if(null != tag){
+                makaanGetRequestQueue.cancelAll(tag);
+            }
         }
+
     }
 
     private void completeRequestInQueue(String url) {

@@ -1,9 +1,15 @@
 package com.makaan;
 
 import android.app.Application;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.Volley;
+import com.makaan.cache.LruBitmapCache;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.serp.FilterGroup;
@@ -22,16 +28,19 @@ import java.util.HashMap;
  *
  */
 public class MakaanBuyerApplication extends Application {
+    public static final String TAG = MakaanBuyerApplication.class.getSimpleName();
+
 
     public static RandomString randomString = new RandomString(6);
-    public static Selector serpSelector;
-
+    public static Selector serpSelector  = new Selector();
+    public static boolean isBuySearch = true;
 
     public static Gson gson;
 
     @Override
     public void onCreate() {
         super.onCreate();
+
         MakaanNetworkClient.init(this);
         gson = new GsonBuilder().serializeNulls().disableHtmlEscaping().create();
 
@@ -50,5 +59,7 @@ public class MakaanBuyerApplication extends Application {
 
 
     }
+
+
 
 }

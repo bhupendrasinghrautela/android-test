@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.makaan.activity.serp.ListingViewPager
+    <com.makaan.ui.listing.ListingViewPager
         android:id="@+id/serp_map_listing_viewpager"
         android:layout_width="match_parent"
         android:layout_height="120dp"

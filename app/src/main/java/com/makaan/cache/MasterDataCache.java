@@ -82,12 +82,22 @@ public class MasterDataCache {
         return propertyTypes;
     }
 
-    public Collection<FilterGroup> getAllBuyFilterGroups() {
-        return internalNameToFilterGrpBuy.values();
+    public ArrayList<FilterGroup> getAllBuyFilterGroups() {
+        Iterator<FilterGroup> filterGroupIterator = internalNameToFilterGrpBuy.values().iterator();
+        ArrayList<FilterGroup> buyFilterGroups = new ArrayList<>();
+        while (filterGroupIterator.hasNext()) {
+            buyFilterGroups.add(filterGroupIterator.next());
+        }
+        return buyFilterGroups;
     }
 
-    public Collection<FilterGroup> getAllRentFilterGroups() {
-        return internalNameToFilterGrpRent.values();
+    public ArrayList<FilterGroup> getAllRentFilterGroups() {
+        Iterator<FilterGroup> filterGroupIterator = internalNameToFilterGrpRent.values().iterator();
+        ArrayList<FilterGroup> rentFilterGroups = new ArrayList<>();
+        while (filterGroupIterator.hasNext()) {
+            rentFilterGroups.add(filterGroupIterator.next());
+        }
+        return rentFilterGroups;
     }
 
 

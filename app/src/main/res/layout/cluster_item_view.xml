@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.makaan.ui.view.TempClusterItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/cluster_item_view_property_price_range_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="\u20B9 40l to \u20B945l"
+        android:textSize="20sp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="4dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/cluster_item_view_property_type_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="2 bhk apartment"
+        android:textSize="14sp"
+        android:layout_marginBottom="4dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/cluster_item_view_property_price_range_text_view"/>
+
+    <TextView
+        android:id="@+id/cluster_item_view_property_address_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="sector 2, sohna road"
+        android:textSize="14sp"
+        android:layout_marginBottom="4dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/cluster_item_view_property_type_text_view"/>
+
+    <Button
+        android:id="@+id/cluster_item_view_click_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="view 100 listings"
+        android:layout_marginBottom="6dp"
+        android:textSize="14sp"
+        android:background="@drawable/rounded_outline_button_white"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/cluster_item_view_property_address_text_view" />
+</com.makaan.ui.view.TempClusterItemView>

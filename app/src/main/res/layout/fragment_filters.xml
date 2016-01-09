@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:id="@+id/filters_fragment_filter_relative_layout"
+        android:layout_weight="2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="#FAFAFA"
+        android:layout_marginRight="1dp">
+
+        <ImageView
+            android:id="@+id/filters_fragment_filter_image_view"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/filter"
+            android:layout_marginLeft="8dp"/>
+        <TextView
+            android:id="@+id/filters_fragment_filter_text_view"
+            android:layout_toRightOf="@id/filters_fragment_filter_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter"
+            android:textColor="#f00"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="2dp"/>
+        <TextView
+            android:id="@+id/filters_fragment_filter_setting_text_view"
+            android:layout_toRightOf="@id/filters_fragment_filter_image_view"
+            android:layout_below="@id/filters_fragment_filter_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="None Applied"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="2dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/filters_fragment_sort_by_relative_layout"
+        android:layout_weight="2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="#FAFAFA"
+        android:layout_marginRight="1dp">
+
+        <ImageView
+            android:id="@+id/filters_fragment_sort_by_image_view"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/sort_by"
+            android:layout_marginLeft="8dp"/>
+        <TextView
+            android:id="@+id/filters_fragment_sort_by_text_view"
+            android:layout_toRightOf="@id/filters_fragment_sort_by_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sort by"
+            android:textColor="#f00"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="2dp"/>
+        <TextView
+            android:id="@+id/filters_fragment_sort_by_setting_text_view"
+            android:layout_toRightOf="@id/filters_fragment_sort_by_image_view"
+            android:layout_below="@id/filters_fragment_sort_by_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Relevance"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="2dp"/>
+
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/filters_fragment_map_linear_layout"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#FAFAFA">
+
+        <ImageView
+            android:id="@+id/filters_fragment_map_image_view"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/map"
+            android:layout_marginTop="4dp"/>
+        <TextView
+            android:id="@+id/filters_fragment_map_text_view"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Map"
+            android:layout_marginTop="2dp"/>
+
+    </LinearLayout>
+</LinearLayout>
