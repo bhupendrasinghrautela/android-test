@@ -3,6 +3,7 @@ package com.makaan.activity.listing;
 import android.os.Bundle;
 import android.view.View;
 
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.cache.MasterDataCache;
@@ -23,7 +24,6 @@ import butterknife.OnClick;
 public class ListingDetailActivity extends MakaanFragmentActivity {
 
 
-
     @Override
     protected int getContentViewId() {
         return R.layout.content_main;
@@ -38,22 +38,12 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
 
     @OnClick(R.id.fetch)
     public void fetch(View view) {
-
-        Selector selector = new Selector();
-
-        ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).handleSerpRequest(null);
-
-
-        /*ArrayList <ApiIntLabel> test = MasterDataCache.getInstance().getAllPropertyTypes();
-
-                ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getListingDetail(323996L);*/
-        System.out.println("Test");
+        ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).handleSerpRequest(MakaanBuyerApplication.serpSelector);
     }
 
     @Subscribe
-    public void onResults(SerpGetEvent serpGetEvent){
+    public void onResults(SerpGetEvent serpGetEvent) {
         System.out.println("TEST");
-
     }
 
 }

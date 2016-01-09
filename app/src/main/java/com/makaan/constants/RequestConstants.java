@@ -16,12 +16,14 @@ public class RequestConstants  {
     public static final String START = "start";
     public static final String ROWS = "rows";
     public static final String AND = "and";
+    public static final String FIELDS = "fields";
     public static final String EQUAL = "equal";
     public static final String RANGE = "range";
     public static final String CITY_ID = "cityId";
     public static final String BEDROOMS = "bedrooms";
     public static final String LISTING_POSTED_BY = "listingPostedBy";
     public static final String PRICE = "price";
+    public static final String UNIT_TYPE = "unitType";
     public static final String FROM = "from";
     public static final String TO = "to";
     public static final String BATHROOMS = "bathrooms";

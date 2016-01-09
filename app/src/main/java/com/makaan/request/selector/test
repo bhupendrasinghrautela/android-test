@@ -1,1 +1,0 @@
-https://marketplace-qa.proptiger-ws.com/app/v1/listing?selector={%22sort%22:%22[{\%22sortOrder\%22:null,\%22field\%22:null}]%22,%22paging%22:%22{\%22start\%22:\%220\%22,\%22rows\%22:\%225\%22}%22,%22filters%22:%22{\%22and\%22:[\%22\%22,\%22{\\\%22range\\\%22:{\\\%22price\\\%22:{\\\%22from\\\%22:\\\%220.0\\\%22,\\\%22to\\\%22:\\\%225000000.0\\\%22}}}\%22]}%22}

@@ -1,16 +1,16 @@
-package com.makaan.request;
+package com.makaan.constants;
 
 import static com.makaan.constants.ResponseConstants.*;
 
-import com.makaan.constants.ResponseConstants;
-
 /**
  * Created by vaibhav on 06/01/16.
+ *
+ * to be used on ui
  */
 public enum SerpSortField {
 
     PRICE(1, "Price", ResponseConstants.PRICE),
-    CONS_STATUS(1, "Construction Status", CONS_STATUS_ID);
+    CONS_STATUS(2, "Construction Status", CONS_STATUS_ID);
 
 
     private int uid;

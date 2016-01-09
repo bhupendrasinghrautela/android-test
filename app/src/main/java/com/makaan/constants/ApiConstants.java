@@ -13,6 +13,7 @@ public class ApiConstants {
     public static final String UNIT_TYPE = BASE_URL.concat("/data/v1/entity/unit-types");
     public static final String LISTING = BASE_URL.concat("/app/v1/listing/");
     public static final String CITY = BASE_URL.concat("/app/v1/city/");
+    public static final String TOP_AGENTS_LOCALITY = BASE_URL.concat("/data/v1/entity/city");
 
 
 

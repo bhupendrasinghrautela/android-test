@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -25,10 +26,18 @@ public class Selector {
 
     public static final String TAG = Selector.class.getSimpleName();
 
+
+    private HashSet<String> fieldSelector = new HashSet<>();
     private LinkedHashMap<String, TermSelector> termSelectorHashMap = new LinkedHashMap<>();
     private LinkedHashMap<String, RangeSelector> rangeSelectorHashMap = new LinkedHashMap<>();
     private PagingSelector pagingSelector = new PagingSelector();
     private SortSelector sortSelector = new SortSelector();
+
+
+    public Selector field(String fieldName){
+        fieldSelector.add(fieldName);
+        return this;
+    }
 
     public Selector term(String fieldName, Iterable<String> values) {
         TermSelector termSelector = termSelectorHashMap.get(fieldName);
@@ -89,6 +98,13 @@ public class Selector {
         try {
 
             StringBuilder jsonBuilder = new StringBuilder();
+            jsonBuilder.append("{");
+
+            if(fieldSelector.size() > 0){
+                StringBuilder fieldBuilder = new StringBuilder();
+                fieldBuilder.append("\"").append(FIELDS).append("\"").append(":").append(MakaanBuyerApplication.gson.toJson(fieldSelector));
+                jsonBuilder.append(fieldBuilder.toString());
+            }
 
             if (termSelectorHashMap.size() > 0 || rangeSelectorHashMap.size() > 0) {
 
@@ -101,7 +117,7 @@ public class Selector {
                     String termSelectorJson = entry.getValue().build();
                     if (!StringUtil.isBlank(termSelectorJson)) {
 
-                        if (i != 0) {
+                        if (i != 0 || fieldSelector.size() > 0) {
                             andStrBuilder.append(",").append(termSelectorJson);
                         } else {
                             andStrBuilder.append(termSelectorJson);
@@ -125,7 +141,7 @@ public class Selector {
                 }
 
                 andStrBuilder.append("]");
-                jsonBuilder.append("{").append("\"").append(FILTERS).append("\"").append(":{").append(andStrBuilder.toString()).append("}");
+                jsonBuilder.append("\"").append(FILTERS).append("\"").append(":{").append(andStrBuilder.toString()).append("}");
             }
 
             String pagingSelectorJson = pagingSelector.build();
@@ -135,8 +151,10 @@ public class Selector {
 
             String sortSelectorJson = sortSelector.build();
             if (!StringUtil.isBlank(sortSelectorJson)) {
-                jsonBuilder.append(",").append("\"").append(SORT).append("\"").append(":").append(sortSelector.build()).append("}");
+                jsonBuilder.append(",\"").append(SORT).append("\"").append(":").append(sortSelectorJson);
             }
+
+            jsonBuilder.append("}");
 
             return SELECTOR.concat("=").concat(jsonBuilder.toString());
 
