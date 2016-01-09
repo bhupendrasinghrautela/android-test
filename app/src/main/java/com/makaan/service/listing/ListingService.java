@@ -15,26 +15,24 @@ import java.util.ArrayList;
 public class ListingService implements MakaanService {
 
 
-    public void handleSerpRequest(SerpRequest serpRequest) {
-        /**
-         *
-         * build selector make actual network call and use SerpGetCallback
-         */
+    public void handleSerpRequest(Selector serpSelector) {
 
-        Selector selector = new Selector();
+        /*Selector selector = new Selector();
 
         ArrayList<String> cityList = new ArrayList<>();
         cityList.add("2");
-        selector.term("cityId", "2").range("price", 10000D, 5000000D).page(0, 20).sort("price","DESC");
+        selector.term("cityId", "2").range("price", 10000D, 5000000D).page(0, 20).sort("price", "DESC");
 
-        String selectorStr  = selector.build();
+        String selectorStr = selector.build();
 
-        System.out.println(selector.build());
+        System.out.println(selector.build());*/
+
+        if(null != serpSelector){
+            String serpDetailsURL = ApiConstants.LISTING.concat("?").concat(serpSelector.build());
+            MakaanNetworkClient.getInstance().get(serpDetailsURL, new SerpGetCallback());
+        }
 
 
-
-        MakaanNetworkClient.getInstance().get("https://marketplace-qa.proptiger-ws.com/app/v1/listing?".concat(selectorStr),
-                new SerpGetCallback(),null);
     }
 
 
@@ -42,7 +40,7 @@ public class ListingService implements MakaanService {
 
         if (null != listingId) {
             String listingDetailURL = ApiConstants.LISTING.concat(listingId.toString());
-            MakaanNetworkClient.getInstance().get(listingDetailURL, new ListingByIdCallback(), null);
+            MakaanNetworkClient.getInstance().get(listingDetailURL, new ListingByIdCallback());
         }
 
     }

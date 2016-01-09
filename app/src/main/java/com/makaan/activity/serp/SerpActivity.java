@@ -26,7 +26,7 @@ public class SerpActivity extends MakaanFragmentActivity {
     }
 
     private void fetchData(){
-        new ListingService().handleSerpRequest(MakaanBuyerApplication.serpRequest);
+        new ListingService().handleSerpRequest(MakaanBuyerApplication.serpSelector);
     }
 
     @Subscribe

@@ -57,6 +57,9 @@ public class MakaanNetworkClient {
         return instance;
     }
 
+    public void get(String url, final JSONGetCallback jsonGetCallback) {
+        get(url, jsonGetCallback, null, null);
+    }
 
     public void get(String url, final JSONGetCallback jsonGetCallback, String mockFile) {
         get(url, jsonGetCallback, mockFile, null);
