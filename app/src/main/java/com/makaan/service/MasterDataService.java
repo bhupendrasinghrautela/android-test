@@ -30,7 +30,7 @@ public class MasterDataService implements MakaanService {
 
     public static final String TAG = MasterDataService.class.getSimpleName();
 
-    public void populatePropertyTypes() {
+    public void populateBuyPropertyTypes() {
         Type listType = new TypeToken<HashMap<String, String>>() {}.getType();
 
         MakaanNetworkClient.getInstance().get(ApiConstants.UNIT_TYPE, listType, new ObjectGetCallback() {
@@ -40,10 +40,28 @@ public class MasterDataService implements MakaanService {
                 HashMap<String, String> propertyTypes = ( HashMap<String, String>) responseObject;
 
                 for (Map.Entry<String, String> propertyType : propertyTypes.entrySet()) {
-                    MasterDataCache.getInstance().addPropertyType(new ApiIntLabel(propertyType.getValue(), Integer.parseInt(propertyType.getKey())));
+                    MasterDataCache.getInstance().addBuyPropertyType(new ApiIntLabel(propertyType.getValue(), Integer.parseInt(propertyType.getKey())));
                 }
             }
-        }, "propertyType.json");
+        }, "propertyTypeBuy.json");
+
+
+    }
+
+    public void populateRentPropertyTypes() {
+        Type listType = new TypeToken<HashMap<String, String>>() {}.getType();
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.UNIT_TYPE, listType, new ObjectGetCallback() {
+            @Override
+            @SuppressWarnings("unchecked")
+            public void onSuccess(Object responseObject) {
+                HashMap<String, String> propertyTypes = ( HashMap<String, String>) responseObject;
+
+                for (Map.Entry<String, String> propertyType : propertyTypes.entrySet()) {
+                    MasterDataCache.getInstance().addBuyPropertyType(new ApiIntLabel(propertyType.getValue(), Integer.parseInt(propertyType.getKey())));
+                }
+            }
+        }, "propertyTypeRent.json");
 
 
     }
@@ -93,7 +111,8 @@ public class MasterDataService implements MakaanService {
             @Override
             public void onSuccess(JSONObject responseObject) {
                 try {
-                    JSONArray filters = responseObject.getJSONArray(ResponseConstants.FILTERS);
+                    JSONObject object = responseObject.getJSONObject(ResponseConstants.DATA);
+                    JSONArray filters = object.getJSONArray(ResponseConstants.FILTERS);
 
                     ArrayList<FilterGroup> filterGroups  = MakaanBuyerApplication.gson.fromJson(filters.toString(), filterGroupTypeList);
 

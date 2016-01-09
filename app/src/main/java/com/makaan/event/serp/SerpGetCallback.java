@@ -2,6 +2,7 @@ package com.makaan.event.serp;
 
 import android.util.Log;
 
+import com.makaan.constants.ResponseConstants;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.listing.ListingData;
@@ -24,30 +25,35 @@ public class SerpGetCallback extends JSONGetCallback {
     public static final String TAG = SerpGetCallback.class.getSimpleName();
 
     @Override
-    public void onSuccess(JSONObject apiResponse) {
+    public void onSuccess(JSONObject dataResponse) {
         SerpGetEvent serpGetEvent = new SerpGetEvent();
 
-        if (null != apiResponse) {
+
+        if (null != dataResponse) {
             try {
-                ListingData listingData = new ListingData();
-                //listingData.totalCount = apiResponse.optInt(TOTAL_COUNT);
-                serpGetEvent.listingData = listingData;
 
-                JSONArray items = apiResponse.getJSONArray(ITEMS);
-                if (null == items || items.length() == 0) {
-                    serpGetEvent.message = SERP_NO_LISITINGS_AVAILABLE;
-                } else {
+                JSONObject apiResponse = dataResponse.getJSONObject(ResponseConstants.DATA);
+                if (null != apiResponse) {
+                    ListingData listingData = new ListingData();
+                    //listingData.totalCount = apiResponse.optInt(TOTAL_COUNT);
+                    serpGetEvent.listingData = listingData;
 
-                    ListingParser listingParser = new ListingParser();
-                    for (int i = 0; i < items.length(); i++) {
+                    JSONArray items = apiResponse.getJSONArray(ITEMS);
+                    if (null == items || items.length() == 0) {
+                        serpGetEvent.message = SERP_NO_LISITINGS_AVAILABLE;
+                    } else {
 
-                        JSONObject listingJson = items.getJSONObject(i);
+                        ListingParser listingParser = new ListingParser();
+                        for (int i = 0; i < items.length(); i++) {
 
-                        listingJson = listingJson.getJSONObject(LISTING);
-                        Listing listing = listingParser.getListingFromJson(listingJson);
+                            JSONObject listingJson = items.getJSONObject(i);
 
-                        listingData.listings.add(listing);
-                        listingData.cityName = listing.cityName;
+                            listingJson = listingJson.getJSONObject(LISTING);
+                            Listing listing = listingParser.getListingFromJson(listingJson);
+
+                            listingData.listings.add(listing);
+                            listingData.cityName = listing.cityName;
+                        }
                     }
                 }
             } catch (JSONException e) {

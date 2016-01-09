@@ -28,6 +28,7 @@ public class CityService implements MakaanService {
             citySelector.fields(new String[]{ENTITY_DESCRIPTIONS, CENTER_LAT, CENTER_LONG, DESCRIPTION, CITY_HEROSHOT_IMAGE_URL, ANNUAL_GROWTH, RENTAL_YIELD, DEMAND_RATE, SUPPLY_RATE, LABEL});
 
             String cityUrl = ApiConstants.CITY.concat("/").concat(cityId.toString()).concat("?").concat(citySelector.build());
+
             Type cityType = new TypeToken<City>() {}.getType();
 
             MakaanNetworkClient.getInstance().get(cityUrl, cityType, new ObjectGetCallback() {

@@ -7,7 +7,6 @@ import com.makaan.response.serp.FilterGroup;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.logging.Filter;
 
 /**
  * Created by vaibhav on 29/12/15.
@@ -15,7 +14,8 @@ import java.util.logging.Filter;
 public class MasterDataCache {
 
     private static MasterDataCache instance = new MasterDataCache();
-    private HashMap<Integer, ApiIntLabel> idToPropertyType = new HashMap<>();
+    private HashMap<Integer, ApiIntLabel> idToBuyPropertyType = new HashMap<>();
+    private HashMap<Integer, ApiIntLabel> idToRentPropertyType = new HashMap<>();
     private HashMap<Integer, ApiIntLabel> idToPropertyStatus = new HashMap<>();
     private HashMap<String, String> apiLabels = new HashMap<>();
     private HashMap<String, FilterGroup> internalNameToFilterGrp = new HashMap<>();
@@ -28,9 +28,15 @@ public class MasterDataCache {
         return instance;
     }
 
-    public void addPropertyType(ApiIntLabel propertyType) {
+    public void addBuyPropertyType(ApiIntLabel propertyType) {
         if (null != propertyType && null != propertyType.id && null != propertyType.name) {
-            idToPropertyType.put(propertyType.id, propertyType);
+            idToBuyPropertyType.put(propertyType.id, propertyType);
+        }
+    }
+
+    public void addRentPropertyType(ApiIntLabel propertyType) {
+        if (null != propertyType && null != propertyType.id && null != propertyType.name) {
+            idToRentPropertyType.put(propertyType.id, propertyType);
         }
     }
 
@@ -53,9 +59,15 @@ public class MasterDataCache {
         }
     }
 
-    public ArrayList<ApiIntLabel> getAllPropertyTypes() {
+    public ArrayList<ApiIntLabel> getBuyPropertyTypes() {
         ArrayList<ApiIntLabel> propertyTypes = new ArrayList<>();
-        propertyTypes.addAll(idToPropertyType.values());
+        propertyTypes.addAll(idToBuyPropertyType.values());
+        return propertyTypes;
+    }
+
+    public ArrayList<ApiIntLabel> getRentPropertyTypes() {
+        ArrayList<ApiIntLabel> propertyTypes = new ArrayList<>();
+        propertyTypes.addAll(idToRentPropertyType.values());
         return propertyTypes;
     }
 
@@ -68,8 +80,12 @@ public class MasterDataCache {
         return apiLabels.get(apiLabel);
     }
 
-    public ApiIntLabel getPropertyType(Integer id) {
-        return idToPropertyType.get(id);
+    public ApiIntLabel getBuyPropertyType(Integer id) {
+        return idToBuyPropertyType.get(id);
+    }
+
+    public ApiIntLabel getRentPropertyType(Integer id) {
+        return idToRentPropertyType.get(id);
     }
 
     public ApiIntLabel getPropertyStatus(Integer status) {

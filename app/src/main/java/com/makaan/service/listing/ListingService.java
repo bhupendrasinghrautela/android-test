@@ -40,6 +40,7 @@ public class ListingService implements MakaanService {
 
         if (null != listingId) {
             String listingDetailURL = ApiConstants.LISTING.concat(listingId.toString());
+
             MakaanNetworkClient.getInstance().get(listingDetailURL, new ListingByIdCallback());
         }
 

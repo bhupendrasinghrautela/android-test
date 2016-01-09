@@ -94,14 +94,8 @@ public class MakaanNetworkClient {
                         public void onResponse(JSONObject response) {
 
                             completeRequestInQueue(url);
-                            try {
-                                response = response.getJSONObject(ResponseConstants.DATA);
-                                //Object objResponse = gson.fromJson(response.toString(), jsonGetCallback.getResponseClass());
-                                jsonGetCallback.onSuccess(response);
+                            jsonGetCallback.onSuccess(response);
 
-                            } catch (JSONException e) {
-                                Log.e(TAG, "JSONException", e);
-                            }
                         }
                     }, new Response.ErrorListener() {
                         @Override

@@ -71,7 +71,7 @@ public class ListingParser {
                     listing.bedrooms = property.optInt(BEDROOMS);
                     listing.bathrooms = property.optInt(BATHROOMS);
 
-                    ApiIntLabel propertyType = masterDataCache.getPropertyType(property.optInt(UNIT_TYPE_ID));
+                    ApiIntLabel propertyType = masterDataCache.getBuyPropertyType(property.optInt(UNIT_TYPE_ID));
                     listing.propertyType = null != propertyType ? propertyType.name : null;
 
                     ApiIntLabel propertyStatus1 = masterDataCache.getPropertyStatus(listingJson.optInt(CONS_STATUS_ID));
