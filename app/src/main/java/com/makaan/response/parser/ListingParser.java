@@ -8,6 +8,7 @@ import com.makaan.response.listing.Listing;
 import com.makaan.response.listing.ListingImage;
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.project.Project;
+import com.makaan.util.StringUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -99,8 +100,8 @@ public class ListingParser {
 
                     listing.isReadyToMove = isReadyToMove(listingJson.optInt(CONS_STATUS_ID));
                     String possessionDateStr = listingJson.optString(POSSESSION_DATE);
-                    listing.propertyAge = !isBlank(possessionDateStr) ? getElapsedDaysFromNow(possessionDateStr).toString().concat(DAYS) : null;
-                    listing.possessionDate = !isBlank(possessionDateStr) ? getMMMYYYYDateStringFromEpoch(possessionDateStr) : null;
+                    listing.propertyAge = !StringUtil.isBlank(possessionDateStr) ? getElapsedDaysFromNow(possessionDateStr).toString().concat(DAYS) : null;
+                    listing.possessionDate = !StringUtil.isBlank(possessionDateStr) ? getMMMYYYYDateStringFromEpoch(possessionDateStr) : null;
 
                     //TODO: check if we need diff
                     /*if (listing.price != null && listing.localityAvgPrice != null) {

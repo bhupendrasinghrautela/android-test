@@ -32,7 +32,7 @@ public class SortSelector implements  MakaanReqSelector {
 
         LinkedHashMap<String, String> sortMap = new LinkedHashMap<>();
         sortMap.put(FIELD, fieldName);
-        sortMap.put(SORT_ORDER, sortOrder);
+        sortMap.put(SORT_ORDER, sortOrder.toUpperCase());
 
         jsonArray.add(sortMap);
 

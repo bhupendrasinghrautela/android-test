@@ -38,14 +38,14 @@ public class RangeSelector implements MakaanReqSelector {
             return "";
         }
 
-        LinkedHashMap<String, String> fromToMap = new LinkedHashMap<>();
-        fromToMap.put(FROM, from.toString());
-        fromToMap.put(TO, to.toString());
+        LinkedHashMap<String, Double> fromToMap = new LinkedHashMap<>();
+        fromToMap.put(FROM, from);
+        fromToMap.put(TO, to);
 
-        LinkedHashMap<String, Map<String, String>> fieldMap = new LinkedHashMap<>();
+        LinkedHashMap<String, Map<String, Double>> fieldMap = new LinkedHashMap<>();
         fieldMap.put(fieldName, fromToMap);
 
-        LinkedHashMap<String, Map<String, Map<String, String>>> jsonMap = new LinkedHashMap<>();
+        LinkedHashMap<String, Map<String, Map<String, Double>>> jsonMap = new LinkedHashMap<>();
 
         jsonMap.put(RANGE, fieldMap);
 

@@ -41,13 +41,6 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
 
         Selector selector = new Selector();
 
-        ArrayList<String> cityList = new ArrayList<>();
-        cityList.add("2");
-        cityList.add("3");
-        selector.term("cityId", cityList).term("unitType", "apartment").range("price", 0D, 50000D).page(0, 5);
-
-
-        System.out.println(selector.build());
         ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).handleSerpRequest(null);
 
 

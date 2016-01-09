@@ -3,6 +3,7 @@ package com.makaan.request.selector;
 import android.util.Log;
 
 import com.makaan.MakaanBuyerApplication;
+import com.makaan.util.StringUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -87,58 +88,57 @@ public class Selector {
     public String build() {
         try {
 
-
-            StringBuilder andStrBuilder = new StringBuilder();
-            andStrBuilder.append("\"").append(AND).append("\"").append(":[");
-
-            int i =0;
-            boolean termSelectorAdded = false;
-            for (LinkedHashMap.Entry<String, TermSelector> entry : termSelectorHashMap.entrySet()) {
-                termSelectorAdded = true;
-                String k = entry.getValue().build();
-                if(null != k  && !"".equals(k)){
-                    if(i !=0){
-                        andStrBuilder.append(",").append(k);
-                    }else {
-                        andStrBuilder.append(k);
-                    }
-                    i++;
-                }
-            }
-
-            i =0;
-            for (LinkedHashMap.Entry<String, RangeSelector> entry : rangeSelectorHashMap.entrySet()) {
-
-                String k = entry.getValue().build();
-                if(null != k  && !"".equals(k)){
-                    if(i !=0 || termSelectorAdded){
-                        andStrBuilder.append(",").append(k);
-                    }else {
-                        andStrBuilder.append(k);
-                    }
-                    i++;
-                }
-            }
-
-           andStrBuilder.append("]");
-
-
-
-
-
             StringBuilder jsonBuilder = new StringBuilder();
-            jsonBuilder.append("{").append("\"").append(FILTERS).append("\"").append(":{").append(andStrBuilder.toString()).append(",").
-                    append("\"").append(PAGING).append("\"").append(":").append(pagingSelector.build())
-                    .append(",").append("\"").append(SORT).append("\"").append(":").append(sortSelector.build()).append("}}");
 
+            if (termSelectorHashMap.size() > 0 || rangeSelectorHashMap.size() > 0) {
 
-            String s = jsonBuilder.toString();
+                StringBuilder andStrBuilder = new StringBuilder();
+                andStrBuilder.append("\"").append(AND).append("\"").append(":[");
 
-            s = SELECTOR.concat("=").concat(s);
-            //String s = SELECTOR.concat("=").concat(jsonObject.toString());
+                int i = 0;
+                for (LinkedHashMap.Entry<String, TermSelector> entry : termSelectorHashMap.entrySet()) {
 
-           // s = URLEncoder.encode(s, "utf-8");
-            return s;
+                    String termSelectorJson = entry.getValue().build();
+                    if (!StringUtil.isBlank(termSelectorJson)) {
+
+                        if (i != 0) {
+                            andStrBuilder.append(",").append(termSelectorJson);
+                        } else {
+                            andStrBuilder.append(termSelectorJson);
+                        }
+                        i++;
+                    }
+                }
+
+                int j = 0;
+                for (LinkedHashMap.Entry<String, RangeSelector> entry : rangeSelectorHashMap.entrySet()) {
+
+                    String rangeSelectorJson = entry.getValue().build();
+                    if (!StringUtil.isBlank(rangeSelectorJson)) {
+                        if (j != 0 || i > 0) {          // i > 0 means at least one term selector added
+                            andStrBuilder.append(",").append(rangeSelectorJson);
+                        } else {
+                            andStrBuilder.append(rangeSelectorJson);
+                        }
+                        j++;
+                    }
+                }
+
+                andStrBuilder.append("]");
+                jsonBuilder.append("{").append("\"").append(FILTERS).append("\"").append(":{").append(andStrBuilder.toString()).append("}");
+            }
+
+            String pagingSelectorJson = pagingSelector.build();
+            if (!StringUtil.isBlank(pagingSelectorJson)) {
+                jsonBuilder.append(",\"").append(PAGING).append("\"").append(":").append(pagingSelectorJson);
+            }
+
+            String sortSelectorJson = sortSelector.build();
+            if (!StringUtil.isBlank(sortSelectorJson)) {
+                jsonBuilder.append(",").append("\"").append(SORT).append("\"").append(":").append(sortSelector.build()).append("}");
+            }
+
+            return SELECTOR.concat("=").concat(jsonBuilder.toString());
 
         } catch (Exception e) {
             Log.e(TAG, "Error while building Selector", e);
@@ -148,19 +148,5 @@ public class Selector {
         return null;
     }
 
-
-    public static void main(String[] args) {
-
-
-        Selector selector = new Selector();
-
-        ArrayList<String> cityList = new ArrayList<>();
-        cityList.add("2");
-        cityList.add("3");
-        selector.term("cityId", cityList).term("unitType", "apartment").range("price", 0D, 50000D).page(0, 5);
-
-
-        System.out.println(selector.build());
-    }
 
 }

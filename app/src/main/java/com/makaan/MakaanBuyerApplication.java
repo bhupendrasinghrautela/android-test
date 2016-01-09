@@ -5,7 +5,7 @@ import android.app.Application;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.makaan.network.MakaanNetworkClient;
-import com.makaan.request.SerpRequest;
+import com.makaan.request.selector.Selector;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.MasterDataService;
 import com.makaan.service.listing.ListingService;
@@ -18,8 +18,7 @@ import com.makaan.util.RandomString;
  */
 public class MakaanBuyerApplication extends Application {
 
-    public static SerpRequest serpRequest;
-    //public static Selector serpSelector;
+    public static Selector serpSelector;
     public static RandomString randomString = new RandomString(6);
     public static Gson gson;
 
