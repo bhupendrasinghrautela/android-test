@@ -11,6 +11,7 @@ import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.service.city.CityService;
 import com.makaan.service.listing.ListingService;
 import com.squareup.otto.Subscribe;
 
@@ -39,6 +40,7 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
     @OnClick(R.id.fetch)
     public void fetch(View view) {
         ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).handleSerpRequest(MakaanBuyerApplication.serpSelector);
+        ((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getCityById(2L);
     }
 
     @Subscribe

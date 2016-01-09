@@ -116,6 +116,9 @@ public class MakaanNetworkClient {
 
     }
 
+    public void get(final String url, final Type type, final ObjectGetCallback objectGetCallback) {
+        get(url, type, objectGetCallback, null, null);
+    }
 
     public void get(final String url, final Type type, final ObjectGetCallback objectGetCallback, String mockFile, String tag) {
 

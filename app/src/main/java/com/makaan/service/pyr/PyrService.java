@@ -4,12 +4,14 @@ import com.makaan.constants.ApiConstants;
 import com.makaan.event.pyr.TopAgentLocalityGetCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.request.selector.Selector;
+import com.makaan.service.MakaanService;
+
 import static com.makaan.constants.RequestConstants.*;
 
 /**
  * Created by vaibhav on 09/01/16.
  */
-public class PyrService {
+public class PyrService  implements MakaanService {
 
 
     public void getTopAgentsInLocality(Integer agentCount, Selector localityTopAgentSelector ){

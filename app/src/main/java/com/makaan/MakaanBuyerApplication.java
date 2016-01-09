@@ -8,7 +8,9 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.request.selector.Selector;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.MasterDataService;
+import com.makaan.service.city.CityService;
 import com.makaan.service.listing.ListingService;
+import com.makaan.service.pyr.PyrService;
 import com.makaan.service.search.SearchService;
 import com.makaan.util.RandomString;
 
@@ -18,8 +20,8 @@ import com.makaan.util.RandomString;
  */
 public class MakaanBuyerApplication extends Application {
 
-    public static Selector serpSelector;
     public static RandomString randomString = new RandomString(6);
+    public static Selector serpSelector;
     public static Gson gson;
 
     @Override
@@ -31,6 +33,8 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(MasterDataService.class, new MasterDataService());
         MakaanServiceFactory.getInstance().registerService(ListingService.class, new ListingService());
         MakaanServiceFactory.getInstance().registerService(SearchService.class , new SearchService());
+        MakaanServiceFactory.getInstance().registerService(CityService.class , new CityService());
+        MakaanServiceFactory.getInstance().registerService(PyrService.class , new PyrService());
 
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();

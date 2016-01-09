@@ -26,5 +26,40 @@ public class RequestConstants  {
     public static final String UNIT_TYPE = "unitType";
     public static final String FROM = "from";
     public static final String TO = "to";
+    public static final String ID = "id";
     public static final String BATHROOMS = "bathrooms";
+
+    public static final String ENTITY_DESCRIPTIONS = "entityDescriptions";
+    public static final String CENTER_LAT = "centerLatitude";
+    public static final String CENTER_LONG = "centerLongitude";
+    public static final String DESCRIPTION = "description";
+    public static final String CITY_HEROSHOT_IMAGE_URL = "cityHeroshotImageUrl";
+    public static final String ANNUAL_GROWTH = "annualGrowth";
+    public static final String RENTAL_YIELD = "rentalYield";
+    public static final String DEMAND_RATE = "demandRate";
+    public static final String SUPPLY_RATE = "supplyRate";
+    public static final String LABEL = "label";
+    public static final String LOCALITY_ID = "localityId";
+    public static final String LIVABILITY_SCORE = "livabilityScore";
+    public static final String LATITUDE = "latitude";
+    public static final String LONGITUDE = "longitude";
+    public static final String AVG_PRICE_RISE_PERCENTAGE = "avgPriceRisePercentage";
+    public static final String AVG_PRICE_PER_UNIT_AREA = "avgPricePerUnitArea";
+    public static final String AVERAGE_RENT_PER_MONTH = "averageRentPerMonth";
+
+    public static final String MIN_AFFORDABLE_PRICE = "minAffordablePrice";
+    public static final String MAX_AFFORDABLE_PRICE = "maxAffordablePrice";
+    public static final String MIN_LUXURY_PRICE = "minLuxuryPrice";
+    public static final String MAX_BUDGET_PRICE = "maxBudgetPrice";
+    public static final String AVG_RENTAL_DEMAND_RISE_PERCENTAGE = "avgRentalDemandRisePercentage";
+    public static final String LOCALITY_HEROSHOT_IMAGE_URL = "localityHeroshotImageUrl";
+    public static final String SUBURB = "suburb";
+    public static final String CITY = "city";
+    public static final String AVG_RENT_PER_MONTH = "averageRentPerMonth";
+    public static final String PROPERTY_DERIVED_INFO = "propertyDerivedInfo";
+    public static final String TYPE = "type";
+
+
+
+
 }

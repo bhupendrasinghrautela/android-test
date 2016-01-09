@@ -33,8 +33,14 @@ public class Selector {
     private PagingSelector pagingSelector = new PagingSelector();
     private SortSelector sortSelector = new SortSelector();
 
+    public Selector fields(String[] fields) {
+        for (String field : fields) {
+            fieldSelector.add(field);
+        }
+        return this;
+    }
 
-    public Selector field(String fieldName){
+    public Selector field(String fieldName) {
         fieldSelector.add(fieldName);
         return this;
     }
@@ -100,7 +106,7 @@ public class Selector {
             StringBuilder jsonBuilder = new StringBuilder();
             jsonBuilder.append("{");
 
-            if(fieldSelector.size() > 0){
+            if (fieldSelector.size() > 0) {
                 StringBuilder fieldBuilder = new StringBuilder();
                 fieldBuilder.append("\"").append(FIELDS).append("\"").append(":").append(MakaanBuyerApplication.gson.toJson(fieldSelector));
                 jsonBuilder.append(fieldBuilder.toString());
