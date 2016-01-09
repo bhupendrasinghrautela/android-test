@@ -18,6 +18,7 @@ public class Listing {
      * relativeCreateDate
      * posted by rating
      */
+    public Long id;
     public String priceInWords, unitInfo;
     public String bhkInfo, sizeInfo;
 
