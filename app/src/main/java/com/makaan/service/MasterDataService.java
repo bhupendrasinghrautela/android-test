@@ -58,7 +58,7 @@ public class MasterDataService implements MakaanService {
                 HashMap<String, String> propertyTypes = ( HashMap<String, String>) responseObject;
 
                 for (Map.Entry<String, String> propertyType : propertyTypes.entrySet()) {
-                    MasterDataCache.getInstance().addBuyPropertyType(new ApiIntLabel(propertyType.getValue(), Integer.parseInt(propertyType.getKey())));
+                    MasterDataCache.getInstance().addRentPropertyType(new ApiIntLabel(propertyType.getValue(), Integer.parseInt(propertyType.getKey())));
                 }
             }
         }, "propertyTypeRent.json");
@@ -103,7 +103,7 @@ public class MasterDataService implements MakaanService {
     }
 
 
-    public void populateFilterGroups(){
+    public void populateFilterGroupsBuy(){
         final Type filterGroupTypeList = new TypeToken<ArrayList<FilterGroup>>() {}.getType();
 
         MakaanNetworkClient.getInstance().get(ApiConstants.FILTER_GROUP, new JSONGetCallback() {
@@ -117,7 +117,7 @@ public class MasterDataService implements MakaanService {
                     ArrayList<FilterGroup> filterGroups  = MakaanBuyerApplication.gson.fromJson(filters.toString(), filterGroupTypeList);
 
                     for (FilterGroup filterGroup : filterGroups) {
-                        MasterDataCache.getInstance().addFilterGroup(filterGroup);
+                        MasterDataCache.getInstance().addFilterGroupBuy(filterGroup);
                     }
                 }catch(JSONException je){
                     Log.e(TAG, "Unable to parse filters", je);
@@ -126,6 +126,32 @@ public class MasterDataService implements MakaanService {
             }
 
 
-        }, "filterGroup.json");
+        }, "filterGroupBuy.json");
+    }
+
+    public void populateFilterGroupsRent(){
+        final Type filterGroupTypeList = new TypeToken<ArrayList<FilterGroup>>() {}.getType();
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.FILTER_GROUP, new JSONGetCallback() {
+
+            @Override
+            public void onSuccess(JSONObject responseObject) {
+                try {
+                    JSONObject object = responseObject.getJSONObject(ResponseConstants.DATA);
+                    JSONArray filters = object.getJSONArray(ResponseConstants.FILTERS);
+
+                    ArrayList<FilterGroup> filterGroups  = MakaanBuyerApplication.gson.fromJson(filters.toString(), filterGroupTypeList);
+
+                    for (FilterGroup filterGroup : filterGroups) {
+                        MasterDataCache.getInstance().addFilterGroupRent(filterGroup);
+                    }
+                }catch(JSONException je){
+                    Log.e(TAG, "Unable to parse filters", je);
+                }
+
+            }
+
+
+        }, "filterGroupRent.json");
     }
 }

@@ -3,12 +3,18 @@ package com.makaan.response.serp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.makaan.request.selector.RangeSelector;
+import com.makaan.request.selector.Selector;
+import com.makaan.request.selector.TermSelector;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Created by vaibhav on 04/01/16.
  */
-public class FilterGroup implements Parcelable, FinderFilterable{
+public class FilterGroup implements Parcelable, FinderFilterable {
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public FilterGroup createFromParcel(Parcel in) {
@@ -41,8 +47,8 @@ public class FilterGroup implements Parcelable, FinderFilterable{
         this.rangeFilterValues = new ArrayList<>();
         in.readTypedList(rangeFilterValues, RangeFilter.CREATOR);
 
-
     }
+
 
     public FilterGroup() {
     }
@@ -70,8 +76,16 @@ public class FilterGroup implements Parcelable, FinderFilterable{
         return displayName;
     }
 
+    public void reset() {
 
+        for (TermFilter termFilter : termFilterValues) {
+            termFilter.selected = false;
+        }
+        for (RangeFilter rangeFilter : rangeFilterValues) {
+            rangeFilter.selected = false;
+        }
 
+    }
 
 
 }

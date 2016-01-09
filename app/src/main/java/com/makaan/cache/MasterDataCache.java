@@ -1,5 +1,7 @@
 package com.makaan.cache;
 
+import android.support.annotation.NonNull;
+
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.master.ApiLabel;
 import com.makaan.response.serp.FilterGroup;
@@ -7,6 +9,8 @@ import com.makaan.response.serp.FilterGroup;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.logging.Filter;
 
 /**
  * Created by vaibhav on 29/12/15.
@@ -18,7 +22,8 @@ public class MasterDataCache {
     private HashMap<Integer, ApiIntLabel> idToRentPropertyType = new HashMap<>();
     private HashMap<Integer, ApiIntLabel> idToPropertyStatus = new HashMap<>();
     private HashMap<String, String> apiLabels = new HashMap<>();
-    private HashMap<String, FilterGroup> internalNameToFilterGrp = new HashMap<>();
+    private HashMap<String, FilterGroup> internalNameToFilterGrpBuy = new HashMap<>();
+    private HashMap<String, FilterGroup> internalNameToFilterGrpRent = new HashMap<>();
 
     private MasterDataCache() {
 
@@ -53,9 +58,15 @@ public class MasterDataCache {
         }
     }
 
-    public void addFilterGroup(FilterGroup filterGroup) {
+    public void addFilterGroupBuy(FilterGroup filterGroup) {
         if (null != filterGroup && null != filterGroup.internalName) {
-            internalNameToFilterGrp.put(filterGroup.internalName, filterGroup);
+            internalNameToFilterGrpBuy.put(filterGroup.internalName, filterGroup);
+        }
+    }
+
+    public void addFilterGroupRent(FilterGroup filterGroup) {
+        if (null != filterGroup && null != filterGroup.internalName) {
+            internalNameToFilterGrpRent.put(filterGroup.internalName, filterGroup);
         }
     }
 
@@ -71,8 +82,12 @@ public class MasterDataCache {
         return propertyTypes;
     }
 
-    public Collection<FilterGroup> getAllFilterGroups() {
-        return internalNameToFilterGrp.values();
+    public Collection<FilterGroup> getAllBuyFilterGroups() {
+        return internalNameToFilterGrpBuy.values();
+    }
+
+    public Collection<FilterGroup> getAllRentFilterGroups() {
+        return internalNameToFilterGrpRent.values();
     }
 
 

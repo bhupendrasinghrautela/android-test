@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.request.selector.Selector;
+import com.makaan.response.serp.FilterGroup;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.MasterDataService;
 import com.makaan.service.city.CityService;
@@ -13,6 +14,8 @@ import com.makaan.service.listing.ListingService;
 import com.makaan.service.pyr.PyrService;
 import com.makaan.service.search.SearchService;
 import com.makaan.util.RandomString;
+
+import java.util.HashMap;
 
 /**
  * Created by vaibhav on 23/12/15.
@@ -22,6 +25,8 @@ public class MakaanBuyerApplication extends Application {
 
     public static RandomString randomString = new RandomString(6);
     public static Selector serpSelector;
+
+
     public static Gson gson;
 
     @Override
@@ -40,7 +45,8 @@ public class MakaanBuyerApplication extends Application {
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateBuyPropertyTypes();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateRentPropertyTypes();
-        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateFilterGroups();
+        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateFilterGroupsBuy();
+        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateFilterGroupsRent();
 
 
     }

@@ -99,6 +99,14 @@ public class Selector {
         return this;
     }
 
+    public void reset() {
+        fieldSelector = new HashSet<>();
+        termSelectorHashMap = new LinkedHashMap<>();
+        rangeSelectorHashMap = new LinkedHashMap<>();
+        pagingSelector = new PagingSelector();
+        sortSelector = new SortSelector();
+    }
+
 
     public String build() {
         try {
