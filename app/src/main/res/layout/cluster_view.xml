@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.makaan.ui.view.ClusterListingView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="@dimen/card_elevation_small"
+    android:layout_margin="4dp"
+    android:id="@+id/cluster_view_card_view"
+    app:cardBackgroundColor="#f00">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.makaan.ui.view.CustomViewPager
+            android:id="@+id/cluster_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"/>
+        <ImageView
+            android:id="@+id/cluster_view_left_arrow"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrow_left"/>
+        <ImageView
+            android:id="@+id/cluster_view_right_arrow"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrow_right"/>
+    </RelativeLayout>
+
+</com.makaan.ui.view.ClusterListingView>

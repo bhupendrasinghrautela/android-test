@@ -1,10 +1,11 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin">4dp</dimen>
+    <dimen name="activity_vertical_margin">4dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
-
+    <dimen name="border_width">1dp</dimen>
+    <dimen name="card_elevation_small">2dp</dimen>
 
 
     <!--Listing manag header layout -->
@@ -22,6 +23,6 @@
     <dimen name= "thumbnail_width">160dp</dimen>
     <dimen name= "thumbnail_margin">8dp</dimen>
 
-
-
+    <dimen name="default_height">130dp</dimen>
+    <dimen name="v_shape_half_width">5dp</dimen>
 </resources>
