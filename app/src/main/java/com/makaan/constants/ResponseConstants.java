@@ -63,6 +63,15 @@ public class ResponseConstants {
     public static final String UNIT_TYPE = "unitType";
     public static final String LISTING = "listing";
 
-
+    public static final String TERM_FILTER_VALUES = "termFilterValues";
+    public static final String RANGE_FILTER_VALUES = "rangeFilterValues";
+    public static final String FILTER_DISPLAY_NAME = "displayName";
+    public static final String FILTER_FIELD_NAME = "fieldName";
+    public static final String FILTER_INTERNAL_NAME = "internalName";
+    public static final String FILTER_DISPLAY_ORDER = "displayOrder";
+    public static final String FILTER_TERM_VALUE = "value";
+    public static final String FILTER_RANGE_MIN_VALUE = "minValue";
+    public static final String FILTER_RANGE_MAX_VALUE = "maxValue";
+    public static final String FILTER_SELECTED = "selected";
 
 }

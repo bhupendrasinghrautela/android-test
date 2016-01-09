@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Furnishing Status"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:padding="10dp"/>
+
+    <com.makaan.ui.view.ExpandableHeightGridView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_filters_layout_furnishing_grid_view"
+        android:numColumns="auto_fit"
+        android:horizontalSpacing="5dp"
+        android:isScrollContainer="false"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp"/>
+
+</LinearLayout>
