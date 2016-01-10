@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.makaan.ui.pyr.PyrBedroomCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="@dimen/pyr_bedroom_icon_layout_width"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="@dimen/pyr_bedroom_icon_width"
+                android:layout_height="@dimen/pyr_bedroom_icon_height"
+                android:layout_marginLeft="@dimen/pyr_bedroom_icon_left_margin"
+                android:src="@drawable/money_icon" />
+
+            <TextView
+                android:layout_width="@dimen/pyr_bedroom_text_width"
+                android:layout_height="@dimen/pyr_bedroom_text_height"
+                android:textColor="@color/black"
+                android:text="@string/pyr_bedroom_string"
+                android:textSize="@dimen/pyr_bedroom_text_text_size"
+                android:layout_marginLeft="@dimen/pyr_bedroom_text_left_margin"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/pyr_light_grey"/>
+
+        <LinearLayout
+            android:layout_width="@dimen/pyr_bedroom_circular_icon_width"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal">
+
+            <ToggleButton
+                android:id="@+id/onebhk_toggle_button"
+                android:layout_width="@dimen/bedroom_toggle_button_width_height"
+                android:layout_height="@dimen/bedroom_toggle_button_width_height"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/bedroom_onebhk_toggle_button_margin_left"
+                android:background="@drawable/bedroom_toggle_button_drawable"
+                android:textColor="@drawable/bedroom_toggle_button_text_color_selector"
+                android:textOff="@string/pyr_one_bhk_text"
+                android:textOn="@string/pyr_one_bhk_text"
+                android:textSize="@dimen/bedrrom_toggle_button_text_size" />
+
+            <ToggleButton
+                android:id="@+id/twobhk_toggle_button"
+                android:layout_width="@dimen/bedroom_toggle_button_width_height"
+                android:layout_height="@dimen/bedroom_toggle_button_width_height"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/bedroom_toggle_button_margin_left"
+                android:background="@drawable/bedroom_toggle_button_drawable"
+                android:textColor="@drawable/bedroom_toggle_button_text_color_selector"
+                android:textOff="@string/pyr_two_bhk_text"
+                android:textOn="@string/pyr_two_bhk_text"
+                android:textSize="@dimen/bedrrom_toggle_button_text_size" />
+
+            <ToggleButton
+                android:id="@+id/threebhk_toggle_button"
+                android:layout_width="@dimen/bedroom_toggle_button_width_height"
+                android:layout_height="@dimen/bedroom_toggle_button_width_height"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/bedroom_toggle_button_margin_left"
+                android:background="@drawable/bedroom_toggle_button_drawable"
+                android:textColor="@drawable/bedroom_toggle_button_text_color_selector"
+                android:textOff="@string/pyr_three_bhk_text"
+                android:textOn="@string/pyr_three_bhk_text"
+                android:textSize="@dimen/bedrrom_toggle_button_text_size" />
+
+            <ToggleButton
+                android:id="@+id/fourbhk_toggle_button"
+                android:layout_width="@dimen/bedroom_toggle_button_width_height"
+                android:layout_height="@dimen/bedroom_toggle_button_width_height"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/bedroom_toggle_button_margin_left"
+                android:background="@drawable/bedroom_toggle_button_drawable"
+                android:textColor="@drawable/bedroom_toggle_button_text_color_selector"
+                android:textOff="@string/pyr_four_bhk_text"
+                android:textOn="@string/pyr_three_bhk_text"
+                android:textSize="@dimen/bedrrom_toggle_button_text_size" />
+
+         </LinearLayout>
+
+    </LinearLayout>
+
+</com.makaan.ui.pyr.PyrBedroomCardView>

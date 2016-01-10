@@ -13,8 +13,16 @@
     <color name="listingBlack">#444444</color>
 
     <color name = "light_gray">#d3d3d3 </color>
-
     <color name="app_grey">#80000000</color>
     <color name="app_pink">#E72989</color>
+    <!--Pyr-->
+    <color name="appThemeRed">#E71C28  </color>
+    <color name="pyr_light_grey">#e0e0e0</color>
+    <color name="pyr_grey">#666666</color>
+    <color name="selected_list_view_background">#F2F2F2</color>
+    <color name="selected_list_item_color">#f7941e</color>
+    <color name="selected_list_cancel_icon_tint">#f7941e</color>
+    <color name="list_filter_button_background_color">#FFFFFF</color>
+    <color name="bedroom_circular_stroke">#D3D3D3</color>
 
 </resources>

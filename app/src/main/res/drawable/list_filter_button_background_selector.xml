@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true"><shape>
+            <solid android:color="@color/list_filter_button_background_color" />
+
+            <corners android:radius="@dimen/list_filter_button_background_corner_radius" />
+        </shape></item>
+    <item><shape>
+            <gradient android:angle="90" android:endColor="#E9EBEC" android:startColor="#FFFFFF" />
+
+            <corners android:radius="@dimen/list_filter_button_background_corner_radius" />
+        </shape></item>
+
+</selector>
