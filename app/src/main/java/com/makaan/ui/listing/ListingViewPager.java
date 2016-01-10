@@ -34,7 +34,7 @@ public class ListingViewPager extends ViewPager{
     }
 
     public void bindView(){
-        mListingPagerAdapter = new ListingPagerAdapter(mContext,null);
+        mListingPagerAdapter = new ListingPagerAdapter(mContext);
         setAdapter(mListingPagerAdapter);
         setClipToPadding(false);
         setPageMargin(MARGIN);
