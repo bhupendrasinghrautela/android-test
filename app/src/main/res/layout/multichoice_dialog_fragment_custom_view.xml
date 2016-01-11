@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginRight="@dimen/locality_search_margin_right"
+    android:layout_marginLeft="@dimen/locality_search_margin_left"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.makaan.ui.pyr.PyrPropertySearchCardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/property_search_card_view_margin_bottom"
+        android:layout_gravity="center_horizontal"
+        >
+
+        <LinearLayout
+            android:layout_width="@dimen/select_locality_width"
+            android:layout_height="@dimen/select_locality_height"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="@dimen/location_width"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="@dimen/location_icon_width"
+                android:layout_height="@dimen/location_icon_height"
+                android:src="@drawable/location_icon"
+                android:layout_gravity="center_horizontal"/>
+                
+            <TextView
+                android:layout_width="@dimen/location_text_width"
+                android:layout_height="@dimen/location_text_height"
+                android:textColor="@color/black"
+                android:text="location"
+                android:textSize="@dimen/location_text_size"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/pyr_light_grey"/>
+
+            <TextView
+                android:layout_width="@dimen/select_locality_text_width"
+                android:layout_height="@dimen/select_locality_text_height"
+                android:layout_marginRight="@dimen/select_locality_margin_right"
+                android:layout_marginLeft="@dimen/select_locality_margin_left"
+                android:orientation="horizontal"
+                android:text="@string/select_locality_text"
+                android:textSize="@dimen/select_locality_text_size"
+                android:textColor="@color/black"
+                android:layout_gravity="center_vertical" />
+
+
+            <ImageView
+                android:layout_width="@dimen/red_tick_width"
+                android:layout_height="@dimen/red_tick_height"
+                android:src="@drawable/circle_tick_icon"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/red_tick_margin_right"/>
+
+        </LinearLayout>
+
+    </com.makaan.ui.pyr.PyrPropertySearchCardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="@dimen/select_locality_search_width"
+        android:layout_height="@dimen/select_locality_search_height"
+        android:layout_gravity="center_horizontal">
+
+    <EditText
+        android:id="@+id/multichoice_dialog_search_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:drawableRight="@drawable/search_icon"
+        android:hint="@string/select_locality_search_hint"
+        android:inputType="textVisiblePassword"
+        android:paddingLeft="@dimen/select_locality_search_padding_left"
+        android:textSize="@dimen/select_locality_search_text_size" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/multichoice_card_view"
+        android:layout_width="@dimen/multi_choice_search_width"
+        android:layout_height="@dimen/multi_choice_search_height"
+        android:layout_marginTop="1dp"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
+
+        <ListView
+            android:id="@+id/multichoice_dialog_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:choiceMode="multipleChoice"
+            android:fadeScrollbars="false" />
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/pyr_grey"
+            android:weightSum="1" >
+
+            <TextView
+                android:id="@+id/selected_items"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="@dimen/selected_items_count_padding"
+                android:layout_marginLeft="@dimen/selected_items_count_margin_left"
+                android:layout_weight="1"
+                android:text="@string/selected_items_count_text"
+                android:textColor="@color/white"
+                android:textSize="@dimen/selected_items_count_text_size" />
+            
+            <TextView
+                android:id="@+id/clear_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/clear_button_margin"
+                android:background="@drawable/list_filter_button_background_selector"
+                android:paddingBottom="@dimen/clear_button_padding_top_bottom"
+                android:paddingLeft="@dimen/clear_button_pading_left_right"
+                android:paddingRight="@dimen/clear_button_pading_left_right"
+                android:paddingTop="@dimen/clear_button_padding_top_bottom"
+                android:text="@string/clear_button_text"
+                android:textSize="@dimen/clear_button_text_size" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="vertical" >
+
+            <ListView
+                android:id="@+id/multichoice_dialog_selected_items_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/selected_list_view_background"
+                android:fadeScrollbars="false" />
+
+            <TextView
+                android:id="@+id/empty_selection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/empty_selection_padding"
+                android:text="@string/empty_selection_text"
+                android:textColor="@color/black"
+                android:textSize="@dimen/empty_selection_text_size"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

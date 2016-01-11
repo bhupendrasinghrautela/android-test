@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RadioGroup
+    android:id="@+id/buy_rent_radiogroup"
+    android:layout_width="@dimen/pyr_buy_rent_total_width"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginTop="10dp"
+    android:orientation="horizontal"
+    android:checkedButton="@+id/pyr_buy"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RadioButton
+        android:id = "@+id/buy"
+        android:button="@color/transparent"
+        android:background="@drawable/pyr_buy_background_style"
+        android:layout_width="@dimen/pyr_buy_button_width"
+        android:text="@string/pyr_buy"
+        android:textSize="@dimen/pyr_buy_rent_text_size"
+        android:gravity="center"
+        android:layout_height="@dimen/pyr_buy_button_height"
+        android:textColor="@drawable/pyr_buy_text_style"
+        android:checked="true">
+    </RadioButton>
+
+    <RadioButton
+        android:id = "@+id/rent"
+        android:background="@drawable/pyr_rent_background_style"
+        android:button="@color/transparent"
+        android:layout_width="@dimen/pyr_rent_button_width"
+        android:gravity="center"
+        android:text="@string/pyr_rent"
+        android:textSize="@dimen/pyr_buy_rent_text_size"
+        android:checked="false"
+        android:textColor="@drawable/pyr_buy_text_style"
+        android:layout_height="@dimen/pyr_rent_button_height"
+        >
+    </RadioButton>
+
+</RadioGroup>
+
