@@ -11,8 +11,10 @@ import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.service.MasterDataService;
 import com.makaan.service.city.CityService;
 import com.makaan.service.listing.ListingService;
+import com.makaan.service.locality.LocalityService;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -39,8 +41,18 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
 
     @OnClick(R.id.fetch)
     public void fetch(View view) {
+
+        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
+        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();
+        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateBuyPropertyTypes();
+        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateRentPropertyTypes();
+        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateFilterGroupsBuy();
+        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateFilterGroupsRent();
+
+
         ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).handleSerpRequest(MakaanBuyerApplication.serpSelector);
         ((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getCityById(2L);
+        ((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getLocalityById(50186L);
     }
 
     @Subscribe

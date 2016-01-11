@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * Created by vaibhav on 09/01/16.
  */
-public class CityEntityDesc {
+public class EntityDesc {
 
 
     public Long id;

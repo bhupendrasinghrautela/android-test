@@ -15,5 +15,5 @@ public class City {
     public String cityHeroshotImageUrl;
 
 
-    public ArrayList<CityEntityDesc> entityDescriptions = new ArrayList<>();
+    public ArrayList<EntityDesc> entityDescriptions = new ArrayList<>();
 }

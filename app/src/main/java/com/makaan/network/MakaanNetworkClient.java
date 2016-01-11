@@ -81,8 +81,8 @@ public class MakaanNetworkClient {
 
             try {
                 JSONObject mockFileResponse = readFromMockFile(mockFile);
-                JSONObject response = mockFileResponse.getJSONObject(ResponseConstants.DATA);
-                jsonGetCallback.onSuccess(response);
+                //JSONObject response = mockFileResponse.getJSONObject(ResponseConstants.DATA);
+                jsonGetCallback.onSuccess(mockFileResponse);
             } catch (Exception e) {
                 Log.e(TAG, "Exception", e);
             }

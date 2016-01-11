@@ -1,4 +1,4 @@
-package com.makaan.event;
+package com.makaan.event.city;
 
 import com.makaan.response.city.City;
 
