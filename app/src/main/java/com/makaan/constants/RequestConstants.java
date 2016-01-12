@@ -28,6 +28,11 @@ public class RequestConstants  {
     public static final String TO = "to";
     public static final String ID = "id";
     public static final String BATHROOMS = "bathrooms";
+    public static final String GEO_DISTANCE = "geoDistance";
+    public static final String DISTANCE = "distance";
+    public static final String GEO = "geo";
+    public static final String LAT = "lat";
+    public static final String LON = "lon";
 
     public static final String ENTITY_DESCRIPTIONS = "entityDescriptions";
     public static final String CENTER_LAT = "centerLatitude";
