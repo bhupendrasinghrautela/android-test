@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingTop="25dp"
+    android:paddingBottom="25dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="bedrooms"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <com.makaan.ui.view.ExpandableHeightGridView
+        android:id="@+id/grid_beds"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:layout_gravity="center_vertical"
+        android:horizontalSpacing="10dp"
+        android:isScrollContainer="false"
+        android:numColumns="4"
+        android:verticalSpacing="10dp" />
+
+    <!--<com.proptiger.demoapp.RowLayout
+        android:id="@+id/rl_beds"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="wrap_content"/>-->
+
+</LinearLayout>
