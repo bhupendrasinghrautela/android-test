@@ -24,7 +24,7 @@
     <color name="selected_list_cancel_icon_tint">#f7941e</color>
     <color name="list_filter_button_background_color">#FFFFFF</color>
     <color name="bedroom_circular_stroke">#D3D3D3</color>
-
+    <color name="app_yellow">#fba511</color>
     <!-- Serp Listing Color Values -->
     <color name="serp_listing_background">#F0F0F0</color>
     <color name="serp_listing_card_background">#FFFFFF</color>
