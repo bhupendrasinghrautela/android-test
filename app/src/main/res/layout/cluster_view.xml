@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.makaan.ui.view.ClusterListingView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cluster_view_card_view"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    app:cardCornerRadius="0dp"
+    android:layout_marginBottom="@dimen/serp_listing_card_margin_bottom"
+    android:layout_marginEnd="@dimen/serp_listing_cluster_card_margin_right"
+    android:layout_marginRight="@dimen/serp_listing_cluster_card_margin_right"
+    android:layout_marginLeft="@dimen/serp_listing_cluster_card_margin_left"
+    android:layout_marginStart="@dimen/serp_listing_cluster_card_margin_left"
+    android:layout_marginTop="@dimen/serp_listing_cluster_card_margin_top"
+    app:cardCornerRadius="25dp"
     app:cardElevation="@dimen/card_elevation_small"
-    android:layout_margin="4dp"
-    android:id="@+id/cluster_view_card_view"
-    app:cardBackgroundColor="#f00">
+    app:cardBackgroundColor="@color/serp_listing_cluster_card_background" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,7 +23,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"/>
-        <ImageView
+        <!--<ImageView
             android:id="@+id/cluster_view_left_arrow"
             android:layout_width="32dp"
             android:layout_height="32dp"
@@ -32,7 +36,7 @@
             android:layout_height="32dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/arrow_right"/>
+            android:src="@drawable/arrow_right"/>-->
     </RelativeLayout>
 
 </com.makaan.ui.view.ClusterListingView>

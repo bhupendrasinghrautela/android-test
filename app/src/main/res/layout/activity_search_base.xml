@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/serp_listing_background"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.makaan.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/activity_search_base_search_frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/activity_search_base_layout_search_bar" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/activity_search_base_content_frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/activity_search_base_search_frame_layout" />
+
+    <FrameLayout
+        android:id="@+id/activity_search_base_search_results_frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/activity_search_base_search_frame_layout"
+        android:visibility="gone">
+
+        <include layout="@layout/activity_search_base_layout_search_results" />
+        </FrameLayout>
+</RelativeLayout>

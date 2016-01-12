@@ -161,4 +161,221 @@
     <dimen name="pyr_locality_value_left_margin">18dp</dimen>
     <dimen name="pyr_locality_value_text_size">18sp</dimen>
 
+    <!-- Serp Listing Color Values -->
+    <dimen name="serp_listing_card_radius">25dp</dimen>
+    <dimen name="serp_listing_cluster_card_radius">25dp</dimen>
+    <dimen name="serp_listing_card_elevation">3dp</dimen>
+    <dimen name="serp_listing_cluster_card_elevation">2dp</dimen>
+    <dimen name="serp_listing_card_margin_top">10dp</dimen>
+    <dimen name="serp_listing_card_margin_left">9dp</dimen>
+    <dimen name="serp_listing_cluster_card_margin_left">10dp</dimen>
+    <dimen name="serp_listing_card_margin_right">9dp</dimen>
+    <dimen name="serp_listing_cluster_card_margin_right">10dp</dimen>
+    <dimen name="serp_listing_card_margin_bottom">11dp</dimen>
+    <dimen name="serp_listing_cluster_card_margin_top">9dp</dimen>
+
+
+    <dimen name="serp_listing_card_badge_width">59dp</dimen>
+    <dimen name="serp_listing_card_badge_height">28dp</dimen>
+    <dimen name="serp_listing_card_badge_margin_top">7dp</dimen>
+    <dimen name="serp_listing_card_badge_margin_left">-7dp</dimen>
+    <dimen name="serp_listing_card_badge_text_margin_left">9dp</dimen>
+    <dimen name="serp_listing_card_badge_text_height">19dp</dimen>
+    <dimen name="serp_listing_card_badge_text_size">16sp</dimen>
+
+    <dimen name="serp_listing_card_empty_view_height">3dp</dimen>
+
+    <dimen name="serp_listing_card_property_image_width">175dp</dimen>
+    <dimen name="serp_listing_card_property_image_height">131dp</dimen>
+
+    <dimen name="serp_listing_card_property_price_rupee_image_left_margin">7dp</dimen>
+    <dimen name="serp_listing_card_property_price_rupee_image_top_margin">28dp</dimen>
+    <dimen name="serp_listing_card_property_price_rupee_image_width">16dp</dimen>
+    <dimen name="serp_listing_card_property_price_rupee_image_height">16dp</dimen>
+
+    <dimen name="serp_listing_card_property_price_left_margin">5dp</dimen>
+    <dimen name="serp_listing_card_property_price_top_margin">13dp</dimen>
+    <dimen name="serp_listing_card_property_price_text_size">32sp</dimen>
+
+    <dimen name="serp_listing_card_property_price_unit_left_margin">5dp</dimen>
+    <dimen name="serp_listing_card_property_price_unit_top_margin">24dp</dimen>
+    <dimen name="serp_listing_card_property_price_unit_text_size">18sp</dimen>
+
+    <dimen name="serp_listing_card_property_shortlist_checkbox_right_margin">14dp</dimen>
+    <dimen name="serp_listing_card_property_shortlist_checkbox_top_margin">12dp</dimen>
+    <dimen name="serp_listing_card_property_shortlist_checkbox_width">20dp</dimen>
+    <dimen name="serp_listing_card_property_shortlist_checkbox_height">20dp</dimen>
+
+    <dimen name="serp_listing_card_property_area_sq_ft_text_view_left_margin">29dp</dimen>
+    <dimen name="serp_listing_card_property_area_sq_ft_text_view_top_margin">0dp</dimen>
+    <dimen name="serp_listing_card_property_area_sq_ft_text_view_text_size">16sp</dimen>
+
+    <dimen name="serp_listing_card_property_price_difference_image_view_left_margin">8dp</dimen>
+    <dimen name="serp_listing_card_property_price_difference_image_view_top_margin">3dp</dimen>
+    <dimen name="serp_listing_card_property_price_difference_image_view_width">16dp</dimen>
+    <dimen name="serp_listing_card_property_price_difference_image_view_height">16dp</dimen>
+
+    <dimen name="serp_listing_card_property_info_text_view_left_margin">27dp</dimen>
+    <dimen name="serp_listing_card_property_info_text_view_top_margin">12dp</dimen>
+    <dimen name="serp_listing_card_property_info_text_view_text_size">16sp</dimen>
+
+    <dimen name="serp_listing_card_property_address_text_view_left_margin">19dp</dimen>
+    <dimen name="serp_listing_card_property_address_text_view_top_margin">13dp</dimen>
+    <dimen name="serp_listing_card_property_address_text_view_text_size">16sp</dimen>
+
+    <dimen name="serp_listing_card_empty_view_after_address_text_view_margin_left">20dp</dimen>
+    <dimen name="serp_listing_card_empty_view_after_address_text_view_margin_top">12dp</dimen>
+    <dimen name="serp_listing_card_empty_view_after_property_info_view_margin_top">-2dp</dimen>
+    <dimen name="serp_listing_card_empty_view_after_property_info_view_margin_left">2dp</dimen>
+    <dimen name="serp_listing_card_empty_view_after_property_detail_view_margin_top">14dp</dimen>
+    <dimen name="serp_listing_card_empty_view_after_property_tagline_view_margin_top">14dp</dimen>
+
+    <dimen name="serp_listing_card_possession_image_view_left_margin">21dp</dimen>
+    <dimen name="serp_listing_card_possession_image_view_top_margin">14dp</dimen>
+    <dimen name="serp_listing_card_possession_image_view_width">21.2dp</dimen>
+    <dimen name="serp_listing_card_possession_image_view_height">24dp</dimen>
+
+    <dimen name="serp_listing_card_floor_image_view_left_margin">84.8dp</dimen>
+    <dimen name="serp_listing_card_floor_image_view_top_margin">14dp</dimen>
+    <dimen name="serp_listing_card_floor_image_view_width">19.8dp</dimen>
+    <dimen name="serp_listing_card_floor_image_view_height">24dp</dimen>
+
+    <dimen name="serp_listing_card_bathroom_image_view_left_margin">92.2dp</dimen>
+    <dimen name="serp_listing_card_bathroom_image_view_top_margin">15dp</dimen>
+    <dimen name="serp_listing_card_bathroom_image_view_width">17.6dp</dimen>
+    <dimen name="serp_listing_card_bathroom_image_view_height">24dp</dimen>
+
+    <dimen name="serp_listing_card_possession_date_text_view_left_margin">0dp</dimen>
+    <dimen name="serp_listing_card_possession_date_text_view_top_margin">6dp</dimen>
+    <dimen name="serp_listing_card_possession_date_text_view_text_size">16sp</dimen>
+
+    <dimen name="serp_listing_card_floor_info_text_view_left_margin">2dp</dimen>
+    <dimen name="serp_listing_card_floor_info_text_view_top_margin">6dp</dimen>
+    <dimen name="serp_listing_card_floor_info_text_view_text_size">16sp</dimen>
+
+    <dimen name="serp_listing_card_bathroom_number_text_view_left_margin">1dp</dimen>
+    <dimen name="serp_listing_card_bathroom_number_text_view_top_margin">5dp</dimen>
+    <dimen name="serp_listing_card_bathroom_number_text_view_text_size">16sp</dimen>
+
+    <dimen name="serp_listing_card_possession_text_text_view_left_margin">0dp</dimen>
+    <dimen name="serp_listing_card_possession_text_text_view_top_margin">0dp</dimen>
+    <dimen name="serp_listing_card_possession_text_text_view_text_size">14sp</dimen>
+
+    <dimen name="serp_listing_card_floor_text_text_view_left_margin">0dp</dimen>
+    <dimen name="serp_listing_card_floor_text_text_view_top_margin">0dp</dimen>
+    <dimen name="serp_listing_card_floor_text_text_view_text_size">14sp</dimen>
+
+    <dimen name="serp_listing_card_bathroom_text_text_view_left_margin">0dp</dimen>
+    <dimen name="serp_listing_card_bathroom_text_text_view_top_margin">0dp</dimen>
+    <dimen name="serp_listing_card_bathroom_text_text_view_text_size">14sp</dimen>
+
+    <dimen name="serp_listing_card_property_tagline_text_view_left_margin">20dp</dimen>
+    <dimen name="serp_listing_card_property_tagline_text_view_top_margin">7dp</dimen>
+    <dimen name="serp_listing_card_property_tagline_text_view_text_size">14sp</dimen>
+
+    <dimen name="serp_listing_card_seller_image_view_left_margin">20dp</dimen>
+    <dimen name="serp_listing_card_seller_image_view_top_margin">12dp</dimen>
+    <dimen name="serp_listing_card_seller_image_view_width">44dp</dimen>
+    <dimen name="serp_listing_card_seller_image_view_height">44dp</dimen>
+
+    <dimen name="serp_listing_card_seller_name_text_view_left_margin">7dp</dimen>
+    <dimen name="serp_listing_card_seller_name_text_view_top_margin">3dp</dimen>
+    <dimen name="serp_listing_card_seller_name_text_view_text_size">16sp</dimen>
+
+    <dimen name="serp_listing_card_assist_button_width">79dp</dimen>
+    <dimen name="serp_listing_card_assist_button_height">30dp</dimen>
+    <dimen name="serp_listing_card_assist_button_right_margin">36dp</dimen>
+    <dimen name="serp_listing_card_assist_button_top_margin">22dp</dimen>
+    <dimen name="serp_listing_card_assist_button_text_size">14sp</dimen>
+
+    <dimen name="serp_listing_card_call_button_width">152dp</dimen>
+    <dimen name="serp_listing_card_call_button_height">39dp</dimen>
+    <dimen name="serp_listing_card_call_button_right_margin">0dp</dimen>
+    <dimen name="serp_listing_card_call_button_top_margin">10dp</dimen>
+    <dimen name="serp_listing_card_call_button_text_size">16sp</dimen>
+    <dimen name="serp_listing_card_call_left_button_right_margin">6dp</dimen>
+
+    <dimen name="serp_listing_card_seller_rating_min_height">10dp</dimen>
+    <dimen name="serp_listing_card_seller_rating_max_height">10dp</dimen>
+    <dimen name="serp_listing_card_seller_rating_margin_top">3dp</dimen>
+
+    <dimen name="serp_listing_cluster_card_group_text_view_text_size">26sp</dimen>
+    <dimen name="serp_listing_cluster_card_group_text_view_margin_left">32dp</dimen>
+    <dimen name="serp_listing_cluster_card_group_text_view_margin_right">16dp</dimen>
+
+    <dimen name="serp_listing_cluster_card_empty_view_height">3dp</dimen>
+    <dimen name="serp_listing_cluster_card_empty_view_2_margin_top">28dp</dimen>
+
+    <dimen name="serp_listing_cluster_card_properties_info_text_size">36sp</dimen>
+    <dimen name="serp_listing_cluster_card_properties_info_margin_left">32dp</dimen>
+    <dimen name="serp_listing_cluster_card_properties_info_margin_top">15dp</dimen>
+
+    <dimen name="serp_listing_cluster_card_total_properties_text_size">30sp</dimen>
+    <dimen name="serp_listing_cluster_card_total_properties_margin_left">34dp</dimen>
+    <dimen name="serp_listing_cluster_card_total_properties_margin_top">5dp</dimen>
+    <dimen name="serp_listing_cluster_card_total_properties_margin_bottom">19dp</dimen>
+
+    <dimen name="serp_listing_cluster_card_home_image_view_margin_right">-10dp</dimen>
+    <dimen name="serp_listing_cluster_card_home_image_view_margin_top">77dp</dimen>
+    <dimen name="serp_listing_cluster_card_home_image_view_width">95dp</dimen>
+    <dimen name="serp_listing_cluster_card_home_image_view_height">76dp</dimen>
+
+    <dimen name="fragment_listing_total_properties_text_view_margin_left">17dp</dimen>
+    <dimen name="fragment_listing_total_properties_text_view_margin_top">16dp</dimen>
+    <dimen name="fragment_listing_total_properties_text_view_margin_bottom">3dp</dimen>
+    <dimen name="fragment_listing_total_properties_text_view_text_size">14sp</dimen>
+
+    <dimen name="activity_search_base_layout_search_bar_back_button_width">24dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_back_button_height">24dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_back_button_margin_left">10dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_back_button_margin_top">14dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_back_button_margin_bottom">12dp</dimen>
+
+    <dimen name="activity_search_base_layout_search_bar_builder_image_view_width">38dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_builder_image_view_height">38dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_builder_image_view_margin_right">10dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_builder_image_view_margin_top">7dp</dimen>
+
+    <dimen name="activity_search_base_layout_search_bar_search_text_view_margin_top">15dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_search_text_view_margin_left">22dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_search_text_view_text_size">16sp</dimen>
+
+    <dimen name="activity_search_base_layout_search_bar_search_image_button_width">24dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_search_image_button_height">24dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_search_image_button_margin_right">18dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_search_image_button_margin_top">14dp</dimen>
+
+    <dimen name="fragment_filters_filter_image_view_width">20dp</dimen>
+    <dimen name="fragment_filters_filter_image_view_height">20dp</dimen>
+    <dimen name="fragment_filters_filter_image_view_margin_left">16dp</dimen>
+    <dimen name="fragment_filters_filter_image_view_margin_top">17dp</dimen>
+    <dimen name="fragment_filters_filter_image_view_margin_bottom">13dp</dimen>
+
+    <dimen name="fragment_filters_filter_text_view_margin_left">11dp</dimen>
+    <dimen name="fragment_filters_filter_text_view_margin_top">17dp</dimen>
+    <dimen name="fragment_filters_filter_text_view_text_size">16sp</dimen>
+
+    <dimen name="fragment_filters_applied_filter_count_text_view_margin_left">6dp</dimen>
+    <dimen name="fragment_filters_applied_filter_count_text_view_margin_top">14dp</dimen>
+    <dimen name="fragment_filters_applied_filter_count_text_view_margin_right">33dp</dimen>
+    <dimen name="fragment_filters_applied_filter_count_text_view_text_size">14sp</dimen>
+    <dimen name="filters_fragment_applied_filter_count_text_view_width">20dp</dimen>
+    <dimen name="filters_fragment_applied_filter_count_text_view_height">20dp</dimen>
+
+    <dimen name="fragment_filters_relevance_image_view_width">16dp</dimen>
+    <dimen name="fragment_filters_relevance_image_view_height">16dp</dimen>
+    <dimen name="fragment_filters_relevance_image_view_margin_left">34dp</dimen>
+    <dimen name="fragment_filters_relevance_image_view_margin_top">19dp</dimen>
+    <dimen name="fragment_filters_relevance_image_view_margin_bottom">15dp</dimen>
+
+    <dimen name="fragment_filters_relevance_text_view_margin_left">10dp</dimen>
+    <dimen name="fragment_filters_relevance_text_view_margin_top">15dp</dimen>
+    <dimen name="fragment_filters_relevance_text_view_margin_right">27dp</dimen>
+    <dimen name="fragment_filters_relevance_text_view_text_size">16sp</dimen>
+
+    <dimen name="fragment_filters_map_image_view_width">24dp</dimen>
+    <dimen name="fragment_filters_map_image_view_height">36dp</dimen>
+    <dimen name="fragment_filters_map_image_view_margin_left">27dp</dimen>
+    <dimen name="fragment_filters_map_image_view_margin_top">12dp</dimen>
+
 </resources>

@@ -1,14 +1,17 @@
 package com.makaan.cache;
 
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.master.ApiLabel;
 import com.makaan.response.serp.FilterGroup;
+import com.makaan.util.Preference;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.logging.Filter;
 
@@ -24,6 +27,8 @@ public class MasterDataCache {
     private HashMap<String, String> apiLabels = new HashMap<>();
     private HashMap<String, FilterGroup> internalNameToFilterGrpBuy = new HashMap<>();
     private HashMap<String, FilterGroup> internalNameToFilterGrpRent = new HashMap<>();
+
+    private HashSet<String> shortlistedProperties;
 
     private MasterDataCache() {
 
@@ -117,4 +122,38 @@ public class MasterDataCache {
         return idToPropertyStatus.get(status);
     }
 
+    public void addShortlistedProperty(SharedPreferences preferences, String key, int id) {
+        if(shortlistedProperties == null) {
+            getShortlistedPropertiesFromPreferences(preferences, key);
+        }
+        shortlistedProperties.add(String.valueOf(id));
+        addShortlistedPropertiesToPreferences(preferences.edit(), key);
+    }
+
+    public void removeShortlistedProperty(SharedPreferences preferences, String key, int id) {
+        if(shortlistedProperties == null) {
+            getShortlistedPropertiesFromPreferences(preferences, key);
+        }
+        shortlistedProperties.remove(String.valueOf(id));
+        addShortlistedPropertiesToPreferences(preferences.edit(), key);
+    }
+
+    public boolean isShortlistedProperty(SharedPreferences preferences, String key, int id) {
+        if(shortlistedProperties == null) {
+            getShortlistedPropertiesFromPreferences(preferences, key);
+        }
+        if(shortlistedProperties.contains(String.valueOf(id))) {
+            return true;
+        }
+        return false;
+    }
+
+    private void addShortlistedPropertiesToPreferences(SharedPreferences.Editor editor, String key) {
+        Preference.putStringSet(editor, key, shortlistedProperties);
+        editor.commit();
+    }
+
+    private void getShortlistedPropertiesFromPreferences(SharedPreferences preferences, String key) {
+        shortlistedProperties = Preference.getStringSet(preferences, key);
+    }
 }

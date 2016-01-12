@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.Settings;
+import android.text.TextUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -59,8 +60,10 @@ public class AppUtils {
 
 
     public static String getDateStringFromEpoch(String epochTime) {
-        return ddMMYYFormatter.format(getDateFromEpoch(epochTime));
-
+        if(epochTime != null && !TextUtils.isEmpty(epochTime)) {
+            return ddMMYYFormatter.format(getDateFromEpoch(epochTime));
+        }
+        return "";
     }
 
     public static Long getElapsedDaysFromNow(String epochTime) {

@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
 import com.makaan.R;
+import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.ui.listing.ListingViewPager;
 import com.makaan.ui.listing.OnListingPagerChangeListener;
 import com.makaan.response.listing.Listing;
@@ -39,7 +40,7 @@ import butterknife.ButterKnife;
 /**
  * Created by sunil on 03/01/16.
  */
-public class SerpMapFragment extends Fragment {
+public class SerpMapFragment extends MakaanBaseFragment {
 
     private List<Marker> mAllMarkers = new ArrayList<Marker>();
     private SelectedObject mSelectedObject = new SelectedObject();
@@ -53,12 +54,15 @@ public class SerpMapFragment extends Fragment {
     @Bind(R.id.serp_map_view)
     MapView mMapView;
 
+    @Override
+    protected int getContentViewId() {
+        return R.layout.serp_map_layout;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.serp_map_layout, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override

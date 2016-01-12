@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/fragment_filters_filter_relative_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
+
+            <ImageView
+                android:id="@+id/fragment_filters_filter_image_view"
+                android:layout_width="@dimen/fragment_filters_filter_image_view_width"
+                android:layout_height="@dimen/fragment_filters_filter_image_view_height"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="@dimen/fragment_filters_filter_image_view_margin_bottom"
+                android:layout_marginLeft="@dimen/fragment_filters_filter_image_view_margin_left"
+                android:layout_marginStart="@dimen/fragment_filters_filter_image_view_margin_left"
+                android:layout_marginTop="@dimen/fragment_filters_filter_image_view_margin_top"
+                android:src="@drawable/more_filter" />
+
+            <TextView
+                android:id="@+id/fragment_filters_filter_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/fragment_filters_filter_text_view_margin_left"
+                android:layout_marginStart="@dimen/fragment_filters_filter_text_view_margin_left"
+                android:layout_marginTop="@dimen/fragment_filters_filter_text_view_margin_top"
+                android:layout_toEndOf="@id/fragment_filters_filter_image_view"
+                android:layout_toRightOf="@id/fragment_filters_filter_image_view"
+                android:text="@string/filter"
+                android:textColor="@color/serp_listing_card_default_text_color"
+                android:textSize="@dimen/fragment_filters_filter_text_view_text_size" />
+
+            <TextView
+                android:id="@+id/fragment_filters_applied_filter_count_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/fragment_filters_applied_filter_count_text_view_margin_right"
+                android:layout_marginLeft="@dimen/fragment_filters_applied_filter_count_text_view_margin_left"
+                android:layout_marginRight="@dimen/fragment_filters_applied_filter_count_text_view_margin_right"
+                android:layout_marginStart="@dimen/fragment_filters_applied_filter_count_text_view_margin_left"
+                android:layout_marginTop="@dimen/fragment_filters_applied_filter_count_text_view_margin_top"
+                android:layout_toEndOf="@id/fragment_filters_filter_text_view"
+                android:layout_toRightOf="@id/fragment_filters_filter_text_view"
+                android:background="@drawable/filter_filters_applied_filter_count_background"
+                android:gravity="center"
+                android:text="2"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fragment_filters_applied_filter_count_text_view_text_size" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/fragment_filters_relevance_relative_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@id/fragment_filters_filter_relative_layout"
+            android:layout_toRightOf="@id/fragment_filters_filter_relative_layout">
+
+            <ImageView
+                android:id="@+id/fragment_filters_relevance_image_view"
+                android:layout_width="@dimen/fragment_filters_relevance_image_view_width"
+                android:layout_height="@dimen/fragment_filters_relevance_image_view_height"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="@dimen/fragment_filters_relevance_image_view_margin_bottom"
+                android:layout_marginLeft="@dimen/fragment_filters_relevance_image_view_margin_left"
+                android:layout_marginStart="@dimen/fragment_filters_relevance_image_view_margin_left"
+                android:layout_marginTop="@dimen/fragment_filters_relevance_image_view_margin_top"
+                android:src="@drawable/sort_by" />
+
+            <TextView
+                android:id="@+id/fragment_filters_relevance_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/fragment_filters_relevance_text_view_margin_right"
+                android:layout_marginLeft="@dimen/fragment_filters_relevance_text_view_margin_left"
+                android:layout_marginRight="@dimen/fragment_filters_relevance_text_view_margin_right"
+                android:layout_marginStart="@dimen/fragment_filters_relevance_text_view_margin_left"
+                android:layout_marginTop="@dimen/fragment_filters_relevance_text_view_margin_top"
+                android:layout_toEndOf="@id/fragment_filters_relevance_image_view"
+                android:layout_toRightOf="@id/fragment_filters_relevance_image_view"
+                android:text="@string/relevance"
+                android:textColor="@color/serp_listing_card_default_text_color"
+                android:textSize="@dimen/fragment_filters_relevance_text_view_text_size" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/fragment_filters_map_relative_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@id/fragment_filters_relevance_relative_layout"
+            android:layout_toRightOf="@id/fragment_filters_relevance_relative_layout">
+
+            <ImageView
+                android:id="@+id/fragment_filters_map_image_view"
+                android:layout_width="@dimen/fragment_filters_map_image_view_width"
+                android:layout_height="@dimen/fragment_filters_map_image_view_height"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="@dimen/fragment_filters_map_image_view_margin_left"
+                android:layout_marginStart="@dimen/fragment_filters_map_image_view_margin_left"
+                android:layout_marginTop="@dimen/fragment_filters_map_image_view_margin_top"
+                android:src="@drawable/map" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</merge>

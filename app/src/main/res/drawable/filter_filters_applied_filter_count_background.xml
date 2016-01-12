@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <solid android:color="@color/filters_fragment_filter_count_background_color" />
+    <size android:height="@dimen/filters_fragment_applied_filter_count_text_view_height"
+        android:width="@dimen/filters_fragment_applied_filter_count_text_view_width" />
+</shape>

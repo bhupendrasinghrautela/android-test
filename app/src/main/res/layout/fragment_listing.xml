@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/fragment_listing_recycler_view"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="false"
-    android:drawSelectorOnTop="false"
-    android:fastScrollEnabled="true"
-    android:overScrollMode="never"
-    android:scrollbarStyle="insideInset"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/fragment_listing_total_properties_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/fragment_listing_total_properties_text_view_margin_left"
+        android:layout_marginStart="@dimen/fragment_listing_total_properties_text_view_margin_left"
+        android:layout_marginTop="@dimen/fragment_listing_total_properties_text_view_margin_top"
+        android:layout_marginBottom="@dimen/fragment_listing_total_properties_text_view_margin_bottom"
+        android:text="100 properties"
+        android:textColor="@color/serp_listing_total_properties_text_color"
+        android:textSize="@dimen/fragment_listing_total_properties_text_view_text_size"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fragment_listing_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:drawSelectorOnTop="false"
+        android:fastScrollEnabled="true"
+        android:overScrollMode="never"
+        android:scrollbarStyle="insideInset" />
+</LinearLayout>

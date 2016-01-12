@@ -86,6 +86,21 @@
 
         ]
 
+      }, {
+        "displayName": "Locality",
+        "internalName": "i_locality",
+        "displayOrder": "-1",
+        "termFilterValues": [{
+          "displayName": "Locality",
+          "displayOrder": "-1",
+          "fieldName": "localityId",
+          "value": "1",
+          "selected": false
+        }],
+        "rangeFilterValues": [
+
+        ]
+
       }
     ]
   }

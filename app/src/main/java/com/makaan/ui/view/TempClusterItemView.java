@@ -1,31 +1,32 @@
 package com.makaan.ui.view;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
+import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
-import android.widget.Button;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+import com.makaan.activity.listing.SerpActivity;
 import com.makaan.pojo.TempClusterItem;
+import com.makaan.service.listing.ListingService;
 
 /**
  * Created by rohitgarg on 1/7/16.
  */
 public class TempClusterItemView extends RelativeLayout {
     @Bind(R.id.cluster_item_view_property_price_range_text_view)
-    TextView propertyPriceRangeTextView;
+    TextView mPropertyPriceRangeTextView;
     @Bind(R.id.cluster_item_view_property_type_text_view)
-    TextView propertyTypeTextView;
-    @Bind(R.id.cluster_item_view_property_address_text_view)
-    TextView propertyAddressTextView;
+    TextView mPropertyTypeTextView;
     @Bind(R.id.cluster_item_view_click_button)
-    Button clickButton;
+    TextView mPropertyCountTextView;
     public TempClusterItemView(Context context) {
         super(context);
     }
@@ -38,17 +39,19 @@ public class TempClusterItemView extends RelativeLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public TempClusterItemView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
     // TODO need to map data from web based data
     public void populateView(TempClusterItem item) {
         ButterKnife.bind(this, this);
-        propertyPriceRangeTextView.setText(item.getPropertyPriceRange());
-        propertyTypeTextView.setText(item.getPropertyType());
-        propertyAddressTextView.setText(item.getPropertyAddress());
-        clickButton.setText(item.getPropertyCount());
+        mPropertyPriceRangeTextView.setText(item.getPropertyPriceRange());
+        mPropertyTypeTextView.setText(item.getPropertyType());
+        mPropertyCountTextView.setText(item.getPropertyCount());
+
+        this.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SerpActivity.isChildSerp = true;
+                new ListingService().handleSerpRequest(MakaanBuyerApplication.serpSelector);
+            }
+        });
     }
 }
