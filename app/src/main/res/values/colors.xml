@@ -25,4 +25,24 @@
     <color name="list_filter_button_background_color">#FFFFFF</color>
     <color name="bedroom_circular_stroke">#D3D3D3</color>
 
+    <!-- Serp Listing Color Values -->
+    <color name="serp_listing_background">#F0F0F0</color>
+    <color name="serp_listing_card_background">#FFFFFF</color>
+    <color name="serp_listing_car_empty_view_color">#33979797</color>
+    <color name="serp_listing_cluster_card_background">#FBA511</color>
+
+    <color name="serp_listing_cluster_card_group_background">#ADE62489</color>
+
+    <color name="serp_listing_card_default_text_color">#444444</color>
+    <color name="serp_listing_card_property_price_sq_ft_text_color">#B0444444</color>
+    <color name="serp_listing_card_property_detail_info_text_color">#B0666666</color>
+    <color name="serp_listing_card_seller_mask_color">#D8D8D8</color>
+    <color name="serp_listing_call_seller_button_background_color">#E71C28</color>
+    <color name="serp_listing_call_seller_button_background_left_color">#FBA511</color>
+    <color name="activity_search_base_layout_search_bar_background_color">#E71C28</color>
+
+    <color name="serp_listing_total_properties_text_color">#E3444444</color>
+
+    <color name="filters_fragment_filter_count_background_color">#FBA511</color>
+
 </resources>

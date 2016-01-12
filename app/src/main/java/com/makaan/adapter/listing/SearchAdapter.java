@@ -5,9 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.response.search.Search;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +17,9 @@ import java.util.List;
 /**
  * Created by rohitgarg on 1/9/16.
  */
-public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
+public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    List<String> mSearches;
+    List<Search> mSearches;
     private final Context mContext;
     private final SearchAdapterCallbacks mCallbacks;
 
@@ -26,18 +28,18 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         mCallbacks = callbacks;
     }
 
-    public SearchAdapter(Context context, SearchAdapterCallbacks callbacks, List<String> listings) {
+    public SearchAdapter(Context context, SearchAdapterCallbacks callbacks, List<Search> searches) {
         mContext = context;
         mCallbacks = callbacks;
-        setData((ArrayList<String>) listings);
+        setData((ArrayList<Search>) searches);
     }
 
-    private void setData(ArrayList<String> listings) {
-        if(this.mSearches == null) {
-            this.mSearches = new ArrayList<String>();
+    public void setData(ArrayList<Search> searches) {
+        if (this.mSearches == null) {
+            this.mSearches = new ArrayList<Search>();
         }
         this.mSearches.clear();
-        this.mSearches.addAll(listings);
+        this.mSearches.addAll(searches);
         notifyDataSetChanged();
     }
 
@@ -50,27 +52,49 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((ViewHolder)holder).setPropertyName("DEF");
+        ((ViewHolder) holder).bindData(mSearches.get(position), position == 0);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        if (mSearches == null) {
+            return 0;
+        }
+        return mSearches.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public void clear() {
+        mSearches.clear();
+        notifyDataSetChanged();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final View view;
+        private Search search;
 
         public ViewHolder(View view) {
             super(view);
             this.view = view;
+            view.setOnClickListener(this);
         }
-        public void setPropertyName(String name) {
-            ((TextView)view.findViewById(R.id.search_result_item_property_name_text_view)).setText(name);
+
+        public void bindData(Search search, boolean needTopHeader) {
+            this.search = search;
+            ((LinearLayout) view.findViewById(R.id.search_result_item_header_linear_layout)).setVisibility(needTopHeader ? View.VISIBLE : View.GONE);
+            ((View) view.findViewById(R.id.search_result_item_separator_view)).setVisibility(needTopHeader ? View.GONE : View.VISIBLE);
+
+            ((TextView) view.findViewById(R.id.search_result_item_property_name_text_view)).setText(search.getLabel());
+            ((TextView) view.findViewById(R.id.search_result_item_property_address_text_view)).setText(search.getLocality());
+        }
+
+        @Override
+        public void onClick(View v) {
+            mCallbacks.onSearchItemClick(search);
         }
     }
 
     public interface SearchAdapterCallbacks {
+        void onSearchItemClick(Search search);
     }
 }

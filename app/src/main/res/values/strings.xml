@@ -32,6 +32,10 @@
     <string name="pyr_property_string">property</string>
     <string name="pyr_property_value_string">residential property apartment</string>
     <string name="pyr_budget_string">budget</string>
+    <string name="cluster_item_group_text">we’ve grouped properties</string>
+    <string name="search_by_property">search by property</string>
+    <string name="filter">filter</string>
+    <string name="relevance">relevance</string>
 
 
 </resources>

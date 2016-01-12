@@ -33,7 +33,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
     public FiltersViewAdapter(Context context, List<TermFilter> values, int type) {
         this.context = context;
         this.termValues = new ArrayList<TermFilter>();
-        this.termValues.addAll(values);
+        this.termValues = values;
         this.type = type;
     }
 
@@ -43,8 +43,8 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
     }
 
     @Override
-    public Object getItem(int position) {
-        return termValues.get(position).displayName;
+    public TermFilter getItem(int position) {
+        return termValues.get(position);
     }
 
     @Override
@@ -62,6 +62,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                 ((CheckBox) convertView).setTextSize(14);
                 holder = new ViewHolder();
                 holder.view = convertView;
+                ((CheckBox) holder.view).setOnCheckedChangeListener(this);
             } else if (type == 2) {
                 convertView = new CheckBox(context);
                 ((CheckBox) convertView).setTextColor(context.getResources().getColorStateList(R.color.radio_selector));
@@ -71,6 +72,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                 ((CheckBox) convertView).setGravity(Gravity.CENTER);
                 holder = new ViewHolder();
                 holder.view = convertView;
+                ((CheckBox) holder.view).setOnCheckedChangeListener(this);
             }
             holder.pos = position;
             convertView.setTag(holder);
@@ -79,11 +81,11 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
             holder.pos = position;
         }
         if (type == 1) {
-            ((CheckBox) holder.view).setText((String) this.getItem(position));
-            ((CheckBox) holder.view).setOnCheckedChangeListener(this);
+            ((CheckBox) holder.view).setText((String) this.getItem(position).displayName);
+            ((CheckBox) holder.view).setChecked(this.getItem(position).selected);
         } else if (type == 2) {
-            ((CheckBox) holder.view).setText((String) this.getItem(position));
-            ((CheckBox) holder.view).setOnCheckedChangeListener(this);
+            ((CheckBox) holder.view).setText((String) this.getItem(position).displayName);
+            ((CheckBox) holder.view).setChecked(this.getItem(position).selected);
         }
 
         return convertView;

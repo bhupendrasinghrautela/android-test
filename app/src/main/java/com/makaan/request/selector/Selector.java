@@ -45,6 +45,22 @@ public class Selector {
         return this;
     }
 
+    public Selector term(String fieldName, String value, boolean clearValues) {
+        TermSelector termSelector = termSelectorHashMap.get(fieldName);
+        if (null == termSelector) {
+            termSelector = new TermSelector(fieldName, value);
+            termSelectorHashMap.put(fieldName, termSelector);
+
+        } else {
+            if(clearValues) {
+                termSelector.values.clear();
+            }
+            termSelector.values.add(value);
+        }
+
+        return this;
+    }
+
     public Selector term(String fieldName, Iterable<String> values) {
         TermSelector termSelector = termSelectorHashMap.get(fieldName);
 
