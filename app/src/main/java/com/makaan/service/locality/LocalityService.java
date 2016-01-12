@@ -18,6 +18,10 @@ import java.lang.reflect.Type;
  */
 public class LocalityService implements MakaanService {
 
+    /**
+     *
+     * https://marketplace-qa.proptiger-ws.com/app/v3/locality/50157
+     */
     public void getLocalityById(Long localityId) {
 
         if (null != localityId) {
@@ -35,7 +39,9 @@ public class LocalityService implements MakaanService {
                 }
             });
         }
+    }
 
+    public void getPriceTrendsInLocality(){
 
     }
 }

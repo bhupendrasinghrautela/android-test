@@ -11,8 +11,8 @@ public class RequestConstants  {
     public static final String SORT = "sort";
     public static final String FIELD = "field";
     public static final String SORT_ORDER = "sortOrder";
-    public static final String ASC = "ASC";
-    public static final String DESC = "DESC";
+    public static final String SORT_ASC = "SORT_ASC";
+    public static final String SORT_DESC = "SORT_DESC";
     public static final String START = "start";
     public static final String ROWS = "rows";
     public static final String AND = "and";
@@ -28,6 +28,7 @@ public class RequestConstants  {
     public static final String TO = "to";
     public static final String ID = "id";
     public static final String BATHROOMS = "bathrooms";
+    public static final String LOCALITY_PRIORITY = "localityPriority";
 
     public static final String ENTITY_DESCRIPTIONS = "entityDescriptions";
     public static final String CENTER_LAT = "centerLatitude";
