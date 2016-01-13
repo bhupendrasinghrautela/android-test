@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/activity_search_base_layout_search_bar_background_color">
+
+        <Button
+            android:id="@+id/activity_search_base_layout_search_bar_back_button"
+            android:layout_width="@dimen/activity_search_base_layout_search_bar_back_button_width"
+            android:layout_height="@dimen/activity_search_base_layout_search_bar_back_button_height"
+            android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_back_button_margin_top"
+            android:layout_marginBottom="@dimen/activity_search_base_layout_search_bar_back_button_margin_bottom"
+            android:layout_marginLeft="@dimen/activity_search_base_layout_search_bar_back_button_margin_left"
+            android:layout_marginStart="@dimen/activity_search_base_layout_search_bar_back_button_margin_left"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/back_arrow" />
+
+        <com.pkmmte.view.CircularImageView
+            android:id="@+id/activity_search_base_layout_search_bar_builder_image_view"
+            android:layout_width="@dimen/activity_search_base_layout_search_bar_builder_image_view_width"
+            android:layout_height="@dimen/activity_search_base_layout_search_bar_builder_image_view_height"
+            android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_top"
+            android:layout_marginRight="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_right"
+            android:layout_marginEnd="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_right"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/temp_builder" />
+        <ImageButton
+            android:id="@+id/activity_search_base_layout_search_bar_search_image_button"
+            android:layout_width="@dimen/activity_search_base_layout_search_bar_search_image_button_width"
+            android:layout_height="@dimen/activity_search_base_layout_search_bar_search_image_button_height"
+            android:layout_marginRight="@dimen/activity_search_base_layout_search_bar_search_image_button_margin_right"
+            android:layout_marginEnd="@dimen/activity_search_base_layout_search_bar_search_image_button_margin_right"
+            android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_search_image_button_margin_top"
+            android:layout_toLeftOf="@id/activity_search_base_layout_search_bar_builder_image_view"
+            android:layout_toStartOf="@id/activity_search_base_layout_search_bar_builder_image_view"
+            android:background="@drawable/search_icon" />
+
+        <TextView
+            android:id="@+id/activity_search_base_layout_search_bar_search_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_search_base_layout_search_bar_search_text_view_margin_left"
+            android:layout_marginStart="@dimen/activity_search_base_layout_search_bar_search_text_view_margin_left"
+            android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_search_text_view_margin_top"
+            android:text="@string/search_by_property"
+            android:textColor="@color/white"
+            android:textSize="@dimen/activity_search_base_layout_search_bar_search_text_view_text_size"
+            android:layout_toRightOf="@id/activity_search_base_layout_search_bar_back_button"
+            android:layout_toEndOf="@id/activity_search_base_layout_search_bar_back_button"
+            android:layout_toLeftOf="@id/activity_search_base_layout_search_bar_search_image_button"
+            android:layout_toStartOf="@id/activity_search_base_layout_search_bar_search_image_button" />
+
+        <!-- TODO search view style not present on zeplin -->
+        <SearchView
+            android:id="@+id/activity_search_base_layout_search_bar_search_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:iconifiedByDefault="false"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_toLeftOf="@id/activity_search_base_layout_search_bar_builder_image_view"
+            android:layout_toRightOf="@id/activity_search_base_layout_search_bar_back_button"
+            android:visibility="gone"/>
+    </RelativeLayout>
+</merge>

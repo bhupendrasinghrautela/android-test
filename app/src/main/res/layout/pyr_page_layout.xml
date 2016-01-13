@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:scrollbars="none">
+
+<com.makaan.ui.pyr.PyrPageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <include layout="@layout/pyr_buy_rent_radio_group" />
+
+    <include layout="@layout/pyr_budget_layout"
+        android:layout_width="@dimen/pyr_page_card_width"
+        android:layout_height="@dimen/pyr_page_card_height"
+        android:layout_marginTop="@dimen/pyr_page_margin_top"
+        android:layout_gravity="center_horizontal" />
+
+    <include layout="@layout/pyr_property_card_layout"
+        android:layout_width="@dimen/pyr_page_card_width"
+        android:layout_height="@dimen/pyr_page_card_height"
+        android:layout_marginTop="@dimen/pyr_page_margin_top"
+        android:layout_gravity="center_horizontal"/>
+
+    <include layout="@layout/pyr_bedroom_layout"
+        android:layout_width="@dimen/pyr_page_card_width"
+        android:layout_height="@dimen/pyr_page_card_height"
+        android:layout_marginTop="@dimen/pyr_page_margin_top"
+        android:layout_gravity="center_horizontal"/>
+
+    <include layout="@layout/pyr_location_card_layout"
+        android:layout_width="@dimen/pyr_page_card_width"
+        android:layout_height="@dimen/pyr_page_card_height"
+        android:layout_marginTop="@dimen/pyr_page_margin_top"
+        android:layout_gravity="center_horizontal"/>
+
+    <EditText
+        android:id="@+id/pyr_page_name"
+        android:layout_width="@dimen/pyr_page_edit_text_width"
+        android:layout_height="@dimen/pyr_page_edit_text_height"
+        android:inputType="text"
+        android:hint="@string/pyr_name"
+        android:textColorHint="@color/pyr_grey"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/pyr_page_edit_text_text_size"
+        android:layout_marginLeft="@dimen/pyr_page_edit_text_margin_left"
+        android:layout_marginTop="@dimen/pyr_page_edit_text_margin_top"/>
+
+    <EditText
+        android:id="@+id/pyr_page_email"
+        android:layout_width="@dimen/pyr_page_edit_text_width"
+        android:layout_height="@dimen/pyr_page_edit_text_height"
+        android:inputType="textEmailAddress"
+        android:hint="@string/pyr_email"
+        android:textColorHint="@color/pyr_grey"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/pyr_page_edit_text_text_size"
+        android:layout_marginLeft="@dimen/pyr_page_edit_text_margin_left"
+        android:layout_marginTop="@dimen/pyr_page_edit_text_margin_top"/>
+
+    <EditText
+        android:id="@+id/pyr_page_mobile"
+        android:layout_width="@dimen/pyr_page_edit_text_width"
+        android:layout_height="@dimen/pyr_page_edit_text_height"
+        android:inputType="number"
+        android:hint="@string/pyr_mobile"
+        android:textColorHint="@color/pyr_grey"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/pyr_page_edit_text_text_size"
+        android:layout_marginLeft="@dimen/pyr_page_edit_text_margin_left"
+        android:layout_marginTop="@dimen/pyr_page_edit_text_margin_top"/>
+
+    <TextView
+        android:layout_width="@dimen/post_requirements_width"
+        android:layout_height="@dimen/post_requirements_height"
+        android:layout_marginLeft="@dimen/post_requirements_margin_left"
+        android:layout_marginRight="@dimen/post_requirements_margin_right"
+        android:layout_marginTop="@dimen/post_requirements_margin_top"
+        android:layout_marginBottom="@dimen/post_requirements_margin_bottom"
+        android:gravity="center_horizontal|center_vertical"
+        android:background="@drawable/post_requirements_drawable"
+        android:text="@string/pyr_requirements"
+        android:textColor="@color/white"
+        android:textSize="@dimen/post_requirements_text_size"/>
+
+</com.makaan.ui.pyr.PyrPageView>
+
+</ScrollView>

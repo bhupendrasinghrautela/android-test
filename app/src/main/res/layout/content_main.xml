@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"/>
 
     <FrameLayout
-        android:id="@+id/search_results"
+        android:id="@+id/activity_search_base_search_results_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -34,15 +34,15 @@
         android:layout_below="@id/top_bar"/>
 
     <FrameLayout
-        android:id="@+id/filters"
+        android:id="@+id/activity_serp_filters_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/top_bar"/>
 
     <FrameLayout
-        android:id="@+id/content"
+        android:id="@+id/activity_serp_content_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/filters" />
+        android:layout_below="@id/activity_serp_filters_frame_layout" />
 
 </RelativeLayout>

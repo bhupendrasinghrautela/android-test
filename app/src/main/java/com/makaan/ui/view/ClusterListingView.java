@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.makaan.R;
-import com.makaan.adapter.listing.HorizontalScrollAdapter;
 import com.makaan.adapter.listing.HorizontalScrollFragmentAdapter;
 
 import java.util.List;
@@ -23,10 +22,10 @@ import com.makaan.pojo.TempClusterItem;
  * Created by rohitgarg on 1/7/16.
  */
 public class ClusterListingView extends AbstractListingView {
-    @Bind(R.id.cluster_view_left_arrow)
+    /*@Bind(R.id.cluster_view_left_arrow)
     ImageView leftArrowImageView;
     @Bind(R.id.cluster_view_right_arrow)
-    ImageView rightArrowImageView;
+    ImageView rightArrowImageView;*/
     @Bind(R.id.cluster_view_pager)
     ViewPager viewPager;
     private PagerAdapter viewPagerAdapter;
@@ -48,15 +47,15 @@ public class ClusterListingView extends AbstractListingView {
     public void populateData(Object data) {
         super.populateData(data);
         if(data != null && data instanceof List && ((List) data).size() > 0 && ((List) data).get(0) instanceof TempClusterItem) {
-            if(mContext instanceof Activity) {
-                fragmentPagerAdapter = new HorizontalScrollFragmentAdapter(((FragmentActivity)mContext).getSupportFragmentManager(), mContext, (List) data);
+            if(mContext instanceof FragmentActivity) {
+                fragmentPagerAdapter = new HorizontalScrollFragmentAdapter<TempClusterItem>(((FragmentActivity)mContext).getSupportFragmentManager(), mContext, (List<TempClusterItem>) data, false);
                 viewPager.setAdapter(fragmentPagerAdapter);
             } else {
-                viewPagerAdapter = new HorizontalScrollAdapter(mContext, (List) data);
-                viewPager.setAdapter(viewPagerAdapter);
+                //viewPagerAdapter = new HorizontalScrollAdapter(mContext, (List) data);
+                //viewPager.setAdapter(viewPagerAdapter);
             }
 
-            viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            /*viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -99,7 +98,7 @@ public class ClusterListingView extends AbstractListingView {
                 public void onClick(View v) {
                     viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
                 }
-            });
+            });*/
         }
     }
 }

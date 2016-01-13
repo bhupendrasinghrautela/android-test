@@ -58,7 +58,7 @@ public class FiltersDialogFragment extends DialogFragment implements View.OnClic
     private static final String FILTER_BEDS = "Beds";
     private static final String FILTER_PROPERTY_TYPE = "Property Type";
 
-    static FiltersDialogFragment init() {
+    public static FiltersDialogFragment init() {
         return new FiltersDialogFragment();
     }
 
@@ -132,6 +132,7 @@ public class FiltersDialogFragment extends DialogFragment implements View.OnClic
             adapter = (FiltersViewAdapter) mPropertyTypeLayoutGridView.getAdapter();
             list = adapter.getSelectedOptions();
             addFilters(list, MakaanBuyerApplication.serpSelector);
+            MakaanBuyerApplication.serpSelector.sort("price", "desc");
             new ListingService().handleSerpRequest(MakaanBuyerApplication.serpSelector);
             dismiss();
         }

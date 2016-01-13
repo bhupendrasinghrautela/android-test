@@ -32,6 +32,7 @@ public class Selector {
     private LinkedHashMap<String, RangeSelector> rangeSelectorHashMap = new LinkedHashMap<>();
     private PagingSelector pagingSelector = new PagingSelector();
     private SortSelector sortSelector = new SortSelector();
+    private GeoSelector geoSelector = new GeoSelector();
 
     public Selector fields(String[] fields) {
         for (String field : fields) {
@@ -42,6 +43,22 @@ public class Selector {
 
     public Selector field(String fieldName) {
         fieldSelector.add(fieldName);
+        return this;
+    }
+
+    public Selector term(String fieldName, String value, boolean clearValues) {
+        TermSelector termSelector = termSelectorHashMap.get(fieldName);
+        if (null == termSelector) {
+            termSelector = new TermSelector(fieldName, value);
+            termSelectorHashMap.put(fieldName, termSelector);
+
+        } else {
+            if(clearValues) {
+                termSelector.values.clear();
+            }
+            termSelector.values.add(value);
+        }
+
         return this;
     }
 
@@ -99,6 +116,13 @@ public class Selector {
         return this;
     }
 
+    public Selector nearby(double distance, double lat, double lon) {
+        geoSelector.distance = distance;
+        geoSelector.lat = lat;
+        geoSelector.lon = lon;
+        return this;
+    }
+
     public void reset() {
         fieldSelector = new HashSet<>();
         termSelectorHashMap = new LinkedHashMap<>();
@@ -152,6 +176,10 @@ public class Selector {
                         }
                         j++;
                     }
+                }
+
+                if(geoSelector.lat>0 && geoSelector.lat>0) {
+                    andStrBuilder.append(geoSelector.build());
                 }
 
                 andStrBuilder.append("]");

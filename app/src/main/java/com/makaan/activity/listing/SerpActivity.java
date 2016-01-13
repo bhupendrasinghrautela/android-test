@@ -1,74 +1,74 @@
 package com.makaan.activity.listing;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
-import com.makaan.activity.MakaanFragmentActivity;
+import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.event.listing.ListingByIdGetEvent;
 import com.makaan.event.serp.SerpGetEvent;
+import com.makaan.fragment.listing.ChildSerpClusterFragment;
+import com.makaan.fragment.listing.FiltersDialogFragment;
 import com.makaan.service.listing.ListingService;
-import com.makaan.fragment.listing.FiltersFragment;
 import com.makaan.fragment.listing.SerpListFragment;
-import com.makaan.fragment.listing.SearchBarFragment;
-import com.makaan.fragment.listing.SearchResultsFragment;
 import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by rohitgarg on 1/6/16.
  */
-public class SerpActivity extends MakaanFragmentActivity implements SerpListFragment.ListingFragmentCallbacks,
-        FiltersFragment.FiltersFragmentCallbacks, SearchBarFragment.SearchBarFragmentCallbacks {
-    @Bind(R.id.search_results)
-    FrameLayout mSearchLayout;
+public class SerpActivity extends MakaanBaseSearchActivity implements SerpListFragment.ListingFragmentCallbacks {
+    public static boolean isChildSerp = false;
 
-    private FragmentTransaction mFragmentTransaction;
-    private SerpGetEvent listingGetEvent;
-    private ListingActivityCallbacks listingFragment;
-    private FiltersFragment filtersFragment;
-    private ListingByIdGetEvent listingByIdGetEvent;
-    private SearchResultsFragment mSearchResultsFragment;
+    private SerpListFragment mListingFragment;
+    private SerpListFragment mChildSerpListFragment;
+    private boolean wasLastChildSerp = false;
+
+    @Bind(R.id.activity_serp_filters_frame_layout)
+    FrameLayout mFiltersFrameLayout;
+    @Bind(R.id.activity_serp_similar_properties_frame_layout)
+    FrameLayout mSimilarPropertiesFrameLayout;
+    @Bind(R.id.activity_serp_content_frame_layout)
+    FrameLayout mContentFrameLayout;
+
+    @Bind(R.id.fragment_filters_filter_relative_layout)
+    RelativeLayout mFilterRelativeLayout;
 
     @Override
     protected int getContentViewId() {
-        return R.layout.content_main;
+        return R.layout.activity_serp;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
         // TODO check whether it should be used or not
         fetchData();
+
+        // init fragments we need to use
+        initUi(true);
     }
 
-
-    @OnClick(R.id.fetch)
-    public void fetch(View view) {
-
-        new ListingService().getListingDetail(1L);
-    }
-
-    private void initFragment(int fragmentHolderId, Fragment fragment, boolean shouldAddToBackStack) {
-        // reference fragment transaction
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(fragmentHolderId, fragment, fragment.getClass().getName());
-        // if need to be added to the backstack, then do so
-        if(shouldAddToBackStack) {
-            fragmentTransaction.addToBackStack(fragment.getClass().getName());
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (isChildSerp) {
+            setShowSearchBar(true);
+            isChildSerp = false;
+            mFiltersFrameLayout.setVisibility(View.VISIBLE);
+            mSimilarPropertiesFrameLayout.setVisibility(View.GONE);
         }
-        // TODO
-        // check if we this can be called from any background thread or after background to ui thread communication
-        // then we need to make use of commitAllowingStateLoss()
-        fragmentTransaction.commit();
+    }
+
+    protected void initUi(boolean showSearchBar) {
+        super.initUi(true);
     }
 
     private void fetchData() {
@@ -77,58 +77,73 @@ public class SerpActivity extends MakaanFragmentActivity implements SerpListFrag
 
     @Subscribe
     public void onResults(SerpGetEvent listingGetEvent) {
-        this.listingGetEvent = listingGetEvent;
-        // check if we have working listing fragment at this time
-        if (listingFragment == null) {
+        if (isChildSerp) {
+            setShowSearchBar(false);
+            mFiltersFrameLayout.setVisibility(View.GONE);
+            mSimilarPropertiesFrameLayout.setVisibility(View.VISIBLE);
+            if (mChildSerpListFragment == null || !mChildSerpListFragment.isVisible()) {
+                // create new child serp cluster fragment to show the cluster items
+                ChildSerpClusterFragment childSerpClusterFragment = ChildSerpClusterFragment.init();
+                // create new listing fragment to show the listings
+                mChildSerpListFragment = SerpListFragment.init(true);
+                mChildSerpListFragment.updateListings(listingGetEvent);
 
-            // new fragment to show search bar top of listing
-            SearchBarFragment searchBarFragment = SearchBarFragment.init(SearchBarFragment.TYPE_SEARCH);
-            initFragment(R.id.top_bar, searchBarFragment, false);
+                initFragments(new int[]{R.id.activity_serp_similar_properties_frame_layout, R.id.activity_serp_content_frame_layout},
+                        new Fragment[]{childSerpClusterFragment, mChildSerpListFragment}, true);
 
-            // new fragment to show search bar top of listing
-            SearchResultsFragment searchResultsFragment = SearchResultsFragment.init();
-            initFragment(R.id.search_results, searchResultsFragment, false);
-            mSearchResultsFragment = searchResultsFragment;
-
-            // new fragment to show filters
-            FiltersFragment filtersFragment = FiltersFragment.init();
-            initFragment(R.id.filters, filtersFragment, false);
-
-            // create new listing fragment to show the listings
-            SerpListFragment listingFragment = SerpListFragment.init();
-            listingFragment.updateListings(listingGetEvent);
-            initFragment(R.id.content, listingFragment, false);
+            } else {
+                mChildSerpListFragment.updateListings(listingGetEvent);
+            }
         } else {
-            // update already running listing fragment with the new list
-            listingFragment.updateListings(listingGetEvent);
+            setShowSearchBar(true);
+            mFiltersFrameLayout.setVisibility(View.VISIBLE);
+            mSimilarPropertiesFrameLayout.setVisibility(View.GONE);
+            // check if we have working listing fragment at this time
+            if (mListingFragment == null) {
+                // create new listing fragment to show the listings
+                mListingFragment = SerpListFragment.init(false);
+                mListingFragment.updateListings(listingGetEvent);
+                initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
+            } else {
+                // update already running listing fragment with the new list
+                mListingFragment.updateListings(listingGetEvent);
+            }
         }
     }
 
     @Subscribe
-    public void onResults(ListingByIdGetEvent listingByIdGetEvent){
-        this.listingByIdGetEvent = listingByIdGetEvent;
-        // check if we have working listing fragment at this time
-        if(listingFragment == null) {
+    public void onResults(ListingByIdGetEvent listingByIdGetEvent) {
+        if (isChildSerp) {
+            setShowSearchBar(false);
+            mFiltersFrameLayout.setVisibility(View.GONE);
+            mSimilarPropertiesFrameLayout.setVisibility(View.VISIBLE);
+            if (mChildSerpListFragment == null || !mChildSerpListFragment.isVisible()) {
+                // create new child serp cluster fragment to show the cluster items
+                ChildSerpClusterFragment childSerpClusterFragment = ChildSerpClusterFragment.init();
+                // create new listing fragment to show the listings
+                mChildSerpListFragment = SerpListFragment.init(true);
+                mChildSerpListFragment.updateListings(listingByIdGetEvent.listing);
 
-            // new fragment to show search bar top of listing
-            SearchBarFragment searchBarFragment = SearchBarFragment.init(SearchBarFragment.TYPE_SEARCH);
-            initFragment(R.id.top_bar, searchBarFragment, false);
+                initFragments(new int[]{R.id.activity_serp_similar_properties_frame_layout, R.id.activity_serp_content_frame_layout},
+                        new Fragment[]{childSerpClusterFragment, mChildSerpListFragment}, true);
 
-            // new fragment to show search bar top of listing
-            SearchResultsFragment searchResultsFragment = SearchResultsFragment.init();
-            initFragment(R.id.search_results, searchResultsFragment, false);
-            mSearchResultsFragment = searchResultsFragment;
-
-            // new fragment to show filters on top of listing
-            FiltersFragment filtersFragment = FiltersFragment.init();
-            initFragment(R.id.filters, filtersFragment, false);
-
-            // create new listing fragment to show the listings
-            SerpListFragment listingFragment = SerpListFragment.init();
-            listingFragment.updateListings(listingByIdGetEvent.listing);
+            } else {
+                mChildSerpListFragment.updateListings(listingByIdGetEvent.listing);
+            }
         } else {
-            // update already running listing fragment with the new list
-            listingFragment.updateListings(listingByIdGetEvent.listing);
+            setShowSearchBar(true);
+            mFiltersFrameLayout.setVisibility(View.VISIBLE);
+            mSimilarPropertiesFrameLayout.setVisibility(View.GONE);
+            // check if we have working listing fragment at this time
+            if (mListingFragment == null) {
+                // create new listing fragment to show the listings
+                mListingFragment = SerpListFragment.init(false);
+                mListingFragment.updateListings(listingByIdGetEvent.listing);
+                initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
+            } else {
+                // update already running listing fragment with the new list
+                mListingFragment.updateListings(listingByIdGetEvent.listing);
+            }
         }
     }
 
@@ -136,24 +151,12 @@ public class SerpActivity extends MakaanFragmentActivity implements SerpListFrag
     public SerpGetEvent getListings(int flag) {
         return null;
     }
-
-    @Override
-    public void updateListingFragment(ListingActivityCallbacks listingFragmentCallbacks) {
-        this.listingFragment = listingFragmentCallbacks;
-    }
-
-    @Override
-    public void updateFiltersFragment(FiltersFragment filtersFragment) {
-        this.filtersFragment = filtersFragment;
-    }
-
-    @Override
-    public void onQueryChanged(String query) {
-        if(query != null) {
-            mSearchLayout.setVisibility(View.VISIBLE);
-            if(mSearchResultsFragment != null && mSearchResultsFragment instanceof SearchBarFragment.SearchBarFragmentCallbacks) {
-                ((SearchBarFragment.SearchBarFragmentCallbacks)mSearchResultsFragment).onQueryChanged(query);
-            }
+    @OnClick(R.id.fragment_filters_filter_relative_layout)
+    public void onFilterPressed(View view) {
+        if(view == mFilterRelativeLayout) {
+            FragmentTransaction ft = this.getFragmentManager().beginTransaction();
+            FiltersDialogFragment filterFragment = FiltersDialogFragment.init();
+            filterFragment.show(ft, "Filters");
         }
     }
 

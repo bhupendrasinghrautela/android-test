@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.makaan.ui.pyr.PyrBudgetCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:layout_width="@dimen/pyr_budget_icon_layout_width"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="@dimen/pyr_budget_icon_width"
+                android:layout_height="@dimen/pyr_budget_icon_height"
+                android:layout_marginLeft="@dimen/pyr_budget_icon_left_margin"
+                android:src="@drawable/money_icon"/>
+
+            <TextView
+                android:layout_width="@dimen/pyr_budget_text_width"
+                android:layout_height="@dimen/pyr_budget_text_height"
+                android:textColor="@color/black"
+                android:text="@string/pyr_budget_string"
+                android:textSize="@dimen/location_text_size"
+                android:gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/pyr_budget_text_left_margin"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/pyr_light_grey"/>
+
+        <LinearLayout
+            android:id="@+id/budget_layout"
+            android:layout_width="@dimen/pyr_budget_seekbar_layout_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/min_budget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="5dp"
+                android:textSize="12sp"/>
+
+            <com.makaan.ui.pyr.RangeSeekBar
+                android:id="@+id/budget_range_seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/pyr_budget_seekbar_margin_right"
+                android:layout_marginLeft="@dimen/pyr_budget_seekbar_margin_left"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical|center"/>
+
+            <TextView
+                android:id="@+id/max_budget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginRight="35dp"
+                android:layout_marginTop="5dp"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.makaan.ui.pyr.PyrBudgetCardView>

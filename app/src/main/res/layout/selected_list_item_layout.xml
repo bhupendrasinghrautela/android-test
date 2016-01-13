@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@android:id/text1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/selected_list_item_drawable_padding"
+        android:gravity="center_vertical"
+        android:padding="@dimen/selected_list_item_padding"
+        android:layout_weight="1"
+        android:textColor="@color/selected_list_item_color" />
+    
+    <ImageView
+        android:layout_width="@dimen/selected_list_cancel_icon_width_height"
+        android:layout_height="@dimen/selected_list_cancel_icon_width_height"
+        android:padding="@dimen/selected_list_cancel_icon_padding"
+        android:tint="@color/selected_list_cancel_icon_tint"
+        android:src="@drawable/cancel"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/selected_list_cancel_icon_margin_left"
+        android:layout_marginRight="@dimen/selected_list_cancel_icon_margin_right"
+        />
+
+</LinearLayout>
