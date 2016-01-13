@@ -68,7 +68,9 @@ public class SerpListFragment extends MakaanBaseFragment implements SerpListingA
         if(activity != null && activity instanceof ListingFragmentCallbacks) {
             initializeRecyclerViewData();
             if(mListings != null) {
-                mTotalPropertiesTextView.setText(String.format(Locale.ENGLISH, "%d properties", mListings.size()));
+                if(mTotalPropertiesTextView != null) {
+                    mTotalPropertiesTextView.setText(String.format(Locale.ENGLISH, "%d properties", mListings.size()));
+                }
                 mListingAdapter.setData(mListings);
             }
         }
@@ -101,7 +103,9 @@ public class SerpListFragment extends MakaanBaseFragment implements SerpListingA
         }
         this.mListings = listings;
         if(mListingAdapter != null) {
-            mTotalPropertiesTextView.setText(String.format(Locale.ENGLISH, "%d properties", mListings.size()));
+            if(mTotalPropertiesTextView != null) {
+                mTotalPropertiesTextView.setText(String.format(Locale.ENGLISH, "%d properties", mListings.size()));
+            }
             mListingAdapter.setData(mListings);
         }
     }

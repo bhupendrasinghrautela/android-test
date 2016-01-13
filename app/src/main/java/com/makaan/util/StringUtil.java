@@ -67,6 +67,9 @@ public class StringUtil {
 
     public static String getDisplayPrice(double price) {
         try {
+            if(price == Double.NaN) {
+                return String.valueOf(price);
+            }
             if (price == 0) {
                 return "Price on request";
             }
@@ -74,7 +77,17 @@ public class StringUtil {
             priceStringBuilder.append("\u20B9");
             double displayPrice = (double) price / 100000.00;
 
-            if (displayPrice < 100.0) {
+            if(displayPrice < 1) {
+                displayPrice = (double) price / 1000.00;
+                DecimalFormat df = new DecimalFormat("#.#");
+                try {
+                    priceStringBuilder.append(String.format("%.1f",
+                            Double.parseDouble(df.format(displayPrice))));
+                } catch (NumberFormatException nfe) {
+                    return "Price on request";
+                }
+                priceStringBuilder.append(" K");
+            } else if (displayPrice < 100.0) {
                 DecimalFormat df = new DecimalFormat("#.#");
                 try {
                     priceStringBuilder.append(String.format("%.1f",

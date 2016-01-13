@@ -24,6 +24,7 @@ import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.listing.ListingService;
 import com.makaan.service.search.SearchService;
+import com.makaan.util.AppBus;
 import com.squareup.otto.Subscribe;
 
 import java.io.UnsupportedEncodingException;
@@ -205,7 +206,6 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         }
     }
 
-    @Subscribe
     public void onResults(SearchResultEvent searchResultEvent) {
         this.mSearches = searchResultEvent.searchResponse.getData();
         mSearchAdapter.setData(mSearches);

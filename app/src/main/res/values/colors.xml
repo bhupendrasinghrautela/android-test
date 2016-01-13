@@ -12,7 +12,7 @@
     <color name="listingLightGray">#999999</color>
     <color name="listingBlack">#444444</color>
 
-    <color name = "light_gray">#d3d3d3 </color>
+    <color name= "light_gray">#d3d3d3 </color>
     <color name="app_grey">#80000000</color>
     <color name="app_pink">#E72989</color>
     <!--Pyr-->
@@ -24,7 +24,8 @@
     <color name="selected_list_cancel_icon_tint">#f7941e</color>
     <color name="list_filter_button_background_color">#FFFFFF</color>
     <color name="bedroom_circular_stroke">#D3D3D3</color>
-    <color name="app_yellow">#fba511</color>
+    <color name="app_yellow">#FBA511</color>
+    <color name="app_red">#E71C28</color>
     <!-- Serp Listing Color Values -->
     <color name="serp_listing_background">#F0F0F0</color>
     <color name="serp_listing_card_background">#FFFFFF</color>
@@ -44,5 +45,10 @@
     <color name="serp_listing_total_properties_text_color">#E3444444</color>
 
     <color name="filters_fragment_filter_count_background_color">#FBA511</color>
+
+    <color name="fragment_dialog_filters_toggle_button_normal_text_color">#444444</color>
+    <color name="fragment_dialog_filters_toggle_button_disabled_text_color">#80444444</color>
+    <color name="fragment_dialog_filters_toggle_button_normal_stroke_color">#757575</color>
+    <color name="fragment_dialog_filters_item_empty_view_background_color">#4C979797</color>
 
 </resources>
