@@ -215,7 +215,8 @@
     <dimen name="serp_listing_card_property_price_difference_image_view_width">16dp</dimen>
     <dimen name="serp_listing_card_property_price_difference_image_view_height">16dp</dimen>
 
-    <dimen name="serp_listing_card_property_info_text_view_left_margin">27dp</dimen>
+    <!-- TODO serp_listing_card_property_info_text_view_left_margin should be 27 as per GUI-->
+    <dimen name="serp_listing_card_property_info_text_view_left_margin">20dp</dimen>
     <dimen name="serp_listing_card_property_info_text_view_top_margin">12dp</dimen>
     <dimen name="serp_listing_card_property_info_text_view_text_size">16sp</dimen>
 

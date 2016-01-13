@@ -191,7 +191,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         onBackPressed();
     }
 
-    @OnClick(R.id.activity_search_base_layout_search_bar_search_image_button)
+    @OnClick({R.id.activity_search_base_layout_search_bar_search_image_button, R.id.activity_search_base_layout_search_bar_search_text_view})
     public void onSearchPressed(View view) {
         setSearchViewVisibility(true, null);
     }

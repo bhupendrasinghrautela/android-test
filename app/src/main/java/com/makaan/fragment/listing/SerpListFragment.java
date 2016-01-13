@@ -91,7 +91,9 @@ public class SerpListFragment extends MakaanBaseFragment implements SerpListingA
             mListings = new ArrayList<Listing>();
         }
         if(mListingAdapter != null) {
-            mTotalPropertiesTextView.setText(String.format(Locale.ENGLISH, "%d properties", mListings.size()));
+            if(mTotalPropertiesTextView != null) {
+                mTotalPropertiesTextView.setText(String.format(Locale.ENGLISH, "%d properties", mListings.size()));
+            }
             mListingAdapter.setData(mListings);
         }
     }
