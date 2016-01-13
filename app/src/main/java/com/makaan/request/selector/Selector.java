@@ -178,7 +178,7 @@ public class Selector {
                     }
                 }
 
-                if(geoSelector.lat>0 && geoSelector.lat>0) {
+                if(null != geoSelector.lat && geoSelector.lat>0 && null != geoSelector.lon && geoSelector.lon>0) {
                     andStrBuilder.append(geoSelector.build());
                 }
 
@@ -208,5 +208,8 @@ public class Selector {
         return null;
     }
 
+    public int getAppliedFilterCount() {
+        return this.termSelectorHashMap.keySet().size();
+    }
 
 }

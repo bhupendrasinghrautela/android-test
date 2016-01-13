@@ -16,6 +16,7 @@ import com.makaan.R;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.PreferenceConstants;
 import com.makaan.response.listing.Listing;
+import com.makaan.util.StringUtil;
 import com.pkmmte.view.CircularImageView;
 
 import org.w3c.dom.Text;
@@ -162,8 +163,20 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         // TODO set rating for the seller
 
         // TODO check for unit info
+        String priceString = StringUtil.getDisplayPrice(mListing.price);
+        String priceUnit = "";
+        if(priceString.indexOf("\u20B9") == 0) {
+            priceString = priceString.replace("\u20B9", "");
+        }
+        String[] priceParts = priceString.split(" ");
+        priceString = priceParts[0];
+        if(priceParts.length > 1) {
+            priceUnit = priceParts[1];
+        }
 
-        mPropertyPriceTextView.setText(mListing.price.toString());
+
+        mPropertyPriceTextView.setText(priceString);
+        mPropertyPriceUnitTextView.setText(priceUnit);
         mPropertyPriceSqFtTextView.setText(String.format(Locale.ENGLISH, "%d/sqft", mListing.pricePerUnitArea));
         mPropertyInfoTextView.setText(String.format(Locale.ENGLISH, "%s\n%s", mListing.bhkInfo, mListing.sizeInfo));
         mPropertyAddressTextView.setText(String.format(Locale.ENGLISH, "%s, %s", mListing.localityName, mListing.cityName));

@@ -111,8 +111,8 @@ public class MasterDataService implements MakaanService {
             @Override
             public void onSuccess(JSONObject responseObject) {
                 try {
-//                    JSONObject object = responseObject.getJSONObject(ResponseConstants.DATA);
-                    JSONArray filters = responseObject.getJSONArray(ResponseConstants.FILTERS);
+                    JSONObject object = responseObject.getJSONObject(ResponseConstants.DATA);
+                    JSONArray filters = object.getJSONArray(ResponseConstants.FILTERS);
 
                     ArrayList<FilterGroup> filterGroups  = MakaanBuyerApplication.gson.fromJson(filters.toString(), filterGroupTypeList);
 

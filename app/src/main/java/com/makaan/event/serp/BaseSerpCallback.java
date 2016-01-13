@@ -48,7 +48,7 @@ public class BaseSerpCallback extends JSONGetCallback {
 
                             JSONObject listingJson = items.getJSONObject(i);
 
-                            listingJson = listingJson.getJSONObject(MIN_PRICE_PER_UNIT_AREA);
+                            listingJson = listingJson.getJSONObject(LISTING);
                             Listing listing = listingParser.getListingFromJson(listingJson);
 
                             listingData.listings.add(listing);

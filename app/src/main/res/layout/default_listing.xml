@@ -60,7 +60,6 @@
                     android:layout_marginTop="@dimen/serp_listing_card_property_price_top_margin"
                     android:layout_toRightOf="@+id/serp_default_listing_property_price_rupee_image_view"
                     android:layout_toEndOf="@+id/serp_default_listing_property_price_rupee_image_view"
-                    android:text="82.2"
                     android:textColor="@color/serp_listing_card_default_text_color"
                     android:textSize="@dimen/serp_listing_card_property_price_text_size" />
 
@@ -73,7 +72,6 @@
                     android:layout_marginTop="@dimen/serp_listing_card_property_price_unit_top_margin"
                     android:layout_toRightOf="@+id/serp_default_listing_property_price_text_view"
                     android:layout_toEndOf="@+id/serp_default_listing_property_price_text_view"
-                    android:text="L"
                     android:textColor="@color/serp_listing_card_default_text_color"
                     android:textSize="@dimen/serp_listing_card_property_price_unit_text_size" />
 

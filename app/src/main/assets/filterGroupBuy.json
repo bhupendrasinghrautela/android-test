@@ -1,108 +1,353 @@
 {
   "data": {
-    "filters": [{
-      "displayName": "Beds",
-      "internalName": "i_beds",
-      "displayOrder": "1",
-      "termFilterValues": [{
-        "displayName": "1 BHK",
+    "filters": [
+      {
+        "displayName": "Beds",
+        "internalName": "i_beds",
         "displayOrder": "1",
-        "fieldName": "bedrooms",
-        "value": "1",
-        "selected": false
-      }, {
-        "displayName": "2 BHK",
-        "displayOrder": "2",
-        "fieldName": "bedrooms",
-        "value": "2",
-        "selected": false
-      }, {
-        "displayName": "3 BHK",
-        "displayOrder": "3",
-        "fieldName": "bedrooms",
-        "value": "3",
-        "selected": false
-      }, {
-        "displayName": "4 BHK",
-        "displayOrder": "4",
-        "fieldName": "bedrooms",
-        "value": "4",
-        "selected": false
-      }],
-      "rangeFilterValues": [
-
-      ]
-    },
-
+        "layoutType": "1",
+        "termFilterValues": [
+          {
+            "displayName": "1",
+            "displayOrder": "1",
+            "fieldName": "bedrooms",
+            "value": "1",
+            "selected": false
+          },
+          {
+            "displayName": "2",
+            "displayOrder": "2",
+            "fieldName": "bedrooms",
+            "value": "2",
+            "selected": false
+          },
+          {
+            "displayName": "3",
+            "displayOrder": "3",
+            "fieldName": "bedrooms",
+            "value": "3",
+            "selected": false
+          },
+          {
+            "displayName": "4",
+            "displayOrder": "4",
+            "fieldName": "bedrooms",
+            "value": "4",
+            "selected": false
+          }
+        ],
+        "rangeFilterValues": [
+        ]
+      },
       {
         "displayName": "Budget",
         "internalName": "i_budget",
         "displayOrder": "2",
+        "layoutType": "2",
         "termFilterValues": [],
-        "rangeFilterValues": [{
-          "displayName": "",
-          "displayOrder": "1",
-          "fieldName": "price",
-          "minValue": 0,
-          "maxValue": 100000000,
-          "selected": false
-        }]
-      }, {
+        "rangeFilterValues": [
+          {
+            "displayName": "",
+            "displayOrder": "1",
+            "fieldName": "price",
+            "minValue": 0,
+            "maxValue": 100000000,
+            "selected": false
+          }
+        ]
+      },
+      {
         "displayName": "Property Type",
         "internalName": "i_property_type",
         "displayOrder": "3",
-        "termFilterValues": [{
-          "displayName": "Apartment/Flat",
-          "displayOrder": "1",
-          "fieldName": "unitTypeId",
-          "value": "1",
-          "selected": false
-        }, {
-          "displayName": "Villa",
-          "displayOrder": "2",
-          "fieldName": "unitTypeId",
-          "value": "2",
-          "selected": false
-        }, {
-          "displayName": "Independent House",
-          "displayOrder": "3",
-          "fieldName": "unitTypeId",
-          "value": "19",
-          "selected": false
-        }, {
-          "displayName": "Plot/Land",
-          "displayOrder": "4",
-          "fieldName": "unitTypeId",
-          "value": "3",
-          "selected": false
-        }, {
-          "displayName": "Builder Floor",
-          "displayOrder": "5",
-          "fieldName": "unitTypeId",
-          "value": "7",
-          "selected": false
-        }],
+        "layoutType": "3",
+        "termFilterValues": [
+          {
+            "displayName": "apartment/flat",
+            "displayOrder": "1",
+            "fieldName": "unitTypeId",
+            "value": "1",
+            "selected": false
+          },
+          {
+            "displayName": "villa",
+            "displayOrder": "2",
+            "fieldName": "unitTypeId",
+            "value": "2",
+            "selected": false
+          },
+          {
+            "displayName": "independent house",
+            "displayOrder": "3",
+            "fieldName": "unitTypeId",
+            "value": "19",
+            "selected": false
+          },
+          {
+            "displayName": "plot/land",
+            "displayOrder": "4",
+            "fieldName": "unitTypeId",
+            "value": "3",
+            "selected": false
+          },
+          {
+            "displayName": "builder floor",
+            "displayOrder": "5",
+            "fieldName": "unitTypeId",
+            "value": "7",
+            "selected": false
+          }
+        ],
         "rangeFilterValues": [
-
         ]
-
-      }, {
+      },
+      {
+        "displayName": "Bathroom",
+        "internalName": "i_bathroom",
+        "displayOrder": "4",
+        "layoutType": "1",
+        "termFilterValues": [
+          {
+            "displayName": "1",
+            "displayOrder": "1",
+            "fieldName": "bathroom",
+            "value": "1",
+            "selected": false
+          },
+          {
+            "displayName": "2",
+            "displayOrder": "2",
+            "fieldName": "bathroom",
+            "value": "2",
+            "selected": false
+          },
+          {
+            "displayName": "3",
+            "displayOrder": "3",
+            "fieldName": "bathroom",
+            "value": "3",
+            "selected": false
+          },
+          {
+            "displayName": "4",
+            "displayOrder": "4",
+            "fieldName": "bathroom",
+            "value": "4",
+            "selected": false
+          }
+        ],
+        "rangeFilterValues": [
+        ]
+      },
+      {
+        "displayName": "ready to move (age by property)",
+        "internalName": "i_ready_to_move",
+        "displayOrder": "5",
+        "layoutType": "1",
+        "termFilterValues": [
+          {
+            "displayName": "1yr",
+            "displayOrder": "1",
+            "fieldName": "readyToMove",
+            "value": "1",
+            "selected": false
+          },
+          {
+            "displayName": "2yr",
+            "displayOrder": "2",
+            "fieldName": "readyToMove",
+            "value": "2",
+            "selected": false
+          },
+          {
+            "displayName": "5yr",
+            "displayOrder": "3",
+            "fieldName": "readyToMove",
+            "value": "3",
+            "selected": false
+          },
+          {
+            "displayName": ">5yr",
+            "displayOrder": "4",
+            "fieldName": "readyToMove",
+            "value": "4",
+            "selected": false
+          }
+        ],
+        "rangeFilterValues": [
+        ]
+      },
+      {
+        "displayName": "area\nsq ft",
+        "internalName": "i_sq_ft",
+        "displayOrder": "6",
+        "layoutType": "2",
+        "termFilterValues": [],
+        "rangeFilterValues": [
+          {
+            "displayName": "",
+            "displayOrder": "1",
+            "fieldName": "sq_ft",
+            "minValue": 100,
+            "maxValue": 2500,
+            "selected": false
+          }
+        ]
+      },
+      {
+        "displayName": "new/resale",
+        "internalName": "i_new_resale",
+        "displayOrder": "7",
+        "layoutType": "4",
+        "termFilterValues": [
+          {
+            "displayName": "new",
+            "displayOrder": "1",
+            "fieldName": "newResale",
+            "value": "1",
+            "selected": false
+          },
+          {
+            "displayName": "resale",
+            "displayOrder": "2",
+            "fieldName": "newResale",
+            "value": "2",
+            "selected": false
+          },
+          {
+            "displayName": "both",
+            "displayOrder": "3",
+            "fieldName": "newResale",
+            "value": "3",
+            "selected": false
+          }
+        ],
+        "rangeFilterValues": [
+        ]
+      },
+      {
+        "displayName": "listed by",
+        "internalName": "i_listed_by",
+        "displayOrder": "8",
+        "layoutType": "3",
+        "termFilterValues": [
+          {
+            "displayName": "agent",
+            "displayOrder": "1",
+            "fieldName": "listedBy",
+            "value": "1",
+            "selected": false
+          },
+          {
+            "displayName": "builder",
+            "displayOrder": "2",
+            "fieldName": "listedBy",
+            "value": "2",
+            "selected": false
+          },
+          {
+            "displayName": "owner",
+            "displayOrder": "3",
+            "fieldName": "listedBy",
+            "value": "3",
+            "selected": false
+          }
+        ],
+        "rangeFilterValues": [
+        ]
+      },
+      {
+        "displayName": "furnishing status",
+        "internalName": "i_furnishing_status",
+        "displayOrder": "9",
+        "layoutType": "3",
+        "termFilterValues": [
+          {
+            "displayName": "unfurnished",
+            "displayOrder": "1",
+            "fieldName": "furnishingStatus",
+            "value": "1",
+            "selected": false
+          },
+          {
+            "displayName": "semi-furnished",
+            "displayOrder": "2",
+            "fieldName": "furnishingStatus",
+            "value": "2",
+            "selected": false
+          },
+          {
+            "displayName": "fully furnished",
+            "displayOrder": "3",
+            "fieldName": "furnishingStatus",
+            "value": "3",
+            "selected": false
+          }
+        ],
+        "rangeFilterValues": [
+        ]
+      },
+      {
+        "displayName": "top builders",
+        "internalName": "i_top_builders",
+        "displayOrder": "10",
+        "layoutType": "3",
+        "termFilterValues": [
+          {
+            "displayName": "dlf builders",
+            "displayOrder": "1",
+            "fieldName": "topbuilders",
+            "value": "1",
+            "selected": false
+          },
+          {
+            "displayName": "panchseel builders",
+            "displayOrder": "2",
+            "fieldName": "topbuilders",
+            "value": "2",
+            "selected": false
+          },
+          {
+            "displayName": "amrapali group",
+            "displayOrder": "3",
+            "fieldName": "topbuilders",
+            "value": "3",
+            "selected": false
+          },
+          {
+            "displayName": "ajanta group",
+            "displayOrder": "4",
+            "fieldName": "topbuilders",
+            "value": "4",
+            "selected": false
+          },
+          {
+            "displayName": "supertech group",
+            "displayOrder": "5",
+            "fieldName": "topbuilders",
+            "value": "5",
+            "selected": false
+          }
+        ],
+        "rangeFilterValues": [
+        ]
+      },
+      {
         "displayName": "Locality",
         "internalName": "i_locality",
         "displayOrder": "-1",
-        "termFilterValues": [{
-          "displayName": "Locality",
-          "displayOrder": "-1",
-          "fieldName": "localityId",
-          "value": "1",
-          "selected": false
-        }],
+        "termFilterValues": [
+          {
+            "displayName": "Locality",
+            "displayOrder": "-1",
+            "fieldName": "localityId",
+            "value": "1",
+            "selected": false
+          }
+        ],
         "rangeFilterValues": [
-
         ]
-
       }
     ]
   }
-
 }

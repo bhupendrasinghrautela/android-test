@@ -30,6 +30,7 @@ public class FilterGroup implements Parcelable, FinderFilterable {
     public String displayName;
     public String internalName;
     public int displayOrder;
+    public int layoutType;
 
     public ArrayList<TermFilter> termFilterValues = new ArrayList<>();
     public ArrayList<RangeFilter> rangeFilterValues = new ArrayList<>();
