@@ -29,6 +29,7 @@ public class RequestConstants  {
     public static final String ID = "id";
     public static final String BATHROOMS = "bathrooms";
     public static final String LOCALITY_PRIORITY = "localityPriority";
+    public static final String MIN_PRICE_PER_UNIT_AREA = "minPricePerUnitArea";
 
     public static final String ENTITY_DESCRIPTIONS = "entityDescriptions";
     public static final String CENTER_LAT = "centerLatitude";
@@ -41,6 +42,9 @@ public class RequestConstants  {
     public static final String SUPPLY_RATE = "supplyRate";
     public static final String LABEL = "label";
     public static final String LOCALITY_ID = "localityId";
+    public static final String LOCALITY_NAME = "localityName";
+    public static final String PROJECT_NAME = "projectName";
+    public static final String MONTH_DURATION = "monthDuration";
     public static final String LIVABILITY_SCORE = "livabilityScore";
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";

@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken;
 import com.makaan.constants.ApiConstants;
 import com.makaan.event.city.GetCityByIdEvent;
 import com.makaan.event.city.GetCityTopLocalityEvent;
+import com.makaan.event.trend.CityTrendChartCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 
 import static com.makaan.constants.RequestConstants.*;
 
+
 /**
  * Created by vaibhav on 09/01/16.
  */
@@ -25,7 +27,6 @@ public class CityService implements MakaanService {
 
     /**
      * https://marketplace-qa.proptiger-ws.com/app/v1/city/2?selector={"fields":["entityDescriptions","id","centerLatitude","centerLongitude","description","cityHeroshotImageUrl","annualGrowth","rentalYield","demandRate","supplyRate","label"],"filters":{}}
-     *
      */
     public void getCityById(Long cityId) {
 
@@ -35,7 +36,8 @@ public class CityService implements MakaanService {
 
             String cityUrl = ApiConstants.CITY.concat(cityId.toString()).concat("?").concat(citySelector.build());
 
-            Type cityType = new TypeToken<City>() {}.getType();
+            Type cityType = new TypeToken<City>() {
+            }.getType();
 
             MakaanNetworkClient.getInstance().get(cityUrl, cityType, new ObjectGetCallback() {
                 @Override
@@ -50,18 +52,18 @@ public class CityService implements MakaanService {
     }
 
     /**
-     *  http:/marketplace-qa.proptiger-ws.com/data/v3/entity/locality?selector={"filters":{"and":[{"equal":{"cityId":"2"}}]},"paging":{"start":0,"rows":5},"sort":[{"field":"localityPriority","sortOrder":"DESC"}]}
-     *
+     * http:/marketplace-qa.proptiger-ws.com/data/v3/entity/locality?selector={"filters":{"and":[{"equal":{"cityId":"2"}}]},"paging":{"start":0,"rows":5},"sort":[{"field":"localityPriority","sortOrder":"DESC"}]}
      */
-    public void getTopLocalitiesInCity(Long cityId, Integer noOfTopLocalities){
+    public void getTopLocalitiesInCity(Long cityId, Integer noOfTopLocalities) {
 
-        if(null != cityId){
+        if (null != cityId) {
 
             Selector topLocaliltySelector = new Selector();
-            topLocaliltySelector.term(CITY, cityId.toString()).page(0, noOfTopLocalities != null ? noOfTopLocalities: 5)
-                    .sort(LOCALITY_PRIORITY, SORT_DESC);
+            topLocaliltySelector.term(CITY, cityId.toString()).page(0, noOfTopLocalities != null ? noOfTopLocalities : 5)
+                    .sort(MIN_PRICE_PER_UNIT_AREA, SORT_DESC);
 
-            Type topLocalitiesListType = new TypeToken<ArrayList<Locality>>(){}.getType();
+            Type topLocalitiesListType = new TypeToken<ArrayList<Locality>>() {
+            }.getType();
 
             String topLocalitiesUrl = ApiConstants.LOCALITY_DATA.concat("?").concat(topLocaliltySelector.build());
 
@@ -77,13 +79,23 @@ public class CityService implements MakaanService {
     }
 
     /**
-     * http://marketplace-qa.makaan-ws.com/data/v1/trend/hitherto?fields=minPricePerUnitArea,localityName,projectName&filters=localityId==51549,localityId==51751,localityId==53250,localityId==53133&monthDuration=6&group=localityId,month
+     * http://marketplace-qa.makaan-ws.com/data/v1/trend/hitherto?fields=minPricePerUnitArea,localityName,projectName&filters=localityId==51549,localityId==51751,
+     * localityId==53250,localityId==53133&monthDuration=6&group=localityId,month
      */
 
-    public void getPriceTrendForTopLocalitiesInCity(){
+    public void getPriceTrendForTopLocalitiesInCity(Long[] topLocalityIds, int monthDuration) {
 
+        if (null != topLocalityIds && topLocalityIds.length > 0 && monthDuration > 0) {
+            StringBuilder priceTrendUrl = new StringBuilder(ApiConstants.LOCALITY_TREND_URL);
+            priceTrendUrl.append("&").append(MONTH_DURATION).append("=").append(monthDuration).append(FILTERS).append("=");
+
+            for(int i=0 ; i < topLocalityIds.length ; i++){
+                priceTrendUrl.append("");
+            }
+
+            MakaanNetworkClient.getInstance().get(priceTrendUrl.toString(), new CityTrendChartCallback());
+        }
     }
-
 
 
 }

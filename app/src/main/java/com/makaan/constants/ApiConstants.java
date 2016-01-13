@@ -20,6 +20,9 @@ public class ApiConstants {
     public static final String LOCALITY_DATA = BASE_URL.concat("/data/v3/entity/locality");
     public static final String LOCALITY = BASE_URL.concat("/app/v3/locality/");
 
+    public static final String TREND_URL = BASE_URL.concat("/data/v1/trend/hitherto");
+    public static final String LOCALITY_TREND_URL = TREND_URL.concat("?fields=minPricePerUnitArea,localityName,projectName&group=localityId,month");
+
 
 
 
