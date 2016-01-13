@@ -81,8 +81,8 @@ public class MakaanNetworkClient {
 
             try {
                 JSONObject mockFileResponse = readFromMockFile(mockFile);
-                JSONObject response = mockFileResponse.getJSONObject(ResponseConstants.DATA);
-                jsonGetCallback.onSuccess(response);
+                //JSONObject response = mockFileResponse.getJSONObject(ResponseConstants.DATA);
+                jsonGetCallback.onSuccess(mockFileResponse);
             } catch (Exception e) {
                 Log.e(TAG, "Exception", e);
             }
@@ -159,9 +159,6 @@ public class MakaanNetworkClient {
     }
 
 
-    /**
-     *
-     * */
     public void get(final String url, final StringRequestCallback stringRequestCallback, String tag) {
 
         StringRequest stringRequest = new StringRequest
@@ -178,6 +175,27 @@ public class MakaanNetworkClient {
                         completeRequestInQueue(url);
                         stringRequestCallback.onError();
                         Log.e(TAG, "Network error", error);
+                    }
+                });
+        addToRequestQueue(stringRequest, tag);
+    }
+
+    public void post(final String url, JSONObject jsonObject,
+                     final StringRequestCallback stringRequestCallback, String tag) {
+
+        StringRequest stringRequest = new StringRequest
+                (Request.Method.POST, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onSuccess(response);
+
+                    }
+                }, jsonObject, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onError();
                     }
                 });
         addToRequestQueue(stringRequest, tag);

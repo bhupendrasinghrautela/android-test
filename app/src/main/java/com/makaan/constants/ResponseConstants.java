@@ -62,6 +62,7 @@ public class ResponseConstants {
     public static final String LANDMARK_DISTANCE = "landmarkDistance";
     public static final String UNIT_TYPE = "unitType";
     public static final String LISTING = "listing";
+    public static final String MIN_PRICE_PER_UNIT_AREA = "minPricePerUnitArea";
 
     public static final String TERM_FILTER_VALUES = "termFilterValues";
     public static final String RANGE_FILTER_VALUES = "rangeFilterValues";

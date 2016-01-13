@@ -21,8 +21,8 @@ import org.json.JSONObject;
  * <p/>
  * parser for listing get callback
  */
-public class SerpGetCallback extends JSONGetCallback {
-    public static final String TAG = SerpGetCallback.class.getSimpleName();
+public class BaseSerpCallback extends JSONGetCallback {
+    public static final String TAG = BaseSerpCallback.class.getSimpleName();
 
     @Override
     public void onSuccess(JSONObject dataResponse) {
@@ -48,7 +48,7 @@ public class SerpGetCallback extends JSONGetCallback {
 
                             JSONObject listingJson = items.getJSONObject(i);
 
-                            listingJson = listingJson.getJSONObject(LISTING);
+                            listingJson = listingJson.getJSONObject(MIN_PRICE_PER_UNIT_AREA);
                             Listing listing = listingParser.getListingFromJson(listingJson);
 
                             listingData.listings.add(listing);
