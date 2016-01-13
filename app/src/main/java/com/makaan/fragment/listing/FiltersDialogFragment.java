@@ -79,7 +79,6 @@ public class FiltersDialogFragment extends DialogFragment implements View.OnClic
         AppBus.getInstance().register(this); //TODO: move to base fragment
         ButterKnife.bind(this, view);
 
-        mBackButton.setOnClickListener(this);
         mApplyButton.setOnClickListener(this);
 
 
