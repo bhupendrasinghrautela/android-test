@@ -18,6 +18,7 @@ import com.makaan.constants.RequestConstants;
 import com.makaan.constants.ResponseConstants;
 
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,7 +68,7 @@ public class MakaanNetworkClient {
     }
 
     public void get(String url, final Type type, final ObjectGetCallback objectGetCallback, String mockFile) {
-        get(url, type, objectGetCallback, mockFile, null);
+        get(url, type, objectGetCallback, mockFile, null, false);
     }
 
     public void get(String url, final StringRequestCallback stringRequestCallback) {
@@ -112,17 +113,27 @@ public class MakaanNetworkClient {
     }
 
     public void get(final String url, final Type type, final ObjectGetCallback objectGetCallback) {
-        get(url, type, objectGetCallback, null, null);
+        get(url, type, objectGetCallback, null, null, false);
     }
 
-    public void get(final String url, final Type type, final ObjectGetCallback objectGetCallback, String mockFile, String tag) {
+    public void get(final String url, final Type type, final ObjectGetCallback objectGetCallback, boolean isDataArr) {
+        get(url, type, objectGetCallback, null, null, isDataArr);
+    }
+
+    public void get(final String url, final Type type, final ObjectGetCallback objectGetCallback, String mockFile, String tag, final boolean isDataArr) {
 
         if (null != mockFile) {
             try {
                 JSONObject mockFileResponse = readFromMockFile(mockFile);
-                JSONObject response = mockFileResponse.getJSONObject(ResponseConstants.DATA);
+                Object objResponse;
+                if (isDataArr) {
+                    JSONArray response = mockFileResponse.getJSONArray(ResponseConstants.DATA);
+                    objResponse = MakaanBuyerApplication.gson.fromJson(response.toString(), type);
+                } else {
+                    JSONObject response = mockFileResponse.getJSONObject(ResponseConstants.DATA);
+                    objResponse = MakaanBuyerApplication.gson.fromJson(response.toString(), type);
+                }
 
-                Object objResponse = MakaanBuyerApplication.gson.fromJson(response.toString(), type);
                 objectGetCallback.onSuccess(objResponse);
 
             } catch (Exception e) {
@@ -136,9 +147,16 @@ public class MakaanNetworkClient {
                         public void onResponse(JSONObject response) {
                             completeRequestInQueue(url);
                             try {
-                                response = response.getJSONObject(ResponseConstants.DATA);
+                                Object objResponse;
+                                if (isDataArr) {
+                                    JSONArray tempResponse = response.getJSONArray(ResponseConstants.DATA);
+                                    objResponse = MakaanBuyerApplication.gson.fromJson(tempResponse.toString(), type);
+                                } else {
+                                    response = response.getJSONObject(ResponseConstants.DATA);
+                                    objResponse = MakaanBuyerApplication.gson.fromJson(response.toString(), type);
+                                }
 
-                                Object objResponse = MakaanBuyerApplication.gson.fromJson(response.toString(), type);
+
                                 objectGetCallback.onSuccess(objResponse);
 
                             } catch (JSONException e) {

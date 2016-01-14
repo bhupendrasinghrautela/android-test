@@ -72,14 +72,9 @@ public class CityService implements MakaanService {
                     ArrayList<Locality> topLocalities = (ArrayList<Locality>) responseObject;
                     AppBus.getInstance().post(new CityTopLocalityEvent(topLocalities));
                 }
-            });
+            }, true);
         }
     }
-
-
-
-
-
 
 
 }
