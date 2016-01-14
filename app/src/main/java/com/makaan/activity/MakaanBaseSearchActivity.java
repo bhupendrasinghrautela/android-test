@@ -21,8 +21,11 @@ import com.makaan.response.search.Search;
 import com.makaan.response.search.SearchType;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.service.MakaanServiceFactory;
+
 import com.makaan.service.ListingService;
 import com.makaan.service.SearchService;
+import com.makaan.util.AppBus;
+
 import com.squareup.otto.Subscribe;
 
 import java.io.UnsupportedEncodingException;
@@ -87,6 +90,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     /**
      * must call this function from onCreate function by child activity
      * with default preference of whether search bar should show or not
+     *
      * @param showSearchBar boolean to control whether search bar should show or not
      */
     protected void initUi(boolean showSearchBar) {
@@ -105,7 +109,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     protected void setShowSearchBar(boolean showSearchBar) {
-        if(showSearchBar) {
+        if (showSearchBar) {
             mSearchLayoutFrameLayout.setVisibility(View.VISIBLE);
         } else {
             mSearchLayoutFrameLayout.setVisibility(View.GONE);
@@ -118,7 +122,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(fragmentHolderId, fragment, fragment.getClass().getName());
         // if need to be added to the backstack, then do so
-        if(shouldAddToBackStack) {
+        if (shouldAddToBackStack) {
             fragmentTransaction.addToBackStack(fragment.getClass().getName());
         }
         // TODO
@@ -128,16 +132,16 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     protected void initFragments(int[] fragmentHolderId, Fragment[] fragment, boolean shouldAddToBackStack) {
-        if(fragmentHolderId.length != fragment.length) {
+        if (fragmentHolderId.length != fragment.length) {
             return;
         }
         // reference fragment transaction
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        for(int i = 0; i < fragmentHolderId.length; i++) {
+        for (int i = 0; i < fragmentHolderId.length; i++) {
             fragmentTransaction.replace(fragmentHolderId[i], fragment[i], fragment.getClass().getName());
         }
         // if need to be added to the backstack, then do so
-        if(shouldAddToBackStack) {
+        if (shouldAddToBackStack) {
             fragmentTransaction.addToBackStack(fragment.getClass().getName());
         }
         // TODO
@@ -148,7 +152,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
     @Override
     public void onSearchItemClick(Search search) {
-        if(mSearchLayoutFrameLayout != null) {
+        if (mSearchLayoutFrameLayout != null) {
             mSearchResultFrameLayout.setVisibility(View.GONE);
         }
 
@@ -170,7 +174,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        if(newText != null && !TextUtils.isEmpty(newText)) {
+        if (newText != null && !TextUtils.isEmpty(newText)) {
             mSearchResultFrameLayout.setVisibility(View.VISIBLE);
             SearchService service = (SearchService) MakaanServiceFactory.getInstance().getService(SearchService.class);
             try {
@@ -189,7 +193,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         onBackPressed();
     }
 
-    @OnClick(R.id.activity_search_base_layout_search_bar_search_image_button)
+    @OnClick({R.id.activity_search_base_layout_search_bar_search_image_button, R.id.activity_search_base_layout_search_bar_search_text_view})
     public void onSearchPressed(View view) {
         setSearchViewVisibility(true, null);
     }
@@ -199,12 +203,11 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         mSearchPropertiesTextView.setVisibility(searchViewVisible ? View.GONE : View.VISIBLE);
         mSearchView.setVisibility(searchViewVisible ? View.VISIBLE : View.GONE);
 
-        if(!searchViewVisible && searchPropertiesText != null && !TextUtils.isEmpty(searchPropertiesText)) {
+        if (!searchViewVisible && searchPropertiesText != null && !TextUtils.isEmpty(searchPropertiesText)) {
             mSearchPropertiesTextView.setText(searchPropertiesText);
         }
     }
 
-    @Subscribe
     public void onResults(SearchResultEvent searchResultEvent) {
         this.mSearches = searchResultEvent.searchResponse.getData();
         mSearchAdapter.setData(mSearches);

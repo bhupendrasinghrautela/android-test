@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -67,9 +69,18 @@ public class SerpMapFragment extends MakaanBaseFragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initMap(savedInstanceState);
-        initPager();
+        super.onActivityCreated(savedInstanceState);int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
+        if(status == ConnectionResult.SUCCESS) {
+            initMap(savedInstanceState);
+            initPager();
+            if(mListings != null) {
+                populateMarker(mListings);
+                mProjectViewPager.setData(mListings);
+            }
+
+        }else{
+            GooglePlayServicesUtil.getErrorDialog(status, getActivity(), status);
+        }
 
     }
 
@@ -82,7 +93,9 @@ public class SerpMapFragment extends MakaanBaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mMapView.onDestroy();
+        if(mMapView != null) {
+            mMapView.onDestroy();
+        }
     }
 
     @Override
@@ -93,8 +106,10 @@ public class SerpMapFragment extends MakaanBaseFragment {
 
     public void setData(ListingData data){
         mListings = data.listings;
-        populateMarker(mListings);
-        mProjectViewPager.setData(mListings);
+        if(mProjectViewPager != null) {
+            populateMarker(mListings);
+            mProjectViewPager.setData(mListings);
+        }
     }
 
     private void initMap(@Nullable Bundle savedInstanceState) {

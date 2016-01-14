@@ -208,5 +208,8 @@ public class Selector {
         return null;
     }
 
+    public int getAppliedFilterCount() {
+        return this.termSelectorHashMap.keySet().size();
+    }
 
 }
