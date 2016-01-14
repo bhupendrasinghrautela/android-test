@@ -1,16 +1,14 @@
-package com.makaan.service.city;
+package com.makaan.service;
 
 import com.google.gson.reflect.TypeToken;
 import com.makaan.constants.ApiConstants;
-import com.makaan.event.city.GetCityByIdEvent;
-import com.makaan.event.city.GetCityTopLocalityEvent;
-import com.makaan.event.trend.CityTrendChartCallback;
+import com.makaan.event.city.CityByIdEvent;
+import com.makaan.event.city.CityTopLocalityEvent;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.city.City;
 import com.makaan.response.locality.Locality;
-import com.makaan.service.MakaanService;
 import com.makaan.util.AppBus;
 
 import java.lang.reflect.Type;
@@ -43,7 +41,7 @@ public class CityService implements MakaanService {
                 @Override
                 public void onSuccess(Object responseObject) {
                     City city = (City) responseObject;
-                    AppBus.getInstance().post(new GetCityByIdEvent(city));
+                    AppBus.getInstance().post(new CityByIdEvent(city));
                 }
             });
         }
@@ -59,7 +57,7 @@ public class CityService implements MakaanService {
         if (null != cityId) {
 
             Selector topLocaliltySelector = new Selector();
-            topLocaliltySelector.term(CITY, cityId.toString()).page(0, noOfTopLocalities != null ? noOfTopLocalities : 5)
+            topLocaliltySelector.term(CITY_ID, cityId.toString()).page(0, noOfTopLocalities != null ? noOfTopLocalities : 5)
                     .sort(MIN_PRICE_PER_UNIT_AREA, SORT_DESC);
 
             Type topLocalitiesListType = new TypeToken<ArrayList<Locality>>() {
@@ -72,30 +70,16 @@ public class CityService implements MakaanService {
                 @SuppressWarnings("unchecked")
                 public void onSuccess(Object responseObject) {
                     ArrayList<Locality> topLocalities = (ArrayList<Locality>) responseObject;
-                    AppBus.getInstance().post(new GetCityTopLocalityEvent(topLocalities));
+                    AppBus.getInstance().post(new CityTopLocalityEvent(topLocalities));
                 }
             });
         }
     }
 
-    /**
-     * http://marketplace-qa.makaan-ws.com/data/v1/trend/hitherto?fields=minPricePerUnitArea,localityName,projectName&filters=localityId==51549,localityId==51751,
-     * localityId==53250,localityId==53133&monthDuration=6&group=localityId,month
-     */
 
-    public void getPriceTrendForTopLocalitiesInCity(Long[] topLocalityIds, int monthDuration) {
 
-        if (null != topLocalityIds && topLocalityIds.length > 0 && monthDuration > 0) {
-            StringBuilder priceTrendUrl = new StringBuilder(ApiConstants.LOCALITY_TREND_URL);
-            priceTrendUrl.append("&").append(MONTH_DURATION).append("=").append(monthDuration).append(FILTERS).append("=");
 
-            for(int i=0 ; i < topLocalityIds.length ; i++){
-                priceTrendUrl.append("");
-            }
 
-            MakaanNetworkClient.getInstance().get(priceTrendUrl.toString(), new CityTrendChartCallback());
-        }
-    }
 
 
 }

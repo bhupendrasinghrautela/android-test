@@ -3,7 +3,7 @@ package com.makaan.constants;
 /**
  * Created by vaibhav on 04/01/16.
  */
-public class RequestConstants  {
+public class RequestConstants {
 
     public static final String SELECTOR = "selector";
     public static final String FILTERS = "filters";
@@ -11,9 +11,11 @@ public class RequestConstants  {
     public static final String SORT = "sort";
     public static final String FIELD = "field";
     public static final String SORT_ORDER = "sortOrder";
-    public static final String SORT_ASC = "SORT_ASC";
-    public static final String SORT_DESC = "SORT_DESC";
+    public static final String SORT_ASC = "ASC";
+    public static final String SORT_DESC = "DESC";
     public static final String START = "start";
+    public static final String END = "end";
+    public static final String GAP = "gap";
     public static final String ROWS = "rows";
     public static final String AND = "and";
     public static final String FIELDS = "fields";
@@ -66,12 +68,11 @@ public class RequestConstants  {
     public static final String AVG_RENTAL_DEMAND_RISE_PERCENTAGE = "avgRentalDemandRisePercentage";
     public static final String LOCALITY_HEROSHOT_IMAGE_URL = "localityHeroshotImageUrl";
     public static final String SUBURB = "suburb";
-    public static final String CITY = "city";
+
     public static final String AVG_RENT_PER_MONTH = "averageRentPerMonth";
     public static final String PROPERTY_DERIVED_INFO = "propertyDerivedInfo";
     public static final String TYPE = "type";
-
-
+    public static final String SOURCE_DOMAIN_MAKAAN = "sourceDomain=Makaan";
 
 
 }

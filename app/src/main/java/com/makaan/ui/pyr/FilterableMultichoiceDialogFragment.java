@@ -21,7 +21,7 @@ import com.makaan.response.search.Search;
 import com.makaan.response.search.SearchType;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.service.MakaanServiceFactory;
-import com.makaan.service.search.SearchService;
+import com.makaan.service.SearchService;
 import com.makaan.fragment.pyr.PyrPagePresenter;
 import com.makaan.adapter.pyr.SearchableListviewAdapter;
 import com.makaan.adapter.pyr.SelectedListViewAdapter;

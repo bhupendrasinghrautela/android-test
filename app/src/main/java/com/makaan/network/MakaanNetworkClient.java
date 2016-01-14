@@ -14,6 +14,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.GsonBuilder;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.cache.LruBitmapCache;
+import com.makaan.constants.RequestConstants;
 import com.makaan.constants.ResponseConstants;
 
 
@@ -89,7 +90,7 @@ public class MakaanNetworkClient {
 
         } else {
             final JsonObjectRequest jsonRequest = new JsonObjectRequest
-                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    (Request.Method.GET, appendSourceDomain(url), null, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
 
@@ -130,7 +131,7 @@ public class MakaanNetworkClient {
         } else {
 
             JsonObjectRequest jsonRequest = new JsonObjectRequest
-                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    (Request.Method.GET, appendSourceDomain(url), null, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             completeRequestInQueue(url);
@@ -165,7 +166,7 @@ public class MakaanNetworkClient {
                 (Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        completeRequestInQueue(url);
+                        completeRequestInQueue(appendSourceDomain(url));
                         stringRequestCallback.onSuccess(response);
 
                     }
@@ -214,16 +215,31 @@ public class MakaanNetworkClient {
         }
 
         cancelFromRequestQueue(req, tag);
+        Log.e(TAG, "URL: -> " + req.getUrl());
+
         makaanGetRequestQueue.add(req);
     }
 
 
+    private String appendSourceDomain(String url) {
+
+        if (!url.contains(RequestConstants.SOURCE_DOMAIN_MAKAAN)) {
+            if (url.contains("?")) {
+                url = url.concat("&").concat(RequestConstants.SOURCE_DOMAIN_MAKAAN);
+            } else {
+                url = url.concat("?").concat(RequestConstants.SOURCE_DOMAIN_MAKAAN);
+            }
+        }
+
+        return url;
+    }
+
     private void cancelFromRequestQueue(Request req, String tag) {
-        if(null != makaanGetRequestQueue){
-            if(tag == null && null != req){
+        if (null != makaanGetRequestQueue) {
+            if (tag == null && null != req) {
                 tag = requestUrlToTag.get(req.getUrl());
                 makaanGetRequestQueue.cancelAll(tag);
-            }else if(null != tag){
+            } else if (null != tag) {
                 makaanGetRequestQueue.cancelAll(tag);
             }
         }

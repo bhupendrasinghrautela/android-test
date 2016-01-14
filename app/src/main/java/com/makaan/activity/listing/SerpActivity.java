@@ -14,7 +14,7 @@ import com.makaan.event.listing.ListingByIdGetEvent;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.fragment.listing.ChildSerpClusterFragment;
 import com.makaan.fragment.listing.FiltersDialogFragment;
-import com.makaan.service.listing.ListingService;
+import com.makaan.service.ListingService;
 import com.makaan.fragment.listing.SerpListFragment;
 import com.squareup.otto.Subscribe;
 

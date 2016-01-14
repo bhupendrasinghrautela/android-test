@@ -8,14 +8,14 @@ import java.util.ArrayList;
 /**
  * Created by vaibhav on 11/01/16.
  */
-public class GetCityTopLocalityEvent extends MakaanEvent {
+public class CityTopLocalityEvent extends MakaanEvent {
 
     public ArrayList<Locality> topLocalitiesInCity = new ArrayList<>();
 
-    public GetCityTopLocalityEvent(ArrayList<Locality> topLocalitiesInCity) {
+    public CityTopLocalityEvent(ArrayList<Locality> topLocalitiesInCity) {
         this.topLocalitiesInCity = topLocalitiesInCity;
     }
 
-    public GetCityTopLocalityEvent() {
+    public CityTopLocalityEvent() {
     }
 }

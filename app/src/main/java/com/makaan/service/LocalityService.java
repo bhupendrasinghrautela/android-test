@@ -1,14 +1,11 @@
-package com.makaan.service.locality;
+package com.makaan.service;
 
 import com.google.gson.reflect.TypeToken;
 import com.makaan.constants.ApiConstants;
-import com.makaan.event.city.GetCityByIdEvent;
-import com.makaan.event.locality.GetLocalityByIdEvent;
+import com.makaan.event.locality.LocalityByIdEvent;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
-import com.makaan.response.city.City;
 import com.makaan.response.locality.Locality;
-import com.makaan.service.MakaanService;
 import com.makaan.util.AppBus;
 
 import java.lang.reflect.Type;
@@ -35,7 +32,7 @@ public class LocalityService implements MakaanService {
                 @Override
                 public void onSuccess(Object responseObject) {
                     Locality locality = (Locality) responseObject;
-                    AppBus.getInstance().post(new GetLocalityByIdEvent(locality));
+                    AppBus.getInstance().post(new LocalityByIdEvent(locality));
                 }
             });
         }

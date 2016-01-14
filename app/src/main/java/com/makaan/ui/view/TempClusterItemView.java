@@ -1,7 +1,6 @@
 package com.makaan.ui.view;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -15,7 +14,7 @@ import butterknife.ButterKnife;
 
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.pojo.TempClusterItem;
-import com.makaan.service.listing.ListingService;
+import com.makaan.service.ListingService;
 
 /**
  * Created by rohitgarg on 1/7/16.

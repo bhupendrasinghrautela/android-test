@@ -1,4 +1,4 @@
-package com.makaan.event.trend;
+package com.makaan.event.trend.callback;
 
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
@@ -19,19 +19,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.makaan.constants.ResponseConstants.*;
+import static com.makaan.constants.ResponseConstants.MIN_PRICE_PER_UNIT_AREA;
 
 /**
- * Created by vaibhav on 11/01/16.
+ * Created by vaibhav on 13/01/16.
+ *
  */
-public class CityTrendChartCallback extends JSONGetCallback {
-    public static final String TAG = CityTrendChartCallback.class.getSimpleName();
+public abstract class LocalityTrendCallback extends JSONGetCallback {
 
     @Override
     public void onSuccess(JSONObject dataResponse) {
-
         LocalityPriceTrendDto localityPriceTrendDto = new LocalityPriceTrendDto();
-        CityTrendEvent cityTrendEvent = new CityTrendEvent(localityPriceTrendDto);
 
 
         Type apiPriceTrendType = new TypeToken<ArrayList<ApiPriceTrend>>() {
@@ -61,13 +59,16 @@ public class CityTrendChartCallback extends JSONGetCallback {
                     }
 
                 }
-                AppBus.getInstance().post(cityTrendEvent);
+                onTrendReceived(localityPriceTrendDto);
             }
         } else {
-            cityTrendEvent.message = MessageConstants.LOCALITY_PRICE_TREND_NOT_AVAIL;
-            AppBus.getInstance().post(cityTrendEvent);
+            onTrendReceived(null);
         }
 
-
     }
+
+
+    public abstract void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto);
+
+
 }

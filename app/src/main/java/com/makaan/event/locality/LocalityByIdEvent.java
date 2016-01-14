@@ -5,14 +5,14 @@ import com.makaan.response.locality.Locality;
 /**
  * Created by vaibhav on 09/01/16.
  */
-public class GetLocalityByIdEvent {
+public class LocalityByIdEvent {
 
     public Locality locality;
 
-    public GetLocalityByIdEvent(Locality locality) {
+    public LocalityByIdEvent(Locality locality) {
         this.locality = locality;
     }
 
-    public GetLocalityByIdEvent() {
+    public LocalityByIdEvent() {
     }
 }

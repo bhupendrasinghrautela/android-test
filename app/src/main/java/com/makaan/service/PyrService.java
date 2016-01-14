@@ -1,4 +1,4 @@
-package com.makaan.service.pyr;
+package com.makaan.service;
 
 import com.makaan.constants.ApiConstants;
 import com.makaan.event.pyr.TopAgentLocalityGetCallback;

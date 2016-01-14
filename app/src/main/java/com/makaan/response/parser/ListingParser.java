@@ -144,7 +144,7 @@ public class ListingParser {
                     }
 
 
-                    listing.hasOffer = listingJson.optString(IS_OFFERED) != null && listingJson.getBoolean(IS_OFFERED);
+                    listing.hasOffer = listingJson.optString(IS_OFFERED) != null && listingJson.optBoolean(IS_OFFERED);
 
                     //listing.currentServerTime = (new Date()).valueOf();
 

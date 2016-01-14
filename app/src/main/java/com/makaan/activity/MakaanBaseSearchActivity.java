@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -22,8 +21,8 @@ import com.makaan.response.search.Search;
 import com.makaan.response.search.SearchType;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.service.MakaanServiceFactory;
-import com.makaan.service.listing.ListingService;
-import com.makaan.service.search.SearchService;
+import com.makaan.service.ListingService;
+import com.makaan.service.SearchService;
 import com.squareup.otto.Subscribe;
 
 import java.io.UnsupportedEncodingException;

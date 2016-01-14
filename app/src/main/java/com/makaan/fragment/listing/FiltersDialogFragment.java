@@ -15,14 +15,12 @@ import com.makaan.R;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.serp.FilterGroup;
-import com.makaan.service.listing.ListingService;
+import com.makaan.service.ListingService;
 import com.makaan.adapter.listing.FiltersViewAdapter;
 import com.makaan.ui.view.ExpandableHeightGridView;
 import com.makaan.util.AppBus;
-import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import butterknife.Bind;

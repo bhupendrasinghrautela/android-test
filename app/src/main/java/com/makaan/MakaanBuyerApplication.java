@@ -1,29 +1,21 @@
 package com.makaan;
 
 import android.app.Application;
-import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.Volley;
-import com.makaan.cache.LruBitmapCache;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.request.selector.Selector;
-import com.makaan.response.locality.Locality;
-import com.makaan.response.serp.FilterGroup;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.MasterDataService;
-import com.makaan.service.city.CityService;
-import com.makaan.service.listing.ListingService;
-import com.makaan.service.locality.LocalityService;
-import com.makaan.service.pyr.PyrService;
-import com.makaan.service.search.SearchService;
+import com.makaan.service.CityService;
+import com.makaan.service.ListingService;
+import com.makaan.service.LocalityService;
+import com.makaan.service.PriceTrendService;
+import com.makaan.service.PyrService;
+import com.makaan.service.SearchService;
+import com.makaan.service.TaxonomyService;
 import com.makaan.util.RandomString;
-
-import java.util.HashMap;
 
 /**
  * Created by vaibhav on 23/12/15.
@@ -52,6 +44,8 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(CityService.class , new CityService());
         MakaanServiceFactory.getInstance().registerService(PyrService.class , new PyrService());
         MakaanServiceFactory.getInstance().registerService(LocalityService.class , new LocalityService());
+        MakaanServiceFactory.getInstance().registerService(PriceTrendService.class , new PriceTrendService());
+        MakaanServiceFactory.getInstance().registerService(TaxonomyService.class , new TaxonomyService());
 
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();
