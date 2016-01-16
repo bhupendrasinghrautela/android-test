@@ -42,10 +42,11 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
     @OnClick(R.id.fetch)
     public void fetch(View view) {
 
-        //((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).handleSerpRequest(MakaanBuyerApplication.serpSelector);
-        ((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getCityById(2L);
+        MakaanBuyerApplication.serpSelector.term("cityId", "11").term("listingCategory", new String[]{"Primary", "Resale"});
+        ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).handleSerpRequest(MakaanBuyerApplication.serpSelector);
+        /*((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getCityById(2L);
         ((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getTopLocalitiesInCity(2L, 5);
-        ((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getLocalityById(50186L);
+        ((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getLocalityById(50186L);*/
     }
 
     @Subscribe
@@ -59,7 +60,7 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
 
         ArrayList<Long> topLocalities = new ArrayList<Long>();
 
-        for(Locality locality : cityTopLocalityEvent.topLocalitiesInCity){
+        for (Locality locality : cityTopLocalityEvent.topLocalitiesInCity) {
             topLocalities.add(locality.localityId);
         }
         ((PriceTrendService) (MakaanServiceFactory.getInstance().getService(PriceTrendService.class))).getPriceTrendForLocalities(topLocalities, 6, new TopLocalitiesTrendCallback());

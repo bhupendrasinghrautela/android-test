@@ -10,6 +10,8 @@ import org.json.JSONObject;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -53,13 +55,17 @@ public class Selector {
             termSelectorHashMap.put(fieldName, termSelector);
 
         } else {
-            if(clearValues) {
+            if (clearValues) {
                 termSelector.values.clear();
             }
             termSelector.values.add(value);
         }
 
         return this;
+    }
+
+    public Selector term(String fieldName, String[] values) {
+        return term(fieldName, Arrays.asList(values));
     }
 
     public Selector term(String fieldName, Iterable<String> values) {
@@ -178,7 +184,7 @@ public class Selector {
                     }
                 }
 
-                if((null != geoSelector.lat && geoSelector.lat>0) && (null != geoSelector.lon &&geoSelector.lon >0)) {
+                if ((null != geoSelector.lat && geoSelector.lat > 0) && (null != geoSelector.lon && geoSelector.lon > 0)) {
                     andStrBuilder.append(geoSelector.build());
                 }
 

@@ -92,7 +92,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpListFr
     }
 
     private void fetchData() {
-        MakaanBuyerApplication.serpSelector.term("cityId", "2");
+        MakaanBuyerApplication.serpSelector.term("cityId", "11").term("listingCategory", new String[]{"Primary","Resale"});
         new ListingService().handleSerpRequest(MakaanBuyerApplication.serpSelector);
     }
 

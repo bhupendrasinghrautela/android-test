@@ -43,7 +43,7 @@ public class ViewAdapterRings extends BaseAdapter {
 
             //using toggle button
             ToggleButton toggle = new ToggleButton(context);
-            toggle.setTextColor(context.getResources().getColorStateList(R.color.bedroom_toggle_button_text_color_selector));
+            /*toggle.setTextColor(context.getResources().getColorStateList(R.color.bedroom_toggle_button_text_color_selector));*/
             //uncomment below line
             // toggle.setBackground(context.getResources().getDrawable(R.drawable.bedroom_toggle_button_drawable));
             toggle.setTextSize(16);

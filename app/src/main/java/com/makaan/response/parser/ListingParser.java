@@ -71,6 +71,8 @@ public class ListingParser {
                     listing.bedrooms = property.optInt(BEDROOMS);
                     listing.bathrooms = property.optInt(BATHROOMS);
 
+                    listing.balcony   = property.optInt(BALCONY);
+
                     ApiIntLabel propertyType = masterDataCache.getBuyPropertyType(property.optInt(UNIT_TYPE_ID));
                     listing.propertyType = null != propertyType ? propertyType.name : null;
 
@@ -139,12 +141,14 @@ public class ListingParser {
                             listing.lisitingPostedBy.name = seller.optString(NAME);
                             //listing.lisitingPostedBy.image = sellerCompany.companyImage; //TODO: implement image
                             listing.lisitingPostedBy.rating = Math.round(sellerCompany.optInt(COMPANY_SCORE) * 10) / (10 * 2); // devided by 2 to show rating out of 5
-                            listing.lisitingPostedBy.assist = sellerCompany.getBoolean(ASSIST);
+                            listing.lisitingPostedBy.assist = sellerCompany.optBoolean(ASSIST);
                         }
                     }
 
 
                     listing.hasOffer = listingJson.optString(IS_OFFERED) != null && listingJson.optBoolean(IS_OFFERED);
+                    listing.mainImageUrl = listingJson.optString(MAIN_IMAGE_URL);
+                    listing.imageCount = listingJson.optInt(IMAGE_COUNT);
 
                     //listing.currentServerTime = (new Date()).valueOf();
 

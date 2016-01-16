@@ -26,6 +26,8 @@ public class ResponseConstants {
     public static final String ID = "id";
     public static final String BEDROOMS = "bedrooms";
     public static final String BATHROOMS = "bathrooms";
+    public static final String BALCONY = "balcony";
+
     public static final String DESCRIPTION = "description";
     public static final String SIZE = "size";
     public static final String MEASURE = "measure";
@@ -51,6 +53,8 @@ public class ResponseConstants {
     public static final String COMPANY_SCORE = "companyScore";
     public static final String ASSIST = "assist";
     public static final String IS_OFFERED = "isOffered";
+    public static final String MAIN_IMAGE_URL = "mainImageURL";
+    public static final String IMAGE_COUNT = "imageCount";
     public static final String TITLE = "title";
     public static final String ALT_TEXT = "altText";
     public static final String ABSOLUTE_PATH = "absolutePath";
