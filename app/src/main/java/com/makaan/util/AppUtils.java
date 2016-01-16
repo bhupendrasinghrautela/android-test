@@ -17,6 +17,10 @@ public class AppUtils {
 
     public static SimpleDateFormat ddMMYYFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
+    public static String stripHtml(String input) {
+        return android.text.Html.fromHtml(input).toString();
+    }
+
     public static boolean haveNetworkConnection(Context activityContext) {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
@@ -60,7 +64,7 @@ public class AppUtils {
 
 
     public static String getDateStringFromEpoch(String epochTime) {
-        if(epochTime != null && !TextUtils.isEmpty(epochTime)) {
+        if (epochTime != null && !TextUtils.isEmpty(epochTime)) {
             return ddMMYYFormatter.format(getDateFromEpoch(epochTime));
         }
         return "";
@@ -96,8 +100,6 @@ public class AppUtils {
         }
         return contentTrimmed.toString();
     }
-
-
 
 
 }
