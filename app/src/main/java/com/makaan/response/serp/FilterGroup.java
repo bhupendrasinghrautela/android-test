@@ -14,7 +14,7 @@ import java.util.LinkedHashMap;
 /**
  * Created by vaibhav on 04/01/16.
  */
-public class FilterGroup implements Parcelable, FinderFilterable {
+public class FilterGroup implements Parcelable, FinderFilterable, Cloneable {
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public FilterGroup createFromParcel(Parcel in) {
@@ -41,6 +41,7 @@ public class FilterGroup implements Parcelable, FinderFilterable {
         this.displayName = in.readString();
         this.internalName = in.readString();
         this.displayOrder = in.readInt();
+        this.layoutType = in.readInt();
 
         this.termFilterValues = new ArrayList<>();
         in.readTypedList(termFilterValues, TermFilter.CREATOR);
@@ -52,6 +53,21 @@ public class FilterGroup implements Parcelable, FinderFilterable {
 
 
     public FilterGroup() {
+    }
+
+    public FilterGroup(FilterGroup filterGroup) throws CloneNotSupportedException {
+        this.displayName = filterGroup.displayName;
+        this.internalName = filterGroup.internalName;
+        this.displayOrder = filterGroup.displayOrder;
+        this.layoutType = filterGroup.layoutType;
+
+        for(TermFilter filter : filterGroup.termFilterValues) {
+            this.termFilterValues.add(filter.clone());
+        }
+
+        for(RangeFilter filter : filterGroup.rangeFilterValues) {
+            this.rangeFilterValues.add(filter.clone());
+        }
     }
 
     @Override
@@ -88,5 +104,16 @@ public class FilterGroup implements Parcelable, FinderFilterable {
 
     }
 
+    @Override
+    public FilterGroup clone() throws CloneNotSupportedException {
+        return new FilterGroup(this);
+    }
 
+    public void applyFilters(FilterGroup filterGroup) {
+        this.termFilterValues = new ArrayList<>();
+        this.rangeFilterValues = new ArrayList<>();
+
+        this.termFilterValues.addAll(filterGroup.termFilterValues);
+        this.rangeFilterValues.addAll(filterGroup.rangeFilterValues);
+    }
 }

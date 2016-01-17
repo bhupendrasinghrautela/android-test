@@ -2,75 +2,69 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="6dp"
-    android:paddingRight="6dp"
-    android:paddingTop="8dp"
-    android:background="@color/white"
-    >
-
-    <LinearLayout
-        android:id="@+id/search_result_item_header_linear_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="4dp"
-        android:visibility="gone"
-        >
-        <ImageView
-            android:id="@+id/search_result_item_header_image_view"
-            android:layout_width="36dp"
-            android:layout_height="36dp" />
-        <TextView
-            android:id="@+id/search_result_item_header_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="properties near my location" />
-    </LinearLayout>
-    <View
-        android:id="@+id/search_result_item_separator_view"
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:background="@color/app_grey"
-        />
+    android:background="@color/white" >
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/search_result_item_view_padding_bottom"
+        android:paddingTop="@dimen/search_result_item_view_padding_top">
         <ImageView
-            android:id="@+id/search_result_item_property_image_view"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:id="@+id/search_result_item_image_view"
+            android:layout_width="@dimen/search_result_item_image_width"
+            android:layout_height="@dimen/search_result_item_image_height"
+            android:layout_marginLeft="@dimen/search_result_item_image_margin_left"
+            android:layout_marginStart="@dimen/search_result_item_image_margin_left"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
+            android:src="@drawable/search_history"
             />
         <TextView
-            android:id="@+id/search_result_item_property_name_text_view"
+            android:id="@+id/search_result_item_type_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:textSize="12sp"
-            android:text="raheja vihar"
+            android:layout_marginRight="@dimen/search_result_item_type_text_view_margin_right"
+            android:layout_marginEnd="@dimen/search_result_item_type_text_view_margin_right"
+            android:textSize="@dimen/search_result_item_type_text_view_text_size"
+            android:textColor="@color/search_result_item_type_text_color"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+        <TextView
+            android:id="@+id/search_result_item_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/search_result_item_name_text_view_margin_left"
+            android:layout_marginStart="@dimen/search_result_item_name_text_view_margin_left"
+            android:layout_marginRight="@dimen/search_result_item_type_text_view_margin_right"
+            android:layout_marginEnd="@dimen/search_result_item_type_text_view_margin_right"
+            android:textSize="@dimen/search_result_item_name_text_view_text_size"
+            android:textColor="@color/search_result_item_name_text_color"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@id/search_result_item_property_image_view" />
+            android:layout_toRightOf="@id/search_result_item_image_view"
+            android:layout_toEndOf="@id/search_result_item_image_view"
+            android:layout_toLeftOf="@id/search_result_item_type_text_view"
+            android:layout_toStartOf="@id/search_result_item_type_text_view" />
         <TextView
-            android:id="@+id/search_result_item_property_address_text_view"
+            android:id="@+id/search_result_item_address_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:textSize="10sp"
-            android:text="powai, mumbai"
-            android:layout_below="@id/search_result_item_property_name_text_view"
-            android:layout_toRightOf="@id/search_result_item_property_image_view" />
-        <TextView
-            android:id="@+id/search_result_item_property_type_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:textSize="12sp"
-            android:text="locality"
-            android:layout_alignParentRight="true"/>
-
+            android:layout_marginLeft="@dimen/search_result_item_address_text_view_margin_left"
+            android:layout_marginStart="@dimen/search_result_item_address_text_view_margin_left"
+            android:layout_marginTop="@dimen/search_result_item_address_text_view_margin_top"
+            android:textSize="@dimen/search_result_item_address_text_view_text_size"
+            android:textColor="@color/search_result_item_address_text_color"
+            android:layout_below="@id/search_result_item_name_text_view"
+            android:layout_toRightOf="@id/search_result_item_image_view"
+            android:layout_toEndOf="@id/search_result_item_image_view" />
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/search_result_item_empty_view_height"
+        android:layout_marginLeft="@dimen/search_result_item_empty_view_margin_left"
+        android:layout_marginStart="@dimen/search_result_item_empty_view_margin_left"
+        android:layout_marginRight="@dimen/search_result_item_empty_view_margin_right"
+        android:layout_marginEnd="@dimen/search_result_item_empty_view_margin_right"
+        android:background="@color/search_result_item_empty_view_background_color" />
 
 </LinearLayout>

@@ -37,8 +37,10 @@ public class ListingViewPager extends ViewPager{
         mListingPagerAdapter = new ListingPagerAdapter(mContext);
         setAdapter(mListingPagerAdapter);
         setClipToPadding(false);
-        setPageMargin(MARGIN);
-        setPadding(H_PADDING, 0, H_PADDING, 0);
+        setPageMargin(mContext.getResources().getDimensionPixelSize(R.dimen.map_listing_view_pager_page_gap));
+        setPadding(mContext.getResources().getDimensionPixelSize(R.dimen.map_listing_view_pager_page_left_padding), 0,
+                mContext.getResources().getDimensionPixelSize(R.dimen.map_listing_view_pager_page_right_padding),
+                mContext.getResources().getDimensionPixelSize(R.dimen.map_listing_view_pager_page_bottom_padding));
         setOffscreenPageLimit(2);
     }
 

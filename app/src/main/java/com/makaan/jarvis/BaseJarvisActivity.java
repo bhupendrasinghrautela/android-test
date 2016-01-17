@@ -1,5 +1,6 @@
 package com.makaan.jarvis;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.LayoutRes;
@@ -44,16 +45,16 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
     public void startActivity(Intent intent){
         if(!isJarvisSupported()){
-            this.startActivity(intent);
+            super.startActivity(intent);
             return;
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptionsCompat options = ActivityOptionsCompat.
                     makeSceneTransitionAnimation(this, mJarvisHead, getString(R.string.jarvis_button_transition));
-            startActivity(intent, options.toBundle());
+            super.startActivity(intent, options.toBundle());
         }
         else {
-            startActivity(intent);
+            super.startActivity(intent);
         }
     }
 

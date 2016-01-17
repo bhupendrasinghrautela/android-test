@@ -110,28 +110,66 @@
           {
             "displayName": "1",
             "displayOrder": "1",
-            "fieldName": "bathroom",
+            "fieldName": "bathrooms",
             "value": "1",
             "selected": false
           },
           {
             "displayName": "2",
             "displayOrder": "2",
-            "fieldName": "bathroom",
+            "fieldName": "bathrooms",
             "value": "2",
             "selected": false
           },
           {
             "displayName": "3",
             "displayOrder": "3",
-            "fieldName": "bathroom",
+            "fieldName": "bathrooms",
             "value": "3",
             "selected": false
           },
           {
             "displayName": "4",
             "displayOrder": "4",
-            "fieldName": "bathroom",
+            "fieldName": "bathrooms",
+            "value": "4",
+            "selected": false
+          }
+        ],
+        "rangeFilterValues": [
+        ]
+      },
+      {
+        "displayName": "under construction (possession in)",
+        "internalName": "i_possession in",
+        "displayOrder": "5",
+        "layoutType": "1",
+        "termFilterValues": [
+          {
+            "displayName": "1yr",
+            "displayOrder": "1",
+            "fieldName": "listingPossessionDate",
+            "value": "1",
+            "selected": false
+          },
+          {
+            "displayName": "2yrs",
+            "displayOrder": "2",
+            "fieldName": "listingPossessionDate",
+            "value": "2",
+            "selected": false
+          },
+          {
+            "displayName": "3yrs",
+            "displayOrder": "3",
+            "fieldName": "listingPossessionDate",
+            "value": "3",
+            "selected": false
+          },
+          {
+            "displayName": "any",
+            "displayOrder": "4",
+            "fieldName": "listingPossessionDate",
             "value": "4",
             "selected": false
           }
@@ -142,34 +180,34 @@
       {
         "displayName": "ready to move (age by property)",
         "internalName": "i_ready_to_move",
-        "displayOrder": "5",
+        "displayOrder": "6",
         "layoutType": "1",
         "termFilterValues": [
           {
             "displayName": "1yr",
             "displayOrder": "1",
-            "fieldName": "readyToMove",
+            "fieldName": "ageOfProperty",
             "value": "1",
             "selected": false
           },
           {
             "displayName": "2yr",
             "displayOrder": "2",
-            "fieldName": "readyToMove",
+            "fieldName": "ageOfProperty",
             "value": "2",
             "selected": false
           },
           {
             "displayName": "5yr",
             "displayOrder": "3",
-            "fieldName": "readyToMove",
+            "fieldName": "ageOfProperty",
             "value": "3",
             "selected": false
           },
           {
-            "displayName": ">5yr",
+            "displayName": "any",
             "displayOrder": "4",
-            "fieldName": "readyToMove",
+            "fieldName": "ageOfProperty",
             "value": "4",
             "selected": false
           }
@@ -180,14 +218,14 @@
       {
         "displayName": "area\nsq ft",
         "internalName": "i_sq_ft",
-        "displayOrder": "6",
+        "displayOrder": "7",
         "layoutType": "2",
         "termFilterValues": [],
         "rangeFilterValues": [
           {
             "displayName": "",
             "displayOrder": "1",
-            "fieldName": "sq_ft",
+            "fieldName": "size",
             "minValue": 100,
             "maxValue": 2500,
             "selected": false
@@ -197,28 +235,28 @@
       {
         "displayName": "new/resale",
         "internalName": "i_new_resale",
-        "displayOrder": "7",
+        "displayOrder": "8",
         "layoutType": "4",
         "termFilterValues": [
           {
             "displayName": "new",
             "displayOrder": "1",
-            "fieldName": "newResale",
-            "value": "1",
+            "fieldName": "listingCategory",
+            "value": "Primary",
             "selected": false
           },
           {
             "displayName": "resale",
             "displayOrder": "2",
-            "fieldName": "newResale",
-            "value": "2",
+            "fieldName": "listingCategory",
+            "value": "Resale",
             "selected": false
           },
           {
             "displayName": "both",
             "displayOrder": "3",
-            "fieldName": "newResale",
-            "value": "3",
+            "fieldName": "listingCategory",
+            "value": "-1",
             "selected": false
           }
         ],
@@ -228,104 +266,28 @@
       {
         "displayName": "listed by",
         "internalName": "i_listed_by",
-        "displayOrder": "8",
+        "displayOrder": "9",
         "layoutType": "3",
         "termFilterValues": [
           {
             "displayName": "agent",
             "displayOrder": "1",
-            "fieldName": "listedBy",
-            "value": "1",
+            "fieldName": "listingSellerCompanyType",
+            "value": "Broker",
             "selected": false
           },
           {
             "displayName": "builder",
             "displayOrder": "2",
-            "fieldName": "listedBy",
-            "value": "2",
+            "fieldName": "listingSellerCompanyType",
+            "value": "Builder",
             "selected": false
           },
           {
             "displayName": "owner",
             "displayOrder": "3",
-            "fieldName": "listedBy",
-            "value": "3",
-            "selected": false
-          }
-        ],
-        "rangeFilterValues": [
-        ]
-      },
-      {
-        "displayName": "furnishing status",
-        "internalName": "i_furnishing_status",
-        "displayOrder": "9",
-        "layoutType": "3",
-        "termFilterValues": [
-          {
-            "displayName": "unfurnished",
-            "displayOrder": "1",
-            "fieldName": "furnishingStatus",
-            "value": "1",
-            "selected": false
-          },
-          {
-            "displayName": "semi-furnished",
-            "displayOrder": "2",
-            "fieldName": "furnishingStatus",
-            "value": "2",
-            "selected": false
-          },
-          {
-            "displayName": "fully furnished",
-            "displayOrder": "3",
-            "fieldName": "furnishingStatus",
-            "value": "3",
-            "selected": false
-          }
-        ],
-        "rangeFilterValues": [
-        ]
-      },
-      {
-        "displayName": "top builders",
-        "internalName": "i_top_builders",
-        "displayOrder": "10",
-        "layoutType": "3",
-        "termFilterValues": [
-          {
-            "displayName": "dlf builders",
-            "displayOrder": "1",
-            "fieldName": "topbuilders",
-            "value": "1",
-            "selected": false
-          },
-          {
-            "displayName": "panchseel builders",
-            "displayOrder": "2",
-            "fieldName": "topbuilders",
-            "value": "2",
-            "selected": false
-          },
-          {
-            "displayName": "amrapali group",
-            "displayOrder": "3",
-            "fieldName": "topbuilders",
-            "value": "3",
-            "selected": false
-          },
-          {
-            "displayName": "ajanta group",
-            "displayOrder": "4",
-            "fieldName": "topbuilders",
-            "value": "4",
-            "selected": false
-          },
-          {
-            "displayName": "supertech group",
-            "displayOrder": "5",
-            "fieldName": "topbuilders",
-            "value": "5",
+            "fieldName": "listingSellerCompanyType",
+            "value": "Owner",
             "selected": false
           }
         ],
