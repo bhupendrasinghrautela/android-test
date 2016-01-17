@@ -55,6 +55,7 @@ public class ResponseConstants {
     public static final String IS_OFFERED = "isOffered";
     public static final String MAIN_IMAGE_URL = "mainImageURL";
     public static final String IMAGE_COUNT = "imageCount";
+    public static final String SELLER_ID = "sellerId";
     public static final String TITLE = "title";
     public static final String ALT_TEXT = "altText";
     public static final String ABSOLUTE_PATH = "absolutePath";

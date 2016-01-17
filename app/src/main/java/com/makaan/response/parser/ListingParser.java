@@ -150,6 +150,7 @@ public class ListingParser {
                     listing.hasOffer = listingJson.optString(IS_OFFERED) != null && listingJson.optBoolean(IS_OFFERED);
                     listing.mainImageUrl = listingJson.optString(MAIN_IMAGE_URL);
                     listing.imageCount = listingJson.optInt(IMAGE_COUNT);
+                    listing.sellerId = listingJson.optLong(SELLER_ID);
 
                     //listing.currentServerTime = (new Date()).valueOf();
 

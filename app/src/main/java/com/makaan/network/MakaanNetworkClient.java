@@ -184,6 +184,10 @@ public class MakaanNetworkClient {
     }
 
 
+   /* public void addSyncGet(JsonObjectRequest jsonObjectRequest) {
+        makaanGetRequestQueue.add(jsonObjectRequest);
+    }*/
+
     public void get(final String inputUrl, final StringRequestCallback stringRequestCallback, String tag) {
 
         final String urlToHit = appendSourceDomain(inputUrl);

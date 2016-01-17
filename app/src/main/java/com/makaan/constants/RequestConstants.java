@@ -51,6 +51,7 @@ public class RequestConstants {
     public static final String SUPPLY_RATE = "supplyRate";
     public static final String LABEL = "label";
     public static final String LOCALITY_ID = "localityId";
+    public static final String USER_ID = "userId";
     public static final String LOCALITY_NAME = "localityName";
     public static final String PROJECT_NAME = "projectName";
     public static final String MONTH_DURATION = "monthDuration";

@@ -25,6 +25,7 @@ public class Listing {
 
     public String postedDate, mainImageUrl;
     public Integer lisitingId;
+    public Long sellerId;
     public String description;
     public Integer bedrooms, bathrooms, balcony;
 

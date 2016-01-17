@@ -8,6 +8,7 @@ import com.google.gson.GsonBuilder;
 import com.makaan.jarvis.JarvisServiceCreator;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.request.selector.Selector;
+import com.makaan.service.ImageService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.MasterDataService;
 import com.makaan.service.CityService;
@@ -17,6 +18,7 @@ import com.makaan.service.PriceTrendService;
 import com.makaan.service.PyrService;
 import com.makaan.service.SearchService;
 import com.makaan.service.TaxonomyService;
+import com.makaan.service.UserService;
 import com.makaan.util.RandomString;
 
 /**
@@ -49,6 +51,8 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(LocalityService.class , new LocalityService());
         MakaanServiceFactory.getInstance().registerService(PriceTrendService.class , new PriceTrendService());
         MakaanServiceFactory.getInstance().registerService(TaxonomyService.class , new TaxonomyService());
+        MakaanServiceFactory.getInstance().registerService(UserService.class , new UserService());
+        MakaanServiceFactory.getInstance().registerService(ImageService.class , new ImageService());
 
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();

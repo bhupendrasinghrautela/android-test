@@ -15,6 +15,9 @@ public class ApiConstants {
     public static final String PROPERTY_AMENITY = BASE_URL.concat("/data/v1/entity/master-amenities");
     public static final String MASTER_FURNISHINGS = BASE_URL.concat("/data/v1/entity/master-furnishings");
 
+    public static final String COMPANY_USERS = BASE_URL.concat("/userservice/data/v1/entity/company-users");
+    public static final String LISTING_IMAGE = BASE_URL.concat("/data/v1/entity/image?objectType=listing&objectId=");
+
     public static final String LISTING = BASE_URL.concat("/app/v1/listing/");
 
     public static final String CITY_DATA = BASE_URL.concat("/data/v1/entity/city");
