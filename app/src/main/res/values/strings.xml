@@ -38,5 +38,10 @@
     <string name="relevance">relevance</string>
     <string name="apply">apply</string>
 
+    <string name="jarvis_button_transition">jarvistran</string>
+
+
+
+
 
 </resources>
