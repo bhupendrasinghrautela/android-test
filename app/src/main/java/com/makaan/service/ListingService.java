@@ -5,7 +5,7 @@ import com.makaan.event.listing.ListingByIdCallback;
 import com.makaan.event.serp.BaseSerpCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.request.selector.Selector;
-import com.makaan.service.MakaanService;
+import static com.makaan.constants.RequestConstants.*;
 
 /**
  * Created by vaibhav on 23/12/15.
@@ -38,6 +38,9 @@ public class ListingService implements MakaanService {
     public void getListingDetail(Long listingId) {
 
         if (null != listingId) {
+
+            Selector listingDetailSelector = new Selector();
+            listingDetailSelector.fields(new String[]{NEIGHBOURHOOD_AMENITIES_IDS, FURNISHINGS});
             String listingDetailURL = ApiConstants.LISTING.concat(listingId.toString());
 
             MakaanNetworkClient.getInstance().get(listingDetailURL, new ListingByIdCallback());

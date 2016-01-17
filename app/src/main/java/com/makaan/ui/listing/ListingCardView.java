@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
-import com.makaan.ui.listing.BaseCardView;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.listing.Listing;
 import com.makaan.util.StringUtil;
@@ -59,7 +58,7 @@ public class ListingCardView extends BaseCardView<Listing> {
             mSizeTextView.setText(item.sizeInfo);
         }
 
-        mNameTextView.setText(item.project.fullName);
+        mNameTextView.setText(item.project.getFullName());
 
     }
 }

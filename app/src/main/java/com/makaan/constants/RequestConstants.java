@@ -72,6 +72,8 @@ public class RequestConstants {
     public static final String AVG_RENT_PER_MONTH = "averageRentPerMonth";
     public static final String PROPERTY_DERIVED_INFO = "propertyDerivedInfo";
     public static final String TYPE = "type";
+    public static final String NEIGHBOURHOOD_AMENITIES_IDS = "neighbourhoodAmenitiesIds";
+    public static final String FURNISHINGS = "furnishings";
     public static final String SOURCE_DOMAIN_MAKAAN = "sourceDomain=Makaan";
 
 

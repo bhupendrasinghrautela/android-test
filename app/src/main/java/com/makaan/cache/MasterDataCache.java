@@ -1,19 +1,17 @@
 package com.makaan.cache;
 
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
 
+import com.makaan.response.master.Amenity;
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.master.ApiLabel;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.util.Preference;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.logging.Filter;
 
 /**
  * Created by vaibhav on 29/12/15.
@@ -25,6 +23,8 @@ public class MasterDataCache {
     private HashMap<Integer, ApiIntLabel> idToRentPropertyType = new HashMap<>();
     private HashMap<Integer, ApiIntLabel> idToPropertyStatus = new HashMap<>();
     private HashMap<String, String> apiLabels = new HashMap<>();
+    private HashMap<Long, Amenity> idToAmenity = new HashMap<>();
+
     private HashMap<String, FilterGroup> internalNameToFilterGrpBuy = new HashMap<>();
     private HashMap<String, FilterGroup> internalNameToFilterGrpRent = new HashMap<>();
 
@@ -36,6 +36,10 @@ public class MasterDataCache {
 
     public static MasterDataCache getInstance() {
         return instance;
+    }
+
+    public void addAmenity(){
+
     }
 
     public void addBuyPropertyType(ApiIntLabel propertyType) {

@@ -117,11 +117,11 @@ public class ListingParser {
                     //if (null != propertyStatus && propertyStatus.equalsIgnoreCase(ACTUAL_PROPERTY_STATUS)) {
                     listing.project.actual = true;
                     listing.project.name = project.optString(NAME);
-                    listing.project.fullName = project.optString(NAME);
+                    //listing.project.fullName = project.optString(NAME);
                     listing.project.url = project.optString(URL);
                     if (null != builder) {
                         listing.project.builderName = builder.optString(NAME);
-                        listing.project.fullName = builder.optString(NAME) + ' ' + project.optString(NAME);
+                        //listing.project.fullName = builder.optString(NAME) + ' ' + project.optString(NAME);
                     }
                     // }
 
