@@ -51,4 +51,28 @@
     <color name="fragment_dialog_filters_toggle_button_normal_stroke_color">#757575</color>
     <color name="fragment_dialog_filters_item_empty_view_background_color">#4C979797</color>
 
+
+    <!---Jarvis work in progress to be refactored-->
+    <color name="body_background">#e8e8e8</color>
+    <color name="body_background_green">#82e783</color>
+    <color name="server_status_bar">#2b2b2b</color>
+    <color name="title_gray">#434343</color>
+    <color name="bg_msg_you">#eb4433</color>
+    <color name="bg_msg_from">#1e6258</color>
+    <color name="msg_border_color">#a1a1a1</color>
+    <color name="bg_btn_join">#1e6258</color>
+    <color name="bg_msg_input">#e8e8e8</color>
+    <color name="text_msg_input">#626262</color>
+    <color name="lblFromName">#777777</color>
+    <color name="chat_divider">#e0e0e0</color>
+    <color name="chat_card_stroke">#cccccc</color>
+
+    <!--PropertyAmenity-->
+    <color name="amenity_title_color">#353535</color>
+    <color name="amenity_name_color">#444444</color>
+    <color name="amenity_distance_color">#e71c28</color>
+    <color name="amenity_item_bg">#f2f2f2</color>
+
+
+
 </resources>

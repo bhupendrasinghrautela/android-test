@@ -17,4 +17,27 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+
+    <style name="NoActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorAccent</item>
+    </style>
+
+
+    <style name="Theme.FloatingWindow.Popup" parent="Theme.AppCompat.Light.NoActionBar" >
+
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">stateUnchanged</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:background">@drawable/jarvis_chat_bg</item>
+        <item name="android:windowBackground">@drawable/jarvis_chat_bg</item>
+        <item name="android:backgroundDimEnabled">true</item>
+
+    </style>
+
 </resources>

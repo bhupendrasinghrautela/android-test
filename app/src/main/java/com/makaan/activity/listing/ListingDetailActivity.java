@@ -10,10 +10,8 @@ import com.makaan.event.city.CityTopLocalityEvent;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.event.trend.callback.TopLocalitiesTrendCallback;
 import com.makaan.response.locality.Locality;
-import com.makaan.service.MakaanServiceFactory;
-import com.makaan.service.CityService;
 import com.makaan.service.ListingService;
-import com.makaan.service.LocalityService;
+import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PriceTrendService;
 import com.squareup.otto.Subscribe;
 
@@ -42,12 +40,19 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
     @OnClick(R.id.fetch)
     public void fetch(View view) {
 
+        //((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyAmenities();
+        //((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateMasterFunishings();
+
+
         MakaanBuyerApplication.serpSelector.term("cityId", "11").term("listingCategory", new String[]{"Primary", "Resale"});
         //((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).handleSerpRequest(MakaanBuyerApplication.serpSelector);
         //((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getCityById(11L);
-        ((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getTopLocalitiesInCity(11L, 5);
+        //((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getTopLocalitiesInCity(11L, 5);
         //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getLocalityById(50186L);
+        ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getListingDetail(429713L);
     }
+
+
 
     @Subscribe
     public void onResults(SerpGetEvent serpGetEvent) {
@@ -67,4 +72,8 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
 
     }
 
+    @Override
+    public boolean isJarvisSupported() {
+        return true;
+    }
 }

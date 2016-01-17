@@ -1,6 +1,6 @@
 package com.makaan.response.search;
 
-import com.makaan.response.BaseJsonModel;
+import com.makaan.response.BaseResponse;
 
 import java.util.ArrayList;
 
@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * A model for typeahead getSearchResult response
  * 
  * */
-public class SearchResponse extends BaseJsonModel {
+public class SearchResponse extends BaseResponse {
 
     private int totalCount;
     private ArrayList<Search> data;

@@ -35,8 +35,7 @@ public class CityService implements MakaanService {
 
             String cityUrl = ApiConstants.CITY.concat(cityId.toString()).concat("?").concat(citySelector.build());
 
-            Type cityType = new TypeToken<City>() {
-            }.getType();
+            Type cityType = new TypeToken<City>() {}.getType();
 
             MakaanNetworkClient.getInstance().get(cityUrl, cityType, new ObjectGetCallback() {
                 @Override

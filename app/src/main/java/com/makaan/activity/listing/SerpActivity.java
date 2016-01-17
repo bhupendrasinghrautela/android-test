@@ -11,16 +11,13 @@ import android.widget.TextView;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
-import com.makaan.event.listing.ListingByIdGetEvent;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.fragment.listing.ChildSerpClusterFragment;
 import com.makaan.fragment.listing.FiltersDialogFragment;
-
-import com.makaan.service.ListingService;
+import com.makaan.fragment.listing.SerpListFragment;
 import com.makaan.fragment.listing.SerpMapFragment;
 import com.makaan.response.search.event.SearchResultEvent;
-
-import com.makaan.fragment.listing.SerpListFragment;
+import com.makaan.service.ListingService;
 import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
@@ -136,7 +133,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpListFr
         }
     }
 
-    @Subscribe
+   /* @Subscribe
     public void onResults(ListingByIdGetEvent listingByIdGetEvent) {
         if (isChildSerp) {
             setShowSearchBar(false);
@@ -170,7 +167,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpListFr
                 mListingFragment.updateListings(listingByIdGetEvent.listing);
             }
         }
-    }
+    }*/
 
     @Override
     public SerpGetEvent getListings(int flag) {
@@ -210,4 +207,10 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpListFr
     public void dialogDismissed() {
         mAppliedFiltersCountTextView.setText(String.valueOf(MakaanBuyerApplication.serpSelector.getAppliedFilterCount()));
     }
+
+    @Override
+    public boolean isJarvisSupported() {
+        return true;
+    }
+
 }

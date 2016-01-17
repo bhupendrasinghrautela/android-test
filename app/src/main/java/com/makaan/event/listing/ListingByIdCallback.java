@@ -1,3 +1,4 @@
+/*
 package com.makaan.event.listing;
 
 import android.util.Log;
@@ -13,10 +14,12 @@ import org.json.JSONObject;
 
 import static com.makaan.constants.MessageConstants.*;
 
+*/
 /**
  * Created by vaibhav on 07/01/16.
  *
- */
+ *//*
+
 public class ListingByIdCallback extends JSONGetCallback {
 
     public static final String TAG = MakaanNetworkClient.class.getSimpleName();
@@ -43,3 +46,4 @@ public class ListingByIdCallback extends JSONGetCallback {
         }
     }
 }
+*/

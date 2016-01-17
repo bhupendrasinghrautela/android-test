@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import com.makaan.jarvis.JarvisServiceCreator;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.request.selector.Selector;
 import com.makaan.service.MakaanServiceFactory;
@@ -36,6 +38,7 @@ public class MakaanBuyerApplication extends Application {
         super.onCreate();
 
         MakaanNetworkClient.init(this);
+        JarvisServiceCreator.create(this);
         gson = new GsonBuilder().serializeNulls().disableHtmlEscaping().create();
 
         MakaanServiceFactory.getInstance().registerService(MasterDataService.class, new MasterDataService());
@@ -53,7 +56,9 @@ public class MakaanBuyerApplication extends Application {
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateRentPropertyTypes();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateFilterGroupsBuy();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateFilterGroupsRent();
-
+        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateAmenityMap();
+        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyAmenities();
+        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateMasterFunishings();
 
     }
 
