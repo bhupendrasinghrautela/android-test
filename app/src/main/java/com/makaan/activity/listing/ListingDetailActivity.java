@@ -44,11 +44,10 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
     public void fetch(View view) {
 
         MakaanBuyerApplication.serpSelector.term("cityId", "11").term("listingCategory", new String[]{"Primary", "Resale"});
-        ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).handleSerpRequest(MakaanBuyerApplication.serpSelector);
-        /*((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getCityById(2L);
-        ((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getTopLocalitiesInCity(2L, 5);
-        ((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getLocalityById(50186L);*/
-
+        //((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).handleSerpRequest(MakaanBuyerApplication.serpSelector);
+        //((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getCityById(11L);
+        ((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getTopLocalitiesInCity(11L, 5);
+        //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getLocalityById(50186L);
     }
 
 

@@ -72,6 +72,7 @@ public class ListingParser {
                     listing.bathrooms = property.optInt(BATHROOMS);
 
                     listing.balcony   = property.optInt(BALCONY);
+                    listing.id = listingJson.optLong(ID);
 
                     ApiIntLabel propertyType = masterDataCache.getBuyPropertyType(property.optInt(UNIT_TYPE_ID));
                     listing.propertyType = null != propertyType ? propertyType.name : null;
@@ -138,7 +139,7 @@ public class ListingParser {
                         if (listing.lisitingPostedBy.type.equalsIgnoreCase(POSTED_BY_BROKER)
                                 || listing.lisitingPostedBy.type.equalsIgnoreCase(POSTED_BY_OWNER)
                                 || listing.lisitingPostedBy.type.equalsIgnoreCase(POSTED_BY_BUILDER)) {
-                            listing.lisitingPostedBy.name = seller.optString(NAME);
+                            listing.lisitingPostedBy.name = sellerCompany.optString(NAME);
                             //listing.lisitingPostedBy.image = sellerCompany.companyImage; //TODO: implement image
                             listing.lisitingPostedBy.rating = Math.round(sellerCompany.optInt(COMPANY_SCORE) * 10) / (10 * 2); // devided by 2 to show rating out of 5
                             listing.lisitingPostedBy.assist = sellerCompany.optBoolean(ASSIST);

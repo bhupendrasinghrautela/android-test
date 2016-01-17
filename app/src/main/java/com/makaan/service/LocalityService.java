@@ -7,6 +7,7 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.response.locality.Locality;
 import com.makaan.util.AppBus;
+import com.makaan.util.AppUtils;
 
 import java.lang.reflect.Type;
 
@@ -32,6 +33,7 @@ public class LocalityService implements MakaanService {
                 @Override
                 public void onSuccess(Object responseObject) {
                     Locality locality = (Locality) responseObject;
+                    locality.description = AppUtils.stripHtml(locality.description);
                     AppBus.getInstance().post(new LocalityByIdEvent(locality));
                 }
             });
