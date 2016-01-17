@@ -18,7 +18,10 @@ public class AppUtils {
     public static SimpleDateFormat ddMMYYFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
     public static String stripHtml(String input) {
-        return android.text.Html.fromHtml(input).toString();
+        String result =  android.text.Html.fromHtml(input).toString();
+        result = result.replaceAll("\\n","");
+        result = result.replaceAll("\\t","");
+        return result;
     }
 
     public static boolean haveNetworkConnection(Context activityContext) {
@@ -98,7 +101,9 @@ public class AppUtils {
             contentTrimmed.append(text);
 
         }
-        return contentTrimmed.toString();
+        String result =  contentTrimmed.toString();
+
+        return stripHtml(result);
     }
 
 
