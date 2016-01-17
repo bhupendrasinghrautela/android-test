@@ -3,7 +3,7 @@ package com.makaan.response;
 /**
  * Created by sunil on 03/12/15.
  */
-public class BaseJsonModel {
+public class BaseResponse {
 
     private String statusCode;
     private String version;

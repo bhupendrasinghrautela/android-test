@@ -1,6 +1,7 @@
 package com.makaan.activity.listing;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -15,11 +16,9 @@ import com.makaan.event.listing.ListingByIdGetEvent;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.fragment.listing.ChildSerpClusterFragment;
 import com.makaan.fragment.listing.FiltersDialogFragment;
-
 import com.makaan.service.ListingService;
 import com.makaan.fragment.listing.SerpMapFragment;
 import com.makaan.response.search.event.SearchResultEvent;
-
 import com.makaan.fragment.listing.SerpListFragment;
 import com.squareup.otto.Subscribe;
 
@@ -210,4 +209,10 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpListFr
     public void dialogDismissed() {
         mAppliedFiltersCountTextView.setText(String.valueOf(MakaanBuyerApplication.serpSelector.getAppliedFilterCount()));
     }
+
+    @Override
+    public boolean isJarvisSupported() {
+        return true;
+    }
+
 }

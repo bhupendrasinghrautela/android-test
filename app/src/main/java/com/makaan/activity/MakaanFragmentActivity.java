@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.makaan.jarvis.BaseJarvisActivity;
 import com.makaan.ui.MakaanProgressDialog;
 import com.makaan.util.AnimationUtils;
 import com.makaan.util.AppBus;
@@ -16,7 +17,7 @@ import butterknife.ButterKnife;
 /**
  * Created by vaibhav on 23/12/15.
  */
-public abstract class MakaanFragmentActivity extends FragmentActivity {
+public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
 
 
     private MakaanProgressDialog progressDialog;

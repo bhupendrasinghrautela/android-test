@@ -10,6 +10,7 @@ import com.makaan.constants.ResponseConstants;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
+import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.master.ApiLabel;
 import com.makaan.response.serp.FilterGroup;
@@ -153,5 +154,31 @@ public class MasterDataService implements MakaanService {
 
 
         }, "filterGroupRent.json");
+    }
+
+    public void populateAmenityMap(){
+        final Type amenityClusterTypeList = new TypeToken<ArrayList<AmenityCluster>>() {}.getType();
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.AMENITY, new JSONGetCallback() {
+
+            @Override
+            public void onSuccess(JSONObject responseObject) {
+                try {
+                    JSONArray amenities = responseObject.getJSONArray(ResponseConstants.DATA);
+
+                    ArrayList<AmenityCluster> amenityClusters  =
+                            MakaanBuyerApplication.gson.fromJson(amenities.toString(), amenityClusterTypeList);
+
+                    for (AmenityCluster amenityCluster : amenityClusters) {
+                        MasterDataCache.getInstance().addAmenityCluster(amenityCluster);
+                    }
+                }catch(JSONException je){
+                    Log.e(TAG, "Unable to parse filters", je);
+                }
+
+            }
+
+
+        }, "amenityMap.json");
     }
 }

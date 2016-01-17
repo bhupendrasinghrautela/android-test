@@ -1,5 +1,6 @@
 package com.makaan.activity.listing;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -49,6 +50,8 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getLocalityById(50186L);
     }
 
+
+
     @Subscribe
     public void onResults(SerpGetEvent serpGetEvent) {
         System.out.println("TEST");
@@ -67,4 +70,8 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
 
     }
 
+    @Override
+    public boolean isJarvisSupported() {
+        return true;
+    }
 }

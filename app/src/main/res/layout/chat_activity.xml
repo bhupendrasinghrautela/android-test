@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android.support.v7.recyclerview="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/conversation_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@null"
+        android:divider="@null"
+        android.support.v7.recyclerview:stackFromEnd ="true"
+        android:transcriptMode="alwaysScroll">
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/jarvis_chat_divider_height"
+        android:background="@color/chat_divider"
+        android:layout_marginBottom="@dimen/jarvis_chat_divider_margin"/>
+
+    <LinearLayout
+        android:id="@+id/llMsgCompose"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/inputMsg"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:textColor="@color/text_msg_input"
+            android:paddingLeft="@dimen/jarvis_chat_compose_padding"
+            android:paddingRight="@dimen/jarvis_chat_compose_padding"/>
+
+        <ImageView
+            android:id="@+id/btnSend"
+            android:layout_width="@dimen/jarvis_send_dimen"
+            android:layout_height="@dimen/jarvis_send_dimen"
+            android:src="@drawable/jarvis"
+            android:transitionName="@string/jarvis_button_transition"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,25 +1,25 @@
-package com.makaan.ui.listing;
+package com.makaan.ui.view;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.widget.LinearLayout;
 
 import butterknife.ButterKnife;
 
 /**
- * Created by sunil on 07/12/15.
+ * Created by sunil on 14/01/16.
  */
-public abstract class BaseCardView<D> extends CardView {
-
-    public BaseCardView(Context context) {
+public abstract class BaseView <D> extends LinearLayout {
+    public BaseView(Context context) {
         super(context);
     }
 
-    public BaseCardView(Context context, AttributeSet attrs) {
+    public BaseView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public BaseCardView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BaseView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

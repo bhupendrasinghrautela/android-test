@@ -128,7 +128,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         // TODO
         // check if we this can be called from any background thread or after background to ui thread communication
         // then we need to make use of commitAllowingStateLoss()
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     protected void initFragments(int[] fragmentHolderId, Fragment[] fragment, boolean shouldAddToBackStack) {

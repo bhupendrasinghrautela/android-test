@@ -3,6 +3,7 @@ package com.makaan.cache;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
+import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.master.ApiLabel;
 import com.makaan.response.serp.FilterGroup;
@@ -13,6 +14,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Filter;
 
 /**
@@ -27,6 +29,7 @@ public class MasterDataCache {
     private HashMap<String, String> apiLabels = new HashMap<>();
     private HashMap<String, FilterGroup> internalNameToFilterGrpBuy = new HashMap<>();
     private HashMap<String, FilterGroup> internalNameToFilterGrpRent = new HashMap<>();
+    private Map<Integer, AmenityCluster> amenityMap = new HashMap<>();
 
     private HashSet<String> shortlistedProperties;
 
@@ -75,6 +78,12 @@ public class MasterDataCache {
         }
     }
 
+    public void addAmenityCluster(AmenityCluster amenityCluster) {
+        if (null != amenityCluster) {
+            amenityMap.put(amenityCluster.placeTypeId, amenityCluster);
+        }
+    }
+
     public ArrayList<ApiIntLabel> getBuyPropertyTypes() {
         ArrayList<ApiIntLabel> propertyTypes = new ArrayList<>();
         propertyTypes.addAll(idToBuyPropertyType.values());
@@ -103,6 +112,10 @@ public class MasterDataCache {
             rentFilterGroups.add(filterGroupIterator.next());
         }
         return rentFilterGroups;
+    }
+
+    public Map<Integer, AmenityCluster> getAmenityMap(){
+        return amenityMap;
     }
 
 
