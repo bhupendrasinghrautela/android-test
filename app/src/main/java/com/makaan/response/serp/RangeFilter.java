@@ -21,6 +21,9 @@ public class RangeFilter extends AbstractFilterValue {
     public double minValue;
     public double maxValue;
 
+    public double selectedMinValue;
+    public double selectedMaxValue;
+
     public RangeFilter(Parcel in) {
         super(in);
         this.minValue = in.readDouble();
@@ -32,6 +35,14 @@ public class RangeFilter extends AbstractFilterValue {
 
     }
 
+    public RangeFilter(RangeFilter rangeFilter) {
+        super(rangeFilter);
+        this.minValue = rangeFilter.minValue;
+        this.maxValue = rangeFilter.maxValue;
+        this.selectedMinValue = rangeFilter.selectedMinValue;
+        this.selectedMaxValue = rangeFilter.selectedMaxValue;
+    }
+
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
@@ -40,5 +51,10 @@ public class RangeFilter extends AbstractFilterValue {
         parcel.writeDouble(minValue);
         parcel.writeDouble(maxValue);
 
+    }
+
+    @Override
+    protected RangeFilter clone() throws CloneNotSupportedException {
+        return new RangeFilter(this);
     }
 }

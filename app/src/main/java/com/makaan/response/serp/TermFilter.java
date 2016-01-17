@@ -32,6 +32,11 @@ public class TermFilter extends AbstractFilterValue {
 
     }
 
+    public TermFilter(TermFilter termFilter) {
+        super(termFilter);
+        this.value = termFilter.value;
+    }
+
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         super.writeToParcel(parcel, i);
@@ -39,4 +44,8 @@ public class TermFilter extends AbstractFilterValue {
 
     }
 
+    @Override
+    protected TermFilter clone() throws CloneNotSupportedException {
+        return new TermFilter(this);
+    }
 }

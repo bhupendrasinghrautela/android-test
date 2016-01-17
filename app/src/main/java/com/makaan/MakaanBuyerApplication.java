@@ -31,7 +31,6 @@ public class MakaanBuyerApplication extends Application {
 
     public static RandomString randomString = new RandomString(6);
     public static Selector serpSelector  = new Selector();
-    public static boolean isBuySearch = true;
 
     public static Gson gson;
 

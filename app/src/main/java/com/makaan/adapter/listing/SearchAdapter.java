@@ -2,6 +2,7 @@ package com.makaan.adapter.listing;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((ViewHolder) holder).bindData(mSearches.get(position), position == 0);
+        ((ViewHolder) holder).bindData(mSearches.get(position));
     }
 
     @Override
@@ -79,13 +80,18 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             view.setOnClickListener(this);
         }
 
-        public void bindData(Search search, boolean needTopHeader) {
+        public void bindData(Search search) {
             this.search = search;
-            ((LinearLayout) view.findViewById(R.id.search_result_item_header_linear_layout)).setVisibility(needTopHeader ? View.VISIBLE : View.GONE);
-            ((View) view.findViewById(R.id.search_result_item_separator_view)).setVisibility(needTopHeader ? View.GONE : View.VISIBLE);
 
-            ((TextView) view.findViewById(R.id.search_result_item_property_name_text_view)).setText(search.getLabel());
-            ((TextView) view.findViewById(R.id.search_result_item_property_address_text_view)).setText(search.getLocality());
+            // TODO need to check which kind of data we should map
+            ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setText(search.getDisplayText());
+            if(search.getLocality() == null || TextUtils.isEmpty(search.getLocality())) {
+                view.findViewById(R.id.search_result_item_address_text_view).setVisibility(View.GONE);
+            } else {
+                view.findViewById(R.id.search_result_item_address_text_view).setVisibility(View.VISIBLE);
+                ((TextView) view.findViewById(R.id.search_result_item_address_text_view)).setText(search.getLocality());
+            }
+            ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText(search.getType());
         }
 
         @Override

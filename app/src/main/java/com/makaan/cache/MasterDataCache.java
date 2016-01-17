@@ -8,6 +8,7 @@ import com.makaan.response.master.PropertyAmenity;
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.master.ApiLabel;
 import com.makaan.response.serp.FilterGroup;
+import com.makaan.response.serp.RangeFilter;
 import com.makaan.util.Preference;
 
 import java.util.ArrayList;
@@ -95,12 +96,24 @@ public class MasterDataCache {
     public void addFilterGroupBuy(FilterGroup filterGroup) {
         if (null != filterGroup && null != filterGroup.internalName) {
             internalNameToFilterGrpBuy.put(filterGroup.internalName, filterGroup);
+            if(filterGroup.rangeFilterValues.size() > 0) {
+                for(RangeFilter filter : filterGroup.rangeFilterValues) {
+                    filter.selectedMinValue = filter.minValue;
+                    filter.selectedMaxValue = filter.maxValue;
+                }
+            }
         }
     }
 
     public void addFilterGroupRent(FilterGroup filterGroup) {
         if (null != filterGroup && null != filterGroup.internalName) {
             internalNameToFilterGrpRent.put(filterGroup.internalName, filterGroup);
+            if(filterGroup.rangeFilterValues.size() > 0) {
+                for(RangeFilter filter : filterGroup.rangeFilterValues) {
+                    filter.selectedMinValue = filter.minValue;
+                    filter.selectedMaxValue = filter.maxValue;
+                }
+            }
         }
     }
 
