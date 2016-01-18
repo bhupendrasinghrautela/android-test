@@ -18,10 +18,10 @@
             android:orientation="vertical"
             android:paddingLeft="20dp">
 
-           <!-- <include
-                layout="@layout/layout_beds"
+            <include
+                layout="@layout/activity_filters_layout_beds"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />-->
+                android:layout_height="wrap_content" />
 
             <View
                 android:layout_width="match_parent"
