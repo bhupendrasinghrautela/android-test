@@ -26,7 +26,7 @@ public class PyrPageView extends LinearLayout {
     @Bind(R.id.buy) RadioButton buy;
     @Bind(R.id.rent) RadioButton rent;
     @Bind(R.id.pyr_page_name)EditText mClientName;
-    @Bind(R.id.pyr_page_mobile)EditText mClientMobile;
+    @Bind(R.id.leadform_mobileno_edittext)EditText mClientMobile;
     @Bind(R.id.pyr_page_email)EditText mClientEmail;
 
     private Context mContext;

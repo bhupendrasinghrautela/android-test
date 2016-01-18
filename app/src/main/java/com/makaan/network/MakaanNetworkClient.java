@@ -38,7 +38,6 @@ public class MakaanNetworkClient {
     private RequestQueue makaanGetRequestQueue;
     private ImageLoader mImageLoader;
 
-
     private AssetManager assetManager;
     private static MakaanNetworkClient instance;
 
@@ -82,7 +81,6 @@ public class MakaanNetworkClient {
     public void get(final String url, final Type type, final ObjectGetCallback objectGetCallback, boolean isDataArr) {
         get(url, type, objectGetCallback, null, null, isDataArr);
     }
-
 
     @SuppressWarnings("unchecked")
     public void get(final String inputUrl, final JSONGetCallback jsonGetCallback, String mockFile, String tag) {

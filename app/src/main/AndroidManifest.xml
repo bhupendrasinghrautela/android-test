@@ -8,10 +8,8 @@
 
     <permission
         android:name="com.makaan.permission.MAPS_RECEIVE"
-        android:protectionLevel="signature"/>
-    <uses-permission android:name="com.makaan.permission.MAPS_RECEIVE"/>
-
-
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.makaan.permission.MAPS_RECEIVE" />
 
     <application
         android:name=".MakaanBuyerApplication"
@@ -23,7 +21,6 @@
 
         <activity
             android:name=".activity.listing.ListingDetailActivity"
-
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarTheme">
@@ -34,27 +31,30 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".activity.listing.SerpActivity"
 
+        <activity android:name=".activity.listing.SerpActivity">
+
+        </activity>
+        <activity
+            android:name=".activity.pyr.PyrPageActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar">
-
         </activity>
+
 
         <activity
             android:name=".jarvis.ChatActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
-            android:theme="@style/Theme.FloatingWindow.Popup"
-            android:configChanges="orientation|screenSize" />
+            android:theme="@style/Theme.FloatingWindow.Popup" />
 
         <service android:name=".jarvis.JarvisService"></service>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA6sKBuPzLAhe5IHBNgvWP8-jhhLeHqQ8E"/>
+            android:value="AIzaSyA6sKBuPzLAhe5IHBNgvWP8-jhhLeHqQ8E" />
 
 
     </application>

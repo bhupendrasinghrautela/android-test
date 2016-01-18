@@ -11,6 +11,7 @@ import com.makaan.request.selector.Selector;
 import com.makaan.service.ImageService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.MasterDataService;
+
 import com.makaan.service.CityService;
 import com.makaan.service.ListingService;
 import com.makaan.service.LocalityService;
@@ -19,6 +20,8 @@ import com.makaan.service.PyrService;
 import com.makaan.service.SearchService;
 import com.makaan.service.TaxonomyService;
 import com.makaan.service.UserService;
+
+import com.makaan.service.pyr.TopAgentsByLocalityService;
 import com.makaan.util.RandomString;
 
 /**
@@ -47,11 +50,14 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(SearchService.class , new SearchService());
         MakaanServiceFactory.getInstance().registerService(CityService.class , new CityService());
         MakaanServiceFactory.getInstance().registerService(PyrService.class , new PyrService());
+
         MakaanServiceFactory.getInstance().registerService(LocalityService.class , new LocalityService());
         MakaanServiceFactory.getInstance().registerService(PriceTrendService.class , new PriceTrendService());
         MakaanServiceFactory.getInstance().registerService(TaxonomyService.class , new TaxonomyService());
         MakaanServiceFactory.getInstance().registerService(UserService.class , new UserService());
         MakaanServiceFactory.getInstance().registerService(ImageService.class , new ImageService());
+        MakaanServiceFactory.getInstance().registerService(TopAgentsByLocalityService.class , new TopAgentsByLocalityService());
+
 
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();

@@ -40,6 +40,7 @@ public class RequestConstants {
     public static final String LAT = "lat";
     public static final String LON = "lon";
 
+
     public static final String ENTITY_DESCRIPTIONS = "entityDescriptions";
     public static final String CENTER_LAT = "centerLatitude";
     public static final String CENTER_LONG = "centerLongitude";
@@ -77,8 +78,10 @@ public class RequestConstants {
     public static final String FURNISHINGS = "furnishings";
     public static final String STATUS = "status";
 
-
     public static final String SOURCE_DOMAIN_MAKAAN = "sourceDomain=Makaan";
+    public static final String LISTING_CATEGORY = "listingCategory";
+    public static final String LOCALITY_IDS = "localityId";
+
 
 
 }
