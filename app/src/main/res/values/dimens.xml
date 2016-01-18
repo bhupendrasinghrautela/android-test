@@ -447,9 +447,11 @@
     <dimen name="amenity_type_text_size">22sp</dimen>
     <dimen name="amenity_name_text_size">16sp</dimen>
     <dimen name="amenity_map_icon_dimen">28sp</dimen>
-    <dimen name="amenity_type_logo_margin">4dp</dimen>
-    <dimen name="amenity_item_padding">4dp</dimen>
-    <dimen name="amenity_card_corner_radius">12dp</dimen>
+    <dimen name="amenity_type_logo_margin">12dp</dimen>
+    <dimen name="amenity_margin_top">12dp</dimen>
+    <dimen name="amenity_margin_bottom">18dp</dimen>
+    <dimen name="amenity_item_padding">12dp</dimen>
+    <dimen name="amenity_card_corner_radius">25dp</dimen>
 
 
     <!-- search result items dimen values -->

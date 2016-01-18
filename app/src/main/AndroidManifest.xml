@@ -23,7 +23,7 @@
             android:name=".activity.listing.ListingDetailActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionBarTheme">
+            android:theme="@style/Theme.NoActionBarTheme">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,7 +39,17 @@
             android:name=".activity.pyr.PyrPageActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar">
+            android:theme="@style/Theme.NoActionBarTheme">
+
+        </activity>
+
+        <activity
+            android:name=".activity.listing.PropertyActivity"
+
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NoActionBarTheme">
+
         </activity>
 
 

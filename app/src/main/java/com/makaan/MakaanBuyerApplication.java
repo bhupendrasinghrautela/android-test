@@ -9,6 +9,7 @@ import com.makaan.jarvis.JarvisServiceCreator;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.request.selector.Selector;
 import com.makaan.service.ImageService;
+import com.makaan.service.AmenityService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.MasterDataService;
 
@@ -58,6 +59,7 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(ImageService.class , new ImageService());
         MakaanServiceFactory.getInstance().registerService(TopAgentsByLocalityService.class , new TopAgentsByLocalityService());
 
+        MakaanServiceFactory.getInstance().registerService(AmenityService.class , new AmenityService());
 
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();

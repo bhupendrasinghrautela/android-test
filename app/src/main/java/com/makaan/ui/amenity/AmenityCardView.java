@@ -19,7 +19,7 @@ import butterknife.Bind;
 /**
  * Created by sunil on 17/01/16.
  */
-public class AmenityCardView extends BaseView<AmenityCluster> {
+public class AmenityCardView extends BaseCardView<AmenityCluster> {
 
     @Bind(R.id.amenity_title)TextView mAmenityTitle;
     @Bind(R.id.amenity_logo)ImageView mAmenityLogo;
@@ -49,7 +49,8 @@ public class AmenityCardView extends BaseView<AmenityCluster> {
                 (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         mAmenityTitle.setText(item.name);
-        for(Amenity amenity : item.cluster){
+        for(int i=0;i<3;i++){
+            Amenity amenity = item.cluster.get(i);
             final View amenityItem =
                     mLayoutInflater.inflate(R.layout.amenity_item_layout, null);
 
