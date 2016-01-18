@@ -1,0 +1,106 @@
+{
+  "totalCount": 25,
+  "statusCode": "2XX",
+  "version": "A",
+  "data": [{
+    "amenityId": 1,
+    "amenityName": "Gymnasium",
+    "abbreviation": "Gym"
+  }, {
+    "amenityId": 2,
+    "amenityName": "Swimming Pool",
+    "abbreviation": "Swi"
+  }, {
+    "amenityId": 3,
+    "amenityName": "Children's play area",
+    "abbreviation": "Chi"
+  }, {
+    "amenityId": 4,
+    "amenityName": "Club House",
+    "abbreviation": "Clu"
+  }, {
+    "amenityId": 5,
+    "amenityName": "Cafeteria",
+    "abbreviation": "Caf"
+  }, {
+    "amenityId": 6,
+    "amenityName": "Golf Course",
+    "abbreviation": "Gol"
+  }, {
+    "amenityId": 7,
+    "amenityName": "Multipurpose Room",
+    "abbreviation": "Mul"
+  }, {
+    "amenityId": 8,
+    "amenityName": "Sports Facility",
+    "abbreviation": "Spo"
+  }, {
+    "amenityId": 9,
+    "amenityName": "Rain Water Harvesting",
+    "abbreviation": "Rai"
+  }, {
+    "amenityId": 10,
+    "amenityName": "Intercom",
+    "abbreviation": "Int"
+  }, {
+    "amenityId": 11,
+    "amenityName": "24 X 7 Security",
+    "abbreviation": "Sec"
+  }, {
+    "amenityId": 12,
+    "amenityName": "Jogging Track",
+    "abbreviation": "Jog"
+  }, {
+    "amenityId": 13,
+    "amenityName": "Power Backup",
+    "abbreviation": "Pow"
+  }, {
+    "amenityId": 14,
+    "amenityName": "Landscaped Gardens",
+    "abbreviation": "Lan"
+  }, {
+    "amenityId": 15,
+    "amenityName": "Indoor Games",
+    "abbreviation": "Ind"
+  }, {
+    "amenityId": 16,
+    "amenityName": "Maintenance Staff",
+    "abbreviation": "Mai"
+  }, {
+    "amenityId": 17,
+    "amenityName": "Car Parking",
+    "abbreviation": "Car"
+  }, {
+    "amenityId": 18,
+    "amenityName": "Lift Available",
+    "abbreviation": "Lif"
+  }, {
+    "amenityId": 19,
+    "amenityName": "Staff Quarter",
+    "abbreviation": "Sta"
+  }, {
+    "amenityId": 20,
+    "amenityName": "Vaastu Compliant",
+    "abbreviation": "Vaa"
+  }, {
+    "amenityId": 21,
+    "amenityName": "Shopping Mall",
+    "abbreviation": "Sho"
+  }, {
+    "amenityId": 22,
+    "amenityName": "School",
+    "abbreviation": "Sco"
+  }, {
+    "amenityId": 23,
+    "amenityName": "Hospital",
+    "abbreviation": "Hos"
+  }, {
+    "amenityId": 24,
+    "amenityName": "ATM",
+    "abbreviation": "ATM"
+  }, {
+    "amenityId": 99,
+    "amenityName": "Others",
+    "abbreviation": "Oth"
+  }]
+}

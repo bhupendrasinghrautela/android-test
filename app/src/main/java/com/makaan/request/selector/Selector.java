@@ -10,6 +10,8 @@ import org.json.JSONObject;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -53,13 +55,17 @@ public class Selector {
             termSelectorHashMap.put(fieldName, termSelector);
 
         } else {
-            if(clearValues) {
+            if (clearValues) {
                 termSelector.values.clear();
             }
             termSelector.values.add(value);
         }
 
         return this;
+    }
+
+    public Selector term(String fieldName, String[] values) {
+        return term(fieldName, Arrays.asList(values));
     }
 
     public Selector term(String fieldName, Iterable<String> values) {
@@ -178,7 +184,7 @@ public class Selector {
                     }
                 }
 
-                if((null != geoSelector.lat && geoSelector.lat>0) && (null != geoSelector.lon &&geoSelector.lon >0)) {
+                if ((null != geoSelector.lat && geoSelector.lat > 0) && (null != geoSelector.lon && geoSelector.lon > 0)) {
                     andStrBuilder.append(geoSelector.build());
                 }
 
@@ -188,12 +194,20 @@ public class Selector {
 
             String pagingSelectorJson = pagingSelector.build();
             if (!StringUtil.isBlank(pagingSelectorJson)) {
-                jsonBuilder.append(",\"").append(PAGING).append("\"").append(":").append(pagingSelectorJson);
+                // TODO check for field values
+                if (termSelectorHashMap.size() > 0 || rangeSelectorHashMap.size() > 0) {
+                    jsonBuilder.append(",\"");
+                }
+                jsonBuilder.append(PAGING).append("\"").append(":").append(pagingSelectorJson);
             }
 
             String sortSelectorJson = sortSelector.build();
             if (!StringUtil.isBlank(sortSelectorJson)) {
-                jsonBuilder.append(",\"").append(SORT).append("\"").append(":").append(sortSelectorJson);
+                // TODO check for field values
+                if (termSelectorHashMap.size() > 0 || rangeSelectorHashMap.size() > 0 || !StringUtil.isBlank(pagingSelectorJson)) {
+                    jsonBuilder.append(",\"");
+                }
+                jsonBuilder.append(SORT).append("\"").append(":").append(sortSelectorJson);
             }
 
             jsonBuilder.append("}");
@@ -209,7 +223,42 @@ public class Selector {
     }
 
     public int getAppliedFilterCount() {
-        return this.termSelectorHashMap.keySet().size();
+        int count = this.rangeSelectorHashMap.keySet().size() + this.termSelectorHashMap.keySet().size();
+        if(this.termSelectorHashMap.containsKey("cityId")) {
+            count--;
+        }
+        if(this.termSelectorHashMap.containsKey("localityId")) {
+            count--;
+        }
+        return count;
     }
 
+    public boolean isBuyContext() {
+        if(!this.termSelectorHashMap.containsKey("listingCategory")) {
+            return true;
+        } else {
+            HashSet<String> values = this.termSelectorHashMap.get("listingCategory").values;
+            if(values == null || values.size() == 0 || values.size() > 1) {
+                return true;
+            } else if(values.contains("Rental")) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
+    public Selector removeTerm(String fieldName) {
+        if(this.termSelectorHashMap.containsKey(fieldName)) {
+            this.termSelectorHashMap.remove(fieldName);
+        }
+        return this;
+    }
+
+    public Selector removeRange(String fieldName) {
+        if(this.rangeSelectorHashMap.containsKey(fieldName)) {
+            this.rangeSelectorHashMap.remove(fieldName);
+        }
+        return this;
+    }
 }

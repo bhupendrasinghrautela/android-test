@@ -21,11 +21,13 @@ public class Listing {
     public Long id;
     public String priceInWords, unitInfo;
     public String bhkInfo, sizeInfo;
+    public int imageCount;
 
-    public String postedDate;
+    public String postedDate, mainImageUrl;
     public Integer lisitingId;
+    public Long sellerId;
     public String description;
-    public Integer bedrooms, bathrooms;
+    public Integer bedrooms, bathrooms, balcony;
 
     public String propertyType;         //like apartment etc.
     public Integer size;

@@ -8,5 +8,5 @@ import java.util.List;
  */
 public class ApiPriceTrend {
 
-    public HashMap<Long, HashMap<String, List<ApiPriceTrendData>>> data;
+    //public ;
 }

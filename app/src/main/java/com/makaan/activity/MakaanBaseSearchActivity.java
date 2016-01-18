@@ -65,6 +65,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     private SearchAdapter mSearchAdapter;
     private LinearLayoutManager mLayoutManager;
     private ArrayList<Search> mSearches;
+    protected FrameLayout mMainFrameLayout;
 
     @Override
     protected abstract int getContentViewId();
@@ -75,7 +76,12 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         mContentFrameLayout = (FrameLayout) findViewById(R.id.activity_search_base_content_frame_layout);
 
         View view = LayoutInflater.from(this).inflate(layoutResID, mContentFrameLayout, false);
+
+        // dim 0 for the window
         mContentFrameLayout.addView(view);
+
+        mMainFrameLayout = (FrameLayout) findViewById(R.id.activity_search_base_frame_layout);
+        mMainFrameLayout.getForeground().setAlpha(0);
     }
 
     private void initializeRecyclerViewData() {
@@ -128,7 +134,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         // TODO
         // check if we this can be called from any background thread or after background to ui thread communication
         // then we need to make use of commitAllowingStateLoss()
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     protected void initFragments(int[] fragmentHolderId, Fragment[] fragment, boolean shouldAddToBackStack) {
@@ -156,6 +162,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             mSearchResultFrameLayout.setVisibility(View.GONE);
         }
 
+        // TODO need to handle all cases
+        MakaanBuyerApplication.serpSelector.reset();
         MakaanBuyerApplication.serpSelector.term("localityId", String.valueOf(search.getLocalityId()), true);
         new ListingService().handleSerpRequest(MakaanBuyerApplication.serpSelector);
         mSearchAdapter.clear();

@@ -51,6 +51,7 @@ public class RequestConstants {
     public static final String SUPPLY_RATE = "supplyRate";
     public static final String LABEL = "label";
     public static final String LOCALITY_ID = "localityId";
+    public static final String USER_ID = "userId";
     public static final String LOCALITY_NAME = "localityName";
     public static final String PROJECT_NAME = "projectName";
     public static final String MONTH_DURATION = "monthDuration";
@@ -72,6 +73,11 @@ public class RequestConstants {
     public static final String AVG_RENT_PER_MONTH = "averageRentPerMonth";
     public static final String PROPERTY_DERIVED_INFO = "propertyDerivedInfo";
     public static final String TYPE = "type";
+    public static final String NEIGHBOURHOOD_AMENITIES_IDS = "neighbourhoodAmenitiesIds";
+    public static final String FURNISHINGS = "furnishings";
+    public static final String STATUS = "status";
+
+
     public static final String SOURCE_DOMAIN_MAKAAN = "sourceDomain=Makaan";
 
 

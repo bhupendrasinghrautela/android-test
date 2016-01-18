@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by sunil on 07/12/15.
  */
@@ -21,6 +23,11 @@ public abstract class BaseCardView<D> extends CardView {
         super(context, attrs, defStyleAttr);
     }
 
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        ButterKnife.bind(this);
+    }
 
     /**
      * This method binds this card view with data D

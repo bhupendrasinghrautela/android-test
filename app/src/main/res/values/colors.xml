@@ -29,7 +29,7 @@
     <!-- Serp Listing Color Values -->
     <color name="serp_listing_background">#F0F0F0</color>
     <color name="serp_listing_card_background">#FFFFFF</color>
-    <color name="serp_listing_car_empty_view_color">#33979797</color>
+    <color name="serp_listing_view_empty_view_color">#33979797</color>
     <color name="serp_listing_cluster_card_background">#FBA511</color>
 
     <color name="serp_listing_cluster_card_group_background">#ADE62489</color>
@@ -50,5 +50,42 @@
     <color name="fragment_dialog_filters_toggle_button_disabled_text_color">#80444444</color>
     <color name="fragment_dialog_filters_toggle_button_normal_stroke_color">#757575</color>
     <color name="fragment_dialog_filters_item_empty_view_background_color">#4C979797</color>
+
+    <!---Jarvis work in progress to be refactored-->
+    <color name="body_background">#e8e8e8</color>
+    <color name="body_background_green">#82e783</color>
+    <color name="server_status_bar">#2b2b2b</color>
+    <color name="title_gray">#434343</color>
+    <color name="bg_msg_you">#eb4433</color>
+    <color name="bg_msg_from">#1e6258</color>
+    <color name="msg_border_color">#a1a1a1</color>
+    <color name="bg_btn_join">#1e6258</color>
+    <color name="bg_msg_input">#e8e8e8</color>
+    <color name="text_msg_input">#626262</color>
+    <color name="lblFromName">#777777</color>
+    <color name="chat_divider">#e0e0e0</color>
+    <color name="chat_card_stroke">#cccccc</color>
+
+    <!--PropertyAmenity-->
+    <color name="amenity_title_color">#353535</color>
+    <color name="amenity_name_color">#444444</color>
+    <color name="amenity_distance_color">#e71c28</color>
+    <color name="amenity_item_bg">#f2f2f2</color>
+
+
+
+
+    <!-- Search result item color values -->
+    <color name="search_result_item_name_text_color">#DE000000</color>
+    <color name="search_result_item_address_text_color">#8B000000</color>
+    <color name="search_result_item_type_text_color">#999999</color>
+    <color name="search_result_item_empty_view_background_color">#979797</color>
+
+    <color name="relevance_poup_window_text_color">#444444</color>
+
+    <!-- map listing view colors -->
+    <color name="listing_brief_view_layout_default_text_color">#444444</color>
+    <color name="listing_brief_view_layout_property_price_sq_ft_text_color">#B0444444</color>
+    <color name="listing_brief_view_layout_empty_view_color">#33979797</color>
 
 </resources>

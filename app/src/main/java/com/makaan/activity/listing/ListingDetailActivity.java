@@ -10,14 +10,14 @@ import com.makaan.event.city.CityTopLocalityEvent;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.event.trend.callback.TopLocalitiesTrendCallback;
 import com.makaan.response.locality.Locality;
+import com.makaan.service.ImageService;
 import com.makaan.service.MakaanServiceFactory;
-import com.makaan.service.CityService;
-import com.makaan.service.ListingService;
-import com.makaan.service.LocalityService;
 import com.makaan.service.PriceTrendService;
+import com.makaan.service.UserService;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.OnClick;
 
@@ -42,11 +42,25 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
     @OnClick(R.id.fetch)
     public void fetch(View view) {
 
+        //((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyAmenities();
+        //((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateMasterFunishings();
+
+
+        MakaanBuyerApplication.serpSelector.term("cityId", "11").term("listingCategory", new String[]{"Primary", "Resale"});
         //((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).handleSerpRequest(MakaanBuyerApplication.serpSelector);
-        ((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getCityById(2L);
-        ((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getTopLocalitiesInCity(2L, 5);
-        ((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getLocalityById(50186L);
+        //((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getCityById(11L);
+        //((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getTopLocalitiesInCity(11L, 5);
+        //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getLocalityById(50186L);
+        //((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getListingDetail(429713L);
+        List<Long> tempUsers = new ArrayList<>();
+        tempUsers.add(3564144L);
+        tempUsers.add(3901325L);
+        ((UserService) (MakaanServiceFactory.getInstance().getService(UserService.class))).getCompanyUsers(tempUsers);
+        ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(436057L);
+
     }
+
+
 
     @Subscribe
     public void onResults(SerpGetEvent serpGetEvent) {
@@ -59,11 +73,15 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
 
         ArrayList<Long> topLocalities = new ArrayList<Long>();
 
-        for(Locality locality : cityTopLocalityEvent.topLocalitiesInCity){
+        for (Locality locality : cityTopLocalityEvent.topLocalitiesInCity) {
             topLocalities.add(locality.localityId);
         }
         ((PriceTrendService) (MakaanServiceFactory.getInstance().getService(PriceTrendService.class))).getPriceTrendForLocalities(topLocalities, 6, new TopLocalitiesTrendCallback());
 
     }
 
+    @Override
+    public boolean isJarvisSupported() {
+        return true;
+    }
 }

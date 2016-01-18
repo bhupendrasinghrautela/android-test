@@ -10,9 +10,10 @@ public class City {
     public Long id;
     public Double centerLatitude;
     public Double centerLongitude, annualGrowth, rentalYield, demandRate, supplyRate;
-    public String description;
+    public String description,label;
 
     public String cityHeroshotImageUrl;
+    public Double avgPricePerUnitArea, averageRentPerMonth;
 
 
     public ArrayList<EntityDesc> entityDescriptions = new ArrayList<>();

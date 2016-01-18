@@ -33,6 +33,7 @@
         android:id="@+id/activity_serp_content_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/activity_serp_top_frame_layout" />
+        android:layout_below="@id/activity_serp_top_frame_layout" >
+    </FrameLayout>
 
 </RelativeLayout>

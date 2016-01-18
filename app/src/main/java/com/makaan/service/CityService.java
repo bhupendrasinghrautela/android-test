@@ -10,6 +10,7 @@ import com.makaan.request.selector.Selector;
 import com.makaan.response.city.City;
 import com.makaan.response.locality.Locality;
 import com.makaan.util.AppBus;
+import com.makaan.util.AppUtils;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -30,17 +31,17 @@ public class CityService implements MakaanService {
 
         if (null != cityId) {
             Selector citySelector = new Selector();
-            citySelector.fields(new String[]{ENTITY_DESCRIPTIONS, CENTER_LAT, CENTER_LONG, DESCRIPTION, CITY_HEROSHOT_IMAGE_URL, ANNUAL_GROWTH, RENTAL_YIELD, DEMAND_RATE, SUPPLY_RATE, LABEL});
+            citySelector.fields(new String[]{ID,ENTITY_DESCRIPTIONS, CENTER_LAT, CENTER_LONG, DESCRIPTION, CITY_HEROSHOT_IMAGE_URL, ANNUAL_GROWTH, RENTAL_YIELD, DEMAND_RATE, SUPPLY_RATE, LABEL});
 
             String cityUrl = ApiConstants.CITY.concat(cityId.toString()).concat("?").concat(citySelector.build());
 
-            Type cityType = new TypeToken<City>() {
-            }.getType();
+            Type cityType = new TypeToken<City>() {}.getType();
 
             MakaanNetworkClient.getInstance().get(cityUrl, cityType, new ObjectGetCallback() {
                 @Override
                 public void onSuccess(Object responseObject) {
                     City city = (City) responseObject;
+                    city.description = AppUtils.stripHtml(city.description);
                     AppBus.getInstance().post(new CityByIdEvent(city));
                 }
             });

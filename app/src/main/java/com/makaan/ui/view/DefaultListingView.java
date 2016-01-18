@@ -2,6 +2,8 @@ package com.makaan.ui.view;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.Html;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,10 +13,13 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
+import com.makaan.activity.listing.SerpActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.PreferenceConstants;
+import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.listing.Listing;
 import com.makaan.util.StringUtil;
 import com.pkmmte.view.CircularImageView;
@@ -24,6 +29,7 @@ import org.w3c.dom.Text;
 import java.util.Locale;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by rohitgarg on 1/7/16.
@@ -34,9 +40,9 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
     public CheckBox mPropertyShortlistCheckbox;
 
     @Bind(R.id.serp_default_listing_property_image_image_view)
-    ImageView mPropertyImage_View;
+    FadeInNetworkImageView mPropertyImageView;
     @Bind(R.id.serp_default_listing_property_price_difference_image_view)
-    ImageView mPropertyPriceDifferenceImage_View;
+    ImageView mPropertyPriceDifferenceImageView;
     @Bind(R.id.serp_default_listing_badge_Image_view)
     ImageView mBadgeImageView;
 
@@ -66,6 +72,9 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
     @Bind(R.id.serp_default_listing_badge_text_view)
     TextView mBadgeTextView;
 
+    @Bind(R.id.serp_default_listing_property_possession_text_view)
+    TextView mPossesionTextView;
+
     @Bind(R.id.serp_default_listing_assist_button)
     Button mAssistButton;
     @Bind(R.id.serp_default_listing_call_button)
@@ -93,12 +102,15 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         if(!(data instanceof Listing)) {
             return;
         }
+
+        boolean isBuy = MakaanBuyerApplication.serpSelector.isBuyContext();
+
         mListing = (Listing)data;
         mPropertyShortlistCheckbox.setOnCheckedChangeListener(null);
         mPreferences = mContext.getSharedPreferences(
                 PreferenceConstants.PREF_SHORTLISTED_PROPERTIES, Context.MODE_PRIVATE);
 
-        if(MakaanBuyerApplication.isBuySearch) {
+        if(isBuy) {
             boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(
                     mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_BUY, mListing.lisitingId);
             mPropertyShortlistCheckbox.setChecked(isShortlisted);
@@ -123,12 +135,16 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
                     mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_RENT, mListing.lisitingId);
             mPropertyShortlistCheckbox.setChecked(isShortlisted);
         }
-        mPropertyShortlistCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        mPropertyShortlistCheckbox.setOnCheckedChangeListener(this);
 
-            }
-        });
+        if(mListing.mainImageUrl != null && !TextUtils.isEmpty(mListing.mainImageUrl)) {
+            mPropertyImageView.setImageUrl(mListing.mainImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
+        } else {
+            //TODO this is just a dummy image
+            String url = "https://im.proptiger-ws.com/1/644953/6/imperial-project-image-460007.jpeg";
+            mPropertyImageView.setImageUrl(url, MakaanNetworkClient.getInstance().getImageLoader());
+        }
+
         if(mListing.images != null && mListing.images.size() > 0) {
 
            /* ImageRequest request = new ImageRequest(listing.images.get(0).url,
@@ -174,14 +190,35 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
             priceUnit = priceParts[1];
         }
 
+        if(isBuy) {
+            if (mListing.isReadyToMove && mListing.propertyAge != null) {
+                mPossesionTextView.setText("Age of Property");
+                mPropertyPossessionDateTextView.setText(mListing.propertyAge);
+            } else {
+                mPossesionTextView.setText("Possession");
+                mPropertyPossessionDateTextView.setText(mListing.possessionDate);
+            }
+        } else {
+            mPossesionTextView.setText("Furnished");
+            mPropertyPossessionDateTextView.setText(mListing.furnished);
+        }
 
         mPropertyPriceTextView.setText(priceString);
         mPropertyPriceUnitTextView.setText(priceUnit);
         mPropertyPriceSqFtTextView.setText(String.format(Locale.ENGLISH, "%d/sqft", mListing.pricePerUnitArea));
         mPropertyInfoTextView.setText(String.format(Locale.ENGLISH, "%s\n%s", mListing.bhkInfo, mListing.sizeInfo));
         mPropertyAddressTextView.setText(String.format(Locale.ENGLISH, "%s, %s", mListing.localityName, mListing.cityName));
-        mPropertyPossessionDateTextView.setText(mListing.possessionDate);
-        mPropertyFloorInfoTextView.setText(String.format(Locale.ENGLISH, "%drd of %dth", mListing.floor, mListing.totalFloors));
+
+        if(mListing.floor == 1) {
+            mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format(Locale.ENGLISH, "%d<sup>st</sup> of %d", mListing.floor, mListing.totalFloors)));
+        } else if(mListing.floor == 2) {
+            mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format(Locale.ENGLISH, "%d<sup>nd</sup> of %d", mListing.floor, mListing.totalFloors)));
+        } else if(mListing.floor == 3) {
+            mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format(Locale.ENGLISH, "%d<sup>rd</sup> of %d", mListing.floor, mListing.totalFloors)));
+        } else {
+            mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format(Locale.ENGLISH, "%d<sup>th</sup> of %d", mListing.floor, mListing.totalFloors)));
+        }
+
         mPropertyBathroomNumberTextView.setText(String.valueOf(mListing.bathrooms));
         mPropertyTaglineTextView.setText(mListing.description);
 
@@ -191,6 +228,12 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         // TODO diff image view
 
         mPropertyShortlistCheckbox.setOnCheckedChangeListener(this);
+
+        if(mListing.lisitingPostedBy == null || !mListing.lisitingPostedBy.assist) {
+            mAssistButton.setVisibility(View.VISIBLE);
+        } else {
+            mAssistButton.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -200,5 +243,12 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         } else {
             MasterDataCache.getInstance().removeShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES, mListing.lisitingId);
         }
+    }
+
+    @OnClick(R.id.serp_default_listing_seller_image_view)
+    public void onSellerImageViewPressed(View view) {
+        SerpActivity.isSellerSerp = true;
+        MakaanBuyerApplication.serpSelector.reset();
+//        MakaanBuyerApplication.serpSelector.term("sellerId", String.valueOf(mListing.sellerId));
     }
 }

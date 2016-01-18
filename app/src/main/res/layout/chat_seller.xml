@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.makaan.jarvis.ui.cards.SellerOverviewCard xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginRight="56dp"
+    android:background="@drawable/chat_card_bg">
+
+    <LinearLayout
+        android:id="@+id/seller_pic_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginRight="8dp">
+
+        <com.pkmmte.view.CircularImageView
+            android:layout_width="@dimen/jarvis_seller_card_profile_pic_dimen"
+            android:layout_height="@dimen/jarvis_seller_card_profile_pic_dimen"
+            android:layout_margin="@dimen/thumbnail_margin"
+            android:tint="@color/white"
+            android:layout_gravity="center"
+            android:src="@drawable/star"
+            app:border="true"
+            app:border_color="@color/light_gray"
+            app:border_width="@dimen/border_width"
+            app:shadow="true"/>
+
+        <RatingBar
+            android:id="@+id/ratingbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1.0"
+            android:isIndicator="true"
+            style="?android:attr/ratingBarStyleSmall"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="D bhatia"
+            android:textSize="@dimen/jarvis_seller_card_agent_name_text_size"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="158 properties"
+            android:layout_marginBottom="8dp"
+            android:textSize="@dimen/jarvis_seller_card_agent_detail_text_size"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gurgaon, sector 32, sector 56"
+            android:textSize="@dimen/jarvis_seller_card_agent_detail_text_size"/>
+
+
+    </LinearLayout>
+
+</com.makaan.jarvis.ui.cards.SellerOverviewCard>

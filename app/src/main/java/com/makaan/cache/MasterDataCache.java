@@ -1,19 +1,21 @@
 package com.makaan.cache;
 
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
 
+import com.makaan.response.amenity.AmenityCluster;
+import com.makaan.response.master.MasterFurnishing;
+import com.makaan.response.master.PropertyAmenity;
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.master.ApiLabel;
 import com.makaan.response.serp.FilterGroup;
+import com.makaan.response.serp.RangeFilter;
 import com.makaan.util.Preference;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.logging.Filter;
+import java.util.Map;
 
 /**
  * Created by vaibhav on 29/12/15.
@@ -25,8 +27,12 @@ public class MasterDataCache {
     private HashMap<Integer, ApiIntLabel> idToRentPropertyType = new HashMap<>();
     private HashMap<Integer, ApiIntLabel> idToPropertyStatus = new HashMap<>();
     private HashMap<String, String> apiLabels = new HashMap<>();
+    private HashMap<Long, PropertyAmenity> idToPropertyAmenity = new HashMap<>();
+    private HashMap<Long, MasterFurnishing> idToMasterFurnishing = new HashMap<>();
+
     private HashMap<String, FilterGroup> internalNameToFilterGrpBuy = new HashMap<>();
     private HashMap<String, FilterGroup> internalNameToFilterGrpRent = new HashMap<>();
+    private Map<Integer, AmenityCluster> amenityMap = new HashMap<>();
 
     private HashSet<String> shortlistedProperties;
 
@@ -37,6 +43,30 @@ public class MasterDataCache {
     public static MasterDataCache getInstance() {
         return instance;
     }
+
+    public void addMasterFurnishing(MasterFurnishing masterFurnishing) {
+
+        if (null != masterFurnishing && null != masterFurnishing.id && null != masterFurnishing.name) {
+            idToMasterFurnishing.put(masterFurnishing.id, masterFurnishing);
+        }
+    }
+
+    public MasterFurnishing getMasterFurnishingById(Long furnishingId) {
+        return idToMasterFurnishing.get(furnishingId);
+    }
+
+
+    public void addPropertyAmenity(PropertyAmenity propertyAmenity) {
+
+        if (null != propertyAmenity && null != propertyAmenity.amenityId && null != propertyAmenity.amenityName) {
+            idToPropertyAmenity.put(propertyAmenity.amenityId, propertyAmenity);
+        }
+    }
+
+    public PropertyAmenity getPropertyAmenityById(Long propAmenityId) {
+        return idToPropertyAmenity.get(propAmenityId);
+    }
+
 
     public void addBuyPropertyType(ApiIntLabel propertyType) {
         if (null != propertyType && null != propertyType.id && null != propertyType.name) {
@@ -66,12 +96,30 @@ public class MasterDataCache {
     public void addFilterGroupBuy(FilterGroup filterGroup) {
         if (null != filterGroup && null != filterGroup.internalName) {
             internalNameToFilterGrpBuy.put(filterGroup.internalName, filterGroup);
+            if(filterGroup.rangeFilterValues.size() > 0) {
+                for(RangeFilter filter : filterGroup.rangeFilterValues) {
+                    filter.selectedMinValue = filter.minValue;
+                    filter.selectedMaxValue = filter.maxValue;
+                }
+            }
         }
     }
 
     public void addFilterGroupRent(FilterGroup filterGroup) {
         if (null != filterGroup && null != filterGroup.internalName) {
             internalNameToFilterGrpRent.put(filterGroup.internalName, filterGroup);
+            if(filterGroup.rangeFilterValues.size() > 0) {
+                for(RangeFilter filter : filterGroup.rangeFilterValues) {
+                    filter.selectedMinValue = filter.minValue;
+                    filter.selectedMaxValue = filter.maxValue;
+                }
+            }
+        }
+    }
+
+    public void addAmenityCluster(AmenityCluster amenityCluster) {
+        if (null != amenityCluster) {
+            amenityMap.put(amenityCluster.placeTypeId, amenityCluster);
         }
     }
 
@@ -105,6 +153,10 @@ public class MasterDataCache {
         return rentFilterGroups;
     }
 
+    public Map<Integer, AmenityCluster> getAmenityMap() {
+        return amenityMap;
+    }
+
 
     public String translateApiLabel(String apiLabel) {
         return apiLabels.get(apiLabel);
@@ -123,7 +175,7 @@ public class MasterDataCache {
     }
 
     public void addShortlistedProperty(SharedPreferences preferences, String key, int id) {
-        if(shortlistedProperties == null) {
+        if (shortlistedProperties == null) {
             getShortlistedPropertiesFromPreferences(preferences, key);
         }
         shortlistedProperties.add(String.valueOf(id));
@@ -131,7 +183,7 @@ public class MasterDataCache {
     }
 
     public void removeShortlistedProperty(SharedPreferences preferences, String key, int id) {
-        if(shortlistedProperties == null) {
+        if (shortlistedProperties == null) {
             getShortlistedPropertiesFromPreferences(preferences, key);
         }
         shortlistedProperties.remove(String.valueOf(id));
@@ -139,10 +191,10 @@ public class MasterDataCache {
     }
 
     public boolean isShortlistedProperty(SharedPreferences preferences, String key, int id) {
-        if(shortlistedProperties == null) {
+        if (shortlistedProperties == null) {
             getShortlistedPropertiesFromPreferences(preferences, key);
         }
-        if(shortlistedProperties.contains(String.valueOf(id))) {
+        if (shortlistedProperties.contains(String.valueOf(id))) {
             return true;
         }
         return false;
