@@ -41,7 +41,14 @@ public class AmenityCallback extends JSONGetCallback {
             try {
 
                 Map<Integer, AmenityCluster> amenityMap = MasterDataCache.getInstance().getAmenityMap();
-                amenityGetEvent.amenityClusters = new ArrayList<>();
+
+                for (Map.Entry<Integer, AmenityCluster> entry : amenityMap.entrySet()){
+                    AmenityCluster cluster = entry.getValue();
+
+                    if(null!=cluster.cluster) {
+                        cluster.cluster.clear();
+                    }
+                }
 
                 JSONArray items = responseObject.getJSONArray(ResponseConstants.DATA);
                 if (null != items && items.length()>0) {
@@ -58,15 +65,22 @@ public class AmenityCallback extends JSONGetCallback {
                             amenity.lon = amenityJson.optDouble(LONGITUDE);
                             amenity.name = amenityJson.optString(NAME);
                             amenity.geoDistance = amenityJson.optDouble(GEO_DISTANCE);
-                            amenity.displayDistance = amenity.geoDistance + " KM"; //TODO need to format
+                            amenity.displayDistance = String.format("%.1f", amenity.geoDistance) + " km";
 
-                            if(null!=amenityCluster.cluster){
+                            if(null==amenityCluster.cluster){
                                 amenityCluster.cluster = new ArrayList<>();
                             }
 
                             amenityCluster.cluster.add(amenity);
-                            amenityGetEvent.amenityClusters.add(amenityCluster);
+
                         }
+                    }
+
+                    amenityGetEvent.amenityClusters = new ArrayList<>();
+
+                    for (Map.Entry<Integer, AmenityCluster> entry : amenityMap.entrySet()){
+                        AmenityCluster cluster = entry.getValue();
+                        amenityGetEvent.amenityClusters.add(cluster);
                     }
 
                     if(amenityGetEvent.amenityClusters.isEmpty()){
