@@ -19,7 +19,7 @@
 
 
 
-    <style name="NoActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.NoActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorAccent</item>
         <item name="colorPrimaryDark">@color/colorAccent</item>
     </style>
@@ -39,5 +39,10 @@
         <item name="android:backgroundDimEnabled">true</item>
 
     </style>
+
+    <!-- Custom style for customContainer -->
+    <declare-styleable name="customContainer">
+        <attr name="cont_text" format="string"/>
+    </declare-styleable>
 
 </resources>

@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
-import com.makaan.fragment.listing.SearchBarFragment;
+//import com.makaan.fragment.listing.SearchBarFragment;
 
 public class HomeActivity extends AppCompatActivity {
     boolean isBottom = true;
@@ -30,10 +30,10 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-topBar=(FrameLayout) findViewById(R.id.top_bar);
+        topBar=(FrameLayout) findViewById(R.id.top_bar);
         // new fragment to show search bar top of listing
-        SearchBarFragment searchBarFragment = SearchBarFragment.init(SearchBarFragment.TYPE_SEARCH);
-        initFragment(R.id.top_bar, searchBarFragment, false);
+        //SearchBarFragment searchBarFragment = SearchBarFragment.init(SearchBarFragment.TYPE_SEARCH);
+        //initFragment(R.id.top_bar, searchBarFragment, false);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         tvSearch =(TextView) findViewById(R.id.et_search);
