@@ -160,4 +160,8 @@ public class StringUtil {
         }
         return text.toString();
     }
+
+    public static String getTwoDecimalPlaces(Double num){
+        return  new DecimalFormat("#.##").format(num);
+    }
 }

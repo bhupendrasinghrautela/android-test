@@ -1,7 +1,6 @@
 package com.makaan.response.trend;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,7 +16,7 @@ public class LocalityPriceTrendDto {
     private HashMap<Long, PriceTrendKey> localityIdToTrendKey = new HashMap<>();
 
 
-    public void addPriceTrendData(Long entityId, String entityName, Date dataDate, Long minPricePerUnitArea){
+    public void addPriceTrendData(Long entityId, String entityName, Long dataDate, Long minPricePerUnitArea){
 
         PriceTrendKey priceTrendKey = localityIdToTrendKey.get(entityId);
 

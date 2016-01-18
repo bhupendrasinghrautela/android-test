@@ -8,12 +8,10 @@ import com.makaan.constants.ResponseConstants;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.response.trend.ApiPriceTrendData;
 import com.makaan.response.trend.LocalityPriceTrendDto;
-import com.makaan.util.AppUtils;
 
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,15 +45,15 @@ public abstract class LocalityTrendCallback extends JSONGetCallback {
 
                     if (null != localityTrendData) {
                         for (Map.Entry<String, List<ApiPriceTrendData>> trendEntry : localityTrendData.entrySet()) {
-                            String epochDataDate = trendEntry.getKey();
-                            Date dataDate = AppUtils.getDateFromEpoch(epochDataDate);
+                            Long epochDataDate = Long.valueOf(trendEntry.getKey());
+                           // Date dataDate = AppUtils.getDateFromEpoch(epochDataDate);
 
                             List<ApiPriceTrendData> apiPriceTrendList = trendEntry.getValue();
                             if (null != apiPriceTrendList && apiPriceTrendList.size() > 0) {
                                 ApiPriceTrendData apiPriceTrendData = apiPriceTrendList.get(0);
                                 Long minPricePerUnitArea = apiPriceTrendData.extraAttributes.get(MIN_PRICE_PER_UNIT_AREA);
                                 if (null != minPricePerUnitArea) {
-                                    localityPriceTrendDto.addPriceTrendData(localityId, apiPriceTrendData.localityName, dataDate, minPricePerUnitArea);
+                                    localityPriceTrendDto.addPriceTrendData(localityId, apiPriceTrendData.localityName,epochDataDate, minPricePerUnitArea);
                                 }
                             }
 

@@ -46,6 +46,7 @@ public class RequestConstants {
     public static final String CENTER_LONG = "centerLongitude";
     public static final String DESCRIPTION = "description";
     public static final String CITY_HEROSHOT_IMAGE_URL = "cityHeroshotImageUrl";
+    public static final String CITY_TAG_LINE = "cityTagLine";
     public static final String ANNUAL_GROWTH = "annualGrowth";
     public static final String RENTAL_YIELD = "rentalYield";
     public static final String DEMAND_RATE = "demandRate";
