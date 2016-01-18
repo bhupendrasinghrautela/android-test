@@ -26,7 +26,6 @@ import butterknife.OnClick;
  */
 public class ListingDetailActivity extends MakaanFragmentActivity {
 
-
     @Override
     protected int getContentViewId() {
         return R.layout.content_main;

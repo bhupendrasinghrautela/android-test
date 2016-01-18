@@ -1,10 +1,12 @@
 package com.makaan.cache;
 
+
 import android.content.SharedPreferences;
 
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.master.MasterFurnishing;
 import com.makaan.response.master.PropertyAmenity;
+
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.master.ApiLabel;
 import com.makaan.response.serp.FilterGroup;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+
 import java.util.Map;
 
 /**
@@ -23,8 +26,10 @@ import java.util.Map;
 public class MasterDataCache {
 
     private static MasterDataCache instance = new MasterDataCache();
+
     private HashMap<Integer, ApiIntLabel> idToBuyPropertyType = new HashMap<>();
     private HashMap<Integer, ApiIntLabel> idToRentPropertyType = new HashMap<>();
+
     private HashMap<Integer, ApiIntLabel> idToPropertyStatus = new HashMap<>();
     private HashMap<String, String> apiLabels = new HashMap<>();
     private HashMap<Long, PropertyAmenity> idToPropertyAmenity = new HashMap<>();
@@ -86,7 +91,6 @@ public class MasterDataCache {
         }
     }
 
-
     public void addApiLabel(ApiLabel apiLabel) {
         if (null != apiLabel && null != apiLabel.key && null != apiLabel.value) {
             apiLabels.put(apiLabel.key, apiLabel.value);
@@ -123,6 +127,7 @@ public class MasterDataCache {
         }
     }
 
+
     public ArrayList<ApiIntLabel> getBuyPropertyTypes() {
         ArrayList<ApiIntLabel> propertyTypes = new ArrayList<>();
         propertyTypes.addAll(idToBuyPropertyType.values());
@@ -130,10 +135,12 @@ public class MasterDataCache {
     }
 
     public ArrayList<ApiIntLabel> getRentPropertyTypes() {
+
         ArrayList<ApiIntLabel> propertyTypes = new ArrayList<>();
         propertyTypes.addAll(idToRentPropertyType.values());
         return propertyTypes;
     }
+
 
     public ArrayList<FilterGroup> getAllBuyFilterGroups() {
         Iterator<FilterGroup> filterGroupIterator = internalNameToFilterGrpBuy.values().iterator();
@@ -153,10 +160,10 @@ public class MasterDataCache {
         return rentFilterGroups;
     }
 
+
     public Map<Integer, AmenityCluster> getAmenityMap() {
         return amenityMap;
     }
-
 
     public String translateApiLabel(String apiLabel) {
         return apiLabels.get(apiLabel);

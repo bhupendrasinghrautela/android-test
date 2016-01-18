@@ -170,6 +170,7 @@ public class Selector {
                     }
                 }
 
+
                 int j = 0;
                 for (LinkedHashMap.Entry<String, RangeSelector> entry : rangeSelectorHashMap.entrySet()) {
 
@@ -184,7 +185,9 @@ public class Selector {
                     }
                 }
 
+
                 if ((null != geoSelector.lat && geoSelector.lat > 0) && (null != geoSelector.lon && geoSelector.lon > 0)) {
+
                     andStrBuilder.append(geoSelector.build());
                 }
 

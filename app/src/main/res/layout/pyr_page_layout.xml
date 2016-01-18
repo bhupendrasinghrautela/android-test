@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     android:scrollbars="none">
 
 <com.makaan.ui.pyr.PyrPageView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -40,6 +41,7 @@
         android:id="@+id/pyr_page_name"
         android:layout_width="@dimen/pyr_page_edit_text_width"
         android:layout_height="@dimen/pyr_page_edit_text_height"
+        android:background="@drawable/edittext_bg_bottom_border"
         android:inputType="text"
         android:hint="@string/pyr_name"
         android:textColorHint="@color/pyr_grey"
@@ -57,12 +59,74 @@
         android:hint="@string/pyr_email"
         android:textColorHint="@color/pyr_grey"
         android:singleLine="true"
+        android:background="@drawable/edittext_bg_bottom_border"
         android:textColor="@color/black"
         android:textSize="@dimen/pyr_page_edit_text_text_size"
         android:layout_marginLeft="@dimen/pyr_page_edit_text_margin_left"
         android:layout_marginTop="@dimen/pyr_page_edit_text_margin_top"/>
 
-    <EditText
+    <LinearLayout
+        android:layout_width="@dimen/pyr_page_edit_text_width"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/pyr_page_edit_text_margin_left"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/edittext_light_background_drawable">
+            <Spinner
+                android:id="@+id/select_country_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@drawable/edittext_bg_bottom_border"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textSize="16sp"
+                android:typeface="sans" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:padding="1dp"
+            android:layout_marginLeft="10dp"
+            android:weightSum="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/leadform_country_code_textview"
+                android:layout_width="0dp"
+                android:layout_weight="0.3"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="+91-"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:typeface="sans"
+                android:layout_height="match_parent" />
+            <EditText
+                android:id="@+id/leadform_mobileno_edittext"
+                android:layout_width="0dp"
+                android:layout_weight="0.7"
+                android:layout_height="match_parent"
+                android:layout_gravity="left|center"
+                android:inputType="number"
+                android:background="@drawable/edittext_bg_bottom_border"
+                android:hint="@string/pyr_mobile"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:typeface="sans" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+<!--    <EditText
         android:id="@+id/pyr_page_mobile"
         android:layout_width="@dimen/pyr_page_edit_text_width"
         android:layout_height="@dimen/pyr_page_edit_text_height"
@@ -70,12 +134,14 @@
         android:hint="@string/pyr_mobile"
         android:textColorHint="@color/pyr_grey"
         android:singleLine="true"
+        android:background="@drawable/edittext_bg_bottom_border"
         android:textColor="@color/black"
         android:textSize="@dimen/pyr_page_edit_text_text_size"
         android:layout_marginLeft="@dimen/pyr_page_edit_text_margin_left"
-        android:layout_marginTop="@dimen/pyr_page_edit_text_margin_top"/>
+        android:layout_marginTop="@dimen/pyr_page_edit_text_margin_top"/>-->
 
     <TextView
+        android:id="@+id/post_requirements"
         android:layout_width="@dimen/post_requirements_width"
         android:layout_height="@dimen/post_requirements_height"
         android:layout_marginLeft="@dimen/post_requirements_margin_left"

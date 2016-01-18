@@ -11,4 +11,5 @@ public interface PyrReplaceFragment {
     void replaceFragment(Fragment fragment, boolean shouldAddToBackStack);
 
     void showPropertySearchFragment(FilterableMultichoiceDialogFragment fragment);
+
 }
