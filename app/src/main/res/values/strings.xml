@@ -37,11 +37,20 @@
     <string name="filter">filter</string>
     <string name="relevance">relevance</string>
     <string name="apply">apply</string>
-
     <string name="jarvis_button_transition">jarvistran</string>
 
+    <!--nearby localities card-->
+    <string name="property_for_sale_string">properties for\nsale</string>
+    <string name="property_for_rent_string">properties\nfor rent1</string>
+    <string name="view_deatils_string">view details</string>
 
-
-
+    <!--top agents card-->
+    <string name="view_seller_details_string">view seller details</string>
+    
+    <!--top builders card-->
+    <string name="builder_experience_string">experience: </string>
+    <string name="total_projects_string">total projects</string>
+    <string name="ongoing_projects_string">ongoing projects</string>
+    <string name="view_projects_string">view projects</string>
 
 </resources>
