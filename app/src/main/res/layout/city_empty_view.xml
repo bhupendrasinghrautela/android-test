@@ -1,0 +1,6 @@
+<View
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/city_empty_view_height"
+    android:layout_marginLeft="@dimen/city_empty_view_margin_left"
+    android:background="@color/city_empty_view_color"/>

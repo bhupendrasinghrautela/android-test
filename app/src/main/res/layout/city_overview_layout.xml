@@ -1,0 +1,81 @@
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/city_appbar_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.android.volley.toolbox.FadeInNetworkImageView
+        android:id="@+id/main_city_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+    <ImageView
+        android:id="@+id/blurred_city_image"
+        android:layout_width="match_parent"
+        android:alpha="0"
+        android:scaleType="centerCrop"
+        android:layout_height="match_parent"/>
+
+    <ImageView
+        android:background="#80000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+<android.support.design.widget.AppBarLayout
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:layout_width="wrap_content">
+    <android.support.design.widget.CollapsingToolbarLayout
+        android:id="@+id/city_collapse_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/city_collapse_bar_height"
+        android:fitsSystemWindows="true"
+        app:contentScrim="@color/app_pink"
+        app:title="@string/city_title"
+        app:expandedTitleTextAppearance="@style/WhiteExpandedToolbarText"
+        app:collapsedTitleTextAppearance="@style/WhiteCollapsedToolbarText"
+        app:expandedTitleGravity="bottom|center_horizontal"
+        app:expandedTitleMarginBottom="@dimen/city_collapse_bar_margin_bottom"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            app:layout_collapseMode="pin"
+            android:layout_height="?attr/actionBarSize"/>
+        <TextView
+            android:id="@+id/city_tag_line"
+            android:layout_gravity="bottom"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/city_big_text"
+            app:layout_collapseMode="parallax"
+            android:text="@string/city_sub_title"/>
+    </android.support.design.widget.CollapsingToolbarLayout>
+</android.support.design.widget.AppBarLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/city_scrollview"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <include
+                layout="@layout/city_header"
+                android:layout_width="match_parent"
+                android:layout_margin="@dimen/city_internal_padding"
+                android:layout_height="wrap_content"/>
+            <include layout="@layout/city_empty_view"/>
+            <include layout="@layout/compressed_text_layout"/>
+            <include layout="@layout/city_empty_view"/>
+            <include layout="@layout/property_range_layout"/>
+            <include layout="@layout/city_empty_view"/>
+            <include layout="@layout/price_trend_layout"/>
+            <include layout="@layout/top_locality_layout"/>
+            <include layout="@layout/city_connect_seller"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

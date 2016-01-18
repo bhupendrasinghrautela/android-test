@@ -7,6 +7,8 @@ public class PriceTrendKey {
 
     public Long id;
     public String label;
+    public boolean isActive;
+    public Integer colorId;
 
     public PriceTrendKey(Long id, String label) {
         this.id = id;

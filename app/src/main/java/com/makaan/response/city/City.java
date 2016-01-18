@@ -10,7 +10,9 @@ public class City {
     public Long id;
     public Double centerLatitude;
     public Double centerLongitude, annualGrowth, rentalYield, demandRate, supplyRate;
-    public String description,label;
+    public String description;
+    public String label;
+    public String cityTagLine;
 
     public String cityHeroshotImageUrl;
     public Double avgPricePerUnitArea, averageRentPerMonth;

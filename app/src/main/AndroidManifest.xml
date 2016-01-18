@@ -31,6 +31,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activity.city.CityActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
 
         <activity android:name=".activity.listing.SerpActivity">
 
