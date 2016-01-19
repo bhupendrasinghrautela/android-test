@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
@@ -84,14 +83,14 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.search = search;
 
             // TODO need to check which kind of data we should map
-            ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setText(search.getDisplayText());
-            if(search.getLocality() == null || TextUtils.isEmpty(search.getLocality())) {
-                view.findViewById(R.id.search_result_item_address_text_view).setVisibility(View.GONE);
+            ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setText(search.displayText);
+            if(TextUtils.isEmpty(search.type)) {
+                view.findViewById(R.id.search_result_item_type_text_view).setVisibility(View.GONE);
             } else {
-                view.findViewById(R.id.search_result_item_address_text_view).setVisibility(View.VISIBLE);
-                ((TextView) view.findViewById(R.id.search_result_item_address_text_view)).setText(search.getLocality());
+                view.findViewById(R.id.search_result_item_type_text_view).setVisibility(View.VISIBLE);
+                ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText(search.type);
             }
-            ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText(search.getType());
+            //((TextView) view.findViewById(R.id.search_result_item_address_text_view)).setText(search.displayText);
         }
 
         @Override

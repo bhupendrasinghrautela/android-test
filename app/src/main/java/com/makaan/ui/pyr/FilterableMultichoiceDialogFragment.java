@@ -143,7 +143,7 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 	public void multiChoiceClick(AdapterView<?> arg0, View arg1,
 								 int clicked, long id){
 
-			String clickedItem = (String) mUnselectedItemsAdapter.getItem(clicked).getLocality();
+			String clickedItem = (String) mUnselectedItemsAdapter.getItem(clicked).entityName;
 			mPyrPresenter.updateSelectedItemsList(clickedItem, mSelectedItemsList,
 					mUnselectedItemsAdapter.getItem(clicked));
 			mPyrPresenter.setLocalityIds(mUnselectedItemsAdapter.getItem(clicked), getActivity());
@@ -166,7 +166,7 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 	public void onSelectedItemsClick(AdapterView<?> arg0, View arg1,
 								 int clicked, long id){
 
-		String clickedItem = (String) mSelectedItemsAdapter.getItem(clicked).getLocality();
+		String clickedItem = (String) mSelectedItemsAdapter.getItem(clicked).entityName;
 		mPyrPresenter.removeLocalityId(mSelectedItemsAdapter.getItem(clicked));
 		mSelectedItemsList=mPyrPresenter.getSelectedItemList(clickedItem, mSelectedItemsList);
 		mSelectedItemsAdapter.updateDataItems(mSelectedItemsList);

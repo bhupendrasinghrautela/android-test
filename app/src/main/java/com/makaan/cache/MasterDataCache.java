@@ -38,6 +38,7 @@ public class MasterDataCache {
     private HashMap<String, FilterGroup> internalNameToFilterGrpBuy = new HashMap<>();
     private HashMap<String, FilterGroup> internalNameToFilterGrpRent = new HashMap<>();
     private Map<Integer, AmenityCluster> amenityMap = new HashMap<>();
+    private Map<String, String> searchTypeMap= new HashMap<>();
 
     private HashSet<String> shortlistedProperties;
 
@@ -127,6 +128,12 @@ public class MasterDataCache {
         }
     }
 
+    public void addSearchType(ApiLabel searchType) {
+        if (null != searchType && null != searchType.key && null != searchType.value) {
+            searchTypeMap.put(searchType.key, searchType.value);
+        }
+    }
+
 
     public ArrayList<ApiIntLabel> getBuyPropertyTypes() {
         ArrayList<ApiIntLabel> propertyTypes = new ArrayList<>();
@@ -163,6 +170,10 @@ public class MasterDataCache {
 
     public Map<Integer, AmenityCluster> getAmenityMap() {
         return amenityMap;
+    }
+
+    public Map<String, String> getSearchTypeMap() {
+        return searchTypeMap;
     }
 
     public String translateApiLabel(String apiLabel) {

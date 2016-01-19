@@ -229,4 +229,23 @@ public class MasterDataService implements MakaanService {
 
         }, "amenityMap.json");
     }
+
+
+    public void populateSearchType() {
+        Type searchType = new TypeToken<HashMap<String, String>>() {
+        }.getType();
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.SEARCH_TYPE, searchType, new ObjectGetCallback() {
+            @Override
+            @SuppressWarnings("unchecked")
+            public void onSuccess(Object responseObject) {
+                HashMap<String, String> searchTypes = (HashMap<String, String>) responseObject;
+
+                for (Map.Entry<String, String> searchType : searchTypes.entrySet()) {
+                    MasterDataCache.getInstance().addSearchType(new ApiLabel(searchType.getKey(), searchType.getValue()));
+                }
+            }
+        }, "searchType.json");
+
+    }
 }

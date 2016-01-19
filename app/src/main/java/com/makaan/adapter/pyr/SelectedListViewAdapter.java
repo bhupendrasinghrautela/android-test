@@ -51,7 +51,7 @@ public class SelectedListViewAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.text.setText(mSelectedList.get(position).getLocality());
+        holder.text.setText(mSelectedList.get(position).entityName);
         return convertView;
     }
 

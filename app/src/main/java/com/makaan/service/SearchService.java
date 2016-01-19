@@ -20,7 +20,7 @@ public class SearchService implements MakaanService {
     private static final String TAG = SearchService.class.getSimpleName();
 
     /*---Typeahead api constants*/
-    public static final String TYPEAHEAD_BASE_URL = ApiConstants.BASE_URL.concat("/columbus/app/v4/typeahead?");
+    public static final String TYPEAHEAD_BASE_URL = ApiConstants.BASE_URL.concat("/columbus/app/v5/typeahead?");
     public static final String TYPEAHEAD_QUERY = "query=";
     public static final String TYPEAHEAD_TYPE = "typeAheadType=";
     public static final String TYPEAHEAD_ROWS = "&rows=5";
@@ -55,31 +55,34 @@ public class SearchService implements MakaanService {
     }
 
     private void makeSearchRequest(String requestUrl) {
-        MakaanNetworkClient.getInstance().get(requestUrl, new SearchResultCallback(), TAG);
+        MakaanNetworkClient.getInstance().getSearch(requestUrl, new SearchResultCallback(), TAG);
     }
 
     private String buildSearchUrl(String key, String city, SearchType type, boolean supportGooglePlace){
-            StringBuilder urlBuilder = new StringBuilder();
-            if (type == SearchType.ALL) {
-                urlBuilder.append(TYPEAHEAD_BASE_URL);
-                urlBuilder.append(TYPEAHEAD_QUERY);
-                urlBuilder.append(key);
-                if(supportGooglePlace){
-                    urlBuilder.append(TYPEAHEAD_ENHANCE_GP);
-                }
-                urlBuilder.append(TYPEAHEAD_CITY);
-                urlBuilder.append(city);
-                urlBuilder.append(TYPEAHEAD_ROWS);
-            } else {
-                urlBuilder.append(TYPEAHEAD_BASE_URL);
-                urlBuilder.append(TYPEAHEAD_TYPE);
-                urlBuilder.append(type.getValue());
-                urlBuilder.append("&");
-                urlBuilder.append(TYPEAHEAD_QUERY);
-                urlBuilder.append(key);
-                urlBuilder.append(TYPEAHEAD_CITY);
-                urlBuilder.append(city);
+        StringBuilder urlBuilder = new StringBuilder();
+        urlBuilder.append(TYPEAHEAD_BASE_URL);
+
+        if (type == SearchType.ALL) {
+            urlBuilder.append(TYPEAHEAD_QUERY);
+            urlBuilder.append(key);
+            if(supportGooglePlace){
+                urlBuilder.append(TYPEAHEAD_ENHANCE_GP);
             }
-            return urlBuilder.toString();
+
+        } else {
+            urlBuilder.append(TYPEAHEAD_TYPE);
+            urlBuilder.append(type.getValue());
+            urlBuilder.append("&");
+            urlBuilder.append(TYPEAHEAD_QUERY);
+            urlBuilder.append(key);
+        }
+
+        if(TextUtils.isEmpty(city)) {
+            urlBuilder.append(TYPEAHEAD_CITY);
+            urlBuilder.append(city);
+        }
+
+        urlBuilder.append(TYPEAHEAD_ROWS);
+        return urlBuilder.toString();
     }
 }
