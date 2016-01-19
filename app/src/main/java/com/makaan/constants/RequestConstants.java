@@ -58,6 +58,7 @@ public class RequestConstants {
     public static final String LOCALITY_ID = "localityId";
     public static final String USER_ID = "userId";
     public static final String LOCALITY_NAME = "localityName";
+    public static final String LISTING_AGGREGATIONS = "listingAggregations";
     public static final String PROJECT_NAME = "projectName";
     public static final String MONTH_DURATION = "monthDuration";
     public static final String LIVABILITY_SCORE = "livabilityScore";

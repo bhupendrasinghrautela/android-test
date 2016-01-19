@@ -134,6 +134,10 @@ public class Selector {
         sortSelector = new SortSelector();
     }
 
+    public void applySelection(String selector){
+        //TODO: build
+    }
+
 
     public String build() {
         try {

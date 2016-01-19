@@ -1,6 +1,5 @@
 package com.makaan.activity.listing;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -11,10 +10,9 @@ import com.makaan.event.city.CityTopLocalityEvent;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.event.trend.callback.TopLocalitiesTrendCallback;
 import com.makaan.response.locality.Locality;
-import com.makaan.service.ImageService;
+import com.makaan.service.LocalityService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PriceTrendService;
-import com.makaan.service.UserService;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -55,12 +53,13 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         List<Long> tempUsers = new ArrayList<>();
         tempUsers.add(3564144L);
         tempUsers.add(3901325L);
-        ((UserService) (MakaanServiceFactory.getInstance().getService(UserService.class))).getCompanyUsers(tempUsers);
-        ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(436057L);
+        //((UserService) (MakaanServiceFactory.getInstance().getService(UserService.class))).getCompanyUsers(tempUsers);
+        //((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(436057L);
+        ((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getNearByLocalities(12.84112072, 77.66799164, 5);
 
-        Intent intent = new Intent(this, SerpActivity.class);
+        /*Intent intent = new Intent(this, SerpActivity.class);
         startActivity(intent);
-
+*/
     }
 
 
