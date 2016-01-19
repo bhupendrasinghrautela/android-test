@@ -92,7 +92,7 @@ public class PyrPagePresenter {
     public void updateSelectedItemsList(String clickedItem, ArrayList<Search> list, Search search){
         boolean flag=true;
         for (int i = 0; i < list.size(); i++) {
-            if(clickedItem.equalsIgnoreCase(list.get(i).getLocality())){
+            if(clickedItem.equalsIgnoreCase(list.get(i).entityName)){
                 flag=false;
                 break;
             }
@@ -108,7 +108,7 @@ public class PyrPagePresenter {
     public ArrayList<Search>getSelectedItemList(String clickedItem, ArrayList<Search>list){
         int index=-1;
         for (int i = 0; i < list.size(); i++) {
-            if (clickedItem.equalsIgnoreCase(list.get(i).getLocality())) {
+            if (clickedItem.equalsIgnoreCase(list.get(i).entityName)) {
                 //list.remove(i);
                 index=i;
                 break;
@@ -125,7 +125,7 @@ public class PyrPagePresenter {
 
           boolean flag=false;
           for(Search searchObj:locaityIds){
-            if(searchObj.getLocalityId()==search.getLocalityId()){
+            if(searchObj.entityId==search.entityId){
               flag=true;
             }
           }
@@ -144,7 +144,7 @@ public class PyrPagePresenter {
     public void removeLocalityId(Search search){
         boolean flag=false;
         for(Search searchObj:locaityIds){
-            if(searchObj.getLocalityId()==search.getLocalityId()){
+            if(searchObj.entityId==search.entityName){
                 //locaityIds.remove(searchObj);
                 flag=true;
             }

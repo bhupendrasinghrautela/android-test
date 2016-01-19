@@ -1,0 +1,11 @@
+{
+  "data": {
+    "PROJECT": "projectId",
+    "CITY": "cityId",
+    "BUILDER": "builderId",
+    "LOCALITY": "localityId",
+    "SUBURB": "suburbId",
+    "BUILDER-CITY": "cityId"
+  }
+
+}

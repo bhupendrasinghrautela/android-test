@@ -41,7 +41,7 @@ public class SearchableListviewAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
  
-        holder.text.setText(mData.get(position).getLocality());
+        holder.text.setText(mData.get(position).entityName);
  
         return convertView;
     }
@@ -67,7 +67,7 @@ public class SearchableListviewAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return mData.get(position).getLocalityId();
+        return Long.parseLong(mData.get(position).entityId);
     }
 
 }

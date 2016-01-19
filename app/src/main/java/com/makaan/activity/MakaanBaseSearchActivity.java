@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.adapter.listing.SearchAdapter;
+import com.makaan.cache.MasterDataCache;
 import com.makaan.response.search.Search;
 import com.makaan.response.search.SearchType;
 import com.makaan.response.search.event.SearchResultEvent;
@@ -24,6 +25,7 @@ import com.makaan.service.SearchService;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -124,16 +126,33 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         }
 
         // TODO need to handle all cases
-        MakaanBuyerApplication.serpSelector.reset();
-        MakaanBuyerApplication.serpSelector.term("localityId", String.valueOf(search.getLocalityId()), true);
-        new ListingService().handleSerpRequest(MakaanBuyerApplication.serpSelector);
-        mSearchAdapter.clear();
+
+
+        if(TextUtils.isEmpty(search.type)){
+            //TODO Either suggestion or google place
+        }else {
+            Map<String,String> searchType = MasterDataCache.getInstance().getSearchTypeMap();
+            String searchField = searchType.get(search.type);
+            if(!TextUtils.isEmpty(searchField)) {
+                if(SearchType.PROJECT.getValue().equalsIgnoreCase(search.type)){
+                    //TODO open project page
+                }else {
+                    MakaanBuyerApplication.serpSelector.reset();
+                    MakaanBuyerApplication.serpSelector.term(searchField, String.valueOf(search.entityId), true);
+                    if(SearchType.BUILDER_CITY.getValue().equalsIgnoreCase(search.type)){
+                        MakaanBuyerApplication.serpSelector.term("builderId", String.valueOf(search.builderId), true);
+                    }
+                    new ListingService().handleSerpRequest(MakaanBuyerApplication.serpSelector);
+                    mSearchAdapter.clear();
+                }
+            }
+        }
 
         mSearchView.setOnQueryTextListener(null);
-        mSearchView.setQuery(search.getDisplayText(), false);
+        mSearchView.setQuery(search.displayText, false);
         mSearchView.setOnQueryTextListener(this);
 
-        setSearchViewVisibility(false, search.getDisplayText());
+        setSearchViewVisibility(false, search.displayText);
     }
 
     @Override
