@@ -17,12 +17,15 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.makaan.R;
+import com.makaan.jarvis.event.IncomingMessageEvent;
+import com.makaan.jarvis.event.OutgoingMessageEvent;
 import com.makaan.jarvis.message.Message;
 import com.makaan.jarvis.ui.ConversationAdapter;
 import com.makaan.jarvis.message.*;
 import com.makaan.util.AnimUtil;
 import com.makaan.util.AppBus;
 import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,7 +44,7 @@ public class ChatActivity extends AppCompatActivity {
     @Bind(R.id.conversation_list_view)
     RecyclerView mConRecyclerView;
 
-    @Bind(R.id.btnSend)
+    @Bind(R.id.jarvis_head)
     ImageView mButtonSend;
 
     @Bind(R.id.inputMsg)
@@ -55,6 +58,7 @@ public class ChatActivity extends AppCompatActivity {
         setupConversationView(savedInstanceState);
 
         eventBus = AppBus.getInstance();
+        eventBus.register(ChatActivity.this);
     }
 
 
@@ -75,9 +79,9 @@ public class ChatActivity extends AppCompatActivity {
         int height = size.y;
 
         if (height > width) {
-            getWindow().setLayout((int) (width * .9), (int) (height * .9));
+            getWindow().setLayout((int) (width * .95), (int) (height * .95));
         } else {
-            getWindow().setLayout((int) (width * .9), (int) (height * .9));
+            getWindow().setLayout((int) (width * .95), (int) (height * .95));
         }
     }
 
@@ -126,19 +130,13 @@ public class ChatActivity extends AppCompatActivity {
 
     private void sendMessage(String text){
         if(TextUtils.isEmpty(text)){
-            Message message = new Message();
-            message.messageType = MessageType.inText;
-            message.message = "Hello!!!";
-            mAdapter.addMessage(message);
-        }else if("1".equalsIgnoreCase(text)){
-            Message message = new Message();
-            message.messageType = MessageType.sellerOverView;
-            mAdapter.addMessage(message);
-        } else{
+            this.moveTaskToBack(true);
+        }else{
             Message message = new Message();
             message.messageType = MessageType.outText;
             message.message = text;
             mAdapter.addMessage(message);
+            sendMessageToService(message);
         }
     }
 
@@ -147,4 +145,37 @@ public class ChatActivity extends AppCompatActivity {
             mConRecyclerView.scrollToPosition(mAdapter.getItemCount()-1);
         }
     }
+
+    private void sendMessageToService(SocketMessage message){
+        OutgoingMessageEvent event = new OutgoingMessageEvent();
+        event.message = message;
+        eventBus.post(event);
+    }
+
+    @Subscribe
+    public void onIncomingMessage(IncomingMessageEvent event){
+        //TODO code cleanup
+        final Message message = (Message) event.message;
+
+        if(TextUtils.isEmpty(message.filtered)) {
+            message.messageType = MessageType.inText;
+        }else{
+            if ("details".equalsIgnoreCase(message.filtered)){
+                message.messageType = MessageType.serpFilter;
+            } else if ("signup".equalsIgnoreCase(message.filtered)){
+                message.messageType = MessageType.signUp;
+            }
+        }
+
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.addMessage(message);
+                scrollToEnd();
+            }
+        });
+    }
+
+
 }

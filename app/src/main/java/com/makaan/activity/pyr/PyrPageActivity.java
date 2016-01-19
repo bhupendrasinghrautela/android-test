@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.makaan.R;
+import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.ui.pyr.FilterableMultichoiceDialogFragment;
 import com.makaan.fragment.pyr.PyrPagePresenter;
 import com.makaan.fragment.pyr.PyrReplaceFragment;
@@ -14,15 +15,19 @@ import com.makaan.fragment.pyr.PyrReplaceFragment;
 /**
  * Created by proptiger on 6/1/16.
  */
-public class PyrPageActivity extends AppCompatActivity implements PyrReplaceFragment{
+public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplaceFragment{
 
     private FragmentTransaction mFragmentTransaction;
     private PyrPagePresenter mPagePresenter;
 
     @Override
+    protected int getContentViewId() {
+        return R.layout.pyr_activity_layout;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pyr_activity_layout);
         mPagePresenter=PyrPagePresenter.getPyrPagePresenter();
         mPagePresenter.setReplaceFragment(this);
         mPagePresenter.showPyrMainPageFragment();
@@ -54,4 +59,8 @@ public class PyrPageActivity extends AppCompatActivity implements PyrReplaceFrag
         }
     }
 
+    @Override
+    public boolean isJarvisSupported() {
+        return false;
+    }
 }

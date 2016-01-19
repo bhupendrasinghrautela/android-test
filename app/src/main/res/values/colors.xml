@@ -5,16 +5,17 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-
     <color name="listingBgColor">#f1f1f1</color>
     <color name="listingGray">#666666</color>
+    <color name="emiGray">#979797</color>
     <color name="transparent">#00000000</color>
     <color name="listingLightGray">#999999</color>
     <color name="listingBlack">#444444</color>
-
     <color name= "light_gray">#d3d3d3 </color>
+
     <color name="app_grey">#80000000</color>
     <color name="app_pink">#E72989</color>
+
     <!--Pyr-->
     <color name="appThemeRed">#E71C28  </color>
     <color name="pyr_light_grey">#e0e0e0</color>
@@ -24,12 +25,14 @@
     <color name="selected_list_cancel_icon_tint">#f7941e</color>
     <color name="list_filter_button_background_color">#FFFFFF</color>
     <color name="bedroom_circular_stroke">#D3D3D3</color>
+
     <color name="app_yellow">#FBA511</color>
     <color name="app_red">#E71C28</color>
+
     <!-- Serp Listing Color Values -->
     <color name="serp_listing_background">#F0F0F0</color>
     <color name="serp_listing_card_background">#FFFFFF</color>
-    <color name="serp_listing_car_empty_view_color">#33979797</color>
+    <color name="serp_listing_view_empty_view_color">#33979797</color>
     <color name="serp_listing_cluster_card_background">#FBA511</color>
 
     <color name="serp_listing_cluster_card_group_background">#ADE62489</color>
@@ -41,16 +44,14 @@
     <color name="serp_listing_call_seller_button_background_color">#E71C28</color>
     <color name="serp_listing_call_seller_button_background_left_color">#FBA511</color>
     <color name="activity_search_base_layout_search_bar_background_color">#E71C28</color>
-
     <color name="serp_listing_total_properties_text_color">#E3444444</color>
-
     <color name="filters_fragment_filter_count_background_color">#FBA511</color>
+    <color name = "appThemeYellow">#FBA511 </color>
 
     <color name="fragment_dialog_filters_toggle_button_normal_text_color">#444444</color>
     <color name="fragment_dialog_filters_toggle_button_disabled_text_color">#80444444</color>
     <color name="fragment_dialog_filters_toggle_button_normal_stroke_color">#757575</color>
     <color name="fragment_dialog_filters_item_empty_view_background_color">#4C979797</color>
-
 
     <!---Jarvis work in progress to be refactored-->
     <color name="body_background">#e8e8e8</color>
@@ -75,4 +76,23 @@
 
 
 
+
+    <!-- Search result item color values -->
+    <color name="search_result_item_name_text_color">#DE000000</color>
+    <color name="search_result_item_address_text_color">#8B000000</color>
+    <color name="search_result_item_type_text_color">#999999</color>
+    <color name="search_result_item_empty_view_background_color">#979797</color>
+
+    <color name="relevance_poup_window_text_color">#444444</color>
+
+    <!-- map listing view colors -->
+    <color name="listing_brief_view_layout_default_text_color">#444444</color>
+    <color name="listing_brief_view_layout_property_price_sq_ft_text_color">#B0444444</color>
+    <color name="listing_brief_view_layout_empty_view_color">#33979797</color>
+
+    <color name="city_empty_view_color">#979797</color>
+
+    <color name="grayDivider">#e0e0e0</color>
+    <color name="pink">#E62489</color>
+    <color name="red">#FF0000</color>
 </resources>

@@ -40,7 +40,7 @@ public class AmenityViewPager extends ViewPager {
         setAdapter(mAmenityPagerAdapter);
         setClipToPadding(false);
         setPageMargin(MARGIN);
-        setPadding(H_PADDING, 0, H_PADDING, 0);
+        setPadding(0, 0, H_PADDING, 0);
         setOffscreenPageLimit(2);
     }
 

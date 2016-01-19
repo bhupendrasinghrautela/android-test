@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/select_property_layout"
     >
 
     <LinearLayout
@@ -42,9 +43,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/pyr_property_value_left_margin"
             android:orientation="horizontal"
+            android:clickable="false"
             android:text="@string/pyr_property_value_string"
             android:textSize="@dimen/pyr_property_value_text_size"
-            android:textAlignment="textStart"
             android:textColor="@color/pyr_grey"
             android:layout_gravity="center_vertical" />
 

@@ -86,7 +86,9 @@ public class SerpListFragment extends MakaanBaseFragment implements SerpListingA
     }
 
     public void updateListings(SerpGetEvent listingGetEvent) {
-        this.mListings = listingGetEvent.listingData.listings;
+        if(listingGetEvent != null && listingGetEvent.listingData != null) {
+            this.mListings = listingGetEvent.listingData.listings;
+        }
         if(mListings == null) {
             mListings = new ArrayList<Listing>();
         }

@@ -1,93 +1,334 @@
 {
   "data": {
-    "filters": [{
-      "displayName": "Beds",
-      "internalName": "i_beds",
-      "displayOrder": "1",
-      "termFilterValues": [{
-        "displayName": "1 BHK",
+    "filters": [
+      {
+        "displayName": "Beds",
+        "internalName": "i_beds",
         "displayOrder": "1",
-        "fieldName": "bedrooms",
-        "value": "1",
-        "selected": false
-      }, {
-        "displayName": "2 BHK",
-        "displayOrder": "2",
-        "fieldName": "bedrooms",
-        "value": "2",
-        "selected": false
-      }, {
-        "displayName": "3 BHK",
-        "displayOrder": "3",
-        "fieldName": "bedrooms",
-        "value": "3",
-        "selected": false
-      }, {
-        "displayName": "4 BHK",
-        "displayOrder": "4",
-        "fieldName": "bedrooms",
-        "value": "4",
-        "selected": false
-      }],
-      "rangeFilterValues": [
-
-      ]
-    },
-
+        "layoutType": "1",
+        "termFilterValues": [
+          {
+            "displayName": "1",
+            "displayOrder": "1",
+            "fieldName": "bedrooms",
+            "value": "1",
+            "selected": false
+          },
+          {
+            "displayName": "2",
+            "displayOrder": "2",
+            "fieldName": "bedrooms",
+            "value": "2",
+            "selected": false
+          },
+          {
+            "displayName": "3",
+            "displayOrder": "3",
+            "fieldName": "bedrooms",
+            "value": "3",
+            "selected": false
+          },
+          {
+            "displayName": "4",
+            "displayOrder": "4",
+            "fieldName": "bedrooms",
+            "value": "4",
+            "selected": false
+          }
+        ],
+        "rangeFilterValues": [
+        ]
+      },
       {
         "displayName": "Budget",
         "internalName": "i_budget",
         "displayOrder": "2",
+        "layoutType": "2",
         "termFilterValues": [],
-        "rangeFilterValues": [{
-          "displayName": "",
-          "displayOrder": "1",
-          "fieldName": "price",
-          "minValue": 0,
-          "maxValue": 100000000,
-          "selected": false
-        }]
-      }, {
+        "rangeFilterValues": [
+          {
+            "displayName": "",
+            "displayOrder": "1",
+            "fieldName": "price",
+            "minValue": 0,
+            "maxValue": 150000,
+            "selected": false
+          }
+        ]
+      },
+      {
         "displayName": "Property Type",
         "internalName": "i_property_type",
         "displayOrder": "3",
-        "termFilterValues": [{
-          "displayName": "Apartment/Flat",
-          "displayOrder": "1",
-          "fieldName": "unitTypeId",
-          "value": "1",
-          "selected": false
-        }, {
-          "displayName": "Villa",
-          "displayOrder": "2",
-          "fieldName": "unitTypeId",
-          "value": "2",
-          "selected": false
-        }, {
-          "displayName": "Independent House",
-          "displayOrder": "3",
-          "fieldName": "unitTypeId",
-          "value": "19",
-          "selected": false
-        }, {
-          "displayName": "Plot/Land",
-          "displayOrder": "4",
-          "fieldName": "unitTypeId",
-          "value": "3",
-          "selected": false
-        }, {
-          "displayName": "Builder Floor",
-          "displayOrder": "5",
-          "fieldName": "unitTypeId",
-          "value": "7",
-          "selected": false
-        }],
+        "layoutType": "3",
+        "termFilterValues": [
+          {
+            "displayName": "apartment/flat",
+            "displayOrder": "1",
+            "fieldName": "unitTypeId",
+            "value": "1",
+            "selected": false
+          },
+          {
+            "displayName": "villa",
+            "displayOrder": "2",
+            "fieldName": "unitTypeId",
+            "value": "2",
+            "selected": false
+          },
+          {
+            "displayName": "independent house",
+            "displayOrder": "3",
+            "fieldName": "unitTypeId",
+            "value": "19",
+            "selected": false
+          },
+          {
+            "displayName": "plot/land",
+            "displayOrder": "4",
+            "fieldName": "unitTypeId",
+            "value": "3",
+            "selected": false
+          },
+          {
+            "displayName": "builder floor",
+            "displayOrder": "5",
+            "fieldName": "unitTypeId",
+            "value": "7",
+            "selected": false
+          }
+        ],
         "rangeFilterValues": [
-
         ]
-
+      },
+      {
+        "displayName": "Bathroom",
+        "internalName": "i_bathroom",
+        "displayOrder": "4",
+        "layoutType": "1",
+        "termFilterValues": [
+          {
+            "displayName": "1",
+            "displayOrder": "1",
+            "fieldName": "bathrooms",
+            "value": "1",
+            "selected": false
+          },
+          {
+            "displayName": "2",
+            "displayOrder": "2",
+            "fieldName": "bathrooms",
+            "value": "2",
+            "selected": false
+          },
+          {
+            "displayName": "3",
+            "displayOrder": "3",
+            "fieldName": "bathrooms",
+            "value": "3",
+            "selected": false
+          },
+          {
+            "displayName": "4",
+            "displayOrder": "4",
+            "fieldName": "bathrooms",
+            "value": "4",
+            "selected": false
+          }
+        ],
+        "rangeFilterValues": [
+        ]
+      },
+      {
+        "displayName": "availability",
+        "internalName": "i_possession in",
+        "displayOrder": "5",
+        "layoutType": "3",
+        "termFilterValues": [
+          {
+            "displayName": "ready to move",
+            "displayOrder": "1",
+            "fieldName": "availability",
+            "value": "0",
+            "selected": false
+          },
+          {
+            "displayName": "in a week",
+            "displayOrder": "2",
+            "fieldName": "availability",
+            "value": "7",
+            "selected": false
+          },
+          {
+            "displayName": "in a month",
+            "displayOrder": "3",
+            "fieldName": "availability",
+            "value": "14",
+            "selected": false
+          },
+          {
+            "displayName": "anytime",
+            "displayOrder": "4",
+            "fieldName": "availability",
+            "value": "10000",
+            "selected": false
+          }
+        ],
+        "rangeFilterValues": [
+        ]
+      },
+      {
+        "displayName": "listed by",
+        "internalName": "i_listed_by",
+        "displayOrder": "6",
+        "layoutType": "3",
+        "termFilterValues": [
+          {
+            "displayName": "agent",
+            "displayOrder": "1",
+            "fieldName": "listingSellerCompanyType",
+            "value": "Broker",
+            "selected": false
+          },
+          {
+            "displayName": "builder",
+            "displayOrder": "2",
+            "fieldName": "listingSellerCompanyType",
+            "value": "Builder",
+            "selected": false
+          },
+          {
+            "displayName": "owner",
+            "displayOrder": "3",
+            "fieldName": "listingSellerCompanyType",
+            "value": "Owner",
+            "selected": false
+          }
+        ],
+        "rangeFilterValues": [
+        ]
+      },
+      {
+        "displayName": "furnishing status",
+        "internalName": "i_furnishing_status",
+        "displayOrder": "7",
+        "layoutType": "3",
+        "termFilterValues": [
+          {
+            "displayName": "unfurnished",
+            "displayOrder": "1",
+            "fieldName": "listingFurnished",
+            "value": "unfurnished",
+            "selected": false
+          },
+          {
+            "displayName": "semi-furnished",
+            "displayOrder": "2",
+            "fieldName": "listingFurnished",
+            "value": "semifurnished",
+            "selected": false
+          },
+          {
+            "displayName": "fully furnished",
+            "displayOrder": "3",
+            "fieldName": "listingFurnished",
+            "value": "fullyfurnished",
+            "selected": false
+          }
+        ],
+        "rangeFilterValues": [
+        ]
+      },
+      {
+        "displayName": "furnishings",
+        "internalName": "i_furnishings",
+        "displayOrder": "8",
+        "layoutType": "3",
+        "termFilterValues": [
+          {
+            "displayName": "wardrobe",
+            "displayOrder": "1",
+            "fieldName": "listingFurnished",
+            "value": "unfurnished",
+            "selected": false
+          },
+          {
+            "displayName": "double bed",
+            "displayOrder": "2",
+            "fieldName": "listingFurnished",
+            "value": "semiFurnished",
+            "selected": false
+          },
+          {
+            "displayName": "tv",
+            "displayOrder": "3",
+            "fieldName": "listingFurnished",
+            "value": "fullyFurnished",
+            "selected": false
+          },
+          {
+            "displayName": "refrigerator",
+            "displayOrder": "3",
+            "fieldName": "listingFurnished",
+            "value": "fullyFurnished",
+            "selected": false
+          },
+          {
+            "displayName": "sofa",
+            "displayOrder": "3",
+            "fieldName": "listingFurnished",
+            "value": "fullyFurnished",
+            "selected": false
+          }
+        ],
+        "rangeFilterValues": [
+        ]
+      },
+      {
+        "displayName": "restrictions",
+        "internalName": "i_restrictions",
+        "displayOrder": "8",
+        "layoutType": "3",
+        "termFilterValues": [
+          {
+            "displayName": "bachelors",
+            "displayOrder": "1",
+            "fieldName": "listingFurnished",
+            "value": "unfurnished",
+            "selected": false
+          },
+          {
+            "displayName": "family",
+            "displayOrder": "2",
+            "fieldName": "listingFurnished",
+            "value": "semiFurnished",
+            "selected": false
+          },
+          {
+            "displayName": "pets allowed",
+            "displayOrder": "3",
+            "fieldName": "listingFurnished",
+            "value": "fullyFurnished",
+            "selected": false
+          },
+          {
+            "displayName": "non vegetarian",
+            "displayOrder": "3",
+            "fieldName": "listingFurnished",
+            "value": "fullyFurnished",
+            "selected": false
+          },
+          {
+            "displayName": "company lease",
+            "displayOrder": "3",
+            "fieldName": "listingFurnished",
+            "value": "fullyFurnished",
+            "selected": false
+          }
+        ],
+        "rangeFilterValues": [
+        ]
       }
     ]
   }
-
 }

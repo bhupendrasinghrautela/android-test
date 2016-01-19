@@ -1,9 +1,8 @@
 package com.makaan.activity;
 
 import android.os.Bundle;
-
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 import com.makaan.jarvis.BaseJarvisActivity;
@@ -53,6 +52,39 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
         if (!isFinishing()) {
             progressDialog.show();
         }
+    }
+
+    protected void initFragment(int fragmentHolderId, Fragment fragment, boolean shouldAddToBackStack) {
+        // reference fragment transaction
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(fragmentHolderId, fragment, fragment.getClass().getName());
+        // if need to be added to the backstack, then do so
+        if (shouldAddToBackStack) {
+            fragmentTransaction.addToBackStack(fragment.getClass().getName());
+        }
+        // TODO
+        // check if we this can be called from any background thread or after background to ui thread communication
+        // then we need to make use of commitAllowingStateLoss()
+        fragmentTransaction.commitAllowingStateLoss();
+    }
+
+    protected void initFragments(int[] fragmentHolderId, Fragment[] fragment, boolean shouldAddToBackStack) {
+        if (fragmentHolderId.length != fragment.length) {
+            return;
+        }
+        // reference fragment transaction
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        for (int i = 0; i < fragmentHolderId.length; i++) {
+            fragmentTransaction.replace(fragmentHolderId[i], fragment[i], fragment.getClass().getName());
+        }
+        // if need to be added to the backstack, then do so
+        if (shouldAddToBackStack) {
+            fragmentTransaction.addToBackStack(fragment.getClass().getName());
+        }
+        // TODO
+        // check if we this can be called from any background thread or after background to ui thread communication
+        // then we need to make use of commitAllowingStateLoss()
+        fragmentTransaction.commit();
     }
 
     private void cancelLoadingDialog() {

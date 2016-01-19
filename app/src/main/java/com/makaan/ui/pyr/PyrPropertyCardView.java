@@ -46,9 +46,10 @@ public class PyrPropertyCardView extends BaseCardView {
 
     }
 
-    @OnClick(R.id.property_value)
+    @OnClick(R.id.select_property_layout)
     public void onPropertyClick(){
         pyrPagePresenter=PyrPagePresenter.getPyrPagePresenter();
+        pyrPagePresenter.showPropertyTypeFragment();
     }
 
 }

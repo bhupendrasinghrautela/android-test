@@ -40,15 +40,8 @@ import butterknife.OnClick;
 /**
  * Created by rohitgarg on 1/8/16.
  */
-public class FiltersDialogFragment extends DialogFragment implements View.OnClickListener {
-    ExpandableHeightGridView mBedsLayoutGridView;
-    ExpandableHeightGridView mPropertyTypeLayoutGridView;
-    ExpandableHeightGridView mBathroomLayoutGridView;
-    ExpandableHeightGridView mReadyToMoveLayoutGridView;
-    ExpandableHeightGridView mSaleTypeLayoutGridView;
-    ExpandableHeightGridView mListedByLayoutGridView;
-    ExpandableHeightGridView mFurnishingLayoutGridView;
-    ExpandableHeightGridView mBuildersLayoutGridView;
+public class FiltersDialogFragment extends DialogFragment {
+    List<ExpandableHeightGridView> mFilterGridViews = new ArrayList<>();
 
     @Bind(R.id.fragment_dialog_filters_back_buttom)
     Button mBackButton;
@@ -82,17 +75,29 @@ public class FiltersDialogFragment extends DialogFragment implements View.OnClic
         AppBus.getInstance().register(this); //TODO: move to base fragment
         ButterKnife.bind(this, view);
 
-        mApplyButton.setOnClickListener(this);
 
-
-        if (MakaanBuyerApplication.isBuySearch) {
-            populateFilters(MasterDataCache.getInstance().getAllBuyFilterGroups());
-        } else {
-            populateFilters(MasterDataCache.getInstance().getAllRentFilterGroups());
+        try {
+            if (MakaanBuyerApplication.serpSelector.isBuyContext()) {
+                ArrayList<FilterGroup> filterGroups = MasterDataCache.getInstance().getAllBuyFilterGroups();
+                populateFilters(getClonedFilterGroups(filterGroups));
+            } else {
+                ArrayList<FilterGroup> filterGroups = MasterDataCache.getInstance().getAllRentFilterGroups();
+                populateFilters(getClonedFilterGroups(filterGroups));
+            }
+        } catch (CloneNotSupportedException ex) {
+            ex.printStackTrace();
         }
 
 
         return view;
+    }
+
+    private ArrayList<FilterGroup> getClonedFilterGroups(ArrayList<FilterGroup> filterGroups) throws CloneNotSupportedException {
+        ArrayList<FilterGroup> group = new ArrayList<>(filterGroups.size());
+        for(FilterGroup filter : filterGroups) {
+            group.add(filter.clone());
+        }
+        return group;
     }
 
     @Override
@@ -113,57 +118,34 @@ public class FiltersDialogFragment extends DialogFragment implements View.OnClic
     private void populateFilters(ArrayList<FilterGroup> filterGroups) {
         if (filterGroups != null && filterGroups.size() > 0) {
             for (FilterGroup filterGroup : filterGroups) {
-                GridView gridView = null;
-                List<TermFilter> term = null;
-                List<RangeFilter> range = null;
-                View view = null;
-                switch (filterGroup.layoutType) {
-                    case FiltersViewAdapter.TOGGLE_BUTTON:
-                        view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_dialog_filters_item_layout, mFiltersLinearLayout, false);
-                        ((TextView) view.findViewById(R.id.fragment_dialog_filters_item_layout_display_text_view)).setText(filterGroup.displayName);
-                        mFiltersLinearLayout.addView(view);
-                        gridView = (GridView) view.findViewById(R.id.fragment_dialog_filters_item_layout_grid_view);
-                        term = filterGroup.termFilterValues;
-                        range = filterGroup.rangeFilterValues;
-                        break;
-                    case FiltersViewAdapter.CHECKBOX:
-                        view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_dialog_filters_item_layout, mFiltersLinearLayout, false);
-                        ((TextView) view.findViewById(R.id.fragment_dialog_filters_item_layout_display_text_view)).setText(filterGroup.displayName);
-                        mFiltersLinearLayout.addView(view);
-                        gridView = (GridView) view.findViewById(R.id.fragment_dialog_filters_item_layout_grid_view);
-                        gridView.setNumColumns(1);
-                        term = filterGroup.termFilterValues;
-                        range = filterGroup.rangeFilterValues;
-                        break;
-                    case FiltersViewAdapter.RADIO_BUTTON:
-                        view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_dialog_filters_item_layout, mFiltersLinearLayout, false);
-                        ((TextView) view.findViewById(R.id.fragment_dialog_filters_item_layout_display_text_view)).setText(filterGroup.displayName);
-                        mFiltersLinearLayout.addView(view);
-                        gridView = (GridView) view.findViewById(R.id.fragment_dialog_filters_item_layout_grid_view);
-                        gridView.setNumColumns(1);
-                        term = filterGroup.termFilterValues;
-                        range = filterGroup.rangeFilterValues;
-                        break;
-                    case FiltersViewAdapter.SEEKBAR:
-                        view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_dialog_filters_item_layout, mFiltersLinearLayout, false);
-                        ((TextView) view.findViewById(R.id.fragment_dialog_filters_item_layout_display_text_view)).setText(filterGroup.displayName);
-                        mFiltersLinearLayout.addView(view);
-                        gridView = (GridView) view.findViewById(R.id.fragment_dialog_filters_item_layout_grid_view);
-                        gridView.setNumColumns(1);
-                        term = filterGroup.termFilterValues;
-                        range = filterGroup.rangeFilterValues;
-                        break;
+                if(filterGroup.displayOrder < 0) {
+                    continue;
                 }
+
+                View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_dialog_filters_item_layout, mFiltersLinearLayout, false);
+                ((TextView)view.findViewById(R.id.fragment_dialog_filters_item_layout_display_text_view)).setText(filterGroup.displayName);
+                GridView gridView = (GridView) view.findViewById(R.id.fragment_dialog_filters_item_layout_grid_view);
+
+                mFilterGridViews.add((ExpandableHeightGridView) gridView);
+
+                if(mFiltersLinearLayout.getChildCount() >= filterGroup.displayOrder) {
+                    mFiltersLinearLayout.addView(view, filterGroup.displayOrder - 1);
+                } else {
+                    mFiltersLinearLayout.addView(view, mFiltersLinearLayout.getChildCount());
+                }
+
+                if(filterGroup.layoutType != FiltersViewAdapter.TOGGLE_BUTTON) {
+                    gridView.setNumColumns(1);
+                }
+
                 switch (filterGroup.displayName) {
                     case FILTER_BEDS:
-                        mBedsLayoutGridView = (ExpandableHeightGridView) gridView;
                         if (view != null) {
                             ((ImageView) view.findViewById(R.id.fragment_dialog_filters_item_layout_image_view)).setImageResource(R.drawable.bed);
                         }
                         break;
                     case FILTER_PROPERTY_TYPE:
-                        mPropertyTypeLayoutGridView = (ExpandableHeightGridView) gridView;
-                        if (view != null) {
+                        if(view != null) {
                             // TODO change image to property type
                             ((ImageView) view.findViewById(R.id.fragment_dialog_filters_item_layout_image_view)).setImageResource(R.drawable.floor);
                         }
@@ -207,28 +189,30 @@ public class FiltersDialogFragment extends DialogFragment implements View.OnClic
                 }
                 if (gridView != null) {
                     ((ExpandableHeightGridView) gridView).setExpanded(true);
-                    FiltersViewAdapter adapter = new FiltersViewAdapter(getActivity(), term, range, filterGroup.layoutType);
+                    FiltersViewAdapter adapter = new FiltersViewAdapter(getActivity(), filterGroup, filterGroup.layoutType);
                     gridView.setAdapter(adapter);
                 }
             }
         }
     }
 
-    @Override
-    public void onClick(View v) {
-//        Selector request =
-        if (v == mApplyButton) {
-            FiltersViewAdapter adapter = (FiltersViewAdapter) mBedsLayoutGridView.getAdapter();
-            List<String> list = adapter.getSelectedOptions();
-            addFilters(list, MakaanBuyerApplication.serpSelector);
-
-            adapter = (FiltersViewAdapter) mPropertyTypeLayoutGridView.getAdapter();
-            list = adapter.getSelectedOptions();
-            addFilters(list, MakaanBuyerApplication.serpSelector);
-            MakaanBuyerApplication.serpSelector.sort("price", "desc");
-            new ListingService().handleSerpRequest(MakaanBuyerApplication.serpSelector);
-            dismiss();
+    @OnClick(R.id.fragment_dialog_filters_submit_button) public void onSubmitClick(View v) {
+        ArrayList<FilterGroup> filterGroups;
+        if (MakaanBuyerApplication.serpSelector.isBuyContext()) {
+            filterGroups = MasterDataCache.getInstance().getAllBuyFilterGroups();
+        } else {
+            filterGroups = MasterDataCache.getInstance().getAllRentFilterGroups();
         }
+
+        for(ExpandableHeightGridView gridView : mFilterGridViews) {
+            FiltersViewAdapter adapter = (FiltersViewAdapter) (gridView.getAdapter());
+            adapter.applyFilters(MakaanBuyerApplication.serpSelector, filterGroups);
+        }
+        if(MakaanBuyerApplication.serpSelector.getAppliedFilterCount() > 0) {
+            MakaanBuyerApplication.serpSelector.sort("price", "desc");
+        }
+        new ListingService().handleSerpRequest(MakaanBuyerApplication.serpSelector);
+        dismiss();
     }
 
     private void addFilters(List<String> list, Selector request) {
@@ -252,8 +236,16 @@ public class FiltersDialogFragment extends DialogFragment implements View.OnClic
     }
 
     @OnClick(R.id.fragment_dialog_filters_back_buttom)
-    public void onBackPressed(View view) {
-        getActivity().onBackPressed();
+    public void onBackClicked(View view) {
+        dismiss();
+    }
+
+    @OnClick(R.id.fragment_dialog_filters_reset_buttom)
+    public void onResetClicked(View view) {
+        for(ExpandableHeightGridView gridView : mFilterGridViews) {
+            FiltersViewAdapter adapter = (FiltersViewAdapter) (gridView.getAdapter());
+            adapter.reset();
+        }
     }
 
     public interface FilterDialogFragmentCallback {

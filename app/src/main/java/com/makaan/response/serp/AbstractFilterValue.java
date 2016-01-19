@@ -8,7 +8,7 @@ import android.os.Parcelable;
  *
  * represents base value for filter in serp
  */
-public abstract class AbstractFilterValue  implements Parcelable {
+public abstract class AbstractFilterValue  implements Parcelable, Cloneable {
 
 
     public String displayName;
@@ -29,6 +29,13 @@ public abstract class AbstractFilterValue  implements Parcelable {
 
     public AbstractFilterValue() {
 
+    }
+
+    public AbstractFilterValue(AbstractFilterValue filter) {
+        this.displayName = filter.displayName;
+        this.displayOrder = filter.displayOrder;
+        this.fieldName = filter.fieldName;
+        this.selected = filter.selected;
     }
 
 

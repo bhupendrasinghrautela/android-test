@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.makaan.ui.MakaanLineChartView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:id="@+id/line_chart_layout"
+              android:padding="@dimen/city_internal_padding"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <lecho.lib.hellocharts.view.LineChartView
+        android:id="@+id/line_chart"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_chart_height" >
+    </lecho.lib.hellocharts.view.LineChartView>
+    <com.makaan.ui.FixedGridView
+        android:id="@+id/legends_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="2"/>
+</com.makaan.ui.MakaanLineChartView>

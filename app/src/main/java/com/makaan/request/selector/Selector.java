@@ -167,6 +167,7 @@ public class Selector {
                     }
                 }
 
+
                 int j = 0;
                 for (LinkedHashMap.Entry<String, RangeSelector> entry : rangeSelectorHashMap.entrySet()) {
 
@@ -181,7 +182,9 @@ public class Selector {
                     }
                 }
 
+
                 if ((null != geoSelector.lat && geoSelector.lat > 0) && (null != geoSelector.lon && geoSelector.lon > 0)) {
+
                     andStrBuilder.append(geoSelector.build());
                 }
 
@@ -191,12 +194,20 @@ public class Selector {
 
             String pagingSelectorJson = pagingSelector.build();
             if (!StringUtil.isBlank(pagingSelectorJson)) {
-                jsonBuilder.append(",\"").append(PAGING).append("\"").append(":").append(pagingSelectorJson);
+                // TODO check for field values
+                if (termSelectorHashMap.size() > 0 || rangeSelectorHashMap.size() > 0) {
+                    jsonBuilder.append(",\"");
+                }
+                jsonBuilder.append(PAGING).append("\"").append(":").append(pagingSelectorJson);
             }
 
             String sortSelectorJson = sortSelector.build();
             if (!StringUtil.isBlank(sortSelectorJson)) {
-                jsonBuilder.append(",\"").append(SORT).append("\"").append(":").append(sortSelectorJson);
+                // TODO check for field values
+                if (termSelectorHashMap.size() > 0 || rangeSelectorHashMap.size() > 0 || !StringUtil.isBlank(pagingSelectorJson)) {
+                    jsonBuilder.append(",\"");
+                }
+                jsonBuilder.append(SORT).append("\"").append(":").append(sortSelectorJson);
             }
 
             jsonBuilder.append("}");
@@ -212,7 +223,42 @@ public class Selector {
     }
 
     public int getAppliedFilterCount() {
-        return this.termSelectorHashMap.keySet().size();
+        int count = this.rangeSelectorHashMap.keySet().size() + this.termSelectorHashMap.keySet().size();
+        if(this.termSelectorHashMap.containsKey("cityId")) {
+            count--;
+        }
+        if(this.termSelectorHashMap.containsKey("localityId")) {
+            count--;
+        }
+        return count;
     }
 
+    public boolean isBuyContext() {
+        if(!this.termSelectorHashMap.containsKey("listingCategory")) {
+            return true;
+        } else {
+            HashSet<String> values = this.termSelectorHashMap.get("listingCategory").values;
+            if(values == null || values.size() == 0 || values.size() > 1) {
+                return true;
+            } else if(values.contains("Rental")) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
+    public Selector removeTerm(String fieldName) {
+        if(this.termSelectorHashMap.containsKey(fieldName)) {
+            this.termSelectorHashMap.remove(fieldName);
+        }
+        return this;
+    }
+
+    public Selector removeRange(String fieldName) {
+        if(this.rangeSelectorHashMap.containsKey(fieldName)) {
+            this.rangeSelectorHashMap.remove(fieldName);
+        }
+        return this;
+    }
 }

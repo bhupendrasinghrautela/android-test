@@ -3,15 +3,14 @@ package com.makaan.jarvis;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.makaan.R;
-import com.makaan.activity.MakaanFragmentActivity;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -25,6 +24,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
     public abstract boolean isJarvisSupported();
 
+    @Nullable
     @Bind(R.id.jarvis_head)
     ImageView mJarvisHead;
 
@@ -44,19 +44,20 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
     public void startActivity(Intent intent){
         if(!isJarvisSupported()){
-            this.startActivity(intent);
+            super.startActivity(intent);
             return;
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptionsCompat options = ActivityOptionsCompat.
                     makeSceneTransitionAnimation(this, mJarvisHead, getString(R.string.jarvis_button_transition));
-            startActivity(intent, options.toBundle());
+            super.startActivity(intent, options.toBundle());
         }
         else {
-            startActivity(intent);
+            super.startActivity(intent);
         }
     }
 
+    @Nullable
     @OnClick(R.id.jarvis_head)
     public void onJarvisClicked() {
         Intent intent = new Intent(this, ChatActivity.class);

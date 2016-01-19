@@ -191,7 +191,7 @@ public class SerpMapFragment extends MakaanBaseFragment {
         for (int i = 0; i < listings.size(); i++) {
             double lat = listings.get(i).latitude;
             double lng = listings.get(i).longitude;
-            if (lat != 0.0 && lng != 0.0) {
+            if (lat != 0.0 && !Double.isNaN(lat) && lng != 0.0 && !Double.isNaN(lng)) {
                 addMarker(mLatLngBoundsBuilder, lat, lng, mListings.get(i));
             }
         }

@@ -6,6 +6,7 @@ package com.makaan.constants;
 public class MessageConstants {
 
     public static final String SERP_NO_LISITINGS_AVAILABLE = "No Results available";
+    public static final String TOP_AGENTS_NOT_AVAILABLE = "No Results available";
 
     public static final String LISTING_DETAILS_NOT_AVAIL = "Details cannot be fetched now, please try later";
     public static final String LOCALITY_PRICE_TREND_NOT_AVAIL = "Locality price trends cannot be loaded";

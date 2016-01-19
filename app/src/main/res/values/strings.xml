@@ -37,11 +37,45 @@
     <string name="filter">filter</string>
     <string name="relevance">relevance</string>
     <string name="apply">apply</string>
-
     <string name="jarvis_button_transition">jarvistran</string>
+    <string name= "no_social_account" > I don\'t have social account </string>
 
+    <!--nearby localities card-->
+    <string name="property_for_sale_string">properties for\nsale</string>
+    <string name="property_for_rent_string">properties\nfor rent1</string>
+    <string name="view_deatils_string">view details</string>
 
+    <!--top agents card-->
+    <string name="view_seller_details_string">view seller details</string>
+    
+    <!--top builders card-->
+    <string name="builder_experience_string">experience: </string>
+    <string name="total_projects_string">total projects</string>
+    <string name="ongoing_projects_string">ongoing projects</string>
+    <string name="view_projects_string">view projects</string>
 
-
-
+    <string name="city_title">mumbai</string>
+    <string name="city_sub_title">city of seven islands</string>
+    <string name="city_connect_header_text">connect with the best sellers of</string>
+    <string name="overview">an overview</string>
+    <string name="price_trends">price trends</string>
+    <string name="read_more">read more</string>
+    <string name="read_less">read less</string>
+    <string name="intrested_in">interested in</string>
+    <string name="name">name</string>
+    <string name="buy">buy</string>
+    <string name="rent">rent</string>
+    <string name="email">email</string>
+    <string name="phone">phone</string>
+    <string name="submit">submit</string>
+    <string name="show_properties">show all properties</string>
+    <string name="price_growth">price growth</string>
+    <string name="demand_supply">demand &amp; supply</string>
+    <string name="annual_growth">annual price growth</string>
+    <string name="rental_yield">rental yield</string>
+    <string name="avg_price_prefix">avg. price</string>
+    <string name="avg_price_postfix">/ sq ft</string>
+    <string name="property_range">property range</string>
+    <string name="top_localities">top localities</string>
+    <string name="view_properties">view properties</string>
 </resources>

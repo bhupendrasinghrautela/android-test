@@ -27,7 +27,8 @@ public class AmenitiesPagerAdapter extends PagerAdapter {
     }
 
     public void setData(List<AmenityCluster> list){
-        mItems = list;
+        mItems.clear();
+        mItems.addAll(list);
         this.notifyDataSetChanged();
     }
 

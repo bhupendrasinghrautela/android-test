@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.makaan.ui.locality.TopBuildersView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/top_builders_card_height"
+    card_view:cardCornerRadius="@dimen/top_builders_card_radius">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/builder_group_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/top_builders_image_height"
+            android:src="@drawable/temp_bulding"
+            android:scaleType="fitXY"/>
+
+        <TextView
+            android:id="@+id/builder_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/top_builders_left_margin"
+            android:layout_marginTop="@dimen/builder_name_margin_top"
+            android:gravity="center_vertical"
+            android:text="supertech group"
+            android:textSize="@dimen/builder_name_text_size"
+            android:textColor="@color/listingBlack"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/top_builders_left_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/builder_experience_text_size"
+                android:text="@string/builder_experience_string"
+                android:textColor="@color/listingLightGray"/>
+
+            <TextView
+                android:id="@+id/experience_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/builder_experience_text_size"
+                android:text="18 years"
+                android:textColor="@color/listingLightGray"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/builder_projects_count_layout_margin_top"
+            android:layout_marginLeft="@dimen/top_builders_left_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/total_project_count"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/builders_projects_count_text_size"
+                android:text="42"
+                android:textColor="@color/listingBlack"/>
+
+            <TextView
+                android:id="@+id/ongoing_project_count"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/builders_projects_count_text_size"
+                android:text="18"
+                android:textColor="@color/listingBlack"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/top_builders_left_margin"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/builder_experience_text_size"
+                android:text="@string/total_projects_string"
+                android:textColor="@color/listingLightGray"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/builder_experience_text_size"
+                android:text="@string/ongoing_projects_string"
+                android:textColor="@color/listingLightGray"
+                android:gravity="center_vertical"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/view_projects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/view_projects_margin_top"
+            android:layout_marginBottom="@dimen/view_projects_text_margin_bottom"
+            android:gravity="center_horizontal"
+            android:textColor="@color/appThemeRed"
+            android:textSize="@dimen/median_price_text_size"
+            android:text="@string/view_projects_string"/>
+
+    </LinearLayout>
+
+</com.makaan.ui.locality.TopBuildersView>

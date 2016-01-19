@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.makaan.ui.city.TopLocalityView
+    android:id="@+id/top_locality_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+    android:paddingLeft="@dimen/city_internal_padding"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/top_localities"
+    android:textSize="@dimen/city_normal_text"/>
+    <LinearLayout
+        android:id="@+id/locality_container"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/show_properties_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/city_show_property_margin_top"
+        android:layout_gravity="center"
+        android:paddingLeft="@dimen/city_show_property_left_right_padding"
+        android:paddingRight="@dimen/city_show_property_left_right_padding"
+        android:paddingBottom="@dimen/city_show_property_top_bottom_padding"
+        android:paddingTop="@dimen/city_show_property_top_bottom_padding"
+        android:layout_marginBottom="@dimen/city_show_property_margin_bottom"
+        android:textColor="@color/textview_text_selector"
+        android:text="@string/show_properties"
+        android:gravity="center"
+        android:textSize="@dimen/city_small_text"
+        android:background="@drawable/textview_background_selector"/>
+</com.makaan.ui.city.TopLocalityView>

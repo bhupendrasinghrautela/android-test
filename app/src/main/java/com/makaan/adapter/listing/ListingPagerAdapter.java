@@ -11,6 +11,7 @@ import com.makaan.R;
 import com.makaan.ui.listing.ListingCardView;
 import com.makaan.response.listing.Listing;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ import java.util.List;
 public class ListingPagerAdapter extends PagerAdapter {
 
 	private Context mContext;
-	private List<Listing> mProjectList;
+	private List<Listing> mProjectList = new ArrayList<>();
     private int realCount;
 
     public ListingPagerAdapter(Context context) {
@@ -30,7 +31,8 @@ public class ListingPagerAdapter extends PagerAdapter {
     }
     
     public void setData(List<Listing> list){
-    	mProjectList = list;
+        mProjectList.clear();
+    	mProjectList.addAll(list);
     	setItemCount(mProjectList.size());
     	this.notifyDataSetChanged();
     }

@@ -105,6 +105,8 @@
     <dimen name="post_requirements_margin_bottom">19dp</dimen>
     <dimen name="post_requirements_text_size">16sp</dimen>
     <dimen name="post_requirements_corner_radius">4dp</dimen>
+    <dimen name="pyr_page_mobile_layout_width">250dp</dimen>
+    <dimen name="pyr_page_country_code_width">56dp</dimen>
 
 
     <!--Pyr budget layout-->
@@ -236,12 +238,12 @@
     <dimen name="serp_listing_card_possession_image_view_width">21.2dp</dimen>
     <dimen name="serp_listing_card_possession_image_view_height">24dp</dimen>
 
-    <dimen name="serp_listing_card_floor_image_view_left_margin">84.8dp</dimen>
+    <dimen name="serp_listing_card_floor_image_view_left_margin">100dp</dimen>
     <dimen name="serp_listing_card_floor_image_view_top_margin">14dp</dimen>
     <dimen name="serp_listing_card_floor_image_view_width">19.8dp</dimen>
     <dimen name="serp_listing_card_floor_image_view_height">24dp</dimen>
 
-    <dimen name="serp_listing_card_bathroom_image_view_left_margin">92.2dp</dimen>
+    <dimen name="serp_listing_card_bathroom_image_view_left_margin">90dp</dimen>
     <dimen name="serp_listing_card_bathroom_image_view_top_margin">15dp</dimen>
     <dimen name="serp_listing_card_bathroom_image_view_width">17.6dp</dimen>
     <dimen name="serp_listing_card_bathroom_image_view_height">24dp</dimen>
@@ -287,6 +289,7 @@
     <dimen name="serp_listing_card_assist_button_height">30dp</dimen>
     <dimen name="serp_listing_card_assist_button_right_margin">36dp</dimen>
     <dimen name="serp_listing_card_assist_button_top_margin">22dp</dimen>
+    <dimen name="serp_listing_card_assist_button_left_padding">26dp</dimen>
     <dimen name="serp_listing_card_assist_button_text_size">14sp</dimen>
 
     <dimen name="serp_listing_card_call_button_width">152dp</dimen>
@@ -378,8 +381,8 @@
 
     <dimen name="fragment_filters_map_image_view_width">24dp</dimen>
     <dimen name="fragment_filters_map_image_view_height">36dp</dimen>
-    <dimen name="fragment_filters_map_image_view_margin_left">27dp</dimen>
-    <dimen name="fragment_filters_map_image_view_margin_top">12dp</dimen>
+    <dimen name="fragment_filters_map_image_view_margin_right">13dp</dimen>
+    <!--<dimen name="fragment_filters_map_image_view_margin_top">12dp</dimen>-->
 
     <dimen name="fragment_dialog_filters_submit_button_height">50dp</dimen>
     <dimen name="fragment_dialog_filters_submit_button_text_size">18sp</dimen>
@@ -436,7 +439,7 @@
     <dimen name="jarvis_chat_compose_padding">6dp</dimen>
     <dimen name="jarvis_chat_divider_margin">2dp</dimen>
     <dimen name="jarvis_chat_divider_height">1dp</dimen>
-    <dimen name="jarvis_client_margin">14dp</dimen>
+    <dimen name="jarvis_client_margin">24dp</dimen>
     <dimen name="jarvis_chat_card_stroke_width">1dp</dimen>
 
     <!---Amenities-->
@@ -444,8 +447,199 @@
     <dimen name="amenity_type_text_size">22sp</dimen>
     <dimen name="amenity_name_text_size">16sp</dimen>
     <dimen name="amenity_map_icon_dimen">28sp</dimen>
-    <dimen name="amenity_type_logo_margin">4dp</dimen>
-    <dimen name="amenity_item_padding">4dp</dimen>
-    <dimen name="amenity_card_corner_radius">12dp</dimen>
+    <dimen name="amenity_type_logo_margin">12dp</dimen>
+    <dimen name="amenity_margin_top">12dp</dimen>
+    <dimen name="amenity_margin_bottom">18dp</dimen>
+    <dimen name="amenity_item_padding">12dp</dimen>
+    <dimen name="amenity_card_corner_radius">25dp</dimen>
 
+
+    <!-- search result items dimen values -->
+    <dimen name="search_result_item_image_width">24dp</dimen>
+    <dimen name="search_result_item_image_height">24dp</dimen>
+    <dimen name="search_result_item_image_margin_left">24dp</dimen>
+
+    <dimen name="search_result_item_name_text_view_margin_left">24dp</dimen>
+    <dimen name="search_result_item_name_text_view_text_size">16sp</dimen>
+    <dimen name="search_result_item_name_text_view_margin_right">8dp</dimen>
+
+    <dimen name="search_result_item_address_text_view_margin_top">2dp</dimen>
+    <dimen name="search_result_item_address_text_view_margin_left">24dp</dimen>
+    <dimen name="search_result_item_address_text_view_text_size">14sp</dimen>
+
+    <dimen name="search_result_item_type_text_view_margin_right">17dp</dimen>
+    <dimen name="search_result_item_type_text_view_text_size">14sp</dimen>
+
+    <dimen name="search_result_item_empty_view_height">0.5dp</dimen>
+    <dimen name="search_result_item_empty_view_margin_left">64dp</dimen>
+    <dimen name="search_result_item_empty_view_margin_right">2dp</dimen>
+
+    <dimen name="search_result_item_view_padding_bottom">15dp</dimen>
+    <dimen name="search_result_item_view_padding_top">15dp</dimen>
+
+    <!-- relevance popup window dimen values -->
+    <dimen name="relevance_popup_window_width">170dp</dimen>
+    <dimen name="relevance_popup_window_height">253dp</dimen>
+    <dimen name="relevance_popup_window_text_size">16sp</dimen>
+    <dimen name="relevance_popup_window_button_height">38dp</dimen>
+    <dimen name="relevance_popup_window_button_padding_top">9dp</dimen>
+    <dimen name="relevance_popup_window_button_padding_bottom">16dp</dimen>
+    <dimen name="relevance_popup_window_button_padding_left">19dp</dimen>
+    <dimen name="relevance_popup_window_button_padding_right">33dp</dimen>
+
+    <!-- map listing view dimens -->
+    <dimen name="listing_brief_view_layout_card_view_radius">25dp</dimen>
+
+    <dimen name="listing_brief_view_layout_image_view_width">174dp</dimen>
+    <dimen name="listing_brief_view_layout_image_view_height">130dp</dimen>
+    <dimen name="listing_brief_view_layout_image_view_margin_right">4dp</dimen>
+
+    <dimen name="listing_brief_view_layout_rupee_image_width">16dp</dimen>
+    <dimen name="listing_brief_view_layout_rupee_image_height">16dp</dimen>
+    <dimen name="listing_brief_view_layout_rupee_image_top_margin">26dp</dimen>
+
+    <dimen name="listing_brief_view_layout_property_price_left_margin">5dp</dimen>
+    <dimen name="listing_brief_view_layout_property_price_top_margin">11dp</dimen>
+    <dimen name="listing_brief_view_layout_property_price_text_size">32sp</dimen>
+
+    <dimen name="listing_brief_view_layout_property_price_unit_left_margin">5dp</dimen>
+    <dimen name="listing_brief_view_layout_property_price_unit_top_margin">22dp</dimen>
+    <dimen name="listing_brief_view_layout_property_price_unit_text_size">18sp</dimen>
+
+    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_width">24dp</dimen>
+    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_height">24dp</dimen>
+    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_right_margin">12dp</dimen>
+    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_top_margin">11dp</dimen>
+
+    <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_left_margin">30dp</dimen>
+    <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_top_margin">1dp</dimen>
+    <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_text_size">16sp</dimen>
+
+    <dimen name="listing_brief_view_layout_property_price_difference_image_view_width">16dp</dimen>
+    <dimen name="listing_brief_view_layout_property_price_difference_image_view_height">16dp</dimen>
+    <dimen name="listing_brief_view_layout_property_price_difference_image_view_left_margin">8dp</dimen>
+    <dimen name="listing_brief_view_layout_property_price_difference_image_view_top_margin">3dp</dimen>
+
+    <!-- following value must be 28dp as per Zeplin UI -->
+    <dimen name="listing_brief_view_layout_property_info_text_view_left_margin">20dp</dimen>
+    <dimen name="listing_brief_view_layout_property_info_text_view_top_margin">12dp</dimen>
+    <dimen name="listing_brief_view_layout_property_info_text_view_text_size">16sp</dimen>
+
+    <dimen name="listing_brief_view_layout_empty_view_height">3dp</dimen>
+    <dimen name="listing_brief_view_layout_empty_view_after_property_info_view_margin_top">0dp</dimen>
+    <dimen name="listing_brief_view_layout_empty_view_after_property_info_view_margin_left">20dp</dimen>
+
+    <dimen name="listing_brief_view_layout_map_image_width">32dp</dimen>
+    <dimen name="listing_brief_view_layout_map_image_height">32dp</dimen>
+    <dimen name="listing_brief_view_layout_map_image_top_margin">7dp</dimen>
+    <dimen name="listing_brief_view_layout_map_image_left_margin">54dp</dimen>
+    <dimen name="listing_brief_view_layout_map_image_bottom_margin">8dp</dimen>
+
+    <dimen name="listing_brief_view_layout_property_address_text_view_left_margin">1dp</dimen>
+    <dimen name="listing_brief_view_layout_property_address_text_view_top_margin">12dp</dimen>
+    <dimen name="listing_brief_view_layout_property_address_text_view_text_size">16sp</dimen>
+
+    <dimen name="listing_brief_view_layout_badge_margin_left">8dp</dimen>
+    <dimen name="listing_brief_view_layout_badge_margin_top">8dp</dimen>
+    <dimen name="listing_brief_view_layout_badge_width">58dp</dimen>
+    <dimen name="listing_brief_view_layout_badge_height">22dp</dimen>
+    <dimen name="listing_brief_view_layout_text_height">19dp</dimen>
+    <dimen name="listing_brief_view_layout_text_margin_left">9dp</dimen>
+    <dimen name="listing_brief_view_layout_text_size">16sp</dimen>
+
+    <dimen name="map_listing_view_pager_page_gap">14dp</dimen>
+    <dimen name="map_listing_view_pager_page_left_padding">10dp</dimen>
+    <dimen name="map_listing_view_pager_page_right_padding">14dp</dimen>
+    <dimen name="map_listing_view_pager_page_bottom_padding">10dp</dimen>
+
+    <!--nearby localities card view-->
+    <dimen name="nearby_locality_card_height">465dp</dimen>
+    <dimen name="nearby_locality_card_radius">25dp</dimen>
+    <dimen name="nearby_locality_image_height">229dp</dimen>
+    <dimen name="nearby_locality_left_margin">24dp</dimen>
+    <dimen name="locality_name_margin_top">11dp</dimen>
+    <dimen name="locality_name_text_size">24sp</dimen>
+    <dimen name="median_price_text_size">16sp</dimen>
+    <dimen name="sale_rent_count_layout_margin_top">17dp</dimen>
+    <dimen name="sale_rent_count_text_size">24sp</dimen>
+    <dimen name="view_details_text_margin_top">40dp</dimen>
+    <dimen name="view_details_text_margin_bottom">19dp</dimen>
+
+    <!--top agents card view-->
+    <dimen name="top_agents_card_height">465dp</dimen>
+    <dimen name="top_agents_card_radius">25dp</dimen>
+    <dimen name="agent_image_height">229dp</dimen>
+    <dimen name="top_agent_left_margin">24dp</dimen>
+    <dimen name="agent_name_margin_top">11dp</dimen>
+    <dimen name="agent_name_text_size">24sp</dimen>
+    <dimen name="agent_info_text_size">16sp</dimen>
+    <dimen name="agent_sale_rent_count_layout_margin_top">17dp</dimen>
+    <dimen name="agent_sale_rent_count_text_size">24sp</dimen>
+    <dimen name="view_seller_details_text_margin_top">40dp</dimen>
+    <dimen name="view_seller_details_text_margin_bottom">19dp</dimen>
+
+    <!--top builders card view-->
+    <dimen name="top_builders_card_height">465dp</dimen>
+    <dimen name="top_builders_card_radius">25dp</dimen>
+    <dimen name="top_builders_image_height">229dp</dimen>
+    <dimen name="top_builders_left_margin">24dp</dimen>
+    <dimen name="builder_name_margin_top">11dp</dimen>
+    <dimen name="builder_name_text_size">24sp</dimen>
+    <dimen name="builder_experience_text_size">16sp</dimen>
+    <dimen name="builder_projects_count_layout_margin_top">17dp</dimen>
+    <dimen name="builders_projects_count_text_size">24sp</dimen>
+    <dimen name="view_projects_margin_top">59dp</dimen>
+    <dimen name="view_projects_text_margin_bottom">19dp</dimen>
+
+    <!--locality apartments card view-->
+    <dimen name="locality_apartments_card_radius">25dp</dimen>
+    <dimen name="locality_apartments_card_margin_bottom">45dp</dimen>
+    <dimen name="apartments_text_margin_top">29dp</dimen>
+    <dimen name="apartments_text_margin_bottom">28dp</dimen>
+    <dimen name="apartments_text_text_size">24sp</dimen>
+    <dimen name="apartments_card_content_margin_right">20dp</dimen>
+    <dimen name="apartments_card_content_margin_left">20dp</dimen>
+    <dimen name="apartments_card_bhk_price_text_size">18sp</dimen>
+    <dimen name="apartments_card_area_and_price_sq_ft_text_size">16sp</dimen>
+    <dimen name="apartments_card_divider_margin_top">14dp</dimen>
+    <dimen name="apartments_card_content_row_margin_top">18dp</dimen>
+    <dimen name="apartment_background_drawable_radius">25dp</dimen>
+    <dimen name="apartment_background_drawable_stroke">1dp</dimen>
+
+    <dimen name="property_page_pager_image_external_margin">10dp</dimen>
+
+    <dimen name="city_internal_padding">20dp</dimen>
+    <dimen name="city_internal_margin">15dp</dimen>
+    <dimen name="city_internal_margin_text">30dp</dimen>
+    <dimen name="city_header_text">24sp</dimen>
+    <dimen name="line_chart_height">300dp</dimen>
+    <dimen name="city_circular_progress_dimen">36dp</dimen>
+
+    <dimen name="city_empty_view_margin_left">20dp</dimen>
+    <dimen name="city_empty_view_height">1dp</dimen>
+    <dimen name="city_connect_header_margin_left">33dp</dimen>
+    <dimen name="city_header_margin_left">30dp</dimen>
+    <dimen name="city_header_margin_right">48dp</dimen>
+    <dimen name="city_connect_header_margin_right">14dp</dimen>
+    <dimen name="city_connect_interested_top_margin">22dp</dimen>
+    <dimen name="city_connect_buy_rent_top_margin">50dp</dimen>
+    <dimen name="city_property_buy_rent_top_margin">48dp</dimen>
+    <dimen name="city_property_buy_rent_right_left_margin">15dp</dimen>
+    <dimen name="city_property_spinner_margin_top">38dp</dimen>
+    <dimen name="city_small_text">16sp</dimen>
+    <dimen name="city_show_property_left_right_padding">18dp</dimen>
+    <dimen name="city_show_property_top_bottom_padding">9dp</dimen>
+    <dimen name="city_show_property_margin_top">14dp</dimen>
+    <dimen name="city_show_property_margin_bottom">50dp</dimen>
+    <dimen name="city_legends_height">30dp</dimen>
+    <dimen name="city_very_small_text">14sp</dimen>
+    <dimen name="city_normal_text">20sp</dimen>
+    <dimen name="city_big_text">28sp</dimen>
+    <dimen name="city_collapse_bar_height">228dp</dimen>
+    <dimen name="city_collapse_bar_margin_bottom">50dp</dimen>
+
+    <dimen name="similar_project_height">240dp</dimen>
+    <dimen name="similar_project_width">310dp</dimen>
+    <dimen name="similar_project_name_size">24sp</dimen>
+    <dimen name="similar_project_address_size">16sp</dimen>
 </resources>
