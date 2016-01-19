@@ -7,7 +7,8 @@ public enum MessageType {
 
     //TODO WIP , to be defined in config
 
-    outText(0), inText(1), projectOverview(2), sellerOverView(3);
+    outText(0), inText(1), projectOverview(2), sellerOverView(3), serpFilter(4),
+    signUp(5);
 
     public int value;
 

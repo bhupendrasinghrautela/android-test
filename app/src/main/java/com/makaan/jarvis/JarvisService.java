@@ -13,8 +13,7 @@ import com.squareup.otto.Bus;
 public class JarvisService extends Service {
 
 
-    private static JarvisSocket jarvisSocket;
-    private static Bus eventBus;
+    private static JarvisClient mJarvisClient;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -25,10 +24,9 @@ public class JarvisService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        jarvisSocket = new JarvisSocket();
-        jarvisSocket.open();
+        //Create Jarvis client
+        mJarvisClient = JarvisClient.getInstance();
 
-        eventBus = AppBus.getInstance();
     }
 
     @Override
@@ -40,7 +38,7 @@ public class JarvisService extends Service {
     public void onDestroy() {
         super.onDestroy();
 
-        jarvisSocket.close();
+        mJarvisClient.destroy();
     }
 
 

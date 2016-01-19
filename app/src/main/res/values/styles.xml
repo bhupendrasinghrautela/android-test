@@ -56,9 +56,16 @@
         <item name="android:windowFrame">@null</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="android:background">@drawable/jarvis_chat_bg</item>
+        <item name="android:windowAnimationStyle">@style/ChatAnimation.Window</item>
         <item name="android:windowBackground">@drawable/jarvis_chat_bg</item>
         <item name="android:backgroundDimEnabled">true</item>
 
+    </style>
+
+    <!-- Animations for a non-full-screen window or activity. -->
+    <style name="ChatAnimation.Window" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/jarvis_chat_in</item>
+        <item name="android:windowExitAnimation">@anim/jarvis_chat_out</item>
     </style>
 
     <!-- Custom style for customContainer -->

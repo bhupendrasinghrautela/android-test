@@ -1,5 +1,6 @@
 package com.makaan.activity.listing;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -56,6 +57,9 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         tempUsers.add(3901325L);
         ((UserService) (MakaanServiceFactory.getInstance().getService(UserService.class))).getCompanyUsers(tempUsers);
         ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(436057L);
+
+        Intent intent = new Intent(this, SerpActivity.class);
+        startActivity(intent);
 
     }
 

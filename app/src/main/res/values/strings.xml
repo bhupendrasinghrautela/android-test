@@ -38,6 +38,7 @@
     <string name="relevance">relevance</string>
     <string name="apply">apply</string>
     <string name="jarvis_button_transition">jarvistran</string>
+    <string name= "no_social_account" > I don\'t have social account </string>
 
     <!--nearby localities card-->
     <string name="property_for_sale_string">properties for\nsale</string>
