@@ -439,7 +439,7 @@
     <dimen name="jarvis_chat_compose_padding">6dp</dimen>
     <dimen name="jarvis_chat_divider_margin">2dp</dimen>
     <dimen name="jarvis_chat_divider_height">1dp</dimen>
-    <dimen name="jarvis_client_margin">14dp</dimen>
+    <dimen name="jarvis_client_margin">24dp</dimen>
     <dimen name="jarvis_chat_card_stroke_width">1dp</dimen>
 
     <!---Amenities-->

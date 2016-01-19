@@ -10,10 +10,6 @@ public class JarvisServiceCreator {
 
     public static void create(Context appContext){
 
-        //Create Jarvis client
-        JarvisClient.init();
-
-        //Service is below
         Intent serviceIntent = new Intent(appContext,JarvisService.class);
         appContext.startService(serviceIntent);
     }

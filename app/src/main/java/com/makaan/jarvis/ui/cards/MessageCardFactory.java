@@ -24,7 +24,15 @@ public class MessageCardFactory {
 
         } else if(messageType == MessageType.sellerOverView.value){
             return (SellerOverviewCard) LayoutInflater.from(context)
-                    .inflate(R.layout.chat_seller, parent, false);
+                    .inflate(R.layout.card_seller, parent, false);
+
+        }else if(messageType == MessageType.serpFilter.value){
+            return (SerpFilterCard) LayoutInflater.from(context)
+                    .inflate(R.layout.card_serp_filter, parent, false);
+
+        }else if(messageType == MessageType.signUp.value){
+            return (SignupCard) LayoutInflater.from(context)
+                    .inflate(R.layout.card_signup, parent, false);
         }else{
             return null;
         }

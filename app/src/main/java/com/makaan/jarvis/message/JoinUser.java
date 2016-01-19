@@ -1,16 +1,19 @@
 package com.makaan.jarvis.message;
 
+import com.makaan.jarvis.JarvisConstants;
+
 import java.util.Date;
 
 /**
  * Created by sunil on 18/01/16.
  */
 public class JoinUser {
-    public String deliveryId =  "12965289-3f28-474a-a37b-fb270fd80f99";
+    //TODO dummy join user data
+    public String deliveryId = JarvisConstants.DELIVERY_ID;
     public boolean acquired = false;
-    public Date joiningTime = new Date();
+    public Date joinedTime = new Date(System.currentTimeMillis());
     public String acquiredBy = null;
-    public String location  = "https://makaan.com";
+    public String location  = "https://makaan.com/android";
     public boolean detected  = false;
     public String type = "android";
 }

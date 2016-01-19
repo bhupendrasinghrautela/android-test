@@ -35,7 +35,9 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
 
-        <activity android:name=".activity.listing.SerpActivity">
+        <activity android:name=".activity.listing.SerpActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NoActionBarTheme">
 
         </activity>
         <activity
