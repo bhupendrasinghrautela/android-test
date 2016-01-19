@@ -24,6 +24,10 @@ public class RequestConstants {
     public static final String CITY_ID = "cityId";
     public static final String BEDROOMS = "bedrooms";
     public static final String LISTING_POSTED_BY = "listingPostedBy";
+    public static final String LISTING_CREATED_AT = "listingCreatedAt";
+    public static final String LISTING_CATEGORY = "listingCategory";
+    public static final String RENTAL = "Rental";
+    public static final String LISTING_QUALITY_SCORE = "listingQualityScore";
     public static final String PRICE = "price";
     public static final String UNIT_TYPE = "unitType";
     public static final String FROM = "from";

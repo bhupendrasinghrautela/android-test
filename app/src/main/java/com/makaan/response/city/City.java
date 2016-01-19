@@ -1,5 +1,7 @@
 package com.makaan.response.city;
 
+import com.makaan.response.locality.ListingAggregation;
+
 import java.util.ArrayList;
 
 /**
@@ -16,5 +18,6 @@ public class City {
     public Double avgPricePerUnitArea, averageRentPerMonth;
 
 
+    public ArrayList<ListingAggregation> listingAggregations = new ArrayList<>();
     public ArrayList<EntityDesc> entityDescriptions = new ArrayList<>();
 }

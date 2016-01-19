@@ -1,14 +1,13 @@
 package com.makaan.request.selector;
 
 import com.makaan.MakaanBuyerApplication;
-import com.makaan.constants.RequestConstants;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static  com.makaan.constants.RequestConstants.*;
+import static com.makaan.constants.RequestConstants.FROM;
+import static com.makaan.constants.RequestConstants.RANGE;
+import static com.makaan.constants.RequestConstants.TO;
 
 /**
  * Created by vaibhav on 08/01/16.
@@ -34,13 +33,17 @@ public class RangeSelector implements MakaanReqSelector {
     @Override
     public String build() {
 
-        if(null == fieldName || null == from || null == to){
+        if (null == fieldName || (null == from && null == to)) {
             return "";
         }
 
         LinkedHashMap<String, Double> fromToMap = new LinkedHashMap<>();
-        fromToMap.put(FROM, from);
-        fromToMap.put(TO, to);
+        if (null != from) {
+            fromToMap.put(FROM, from);
+        }
+        if (null != to) {
+            fromToMap.put(TO, to);
+        }
 
         LinkedHashMap<String, Map<String, Double>> fieldMap = new LinkedHashMap<>();
         fieldMap.put(fieldName, fromToMap);
@@ -49,13 +52,12 @@ public class RangeSelector implements MakaanReqSelector {
 
         jsonMap.put(RANGE, fieldMap);
 
-        String s =  MakaanBuyerApplication.gson.toJson(jsonMap);
+        String s = MakaanBuyerApplication.gson.toJson(jsonMap);
 
         return s;
 
 
     }
-
 
 
 }

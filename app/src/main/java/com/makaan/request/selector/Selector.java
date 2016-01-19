@@ -5,20 +5,16 @@ import android.util.Log;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.util.StringUtil;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
-import static com.makaan.constants.RequestConstants.*;
+import static com.makaan.constants.RequestConstants.AND;
+import static com.makaan.constants.RequestConstants.FIELDS;
+import static com.makaan.constants.RequestConstants.FILTERS;
+import static com.makaan.constants.RequestConstants.PAGING;
+import static com.makaan.constants.RequestConstants.SELECTOR;
 import static com.makaan.constants.RequestConstants.SORT;
 
 /**
@@ -96,6 +92,7 @@ public class Selector {
 
         return this;
     }
+
 
     public Selector range(String fieldName, Double from, Double to) {
         RangeSelector rangeSelector = rangeSelectorHashMap.get(fieldName);
