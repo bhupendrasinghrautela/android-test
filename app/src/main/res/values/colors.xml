@@ -7,10 +7,10 @@
     <color name="colorAccent">#FF4081</color>
     <color name="listingBgColor">#f1f1f1</color>
     <color name="listingGray">#666666</color>
+    <color name="emiGray">#979797</color>
     <color name="transparent">#00000000</color>
     <color name="listingLightGray">#999999</color>
     <color name="listingBlack">#444444</color>
-
     <color name= "light_gray">#d3d3d3 </color>
 
     <color name="app_grey">#80000000</color>
@@ -90,4 +90,9 @@
     <color name="listing_brief_view_layout_property_price_sq_ft_text_color">#B0444444</color>
     <color name="listing_brief_view_layout_empty_view_color">#33979797</color>
 
+    <color name="city_empty_view_color">#979797</color>
+
+    <color name="grayDivider">#e0e0e0</color>
+    <color name="pink">#E62489</color>
+    <color name="red">#FF0000</color>
 </resources>
