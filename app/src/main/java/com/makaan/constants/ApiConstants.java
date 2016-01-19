@@ -4,7 +4,7 @@ package com.makaan.constants;
  * Created by vaibhav on 29/12/15.
  */
 public class ApiConstants {
-   public static final String SOURCE_DOMAIN_MAKAAN="&sourceDomain=Makaan";
+    public static final String SOURCE_DOMAIN_MAKAAN = "&sourceDomain=Makaan";
 
     public static final String BASE_URL = "https://marketplace-qa.proptiger-ws.com";
     public static final String FILTER_GROUP = BASE_URL.concat("/data/v1/entity/filter-group");           //TODO: need to implement this on server side
@@ -35,5 +35,8 @@ public class ApiConstants {
     public static final String TOP_AGENTS = "/top-agents?";
     public static final String PYR = BASE_URL.concat("/data/v1/entity/enquiry");
 
-   // public static final String CITY_SELECTOR = {"fields":["entityDescriptions","id","centerLatitude","centerLongitude","description","cityHeroshotImageUrl","annualGrowth","rentalYield","demandRate","supplyRate","label"],"filters":{}};
+
+    public static final String COLUMBUS_SUGGESTIONS = BASE_URL.concat("/columbus/app/v1/popular/suggestions");
+
+    // public static final String CITY_SELECTOR = {"fields":["entityDescriptions","id","centerLatitude","centerLongitude","description","cityHeroshotImageUrl","annualGrowth","rentalYield","demandRate","supplyRate","label"],"filters":{}};
 }

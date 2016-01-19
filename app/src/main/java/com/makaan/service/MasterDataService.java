@@ -245,7 +245,7 @@ public class MasterDataService implements MakaanService {
                     MasterDataCache.getInstance().addSearchType(new ApiLabel(searchType.getKey(), searchType.getValue()));
                 }
             }
-        }, "searchType.json");
+        }, "searchResultType.json");
 
     }
 }

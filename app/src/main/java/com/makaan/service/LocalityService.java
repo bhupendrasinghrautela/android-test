@@ -4,10 +4,12 @@ import com.google.gson.reflect.TypeToken;
 import com.makaan.constants.ApiConstants;
 import com.makaan.event.locality.LocalityByIdEvent;
 import com.makaan.event.locality.NearByLocalitiesEvent;
+import com.makaan.event.locality.TrendingSearchLocalityEvent;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.locality.Locality;
+import com.makaan.response.search.Search;
 import com.makaan.util.AppBus;
 import com.makaan.util.AppUtils;
 
@@ -52,7 +54,7 @@ public class LocalityService implements MakaanService {
     public void getNearByLocalities(double lat, double lon, int noOfLocalities) {
 
         Selector nearByLocalitySelector = new Selector();
-        nearByLocalitySelector.nearby(10, lat, lon).fields(new String[]{LOCALITY_ID, LABEL, LISTING_AGGREGATIONS,LOCALITY_HEROSHOT_IMAGE_URL})
+        nearByLocalitySelector.nearby(10, lat, lon).fields(new String[]{LOCALITY_ID, LABEL, LISTING_AGGREGATIONS, LOCALITY_HEROSHOT_IMAGE_URL})
                 .sort(GEO_DISTANCE, SORT_ASC).page(0, noOfLocalities);
 
         String nearbyLocalityUrl = ApiConstants.LOCALITY_DATA.concat("?").concat(nearByLocalitySelector.build());
@@ -71,7 +73,23 @@ public class LocalityService implements MakaanService {
         }, true);
     }
 
-    public void getTrendingSearches(){
-        
+    public void getTrendingSearchesInLocality(Long localityId) {
+
+        if (null != localityId) {
+            String localityTrendingSearch = ApiConstants.COLUMBUS_SUGGESTIONS.concat("?entityId=").concat(localityId.toString());
+
+            Type searchListType = new TypeToken<ArrayList<Search>>() {
+            }.getType();
+
+            MakaanNetworkClient.getInstance().get(localityTrendingSearch, searchListType, new ObjectGetCallback() {
+                @Override
+                @SuppressWarnings("unchecked")
+                public void onSuccess(Object responseObject) {
+                    ArrayList<Search> trendingSearches = (ArrayList<Search>) responseObject;
+                    AppBus.getInstance().post(new TrendingSearchLocalityEvent(trendingSearches));
+                }
+            }, true);
+
+        }
     }
 }

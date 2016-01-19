@@ -56,6 +56,7 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         //((UserService) (MakaanServiceFactory.getInstance().getService(UserService.class))).getCompanyUsers(tempUsers);
         //((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(436057L);
         ((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getNearByLocalities(12.84112072, 77.66799164, 5);
+        ((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getTrendingSearchesInLocality(50175L);
 
         /*Intent intent = new Intent(this, SerpActivity.class);
         startActivity(intent);
