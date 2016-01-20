@@ -150,7 +150,6 @@ public class Selector {
             jsonBuilder.append("{");
 
             if (fieldSelector.size() > 0) {
-                firstElementAdded = true;
                 StringBuilder fieldBuilder = new StringBuilder();
                 fieldBuilder.append("\"").append(FIELDS).append("\"").append(":").append(MakaanBuyerApplication.gson.toJson(fieldSelector));
                 jsonBuilder.append(fieldBuilder.toString());
@@ -174,6 +173,7 @@ public class Selector {
                         }
                         i++;
                     }
+                    firstElementAdded = true;
                 }
 
 
@@ -189,6 +189,7 @@ public class Selector {
                         }
                         j++;
                     }
+                    firstElementAdded = true;
                 }
 
 
@@ -199,6 +200,7 @@ public class Selector {
                         firstElementAdded = true;
                     }else{
                         andStrBuilder.append(geoSelector.build());
+                        firstElementAdded = true;
                     }
 
                 }
