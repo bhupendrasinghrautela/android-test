@@ -1,7 +1,7 @@
 package com.makaan.event.locality;
 
 import com.makaan.event.MakaanEvent;
-import com.makaan.response.search.Search;
+import com.makaan.response.search.SearchResponseItem;
 
 import java.util.ArrayList;
 
@@ -10,9 +10,9 @@ import java.util.ArrayList;
  */
 public class TrendingSearchLocalityEvent extends MakaanEvent {
 
-    public ArrayList<Search> trendingSearches;
+    public ArrayList<SearchResponseItem> trendingSearches;
 
-    public TrendingSearchLocalityEvent(ArrayList<Search> trendingSearches) {
+    public TrendingSearchLocalityEvent(ArrayList<SearchResponseItem> trendingSearches) {
         this.trendingSearches = trendingSearches;
     }
 

@@ -4,7 +4,7 @@ package com.makaan.response.search;
  * A model for typeahead getSearchResult response data
  * 
  * */
-public class Search {
+public class SearchResponseItem {
 
 	public String id, entityId, entityName,
 			type, displayText,

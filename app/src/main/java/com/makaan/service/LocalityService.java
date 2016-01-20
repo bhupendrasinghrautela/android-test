@@ -9,7 +9,7 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.locality.Locality;
-import com.makaan.response.search.Search;
+import com.makaan.response.search.SearchResponseItem;
 import com.makaan.util.AppBus;
 import com.makaan.util.AppUtils;
 
@@ -78,14 +78,14 @@ public class LocalityService implements MakaanService {
         if (null != localityId) {
             String localityTrendingSearch = ApiConstants.COLUMBUS_SUGGESTIONS.concat("?entityId=").concat(localityId.toString());
 
-            Type searchListType = new TypeToken<ArrayList<Search>>() {
+            Type searchListType = new TypeToken<ArrayList<SearchResponseItem>>() {
             }.getType();
 
             MakaanNetworkClient.getInstance().get(localityTrendingSearch, searchListType, new ObjectGetCallback() {
                 @Override
                 @SuppressWarnings("unchecked")
                 public void onSuccess(Object responseObject) {
-                    ArrayList<Search> trendingSearches = (ArrayList<Search>) responseObject;
+                    ArrayList<SearchResponseItem> trendingSearches = (ArrayList<SearchResponseItem>) responseObject;
                     AppBus.getInstance().post(new TrendingSearchLocalityEvent(trendingSearches));
                 }
             }, true);

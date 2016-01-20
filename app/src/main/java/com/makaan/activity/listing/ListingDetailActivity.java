@@ -1,5 +1,6 @@
 package com.makaan.activity.listing;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -58,9 +59,9 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         ((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getNearByLocalities(12.84112072, 77.66799164, 5);
         ((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getTrendingSearchesInLocality(50175L);
 
-        /*Intent intent = new Intent(this, SerpActivity.class);
+        Intent intent = new Intent(this, SerpActivity.class);
         startActivity(intent);
-*/
+
     }
 
 
