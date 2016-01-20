@@ -150,12 +150,14 @@ public class Selector {
             jsonBuilder.append("{");
 
             if (fieldSelector.size() > 0) {
+                firstElementAdded = true;
                 StringBuilder fieldBuilder = new StringBuilder();
                 fieldBuilder.append("\"").append(FIELDS).append("\"").append(":").append(MakaanBuyerApplication.gson.toJson(fieldSelector));
                 jsonBuilder.append(fieldBuilder.toString());
             }
 
             if (termSelectorHashMap.size() > 0 || rangeSelectorHashMap.size() > 0 || null != geoSelector) {
+                boolean firstFilterAdded = false;
 
                 StringBuilder andStrBuilder = new StringBuilder();
                 andStrBuilder.append("\"").append(AND).append("\"").append(":[");
@@ -173,7 +175,7 @@ public class Selector {
                         }
                         i++;
                     }
-                    firstElementAdded = true;
+                    firstFilterAdded = true;
                 }
 
 
@@ -182,25 +184,25 @@ public class Selector {
 
                     String rangeSelectorJson = entry.getValue().build();
                     if (!StringUtil.isBlank(rangeSelectorJson)) {
-                        if (j != 0 || i > 0) {          // i > 0 means at least one term selector added
+                        if (j != 0 || firstFilterAdded) {          // i > 0 means at least one term selector added
                             andStrBuilder.append(",").append(rangeSelectorJson);
                         } else {
                             andStrBuilder.append(rangeSelectorJson);
                         }
                         j++;
                     }
-                    firstElementAdded = true;
+                    firstFilterAdded = true;
                 }
 
 
                 if ((null != geoSelector.lat && geoSelector.lat > 0) && (null != geoSelector.lon && geoSelector.lon > 0)) {
 
-                    if (firstElementAdded) {
+                    if (firstFilterAdded) {
                         andStrBuilder.append(",").append(geoSelector.build());
-                        firstElementAdded = true;
+                        firstFilterAdded = true;
                     }else{
                         andStrBuilder.append(geoSelector.build());
-                        firstElementAdded = true;
+                        firstFilterAdded = true;
                     }
 
                 }
@@ -210,6 +212,7 @@ public class Selector {
                     jsonBuilder.append(",");
                 }
                 jsonBuilder.append("\"").append(FILTERS).append("\"").append(":{").append(andStrBuilder.toString()).append("}");
+                firstElementAdded = true;
             }
 
             String pagingSelectorJson = pagingSelector.build();
