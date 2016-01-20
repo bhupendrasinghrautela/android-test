@@ -37,6 +37,11 @@ public class LocalityService implements MakaanService {
 
             String localityUrl = ApiConstants.LOCALITY.concat(localityId.toString());
 
+            Selector localitySelector = new Selector();
+
+            localitySelector.fields(new String[]{"label", "cityId", "localityId", "livabilityScore", "latitude", "longitude", "description", "avgPriceRisePercentage", "avgPricePerUnitArea", "averageRentPerMonth", "description", "entityDescriptions", "minAffordablePrice", "maxAffordablePrice", "minLuxuryPrice", "maxBudgetPrice", "buyUrl", "avgRentalDemandRisePercentage", "localityHeroshotImageUrl", "suburb", "city", "averageRentPerMonth", "cityHeroshotImageUrl", "listingAggregations", "listingCategory", "unitType", "bedrooms", "entityDescriptions", "description", "entityDescriptionCategories", "masterDescriptionCategory", "name", "masterDescriptionParentCategories", "parentCategory", "count", "minSize", "maxSize", "minPrice", "maxPrice", "minPricePerUnitArea", "maxPricePerUnitArea"});
+
+            localityUrl = localityUrl.concat("?").concat(localitySelector.build());
             Type localityType = new TypeToken<Locality>() {
             }.getType();
 
@@ -94,5 +99,4 @@ public class LocalityService implements MakaanService {
     }
 
 
-   
 }
