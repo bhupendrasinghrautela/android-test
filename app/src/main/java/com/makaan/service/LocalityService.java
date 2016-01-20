@@ -21,7 +21,8 @@ import static com.makaan.constants.RequestConstants.LABEL;
 import static com.makaan.constants.RequestConstants.LISTING_AGGREGATIONS;
 import static com.makaan.constants.RequestConstants.LOCALITY_HEROSHOT_IMAGE_URL;
 import static com.makaan.constants.RequestConstants.LOCALITY_ID;
-import static com.makaan.constants.RequestConstants.SORT_ASC;
+import static com.makaan.constants.RequestConstants.*;
+import static com.makaan.constants.ApiConstants.*;
 
 /**
  * Created by vaibhav on 09/01/16.
@@ -91,5 +92,20 @@ public class LocalityService implements MakaanService {
             }, true);
 
         }
+    }
+
+
+    public void getTopAgentsForLocality(Long cityId, Long localityId, boolean isRenta) {
+
+        if (null != cityId && null != localityId){
+            StringBuilder topAgentsUrl = new StringBuilder(TOP_AGENTS_CITY);
+            topAgentsUrl.append(cityId).append(TOP_AGENTS);
+
+            Selector topAgentsSelector = new Selector();
+            topAgentsSelector.term(LOCALITY_ID, localityId.toString());
+
+
+        }
+
     }
 }

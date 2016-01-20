@@ -9,7 +9,7 @@ public class ListingAggregation {
     public String unitType;
     public int count;
     public int bedrooms;
-    public int minSize, maxSize;
+    public Double minSize, maxSize;
     public Double minPrice, maxPrice,avgPrice;
     public Double minPricePerUnitArea, maxPricePerUnitArea,avgPricePerUnitArea;
 

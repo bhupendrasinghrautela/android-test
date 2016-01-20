@@ -26,6 +26,8 @@ public class RequestConstants {
     public static final String LISTING_POSTED_BY = "listingPostedBy";
     public static final String LISTING_CREATED_AT = "listingCreatedAt";
     public static final String RENTAL = "Rental";
+    public static final String PRIMARY = "Primary";
+    public static final String RESALE = "Resale";
     public static final String LISTING_QUALITY_SCORE = "listingQualityScore";
     public static final String PRICE = "price";
     public static final String UNIT_TYPE = "unitType";
@@ -82,10 +84,11 @@ public class RequestConstants {
     public static final String NEIGHBOURHOOD_AMENITIES_IDS = "neighbourhoodAmenitiesIds";
     public static final String FURNISHINGS = "furnishings";
     public static final String STATUS = "status";
+    public static final String APARTMENT = "apartment";
 
     public static final String SOURCE_DOMAIN_MAKAAN = "sourceDomain=Makaan";
     public static final String LISTING_CATEGORY = "listingCategory";
-    public static final String LOCALITY_IDS = "localityId";
+
 
 
 

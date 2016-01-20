@@ -1,8 +1,11 @@
+/*
 package com.makaan.response.pyr;
 
+*/
 /**
  * Created by makaanuser on 9/1/16.
- */
+ *//*
+
 public class TopAgentsData {
 
     int userId;
@@ -46,3 +49,4 @@ public class TopAgentsData {
     }
 
 }
+*/

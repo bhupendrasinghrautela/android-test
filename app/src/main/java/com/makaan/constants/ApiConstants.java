@@ -30,9 +30,10 @@ public class ApiConstants {
     public static final String TREND_URL = BASE_URL.concat("/data/v1/trend/hitherto");
     public static final String LOCALITY_TREND_URL = TREND_URL.concat("?fields=minPricePerUnitArea,localityName,projectName&group=localityId,month");
 
-    public static final String TOP_AGENTS_LOCALITY = BASE_URL.concat("/data/v1/entity/city");
-    public static final String TOP_AGENTS_URL = BASE_URL.concat("/data/v1/entity/city/");
-    public static final String TOP_AGENTS = "/top-agents?";
+
+
+    public static final String TOP_AGENTS_CITY = BASE_URL.concat("/data/v1/entity/city/");
+    public static final String TOP_AGENTS = "/top-agents";
     public static final String PYR = BASE_URL.concat("/data/v1/entity/enquiry");
 
 
