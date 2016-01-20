@@ -37,7 +37,8 @@ public class ListingCardView extends BaseCardView<Listing> implements CompoundBu
     @Bind(R.id.listing_brief_view_layout_property_shortlist_checkbox)CheckBox mShortlistPropertyCheckbox;
     @Bind(R.id.listing_brief_view_layout_property_price_sq_ft_text_view)TextView mPropertyPriceSqFtTextView;
     @Bind(R.id.listing_brief_view_layout_property_price_difference_image_view)ImageView mDifferenceImageView;
-    @Bind(R.id.listing_brief_view_layout_property_info_text_view)TextView mPropertyInfoTextView;
+    @Bind(R.id.listing_brief_view_layout_property_bhk_info_text_view)TextView mPropertyBhkInfoTextView;
+    @Bind(R.id.listing_brief_view_layout_property_size_info_text_view)TextView mPropertySizeInfoTextView;
     @Bind(R.id.listing_brief_view_layout_property_address_text_view)TextView mPropertyAddressTextView;
     private SharedPreferences mPreferences;
     private Listing mListing;
@@ -68,13 +69,13 @@ public class ListingCardView extends BaseCardView<Listing> implements CompoundBu
         mShortlistPropertyCheckbox.setOnCheckedChangeListener(null);
         if(MakaanBuyerApplication.serpSelector.isBuyContext()) {
             boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(
-                    mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_BUY, item.lisitingId);
+                    mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_BUY, item.lisitingId, true);
             mShortlistPropertyCheckbox.setChecked(isShortlisted);
             // TODO code to show badges
 
         } else {
             boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(
-                    mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_RENT, item.lisitingId);
+                    mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_RENT, item.lisitingId, false);
             mShortlistPropertyCheckbox.setChecked(isShortlisted);
         }
         mShortlistPropertyCheckbox.setOnCheckedChangeListener(this);
@@ -94,8 +95,9 @@ public class ListingCardView extends BaseCardView<Listing> implements CompoundBu
         mPropertyPriceTextView.setText(priceString);
         mPropertyPriceUnitTextView.setText(priceUnit);
         mPropertyPriceSqFtTextView.setText(String.format("%d/sqft", item.pricePerUnitArea));
-        mPropertyInfoTextView.setText(String.format(Locale.ENGLISH, "%s\n%s", item.bhkInfo, item.sizeInfo));
-        mPropertyAddressTextView.setText(String.format(Locale.ENGLISH, "%s, %s", item.localityName, item.cityName));
+        mPropertyBhkInfoTextView.setText(item.bhkInfo);
+        mPropertySizeInfoTextView.setText(item.sizeInfo);
+        mPropertyAddressTextView.setText(String.format("%s, %s", item.localityName, item.cityName));
 
         //TODO this is just a dummy image
         String url = "https://im.proptiger-ws.com/1/644953/6/imperial-project-image-460007.jpeg";
@@ -105,9 +107,17 @@ public class ListingCardView extends BaseCardView<Listing> implements CompoundBu
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if(isChecked) {
-            MasterDataCache.getInstance().addShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES, mListing.lisitingId);
+            if(MakaanBuyerApplication.serpSelector.isBuyContext()) {
+                MasterDataCache.getInstance().addShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_BUY, mListing.lisitingId, true);
+            } else {
+                MasterDataCache.getInstance().addShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_RENT, mListing.lisitingId, false);
+            }
         } else {
-            MasterDataCache.getInstance().removeShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES, mListing.lisitingId);
+            if(MakaanBuyerApplication.serpSelector.isBuyContext()) {
+                MasterDataCache.getInstance().removeShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_BUY, mListing.lisitingId, true);
+            } else {
+                MasterDataCache.getInstance().removeShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_RENT, mListing.lisitingId, false);
+            }
         }
     }
 }

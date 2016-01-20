@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.fragment.listing.HorizontalScrollPageFragment;
 
 import java.util.List;
@@ -13,22 +14,24 @@ import java.util.List;
  * Created by rohitgarg on 1/7/16.
  */
 public class HorizontalScrollFragmentAdapter<T> extends FragmentStatePagerAdapter {
-    private final Context context;
-    private final List<T>  listing;
-    private boolean isChildSerpClusterAdapter;
+    private final Context mContext;
+    private final List<T> mListing;
+    private final SerpRequestCallback mCallback;
+    private boolean mIsChildSerpClusterAdapter;
 
-    public HorizontalScrollFragmentAdapter(FragmentManager fm, Context context, List<T> data, boolean isChildSerpClusterView) {
+    public HorizontalScrollFragmentAdapter(FragmentManager fm, Context context, List<T> data, boolean isChildSerpClusterView, SerpRequestCallback callback) {
         super(fm);
-        this.context = context;
-        this.listing = data;
-        this.isChildSerpClusterAdapter = isChildSerpClusterView;
+        this.mContext = context;
+        this.mListing = data;
+        this.mIsChildSerpClusterAdapter = isChildSerpClusterView;
+        this.mCallback = callback;
     }
 
     @Override
     public Fragment getItem(int position) {
-        if(listing != null && listing.size() > position) {
-            HorizontalScrollPageFragment fragment = HorizontalScrollPageFragment.init(isChildSerpClusterAdapter);
-            fragment.populateData(listing.get(position));
+        if(mListing != null && mListing.size() > position) {
+            HorizontalScrollPageFragment fragment = HorizontalScrollPageFragment.init(mIsChildSerpClusterAdapter);
+            fragment.populateData(mListing.get(position), mCallback);
             return fragment;
         }
         return null;
@@ -36,8 +39,8 @@ public class HorizontalScrollFragmentAdapter<T> extends FragmentStatePagerAdapte
 
     @Override
     public int getCount() {
-        if(listing != null) {
-            return listing.size();
+        if(mListing != null) {
+            return mListing.size();
         }
         return 0;
     }

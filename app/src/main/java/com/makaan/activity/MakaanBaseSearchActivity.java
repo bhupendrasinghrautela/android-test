@@ -1,6 +1,8 @@
 package com.makaan.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -13,6 +15,9 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.city.CityActivity;
+import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.listing.SearchAdapter;
 import com.makaan.response.search.SearchResponseHelper;
 import com.makaan.response.search.SearchResponseItem;
@@ -20,6 +25,9 @@ import com.makaan.response.search.SearchType;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SearchService;
+
+import com.makaan.util.RecentSearchManager;
+
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -124,14 +132,18 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         }
 
         // TODO need to handle all cases
-        SearchResponseHelper.resolveSearch(searchResponseItem);
+        SearchResponseHelper.resolveSearch(searchResponseItem, this);
 
         mSearchAdapter.clear();
+
         mSearchView.setOnQueryTextListener(null);
         mSearchView.setQuery(searchResponseItem.displayText, false);
         mSearchView.setOnQueryTextListener(this);
 
         setSearchViewVisibility(false, searchResponseItem.displayText);
+
+        //RecentSearchManager.getInstance(this).addEntryToRecentSearch(search, this);
+
     }
 
     @Override

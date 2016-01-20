@@ -105,9 +105,9 @@
                 android:layout_height="@dimen/fragment_filters_map_image_view_height"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/fragment_filters_map_image_view_margin_right"
                 android:layout_marginEnd="@dimen/fragment_filters_map_image_view_margin_right"
+                android:layout_marginTop="@dimen/fragment_filters_map_image_view_margin_top"
                 android:src="@drawable/map" />
         </RelativeLayout>
 

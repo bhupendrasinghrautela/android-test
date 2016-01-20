@@ -72,7 +72,8 @@ public class StringUtil {
 
     public static String getDisplayPrice(double price) {
         try {
-            if(price == Double.NaN) {
+            if(Double.isNaN(price)) {
+                // TODO check for fail safe value
                 return String.valueOf(price);
             }
             if (price == 0) {

@@ -1,13 +1,16 @@
 package com.makaan.adapter.listing;
 
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.makaan.constants.UIConstants;
-import com.makaan.fragment.listing.SerpListFragment;
+import com.makaan.R;
+import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.listing.SerpRequestCallback;
+import com.makaan.adapter.PaginatedBaseAdapter;
+import com.makaan.adapter.RecycleViewMode;
 import com.makaan.response.listing.Listing;
 import com.makaan.ui.listing.ListingViewHolderFactory;
 import com.makaan.ui.listing.BaseListingAdapterViewHolder;
@@ -20,79 +23,132 @@ import com.makaan.pojo.TempClusterItem;
 /**
  * Created by rohitgarg on 1/6/16.
  */
-public class SerpListingAdapter extends RecyclerView.Adapter<BaseListingAdapterViewHolder> {
+public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
 
 
     private final Context mContext;
-    private final ListingAdapterCallbacks mCallbacks;
-    private final boolean mIsChildSerp;
-    List<Listing> mListings;
+    private final SerpRequestCallback mCallback;
     SparseArray<List<TempClusterItem>> clusterItems;
+    private int mRequestType = SerpActivity.TYPE_UNKNOWN;
 
-    public SerpListingAdapter(Context context, ListingAdapterCallbacks callbacks) {
+    public SerpListingAdapter(Context context, SerpRequestCallback callbacks) {
         mContext = context;
-        mCallbacks = callbacks;
-        mIsChildSerp = false;
+        mCallback = callbacks;
+        recycleViewMode = RecycleViewMode.DATA;
     }
 
-    public SerpListingAdapter(Context context, ListingAdapterCallbacks callbacks, List<Listing> listings) {
+    public SerpListingAdapter(Context context, SerpRequestCallback callbacks, List<Listing> listings, int requestType) {
         mContext = context;
-        mCallbacks = callbacks;
-        setData((ArrayList<Listing>) listings);
-        mIsChildSerp = false;
+        mCallback = callbacks;
+        setData((ArrayList<Listing>) listings, requestType);
+        recycleViewMode = RecycleViewMode.DATA;
     }
 
-    public SerpListingAdapter(Context context, ListingAdapterCallbacks callbacks, boolean isChildSerp) {
+    public SerpListingAdapter(Context context, SerpRequestCallback callbacks, int requestType) {
         mContext = context;
-        mCallbacks = callbacks;
-        mIsChildSerp = isChildSerp;
+        mCallback = callbacks;
+        recycleViewMode = RecycleViewMode.DATA;
+        this.mRequestType = requestType;
     }
 
     @Override
-    public BaseListingAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public int getItemViewType(int position) {
+        int superItemViewType = super.getItemViewType(position);
+        if(superItemViewType == RecycleViewMode.DATA.getValue()) {
+            if(mRequestType == SerpActivity.TYPE_BUILDER || mRequestType == SerpActivity.TYPE_SELLER) {
+                if(position == 0) {
+                    if(mRequestType == SerpActivity.TYPE_BUILDER) {
+                        superItemViewType = RecycleViewMode.DATA_TYPE_BUILDER.getValue();
+                    } else {
+                        superItemViewType = RecycleViewMode.DATA_TYPE_SELLER.getValue();
+                    }
+                } else {
+                    superItemViewType = RecycleViewMode.DATA_TYPE_LISTING.getValue();
+                }
+            } else {
+                if(clusterItems != null && clusterItems.get(position) != null) {
+                    superItemViewType =  RecycleViewMode.DATA_TYPE_CLUSTER.getValue();
+                } else {
+                    superItemViewType = RecycleViewMode.DATA_TYPE_LISTING.getValue();
+                }
+            }
+        }
+        return superItemViewType;
+    }
+
+    @Override
+    public int getItemCount() {
+        if(mRequestType == SerpActivity.TYPE_CLUSTER) {
+            return mItems.size();
+        } else if(mRequestType == SerpActivity.TYPE_BUILDER || mRequestType == SerpActivity.TYPE_SELLER) {
+            return (mItems.size() + 1);
+        } else {
+            return (mItems.size() + clusterItems.size());
+        }
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateDataViewHolder(ViewGroup parent, int viewType) {
         return ListingViewHolderFactory.createViewHolder(mContext, parent, viewType);
     }
 
     @Override
-    public void onBindViewHolder(BaseListingAdapterViewHolder holder, int position) {
+    public RecyclerView.ViewHolder onCreateFooterLoadingViewHolder(ViewGroup parent) {
+        return new FooterHeaderLoaderViewAdapter(LayoutInflater.from(mContext).inflate(R.layout.recycler_view_loading_footer, parent, false));
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateFooterErrorViewHolder(ViewGroup parent) {
+        return null;
+    }
+
+    @Override
+    public void onBindDataViewHolder(RecyclerView.ViewHolder holder, int position) {
+        BaseListingAdapterViewHolder viewHolder = (BaseListingAdapterViewHolder) holder;
         if(clusterItems != null && clusterItems.get(position) != null) {
-            holder.populateData(clusterItems.get(position));
+            viewHolder.populateData(clusterItems.get(position), mCallback);
         } else {
-            if(!mIsChildSerp) {
-                if (position > 3) {
-                    holder.populateData(mListings.get(position - 1));
+            if(mRequestType == SerpActivity.TYPE_BUILDER) {
+                if(position == 0) {
+                    viewHolder.populateData(null, mCallback);
                 } else {
-                    holder.populateData(mListings.get(position));
+                    viewHolder.populateData(mItems.get(position - 1), mCallback);
                 }
             } else {
-                holder.populateData(mListings.get(position));
+                if (mRequestType != SerpActivity.TYPE_CLUSTER) {
+                    if (position > 3) {
+                        viewHolder.populateData(mItems.get(position - 1), mCallback);
+                    } else {
+                        viewHolder.populateData(mItems.get(position), mCallback);
+                    }
+                } else {
+                    viewHolder.populateData(mItems.get(position), mCallback);
+                }
             }
         }
     }
 
     @Override
-    public int getItemViewType(int position) {
-        if(clusterItems != null && clusterItems.get(position) != null) {
-            return UIConstants.LISTING_ADAPTER_ITEM_TYPE_CLUSTER;
-        }
-        return UIConstants.LISTING_ADAPTER_ITEM_TYPE_LISTING;
+    public void onBindFooterLoadingViewHolder(RecyclerView.ViewHolder holder, int position) {
+
     }
 
     @Override
-    public int getItemCount() {
-        if(mIsChildSerp) {
-            return mListings.size();
-        } else {
-            return (mListings.size() + clusterItems.size());
-        }
+    public void onBindFooterErrorViewHolder(RecyclerView.ViewHolder holder, int position) {
+
     }
 
-    public void setData(ArrayList<Listing> listings) {
-        if(this.mListings == null) {
-            this.mListings = new ArrayList<Listing>();
+    @Override
+    public void setData(List<Listing> listings, int requestType) {
+        if(this.mItems == null) {
+            this.mItems = new ArrayList<Listing>();
         }
-        this.mListings.clear();
-        if(!mIsChildSerp) {
+        this.mItems.clear();
+        mRequestType = requestType;
+        if(listings == null) {
+            return;
+        }
+        if(mRequestType == SerpActivity.TYPE_UNKNOWN || mRequestType == SerpActivity.TYPE_SEARCH) {
             if (clusterItems == null) {
                 clusterItems = new SparseArray<>();
             } else {
@@ -107,15 +163,7 @@ public class SerpListingAdapter extends RecyclerView.Adapter<BaseListingAdapterV
                 clusterItems.append(3, items);
             }
         }
-        this.mListings.addAll(listings);
+        this.mItems.addAll(listings);
         notifyDataSetChanged();
-    }
-
-    /**
-     * this interface will be implemented by activity/fragment
-     * which is housing recycler view which is using this class as its adapter
-     */
-    public interface ListingAdapterCallbacks {
-
     }
 }
