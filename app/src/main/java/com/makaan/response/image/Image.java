@@ -8,7 +8,7 @@ public class Image {
     public Long id;
     public Long imageTypeId;
     public int statusId;
-    public String altText;
+    public String altText, activeStatus;
     public String title, absolutePath;
     public ImageType imageType;
 

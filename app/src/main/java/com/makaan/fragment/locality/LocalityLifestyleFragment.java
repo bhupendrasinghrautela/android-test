@@ -12,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.response.city.EntityDesc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,15 +46,15 @@ public class LocalityLifestyleFragment extends Fragment{
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    public void setData(List<Properties> nearByLocalities) {
-        mAdapter = new NearByLocalitiesAdapter(nearByLocalities);
+    public void setData(ArrayList<EntityDesc> EntityDescs) {
+        mAdapter = new NearByLocalitiesAdapter(EntityDescs);
         if (mRecyclerView != null)
             mRecyclerView.setAdapter(mAdapter);
     }
 
 
     private class NearByLocalitiesAdapter extends RecyclerView.Adapter<NearByLocalitiesAdapter.ViewHolder> {
-        private List<Properties> propertiesList;
+        private List<EntityDesc> entityDescs;
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             // each data item is just a string in this case
@@ -68,8 +70,8 @@ public class LocalityLifestyleFragment extends Fragment{
             }
         }
 
-        public NearByLocalitiesAdapter(List<Properties> propertiesList) {
-            this.propertiesList = propertiesList;
+        public NearByLocalitiesAdapter(List<EntityDesc> entityDescs) {
+            this.entityDescs = entityDescs;
         }
 
         @Override
@@ -83,29 +85,18 @@ public class LocalityLifestyleFragment extends Fragment{
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            final Properties nearByLocalitu = propertiesList.get(position);
+            final EntityDesc nearByLocalitu = entityDescs.get(position);
             holder.descriptionTv.setText(nearByLocalitu.description);
-            holder.descriptionFullTv.setText(nearByLocalitu.fullDescription);
+//            holder.descriptionFullTv.setText(nearByLocalitu.fullDescription);
             holder.localityIv.setImageResource(R.drawable.placeholder_localities_props);
             //TODO: Picasso load imgurl
         }
 
         @Override
         public int getItemCount() {
-            return propertiesList.size();
+            return entityDescs.size();
         }
 
     }
 
-    public static class Properties {
-        String imgUrl;
-        String description;
-        String fullDescription;
-
-        public Properties(String imgUrl, String description, String fullDescription) {
-            this.imgUrl = imgUrl;
-            this.description = description;
-            this.fullDescription = fullDescription;
-        }
-    }
 }

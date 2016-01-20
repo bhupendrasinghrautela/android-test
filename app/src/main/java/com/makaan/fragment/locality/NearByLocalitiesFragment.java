@@ -1,6 +1,7 @@
 package com.makaan.fragment.locality;
 
 import android.app.Fragment;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,7 +14,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
+import com.makaan.network.MakaanNetworkClient;
+import com.makaan.response.locality.ListingAggregation;
+import com.makaan.response.locality.Locality;
+import com.makaan.util.Blur;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +68,59 @@ public class NearByLocalitiesFragment extends Fragment {
             mRecyclerView.setAdapter(mAdapter);
     }
 
+    public void setNearByLocalityData(ArrayList<Locality> nearbyLocalities) {
+        setData(getData(nearbyLocalities));
+    }
+    private List<NearByLocalitiesFragment.NearByLocalities> getData(ArrayList<Locality> nearbyLocalities) {
+        List<NearByLocalitiesFragment.NearByLocalities> nearByLocalities = new ArrayList<>();
+        for(Locality locality:nearbyLocalities){
+            int[] counts = getCountOfNumberOfListingsBasedOnType(locality.listingAggregations);
+            int[] medians = calculateMedianForListings(locality.listingAggregations);
+            nearByLocalities.add(new NearByLocalitiesFragment.NearByLocalities(""+locality.localityHeroshotImageUrl,""+counts[1]+" +",""+counts[0]+" +","median price: "+medians[0]+"/ sq ft",locality.label));
+        }
+        return nearByLocalities;
+    }
+
+    private int[] getCountOfNumberOfListingsBasedOnType(ArrayList<ListingAggregation> listingAggregations) {
+        int[] counts = new int[2];
+        int countRent = 0, countPrimary = 0;
+        for(ListingAggregation listingAggregation: listingAggregations){
+            if(listingAggregation.listingCategory.equalsIgnoreCase("primary") ||
+                    listingAggregation.listingCategory.equalsIgnoreCase("resale")){
+                countPrimary++;
+            }else{
+                countRent++;
+            }
+        }
+        counts[0] = countPrimary;
+        counts[1] = countRent;
+        return counts;
+    }
+
+    private int[] calculateMedianForListings(ArrayList<ListingAggregation> listingAggregations) {
+        double rentalMedian = 0, saleMedian = 0;
+        int countsRental = 0, countsSales = 0;
+        int[] counts = new int[2];
+        for (ListingAggregation ListingAggregation:listingAggregations){
+            if(ListingAggregation.listingCategory.equalsIgnoreCase("primary") ||
+                    ListingAggregation.listingCategory.equalsIgnoreCase("resale")){
+                saleMedian = saleMedian + ListingAggregation.avgPricePerUnitArea;
+                countsSales++;
+            }else{
+                rentalMedian = rentalMedian + ListingAggregation.avgPricePerUnitArea;
+                countsRental++;
+            }
+            if(countsSales!=0)
+                saleMedian = saleMedian / countsSales;
+            if(countsRental!=0)
+                rentalMedian = rentalMedian / countsRental;
+
+            counts[0] = (int) saleMedian;
+            counts[1] = (int) rentalMedian;
+        }
+        return counts;
+    }
+
 
     private class NearByLocalitiesAdapter extends RecyclerView.Adapter<NearByLocalitiesAdapter.ViewHolder> {
         private List<NearByLocalities> nearByLocalitiesList;
@@ -98,14 +158,30 @@ public class NearByLocalitiesFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            final NearByLocalities nearByLocalitu = nearByLocalitiesList.get(position);
-            holder.medianTv.setText(nearByLocalitu.medianPrice);
-            holder.nameTv.setText(nearByLocalitu.localityName);
-            holder.numberOfPropsForSaleTv.setText(nearByLocalitu.numberOfPropsForSale);
-            holder.numberOfPropsForRentTv.setText(nearByLocalitu.numberOfPropsForRent);
+        public void onBindViewHolder(final ViewHolder holder, int position) {
+            final NearByLocalities nearByLocality = nearByLocalitiesList.get(position);
+            holder.medianTv.setText(nearByLocality.medianPrice);
+            holder.nameTv.setText(nearByLocality.localityName);
+            holder.numberOfPropsForSaleTv.setText(nearByLocality.numberOfPropsForSale);
+            holder.numberOfPropsForRentTv.setText(nearByLocality.numberOfPropsForRent);
             holder.localityIv.setImageResource(placeholderResource);
-            //TODO: Picasso load imgurl
+
+            if(nearByLocality.imgUrl!=null)
+            MakaanNetworkClient.getInstance().getImageLoader().get(nearByLocality.imgUrl, new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
+                    if (b && imageContainer.getBitmap() == null) {
+                        return;
+                    }
+                    final Bitmap image = imageContainer.getBitmap();
+                        holder.localityIv.setImageBitmap(image);
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+
+                }
+            });
         }
 
         @Override

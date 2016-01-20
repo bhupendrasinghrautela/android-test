@@ -35,6 +35,7 @@ public class ApiConstants {
     public static final String TOP_AGENTS_CITY = BASE_URL.concat("/data/v1/entity/city/");
     public static final String TOP_AGENTS = "/top-agents";
     public static final String PYR = BASE_URL.concat("/data/v1/entity/enquiry");
+    public static final String TOP_BUILDER = BASE_URL.concat("/data/v2/entity/builder/top");
 
 
     public static final String COLUMBUS_SUGGESTIONS = BASE_URL.concat("/columbus/app/v1/popular/suggestions");

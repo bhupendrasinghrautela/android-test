@@ -21,6 +21,7 @@ import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.locality.LocalityByIdEvent;
+import com.makaan.event.locality.NearByLocalitiesEvent;
 import com.makaan.event.trend.callback.LocalityTrendCallback;
 import com.makaan.fragment.locality.KynFragment;
 import com.makaan.fragment.locality.LocalitiesApartmentsFragment;
@@ -31,6 +32,7 @@ import com.makaan.fragment.locality.NearByLocalitiesFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.TaxonomyCard;
 import com.makaan.response.amenity.AmenityCluster;
+import com.makaan.response.city.EntityDesc;
 import com.makaan.response.locality.ListingAggregation;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.trend.LocalityPriceTrendDto;
@@ -107,26 +109,23 @@ public class LocalityActivity extends MakaanFragmentActivity {
     private void fetchData() {
         new LocalityService().getLocalityById(localityId);
         addProperties(new TaxonomyService().getTaxonomyCardForLocality(localityId));
-        new AmenityService().getAmenitiesByLocation(13.03244019, 77.6019516, 50);//TODO: replace with locality's lat long
-
-
-        ArrayList<Long> localityIds = new ArrayList<>();
-        localityIds.add(localityId);
-        localityIds.add((long) 53250);
-        new PriceTrendService().getPriceTrendForLocalities(localityIds, 12, new LocalityTrendCallback() {
-            @Override
-            public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
-//                priceTrendView.bindView(localityPriceTrendDto);
-            }
-        });
-    }
+       }
 
     @Subscribe
     public void onResults(LocalityByIdEvent localityByIdEvent){
         locality = localityByIdEvent.locality;
         populateLocalityData();
+        addLocalitiesLifestyleFragment(locality.entityDescriptions);
         fetchHero();
+        new LocalityService().getNearByLocalities(locality.latitude, locality.longitude, 10);
+        new AmenityService().getAmenitiesByLocation(locality.latitude, locality.longitude, 10);
+
         addStuff();
+    }
+
+    @Subscribe
+    public void onResults(NearByLocalitiesEvent localitiesEvent){
+        addNearByLocalitiesFragment(localitiesEvent.nearbyLocalities);
     }
 
     @Subscribe
@@ -141,7 +140,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
         livingScoreProgress.setProgress((int) (locality.livabilityScore * 10));
         calculateMedian(locality.listingAggregations);
         salesMedianPrice.setText("Rs " + meadianSale + " / sq ft");
-        rentMedianPrice.setText("Rs "+meadianRental+" / month");
+        rentMedianPrice.setText("Rs " + meadianRental + " / month");
         annualGrowthTv.setText(locality.avgPriceRisePercentage == null ? "N/A" : "" + locality.avgPriceRisePercentage + " %");
         annualRentDemandGrowthTv.setText(locality.avgRentalDemandRisePercentage == null ? "N/A" : "" + locality.avgPriceRisePercentage + " %");
     }
@@ -169,10 +168,8 @@ public class LocalityActivity extends MakaanFragmentActivity {
     }
 
     private void addStuff() {
-        addNearByLocalitiesFragment();
         addTopAgentsFragment();
         addTopBuilders();
-        addLocalitiesLifestyleFragment();
         addLocalitiesApartmentsFragment();
         addPriceTrendFragment();
     }
@@ -203,7 +200,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
         });
     }
 
-    private void addNearByLocalitiesFragment() {
+    private void addNearByLocalitiesFragment(ArrayList<Locality> nearbyLocalities) {
         Fragment newFragment = new NearByLocalitiesFragment();
         Bundle bundle = new Bundle();
         bundle.putString("title", "nearby localities");
@@ -213,7 +210,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
         transaction.replace(R.id.container_nearby_localities, newFragment);
         transaction.addToBackStack(null);
         transaction.commit();
-        ((NearByLocalitiesFragment)newFragment).setData(getDummyData());
+        ((NearByLocalitiesFragment)newFragment).setNearByLocalityData(nearbyLocalities);
     }
 
     private void addLocalitiesApartmentsFragment() {
@@ -239,7 +236,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
         bundle.putInt("secondaryMedian", meadianRental == null ? 0 : meadianRental);
         newFragment.setArguments(bundle);
 
-        initFragment(R.id.container_nearby_localities_price_trends,newFragment,false);
+        initFragment(R.id.container_nearby_localities_price_trends, newFragment, false);
     }
 
     private List<LocalitiesApartmentsFragment.Properties> getDummyDataForApartments() {
@@ -257,7 +254,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
         return properties;
     }
 
-    private void addLocalitiesLifestyleFragment() {
+    private void addLocalitiesLifestyleFragment(ArrayList<EntityDesc> entityDescriptions) {
         Fragment newFragment = new LocalityLifestyleFragment();
         Bundle bundle = new Bundle();
         bundle.putString("title", "lifestyle in electronic city");
@@ -266,7 +263,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
         transaction.replace(R.id.container_nearby_localities_lifestyle, newFragment);
         transaction.addToBackStack(null);
         transaction.commit();
-        ((LocalityLifestyleFragment)newFragment).setData(getDummyDataForLifestyle());
+        ((LocalityLifestyleFragment)newFragment).setData(entityDescriptions);
     }
 
     private void addTopAgentsFragment() {
@@ -307,18 +304,6 @@ public class LocalityActivity extends MakaanFragmentActivity {
         ((LocalityPropertiesFragment)newFragment).setData(taxonomyCardList);
     }
 
-    private List<NearByLocalitiesFragment.NearByLocalities> getDummyData() {
-        List<NearByLocalitiesFragment.NearByLocalities> nearByLocalities = new ArrayList<>();
-        NearByLocalitiesFragment.NearByLocalities nearby = new NearByLocalitiesFragment.NearByLocalities("","1090 +","102 +","median price: 2,400 / sq ft","Koramangla");
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);return nearByLocalities;
-    }
-
     private List<NearByLocalitiesFragment.NearByLocalities> getDummyDataForAgents() {
         List<NearByLocalitiesFragment.NearByLocalities> nearByLocalities = new ArrayList<>();
         NearByLocalitiesFragment.NearByLocalities nearby = new NearByLocalitiesFragment.NearByLocalities("","109 +","552 +","investor clinic","Sachin Singh");
@@ -346,18 +331,18 @@ public class LocalityActivity extends MakaanFragmentActivity {
         nearByLocalities.add(nearby);return nearByLocalities;
     }
 
-    private List<LocalityLifestyleFragment.Properties> getDummyDataForLifestyle() {
-        List<LocalityLifestyleFragment.Properties> nearByLocalities = new ArrayList<>();
-        LocalityLifestyleFragment.Properties nearby = new LocalityLifestyleFragment.Properties("","schools","with constant monitoring and regular rating, we ensure that best brokers feature more on makaan.com. best brokers feature more on makaan. with constant monitoring and regular rating, we ensure that best brokers feature more on makaan.com. best brokers feature more on makaan with constant monitoring and regular rating brokers feature more on makaan. best brokers feature.");
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);return nearByLocalities;
-    }
+//    private List<LocalityLifestyleFragment.Properties> getDummyDataForLifestyle() {
+//        List<LocalityLifestyleFragment.Properties> nearByLocalities = new ArrayList<>();
+//        LocalityLifestyleFragment.Properties nearby = new LocalityLifestyleFragment.Properties("","schools","with constant monitoring and regular rating, we ensure that best brokers feature more on makaan.com. best brokers feature more on makaan. with constant monitoring and regular rating, we ensure that best brokers feature more on makaan.com. best brokers feature more on makaan with constant monitoring and regular rating brokers feature more on makaan. best brokers feature.");
+//        nearByLocalities.add(nearby);
+//        nearByLocalities.add(nearby);
+//        nearByLocalities.add(nearby);
+//        nearByLocalities.add(nearby);
+//        nearByLocalities.add(nearby);
+//        nearByLocalities.add(nearby);
+//        nearByLocalities.add(nearby);
+//        nearByLocalities.add(nearby);return nearByLocalities;
+//    }
 
     private void fetchHero()
     {

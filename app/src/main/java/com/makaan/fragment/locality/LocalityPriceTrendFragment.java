@@ -9,16 +9,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.event.locality.TrendingSearchLocalityEvent;
 import com.makaan.event.trend.callback.LocalityTrendCallback;
 import com.makaan.fragment.MakaanBaseFragment;
-import com.makaan.pojo.TaxonomyCard;
+import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.trend.LocalityPriceTrendDto;
+import com.makaan.service.LocalityService;
 import com.makaan.service.PriceTrendService;
 import com.makaan.ui.PriceTrendView;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,63 +55,6 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
     private LinearLayoutManager mLayoutManager;
     private NearByLocalitiesAdapter mAdapter;
 
-    private void initPopularSearches() {
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
-    }
-
-    public void setData(List<TaxonomyCard> taxonomyCardList) {
-        mAdapter = new NearByLocalitiesAdapter(taxonomyCardList);
-        if (mRecyclerView != null)
-            mRecyclerView.setAdapter(mAdapter);
-    }
-
-
-    private class NearByLocalitiesAdapter extends RecyclerView.Adapter<NearByLocalitiesAdapter.ViewHolder> {
-        private List<String> list;
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            // each data item is just a string in this case
-            public TextView descriptionTv;
-            public TextView unitTv;
-            public ImageView localityIv;
-
-            public ViewHolder(View v) {
-                super(v);
-                descriptionTv = (TextView) v.findViewById(R.id.tv_localities_recent_searches_desc);
-                unitTv = (TextView) v.findViewById(R.id.tv_localities_recent_searches_unit_type);
-            }
-        }
-
-        public NearByLocalitiesAdapter(List<String> list) {
-            this.list = list;
-        }
-
-        @Override
-        public NearByLocalitiesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                                     int viewType) {
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.row_localities_recent_searches, parent, false);
-            ViewHolder vh = new ViewHolder(v);
-            return vh;
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            final String unitType = list.get(position);
-            holder.descriptionTv.setText(list.label1);
-            holder.localityIv.setImageResource(R.drawable.placeholder_localities_props);
-            //TODO: Picasso load imgurl
-        }
-
-        @Override
-        public int getItemCount() {
-            return list.size();
-        }
-
-    }
 
     @Override
     protected int getContentViewId() {
@@ -133,6 +78,12 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
                 priceTrendView.bindView(localityPriceTrendDto);
             }
         });
+        new LocalityService().getTrendingSearchesInLocality(localityId);
+    }
+
+    @Subscribe
+    public void onResults(TrendingSearchLocalityEvent searchResultEvent){
+        initPopularSearches(searchResultEvent.trendingSearches);
     }
 
     private void initView() {
@@ -148,8 +99,8 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
 
         titleTv.setText(title);
         trendsMedianTv.setText("the median home value in electronic city is "+primaryMedian+" / sq ft.");
-        trendsGrowthTv.setText("electronic city home values have gone up +"+primaryRise+" over the past year and makaan predicts they will rise around 0% withing the next year.");
-        trendsRentGrowthTv.setText("the average rent price in electronic city is "+secondaryAverage+" which is higher than city median of "+secondaryMedian);
+        trendsGrowthTv.setText("electronic city home values have gone up +" + primaryRise + " over the past year and makaan predicts they will rise around 0% withing the next year.");
+        trendsRentGrowthTv.setText("the average rent price in electronic city is " + secondaryAverage + " which is higher than city median of " + secondaryMedian);
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -186,5 +137,53 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
                 break;
         }
         return months;
+    }
+
+    private void initPopularSearches(List<SearchResponseItem> searchResponseItems) {
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new NearByLocalitiesAdapter(searchResponseItems);
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private class NearByLocalitiesAdapter extends RecyclerView.Adapter<NearByLocalitiesAdapter.ViewHolder> {
+        private List<SearchResponseItem> list;
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            // each data item is just a string in this case
+            public TextView descriptionTv;
+
+            public ViewHolder(View v) {
+                super(v);
+                descriptionTv = (TextView) v.findViewById(R.id.tv_localities_recent_searches_desc);
+            }
+        }
+
+        public NearByLocalitiesAdapter(List<SearchResponseItem> list) {
+            this.list = list;
+        }
+
+        @Override
+        public NearByLocalitiesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                                     int viewType) {
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.row_localities_recent_searches, parent, false);
+            ViewHolder vh = new ViewHolder(v);
+            return vh;
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            final SearchResponseItem responseItem = list.get(position);
+            holder.descriptionTv.setText(responseItem.displayText);
+            //TODO: Picasso load imgurl
+        }
+
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
+
     }
 }
