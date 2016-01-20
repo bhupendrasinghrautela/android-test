@@ -3,6 +3,7 @@ package com.makaan.cache;
 
 import android.content.SharedPreferences;
 
+import com.google.android.gms.common.api.Api;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.master.MasterFurnishing;
 import com.makaan.response.master.PropertyAmenity;
@@ -38,6 +39,7 @@ public class MasterDataCache {
     private HashMap<String, FilterGroup> internalNameToFilterGrpBuy = new HashMap<>();
     private HashMap<String, FilterGroup> internalNameToFilterGrpRent = new HashMap<>();
     private Map<Integer, AmenityCluster> amenityMap = new HashMap<>();
+    private Map<String, ApiLabel> searchTypeMap= new HashMap<>();
 
     private HashSet<String> shortlistedProperties;
 
@@ -127,6 +129,16 @@ public class MasterDataCache {
         }
     }
 
+    public void addSearchType(String type, ApiLabel searchType) {
+        if (null != searchType && null != type && null != searchType) {
+            searchTypeMap.put(type, searchType);
+        }
+    }
+
+    public void setSearchType(Map<String, ApiLabel> searchTypeMap) {
+        this.searchTypeMap = searchTypeMap;
+    }
+
 
     public ArrayList<ApiIntLabel> getBuyPropertyTypes() {
         ArrayList<ApiIntLabel> propertyTypes = new ArrayList<>();
@@ -163,6 +175,10 @@ public class MasterDataCache {
 
     public Map<Integer, AmenityCluster> getAmenityMap() {
         return amenityMap;
+    }
+
+    public Map<String, ApiLabel> getSearchTypeMap() {
+        return searchTypeMap;
     }
 
     public String translateApiLabel(String apiLabel) {

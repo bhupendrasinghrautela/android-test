@@ -1,6 +1,5 @@
 package com.makaan.activity.listing;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -11,10 +10,8 @@ import com.makaan.event.city.CityTopLocalityEvent;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.event.trend.callback.TopLocalitiesTrendCallback;
 import com.makaan.response.locality.Locality;
-import com.makaan.service.ImageService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PriceTrendService;
-import com.makaan.service.UserService;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -55,14 +52,22 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         List<Long> tempUsers = new ArrayList<>();
         tempUsers.add(3564144L);
         tempUsers.add(3901325L);
-        ((UserService) (MakaanServiceFactory.getInstance().getService(UserService.class))).getCompanyUsers(tempUsers);
-        ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(436057L);
+        //((UserService) (MakaanServiceFactory.getInstance().getService(UserService.class))).getCompanyUsers(tempUsers);
+        //((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(436057L);
+        //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getNearByLocalities(12.84112072, 77.66799164, 5);
+        //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getTrendingSearchesInLocality(50175L);
+        //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getTrendingSearchesInLocality(50175L);
+        //((AgentService) (MakaanServiceFactory.getInstance().getService(AgentService.class))).getTopAgentsForLocality(2L, 50175L, 5, true, new TopBuyAgentsInLocalityCallback());
 
-        Intent intent = new Intent(this, SerpActivity.class);
-        startActivity(intent);
+        ArrayList<Long> topLocalities  = new ArrayList<>();
+        topLocalities.add(53099L);topLocalities.add(53130L);topLocalities.add(53099L);topLocalities.add(53476L);topLocalities.add(53477L);
+        ((PriceTrendService) (MakaanServiceFactory.getInstance().getService(PriceTrendService.class))).getPriceTrendForLocalities(topLocalities, 6, new TopLocalitiesTrendCallback());
+        //((AgentService) (MakaanServiceFactory.getInstance().getService(AgentService.class))).getTopAgentsForLocality(2L, 50175L, 5, false, new TopRentAgentsInLocalityCallback());
+
+        /*Intent intent = new Intent(this, SerpActivity.class);
+        startActivity(intent);*/
 
     }
-
 
 
     @Subscribe

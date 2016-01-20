@@ -134,20 +134,26 @@ public class Selector {
         sortSelector = new SortSelector();
     }
 
+    public void applySelection(String selector) {
+        //TODO: build
+    }
+
 
     public String build() {
         try {
+            boolean firstElementAdded = false;
 
             StringBuilder jsonBuilder = new StringBuilder();
             jsonBuilder.append("{");
 
             if (fieldSelector.size() > 0) {
+                firstElementAdded = true;
                 StringBuilder fieldBuilder = new StringBuilder();
                 fieldBuilder.append("\"").append(FIELDS).append("\"").append(":").append(MakaanBuyerApplication.gson.toJson(fieldSelector));
                 jsonBuilder.append(fieldBuilder.toString());
             }
 
-            if (termSelectorHashMap.size() > 0 || rangeSelectorHashMap.size() > 0) {
+            if (termSelectorHashMap.size() > 0 || rangeSelectorHashMap.size() > 0 || null != geoSelector) {
 
                 StringBuilder andStrBuilder = new StringBuilder();
                 andStrBuilder.append("\"").append(AND).append("\"").append(":[");
@@ -158,7 +164,7 @@ public class Selector {
                     String termSelectorJson = entry.getValue().build();
                     if (!StringUtil.isBlank(termSelectorJson)) {
 
-                        if (i != 0 || fieldSelector.size() > 0) {
+                        if (i != 0 ) {
                             andStrBuilder.append(",").append(termSelectorJson);
                         } else {
                             andStrBuilder.append(termSelectorJson);
@@ -185,29 +191,40 @@ public class Selector {
 
                 if ((null != geoSelector.lat && geoSelector.lat > 0) && (null != geoSelector.lon && geoSelector.lon > 0)) {
 
-                    andStrBuilder.append(geoSelector.build());
+                    if (firstElementAdded) {
+                        andStrBuilder.append(",").append(geoSelector.build());
+                        firstElementAdded = true;
+                    }else{
+                        andStrBuilder.append(geoSelector.build());
+                    }
+
                 }
 
                 andStrBuilder.append("]");
+                if(firstElementAdded){
+                    jsonBuilder.append(",");
+                }
                 jsonBuilder.append("\"").append(FILTERS).append("\"").append(":{").append(andStrBuilder.toString()).append("}");
             }
 
             String pagingSelectorJson = pagingSelector.build();
             if (!StringUtil.isBlank(pagingSelectorJson)) {
                 // TODO check for field values
-                if (termSelectorHashMap.size() > 0 || rangeSelectorHashMap.size() > 0) {
+                if (termSelectorHashMap.size() > 0 || rangeSelectorHashMap.size() > 0 || firstElementAdded) {
                     jsonBuilder.append(",\"");
                 }
                 jsonBuilder.append(PAGING).append("\"").append(":").append(pagingSelectorJson);
+                firstElementAdded = true;
             }
 
             String sortSelectorJson = sortSelector.build();
             if (!StringUtil.isBlank(sortSelectorJson)) {
                 // TODO check for field values
-                if (termSelectorHashMap.size() > 0 || rangeSelectorHashMap.size() > 0 || !StringUtil.isBlank(pagingSelectorJson)) {
+                if (termSelectorHashMap.size() > 0 || rangeSelectorHashMap.size() > 0 || !StringUtil.isBlank(pagingSelectorJson) || firstElementAdded) {
                     jsonBuilder.append(",\"");
                 }
                 jsonBuilder.append(SORT).append("\"").append(":").append(sortSelectorJson);
+                firstElementAdded = true;
             }
 
             jsonBuilder.append("}");
@@ -224,23 +241,23 @@ public class Selector {
 
     public int getAppliedFilterCount() {
         int count = this.rangeSelectorHashMap.keySet().size() + this.termSelectorHashMap.keySet().size();
-        if(this.termSelectorHashMap.containsKey("cityId")) {
+        if (this.termSelectorHashMap.containsKey("cityId")) {
             count--;
         }
-        if(this.termSelectorHashMap.containsKey("localityId")) {
+        if (this.termSelectorHashMap.containsKey("localityId")) {
             count--;
         }
         return count;
     }
 
     public boolean isBuyContext() {
-        if(!this.termSelectorHashMap.containsKey("listingCategory")) {
+        if (!this.termSelectorHashMap.containsKey("listingCategory")) {
             return true;
         } else {
             HashSet<String> values = this.termSelectorHashMap.get("listingCategory").values;
-            if(values == null || values.size() == 0 || values.size() > 1) {
+            if (values == null || values.size() == 0 || values.size() > 1) {
                 return true;
-            } else if(values.contains("Rental")) {
+            } else if (values.contains("Rental")) {
                 return false;
             } else {
                 return true;
@@ -249,14 +266,14 @@ public class Selector {
     }
 
     public Selector removeTerm(String fieldName) {
-        if(this.termSelectorHashMap.containsKey(fieldName)) {
+        if (this.termSelectorHashMap.containsKey(fieldName)) {
             this.termSelectorHashMap.remove(fieldName);
         }
         return this;
     }
 
     public Selector removeRange(String fieldName) {
-        if(this.rangeSelectorHashMap.containsKey(fieldName)) {
+        if (this.rangeSelectorHashMap.containsKey(fieldName)) {
             this.rangeSelectorHashMap.remove(fieldName);
         }
         return this;

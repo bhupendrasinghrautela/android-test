@@ -208,6 +208,27 @@ public class MakaanNetworkClient {
         addToRequestQueue(stringRequest, tag);
     }
 
+    public void getSearch(final String inputUrl, final StringRequestCallback stringRequestCallback, String tag) {
+
+        StringRequest stringRequest = new StringRequest
+                (Request.Method.GET, inputUrl, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        completeRequestInQueue(inputUrl);
+                        stringRequestCallback.onSuccess(response);
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        completeRequestInQueue(inputUrl);
+                        stringRequestCallback.onError();
+                        Log.e(TAG, "Network error", error);
+                    }
+                });
+        addToRequestQueue(stringRequest, tag);
+    }
+
 
     public void post(final String url, JSONObject jsonObject,
                      final StringRequestCallback stringRequestCallback, String tag) {

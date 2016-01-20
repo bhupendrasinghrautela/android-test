@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 
 import com.makaan.R;
-import com.makaan.response.search.Search;
+import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.SearchType;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.service.MakaanServiceFactory;
@@ -54,9 +54,9 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 	@Bind(R.id.empty_selection)TextView mEmptySelectedItemsTextView;
 	private boolean[] mSelectedItemsFlag;
 	private ArrayList<Item> mCompleteItemsList;
-	private ArrayList<Search> mOriginalItemsList;
-	private ArrayList<Search> mUnselectedItemsList;
-	private ArrayList<Search> mSelectedItemsList;
+	private ArrayList<SearchResponseItem> mOriginalItemsList;
+	private ArrayList<SearchResponseItem> mUnselectedItemsList;
+	private ArrayList<SearchResponseItem> mSelectedItemsList;
 	private SelectedListViewAdapter mSelectedItemsAdapter;
 	private SearchableListviewAdapter mUnselectedItemsAdapter;
 	private boolean mSelectedItemsAvaliable;
@@ -77,8 +77,8 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 		try {
 			final Dialog multiSelectionDialog = new Dialog(getActivity());
 			mCompleteItemsList = new ArrayList<Item>();
-			mUnselectedItemsList = new ArrayList<Search>();
-			mSelectedItemsList = new ArrayList<Search>();
+			mUnselectedItemsList = new ArrayList<SearchResponseItem>();
+			mSelectedItemsList = new ArrayList<SearchResponseItem>();
 			mPyrPresenter=PyrPagePresenter.getPyrPagePresenter();
 			if(mPyrPresenter.getAlreadySelectedProjects().size()>0){
 				mSelectedItemsList.clear();
@@ -143,7 +143,7 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 	public void multiChoiceClick(AdapterView<?> arg0, View arg1,
 								 int clicked, long id){
 
-			String clickedItem = (String) mUnselectedItemsAdapter.getItem(clicked).getLocality();
+			String clickedItem = (String) mUnselectedItemsAdapter.getItem(clicked).entityName;
 			mPyrPresenter.updateSelectedItemsList(clickedItem, mSelectedItemsList,
 					mUnselectedItemsAdapter.getItem(clicked));
 			mPyrPresenter.setLocalityIds(mUnselectedItemsAdapter.getItem(clicked), getActivity());
@@ -166,7 +166,7 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 	public void onSelectedItemsClick(AdapterView<?> arg0, View arg1,
 								 int clicked, long id){
 
-		String clickedItem = (String) mSelectedItemsAdapter.getItem(clicked).getLocality();
+		String clickedItem = (String) mSelectedItemsAdapter.getItem(clicked).entityName;
 		mPyrPresenter.removeLocalityId(mSelectedItemsAdapter.getItem(clicked));
 		mSelectedItemsList=mPyrPresenter.getSelectedItemList(clickedItem, mSelectedItemsList);
 		mSelectedItemsAdapter.updateDataItems(mSelectedItemsList);
@@ -199,20 +199,20 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 	}
 
 	private class Item {
-		protected Search mItemName;
+		protected SearchResponseItem mItemName;
 		protected boolean mIsSelected;
 
-		public Item(Search mItemName, boolean mIsSelected) {
+		public Item(SearchResponseItem mItemName, boolean mIsSelected) {
 			super();
 			this.mItemName = mItemName;
 			this.mIsSelected = mIsSelected;
 		}
 
-		public Search getItemName() {
+		public SearchResponseItem getItemName() {
 			return mItemName;
 		}
 
-		public void setItemName(Search mItemName) {
+		public void setItemName(SearchResponseItem mItemName) {
 			this.mItemName = mItemName;
 		}
 
@@ -229,7 +229,7 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 	@Subscribe
 	public void searchResult(SearchResultEvent searchResultEvent){
 		mCompleteItemsList.clear();
-		ArrayList<Search> mOriginalList=searchResultEvent.searchResponse.getData();
+		ArrayList<SearchResponseItem> mOriginalList=searchResultEvent.searchResponse.getData();
 		mSelectedItemsFlag=new boolean[mOriginalList.size()];
 		if(mOriginalList.size()>0){
 			mMultiChoiceCardView.setVisibility(View.VISIBLE);

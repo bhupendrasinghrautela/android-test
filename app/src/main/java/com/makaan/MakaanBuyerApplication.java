@@ -4,25 +4,22 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import com.makaan.jarvis.JarvisServiceCreator;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.request.selector.Selector;
-import com.makaan.service.ImageService;
+import com.makaan.service.AgentService;
 import com.makaan.service.AmenityService;
-import com.makaan.service.MakaanServiceFactory;
-import com.makaan.service.MasterDataService;
-
 import com.makaan.service.CityService;
+import com.makaan.service.ImageService;
 import com.makaan.service.ListingService;
 import com.makaan.service.LocalityService;
+import com.makaan.service.MakaanServiceFactory;
+import com.makaan.service.MasterDataService;
 import com.makaan.service.PriceTrendService;
 import com.makaan.service.PyrService;
 import com.makaan.service.SearchService;
 import com.makaan.service.TaxonomyService;
 import com.makaan.service.UserService;
-
-import com.makaan.service.pyr.TopAgentsByLocalityService;
 import com.makaan.util.RandomString;
 
 /**
@@ -57,9 +54,10 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(TaxonomyService.class , new TaxonomyService());
         MakaanServiceFactory.getInstance().registerService(UserService.class , new UserService());
         MakaanServiceFactory.getInstance().registerService(ImageService.class , new ImageService());
-        MakaanServiceFactory.getInstance().registerService(TopAgentsByLocalityService.class , new TopAgentsByLocalityService());
+        //MakaanServiceFactory.getInstance().registerService(TopAgentsByLocalityService.class , new TopAgentsByLocalityService());
+        MakaanServiceFactory.getInstance().registerService(AgentService.class , new AgentService());
 
-        MakaanServiceFactory.getInstance().registerService(AmenityService.class , new AmenityService());
+        MakaanServiceFactory.getInstance().registerService(AmenityService.class, new AmenityService());
 
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();
@@ -68,6 +66,7 @@ public class MakaanBuyerApplication extends Application {
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateFilterGroupsBuy();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateFilterGroupsRent();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateAmenityMap();
+        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateSearchType();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyAmenities();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateMasterFunishings();
 
