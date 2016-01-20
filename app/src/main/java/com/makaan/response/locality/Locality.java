@@ -19,7 +19,7 @@ public class Locality {
     public Long cityId, localityId;
     public Double livabilityScore, latitude, longitude,
             avgPriceRisePercentage, avgPricePerUnitArea, averageRentPerMonth, minAffordablePrice,
-            maxBudgetPrice, maxAffordablePrice, minLuxuryPrice;
+            maxBudgetPrice, maxAffordablePrice, minLuxuryPrice, priceRiseRankPercentage;
     public Double avgRentalDemandRisePercentage;
     public String localityHeroshotImageUrl, cityHeroshotImageUrl;
     public Suburb suburb;

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.makaan.response.search.Search;
+import com.makaan.response.search.SearchResponseItem;
 
 import java.util.List;
 
@@ -16,11 +16,11 @@ import java.util.List;
  */
 public class SelectedListViewAdapter extends BaseAdapter {
 
-    private List<Search> mSelectedList = null;
+    private List<SearchResponseItem> mSelectedList = null;
     private LayoutInflater mInflater;
     private int layoutId;
 
-    public SelectedListViewAdapter(Context context, List<Search> data,
+    public SelectedListViewAdapter(Context context, List<SearchResponseItem> data,
                                    int layoutId) {
         this.mSelectedList = data;
         this.layoutId = layoutId;
@@ -31,7 +31,7 @@ public class SelectedListViewAdapter extends BaseAdapter {
         return mSelectedList.size();
     }
 
-    public Search getItem(int position) {
+    public SearchResponseItem getItem(int position) {
         return mSelectedList.get(position);
     }
 
@@ -51,7 +51,7 @@ public class SelectedListViewAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.text.setText(mSelectedList.get(position).getLocality());
+        holder.text.setText(mSelectedList.get(position).entityName);
         return convertView;
     }
 
@@ -59,7 +59,7 @@ public class SelectedListViewAdapter extends BaseAdapter {
         TextView text;
     }
 
-    public void updateDataItems(List<Search> data){
+    public void updateDataItems(List<SearchResponseItem> data){
         mSelectedList =data;
         notifyDataSetChanged();
     }

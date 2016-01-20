@@ -20,6 +20,7 @@ public class ListingDetail {
     public int facingId;
     public boolean status;
     public int noOfCarParks;
+    public int propertyId;
 
 
     public double avgPriceRisePercentage, bookingAmount,mainEntryRoadWidth;
@@ -28,6 +29,7 @@ public class ListingDetail {
     public int sellerId, totalFloors, floor;
     public ArrayList<Furnishing> furnishings = new ArrayList<>();
 
+    public ArrayList<Long> amenitiesIds = new ArrayList<>();
 
 
     public double securityDeposit;

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:id="@+id/legends_holder"
+              android:paddingTop="@dimen/city_internal_padding"
+              android:paddingBottom="@dimen/city_internal_padding"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+<View
+    android:id="@+id/legend_view"
+    android:layout_width="@dimen/city_legends_height"
+    android:layout_height="@dimen/city_legends_height"
+    android:background="@drawable/oval_gray_background"/>
+    <TextView
+        android:id="@+id/legend_text"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/city_very_small_text"
+        android:layout_height="match_parent"
+        android:text="@string/action_settings"/>
+</LinearLayout>

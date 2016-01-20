@@ -6,7 +6,8 @@ package com.makaan.response.search;
 public enum SearchType {
     //TODO this should be kept in a config file
 
-    ALL(""), PROJECT("PROJECT"), LOCALITY("LOCALITY");
+    ALL(""), PROJECT("PROJECT"), LOCALITY("LOCALITY"), BUILDER_CITY("BUILDER-CITY"), CITY("CITY"), BUILDER("BUILDER");
+
     private String value;
 
     SearchType(String value) {

@@ -24,7 +24,13 @@ public class ListingService implements MakaanService {
             String serpDetailsURL = ApiConstants.LISTING.concat("?").concat(serpSelector.build());
             MakaanNetworkClient.getInstance().get(serpDetailsURL, new BaseSerpCallback());
         }
+    }
 
+    public void handleSerpRequest(String selector){
+        if(null != selector){
+            String serpDetailsURL = ApiConstants.LISTING.concat("?selector={\"filters\":").concat(selector).concat("}");
+            MakaanNetworkClient.getInstance().get(serpDetailsURL, new BaseSerpCallback());
+        }
     }
 
 

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.makaan.response.search.Search;
+import com.makaan.response.search.SearchResponseItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +17,11 @@ import java.util.List;
 // for parts of the arbitrary string we want
 public class SearchableListviewAdapter extends BaseAdapter {
     
-    private List<Search> mData = new ArrayList<Search>();
+    private List<SearchResponseItem> mData = new ArrayList<SearchResponseItem>();
     private LayoutInflater mInflater;
     private int layoutId;
     
-    public SearchableListviewAdapter(Context context, List<Search> data, int layoutId) {
+    public SearchableListviewAdapter(Context context, List<SearchResponseItem> data, int layoutId) {
         this.mData = data ;
         this.layoutId = layoutId;
         mInflater = LayoutInflater.from(context);
@@ -41,7 +41,7 @@ public class SearchableListviewAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
  
-        holder.text.setText(mData.get(position).getLocality());
+        holder.text.setText(mData.get(position).entityName);
  
         return convertView;
     }
@@ -50,7 +50,7 @@ public class SearchableListviewAdapter extends BaseAdapter {
         TextView text;
     }
  
-    public void updateDataItems(List<Search> data){
+    public void updateDataItems(List<SearchResponseItem> data){
         mData =data;
         notifyDataSetChanged();
     }
@@ -61,13 +61,13 @@ public class SearchableListviewAdapter extends BaseAdapter {
     }
 
     @Override
-    public Search getItem(int position) {
+    public SearchResponseItem getItem(int position) {
         return mData.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return mData.get(position).getLocalityId();
+        return Long.parseLong(mData.get(position).entityId);
     }
 
 }

@@ -105,7 +105,12 @@ public class SerpMapFragment extends MakaanBaseFragment {
     }
 
     public void setData(ListingData data){
-        mListings = data.listings;
+        if(mListings == null) {
+            mListings = new ArrayList<Listing>();
+        } else {
+            mListings.clear();
+        }
+        mListings.addAll(data.listings);
         if(mProjectViewPager != null) {
             populateMarker(mListings);
             mProjectViewPager.setData(mListings);
@@ -193,6 +198,10 @@ public class SerpMapFragment extends MakaanBaseFragment {
             double lng = listings.get(i).longitude;
             if (lat != 0.0 && !Double.isNaN(lat) && lng != 0.0 && !Double.isNaN(lng)) {
                 addMarker(mLatLngBoundsBuilder, lat, lng, mListings.get(i));
+            } else {
+                // remove listing which cannot be represented on the map
+                listings.remove(i);
+                i--;
             }
         }
 

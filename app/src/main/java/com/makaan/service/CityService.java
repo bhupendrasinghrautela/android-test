@@ -31,7 +31,7 @@ public class CityService implements MakaanService {
 
         if (null != cityId) {
             Selector citySelector = new Selector();
-            citySelector.fields(new String[]{ID,ENTITY_DESCRIPTIONS, CENTER_LAT, CENTER_LONG, DESCRIPTION, CITY_HEROSHOT_IMAGE_URL, ANNUAL_GROWTH, RENTAL_YIELD, DEMAND_RATE, SUPPLY_RATE, LABEL});
+            citySelector.fields(new String[]{ID,ENTITY_DESCRIPTIONS,CITY_TAG_LINE, CENTER_LAT, CENTER_LONG, DESCRIPTION, CITY_HEROSHOT_IMAGE_URL, ANNUAL_GROWTH, RENTAL_YIELD, DEMAND_RATE, SUPPLY_RATE, LABEL});
 
             String cityUrl = ApiConstants.CITY.concat(cityId.toString()).concat("?").concat(citySelector.build());
 

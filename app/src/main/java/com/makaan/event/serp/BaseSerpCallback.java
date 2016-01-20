@@ -35,7 +35,7 @@ public class BaseSerpCallback extends JSONGetCallback {
                 JSONObject apiResponse = dataResponse.getJSONObject(ResponseConstants.DATA);
                 if (null != apiResponse) {
                     ListingData listingData = new ListingData();
-                    //listingData.totalCount = apiResponse.optInt(TOTAL_COUNT);
+                    listingData.totalCount = dataResponse.optInt(TOTAL_COUNT);
                     serpGetEvent.listingData = listingData;
 
                     JSONArray items = apiResponse.getJSONArray(ITEMS);

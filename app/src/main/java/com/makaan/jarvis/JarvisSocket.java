@@ -3,13 +3,19 @@ package com.makaan.jarvis;
 import android.util.Log;
 
 import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.Ack;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
+import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.message.JoinUser;
+import com.makaan.jarvis.message.Message;
+import com.makaan.jarvis.message.SocketMessage;
+import com.makaan.util.AppBus;
 import com.makaan.util.JsonBuilder;
-import com.makaan.util.JsonParser;
+import com.squareup.otto.Bus;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 
@@ -19,6 +25,8 @@ import java.net.URISyntaxException;
 public class JarvisSocket {
 
     private boolean mTyping = false;
+    private static int index = 0;
+    private static Bus eventBus = AppBus.getInstance();
 
 
     public Socket mSocket; {
@@ -36,14 +44,9 @@ public class JarvisSocket {
         mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
         mSocket.on("user-acquired", onUserAcquired);
         mSocket.on("new-message-for-user", onNewMessageForUser);
+        mSocket.on("agent-confirms-user", onAgentConfirmUser);
         mSocket.connect();
-
-        try {
-            mSocket.emit("join-user", JsonBuilder.toJson(new JoinUser()));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
+        joinUser();
     }
 
     public void close(){
@@ -52,6 +55,7 @@ public class JarvisSocket {
         mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
         mSocket.off("user-acquired", onUserAcquired);
         mSocket.off("new-message-for-user", onNewMessageForUser);
+        mSocket.off("agent-confirms-user", onAgentConfirmUser);
     }
 
     private void leave() {
@@ -59,9 +63,49 @@ public class JarvisSocket {
         mSocket.connect();
     }
 
+    private void joinUser(){
+        try {
+            mSocket.emit("join-user", JsonBuilder.toJson(new JoinUser()), new Ack() {
+                @Override
+                public void call(Object... args) {
+                    Log.e("join user", "callback");
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
-    public void sendMessage(String message){
 
+    public void sendMessage(SocketMessage message){
+        message.index = index;
+        message.deliveryId = JarvisConstants.DELIVERY_ID;
+        index++;
+
+        try {
+            mSocket.emit("new-message-for-agent", JsonBuilder.toJson(message), new Ack() {
+                @Override
+                public void call(Object... args) {
+                    Log.e("message to agent", "callback");
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void userConfirmsAgent(Object data){
+
+        try {
+            mSocket.emit("user-confirms-agent", JsonBuilder.toJson(data), new Ack() {
+                @Override
+                public void call(Object... args) {
+                    Log.e("message to agent", "callback");
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -83,6 +127,18 @@ public class JarvisSocket {
     private Emitter.Listener onNewMessageForUser = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
+            if(null!=args || args.length>0) {
+                IncomingMessageEvent event = new IncomingMessageEvent();
+                event.message = parseMessage((JSONObject) args[0]);
+                eventBus.post(event);
+                userConfirmsAgent(args[0]);
+            }
+        }
+    };
+
+    private Emitter.Listener onAgentConfirmUser = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
             handleMessage(args);
         }
     };
@@ -99,16 +155,15 @@ public class JarvisSocket {
     };
 
     private void handleMessage(Object... args)  {
+        Log.e("Message", "dummy");
+    }
 
-        try {
-            Log.e("Message", "dummy");
-            //JSONObject object = new JSONObject();
-            //object.put("id",1000);
-            //mSocket.emit("hi", object);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    private SocketMessage parseMessage(JSONObject object){
+        Message message = new Message();
+        message.message = object.optString("message");
+        message.appliedFilter = object.optBoolean("appliedFilter");
+        message.filtered = object.optString("filtered");
+        return message;
     }
 
 

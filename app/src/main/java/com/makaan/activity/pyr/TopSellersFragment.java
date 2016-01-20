@@ -1,7 +1,6 @@
 package com.makaan.activity.pyr;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,13 +17,14 @@ import com.makaan.R;
 import com.makaan.fragment.pyr.PyrPagePresenter;
 import com.makaan.request.pyr.PyrEnquiryType;
 import com.makaan.request.pyr.PyrRequest;
-import com.makaan.response.pyr.TopAgentsData;
+import com.makaan.response.agents.TopAgent;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PyrService;
 
-
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,7 +36,7 @@ import butterknife.OnClick;
 public class TopSellersFragment extends Fragment {
 
     PyrPagePresenter mPyrPagePresenter;
-    TopAgentsData [] mTopAgentsDatas;
+    ArrayList<TopAgent> mTopAgentsDatas;
     @Bind(R.id.sellers_recycler_view)
     RecyclerView mSellerRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -59,7 +59,7 @@ public class TopSellersFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mSellerRecyclerView.setLayoutManager(mLayoutManager);
         mTopAgentsDatas = mPyrPagePresenter.getmTopAgentsDatas();
-        if(mTopAgentsDatas.length>0)
+        if(mTopAgentsDatas.size()>0)
         {
             mSellerListingAdapter = new SellerListingAdapter(getActivity(),mTopAgentsDatas);
             mSellerRecyclerView.setAdapter(mSellerListingAdapter);

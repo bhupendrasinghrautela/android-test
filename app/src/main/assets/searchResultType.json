@@ -1,0 +1,12 @@
+{
+  "data": {
+    "PROJECT": {"key":"projectId", "value":"project"},
+    "CITY": {"key":"cityId", "value":"city"},
+    "BUILDER": {"key":"builderId", "value":"builder"},
+    "LOCALITY": {"key":"localityId", "value":"locality"},
+    "SUBURB": {"key":"suburbId", "value":"suburb"},
+    "BUILDER-CITY": {"key":"cityId", "value":"builder-city"},
+    "GP": {"key":"googlePlaceId", "value":"landmark"}
+  }
+
+}

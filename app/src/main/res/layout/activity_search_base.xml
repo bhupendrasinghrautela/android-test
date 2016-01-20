@@ -33,7 +33,7 @@
         <FrameLayout
             android:id="@+id/activity_search_base_search_results_frame_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@id/activity_search_base_search_frame_layout"
             android:visibility="gone">
 

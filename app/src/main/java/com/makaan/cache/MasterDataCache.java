@@ -3,6 +3,11 @@ package com.makaan.cache;
 
 import android.content.SharedPreferences;
 
+
+import com.google.android.gms.common.api.Api;
+
+import com.makaan.MakaanBuyerApplication;
+
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.master.MasterFurnishing;
 import com.makaan.response.master.PropertyAmenity;
@@ -38,8 +43,10 @@ public class MasterDataCache {
     private HashMap<String, FilterGroup> internalNameToFilterGrpBuy = new HashMap<>();
     private HashMap<String, FilterGroup> internalNameToFilterGrpRent = new HashMap<>();
     private Map<Integer, AmenityCluster> amenityMap = new HashMap<>();
+    private Map<String, ApiLabel> searchTypeMap= new HashMap<>();
 
-    private HashSet<String> shortlistedProperties;
+    private HashSet<String> shortlistedPropertiesBuy;
+    private HashSet<String> shortlistedPropertiesRent;
 
     private MasterDataCache() {
 
@@ -127,6 +134,16 @@ public class MasterDataCache {
         }
     }
 
+    public void addSearchType(String type, ApiLabel searchType) {
+        if (null != searchType && null != type && null != searchType) {
+            searchTypeMap.put(type, searchType);
+        }
+    }
+
+    public void setSearchType(Map<String, ApiLabel> searchTypeMap) {
+        this.searchTypeMap = searchTypeMap;
+    }
+
 
     public ArrayList<ApiIntLabel> getBuyPropertyTypes() {
         ArrayList<ApiIntLabel> propertyTypes = new ArrayList<>();
@@ -165,6 +182,10 @@ public class MasterDataCache {
         return amenityMap;
     }
 
+    public Map<String, ApiLabel> getSearchTypeMap() {
+        return searchTypeMap;
+    }
+
     public String translateApiLabel(String apiLabel) {
         return apiLabels.get(apiLabel);
     }
@@ -181,25 +202,52 @@ public class MasterDataCache {
         return idToPropertyStatus.get(status);
     }
 
-    public void addShortlistedProperty(SharedPreferences preferences, String key, int id) {
-        if (shortlistedProperties == null) {
-            getShortlistedPropertiesFromPreferences(preferences, key);
+    public void addShortlistedProperty(SharedPreferences preferences, String key, int id, boolean isBuy) {
+        HashSet<String> shortlistedProperties;
+        if(isBuy) {
+            if (shortlistedPropertiesBuy == null) {
+                getShortlistedPropertiesFromPreferences(preferences, key, isBuy);
+            }
+            shortlistedProperties = shortlistedPropertiesBuy;
+        } else {
+            if (shortlistedPropertiesRent == null) {
+                getShortlistedPropertiesFromPreferences(preferences, key, isBuy);
+            }
+            shortlistedProperties = shortlistedPropertiesRent;
         }
         shortlistedProperties.add(String.valueOf(id));
-        addShortlistedPropertiesToPreferences(preferences.edit(), key);
+        addShortlistedPropertiesToPreferences(preferences.edit(), key, isBuy);
     }
 
-    public void removeShortlistedProperty(SharedPreferences preferences, String key, int id) {
-        if (shortlistedProperties == null) {
-            getShortlistedPropertiesFromPreferences(preferences, key);
+    public void removeShortlistedProperty(SharedPreferences preferences, String key, int id, boolean isBuy) {
+        HashSet<String> shortlistedProperties;
+        if(isBuy) {
+            if (shortlistedPropertiesBuy == null) {
+                getShortlistedPropertiesFromPreferences(preferences, key, isBuy);
+            }
+            shortlistedProperties = shortlistedPropertiesBuy;
+        } else {
+            if (shortlistedPropertiesRent == null) {
+                getShortlistedPropertiesFromPreferences(preferences, key, isBuy);
+            }
+            shortlistedProperties = shortlistedPropertiesRent;
         }
         shortlistedProperties.remove(String.valueOf(id));
-        addShortlistedPropertiesToPreferences(preferences.edit(), key);
+        addShortlistedPropertiesToPreferences(preferences.edit(), key, isBuy);
     }
 
-    public boolean isShortlistedProperty(SharedPreferences preferences, String key, int id) {
-        if (shortlistedProperties == null) {
-            getShortlistedPropertiesFromPreferences(preferences, key);
+    public boolean isShortlistedProperty(SharedPreferences preferences, String key, int id, boolean isBuy) {
+        HashSet<String> shortlistedProperties;
+        if(isBuy) {
+            if (shortlistedPropertiesBuy == null) {
+                getShortlistedPropertiesFromPreferences(preferences, key, isBuy);
+            }
+            shortlistedProperties = shortlistedPropertiesBuy;
+        } else {
+            if (shortlistedPropertiesRent == null) {
+                getShortlistedPropertiesFromPreferences(preferences, key, isBuy);
+            }
+            shortlistedProperties = shortlistedPropertiesRent;
         }
         if (shortlistedProperties.contains(String.valueOf(id))) {
             return true;
@@ -207,12 +255,36 @@ public class MasterDataCache {
         return false;
     }
 
-    private void addShortlistedPropertiesToPreferences(SharedPreferences.Editor editor, String key) {
-        Preference.putStringSet(editor, key, shortlistedProperties);
+    private void addShortlistedPropertiesToPreferences(SharedPreferences.Editor editor, String key, boolean isBuy) {
+        if(isBuy) {
+            Preference.putStringSet(editor, key, shortlistedPropertiesBuy);
+        } else {
+            Preference.putStringSet(editor, key, shortlistedPropertiesRent);
+        }
         editor.commit();
     }
 
-    private void getShortlistedPropertiesFromPreferences(SharedPreferences preferences, String key) {
-        shortlistedProperties = Preference.getStringSet(preferences, key);
+    private void getShortlistedPropertiesFromPreferences(SharedPreferences preferences, String key, boolean isBuy) {
+        if(isBuy) {
+            shortlistedPropertiesBuy = Preference.getStringSet(preferences, key);
+        } else {
+            shortlistedPropertiesRent = Preference.getStringSet(preferences, key);
+        }
+    }
+
+    public static int getAppliedFilterCount() {
+        int count = 0;
+        ArrayList<FilterGroup> filterGroups;
+        if (MakaanBuyerApplication.serpSelector.isBuyContext()) {
+            filterGroups = MasterDataCache.getInstance().getAllBuyFilterGroups();
+        } else {
+            filterGroups = MasterDataCache.getInstance().getAllRentFilterGroups();
+        }
+        for(FilterGroup grp : filterGroups) {
+            if(grp.isSelected) {
+                count++;
+            }
+        }
+        return count;
     }
 }

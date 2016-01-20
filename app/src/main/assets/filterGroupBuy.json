@@ -37,6 +37,8 @@
           }
         ],
         "rangeFilterValues": [
+        ],
+        "rangeMinMaxFilterValues": [
         ]
       },
       {
@@ -54,6 +56,8 @@
             "maxValue": 100000000,
             "selected": false
           }
+        ],
+        "rangeMinMaxFilterValues": [
         ]
       },
       {
@@ -99,6 +103,8 @@
           }
         ],
         "rangeFilterValues": [
+        ],
+        "rangeMinMaxFilterValues": [
         ]
       },
       {
@@ -137,6 +143,8 @@
           }
         ],
         "rangeFilterValues": [
+        ],
+        "rangeMinMaxFilterValues": [
         ]
       },
       {
@@ -175,44 +183,61 @@
           }
         ],
         "rangeFilterValues": [
+        ],
+        "rangeMinMaxFilterValues": [
         ]
       },
       {
         "displayName": "ready to move (age by property)",
         "internalName": "i_ready_to_move",
         "displayOrder": "6",
-        "layoutType": "1",
+        "layoutType": "5",
         "termFilterValues": [
+        ],
+        "rangeFilterValues": [
+        ],
+        "rangeMinMaxFilterValues": [
           {
-            "displayName": "1yr",
+
+            "displayName": "0-1 year",
             "displayOrder": "1",
-            "fieldName": "ageOfProperty",
-            "value": "1",
+            "fieldName": "listingMinConstructionCompletionDate",
+            "minFieldName": "listingMinConstructionCompletionDate",
+            "maxFieldName": "listingMaxConstructionCompletionDate",
+            "minValue": -1,
+            "maxValue": 1,
             "selected": false
           },
           {
-            "displayName": "2yr",
+            "displayName": "1-2 year",
             "displayOrder": "2",
-            "fieldName": "ageOfProperty",
-            "value": "2",
+            "fieldName": "listingMinConstructionCompletionDate",
+            "minFieldName": "listingMinConstructionCompletionDate",
+            "maxFieldName": "listingMaxConstructionCompletionDate",
+            "minValue": 1,
+            "maxValue": 2,
             "selected": false
           },
           {
-            "displayName": "5yr",
+            "displayName": "2-5 year",
             "displayOrder": "3",
-            "fieldName": "ageOfProperty",
-            "value": "3",
+            "fieldName": "listingMinConstructionCompletionDate",
+            "minFieldName": "listingMinConstructionCompletionDate",
+            "maxFieldName": "listingMaxConstructionCompletionDate",
+            "minValue": 2,
+            "maxValue": 5,
             "selected": false
           },
           {
             "displayName": "any",
             "displayOrder": "4",
-            "fieldName": "ageOfProperty",
-            "value": "4",
+            "fieldName": "listingMinConstructionCompletionDate",
+            "minFieldName": "listingMinConstructionCompletionDate",
+            "maxFieldName": "listingMaxConstructionCompletionDate",
+            "minValue": -1,
+            "maxValue": -1,
             "selected": false
           }
-        ],
-        "rangeFilterValues": [
         ]
       },
       {
@@ -230,6 +255,8 @@
             "maxValue": 2500,
             "selected": false
           }
+        ],
+        "rangeMinMaxFilterValues": [
         ]
       },
       {
@@ -261,6 +288,8 @@
           }
         ],
         "rangeFilterValues": [
+        ],
+        "rangeMinMaxFilterValues": [
         ]
       },
       {
@@ -292,6 +321,8 @@
           }
         ],
         "rangeFilterValues": [
+        ],
+        "rangeMinMaxFilterValues": [
         ]
       },
       {
@@ -308,6 +339,8 @@
           }
         ],
         "rangeFilterValues": [
+        ],
+        "rangeMinMaxFilterValues": [
         ]
       }
     ]

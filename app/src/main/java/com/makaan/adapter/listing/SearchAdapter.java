@@ -6,11 +6,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
-import com.makaan.response.search.Search;
+import com.makaan.response.search.SearchResponseHelper;
+import com.makaan.response.search.SearchResponseItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    List<Search> mSearches;
+    List<SearchResponseItem> mSearches;
     private final Context mContext;
     private final SearchAdapterCallbacks mCallbacks;
 
@@ -29,15 +29,15 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         mCallbacks = callbacks;
     }
 
-    public SearchAdapter(Context context, SearchAdapterCallbacks callbacks, List<Search> searches) {
+    public SearchAdapter(Context context, SearchAdapterCallbacks callbacks, List<SearchResponseItem> searches) {
         mContext = context;
         mCallbacks = callbacks;
-        setData((ArrayList<Search>) searches);
+        setData((ArrayList<SearchResponseItem>) searches);
     }
 
-    public void setData(ArrayList<Search> searches) {
+    public void setData(ArrayList<SearchResponseItem> searches) {
         if (this.mSearches == null) {
-            this.mSearches = new ArrayList<Search>();
+            this.mSearches = new ArrayList<SearchResponseItem>();
         }
         this.mSearches.clear();
         this.mSearches.addAll(searches);
@@ -72,7 +72,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final View view;
-        private Search search;
+        private SearchResponseItem searchResponseItem;
 
         public ViewHolder(View view) {
             super(view);
@@ -80,27 +80,27 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             view.setOnClickListener(this);
         }
 
-        public void bindData(Search search) {
-            this.search = search;
+        public void bindData(SearchResponseItem searchResponseItem) {
+            this.searchResponseItem = searchResponseItem;
 
             // TODO need to check which kind of data we should map
-            ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setText(search.getDisplayText());
-            if(search.getLocality() == null || TextUtils.isEmpty(search.getLocality())) {
-                view.findViewById(R.id.search_result_item_address_text_view).setVisibility(View.GONE);
+            ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setText(searchResponseItem.displayText);
+            if(TextUtils.isEmpty(SearchResponseHelper.getType(searchResponseItem))) {
+                view.findViewById(R.id.search_result_item_type_text_view).setVisibility(View.GONE);
             } else {
-                view.findViewById(R.id.search_result_item_address_text_view).setVisibility(View.VISIBLE);
-                ((TextView) view.findViewById(R.id.search_result_item_address_text_view)).setText(search.getLocality());
+                view.findViewById(R.id.search_result_item_type_text_view).setVisibility(View.VISIBLE);
+                ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText(SearchResponseHelper.getType(searchResponseItem));
             }
-            ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText(search.getType());
+            //((TextView) view.findViewById(R.id.search_result_item_address_text_view)).setText(search.displayText);
         }
 
         @Override
         public void onClick(View v) {
-            mCallbacks.onSearchItemClick(search);
+            mCallbacks.onSearchItemClick(searchResponseItem);
         }
     }
 
     public interface SearchAdapterCallbacks {
-        void onSearchItemClick(Search search);
+        void onSearchItemClick(SearchResponseItem searchResponseItem);
     }
 }

@@ -10,7 +10,8 @@ import android.widget.CompoundButton;
 
 import com.makaan.R;
 import com.makaan.fragment.pyr.PyrPagePresenter;
-import com.makaan.response.pyr.TopAgentsData;
+import com.makaan.response.agents.Agent;
+import com.makaan.response.agents.TopAgent;
 
 import java.util.ArrayList;
 
@@ -21,51 +22,56 @@ public class SellerListingAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     Context mContext;
     ArrayList<Integer> listSelectedSellers = new ArrayList<Integer>();
-    TopAgentsData [] topAgentsList;
-    PyrPagePresenter mPyrPresenter=PyrPagePresenter.getPyrPagePresenter();
-    public SellerListingAdapter(Context mContext,TopAgentsData [] topAgentsList)
-    {
-        this.mContext=mContext;
-        this.topAgentsList= topAgentsList;
+    ArrayList<TopAgent> topAgentsList;
+    PyrPagePresenter mPyrPresenter = PyrPagePresenter.getPyrPagePresenter();
+
+    public SellerListingAdapter(Context mContext, ArrayList<TopAgent> topAgentsList) {
+        this.mContext = mContext;
+        this.topAgentsList = topAgentsList;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_seller_list_item, parent, false);
-            SellerViewHolder mSellerViewHolder = new SellerViewHolder(view);
-            return mSellerViewHolder;
+        SellerViewHolder mSellerViewHolder = new SellerViewHolder(view);
+        return mSellerViewHolder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        SellerViewHolder mSellerViewHolder = (SellerViewHolder)holder;
+        SellerViewHolder mSellerViewHolder = (SellerViewHolder) holder;
 //        if(position<4)
 //        {
 //            mSellerViewHolder.mCheckBoxTick.setChecked(true);
 //            listSelectedSellers.add(position);
 //        }
-        mSellerViewHolder.mSellerName.setText(topAgentsList[position].getName());
-        mSellerViewHolder.mSellerRatingBar.setRating(topAgentsList[position].getCompany().getScore());
-        if(mPyrPresenter.getSellerIdStatus(topAgentsList[position].getUserId())){
-            Log.e("true for ","position"+position);
-            mSellerViewHolder.mCheckBoxTick.setChecked(true);
-        }
-        else{
-            Log.e("false for ","position"+position);
-            mSellerViewHolder.mCheckBoxTick.setChecked(false);
-        }
-       
-        mSellerViewHolder.mCheckBoxTick.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if(isChecked){
-                    Log.e("set ","true");
-                    mPyrPresenter.setSellerIds(topAgentsList[position].getUserId() ,true);
+        TopAgent topAgent = topAgentsList.get(position);
+        if (null != topAgent) {
+            final Agent agent = topAgent.agent;
+            if (null != agent) {
+                mSellerViewHolder.mSellerName.setText(topAgent.agent.name);
+                //mSellerViewHolder.mSellerRatingBar.setRating(agent.score);        //TODO: change double to int
+                if (mPyrPresenter.getSellerIdStatus(agent.id)) {
+                    Log.e("true for ", "position" + position);
+                    mSellerViewHolder.mCheckBoxTick.setChecked(true);
+                } else {
+                    Log.e("false for ", "position" + position);
+                    mSellerViewHolder.mCheckBoxTick.setChecked(false);
                 }
-                else {
-                    Log.e("set ","false");
-                    mPyrPresenter.setSellerIds(topAgentsList[position].getUserId() ,false);
-                }
+
+
+                mSellerViewHolder.mCheckBoxTick.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                        if (isChecked) {
+                            Log.e("set ", "true");
+                            mPyrPresenter.setSellerIds(agent.id, true);
+                        } else {
+                            Log.e("set ", "false");
+                            mPyrPresenter.setSellerIds(agent.id, false);
+                        }
 //                if(isChecked) {
 //                    listSelectedSellers.add(position);
 //                    ((ContactSellersListActivity) mContext).updateButtonText(listSelectedSellers.size());
@@ -77,14 +83,18 @@ public class SellerListingAdapter extends RecyclerView.Adapter<RecyclerView.View
 //
 //                }
 
+                    }
+                });
+
+
             }
-        });
+        }
 
     }
 
     @Override
     public int getItemCount() {
-        return topAgentsList.length;
+        return topAgentsList.size();
     }
 
 }

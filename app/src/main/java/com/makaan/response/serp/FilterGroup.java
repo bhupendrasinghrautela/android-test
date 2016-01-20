@@ -3,13 +3,7 @@ package com.makaan.response.serp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.makaan.request.selector.RangeSelector;
-import com.makaan.request.selector.Selector;
-import com.makaan.request.selector.TermSelector;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 /**
  * Created by vaibhav on 04/01/16.
@@ -31,9 +25,11 @@ public class FilterGroup implements Parcelable, FinderFilterable, Cloneable {
     public String internalName;
     public int displayOrder;
     public int layoutType;
+    public boolean isSelected = false;
 
     public ArrayList<TermFilter> termFilterValues = new ArrayList<>();
     public ArrayList<RangeFilter> rangeFilterValues = new ArrayList<>();
+    public ArrayList<RangeMinMaxFilter> rangeMinMaxFilterValues = new ArrayList<>();
 
 
     public FilterGroup(Parcel in) {
@@ -48,6 +44,9 @@ public class FilterGroup implements Parcelable, FinderFilterable, Cloneable {
 
         this.rangeFilterValues = new ArrayList<>();
         in.readTypedList(rangeFilterValues, RangeFilter.CREATOR);
+
+        this.rangeMinMaxFilterValues = new ArrayList<>();
+        in.readTypedList(rangeMinMaxFilterValues, RangeFilter.CREATOR);
 
     }
 
@@ -68,6 +67,10 @@ public class FilterGroup implements Parcelable, FinderFilterable, Cloneable {
         for(RangeFilter filter : filterGroup.rangeFilterValues) {
             this.rangeFilterValues.add(filter.clone());
         }
+
+        for(RangeMinMaxFilter filter : filterGroup.rangeMinMaxFilterValues) {
+            this.rangeMinMaxFilterValues.add(filter.clone());
+        }
     }
 
     @Override
@@ -81,6 +84,7 @@ public class FilterGroup implements Parcelable, FinderFilterable, Cloneable {
         parcel.writeString(internalName);
         parcel.writeTypedList(termFilterValues);
         parcel.writeTypedList(rangeFilterValues);
+        parcel.writeTypedList(rangeMinMaxFilterValues);
     }
 
     @Override
@@ -115,5 +119,6 @@ public class FilterGroup implements Parcelable, FinderFilterable, Cloneable {
 
         this.termFilterValues.addAll(filterGroup.termFilterValues);
         this.rangeFilterValues.addAll(filterGroup.rangeFilterValues);
+        this.rangeMinMaxFilterValues.addAll(filterGroup.rangeMinMaxFilterValues);
     }
 }

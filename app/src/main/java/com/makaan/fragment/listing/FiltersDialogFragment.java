@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.serp.FilterGroup;
@@ -208,10 +209,12 @@ public class FiltersDialogFragment extends DialogFragment {
             FiltersViewAdapter adapter = (FiltersViewAdapter) (gridView.getAdapter());
             adapter.applyFilters(MakaanBuyerApplication.serpSelector, filterGroups);
         }
-        if(MakaanBuyerApplication.serpSelector.getAppliedFilterCount() > 0) {
+        if(MasterDataCache.getAppliedFilterCount() > 0) {
             MakaanBuyerApplication.serpSelector.sort("price", "desc");
         }
-        new ListingService().handleSerpRequest(MakaanBuyerApplication.serpSelector);
+        if (getActivity() instanceof SerpRequestCallback) {
+            ((SerpRequestCallback) getActivity()).serpRequest(SerpActivity.TYPE_FILTER, MakaanBuyerApplication.serpSelector);
+        }
         dismiss();
     }
 
@@ -231,7 +234,6 @@ public class FiltersDialogFragment extends DialogFragment {
         AppBus.getInstance().unregister(this);
         if (getActivity() instanceof FilterDialogFragmentCallback) {
             ((FilterDialogFragmentCallback) getActivity()).dialogDismissed();
-            ;
         }
     }
 

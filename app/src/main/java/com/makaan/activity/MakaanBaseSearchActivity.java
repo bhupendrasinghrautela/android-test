@@ -1,8 +1,8 @@
 package com.makaan.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -14,22 +14,24 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
+import com.makaan.activity.city.CityActivity;
+import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.listing.SearchAdapter;
-import com.makaan.response.search.Search;
+import com.makaan.response.search.SearchResponseHelper;
+import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.SearchType;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.service.MakaanServiceFactory;
-
-import com.makaan.service.ListingService;
 import com.makaan.service.SearchService;
-import com.makaan.util.AppBus;
 
-import com.squareup.otto.Subscribe;
+import com.makaan.util.RecentSearchManager;
+
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -64,7 +66,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     FrameLayout mContentFrameLayout;
     private SearchAdapter mSearchAdapter;
     private LinearLayoutManager mLayoutManager;
-    private ArrayList<Search> mSearches;
+    private ArrayList<SearchResponseItem> mSearches;
     protected FrameLayout mMainFrameLayout;
 
     @Override
@@ -123,56 +125,25 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         }
     }
 
-    protected void initFragment(int fragmentHolderId, Fragment fragment, boolean shouldAddToBackStack) {
-        // reference fragment transaction
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(fragmentHolderId, fragment, fragment.getClass().getName());
-        // if need to be added to the backstack, then do so
-        if (shouldAddToBackStack) {
-            fragmentTransaction.addToBackStack(fragment.getClass().getName());
-        }
-        // TODO
-        // check if we this can be called from any background thread or after background to ui thread communication
-        // then we need to make use of commitAllowingStateLoss()
-        fragmentTransaction.commitAllowingStateLoss();
-    }
-
-    protected void initFragments(int[] fragmentHolderId, Fragment[] fragment, boolean shouldAddToBackStack) {
-        if (fragmentHolderId.length != fragment.length) {
-            return;
-        }
-        // reference fragment transaction
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        for (int i = 0; i < fragmentHolderId.length; i++) {
-            fragmentTransaction.replace(fragmentHolderId[i], fragment[i], fragment.getClass().getName());
-        }
-        // if need to be added to the backstack, then do so
-        if (shouldAddToBackStack) {
-            fragmentTransaction.addToBackStack(fragment.getClass().getName());
-        }
-        // TODO
-        // check if we this can be called from any background thread or after background to ui thread communication
-        // then we need to make use of commitAllowingStateLoss()
-        fragmentTransaction.commit();
-    }
-
     @Override
-    public void onSearchItemClick(Search search) {
+    public void onSearchItemClick(SearchResponseItem searchResponseItem) {
         if (mSearchLayoutFrameLayout != null) {
             mSearchResultFrameLayout.setVisibility(View.GONE);
         }
 
         // TODO need to handle all cases
-        MakaanBuyerApplication.serpSelector.reset();
-        MakaanBuyerApplication.serpSelector.term("localityId", String.valueOf(search.getLocalityId()), true);
-        new ListingService().handleSerpRequest(MakaanBuyerApplication.serpSelector);
+        SearchResponseHelper.resolveSearch(searchResponseItem, this);
+
         mSearchAdapter.clear();
 
         mSearchView.setOnQueryTextListener(null);
-        mSearchView.setQuery(search.getDisplayText(), false);
+        mSearchView.setQuery(searchResponseItem.displayText, false);
         mSearchView.setOnQueryTextListener(this);
 
-        setSearchViewVisibility(false, search.getDisplayText());
+        setSearchViewVisibility(false, searchResponseItem.displayText);
+
+        //RecentSearchManager.getInstance(this).addEntryToRecentSearch(search, this);
+
     }
 
     @Override
