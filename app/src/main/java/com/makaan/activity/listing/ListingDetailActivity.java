@@ -3,13 +3,13 @@ package com.makaan.activity.listing;
 import android.os.Bundle;
 import android.view.View;
 
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.event.city.CityTopLocalityEvent;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.event.trend.callback.TopLocalitiesTrendCallback;
 import com.makaan.response.locality.Locality;
+import com.makaan.service.LocalityService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PriceTrendService;
 import com.squareup.otto.Subscribe;
@@ -43,11 +43,11 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         //((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateMasterFunishings();
 
 
-        MakaanBuyerApplication.serpSelector.term("cityId", "11").term("listingCategory", new String[]{"Primary", "Resale"});
+        //MakaanBuyerApplication.serpSelector.term("cityId", "11").term("listingCategory", new String[]{"Primary", "Resale"});
         //((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).handleSerpRequest(MakaanBuyerApplication.serpSelector);
         //((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getCityById(11L);
         //((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getTopLocalitiesInCity(11L, 5);
-        //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getLocalityById(50186L);
+        ((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getLocalityById(50186L);
         //((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getListingDetail(429713L);
         List<Long> tempUsers = new ArrayList<>();
         tempUsers.add(3564144L);
@@ -61,7 +61,7 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
 
         ArrayList<Long> topLocalities  = new ArrayList<>();
         topLocalities.add(53099L);topLocalities.add(53130L);topLocalities.add(53099L);topLocalities.add(53476L);topLocalities.add(53477L);
-        ((PriceTrendService) (MakaanServiceFactory.getInstance().getService(PriceTrendService.class))).getPriceTrendForLocalities(topLocalities, 6, new TopLocalitiesTrendCallback());
+        //((PriceTrendService) (MakaanServiceFactory.getInstance().getService(PriceTrendService.class))).getPriceTrendForLocalities(topLocalities, 6, new TopLocalitiesTrendCallback());
         //((AgentService) (MakaanServiceFactory.getInstance().getService(AgentService.class))).getTopAgentsForLocality(2L, 50175L, 5, false, new TopRentAgentsInLocalityCallback());
 
         /*Intent intent = new Intent(this, SerpActivity.class);
