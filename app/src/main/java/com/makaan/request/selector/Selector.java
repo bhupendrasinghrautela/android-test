@@ -136,6 +136,9 @@ public class Selector {
 
     public void applySelection(String selector) {
         //TODO: build
+        /**
+         * http://marketplace-qa.proptiger-ws.com/columbus/app/v1/popular/suggestions?entityId=50175&sourceDomain=Makaan
+         */
     }
 
 
