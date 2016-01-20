@@ -64,6 +64,7 @@ public class RequestConstants {
     public static final String PROJECT_NAME = "projectName";
     public static final String MONTH_DURATION = "monthDuration";
     public static final String LIVABILITY_SCORE = "livabilityScore";
+    public static final String BUILDER_DB_STATUS = "builderDbStatus";
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
     public static final String AVG_PRICE_RISE_PERCENTAGE = "avgPriceRisePercentage";

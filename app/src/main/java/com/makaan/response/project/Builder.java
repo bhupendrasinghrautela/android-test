@@ -10,8 +10,9 @@ import java.util.ArrayList;
 public class Builder {
 
     public Long id;
-    public String name, imageUrl, description;
+    public String name, imageUrl, description, activeStatus;
 
+    public Double projectCount;
     public String establishedDate;
 
 
