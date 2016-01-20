@@ -12,14 +12,12 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.adapter.listing.SearchAdapter;
-import com.makaan.cache.MasterDataCache;
-import com.makaan.response.search.Search;
+import com.makaan.response.search.SearchResponseHelper;
+import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.SearchType;
 import com.makaan.response.search.event.SearchResultEvent;
-import com.makaan.service.ListingService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SearchService;
 
@@ -60,7 +58,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     FrameLayout mContentFrameLayout;
     private SearchAdapter mSearchAdapter;
     private LinearLayoutManager mLayoutManager;
-    private ArrayList<Search> mSearches;
+    private ArrayList<SearchResponseItem> mSearches;
     protected FrameLayout mMainFrameLayout;
 
     @Override
@@ -120,39 +118,20 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     @Override
-    public void onSearchItemClick(Search search) {
+    public void onSearchItemClick(SearchResponseItem searchResponseItem) {
         if (mSearchLayoutFrameLayout != null) {
             mSearchResultFrameLayout.setVisibility(View.GONE);
         }
 
         // TODO need to handle all cases
+        SearchResponseHelper.resolveSearch(searchResponseItem);
 
-
-        if(TextUtils.isEmpty(search.type)){
-            //TODO Either suggestion or google place
-        }else {
-            Map<String,String> searchType = MasterDataCache.getInstance().getSearchTypeMap();
-            String searchField = searchType.get(search.type);
-            if(!TextUtils.isEmpty(searchField)) {
-                if(SearchType.PROJECT.getValue().equalsIgnoreCase(search.type)){
-                    //TODO open project page
-                }else {
-                    MakaanBuyerApplication.serpSelector.reset();
-                    MakaanBuyerApplication.serpSelector.term(searchField, String.valueOf(search.entityId), true);
-                    if(SearchType.BUILDER_CITY.getValue().equalsIgnoreCase(search.type)){
-                        MakaanBuyerApplication.serpSelector.term("builderId", String.valueOf(search.builderId), true);
-                    }
-                    new ListingService().handleSerpRequest(MakaanBuyerApplication.serpSelector);
-                    mSearchAdapter.clear();
-                }
-            }
-        }
-
+        mSearchAdapter.clear();
         mSearchView.setOnQueryTextListener(null);
-        mSearchView.setQuery(search.displayText, false);
+        mSearchView.setQuery(searchResponseItem.displayText, false);
         mSearchView.setOnQueryTextListener(this);
 
-        setSearchViewVisibility(false, search.displayText);
+        setSearchViewVisibility(false, searchResponseItem.displayText);
     }
 
     @Override

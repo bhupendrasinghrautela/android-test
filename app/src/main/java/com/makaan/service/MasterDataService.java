@@ -232,17 +232,36 @@ public class MasterDataService implements MakaanService {
 
 
     public void populateSearchType() {
-        Type searchType = new TypeToken<HashMap<String, String>>() {
+        Type searchType = new TypeToken<HashMap<String, ApiLabel>>() {
         }.getType();
 
         MakaanNetworkClient.getInstance().get(ApiConstants.SEARCH_TYPE, searchType, new ObjectGetCallback() {
             @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
-                HashMap<String, String> searchTypes = (HashMap<String, String>) responseObject;
+                try {
 
-                for (Map.Entry<String, String> searchType : searchTypes.entrySet()) {
-                    MasterDataCache.getInstance().addSearchType(new ApiLabel(searchType.getKey(), searchType.getValue()));
+                    HashMap<String, ApiLabel> searchTypeMap = (HashMap<String, ApiLabel>) responseObject;
+                    MasterDataCache.getInstance().setSearchType(searchTypeMap);
+
+
+                    /*JSONObject object = responseObject.getJSONObject(ResponseConstants.DATA);
+
+                    Map<String, Object> retMap =
+                            MakaanBuyerApplication.gson.fromJson(
+                                    object.toString(), new TypeToken<HashMap<String, Object>>() {
+                            }.getType());
+
+
+
+                    for (Map.Entry<String, JSONObject> searchType : searchTypes.entrySet()) {
+                        ApiLabel data =
+                                MakaanBuyerApplication.gson.fromJson(
+                                        searchType.getValue().toString(), ApiLabel.class);
+                        MasterDataCache.getInstance().addSearchType(searchType.getKey(), data);
+                    }*/
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }, "searchResultType.json");

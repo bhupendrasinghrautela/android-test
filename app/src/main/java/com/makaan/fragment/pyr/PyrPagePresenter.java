@@ -9,7 +9,7 @@ import com.makaan.activity.pyr.PropertyTypeFragment;
 import com.makaan.activity.pyr.PyrOtpVerification;
 import com.makaan.activity.pyr.TopSellersFragment;
 import com.makaan.response.pyr.TopAgentsData;
-import com.makaan.response.search.Search;
+import com.makaan.response.search.SearchResponseItem;
 import com.makaan.ui.pyr.FilterableMultichoiceDialogFragment;
 
 import java.text.DecimalFormat;
@@ -31,7 +31,7 @@ public class PyrPagePresenter {
     private FilterableMultichoiceDialogFragment mPropertySearchFragment;
     private ArrayList<String> list=new ArrayList<String>();
     private boolean[] mSelectedLocalitiesFlag;
-    private ArrayList<Search> locaityIds=new ArrayList<Search>();
+    private ArrayList<SearchResponseItem> locaityIds=new ArrayList<SearchResponseItem>();
     private HashMap<Integer ,Boolean> mSellerIdMap=new HashMap<Integer, Boolean>();
     TopAgentsData[] mTopAgentsDatas;
 
@@ -89,7 +89,7 @@ public class PyrPagePresenter {
         mReplaceFragment.replaceFragment(mPyrFragment, true);
     }
 
-    public void updateSelectedItemsList(String clickedItem, ArrayList<Search> list, Search search){
+    public void updateSelectedItemsList(String clickedItem, ArrayList<SearchResponseItem> list, SearchResponseItem searchResponseItem){
         boolean flag=true;
         for (int i = 0; i < list.size(); i++) {
             if(clickedItem.equalsIgnoreCase(list.get(i).entityName)){
@@ -101,11 +101,11 @@ public class PyrPagePresenter {
             }
         }
         if(flag){
-            list.add(search);
+            list.add(searchResponseItem);
         }
     }
 
-    public ArrayList<Search>getSelectedItemList(String clickedItem, ArrayList<Search>list){
+    public ArrayList<SearchResponseItem>getSelectedItemList(String clickedItem, ArrayList<SearchResponseItem>list){
         int index=-1;
         for (int i = 0; i < list.size(); i++) {
             if (clickedItem.equalsIgnoreCase(list.get(i).entityName)) {
@@ -120,19 +120,19 @@ public class PyrPagePresenter {
         return list;
     }
 
-    public void setLocalityIds(Search search, Context context){
+    public void setLocalityIds(SearchResponseItem searchResponseItem, Context context){
       if(locaityIds.size()<6) {
 
           boolean flag=false;
-          for(Search searchObj:locaityIds){
-            if(searchObj.entityId==search.entityId){
+          for(SearchResponseItem searchResponseItemObj :locaityIds){
+            if(searchResponseItemObj.entityId== searchResponseItem.entityId){
               flag=true;
             }
           }
 
           if(!flag) {
               if (locaityIds.size() >=0) {
-                  locaityIds.add(search);
+                  locaityIds.add(searchResponseItem);
               }
           }
       }
@@ -141,21 +141,21 @@ public class PyrPagePresenter {
       }
     }
 
-    public void removeLocalityId(Search search){
+    public void removeLocalityId(SearchResponseItem searchResponseItem){
         boolean flag=false;
-        for(Search searchObj:locaityIds){
-            if(searchObj.entityId==search.entityName){
-                //locaityIds.remove(searchObj);
+        for(SearchResponseItem searchResponseItemObj :locaityIds){
+            if(searchResponseItemObj.entityId== searchResponseItem.entityName){
+                //locaityIds.remove(searchResponseItemObj);
                 flag=true;
             }
         }
         if(flag){
-            locaityIds.remove(search);
+            locaityIds.remove(searchResponseItem);
         }
 
     }
 
-    public ArrayList<Search> getAlreadySelectedProjects(){
+    public ArrayList<SearchResponseItem> getAlreadySelectedProjects(){
         return locaityIds;
     }
 

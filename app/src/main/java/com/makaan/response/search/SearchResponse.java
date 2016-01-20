@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class SearchResponse extends BaseResponse {
 
     private int totalCount;
-    private ArrayList<Search> data;
+    private ArrayList<SearchResponseItem> data;
 
 
     public int getTotalCount() {
@@ -22,11 +22,11 @@ public class SearchResponse extends BaseResponse {
         this.totalCount = totalCount;
     }
 
-    public ArrayList<Search> getData() {
+    public ArrayList<SearchResponseItem> getData() {
         return data;
     }
 
-    public void setData(ArrayList<Search> data) {
+    public void setData(ArrayList<SearchResponseItem> data) {
         this.data = data;
     }
 }
