@@ -50,4 +50,21 @@ public class Preference {
             editor.putStringSet(key, stringSet);
         }
     }
+
+
+    public static void putString(final SharedPreferences.Editor editor, final String key,
+                                    final String string) {
+        if(editor==null || string==null){
+            return;
+        }
+        editor.putString(key, string);
+    }
+
+
+    public static String getString(final SharedPreferences preferences, final String key) {
+        if(preferences==null || key==null){
+            return null;
+        }
+        return preferences.getString(key, null);
+    }
 }

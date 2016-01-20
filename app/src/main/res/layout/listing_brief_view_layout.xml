@@ -98,7 +98,7 @@
             android:src="@drawable/bottom_arrow_circle_green" />
 
         <TextView
-            android:id="@+id/listing_brief_view_layout_property_info_text_view"
+            android:id="@+id/listing_brief_view_layout_property_bhk_info_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/listing_brief_view_layout_property_price_sq_ft_text_view"
@@ -107,7 +107,21 @@
             android:layout_marginTop="@dimen/listing_brief_view_layout_property_info_text_view_top_margin"
             android:layout_toEndOf="@+id/listing_brief_view_layout_property_image_view"
             android:layout_toRightOf="@+id/listing_brief_view_layout_property_image_view"
-            android:text="2 bhk apartment\n1,900 sqft"
+            android:text="2 bhk apartment"
+            android:textColor="@color/listing_brief_view_layout_default_text_color"
+            android:textSize="@dimen/listing_brief_view_layout_property_info_text_view_text_size"
+            android:singleLine="true"/>
+
+        <TextView
+            android:id="@+id/listing_brief_view_layout_property_size_info_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/listing_brief_view_layout_property_bhk_info_text_view"
+            android:layout_marginLeft="@dimen/listing_brief_view_layout_property_info_text_view_left_margin"
+            android:layout_marginStart="@dimen/listing_brief_view_layout_property_info_text_view_left_margin"
+            android:layout_toEndOf="@+id/listing_brief_view_layout_property_image_view"
+            android:layout_toRightOf="@+id/listing_brief_view_layout_property_image_view"
+            android:text="1,900 sqft"
             android:textColor="@color/listing_brief_view_layout_default_text_color"
             android:textSize="@dimen/listing_brief_view_layout_property_info_text_view_text_size" />
 

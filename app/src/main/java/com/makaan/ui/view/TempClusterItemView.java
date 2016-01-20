@@ -13,6 +13,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.pojo.TempClusterItem;
 import com.makaan.service.ListingService;
 
@@ -39,7 +40,7 @@ public class TempClusterItemView extends RelativeLayout {
     }
 
     // TODO need to map data from web based data
-    public void populateView(TempClusterItem item) {
+    public void populateView(TempClusterItem item, final SerpRequestCallback callback) {
         ButterKnife.bind(this, this);
         mPropertyPriceRangeTextView.setText(item.getPropertyPriceRange());
         mPropertyTypeTextView.setText(item.getPropertyType());
@@ -48,8 +49,9 @@ public class TempClusterItemView extends RelativeLayout {
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                // TODO need to handle it properly
                 SerpActivity.isChildSerp = true;
-                new ListingService().handleSerpRequest(MakaanBuyerApplication.serpSelector);
+                callback.serpRequest(SerpActivity.TYPE_CLUSTER, MakaanBuyerApplication.serpSelector);
             }
         });
     }

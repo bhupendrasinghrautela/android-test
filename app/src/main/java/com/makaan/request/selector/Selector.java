@@ -242,17 +242,6 @@ public class Selector {
         return null;
     }
 
-    public int getAppliedFilterCount() {
-        int count = this.rangeSelectorHashMap.keySet().size() + this.termSelectorHashMap.keySet().size();
-        if (this.termSelectorHashMap.containsKey("cityId")) {
-            count--;
-        }
-        if (this.termSelectorHashMap.containsKey("localityId")) {
-            count--;
-        }
-        return count;
-    }
-
     public boolean isBuyContext() {
         if (!this.termSelectorHashMap.containsKey("listingCategory")) {
             return true;

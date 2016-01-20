@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 
+import com.makaan.activity.listing.SerpRequestCallback;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -28,7 +30,7 @@ public abstract class AbstractListingView extends CardView {
         mContext = context;
     }
 
-    public void populateData(Object data) {
+    public void populateData(Object data, SerpRequestCallback callback) {
         ButterKnife.bind(this, this);
     }
 }

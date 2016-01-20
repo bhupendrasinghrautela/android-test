@@ -37,6 +37,8 @@
           }
         ],
         "rangeFilterValues": [
+        ],
+        "rangeMinMaxFilterValues": [
         ]
       },
       {
@@ -54,6 +56,8 @@
             "maxValue": 150000,
             "selected": false
           }
+        ],
+        "rangeMinMaxFilterValues": [
         ]
       },
       {
@@ -99,6 +103,8 @@
           }
         ],
         "rangeFilterValues": [
+        ],
+        "rangeMinMaxFilterValues": [
         ]
       },
       {
@@ -137,6 +143,8 @@
           }
         ],
         "rangeFilterValues": [
+        ],
+        "rangeMinMaxFilterValues": [
         ]
       },
       {
@@ -175,6 +183,8 @@
           }
         ],
         "rangeFilterValues": [
+        ],
+        "rangeMinMaxFilterValues": [
         ]
       },
       {
@@ -206,6 +216,8 @@
           }
         ],
         "rangeFilterValues": [
+        ],
+        "rangeMinMaxFilterValues": [
         ]
       },
       {
@@ -237,6 +249,8 @@
           }
         ],
         "rangeFilterValues": [
+        ],
+        "rangeMinMaxFilterValues": [
         ]
       },
       {
@@ -248,40 +262,91 @@
           {
             "displayName": "wardrobe",
             "displayOrder": "1",
-            "fieldName": "listingFurnished",
-            "value": "unfurnished",
+            "fieldName": "listingFurnishings",
+            "value": "1",
             "selected": false
           },
           {
             "displayName": "double bed",
             "displayOrder": "2",
-            "fieldName": "listingFurnished",
-            "value": "semiFurnished",
+            "fieldName": "listingFurnishings",
+            "value": "2",
             "selected": false
           },
           {
             "displayName": "tv",
             "displayOrder": "3",
-            "fieldName": "listingFurnished",
-            "value": "fullyFurnished",
+            "fieldName": "listingFurnishings",
+            "value": "3",
             "selected": false
           },
           {
             "displayName": "refrigerator",
-            "displayOrder": "3",
-            "fieldName": "listingFurnished",
-            "value": "fullyFurnished",
+            "displayOrder": "4",
+            "fieldName": "listingFurnishings",
+            "value": "4",
             "selected": false
           },
           {
             "displayName": "sofa",
-            "displayOrder": "3",
-            "fieldName": "listingFurnished",
-            "value": "fullyFurnished",
+            "displayOrder": "5",
+            "fieldName": "listingFurnishings",
+            "value": "5",
+            "selected": false
+          },
+          {
+            "displayName": "washing machine",
+            "displayOrder": "5",
+            "fieldName": "listingFurnishings",
+            "value": "6",
+            "selected": false
+          },
+          {
+            "displayName": "wifi",
+            "displayOrder": "5",
+            "fieldName": "listingFurnishings",
+            "value": "7",
+            "selected": false
+          },
+          {
+            "displayName": "microwave",
+            "displayOrder": "5",
+            "fieldName": "listingFurnishings",
+            "value": "8",
+            "selected": false
+          },
+          {
+            "displayName": "dining table",
+            "displayOrder": "5",
+            "fieldName": "listingFurnishings",
+            "value": "9",
+            "selected": false
+          },
+          {
+            "displayName": "gas connection",
+            "displayOrder": "5",
+            "fieldName": "listingFurnishings",
+            "value": "10",
+            "selected": false
+          },
+          {
+            "displayName": "ac",
+            "displayOrder": "5",
+            "fieldName": "listingFurnishings",
+            "value": "11",
+            "selected": false
+          },
+          {
+            "displayName": "bed",
+            "displayOrder": "5",
+            "fieldName": "listingFurnishings",
+            "value": "12",
             "selected": false
           }
         ],
         "rangeFilterValues": [
+        ],
+        "rangeMinMaxFilterValues": [
         ]
       },
       {
@@ -293,40 +358,38 @@
           {
             "displayName": "bachelors",
             "displayOrder": "1",
-            "fieldName": "listingFurnished",
-            "value": "unfurnished",
+            "fieldName": "listingTenantTypes",
+            "value": "1",
             "selected": false
-          },
-          {
+          },{
             "displayName": "family",
             "displayOrder": "2",
-            "fieldName": "listingFurnished",
-            "value": "semiFurnished",
+            "fieldName": "listingTenantTypes",
+            "value": "2",
             "selected": false
-          },
-          {
+          },{
             "displayName": "pets allowed",
             "displayOrder": "3",
-            "fieldName": "listingFurnished",
-            "value": "fullyFurnished",
+            "fieldName": "listingTenantTypes",
+            "value": "3",
             "selected": false
-          },
-          {
+          },{
             "displayName": "non vegetarian",
-            "displayOrder": "3",
-            "fieldName": "listingFurnished",
-            "value": "fullyFurnished",
+            "displayOrder": "4",
+            "fieldName": "listingTenantTypes",
+            "value": "4",
             "selected": false
-          },
-          {
+          },{
             "displayName": "company lease",
-            "displayOrder": "3",
-            "fieldName": "listingFurnished",
-            "value": "fullyFurnished",
+            "displayOrder": "5",
+            "fieldName": "listingTenantTypes",
+            "value": "5",
             "selected": false
           }
         ],
         "rangeFilterValues": [
+        ],
+        "rangeMinMaxFilterValues": [
         ]
       }
     ]

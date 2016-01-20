@@ -75,6 +75,8 @@
     <color name="amenity_item_bg">#f2f2f2</color>
 
 
+    <!-- relevance popup color values -->
+    <color name="relevance_popup_window_selected_bac">#DE000000</color>
 
 
     <!-- Search result item color values -->
@@ -95,4 +97,8 @@
     <color name="grayDivider">#e0e0e0</color>
     <color name="pink">#E62489</color>
     <color name="red">#FF0000</color>
+
+    <!-- Serp Builder Item Dimens -->
+    <color name="serp_listing_item_builder_empty_view_background_color">#4CFFFFFF</color>
+    <color name="serp_listing_item_seller_empty_view_background_color">#4CFFFFFF</color>
 </resources>

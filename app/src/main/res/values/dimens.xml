@@ -219,7 +219,7 @@
 
     <!-- TODO serp_listing_card_property_info_text_view_left_margin should be 27 as per GUI-->
     <dimen name="serp_listing_card_property_info_text_view_left_margin">20dp</dimen>
-    <dimen name="serp_listing_card_property_info_text_view_top_margin">12dp</dimen>
+    <dimen name="serp_listing_card_property_info_text_view_top_margin">6dp</dimen>
     <dimen name="serp_listing_card_property_info_text_view_text_size">16sp</dimen>
 
     <dimen name="serp_listing_card_property_address_text_view_left_margin">19dp</dimen>
@@ -382,7 +382,7 @@
     <dimen name="fragment_filters_map_image_view_width">24dp</dimen>
     <dimen name="fragment_filters_map_image_view_height">36dp</dimen>
     <dimen name="fragment_filters_map_image_view_margin_right">13dp</dimen>
-    <!--<dimen name="fragment_filters_map_image_view_margin_top">12dp</dimen>-->
+    <dimen name="fragment_filters_map_image_view_margin_top">12dp</dimen>
 
     <dimen name="fragment_dialog_filters_submit_button_height">50dp</dimen>
     <dimen name="fragment_dialog_filters_submit_button_text_size">18sp</dimen>
@@ -522,7 +522,7 @@
 
     <!-- following value must be 28dp as per Zeplin UI -->
     <dimen name="listing_brief_view_layout_property_info_text_view_left_margin">20dp</dimen>
-    <dimen name="listing_brief_view_layout_property_info_text_view_top_margin">12dp</dimen>
+    <dimen name="listing_brief_view_layout_property_info_text_view_top_margin">6dp</dimen>
     <dimen name="listing_brief_view_layout_property_info_text_view_text_size">16sp</dimen>
 
     <dimen name="listing_brief_view_layout_empty_view_height">3dp</dimen>
@@ -642,4 +642,62 @@
     <dimen name="similar_project_width">310dp</dimen>
     <dimen name="similar_project_name_size">24sp</dimen>
     <dimen name="similar_project_address_size">16sp</dimen>
+
+    <!-- Serp Builder Item Dimens -->
+    <dimen name="serp_listing_item_builder_image_card_view_width">70dp</dimen>
+    <dimen name="serp_listing_item_builder_image_card_view_height">70dp</dimen>
+    <dimen name="serp_listing_item_builder_image_card_view_margin_top">45dp</dimen>
+    <dimen name="serp_listing_item_builder_image_card_view_radius">15dp</dimen>
+
+    <dimen name="serp_listing_item_builder_name_text_view_margin_top">15dp</dimen>
+    <dimen name="serp_listing_item_builder_name_text_view_text_size">18sp</dimen>
+
+    <dimen name="serp_listing_item_builder_empty_view_height">2dp</dimen>
+    <dimen name="serp_listing_item_builder_empty_view_margin_top">27dp</dimen>
+    <dimen name="serp_listing_item_builder_empty_view_margin_right">17dp</dimen>
+    <dimen name="serp_listing_item_builder_empty_view_margin_left">17dp</dimen>
+
+
+    <dimen name="serp_listing_item_builder_info_margin_top">25dp</dimen>
+    <dimen name="serp_listing_item_builder_info_margin_bottom">3dp</dimen>
+    <dimen name="serp_listing_item_builder_info_margin_bottom2">23dp</dimen>
+    <dimen name="serp_listing_item_builder_info_text_size">20sp</dimen>
+    <dimen name="serp_listing_item_builder_text_text_size">16sp</dimen>
+
+    <!-- Serp Builder Item Dimens -->
+    <dimen name="serp_listing_item_seller_image_view_width">86dp</dimen>
+    <dimen name="serp_listing_item_seller_image_view_height">86dp</dimen>
+    <dimen name="serp_listing_item_seller_image_view_margin_top">37dp</dimen>
+
+    <dimen name="serp_listing_item_seller_name_text_view_margin_top">7dp</dimen>
+    <dimen name="serp_listing_item_seller_name_text_view_text_size">18sp</dimen>
+
+    <dimen name="serp_listing_item_seller_company_name_text_view_margin_top">3dp</dimen>
+    <dimen name="serp_listing_item_seller_company_name_text_view_text_size">18sp</dimen>
+
+    <dimen name="serp_listing_item_seller_rating_margin_top">12dp</dimen>
+
+    <dimen name="serp_listing_item_seller_empty_view_height">2dp</dimen>
+    <dimen name="serp_listing_item_seller_empty_view_margin_top">26dp</dimen>
+    <dimen name="serp_listing_item_seller_empty_view_margin_top2">8dp</dimen>
+    <dimen name="serp_listing_item_seller_empty_view_margin_right">17dp</dimen>
+    <dimen name="serp_listing_item_seller_empty_view_margin_left">17dp</dimen>
+
+    <dimen name="serp_listing_item_seller_operates_in_text_view_margin_top">10dp</dimen>
+    <dimen name="serp_listing_item_seller_operates_in_text_view_text_size">16sp</dimen>
+
+    <dimen name="serp_listing_item_seller_address_text_view_margin_top">6dp</dimen>
+    <dimen name="serp_listing_item_seller_address_text_view_text_size">16sp</dimen>
+
+    <dimen name="serp_listing_item_seller_add_image_view_margin_right">19dp</dimen>
+    <dimen name="serp_listing_item_seller_add_image_view_width">32dp</dimen>
+    <dimen name="serp_listing_item_seller_add_image_view_height">32dp</dimen>
+
+    <dimen name="serp_listing_item_seller_info_margin_top">18dp</dimen>
+    <dimen name="serp_listing_item_seller_info_margin_bottom">2dp</dimen>
+    <dimen name="serp_listing_item_seller_info_margin_bottom2">17dp</dimen>
+    <dimen name="serp_listing_item_seller_info_image_view_width">24dp</dimen>
+    <dimen name="serp_listing_item_seller_info_image_view_height">24dp</dimen>
+    <dimen name="serp_listing_item_seller_info_text_size">20sp</dimen>
+    <dimen name="serp_listing_item_seller_text_text_size">16sp</dimen>
 </resources>

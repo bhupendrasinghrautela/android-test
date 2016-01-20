@@ -12,30 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <FrameLayout
-            android:id="@+id/serp_listing_cluster_group_frame_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:background="@color/serp_listing_cluster_card_group_background" >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/serp_listing_cluster_card_group_text_view_margin_left"
-                android:layout_marginStart="@dimen/serp_listing_cluster_card_group_text_view_margin_left"
-                android:layout_marginRight="@dimen/serp_listing_cluster_card_group_text_view_margin_right"
-                android:layout_marginEnd="@dimen/serp_listing_cluster_card_group_text_view_margin_right"
-                android:text="@string/cluster_item_group_text"
-                android:textColor="@color/white"
-                android:textSize="@dimen/serp_listing_cluster_card_group_text_view_text_size" />
-        </FrameLayout>
-
         <View
             android:id="@+id/serp_listing_cluster_group_empty_view"
             android:layout_width="match_parent"
             android:layout_height="@dimen/serp_listing_cluster_card_empty_view_height"
-            android:background="@color/white"
-            android:layout_below="@id/serp_listing_cluster_group_frame_layout" />
+            android:background="@color/white" />
 
         <TextView
             android:id="@+id/cluster_item_view_property_price_range_text_view"

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.makaan.R;
+import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.ui.view.TempClusterItemView;
 
 import com.makaan.pojo.TempClusterItem;
@@ -15,8 +16,9 @@ public class HorizontalScrollPageFragment extends Fragment {
 
     public static final String IS_CHILD_SERP_CLUSTER_VIEW = "isChildSerpClusterView";
     private ViewGroup rootView;
-    private Object o;
+    private Object obj;
     private boolean isChildSerpClusterView;
+    private SerpRequestCallback mCallback;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,14 +30,14 @@ public class HorizontalScrollPageFragment extends Fragment {
         if(isChildSerpClusterView) {
             rootView = (ViewGroup) inflater.inflate(
                     R.layout.cluster_item_view, container, false);
-            if (o != null && o instanceof TempClusterItem) {
-                ((TempClusterItemView) rootView).populateView((TempClusterItem) o);
+            if (obj != null && obj instanceof TempClusterItem) {
+                ((TempClusterItemView) rootView).populateView((TempClusterItem) obj, mCallback);
             }
         } else {
             rootView = (ViewGroup) inflater.inflate(
                     R.layout.cluster_item_view, container, false);
-            if (o != null && o instanceof TempClusterItem) {
-                ((TempClusterItemView) rootView).populateView((TempClusterItem) o);
+            if (obj != null && obj instanceof TempClusterItem) {
+                ((TempClusterItemView) rootView).populateView((TempClusterItem) obj, mCallback);
             }
         }
 
@@ -51,7 +53,8 @@ public class HorizontalScrollPageFragment extends Fragment {
         return fragment;
     }
 
-    public void populateData(Object o) {
-        this.o = o;
+    public void populateData(Object o, SerpRequestCallback callback) {
+        this.obj = o;
+        this.mCallback =callback;
     }
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.makaan.R;
+import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.listing.HorizontalScrollFragmentAdapter;
 
 import java.util.List;
@@ -44,15 +45,14 @@ public class ClusterListingView extends AbstractListingView {
     }
 
     @Override
-    public void populateData(Object data) {
-        super.populateData(data);
+    public void populateData(Object data, SerpRequestCallback callback) {
+        super.populateData(data, callback);
         if(data != null && data instanceof List && ((List) data).size() > 0 && ((List) data).get(0) instanceof TempClusterItem) {
             if(mContext instanceof FragmentActivity) {
-                fragmentPagerAdapter = new HorizontalScrollFragmentAdapter<TempClusterItem>(((FragmentActivity)mContext).getSupportFragmentManager(), mContext, (List<TempClusterItem>) data, false);
+                fragmentPagerAdapter = new HorizontalScrollFragmentAdapter<TempClusterItem>(
+                        ((FragmentActivity)mContext).getSupportFragmentManager(), mContext,
+                        (List<TempClusterItem>) data, false, callback);
                 viewPager.setAdapter(fragmentPagerAdapter);
-            } else {
-                //viewPagerAdapter = new HorizontalScrollAdapter(mContext, (List) data);
-                //viewPager.setAdapter(viewPagerAdapter);
             }
 
             /*viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
