@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="25dp"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/tv_nearby_localities_title"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/ll_locality_nearby"
+        android:visibility="gone"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="25dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:id="@+id/tv_localities_props_buy"
+            android:text="buy"
+            />
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/switch_localities_props" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:id="@+id/tv_localities_props_rent"
+            android:text="rent"
+            />
+
+    </LinearLayout>
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/rv_nearby_localities"
+    android:layout_width="wrap_content"
+    android:layout_height="470dp"
+    android:minHeight="470dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+</LinearLayout>

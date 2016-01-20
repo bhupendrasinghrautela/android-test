@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="41dp"
+    android:layout_marginBottom="50dp"
+    android:gravity="center_horizontal"
+    android:layout_marginLeft="80dp"
+    android:layout_marginRight="80dp"
+    android:textColor="@color/white"
+    android:textSize="24sp"
+    android:text="interested in electronic city?"
+    />
+<Button
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:background="#e71c28"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginBottom="50dp"
+    android:textSize="12sp"
+    android:textAllCaps="false"
+    android:textColor="@color/white"
+    android:text="find your home"
+    />
+
+</LinearLayout>

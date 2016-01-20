@@ -78,4 +78,5 @@
     <string name="property_range">property range</string>
     <string name="top_localities">top localities</string>
     <string name="view_properties">view properties</string>
+    <string name="locality_title" />
 </resources>

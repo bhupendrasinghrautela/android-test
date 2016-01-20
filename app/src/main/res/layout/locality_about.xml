@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="match_parent">
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="@dimen/locality_circular_progress_dimen"
+            android:layout_height="@dimen/locality_circular_progress_dimen"
+            android:id="@+id/locality_score_progress"
+            android:progress="78"
+            android:secondaryProgress="100"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/circular_progress_drawable"
+            android:layout_gravity="center_vertical" />
+        <TextView
+            android:id="@+id/locality_score_text"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/city_very_small_text"/>
+    </FrameLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_marginTop="27dp"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rs 4,600/ sq ft"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="58dp"
+        android:id="@+id/tv_locality_per_sqr_ft_median_price"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="median price"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:layout_alignLeft="@+id/tv_locality_per_sqr_ft_median_price"
+        android:textSize="14sp"
+        android:layout_below="@id/tv_locality_per_sqr_ft_median_price"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="15.25 %"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:layout_alignLeft="@+id/tv_locality_annual_growth_label"
+        android:id="@+id/tv_locality_annual_growth"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="annual growth"
+        android:id="@+id/tv_locality_annual_growth_label"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:layout_alignParentRight="true"
+        android:textSize="14sp"
+        android:layout_marginRight="58dp"
+        android:layout_below="@id/tv_locality_annual_growth"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="26dp"
+        android:layout_below="@id/tv_locality_annual_growth_label"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/view_locality_seperator"
+        android:background="#979797"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_locality_seperator"
+        android:text="Rs 4,600/ sq ft"
+        android:layout_marginTop="22dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="58dp"
+        android:id="@+id/tv_locality_per_sqr_ft_median_price_rent"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="median rent"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:layout_alignLeft="@+id/tv_locality_per_sqr_ft_median_price_rent"
+        android:textSize="14sp"
+        android:layout_below="@id/tv_locality_per_sqr_ft_median_price_rent"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="average"
+        android:layout_marginTop="22dp"
+        android:layout_below="@id/view_locality_seperator"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:layout_alignLeft="@+id/tv_locality_annual_growth_label_rent"
+        android:id="@+id/tv_locality_annual_growth_rent"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="rental demand"
+        android:id="@+id/tv_locality_annual_growth_label_rent"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:layout_alignParentRight="true"
+        android:textSize="14sp"
+        android:layout_marginRight="58dp"
+        android:layout_below="@id/tv_locality_annual_growth_rent"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="26dp"
+        android:layout_below="@id/tv_locality_annual_growth_label_rent"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/view_locality_seperator_2"
+        android:background="#979797"/>
+
+</RelativeLayout>
+
+    <include layout="@layout/compressed_text_layout"/>
+</merge>

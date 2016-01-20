@@ -1,6 +1,7 @@
 package com.makaan.fragment.locality;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,87 +13,88 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
-import com.makaan.pojo.TaxonomyCard;
+import com.makaan.response.amenity.AmenityCluster;
+import com.makaan.ui.amenity.AmenityCardView;
 
 import java.util.List;
 
 /**
- * Created by tusharchaudhary on 1/19/16.
+ * Created by tusharchaudhary on 1/20/16.
  */
-public class LocalityPropertiesFragment extends Fragment {
+public class KynFragment extends Fragment {
     private View view;
     RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private NearByLocalitiesAdapter mAdapter;
     private String title;
-
+    private Context context ;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_localities_properties, null);
+        view = inflater.inflate(R.layout.fragment_localities_kyn, null);
+        context = getActivity();
         initView();
         return view;
     }
 
     private void initView() {
         title = getArguments().getString("title");
-        TextView titleTv = (TextView) view.findViewById(R.id.tv_localities_props_title);
+        TextView titleTv = (TextView) view.findViewById(R.id.tv_localities_kyn_title);
         titleTv.setText(title);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_localities_props);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_localities_kyn);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    public void setData(List<TaxonomyCard> taxonomyCardList) {
-        mAdapter = new NearByLocalitiesAdapter(taxonomyCardList);
+    public void setData(List<AmenityCluster> amenityClusters) {
+        mAdapter = new NearByLocalitiesAdapter(amenityClusters);
         if (mRecyclerView != null)
             mRecyclerView.setAdapter(mAdapter);
     }
 
 
     private class NearByLocalitiesAdapter extends RecyclerView.Adapter<NearByLocalitiesAdapter.ViewHolder> {
-        private List<TaxonomyCard> taxonomyCardList;
+        private List<AmenityCluster> amenityClusters;
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             // each data item is just a string in this case
-            public TextView descriptionTv;
-            public ImageView localityIv;
+            public AmenityCardView amenityCardView;
 
             public ViewHolder(View v) {
                 super(v);
-                descriptionTv = (TextView) v.findViewById(R.id.tv_localities_props_label);
-                localityIv = (ImageView) v.findViewById(R.id.iv_localitites_props);
+                amenityCardView = (AmenityCardView) v.findViewById(R.id.amenity_card_view);
             }
         }
 
-        public NearByLocalitiesAdapter(List<TaxonomyCard> taxonomyCardList) {
-            this.taxonomyCardList = taxonomyCardList;
+        public NearByLocalitiesAdapter(List<AmenityCluster> amenityClusters) {
+            this.amenityClusters = amenityClusters;
         }
 
         @Override
         public NearByLocalitiesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                                      int viewType) {
             View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.row_localities_props, parent, false);
+                    .inflate(R.layout.row_localities_kyn, parent, false);
             ViewHolder vh = new ViewHolder(v);
             return vh;
         }
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            final TaxonomyCard taxonomyCard = taxonomyCardList.get(position);
-            holder.descriptionTv.setText(taxonomyCard.label1);
-            holder.localityIv.setImageResource(R.drawable.placeholder_localities_props);
-            //TODO: Picasso load imgurl
+            final AmenityCluster amenityCluster = amenityClusters.get(position);
+            holder.amenityCardView.bindView(context,amenityCluster);
         }
 
         @Override
         public int getItemCount() {
-            return taxonomyCardList.size();
+            return amenityClusters.size();
         }
 
     }
+
+
 }
+

@@ -1,275 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.design.widget.CoordinatorLayout
+    android:id="@+id/city_appbar_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/scroll_view"
-    android:background="@drawable/locality_hero"
     android:layout_width="match_parent"
-    android:fillViewport="true"
     android:layout_height="match_parent">
-
-    <LinearLayout
+    <com.android.volley.toolbox.FadeInNetworkImageView
+        android:id="@+id/main_city_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+    <ImageView
+        android:id="@+id/blurred_city_image"
+        android:layout_width="match_parent"
+        android:alpha="0"
+        android:scaleType="centerCrop"
+        android:layout_height="match_parent"/>
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:background="#80000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+    <android.support.design.widget.AppBarLayout
         android:layout_height="wrap_content"
-        android:src="@drawable/header"
-        />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="148dp"
-            android:layout_marginLeft="49dp"
-            android:layout_marginRight="49dp"
-            android:textSize="38sp"
-            android:text="electronic city"
-            android:textColor="@color/white"
-            android:layout_gravity="center_horizontal"
-            />
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="wrap_content">
-
-        <com.mikhaellopez.circularprogressbar.CircularProgressBar
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            app:progress="76"
-            app:background_progressbar_color="#FFF"
-            app:background_progressbar_width="2dp"
-            app:progressbar_color="#e71c28"
-            app:progressbar_width="2dp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="7.8"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:layout_centerInParent="true"
-            />
-        </RelativeLayout>
-        <RelativeLayout
+        android:background="@color/transparent"
+        android:layout_width="wrap_content">
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/city_collapse_toolbar"
             android:layout_width="match_parent"
-            android:layout_marginTop="27dp"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rs 4,600/ sq ft"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="58dp"
-                android:id="@+id/tv_locality_per_sqr_ft_median_price"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="median price"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/white"
-                android:layout_alignLeft="@+id/tv_locality_per_sqr_ft_median_price"
-                android:textSize="14sp"
-                android:layout_below="@id/tv_locality_per_sqr_ft_median_price"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="15.25 %"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:layout_alignLeft="@+id/tv_locality_annual_growth_label"
-                android:id="@+id/tv_locality_annual_growth"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="annual growth"
-                android:id="@+id/tv_locality_annual_growth_label"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/white"
-                android:layout_alignParentRight="true"
-                android:textSize="14sp"
-                android:layout_marginRight="58dp"
-                android:layout_below="@id/tv_locality_annual_growth"
-                />
-
-            <View
+            android:layout_height="@dimen/city_collapse_bar_height"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@android:color/transparent"
+            app:title="electronic city"
+            app:expandedTitleTextAppearance="@style/WhiteExpandedToolbarText"
+            app:collapsedTitleTextAppearance="@style/WhiteCollapsedToolbarText"
+            app:expandedTitleGravity="bottom|center_horizontal"
+            app:expandedTitleMarginBottom="@dimen/city_collapse_bar_margin_bottom"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="26dp"
-                android:layout_below="@id/tv_locality_annual_growth_label"
-                android:layout_marginLeft="20dp"
-                android:id="@+id/view_locality_seperator"
-                android:background="#979797"/>
+                app:layout_collapseMode="pin"
+                android:layout_height="?attr/actionBarSize"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/view_locality_seperator"
-                android:text="Rs 4,600/ sq ft"
-                android:layout_marginTop="22dp"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="58dp"
-                android:id="@+id/tv_locality_per_sqr_ft_median_price_rent"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="median rent"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/white"
-                android:layout_alignLeft="@+id/tv_locality_per_sqr_ft_median_price_rent"
-                android:textSize="14sp"
-                android:layout_below="@id/tv_locality_per_sqr_ft_median_price_rent"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="average"
-                android:layout_marginTop="22dp"
-                android:layout_below="@id/view_locality_seperator"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:layout_alignLeft="@+id/tv_locality_annual_growth_label_rent"
-                android:id="@+id/tv_locality_annual_growth_rent"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="rental demand"
-                android:id="@+id/tv_locality_annual_growth_label_rent"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/white"
-                android:layout_alignParentRight="true"
-                android:textSize="14sp"
-                android:layout_marginRight="58dp"
-                android:layout_below="@id/tv_locality_annual_growth_rent"
-                />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="26dp"
-                android:layout_below="@id/tv_locality_annual_growth_label_rent"
-                android:layout_marginLeft="20dp"
-                android:id="@+id/view_locality_seperator_2"
-                android:background="#979797"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="10dp"
-                android:layout_below="@+id/view_locality_seperator_2"
-                android:id="@+id/tv_locality_an_overview"
-                android:layout_marginRight="10dp"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:text="an overview"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/tv_locality_an_overview"
-                android:id="@+id/tv_locality_an_overview_body"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:lines="8"
-                android:lineSpacingExtra="10dp"
-                android:ellipsize="marquee"
-                android:text="Lorem Ipsum is zsc asdsimply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-                />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="26dp"
-                android:layout_below="@id/tv_locality_an_overview_body"
-                android:layout_marginLeft="20dp"
-                android:background="#979797"/>
-        </RelativeLayout>
-
-        <FrameLayout
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_width="match_parent"
-            android:id="@+id/container_nearby_localities_props"
-            android:layout_height="wrap_content"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="26dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="#979797"/>
-
-        <FrameLayout
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_width="match_parent"
-            android:id="@+id/container_nearby_localities_top_builders"
-            android:layout_height="wrap_content"/>
-
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/city_scrollview"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="match_parent">
+        //main content
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="41dp"
-                android:layout_marginBottom="50dp"
-                android:gravity="center_horizontal"
-                android:layout_marginLeft="80dp"
-                android:layout_marginRight="80dp"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:text="interested in electronic city?"
-                />
-            <Button
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:background="#e71c28"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="50dp"
-                android:textSize="12sp"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:text="find your home"
-                />
-
+            <include layout="@layout/locality_about"/>
+            <include layout="@layout/locality_seperator_view"/>
+            <include layout="@layout/locality_kyn"/>
+            <include layout="@layout/locality_seperator_view"/>
+            <include layout="@layout/locality_lifestyle"/>
+            <include layout="@layout/locality_price_trends"/>
+            <include layout="@layout/locality_seperator_view_white_bg"/>
+            <include layout="@layout/locality_available_property_status"/>
+            <include layout="@layout/locality_properties"/>
+            <include layout="@layout/locality_seperator_view"/>
+            <include layout="@layout/locality_top_builders"/>
+            <include layout="@layout/locality_interested_to_buy"/>
+            <include layout="@layout/locality_top_agents"/>
+            <include layout="@layout/locality_nearby_localities"/>
         </LinearLayout>
-
-        <FrameLayout
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_width="match_parent"
-            android:id="@+id/container_nearby_localities_top_agents"
-            android:layout_height="wrap_content"/>
-
-        <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginLeft="20dp"
-        android:background="#979797"/>
-
-        <FrameLayout
-            android:layout_marginBottom="90dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_width="match_parent"
-            android:id="@+id/container_nearby_localities"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+    </android.support.design.widget.CoordinatorLayout>

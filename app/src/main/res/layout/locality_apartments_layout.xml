@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.makaan.ui.locality.LocalityApartmentsView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="290dp"
+    android:layout_marginLeft="20dp"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -19,6 +20,7 @@
             android:layout_marginTop="@dimen/apartments_text_margin_top"
             android:layout_marginBottom="@dimen/apartments_text_margin_bottom"
             android:layout_gravity="center"
+            android:id="@+id/apartment_unit_type"
             android:textSize="@dimen/apartments_text_text_size"
             android:text="apartments"/>
 

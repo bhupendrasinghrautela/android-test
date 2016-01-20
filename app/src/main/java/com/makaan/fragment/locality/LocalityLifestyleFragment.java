@@ -12,87 +12,100 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
-import com.makaan.pojo.TaxonomyCard;
 
 import java.util.List;
 
 /**
  * Created by tusharchaudhary on 1/19/16.
  */
-public class LocalityPropertiesFragment extends Fragment {
+public class LocalityLifestyleFragment extends Fragment{
     private View view;
     RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private NearByLocalitiesAdapter mAdapter;
     private String title;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_localities_properties, null);
+        view = inflater.inflate(R.layout.fragment_localities_lifestyle, null);
         initView();
         return view;
     }
 
     private void initView() {
         title = getArguments().getString("title");
-        TextView titleTv = (TextView) view.findViewById(R.id.tv_localities_props_title);
+        TextView titleTv = (TextView) view.findViewById(R.id.tv_localities_lifestyle_title);
         titleTv.setText(title);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_localities_props);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_localities_lifestyle);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    public void setData(List<TaxonomyCard> taxonomyCardList) {
-        mAdapter = new NearByLocalitiesAdapter(taxonomyCardList);
+    public void setData(List<Properties> nearByLocalities) {
+        mAdapter = new NearByLocalitiesAdapter(nearByLocalities);
         if (mRecyclerView != null)
             mRecyclerView.setAdapter(mAdapter);
     }
 
 
     private class NearByLocalitiesAdapter extends RecyclerView.Adapter<NearByLocalitiesAdapter.ViewHolder> {
-        private List<TaxonomyCard> taxonomyCardList;
+        private List<Properties> propertiesList;
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             // each data item is just a string in this case
             public TextView descriptionTv;
+            public TextView descriptionFullTv;
             public ImageView localityIv;
 
             public ViewHolder(View v) {
                 super(v);
                 descriptionTv = (TextView) v.findViewById(R.id.tv_localities_props_label);
+                descriptionFullTv = (TextView) v.findViewById(R.id.tv_localities_lifestyle_description);
                 localityIv = (ImageView) v.findViewById(R.id.iv_localitites_props);
             }
         }
 
-        public NearByLocalitiesAdapter(List<TaxonomyCard> taxonomyCardList) {
-            this.taxonomyCardList = taxonomyCardList;
+        public NearByLocalitiesAdapter(List<Properties> propertiesList) {
+            this.propertiesList = propertiesList;
         }
 
         @Override
         public NearByLocalitiesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                                      int viewType) {
             View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.row_localities_props, parent, false);
+                    .inflate(R.layout.row_localities_lifestyle, parent, false);
             ViewHolder vh = new ViewHolder(v);
             return vh;
         }
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            final TaxonomyCard taxonomyCard = taxonomyCardList.get(position);
-            holder.descriptionTv.setText(taxonomyCard.label1);
+            final Properties nearByLocalitu = propertiesList.get(position);
+            holder.descriptionTv.setText(nearByLocalitu.description);
+            holder.descriptionFullTv.setText(nearByLocalitu.fullDescription);
             holder.localityIv.setImageResource(R.drawable.placeholder_localities_props);
             //TODO: Picasso load imgurl
         }
 
         @Override
         public int getItemCount() {
-            return taxonomyCardList.size();
+            return propertiesList.size();
         }
 
+    }
+
+    public static class Properties {
+        String imgUrl;
+        String description;
+        String fullDescription;
+
+        public Properties(String imgUrl, String description, String fullDescription) {
+            this.imgUrl = imgUrl;
+            this.description = description;
+            this.fullDescription = fullDescription;
+        }
     }
 }

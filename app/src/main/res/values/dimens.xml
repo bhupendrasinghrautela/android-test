@@ -642,4 +642,7 @@
     <dimen name="similar_project_width">310dp</dimen>
     <dimen name="similar_project_name_size">24sp</dimen>
     <dimen name="similar_project_address_size">16sp</dimen>
+
+
+    <dimen name="locality_circular_progress_dimen">42dp</dimen>
 </resources>
