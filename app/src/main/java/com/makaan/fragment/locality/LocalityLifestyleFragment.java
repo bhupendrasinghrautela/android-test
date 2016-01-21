@@ -12,34 +12,40 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.city.EntityDesc;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+
 /**
  * Created by tusharchaudhary on 1/19/16.
  */
-public class LocalityLifestyleFragment extends Fragment{
-    private View view;
-    RecyclerView mRecyclerView;
+public class LocalityLifestyleFragment extends MakaanBaseFragment{
     private LinearLayoutManager mLayoutManager;
     private NearByLocalitiesAdapter mAdapter;
     private String title;
+    @Bind(R.id.rv_localities_lifestyle)
+    RecyclerView mRecyclerView;
+    @Bind(R.id.tv_localities_lifestyle_title)
+    TextView titleTv;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_localities_lifestyle, null);
+    protected int getContentViewId() {
+        return R.layout.fragment_localities_lifestyle;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         initView();
-        return view;
     }
 
     private void initView() {
         title = getArguments().getString("title");
-        TextView titleTv = (TextView) view.findViewById(R.id.tv_localities_lifestyle_title);
         titleTv.setText(title);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_localities_lifestyle);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);

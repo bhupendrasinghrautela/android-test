@@ -13,36 +13,42 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.ui.amenity.AmenityCardView;
 
 import java.util.List;
 
+import butterknife.Bind;
+
 /**
  * Created by tusharchaudhary on 1/20/16.
  */
-public class KynFragment extends Fragment {
-    private View view;
+public class KynFragment extends MakaanBaseFragment {
+    @Bind(R.id.rv_localities_kyn)
     RecyclerView mRecyclerView;
+    @Bind(R.id.tv_localities_kyn_title)
+    TextView titleTv;
     private LinearLayoutManager mLayoutManager;
     private NearByLocalitiesAdapter mAdapter;
     private String title;
     private Context context ;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_localities_kyn, null);
+    protected int getContentViewId() {
+        return R.layout.fragment_localities_kyn;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         context = getActivity();
         initView();
-        return view;
     }
 
     private void initView() {
         title = getArguments().getString("title");
-        TextView titleTv = (TextView) view.findViewById(R.id.tv_localities_kyn_title);
         titleTv.setText(title);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_localities_kyn);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);

@@ -15,6 +15,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.locality.ListingAggregation;
 
 import java.util.ArrayList;
@@ -24,37 +25,43 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import butterknife.Bind;
 import lecho.lib.hellocharts.dto.PieChartDTO;
 import lecho.lib.hellocharts.view.PieChartView;
 
 /**
  * Created by tusharchaudhary on 1/19/16.
  */
-public class LocalitiesApartmentsFragment extends Fragment {
-    private View view;
-    RecyclerView mRecyclerView;
+public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
     private LinearLayoutManager mLayoutManager;
     private NearByLocalitiesAdapter mAdapter;
     private String title;
     private List<ListingAggregation> primaryListingAggregations;
     private List<ListingAggregation> secondaryListingAggregations;
-    private Switch switchRentSale;
-    private Set<DataItem> adapterItemSet;
     private NearByLocalitiesAdapter mAdapterSecondary;
-    private PieChartView donutChart;
+
+    @Bind(R.id.switch_localities_props)
+    Switch switchRentSale;
+    @Bind(R.id.chart_donut)
+    PieChartView donutChart;
+    @Bind(R.id.tv_localities_aprmnts_title)
+    TextView titleTv;
+    @Bind(R.id.rv_localities_aprmnts)
+    RecyclerView mRecyclerView;
 
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_localities_apartments, null);
-        initView();
-        return view;
+    protected int getContentViewId() {
+        return R.layout.fragment_localities_apartments;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initView();
+    }
 
     private void initChart() {
-        donutChart = (PieChartView) view.findViewById(R.id.chart_donut);
         float[] values_num= new float[3];
         values_num[0] = 5f;
         values_num[1] = 2f;
@@ -76,7 +83,6 @@ public class LocalitiesApartmentsFragment extends Fragment {
 
     private void initView() {
         title = getArguments().getString("title");
-        TextView titleTv = (TextView) view.findViewById(R.id.tv_localities_aprmnts_title);
         titleTv.setText(title);
         initSwitch();
         initChart();
@@ -84,7 +90,6 @@ public class LocalitiesApartmentsFragment extends Fragment {
     }
 
     private void initRecyclerView() {
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_localities_aprmnts);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -92,7 +97,6 @@ public class LocalitiesApartmentsFragment extends Fragment {
     }
 
     private void initSwitch() {
-        switchRentSale = (Switch) view.findViewById(R.id.switch_localities_props);
         switchRentSale.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
