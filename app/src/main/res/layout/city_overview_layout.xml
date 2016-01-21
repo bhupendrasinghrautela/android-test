@@ -30,7 +30,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/city_collapse_bar_height"
         android:fitsSystemWindows="true"
-        app:contentScrim="@color/app_pink"
         app:expandedTitleTextAppearance="@style/WhiteExpandedToolbarText"
         app:collapsedTitleTextAppearance="@style/WhiteCollapsedToolbarText"
         app:expandedTitleGravity="bottom|center_horizontal"
@@ -76,7 +75,7 @@
             <include layout="@layout/top_locality_layout"/>
             <include layout="@layout/locality_properties"/>
             <include layout="@layout/city_empty_view"/>
-            <include layout="@layout/city_connect_seller"/>
+            <include layout="@layout/locality_interested_to_buy"/>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

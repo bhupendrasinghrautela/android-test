@@ -107,6 +107,7 @@
             android:textSize="@dimen/relevance_popup_window_text_size"
             android:textAllCaps="false"
             android:gravity="start|center_vertical"
-            style="?android:attr/borderlessButtonStyle"/>
+            style="?android:attr/borderlessButtonStyle"
+            android:visibility="gone"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>

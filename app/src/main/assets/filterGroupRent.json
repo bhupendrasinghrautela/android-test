@@ -88,17 +88,31 @@
             "selected": false
           },
           {
-            "displayName": "plot/land",
+            "displayName": "independent floor",
             "displayOrder": "4",
             "fieldName": "unitTypeId",
-            "value": "3",
+            "value": "7",
             "selected": false
           },
           {
-            "displayName": "builder floor",
+            "displayName": "farmhouse",
             "displayOrder": "5",
             "fieldName": "unitTypeId",
-            "value": "7",
+            "value": "8",
+            "selected": false
+          },
+          {
+            "displayName": "studio apartment",
+            "displayOrder": "6",
+            "fieldName": "unitTypeId",
+            "value": "9",
+            "selected": false
+          },
+          {
+            "displayName": "penthouse",
+            "displayOrder": "7",
+            "fieldName": "unitTypeId",
+            "value": "20",
             "selected": false
           }
         ],
@@ -151,38 +165,42 @@
         "displayName": "availability",
         "internalName": "i_possession in",
         "displayOrder": "5",
-        "layoutType": "3",
-        "termFilterValues": [
+        "layoutType": "6",
+        "type": "Day",
+        "termFilterValues": [],
+        "rangeFilterValues": [
           {
             "displayName": "ready to move",
             "displayOrder": "1",
-            "fieldName": "availability",
-            "value": "0",
+            "fieldName": "listingPossessionDate",
+            "minValue": 0,
+            "maxValue": 0,
             "selected": false
           },
           {
             "displayName": "in a week",
             "displayOrder": "2",
-            "fieldName": "availability",
-            "value": "7",
+            "fieldName": "listingPossessionDate",
+            "minValue": 0,
+            "maxValue": 7,
             "selected": false
           },
           {
             "displayName": "in a month",
             "displayOrder": "3",
-            "fieldName": "availability",
-            "value": "14",
+            "fieldName": "listingPossessionDate",
+            "minValue": 0,
+            "maxValue": 14,
             "selected": false
           },
           {
             "displayName": "anytime",
             "displayOrder": "4",
-            "fieldName": "availability",
-            "value": "10000",
+            "fieldName": "listingPossessionDate",
+            "minValue": 0,
+            "maxValue": 10000,
             "selected": false
           }
-        ],
-        "rangeFilterValues": [
         ],
         "rangeMinMaxFilterValues": [
         ]
@@ -237,14 +255,14 @@
             "displayName": "semi-furnished",
             "displayOrder": "2",
             "fieldName": "listingFurnished",
-            "value": "semifurnished",
+            "value": "semiFurnished",
             "selected": false
           },
           {
             "displayName": "fully furnished",
             "displayOrder": "3",
             "fieldName": "listingFurnished",
-            "value": "fullyfurnished",
+            "value": "fullyFurnished",
             "selected": false
           }
         ],

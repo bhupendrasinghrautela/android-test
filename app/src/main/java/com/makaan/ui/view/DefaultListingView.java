@@ -26,7 +26,10 @@ import com.makaan.response.listing.Listing;
 import com.makaan.util.StringUtil;
 import com.pkmmte.view.CircularImageView;
 
+import org.w3c.dom.Text;
+
 import java.util.Locale;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -51,6 +54,9 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
 
     @Bind(R.id.serp_default_listing_seller_image_view)
     CircularImageView mSellerImageView;
+
+    @Bind(R.id.serp_default_listing_seller_logo_text_view)
+    TextView mSellerLogoTextView;
 
     @Bind(R.id.serp_default_listing_property_price_text_view)
     TextView mPropertyPriceTextView;
@@ -263,6 +269,26 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         } else {
             mPropertySellerNameTextView.setText(mListing.project.builderName);
         }
+        // todo need to show seller logo image if available
+        mSellerLogoTextView.setText(String.valueOf(mListing.project.builderName.charAt(0)));
+        mSellerLogoTextView.setVisibility(View.VISIBLE);
+        mSellerImageView.setVisibility(View.GONE);
+        // show seller first character as logo
+        Random random = new Random();
+        switch (random.nextInt(4)) {
+            case 0:
+                mSellerLogoTextView.setBackgroundResource(R.drawable.default_listing_seller_logo_background_grey);
+                break;
+            case 1:
+                mSellerLogoTextView.setBackgroundResource(R.drawable.default_listing_seller_logo_background_red);
+                break;
+            case 2:
+                mSellerLogoTextView.setBackgroundResource(R.drawable.default_listing_seller_logo_background_pink);
+                break;
+            default:
+                mSellerLogoTextView.setBackgroundResource(R.drawable.default_listing_seller_logo_background_yellow);
+                break;
+        }
 
         // TODO diff image view
 
@@ -274,6 +300,7 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         } else {
             mAssistButton.setVisibility(View.VISIBLE);
         }
+
     }
 
     @Override

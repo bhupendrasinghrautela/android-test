@@ -234,16 +234,18 @@
     <dimen name="serp_listing_card_empty_view_after_property_tagline_view_margin_top">14dp</dimen>
 
     <dimen name="serp_listing_card_possession_image_view_left_margin">21dp</dimen>
+    <dimen name="serp_listing_card_possession_image_view_right_margin">79dp</dimen>
     <dimen name="serp_listing_card_possession_image_view_top_margin">14dp</dimen>
     <dimen name="serp_listing_card_possession_image_view_width">21.2dp</dimen>
     <dimen name="serp_listing_card_possession_image_view_height">24dp</dimen>
 
-    <dimen name="serp_listing_card_floor_image_view_left_margin">100dp</dimen>
+    <dimen name="serp_listing_card_floor_image_view_left_margin">21dp</dimen>
+    <dimen name="serp_listing_card_floor_image_view_right_margin">69dp</dimen>
     <dimen name="serp_listing_card_floor_image_view_top_margin">14dp</dimen>
     <dimen name="serp_listing_card_floor_image_view_width">19.8dp</dimen>
     <dimen name="serp_listing_card_floor_image_view_height">24dp</dimen>
 
-    <dimen name="serp_listing_card_bathroom_image_view_left_margin">90dp</dimen>
+    <dimen name="serp_listing_card_bathroom_image_view_left_margin">21dp</dimen>
     <dimen name="serp_listing_card_bathroom_image_view_top_margin">15dp</dimen>
     <dimen name="serp_listing_card_bathroom_image_view_width">17.6dp</dimen>
     <dimen name="serp_listing_card_bathroom_image_view_height">24dp</dimen>
@@ -413,7 +415,7 @@
     <dimen name="fragment_dialog_filters_item_layout_image_view_height">36dp</dimen>
     <dimen name="fragment_dialog_filters_item_layout_image_view_margin_bottom">6dp</dimen>
 
-    <dimen name="fragment_dialog_filters_item_layout_content_width">85dp</dimen>
+    <dimen name="fragment_dialog_filters_item_layout_content_width">87dp</dimen>
 
     <dimen name="fragment_dialog_filters_item_layout_display_text_text_size">16sp</dimen>
 
