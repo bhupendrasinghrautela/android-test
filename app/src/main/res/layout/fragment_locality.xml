@@ -31,7 +31,7 @@
             android:layout_height="@dimen/city_collapse_bar_height"
             android:fitsSystemWindows="true"
             app:contentScrim="@android:color/transparent"
-            app:title="electronic city"
+            app:title=""
             app:expandedTitleTextAppearance="@style/WhiteExpandedToolbarText"
             app:collapsedTitleTextAppearance="@style/WhiteCollapsedToolbarText"
             app:expandedTitleGravity="bottom|center_horizontal"
@@ -53,6 +53,8 @@
         //main content
         <LinearLayout
             android:layout_width="match_parent"
+            android:id="@+id/ll_locality_fragment"
+            android:visibility="invisible"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <include layout="@layout/locality_about"/>
