@@ -72,8 +72,8 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     TextView mCityDescription;
     @Bind(R.id.top_locality_layout)
     TopLocalityView mTopLocalityLayout;
-    @Bind(R.id.city_connect_header)
-    TextView mCityConnectHeader;
+/*    @Bind(R.id.city_connect_header)
+    TextView mCityConnectHeader;*/
     @Bind(R.id.price_trend_view)
     PriceTrendView mPriceTrendView;
     @Bind(R.id.city_property_buy_rent_switch)
@@ -109,7 +109,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         mCityCollapseToolbar.setTitle(mCity.label);
         addLocalitiesLifestyleFragment(mCity.entityDescriptions);
         addProperties(new TaxonomyService().getTaxonomyCardForCity(mCity.id));
-        mCityConnectHeader.setText(getString(R.string.city_connect_header_text) + " " + mCity.label);
+        //mCityConnectHeader.setText(getString(R.string.city_connect_header_text) + " " + mCity.label);
         MakaanNetworkClient.getInstance().getImageLoader().get(mCity.cityHeroshotImageUrl, new ImageListener() {
             @Override
             public void onResponse(final ImageContainer imageContainer, boolean b) {
