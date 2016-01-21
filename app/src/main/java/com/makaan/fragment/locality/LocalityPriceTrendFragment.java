@@ -1,15 +1,12 @@
 package com.makaan.fragment.locality;
 
-import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.makaan.R;
@@ -54,7 +51,7 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
     @Bind(R.id.rv_localities_recent_searches)
     RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
-    private NearByLocalitiesAdapter mAdapter;
+    private PopularSearchesAdapter mAdapter;
 
 
     @Override
@@ -67,6 +64,7 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         super.onActivityCreated(savedInstanceState);
         initView();
         new LocalityService().getTrendingSearchesInLocality(localityId);
+        fetchData(12);
     }
 
     private void fetchData(int months) {
@@ -142,11 +140,11 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new NearByLocalitiesAdapter(searchResponseItems);
+        mAdapter = new PopularSearchesAdapter(searchResponseItems);
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private class NearByLocalitiesAdapter extends RecyclerView.Adapter<NearByLocalitiesAdapter.ViewHolder> {
+    private class PopularSearchesAdapter extends RecyclerView.Adapter<PopularSearchesAdapter.ViewHolder> {
         private List<SearchResponseItem> list;
 
         public class ViewHolder extends RecyclerView.ViewHolder {
@@ -159,12 +157,12 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
             }
         }
 
-        public NearByLocalitiesAdapter(List<SearchResponseItem> list) {
+        public PopularSearchesAdapter(List<SearchResponseItem> list) {
             this.list = list;
         }
 
         @Override
-        public NearByLocalitiesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+        public PopularSearchesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                                      int viewType) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.row_localities_recent_searches, parent, false);

@@ -1,6 +1,5 @@
 package com.makaan.fragment.locality;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,12 +24,13 @@ import butterknife.Bind;
  */
 public class LocalityLifestyleFragment extends MakaanBaseFragment{
     private LinearLayoutManager mLayoutManager;
-    private NearByLocalitiesAdapter mAdapter;
+    private LocalityLifestyleAdapter mAdapter;
     private String title;
     @Bind(R.id.rv_localities_lifestyle)
     RecyclerView mRecyclerView;
     @Bind(R.id.tv_localities_lifestyle_title)
     TextView titleTv;
+
 
     @Override
     protected int getContentViewId() {
@@ -49,21 +49,18 @@ public class LocalityLifestyleFragment extends MakaanBaseFragment{
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
+        if(mRecyclerView.getAdapter().getItemCount() == 0)
+            mRecyclerView .setVisibility(View.GONE);
+        else
+            mRecyclerView.setAdapter(mAdapter);
     }
 
     public void setData(ArrayList<EntityDesc> entityDescs) {
-        if(entityDescs!=null&&entityDescs.size()!=0) {
-            mAdapter = new NearByLocalitiesAdapter(entityDescs);
-            if (mRecyclerView != null)
-                mRecyclerView.setAdapter(mAdapter);
-        }else{
-            mRecyclerView.setVisibility(View.GONE);
-        }
+            mAdapter = new LocalityLifestyleAdapter(entityDescs);
     }
 
 
-    private class NearByLocalitiesAdapter extends RecyclerView.Adapter<NearByLocalitiesAdapter.ViewHolder> {
+    private class LocalityLifestyleAdapter extends RecyclerView.Adapter<LocalityLifestyleAdapter.ViewHolder> {
         private List<EntityDesc> entityDescs;
 
         public class ViewHolder extends RecyclerView.ViewHolder {
@@ -80,12 +77,12 @@ public class LocalityLifestyleFragment extends MakaanBaseFragment{
             }
         }
 
-        public NearByLocalitiesAdapter(List<EntityDesc> entityDescs) {
+        public LocalityLifestyleAdapter(List<EntityDesc> entityDescs) {
             this.entityDescs = entityDescs;
         }
 
         @Override
-        public NearByLocalitiesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+        public LocalityLifestyleAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                                      int viewType) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.row_localities_lifestyle, parent, false);

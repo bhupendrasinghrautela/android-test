@@ -1,6 +1,5 @@
 package com.makaan.fragment.locality;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -19,8 +17,6 @@ import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.locality.ListingAggregation;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,11 +30,11 @@ import lecho.lib.hellocharts.view.PieChartView;
  */
 public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
     private LinearLayoutManager mLayoutManager;
-    private NearByLocalitiesAdapter mAdapter;
+    private AvailablePropertyStatusAdapter mAdapter;
     private String title;
     private List<ListingAggregation> primaryListingAggregations;
     private List<ListingAggregation> secondaryListingAggregations;
-    private NearByLocalitiesAdapter mAdapterSecondary;
+    private AvailablePropertyStatusAdapter mAdapterSecondary;
 
     @Bind(R.id.switch_localities_props)
     Switch switchRentSale;
@@ -48,7 +44,6 @@ public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
     TextView titleTv;
     @Bind(R.id.rv_localities_aprmnts)
     RecyclerView mRecyclerView;
-
 
     @Override
     protected int getContentViewId() {
@@ -107,8 +102,8 @@ public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
     }
 
     public void setData(ArrayList<ListingAggregation> nearByLocalities) {
-        mAdapter = new NearByLocalitiesAdapter(getData(nearByLocalities));
-        mAdapterSecondary = new NearByLocalitiesAdapter(removeAndCalculateMinMax(secondaryListingAggregations));
+        mAdapter = new AvailablePropertyStatusAdapter(getData(nearByLocalities));
+        mAdapterSecondary = new AvailablePropertyStatusAdapter(removeAndCalculateMinMax(secondaryListingAggregations));
         if (mRecyclerView != null)
             mRecyclerView.setAdapter(mAdapter);
     }
@@ -243,7 +238,7 @@ public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
         }
     }
 
-    private class NearByLocalitiesAdapter extends RecyclerView.Adapter<NearByLocalitiesAdapter.ViewHolder> {
+    private class AvailablePropertyStatusAdapter extends RecyclerView.Adapter<AvailablePropertyStatusAdapter.ViewHolder> {
         private List<DataItem> propertiesList =new ArrayList<>();
 
         public class ViewHolder extends RecyclerView.ViewHolder {
@@ -275,12 +270,12 @@ public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
             }
         }
 
-        public NearByLocalitiesAdapter(Set<DataItem> propertiesList) {
+        public AvailablePropertyStatusAdapter(Set<DataItem> propertiesList) {
             this.propertiesList.addAll(propertiesList);
         }
 
         @Override
-        public NearByLocalitiesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+        public AvailablePropertyStatusAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                                      int viewType) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.locality_apartments_layout, parent, false);

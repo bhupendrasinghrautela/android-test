@@ -1,6 +1,5 @@
 package com.makaan.fragment.locality;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,9 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.makaan.R;
@@ -26,7 +23,7 @@ import butterknife.Bind;
  */
 public class LocalityPropertiesFragment extends MakaanBaseFragment {
     private LinearLayoutManager mLayoutManager;
-    private NearByLocalitiesAdapter mAdapter;
+    private PropertiesAdapter mAdapter;
     private String title;
     @Bind(R.id.tv_localities_props_title)
     public TextView titleTv;
@@ -55,13 +52,14 @@ public class LocalityPropertiesFragment extends MakaanBaseFragment {
     }
 
     public void setData(List<TaxonomyCard> taxonomyCardList) {
-        mAdapter = new NearByLocalitiesAdapter(taxonomyCardList);
+        mAdapter = new PropertiesAdapter(taxonomyCardList);
         if (mRecyclerView != null)
             mRecyclerView.setAdapter(mAdapter);
     }
 
 
-    private class NearByLocalitiesAdapter extends RecyclerView.Adapter<NearByLocalitiesAdapter.ViewHolder> {
+    private class PropertiesAdapter
+            extends RecyclerView.Adapter<PropertiesAdapter.ViewHolder> {
         private List<TaxonomyCard> taxonomyCardList;
 
         public class ViewHolder extends RecyclerView.ViewHolder {
@@ -76,12 +74,12 @@ public class LocalityPropertiesFragment extends MakaanBaseFragment {
             }
         }
 
-        public NearByLocalitiesAdapter(List<TaxonomyCard> taxonomyCardList) {
+        public PropertiesAdapter(List<TaxonomyCard> taxonomyCardList) {
             this.taxonomyCardList = taxonomyCardList;
         }
 
         @Override
-        public NearByLocalitiesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+        public PropertiesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                                      int viewType) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.row_localities_props, parent, false);
