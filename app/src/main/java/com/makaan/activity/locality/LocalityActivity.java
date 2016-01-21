@@ -37,9 +37,9 @@ public class LocalityActivity extends MakaanFragmentActivity {
     private void setLocalityId() {
         Intent intent = getIntent();
         if(intent != null) {
-            localityId = intent.getLongExtra(LOCALITY_ID, 50157); //use  50157 for electronic city
+            localityId = intent.getLongExtra(LOCALITY_ID, 50001); //use  50157 for electronic city
         }else{
-            localityId = Long.valueOf(50157);
+            localityId = Long.valueOf(50001);
         }
     }
 

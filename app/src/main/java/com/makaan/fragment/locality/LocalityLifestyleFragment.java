@@ -49,7 +49,7 @@ public class LocalityLifestyleFragment extends MakaanBaseFragment{
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        if(mRecyclerView.getAdapter().getItemCount() == 0)
+        if(mAdapter !=null && mAdapter.getItemCount() == 0)
             mRecyclerView .setVisibility(View.GONE);
         else
             mRecyclerView.setAdapter(mAdapter);
