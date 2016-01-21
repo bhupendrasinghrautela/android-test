@@ -97,7 +97,21 @@ public class Selector {
     public Selector range(String fieldName, Double from, Double to) {
         RangeSelector rangeSelector = rangeSelectorHashMap.get(fieldName);
         if (null == rangeSelector) {
-            rangeSelector = new RangeSelector(fieldName, from, to);
+            rangeSelector = new RangeSelector<Double>(fieldName, from, to);
+            rangeSelectorHashMap.put(fieldName, rangeSelector);
+        } else {
+            rangeSelector.from = from;
+            rangeSelector.to = to;
+        }
+
+        return this;
+    }
+
+
+    public Selector range(String fieldName, long from, long to) {
+        RangeSelector rangeSelector = rangeSelectorHashMap.get(fieldName);
+        if (null == rangeSelector) {
+            rangeSelector = new RangeSelector<Long>(fieldName, from, to);
             rangeSelectorHashMap.put(fieldName, rangeSelector);
         } else {
             rangeSelector.from = from;

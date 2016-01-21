@@ -12,14 +12,14 @@ import static com.makaan.constants.RequestConstants.TO;
 /**
  * Created by vaibhav on 08/01/16.
  */
-public class RangeSelector implements MakaanReqSelector {
+public class RangeSelector<T> implements MakaanReqSelector {
 
 
     public String fieldName;
-    public Double from;
-    public Double to;
+    public T from;
+    public T to;
 
-    public RangeSelector(String fieldName, Double from, Double to) {
+    public RangeSelector(String fieldName, T from, T to) {
         this.fieldName = fieldName;
         this.from = from;
         this.to = to;
@@ -37,7 +37,7 @@ public class RangeSelector implements MakaanReqSelector {
             return "";
         }
 
-        LinkedHashMap<String, Double> fromToMap = new LinkedHashMap<>();
+        LinkedHashMap<String, T> fromToMap = new LinkedHashMap<>();
         if (null != from) {
             fromToMap.put(FROM, from);
         }
@@ -45,10 +45,10 @@ public class RangeSelector implements MakaanReqSelector {
             fromToMap.put(TO, to);
         }
 
-        LinkedHashMap<String, Map<String, Double>> fieldMap = new LinkedHashMap<>();
+        LinkedHashMap<String, Map<String, T>> fieldMap = new LinkedHashMap<>();
         fieldMap.put(fieldName, fromToMap);
 
-        LinkedHashMap<String, Map<String, Map<String, Double>>> jsonMap = new LinkedHashMap<>();
+        LinkedHashMap<String, Map<String, Map<String, T>>> jsonMap = new LinkedHashMap<>();
 
         jsonMap.put(RANGE, fieldMap);
 

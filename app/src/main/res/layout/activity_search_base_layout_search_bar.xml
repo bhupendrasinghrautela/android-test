@@ -17,54 +17,93 @@
             android:layout_marginStart="@dimen/activity_search_base_layout_search_bar_back_button_margin_left"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:background="@drawable/back_arrow" />
+            android:background="@drawable/back_arrow_white" />
 
-        <com.pkmmte.view.CircularImageView
-            android:id="@+id/activity_search_base_layout_search_bar_builder_image_view"
-            android:layout_width="@dimen/activity_search_base_layout_search_bar_builder_image_view_width"
-            android:layout_height="@dimen/activity_search_base_layout_search_bar_builder_image_view_height"
-            android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_top"
-            android:layout_marginRight="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_right"
-            android:layout_marginEnd="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_right"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-            <!--android:src="@color/app_grey" />-->
-        <ImageButton
-            android:id="@+id/activity_search_base_layout_search_bar_search_image_button"
-            android:layout_width="@dimen/activity_search_base_layout_search_bar_search_image_button_width"
-            android:layout_height="@dimen/activity_search_base_layout_search_bar_search_image_button_height"
-            android:layout_marginRight="@dimen/activity_search_base_layout_search_bar_search_image_button_margin_right"
-            android:layout_marginEnd="@dimen/activity_search_base_layout_search_bar_search_image_button_margin_right"
-            android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_search_image_button_margin_top"
-            android:layout_toLeftOf="@id/activity_search_base_layout_search_bar_builder_image_view"
-            android:layout_toStartOf="@id/activity_search_base_layout_search_bar_builder_image_view"
-            android:background="@drawable/search_icon" />
-
-        <TextView
-            android:id="@+id/activity_search_base_layout_search_bar_search_text_view"
+        <RelativeLayout
+            android:id="@+id/activity_search_base_layout_search_bar_description_relative_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_search_base_layout_search_bar_search_text_view_margin_left"
-            android:layout_marginStart="@dimen/activity_search_base_layout_search_bar_search_text_view_margin_left"
-            android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_search_text_view_margin_top"
-            android:text="@string/search_by_property"
-            android:textColor="@color/white"
-            android:textSize="@dimen/activity_search_base_layout_search_bar_search_text_view_text_size"
             android:layout_toRightOf="@id/activity_search_base_layout_search_bar_back_button"
             android:layout_toEndOf="@id/activity_search_base_layout_search_bar_back_button"
-            android:layout_toLeftOf="@id/activity_search_base_layout_search_bar_search_image_button"
-            android:layout_toStartOf="@id/activity_search_base_layout_search_bar_search_image_button" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
 
+            <com.pkmmte.view.CircularImageView
+                android:id="@+id/activity_search_base_layout_search_bar_builder_image_view"
+                android:layout_width="@dimen/activity_search_base_layout_search_bar_builder_image_view_width"
+                android:layout_height="@dimen/activity_search_base_layout_search_bar_builder_image_view_height"
+                android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_top"
+                android:layout_marginRight="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_right"
+                android:layout_marginEnd="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_right"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+                <!--android:src="@color/app_grey" />-->
+            <ImageButton
+                android:id="@+id/activity_search_base_layout_search_bar_search_image_button"
+                android:layout_width="@dimen/activity_search_base_layout_search_bar_search_image_button_width"
+                android:layout_height="@dimen/activity_search_base_layout_search_bar_search_image_button_height"
+                android:layout_marginRight="@dimen/activity_search_base_layout_search_bar_search_image_button_margin_right"
+                android:layout_marginEnd="@dimen/activity_search_base_layout_search_bar_search_image_button_margin_right"
+                android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_search_image_button_margin_top"
+                android:layout_toLeftOf="@id/activity_search_base_layout_search_bar_builder_image_view"
+                android:layout_toStartOf="@id/activity_search_base_layout_search_bar_builder_image_view"
+                android:background="@drawable/search_white" />
+
+            <TextView
+                android:id="@+id/activity_search_base_layout_search_bar_search_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_search_base_layout_search_bar_search_text_view_margin_left"
+                android:layout_marginStart="@dimen/activity_search_base_layout_search_bar_search_text_view_margin_left"
+                android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_search_text_view_margin_top"
+                android:text="@string/search_by_property"
+                android:textColor="@color/white"
+                android:textSize="@dimen/activity_search_base_layout_search_bar_search_text_view_text_size"
+                android:layout_toLeftOf="@id/activity_search_base_layout_search_bar_search_image_button"
+                android:layout_toStartOf="@id/activity_search_base_layout_search_bar_search_image_button"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+
+        </RelativeLayout>
         <!-- TODO search view style not present on zeplin -->
-        <SearchView
-            android:id="@+id/activity_search_base_layout_search_bar_search_view"
+        <RelativeLayout
+            android:id="@+id/activity_search_base_layout_search_bar_search_relative_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:iconifiedByDefault="false"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_toLeftOf="@id/activity_search_base_layout_search_bar_builder_image_view"
             android:layout_toRightOf="@id/activity_search_base_layout_search_bar_back_button"
-            android:visibility="gone"/>
+            android:layout_toEndOf="@id/activity_search_base_layout_search_bar_back_button"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:visibility="gone">
+            <ImageButton
+                android:id="@+id/activity_search_base_layout_search_bar_search_close_button"
+                android:layout_width="@dimen/activity_search_base_layout_search_bar_search_image_button_width"
+                android:layout_height="@dimen/activity_search_base_layout_search_bar_search_image_button_height"
+                android:layout_marginRight="@dimen/activity_search_base_layout_search_bar_search_image_button_margin_right"
+                android:layout_marginEnd="@dimen/activity_search_base_layout_search_bar_search_image_button_margin_right"
+                android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_search_image_button_margin_top"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/fill_close" />
+
+            <EditText
+                android:id="@+id/activity_search_base_layout_search_bar_search_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_search_base_layout_search_bar_search_text_view_margin_left"
+                android:layout_marginStart="@dimen/activity_search_base_layout_search_bar_search_text_view_margin_left"
+                android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_search_text_view_margin_top"
+                android:textColor="@color/white"
+                android:textSize="@dimen/activity_search_base_layout_search_bar_search_text_view_text_size"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/activity_search_base_layout_search_bar_search_close_button"
+                android:layout_toStartOf="@+id/activity_search_base_layout_search_bar_search_close_button"
+                android:singleLine="true"
+                android:background="@null"
+                android:imeOptions="actionSearch"
+                android:textCursorDrawable="@drawable/search_view_white_cursor"/>
+
+        </RelativeLayout>
     </RelativeLayout>
 </merge>

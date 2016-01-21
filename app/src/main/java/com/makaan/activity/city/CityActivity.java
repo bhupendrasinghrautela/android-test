@@ -29,7 +29,7 @@ public class CityActivity extends MakaanFragmentActivity {
             mCityId = intent.getLongExtra(CITY_ID, 1l);
         }
         mCityOverViewFragment = new CityOverViewFragment();
-        initFragment(R.id.container, mCityOverViewFragment, true);
+        initFragment(R.id.container, mCityOverViewFragment, false);
         fetchData();
     }
 
