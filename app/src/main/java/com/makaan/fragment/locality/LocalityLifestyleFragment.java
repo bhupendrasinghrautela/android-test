@@ -1,6 +1,5 @@
 package com.makaan.fragment.locality;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -58,7 +57,9 @@ public class LocalityLifestyleFragment extends MakaanBaseFragment{
             if (mRecyclerView != null)
                 mRecyclerView.setAdapter(mAdapter);
         }else{
-            mRecyclerView.setVisibility(View.GONE);
+            if(mRecyclerView != null) {
+                mRecyclerView.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -96,7 +97,7 @@ public class LocalityLifestyleFragment extends MakaanBaseFragment{
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             final EntityDesc nearByLocalitu = entityDescs.get(position);
-//            holder.descriptionTv.setText(nearByLocalitu.description);
+            holder.descriptionTv.setText(nearByLocalitu.name);
             holder.descriptionFullTv.setText(nearByLocalitu.description);
             holder.localityIv.setImageResource(R.drawable.placeholder_localities_props);
             //TODO: Picasso load imgurl

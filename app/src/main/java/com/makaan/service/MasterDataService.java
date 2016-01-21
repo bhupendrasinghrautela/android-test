@@ -24,6 +24,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -105,6 +106,24 @@ public class MasterDataService implements MakaanService {
 
     }
 
+    public void populateBhkList() {
+        Type listType = new TypeToken<HashMap<String, String>>() {
+        }.getType();
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.UNIT_TYPE, listType, new ObjectGetCallback() {
+            @Override
+            @SuppressWarnings("unchecked")
+            public void onSuccess(Object responseObject) {
+                HashMap<String, String> bhks = (HashMap<String, String>) responseObject;
+
+                for (Map.Entry<String, String> bhk : bhks.entrySet()) {
+                    MasterDataCache.getInstance().addBhkList(new ApiIntLabel(bhk.getValue(), Integer.parseInt(bhk.getKey())));
+                }
+            }
+        }, "bhkList.json");
+
+    }
+
     public void populatePropertyStatus() {
         Type listType = new TypeToken<HashMap<String, String>>() {
         }.getType();
@@ -120,6 +139,20 @@ public class MasterDataService implements MakaanService {
                 }
             }
         }, "propertyStatus.json");
+
+    }
+
+    public void populatePropertyDisplayOrder() {
+        final Type propertyDisplay = new TypeToken<HashMap<String, HashMap<String,HashMap<String,ArrayList<String>>>>>() {
+        }.getType();
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.PROPERTY_DISPLAY_ORDER, propertyDisplay, new ObjectGetCallback() {
+            @Override
+            @SuppressWarnings("unchecked")
+            public void onSuccess(Object responseObject) {
+                MasterDataCache.getInstance().addPropertyDisplayOrder((Map<String, Map<String, Map<String, List<String>>>>) responseObject);
+            }
+        }, "propertyPageDisplayOrder.json");
 
     }
 

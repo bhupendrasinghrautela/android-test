@@ -31,7 +31,6 @@
         android:layout_height="@dimen/city_collapse_bar_height"
         android:fitsSystemWindows="true"
         app:contentScrim="@color/app_pink"
-        app:title="@string/city_title"
         app:expandedTitleTextAppearance="@style/WhiteExpandedToolbarText"
         app:collapsedTitleTextAppearance="@style/WhiteCollapsedToolbarText"
         app:expandedTitleGravity="bottom|center_horizontal"
@@ -50,8 +49,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="@dimen/city_big_text"
-            app:layout_collapseMode="parallax"
-            android:text="@string/city_sub_title"/>
+            app:layout_collapseMode="parallax"/>
     </android.support.design.widget.CollapsingToolbarLayout>
 </android.support.design.widget.AppBarLayout>
     <android.support.v4.widget.NestedScrollView
@@ -73,8 +71,11 @@
             <include layout="@layout/city_empty_view"/>
             <include layout="@layout/property_range_layout"/>
             <include layout="@layout/city_empty_view"/>
+            <include layout="@layout/locality_lifestyle"/>
             <include layout="@layout/price_trend_layout"/>
             <include layout="@layout/top_locality_layout"/>
+            <include layout="@layout/locality_properties"/>
+            <include layout="@layout/city_empty_view"/>
             <include layout="@layout/city_connect_seller"/>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
