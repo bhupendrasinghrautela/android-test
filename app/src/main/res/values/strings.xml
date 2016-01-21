@@ -78,4 +78,19 @@
     <string name="property_range">property range</string>
     <string name="top_localities">top localities</string>
     <string name="view_properties">view properties</string>
+    <string name="locality_title" />
+    <string name="locality_about_median_price">median price</string>
+    <string name="locality_about_annual_growth">annual growth</string>
+    <string name="locality_about_median_rent">median rent</string>
+    <string name="locality_rental_demand">rental demand</string>
+    <string name="locality_kyn_title">know your neighbourhood</string>
+    <string name="locality_nearby_localities_title">nearby localities</string>
+    <string name="locality_available_locality_status">available property status</string>
+    <string name="locality_price_trends_label">price trends</string>
+    <string name="localities_lifestyle_title">lifestyle in electronic city</string>
+    <string name="locality_top_agents_label">top agents</string>
+    <string name="locality_top_builders_label">top builders</string>
+    <string name="locality_properties_label">properties in electronic city</string>
+    <string name="locality_switch_buy">buy</string>
+    <string name="locality_switch_rent">rent</string>
 </resources>

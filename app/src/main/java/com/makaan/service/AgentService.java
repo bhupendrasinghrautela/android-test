@@ -27,7 +27,6 @@ public class AgentService implements MakaanService{
         getTopAgentsForLocality(cityId, localityIds, null, null, noOfAgents, isRental, topAgentsCallback);
     }
 
-
     public void getTopAgentsForLocality(Long cityId, ArrayList<String> localityIdList, ArrayList<String> bedrooms, String unitType, Integer noOfAgents, boolean isRental, TopAgentsCallback topAgentsCallback) {
 
         if (null != cityId) {

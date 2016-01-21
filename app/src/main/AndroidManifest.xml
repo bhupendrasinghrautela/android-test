@@ -20,7 +20,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activity.listing.ListingDetailActivity"
+            android:name=".activity.locality.LocalityActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.NoActionBarTheme">
@@ -30,9 +30,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--<activity-->
+            <!--android:name=".activity.listing.ListingDetailActivity"-->
+            <!--android:label="@string/app_name"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/NoActionBarTheme">-->
 
-        <activity android:name=".activity.city.CityActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+
+        <!--<activity android:name=".activity.locality.LocalityActivity">-->
+
+        <!--<activity android:name=".activity.city.CityActivity"-->
+            <!--android:theme="@style/AppTheme.NoActionBar"/>-->
 
 
         <activity android:name=".activity.listing.SerpActivity"

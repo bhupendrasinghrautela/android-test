@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--TODO :: hardcoded values, work in progress-->
+
+<com.makaan.ui.PriceTrendView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/price_trend_view"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:padding="@dimen/city_internal_padding"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/header_text"
+        android:gravity="center"
+        android:textSize="@dimen/city_header_text"
+        android:text="@string/price_trends"
+        android:textColor="@color/listingBlack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/price_range_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed"
+        app:tabGravity="fill" />
+    <include layout="@layout/line_chart_view_layout"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:id="@+id/iv_price_trends_median"
+            android:src="@drawable/icon_yellow_heart"
+            />
+        <TextView
+            android:id="@+id/tv_price_trends_median_desc"
+            android:layout_marginLeft="15dp"
+            android:layout_alignTop="@+id/iv_price_trends_median"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#444"
+            android:textSize="16sp"
+            android:layout_toRightOf="@id/iv_price_trends_median"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:layout_below="@id/iv_price_trends_median"
+            android:id="@+id/iv_price_trends_growth"
+            android:src="@drawable/icon_yellow_heart"
+            />
+
+        <TextView
+            android:id="@+id/tv_price_trends_growth_desc"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_alignTop="@+id/iv_price_trends_growth"
+            android:layout_height="wrap_content"
+            android:textColor="#444"
+            android:textSize="16sp"
+            android:layout_toRightOf="@id/iv_price_trends_growth"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:layout_below="@id/iv_price_trends_growth"
+            android:id="@+id/iv_price_trends_rent_growth"
+            android:src="@drawable/icon_yellow_heart"
+            />
+
+        <TextView
+            android:id="@+id/tv_price_trends_rent_growth_desc"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_alignTop="@id/iv_price_trends_rent_growth"
+            android:layout_height="wrap_content"
+            android:textColor="#444"
+            android:textSize="16sp"
+            android:layout_toRightOf="@id/iv_price_trends_growth"
+            />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/header_text_popular_searches"
+        android:gravity="center"
+        android:layout_marginTop="18dp"
+        android:textSize="16sp"
+        android:text="popular searches in this area"
+        android:textColor="@color/listingBlack"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="16dp"
+        android:layout_height="wrap_content"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:id="@+id/rv_localities_recent_searches"
+        />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="#e71c28"
+        android:layout_marginTop="25dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:textSize="12sp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:text="show all properties"
+        />
+
+</com.makaan.ui.PriceTrendView>
