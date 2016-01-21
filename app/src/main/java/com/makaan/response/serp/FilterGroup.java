@@ -25,6 +25,7 @@ public class FilterGroup implements Parcelable, FinderFilterable, Cloneable {
     public String internalName;
     public int displayOrder;
     public int layoutType;
+    public String type;
     public boolean isSelected = false;
 
     public ArrayList<TermFilter> termFilterValues = new ArrayList<>();
@@ -38,6 +39,7 @@ public class FilterGroup implements Parcelable, FinderFilterable, Cloneable {
         this.internalName = in.readString();
         this.displayOrder = in.readInt();
         this.layoutType = in.readInt();
+        this.type = in.readString();
 
         this.termFilterValues = new ArrayList<>();
         in.readTypedList(termFilterValues, TermFilter.CREATOR);
@@ -59,6 +61,7 @@ public class FilterGroup implements Parcelable, FinderFilterable, Cloneable {
         this.internalName = filterGroup.internalName;
         this.displayOrder = filterGroup.displayOrder;
         this.layoutType = filterGroup.layoutType;
+        this.type = filterGroup.type;
 
         for(TermFilter filter : filterGroup.termFilterValues) {
             this.termFilterValues.add(filter.clone());
@@ -82,6 +85,7 @@ public class FilterGroup implements Parcelable, FinderFilterable, Cloneable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(displayName);
         parcel.writeString(internalName);
+        parcel.writeString(type);
         parcel.writeTypedList(termFilterValues);
         parcel.writeTypedList(rangeFilterValues);
         parcel.writeTypedList(rangeMinMaxFilterValues);
@@ -105,6 +109,9 @@ public class FilterGroup implements Parcelable, FinderFilterable, Cloneable {
         for (RangeFilter rangeFilter : rangeFilterValues) {
             rangeFilter.selected = false;
         }
+        for (RangeMinMaxFilter rangeFilter : rangeMinMaxFilterValues) {
+            rangeFilter.selected = false;
+        }
 
     }
 
@@ -116,6 +123,7 @@ public class FilterGroup implements Parcelable, FinderFilterable, Cloneable {
     public void applyFilters(FilterGroup filterGroup) {
         this.termFilterValues = new ArrayList<>();
         this.rangeFilterValues = new ArrayList<>();
+        this.rangeMinMaxFilterValues = new ArrayList<>();
 
         this.termFilterValues.addAll(filterGroup.termFilterValues);
         this.rangeFilterValues.addAll(filterGroup.rangeFilterValues);

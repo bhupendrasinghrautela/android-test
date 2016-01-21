@@ -10,7 +10,7 @@ import com.makaan.fragment.locality.LocalityFragment;
  * Created by tusharchaudhary on 1/18/16.
  */
 public class LocalityActivity extends MakaanFragmentActivity {
-    private static final String LOCALITY_ID = "localityId";
+    public static final String LOCALITY_ID = "localityId";
     private Long localityId;
     private LocalityFragment localityFragment;
 
