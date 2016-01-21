@@ -77,7 +77,7 @@ public class SearchService implements MakaanService {
             urlBuilder.append(key);
         }
 
-        if(TextUtils.isEmpty(city)) {
+        if(!TextUtils.isEmpty(city)) {
             urlBuilder.append(TYPEAHEAD_CITY);
             urlBuilder.append(city);
         }
