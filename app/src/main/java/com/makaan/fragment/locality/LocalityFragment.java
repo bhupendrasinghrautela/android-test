@@ -2,6 +2,7 @@ package com.makaan.fragment.locality;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
@@ -103,8 +104,9 @@ public class LocalityFragment extends MakaanBaseFragment{
     @Subscribe
     public void onResults(LocalityByIdEvent localityByIdEvent){
         locality = localityByIdEvent.locality;
-        fetchHero();
         populateLocalityData();
+        fetchHero();
+        mMainCityImage.setDefaultImageResId(R.drawable.locality_hero);
         addLocalitiesLifestyleFragment(locality.entityDescriptions);
         addProperties(new TaxonomyService().getTaxonomyCardForLocality(locality.localityId));
         ((LocalityService)MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(locality.latitude, locality.longitude, 10);
@@ -231,7 +233,6 @@ public class LocalityFragment extends MakaanBaseFragment{
         newFragment.setArguments(bundle);
         initFragment(R.id.container_nearby_localities_top_builders, newFragment, false);
         newFragment.setDataForTopBuilders(builders);
-
     }
     private void addProperties(List<TaxonomyCard> taxonomyCardList) {
         LocalityPropertiesFragment newFragment = new LocalityPropertiesFragment();
@@ -248,6 +249,7 @@ public class LocalityFragment extends MakaanBaseFragment{
             MakaanNetworkClient.getInstance().getImageLoader().get(locality.localityHeroshotImageUrl, new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
+
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }

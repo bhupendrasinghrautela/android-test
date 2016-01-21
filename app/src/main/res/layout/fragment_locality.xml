@@ -13,12 +13,11 @@
     <ImageView
         android:id="@+id/blurred_city_image"
         android:layout_width="match_parent"
-        android:alpha="0"
         android:scaleType="centerCrop"
         android:layout_height="match_parent"/>
 
     <ImageView
-        android:background="@color/dark_grey"
+        android:src="#80000000"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"/>
@@ -62,7 +61,6 @@
             <include layout="@layout/locality_seperator_view"/>
             <include layout="@layout/locality_lifestyle"/>
             <include layout="@layout/locality_price_trends"/>
-            <include layout="@layout/locality_seperator_view_white_bg"/>
             <include layout="@layout/locality_available_property_status"/>
             <include layout="@layout/locality_properties"/>
             <include layout="@layout/locality_seperator_view"/>
