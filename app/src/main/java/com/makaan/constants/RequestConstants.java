@@ -47,6 +47,11 @@ public class RequestConstants {
 
 
     public static final String ENTITY_DESCRIPTIONS = "entityDescriptions";
+    public static final String ENTITY_DESCRIPTION_CATEGORIES = "entityDescriptionCategories";
+    public static final String MASTER_DESCRIPTION_CATEGORIES = "masterDescriptionCategories";
+    public static final String MASTER_DESCRIPTION_PARENT_CATEGORIES = "masterDescriptionParentCategories";
+    public static final String PARENT_CATEGORY = "parentCategory";
+    public static final String NAME = "name";
     public static final String CENTER_LAT = "centerLatitude";
     public static final String CENTER_LONG = "centerLongitude";
     public static final String DESCRIPTION = "description";
@@ -87,7 +92,7 @@ public class RequestConstants {
     public static final String STATUS = "status";
     public static final String APARTMENT = "apartment";
 
-    public static final String SOURCE_DOMAIN_MAKAAN = "sourceDomain=Makaan";
+    public static final String SOURCE_DOMAIN_MAKAAN = "sourceDomain=Makaan&";
     public static final String LISTING_CATEGORY = "listingCategory";
 
 

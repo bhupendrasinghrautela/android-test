@@ -31,9 +31,10 @@ public class CityService implements MakaanService {
 
         if (null != cityId) {
             Selector citySelector = new Selector();
-            citySelector.fields(new String[]{ID,ENTITY_DESCRIPTIONS,CITY_TAG_LINE, CENTER_LAT, CENTER_LONG, DESCRIPTION, CITY_HEROSHOT_IMAGE_URL, ANNUAL_GROWTH, RENTAL_YIELD, DEMAND_RATE, SUPPLY_RATE, LABEL});
+            citySelector.fields(new String[]{ENTITY_DESCRIPTION_CATEGORIES,MASTER_DESCRIPTION_CATEGORIES,MASTER_DESCRIPTION_PARENT_CATEGORIES,PARENT_CATEGORY,NAME,ENTITY_DESCRIPTIONS,ID,CITY_TAG_LINE, CENTER_LAT, CENTER_LONG, DESCRIPTION, CITY_HEROSHOT_IMAGE_URL,
+                    ANNUAL_GROWTH, RENTAL_YIELD, DEMAND_RATE, SUPPLY_RATE, LABEL});
 
-            String cityUrl = ApiConstants.CITY.concat(cityId.toString()).concat("?").concat(citySelector.build());
+            String cityUrl = ApiConstants.CITY.concat(cityId.toString()).concat("?").concat(SOURCE_DOMAIN_MAKAAN).concat(citySelector.build());
 
             Type cityType = new TypeToken<City>() {}.getType();
 
