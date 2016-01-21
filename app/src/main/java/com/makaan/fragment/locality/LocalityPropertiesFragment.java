@@ -14,6 +14,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.pojo.TaxonomyCard;
 
 import java.util.List;
@@ -23,28 +24,30 @@ import butterknife.Bind;
 /**
  * Created by tusharchaudhary on 1/19/16.
  */
-public class LocalityPropertiesFragment extends Fragment {
-    private View view;
-    RecyclerView mRecyclerView;
+public class LocalityPropertiesFragment extends MakaanBaseFragment {
     private LinearLayoutManager mLayoutManager;
     private NearByLocalitiesAdapter mAdapter;
     private String title;
+    @Bind(R.id.tv_localities_props_title)
+    public TextView titleTv;
+    @Bind(R.id.rv_localities_props)
+    public  RecyclerView mRecyclerView;
 
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_localities_properties, null);
+    protected int getContentViewId() {
+        return R.layout.fragment_localities_properties;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         initView();
-        return view;
     }
 
     private void initView() {
         title = getArguments().getString("title");
-        TextView titleTv = (TextView) view.findViewById(R.id.tv_localities_props_title);
         titleTv.setText(title);
-
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_localities_props);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);

@@ -101,4 +101,6 @@
     <!-- Serp Builder Item Dimens -->
     <color name="serp_listing_item_builder_empty_view_background_color">#4CFFFFFF</color>
     <color name="serp_listing_item_seller_empty_view_background_color">#4CFFFFFF</color>
+    <color name="dark_grey">#888</color>
+    <color name="locality_light_grey">#979797</color>
 </resources>

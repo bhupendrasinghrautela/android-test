@@ -7,12 +7,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginLeft="@dimen/locality_kyn_margin_right"
+        android:layout_marginRight="@dimen/locality_kyn_margin_right"
+        android:layout_marginTop="@dimen/locality_kyn_margin_top"
+        android:layout_marginBottom="@dimen/locality_kyn_margin_bottom"
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="@dimen/locality_text_big"
         android:layout_gravity="center_horizontal"
         android:id="@+id/tv_localities_kyn_title"
         />
@@ -20,7 +20,6 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_localities_kyn"
         android:layout_width="wrap_content"
-        android:layout_height="350dp"
-        android:minHeight="350dp" />
+        android:layout_height="@dimen/locality_kyn_recycler_height"/>
 
 </LinearLayout>

@@ -24,115 +24,111 @@
     </FrameLayout>
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_marginTop="27dp"
+    android:layout_marginTop="@dimen/locality_about_top_margin"
     android:layout_height="wrap_content">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rs 4,600/ sq ft"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="@dimen/locality_text_medium"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="58dp"
+        android:layout_marginLeft="@dimen/locality_about_median_left_margin"
         android:id="@+id/tv_locality_per_sqr_ft_median_price"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="median price"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/locality_about_median_top_margin"
         android:textColor="@color/white"
+        android:text="@string/locality_about_median_price"
         android:layout_alignLeft="@+id/tv_locality_per_sqr_ft_median_price"
-        android:textSize="14sp"
+        android:textSize="@dimen/locality_text_small"
         android:layout_below="@id/tv_locality_per_sqr_ft_median_price"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="15.25 %"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="@dimen/locality_text_medium"
         android:layout_alignLeft="@+id/tv_locality_annual_growth_label"
         android:id="@+id/tv_locality_annual_growth"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="annual growth"
+        android:text="@string/locality_about_annual_growth"
         android:id="@+id/tv_locality_annual_growth_label"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/locality_about_median_top_margin"
         android:textColor="@color/white"
         android:layout_alignParentRight="true"
-        android:textSize="14sp"
-        android:layout_marginRight="58dp"
+        android:textSize="@dimen/locality_text_v_small"
+        android:layout_marginRight="@dimen/locality_about_median_left_margin"
         android:layout_below="@id/tv_locality_annual_growth"
         />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="26dp"
+        android:layout_height="@dimen/locality_seperator_height"
+        android:layout_marginTop="@dimen/locality_seperator_top_margin"
         android:layout_below="@id/tv_locality_annual_growth_label"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="@dimen/locality_seperator_left_margin"
         android:id="@+id/view_locality_seperator"
-        android:background="#979797"/>
+        android:background="@color/locality_light_grey"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/view_locality_seperator"
-        android:text="Rs 4,600/ sq ft"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="@dimen/locality_about_median_rent_top_margin"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="@dimen/locality_text_medium"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="58dp"
+        android:layout_marginLeft="@dimen/locality_about_median_left_margin"
         android:id="@+id/tv_locality_per_sqr_ft_median_price_rent"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="median rent"
-        android:layout_marginTop="5dp"
+        android:text="@string/locality_about_median_rent"
+        android:layout_marginTop="@dimen/locality_about_median_top_margin"
         android:textColor="@color/white"
         android:layout_alignLeft="@+id/tv_locality_per_sqr_ft_median_price_rent"
-        android:textSize="14sp"
+        android:textSize="@dimen/locality_text_small"
         android:layout_below="@id/tv_locality_per_sqr_ft_median_price_rent"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="average"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="@dimen/locality_about_median_rent_top_margin"
         android:layout_below="@id/view_locality_seperator"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="@dimen/locality_text_medium"
         android:layout_alignLeft="@+id/tv_locality_annual_growth_label_rent"
         android:id="@+id/tv_locality_annual_growth_rent"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="rental demand"
+        android:text="@string/locality_rental_demand"
         android:id="@+id/tv_locality_annual_growth_label_rent"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/locality_about_median_top_margin"
         android:textColor="@color/white"
         android:layout_alignParentRight="true"
-        android:textSize="14sp"
-        android:layout_marginRight="58dp"
+        android:textSize="@dimen/locality_text_small"
+        android:layout_marginRight="@dimen/locality_about_median_left_margin"
         android:layout_below="@id/tv_locality_annual_growth_rent"
         />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="26dp"
+        android:layout_height="@dimen/locality_seperator_height"
+        android:layout_marginTop="@dimen/locality_seperator_top_margin"
         android:layout_below="@id/tv_locality_annual_growth_label_rent"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="@dimen/locality_seperator_left_margin"
         android:id="@+id/view_locality_seperator_2"
-        android:background="#979797"/>
+        android:background="@color/locality_light_grey"/>
 
 </RelativeLayout>
 

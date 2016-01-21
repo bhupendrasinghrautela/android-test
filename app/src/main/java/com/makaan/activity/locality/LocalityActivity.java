@@ -102,20 +102,20 @@ public class LocalityActivity extends MakaanFragmentActivity {
         if(bundle!=null)
         localityId = bundle.getLong("localityId");
         if(localityId==null)
-            this.localityId = Long.valueOf(50001);
+            this.localityId = Long.valueOf(50157); //use 50001 for belapur
     }
 
     private void fetchData() {
         ((LocalityService)MakaanServiceFactory.getInstance().getService(LocalityService.class)).getLocalityById(localityId);
-        addProperties(new TaxonomyService().getTaxonomyCardForLocality(localityId));
        }
 
     @Subscribe
     public void onResults(LocalityByIdEvent localityByIdEvent){
         locality = localityByIdEvent.locality;
+        fetchHero();
         populateLocalityData();
         addLocalitiesLifestyleFragment(locality.entityDescriptions);
-        fetchHero();
+        addProperties(new TaxonomyService().getTaxonomyCardForLocality(locality.localityId));
         ((LocalityService)MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(locality.latitude, locality.longitude, 10);
         ((AmenityService)MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(locality.latitude, locality.longitude, 10);
         ((AgentService)MakaanServiceFactory.getInstance().getService(AgentService.class)).getTopAgentsForLocality(locality.cityId, locality.localityId, 10, false, new TopAgentsCallback() {
@@ -156,28 +156,6 @@ public class LocalityActivity extends MakaanFragmentActivity {
         annualRentDemandGrowthTv.setText(locality.avgRentalDemandRisePercentage == null ? "N/A" : "" + locality.avgPriceRisePercentage + " %");
     }
 
-    private void calculateMedian(ArrayList<ListingAggregation> listingAggregations) {
-        double rentalMedian = 0, saleMedian = 0;
-        int countsRental = 0, countsSales = 0;
-        for (ListingAggregation ListingAggregation:listingAggregations){
-            if(ListingAggregation.listingCategory.equalsIgnoreCase("primary") ||
-                    ListingAggregation.listingCategory.equalsIgnoreCase("resale")){
-                saleMedian = saleMedian + ListingAggregation.avgPricePerUnitArea;
-                countsSales++;
-            }else{
-                rentalMedian = rentalMedian + ListingAggregation.avgPricePerUnitArea;
-                countsRental++;
-            }
-            if(countsSales!=0)
-                saleMedian = saleMedian / countsSales;
-            if(countsRental!=0)
-                rentalMedian = rentalMedian / countsRental;
-
-            meadianSale = (int) saleMedian;
-            meadianRental = (int) rentalMedian;
-        }
-    }
-
     private void initListeners() {
         mCityScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -195,7 +173,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
     private void addKyn(List<AmenityCluster> amenityClusters) {
         Fragment newFragment = new KynFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("title", "know your neighbourhood");
+        bundle.putString("title", getResources().getString(R.string.locality_kyn_title));
         newFragment.setArguments(bundle);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.container_nearby_localities_kyn, newFragment);
@@ -207,7 +185,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
     private void addNearByLocalitiesFragment(ArrayList<Locality> nearbyLocalities) {
         NearByLocalitiesFragment newFragment = new NearByLocalitiesFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("title", "nearby localities");
+        bundle.putString("title", getResources().getString(R.string.locality_nearby_localities_title));
         bundle.putInt("placeholder", R.drawable.placeholder_localities_nearby);
         newFragment.setArguments(bundle);
         initFragment(R.id.container_nearby_localities, newFragment, false);
@@ -217,7 +195,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
     private void addLocalitiesApartmentsFragment(ArrayList<ListingAggregation> listingAggregations) {
         Fragment newFragment = new LocalitiesApartmentsFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("title", "available property status");
+        bundle.putString("title", getResources().getString(R.string.locality_available_locality_status));
         newFragment.setArguments(bundle);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.container_nearby_localities_apartments, newFragment);
@@ -229,7 +207,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
     private void addPriceTrendFragment() {
         LocalityPriceTrendFragment newFragment = new LocalityPriceTrendFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("title", "price trends");
+        bundle.putString("title", getResources().getString(R.string.locality_price_trends_label));
         bundle.putLong("localityId", locality.localityId);
         bundle.putInt("primaryMedian", meadianSale == null ? 0 : meadianSale);
         bundle.putDouble("primaryRise", locality.avgPriceRisePercentage == null ? 0 : locality.avgPriceRisePercentage);
@@ -240,25 +218,11 @@ public class LocalityActivity extends MakaanFragmentActivity {
         initFragment(R.id.container_nearby_localities_price_trends, newFragment, false);
     }
 
-//    private List<LocalitiesApartmentsFragment.Properties> getDummyDataForApartments() {
-//        List<LocalitiesApartmentsFragment.Properties> properties = new ArrayList<>();
-//        LocalitiesApartmentsFragment.Properties property = new LocalitiesApartmentsFragment.Properties(
-//                "apartment","1 bhk","2 bhk", "3 bhk","30L - 40L","50L - 660L","70L - 90L","450 - 790 sq ft","450 - 790 sq ft","450 - 790 sq ft","3,475 - 4,580 / sq ft","3,475 - 4,580 / sq ft", "3,475 - 4,580 / sq ft");
-//        properties.add(property);
-//        properties.add(property);
-//        properties.add(property);
-//        properties.add(property);
-//        properties.add(property);
-//        properties.add(property);
-//        properties.add(property);
-//        properties.add(property);
-//        return properties;
-//    }
 
     private void addLocalitiesLifestyleFragment(ArrayList<EntityDesc> entityDescriptions) {
         Fragment newFragment = new LocalityLifestyleFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("title", "lifestyle in electronic city");
+        bundle.putString("title", getResources().getString(R.string.localities_lifestyle_title));
         newFragment.setArguments(bundle);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.container_nearby_localities_lifestyle, newFragment);
@@ -270,7 +234,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
     private void addTopAgentsFragment(ArrayList<TopAgent> topAgents) {
         NearByLocalitiesFragment newFragment = new NearByLocalitiesFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("title", "top agents");
+        bundle.putString("title", getResources().getString(R.string.locality_top_agents_label));
         bundle.putInt("placeholder", R.drawable.placeholder_agent);
         newFragment.setArguments(bundle);
         initFragment(R.id.container_nearby_localities_top_agents, newFragment, false);
@@ -281,7 +245,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
     private void addTopBuilders(ArrayList<Builder> builders) {
         NearByLocalitiesFragment newFragment = new NearByLocalitiesFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("title", "top builders");
+        bundle.putString("title", getResources().getString(R.string.locality_top_builders_label));
         bundle.putInt("placeholder", R.drawable.placeholder_localities_builders);
         newFragment.setArguments(bundle);
         initFragment(R.id.container_nearby_localities_top_builders, newFragment, false);
@@ -289,15 +253,12 @@ public class LocalityActivity extends MakaanFragmentActivity {
 
     }
     private void addProperties(List<TaxonomyCard> taxonomyCardList) {
-        Fragment newFragment = new LocalityPropertiesFragment();
+        LocalityPropertiesFragment newFragment = new LocalityPropertiesFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("title", "properties in electronic city");
+        bundle.putString("title", getResources().getString(R.string.locality_properties_label));
         newFragment.setArguments(bundle);
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.container_nearby_localities_props, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-        ((LocalityPropertiesFragment)newFragment).setData(taxonomyCardList);
+        initFragment(R.id.container_nearby_localities_props, newFragment, false);
+        newFragment.setData(taxonomyCardList);
     }
 
     private void fetchHero()
@@ -326,5 +287,27 @@ public class LocalityActivity extends MakaanFragmentActivity {
     @Override
     public boolean isJarvisSupported() {
         return false;
+    }
+
+    private void calculateMedian(ArrayList<ListingAggregation> listingAggregations) {
+        double rentalMedian = 0, saleMedian = 0;
+        int countsRental = 0, countsSales = 0;
+        for (ListingAggregation ListingAggregation:listingAggregations){
+            if(ListingAggregation.listingCategory.equalsIgnoreCase("primary") ||
+                    ListingAggregation.listingCategory.equalsIgnoreCase("resale")){
+                saleMedian = saleMedian + ListingAggregation.avgPricePerUnitArea;
+                countsSales++;
+            }else{
+                rentalMedian = rentalMedian + ListingAggregation.avgPricePerUnitArea;
+                countsRental++;
+            }
+            if(countsSales!=0)
+                saleMedian = saleMedian / countsSales;
+            if(countsRental!=0)
+                rentalMedian = rentalMedian / countsRental;
+
+            meadianSale = (int) saleMedian;
+            meadianRental = (int) rentalMedian;
+        }
     }
 }

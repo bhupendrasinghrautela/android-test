@@ -24,6 +24,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import lecho.lib.hellocharts.dto.PieChartDTO;
+import lecho.lib.hellocharts.view.PieChartView;
+
 /**
  * Created by tusharchaudhary on 1/19/16.
  */
@@ -38,6 +41,7 @@ public class LocalitiesApartmentsFragment extends Fragment {
     private Switch switchRentSale;
     private Set<DataItem> adapterItemSet;
     private NearByLocalitiesAdapter mAdapterSecondary;
+    private PieChartView donutChart;
 
 
     @Nullable
@@ -48,10 +52,46 @@ public class LocalitiesApartmentsFragment extends Fragment {
         return view;
     }
 
+
+    private void initChart() {
+        donutChart = (PieChartView) view.findViewById(R.id.chart_donut);
+        float[] values_num= new float[3];
+        values_num[0] = 5f;
+        values_num[1] = 2f;
+        values_num[2] = 8f;
+        String[] values_Category = new String[3];
+        values_Category[0] = "1 BHK";
+        values_Category[1] = "2 BHK";
+        values_Category[2] = "3 BHK";
+        if(values_num.length>0) {
+            donutChart.setVisibility(View.VISIBLE);
+            donutChart.setCategories(values_Category);
+            PieChartDTO pieChartDTO = new PieChartDTO(values_num, 15, values_Category);
+            donutChart.setPieChartData(pieChartDTO.getData());
+            donutChart.setChartRotationEnabled(false);
+            donutChart.setValueSelectionEnabled(true);
+            donutChart.setCircleFillRatio(0.7f);
+        }
+    }
+
     private void initView() {
         title = getArguments().getString("title");
         TextView titleTv = (TextView) view.findViewById(R.id.tv_localities_aprmnts_title);
         titleTv.setText(title);
+        initSwitch();
+        initChart();
+        initRecyclerView();
+    }
+
+    private void initRecyclerView() {
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_localities_aprmnts);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void initSwitch() {
         switchRentSale = (Switch) view.findViewById(R.id.switch_localities_props);
         switchRentSale.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -60,11 +100,6 @@ public class LocalitiesApartmentsFragment extends Fragment {
 
             }
         });
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_localities_aprmnts);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
     }
 
     public void setData(ArrayList<ListingAggregation> nearByLocalities) {

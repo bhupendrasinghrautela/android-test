@@ -704,4 +704,24 @@
     <dimen name="serp_listing_item_seller_info_image_view_height">24dp</dimen>
     <dimen name="serp_listing_item_seller_info_text_size">20sp</dimen>
     <dimen name="serp_listing_item_seller_text_text_size">16sp</dimen>
+    <dimen name="locality_text_medium">16sp</dimen>
+    <dimen name="locality_text_small">14sp</dimen>
+    <dimen name="locality_about_top_margin">27dp</dimen>
+    <dimen name="locality_about_median_top_margin">5dp</dimen>
+    <dimen name="locality_about_median_left_margin">58dp</dimen>
+    <dimen name="locality_text_v_small">14sp</dimen>
+    <dimen name="locality_seperator_top_margin">26dp</dimen>
+    <dimen name="locality_seperator_left_margin">20dp</dimen>
+    <dimen name="locality_seperator_height">1dp</dimen>
+    <dimen name="locality_about_median_rent_top_margin">22dp</dimen>
+    <dimen name="locality_kyn_recycler_height">350dp</dimen>
+    <dimen name="locality_text_big">24sp</dimen>
+    <dimen name="locality_kyn_margin_bottom">25dp</dimen>
+    <dimen name="locality_kyn_margin_top">32dp</dimen>
+    <dimen name="locality_kyn_margin_right">20dp</dimen>
+    <dimen name="locality_lifestyle_recycler_height">530dp</dimen>
+    <dimen name="locality_properties_recycler_height">234dp</dimen>
+    <dimen name="locality_text_v_v_small">12sp</dimen>
+    <dimen name="locality_switch_margin_left">15dp</dimen>
+    <dimen name="locality_nearby_localities_recycler_height">470dp</dimen>
 </resources>
