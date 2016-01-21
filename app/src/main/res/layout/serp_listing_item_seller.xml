@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.makaan.ui.view.SellerListingView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/serp_listing_item_seller_card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp"
+    app:cardMaxElevation="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.pkmmte.view.CircularImageView
+            android:id="@+id/serp_listing_item_seller_image_view"
+            android:layout_width="@dimen/serp_listing_item_seller_image_view_width"
+            android:layout_height="@dimen/serp_listing_item_seller_image_view_height"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/serp_listing_item_seller_image_view_margin_top"
+            android:scaleType="centerCrop"
+            android:src="@drawable/builder"
+            app:border="true"
+            app:border_color="@color/white"
+            app:border_width="2dp" />
+
+        <TextView
+            android:id="@+id/serp_listing_item_seller_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/serp_listing_item_seller_name_text_view_margin_top"
+            android:text="Rohit Kumar"
+            android:textColor="@color/white"
+            android:textSize="@dimen/serp_listing_item_seller_name_text_view_text_size" />
+
+        <TextView
+            android:id="@+id/serp_listing_item_seller_company_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/serp_listing_item_seller_company_name_text_view_margin_top"
+            android:text="xyz real estate pvt ltd"
+            android:textColor="@color/white"
+            android:textSize="@dimen/serp_listing_item_seller_company_name_text_view_text_size" />
+
+        <RatingBar
+            android:id="@+id/serp_listing_item_seller_rating_bar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/serp_listing_item_seller_rating_margin_top"
+            android:numStars="5"
+            android:rating="3.5"
+            android:stepSize="0.1" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/serp_listing_item_seller_empty_view_height"
+            android:layout_marginEnd="@dimen/serp_listing_item_seller_empty_view_margin_right"
+            android:layout_marginLeft="@dimen/serp_listing_item_seller_empty_view_margin_left"
+            android:layout_marginRight="@dimen/serp_listing_item_seller_empty_view_margin_right"
+            android:layout_marginStart="@dimen/serp_listing_item_seller_empty_view_margin_left"
+            android:layout_marginTop="@dimen/serp_listing_item_seller_empty_view_margin_top"
+            android:background="@color/serp_listing_item_seller_empty_view_background_color" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/serp_listing_item_seller_operates_in_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/serp_listing_item_seller_operates_in_text_view_margin_top"
+                android:text="operates in - 10 localities"
+                android:textColor="@color/white"
+                android:textSize="@dimen/serp_listing_item_seller_operates_in_text_view_text_size" />
+
+            <TextView
+                android:id="@+id/serp_listing_item_seller_address_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/serp_listing_item_seller_operates_in_text_view"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/serp_listing_item_seller_address_text_view_margin_top"
+                android:text="huda city center, sushantlok"
+                android:textColor="@color/white"
+                android:textSize="@dimen/serp_listing_item_seller_address_text_view_text_size" />
+
+            <ImageView
+                android:id="@+id/serp_listing_item_seller_add_image_view"
+                android:layout_width="@dimen/serp_listing_item_seller_add_image_view_width"
+                android:layout_height="@dimen/serp_listing_item_seller_add_image_view_height"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/serp_listing_item_seller_add_image_view_margin_right"
+                android:layout_marginRight="@dimen/serp_listing_item_seller_add_image_view_margin_right"
+                android:src="@drawable/money" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/serp_listing_item_seller_empty_view_height"
+            android:layout_marginEnd="@dimen/serp_listing_item_seller_empty_view_margin_right"
+            android:layout_marginLeft="@dimen/serp_listing_item_seller_empty_view_margin_left"
+            android:layout_marginRight="@dimen/serp_listing_item_seller_empty_view_margin_right"
+            android:layout_marginStart="@dimen/serp_listing_item_seller_empty_view_margin_left"
+            android:layout_marginTop="@dimen/serp_listing_item_seller_empty_view_margin_top2"
+            android:background="@color/serp_listing_item_seller_empty_view_background_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/serp_listing_item_seller_info_margin_bottom"
+            android:layout_marginTop="@dimen/serp_listing_item_seller_info_margin_top"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/serp_listing_item_seller_info_image_view_width"
+                    android:layout_height="@dimen/serp_listing_item_seller_info_image_view_height"
+                    android:src="@drawable/money" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/serp_listing_item_seller_experience_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/serp_listing_item_seller_info_text_size" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/serp_listing_item_seller_type_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sale and rent"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/serp_listing_item_seller_text_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="experience"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/serp_listing_item_seller_text_text_size" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/serp_listing_item_seller_info_margin_bottom"
+            android:layout_marginTop="@dimen/serp_listing_item_seller_info_margin_top"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/serp_listing_item_seller_info_image_view_width"
+                    android:layout_height="@dimen/serp_listing_item_seller_info_image_view_height"
+                    android:src="@drawable/money" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/serp_listing_item_seller_info_image_view_width"
+                    android:layout_height="@dimen/serp_listing_item_seller_info_image_view_height"
+                    android:src="@drawable/money" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/serp_listing_item_seller_info_margin_bottom2"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/serp_listing_item_seller_properties_count_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="500 properties"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/serp_listing_item_seller_text_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/serp_listing_item_seller_project_count_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="500 projects"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/serp_listing_item_seller_text_text_size" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</com.makaan.ui.view.SellerListingView>

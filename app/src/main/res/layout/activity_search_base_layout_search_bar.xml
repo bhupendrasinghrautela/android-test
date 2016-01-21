@@ -27,8 +27,8 @@
             android:layout_marginRight="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_right"
             android:layout_marginEnd="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_right"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/temp_builder" />
+            android:layout_alignParentEnd="true" />
+            <!--android:src="@color/app_grey" />-->
         <ImageButton
             android:id="@+id/activity_search_base_layout_search_bar_search_image_button"
             android:layout_width="@dimen/activity_search_base_layout_search_bar_search_image_button_width"

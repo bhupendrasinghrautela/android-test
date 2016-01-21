@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.makaan.R;
@@ -65,7 +66,7 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
-        fetchData(12);
+        new LocalityService().getTrendingSearchesInLocality(localityId);
     }
 
     private void fetchData(int months) {
@@ -78,7 +79,7 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
                 priceTrendView.bindView(localityPriceTrendDto);
             }
         });
-        new LocalityService().getTrendingSearchesInLocality(localityId);
+
     }
 
     @Subscribe
@@ -94,8 +95,6 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         primaryRise = getArguments().getDouble("primaryRise");
         secondaryAverage = getArguments().getDouble("secondaryAverage");
         secondaryMedian = getArguments().getInt("secondaryMedian");
-
-
 
         titleTv.setText(title);
         trendsMedianTv.setText("the median home value in electronic city is "+primaryMedian+" / sq ft.");

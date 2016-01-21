@@ -50,9 +50,17 @@ public class KynFragment extends Fragment {
     }
 
     public void setData(List<AmenityCluster> amenityClusters) {
+        filterDataWithLessThan3Amenities(amenityClusters);
         mAdapter = new NearByLocalitiesAdapter(amenityClusters);
         if (mRecyclerView != null)
             mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void filterDataWithLessThan3Amenities(List<AmenityCluster> amenityClusters) {
+        for(AmenityCluster amenityCluster:amenityClusters){
+            if(amenityCluster.cluster.size()<3)
+                amenityClusters.remove(amenityCluster);
+        }
     }
 
 

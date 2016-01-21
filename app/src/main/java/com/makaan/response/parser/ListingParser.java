@@ -34,7 +34,7 @@ public class ListingParser {
             POSTED_BY_BROKER = "BROKER",
             POSTED_BY_OWNER = "PRIVATEEQUITY",
             POSTED_BY_BUILDER = "BUILDER",
-            BHK_STR = " BHK",
+            BHK_STR = " BHK ",
             DAYS = " days";
 
 

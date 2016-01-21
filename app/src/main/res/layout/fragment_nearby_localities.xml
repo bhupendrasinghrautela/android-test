@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:id="@+id/switch_localities_props" />
+            android:id="@+id/switch_top_agents" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

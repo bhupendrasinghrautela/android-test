@@ -46,10 +46,14 @@ public class LocalityLifestyleFragment extends Fragment{
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    public void setData(ArrayList<EntityDesc> EntityDescs) {
-        mAdapter = new NearByLocalitiesAdapter(EntityDescs);
-        if (mRecyclerView != null)
-            mRecyclerView.setAdapter(mAdapter);
+    public void setData(ArrayList<EntityDesc> entityDescs) {
+        if(entityDescs!=null&&entityDescs.size()!=0) {
+            mAdapter = new NearByLocalitiesAdapter(entityDescs);
+            if (mRecyclerView != null)
+                mRecyclerView.setAdapter(mAdapter);
+        }else{
+            mRecyclerView.setVisibility(View.GONE);
+        }
     }
 
 
@@ -86,8 +90,8 @@ public class LocalityLifestyleFragment extends Fragment{
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             final EntityDesc nearByLocalitu = entityDescs.get(position);
-            holder.descriptionTv.setText(nearByLocalitu.description);
-//            holder.descriptionFullTv.setText(nearByLocalitu.fullDescription);
+//            holder.descriptionTv.setText(nearByLocalitu.description);
+            holder.descriptionFullTv.setText(nearByLocalitu.description);
             holder.localityIv.setImageResource(R.drawable.placeholder_localities_props);
             //TODO: Picasso load imgurl
         }

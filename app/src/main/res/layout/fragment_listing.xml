@@ -16,7 +16,7 @@
         android:textSize="@dimen/fragment_listing_total_properties_text_view_text_size"
         />
 
-    <android.support.v7.widget.RecyclerView
+    <com.makaan.ui.PaginatedListView
         android:id="@+id/fragment_listing_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

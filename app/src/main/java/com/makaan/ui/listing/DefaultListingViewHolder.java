@@ -2,23 +2,24 @@ package com.makaan.ui.listing;
 
 import android.view.View;
 
-import com.makaan.ui.listing.BaseListingAdapterViewHolder;
+import com.makaan.activity.listing.SerpRequestCallback;
+import com.makaan.ui.view.AbstractListingView;
 import com.makaan.ui.view.DefaultListingView;
 
 /**
  * Created by rohitgarg on 1/6/16.
  */
 public class DefaultListingViewHolder extends BaseListingAdapterViewHolder {
-    DefaultListingView view;
+    AbstractListingView view;
     public DefaultListingViewHolder(View view) {
         super(view);
-        this.view = (DefaultListingView)view;
+        this.view = (AbstractListingView)view;
     }
 
     @Override
-    public void populateData(Object data) {
+    public void populateData(Object data, SerpRequestCallback callback) {
         if(view != null) {
-            view.populateData(data);
+            view.populateData(data, callback);
         }
     }
 }

@@ -10,56 +10,90 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
+import com.makaan.event.agents.callback.TopAgentsCallback;
+import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.response.agents.TopAgent;
 import com.makaan.response.locality.ListingAggregation;
 import com.makaan.response.locality.Locality;
+import com.makaan.response.project.Builder;
+import com.makaan.service.AgentService;
+import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.Blur;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+
 
 /**
  * Created by tusharchaudhary on 1/19/16.
  */
-public class NearByLocalitiesFragment extends Fragment {
-    private View view;
-    RecyclerView mRecyclerView;
+public class NearByLocalitiesFragment extends MakaanBaseFragment {
     private LinearLayoutManager mLayoutManager;
     private NearByLocalitiesAdapter mAdapter;
     private String title;
     private int placeholderResource;
-    public LinearLayout switchLl;
+    @Bind(R.id.ll_locality_nearby)
+    public LinearLayout switchLl ;
+    @Bind(R.id.switch_top_agents)
+    public Switch switchPrimarySecondary;
+    @Bind(R.id.rv_nearby_localities)
+    public RecyclerView mRecyclerView ;
+    @Bind(R.id.tv_nearby_localities_title)
+    public TextView titleTv ;
+    Long citId,localitId;
 
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_nearby_localities,null);
+    protected int getContentViewId() {
+        return R.layout.fragment_nearby_localities;
+    }
+
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         initView();
-        return view;
     }
 
     private void initView() {
         title = getArguments().getString("title");
         placeholderResource = getArguments().getInt("placeholder");
 
-        switchLl = (LinearLayout) view.findViewById(R.id.ll_locality_nearby);
         switchLl.setVisibility(R.drawable.placeholder_agent == placeholderResource ? View.VISIBLE : View.GONE);
-        TextView titleTv = (TextView) view.findViewById(R.id.tv_nearby_localities_title);
         titleTv.setText(title);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_nearby_localities);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
+        initSwitch();
+    }
+
+    private void initSwitch() {
+        if(switchPrimarySecondary!=null)
+        switchPrimarySecondary.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ((AgentService) MakaanServiceFactory.getInstance().getService(AgentService.class)).getTopAgentsForLocality(citId, localitId, 10, isChecked, new TopAgentsCallback() {
+                    @Override
+                    public void onTopAgentsRcvd(ArrayList<TopAgent> topAgents) {
+                        setData(getDarForAgents(topAgents));
+                    }
+                });
+            }
+        });
     }
 
     public void setData(List<NearByLocalities> nearByLocalities){
@@ -119,6 +153,33 @@ public class NearByLocalitiesFragment extends Fragment {
             counts[1] = (int) rentalMedian;
         }
         return counts;
+    }
+
+    public void setDataForTopAgents( Long cityId,  Long localityId,ArrayList<TopAgent> topAgents) {
+        setData(getDarForAgents(topAgents));
+        this.citId =cityId;
+        this.localitId = localityId;
+
+    }
+
+    private List<NearByLocalities> getDarForAgents(ArrayList<TopAgent> topAgents) {
+        List<NearByLocalities> nearByLocalities = new ArrayList<>();
+        for(TopAgent agent:topAgents){
+            nearByLocalities.add(new NearByLocalities("","0",""+agent.listingCount,""+agent.agent.type,""+agent.agent.name));
+        }
+        return nearByLocalities;
+    }
+
+    public void setDataForTopBuilders(ArrayList<Builder> builders) {
+        setData(getDataForTopBuilder(builders));
+    }
+
+    private List<NearByLocalities> getDataForTopBuilder(ArrayList<Builder> builders) {
+        List<NearByLocalities> nearByLocalities = new ArrayList<>();
+        for(Builder builder: builders){
+            nearByLocalities.add(new NearByLocalities(builder.imageUrl,"", ""+builder.projectCount, ""+builder.description,""+builder.name));
+        }
+        return nearByLocalities;
     }
 
 

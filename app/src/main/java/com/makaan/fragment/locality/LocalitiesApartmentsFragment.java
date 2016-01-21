@@ -2,18 +2,27 @@ package com.makaan.fragment.locality;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.response.locality.ListingAggregation;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by tusharchaudhary on 1/19/16.
@@ -24,6 +33,11 @@ public class LocalitiesApartmentsFragment extends Fragment {
     private LinearLayoutManager mLayoutManager;
     private NearByLocalitiesAdapter mAdapter;
     private String title;
+    private List<ListingAggregation> primaryListingAggregations;
+    private List<ListingAggregation> secondaryListingAggregations;
+    private Switch switchRentSale;
+    private Set<DataItem> adapterItemSet;
+    private NearByLocalitiesAdapter mAdapterSecondary;
 
 
     @Nullable
@@ -38,6 +52,14 @@ public class LocalitiesApartmentsFragment extends Fragment {
         title = getArguments().getString("title");
         TextView titleTv = (TextView) view.findViewById(R.id.tv_localities_aprmnts_title);
         titleTv.setText(title);
+        switchRentSale = (Switch) view.findViewById(R.id.switch_localities_props);
+        switchRentSale.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    changeAdapter(isChecked);
+
+            }
+        });
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_localities_aprmnts);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
@@ -45,15 +67,145 @@ public class LocalitiesApartmentsFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    public void setData(List<Properties> nearByLocalities) {
-        mAdapter = new NearByLocalitiesAdapter(nearByLocalities);
+    public void setData(ArrayList<ListingAggregation> nearByLocalities) {
+        mAdapter = new NearByLocalitiesAdapter(getData(nearByLocalities));
+        mAdapterSecondary = new NearByLocalitiesAdapter(removeAndCalculateMinMax(secondaryListingAggregations));
         if (mRecyclerView != null)
             mRecyclerView.setAdapter(mAdapter);
     }
 
+    private void changeAdapter(boolean isChecked){
+        if(isChecked)
+            mRecyclerView.setAdapter(mAdapterSecondary);
+        else
+            mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private Set<DataItem> getData(ArrayList<ListingAggregation> nearByLocalities) {
+        filterPrimaryAndSecondary(nearByLocalities);
+        return removeAndCalculateMinMax(primaryListingAggregations);
+    }
+
+    private Set<DataItem> removeAndCalculateMinMax(List<ListingAggregation> primaryListingAggregations) {
+        Set<DataItem> dataItemSet = getSetOfDataItemsBasedOnUnitTypes(primaryListingAggregations);
+        for(DataItem dataItem : dataItemSet){
+            for(ListingAggregation listingAggregation:primaryListingAggregations){
+                if(listingAggregation.unitType.equalsIgnoreCase(dataItem.unitType)){
+                    switch (listingAggregation.bedrooms){
+                        case 1:
+                            calculateMaxForOneBhks(dataItem, listingAggregation);
+                            calculateMinForOneBhks(dataItem, listingAggregation);
+
+                            break;
+                        case 2:
+                            calculateMaxForTwoBhks(dataItem, listingAggregation);
+                            calculateMinForTwoBhks(dataItem, listingAggregation);
+                            break;
+                        case 3:
+                            calculateMaxForThreeBhks(dataItem, listingAggregation);
+                            calculateMinsForThreeBhks(dataItem, listingAggregation);
+                            break;
+                    }
+                }
+            }
+        }
+        return dataItemSet;
+    }
+
+    @NonNull
+    private Set<DataItem> getSetOfDataItemsBasedOnUnitTypes(List<ListingAggregation> primaryListingAggregations) {
+        Set<DataItem> dataItemSet = new HashSet<>();
+        for(ListingAggregation listingAggregation:primaryListingAggregations){
+            dataItemSet.add(new DataItem(listingAggregation.unitType,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d));
+        }
+        return dataItemSet;
+    }
+
+    private void calculateMaxForOneBhks(DataItem dataItem, ListingAggregation listingAggregation) {
+        if(dataItem.oneBhkMaxArea<listingAggregation.maxSize){ dataItem.oneBhkMaxArea = listingAggregation.maxSize;}
+        if(dataItem.oneBhkMaxPrice<listingAggregation.maxPrice){ dataItem.oneBhkMaxPrice = listingAggregation.maxPrice;}
+        if(dataItem.oneBhkMaxPricePerArea<listingAggregation.maxPricePerUnitArea){ dataItem.oneBhkMaxPricePerArea = listingAggregation.maxPricePerUnitArea;}
+    }
+
+    private void calculateMinForOneBhks(DataItem dataItem, ListingAggregation listingAggregation) {
+        if(dataItem.oneBhkMinArea == 0)
+            dataItem.oneBhkMinArea= listingAggregation.minSize;
+        else
+        if(dataItem.oneBhkMinArea>listingAggregation.minSize){dataItem.oneBhkMinArea=listingAggregation.minSize;}
+
+        if(dataItem.oneBhkMinPricePerArea == 0)
+            dataItem.oneBhkMinPricePerArea= listingAggregation.minPricePerUnitArea;
+        else
+        if(dataItem.oneBhkMinPricePerArea>listingAggregation.minPricePerUnitArea){dataItem.oneBhkMinPricePerArea=listingAggregation.minPricePerUnitArea;}
+
+        if(dataItem.oneBhkMinPrice == 0)
+            dataItem.oneBhkMinPrice= listingAggregation.minPrice;
+        else
+        if(dataItem.oneBhkMinPrice>listingAggregation.minPrice){dataItem.oneBhkMinPrice=listingAggregation.minPrice;}
+
+    }
+
+    private void calculateMaxForTwoBhks(DataItem dataItem, ListingAggregation listingAggregation) {
+        if(dataItem.twoBhkMaxArea<listingAggregation.maxSize){ dataItem.twoBhkMaxArea = listingAggregation.maxSize;}
+        if(dataItem.twoBhkMaxPrice<listingAggregation.maxPrice){ dataItem.twoBhkMaxPrice = listingAggregation.maxPrice;}
+        if(dataItem.twoBhkMaxAPricePerArea<listingAggregation.maxPricePerUnitArea){ dataItem.twoBhkMaxAPricePerArea = listingAggregation.maxPricePerUnitArea;}
+    }
+
+    private void calculateMinForTwoBhks(DataItem dataItem, ListingAggregation listingAggregation) {
+        if(dataItem.twoBhkMinArea == 0)
+            dataItem.twoBhkMinArea= listingAggregation.minSize;
+        else
+        if(dataItem.twoBhkMinArea>listingAggregation.minSize){dataItem.twoBhkMinArea=listingAggregation.minSize;}
+
+        if(dataItem.twoBhkMinPricePerArea == 0)
+            dataItem.twoBhkMinPricePerArea= listingAggregation.minPrice;
+        else
+        if(dataItem.twoBhkMinPricePerArea>listingAggregation.minPrice){dataItem.twoBhkMinPricePerArea=listingAggregation.minPrice;}
+
+        if(dataItem.twoBhkMinPrice == 0)
+            dataItem.twoBhkMinPrice= listingAggregation.minPricePerUnitArea;
+        else
+        if(dataItem.twoBhkMinPrice>listingAggregation.minPricePerUnitArea){dataItem.twoBhkMinPrice=listingAggregation.minPricePerUnitArea;}
+    }
+
+    private void calculateMaxForThreeBhks(DataItem dataItem, ListingAggregation listingAggregation) {
+        if(dataItem.threeBhkMaxArea<listingAggregation.maxSize){ dataItem.threeBhkMaxArea = listingAggregation.maxSize;}
+        if(dataItem.threeBhkMaxPrice<listingAggregation.maxPrice){ dataItem.threeBhkMaxPrice = listingAggregation.maxPrice;}
+        if(dataItem.threeBhkMaxPricePerArea<listingAggregation.maxPricePerUnitArea){ dataItem.threeBhkMaxPricePerArea = listingAggregation.maxPricePerUnitArea;}
+    }
+
+    private void calculateMinsForThreeBhks(DataItem dataItem, ListingAggregation listingAggregation) {
+        if(dataItem.threeBhkMinArea == 0)
+            dataItem.threeBhkMinArea= listingAggregation.minSize;
+        else
+        if(dataItem.threeBhkMinArea>listingAggregation.minSize){dataItem.threeBhkMinArea=listingAggregation.minSize;}
+
+        if(dataItem.threeBhkMinPricePerArea == 0)
+            dataItem.threeBhkMinPricePerArea= listingAggregation.minPricePerUnitArea;
+        else
+        if(dataItem.threeBhkMinPricePerArea>listingAggregation.minPricePerUnitArea){dataItem.threeBhkMinPricePerArea=listingAggregation.minPricePerUnitArea;}
+
+        if(dataItem.threeBhkMinPrice == 0)
+            dataItem.threeBhkMinPrice= listingAggregation.minPrice;
+        else
+        if(dataItem.threeBhkMinPrice>listingAggregation.minPrice){dataItem.threeBhkMinPrice=listingAggregation.minPrice;}
+    }
+
+    private void filterPrimaryAndSecondary(ArrayList<ListingAggregation> nearByLocalities) {
+        primaryListingAggregations = new ArrayList<>();
+        secondaryListingAggregations = new ArrayList<>();
+        for(ListingAggregation listingAggregation : nearByLocalities){
+            if((listingAggregation.listingCategory.equalsIgnoreCase("Resale")||listingAggregation.listingCategory.equalsIgnoreCase("Primary"))&&(listingAggregation.bedrooms>0)){
+                primaryListingAggregations.add(listingAggregation);
+            }else{
+                if(listingAggregation.bedrooms>0)
+                secondaryListingAggregations.add(listingAggregation);
+            }
+        }
+    }
 
     private class NearByLocalitiesAdapter extends RecyclerView.Adapter<NearByLocalitiesAdapter.ViewHolder> {
-        private List<Properties> propertiesList;
+        private List<DataItem> propertiesList =new ArrayList<>();
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             // each data item is just a string in this case
@@ -84,8 +236,8 @@ public class LocalitiesApartmentsFragment extends Fragment {
             }
         }
 
-        public NearByLocalitiesAdapter(List<Properties> propertiesList) {
-            this.propertiesList = propertiesList;
+        public NearByLocalitiesAdapter(Set<DataItem> propertiesList) {
+            this.propertiesList.addAll(propertiesList);
         }
 
         @Override
@@ -99,23 +251,23 @@ public class LocalitiesApartmentsFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            final Properties property = propertiesList.get(position);
-            holder.unitTypeTv.setText(property.type);
+            final DataItem property = propertiesList.get(position);
+            holder.unitTypeTv.setText(property.unitType);
 
-            holder.oneBhkLabel.setText(property.oneBhk);
-            holder.oneBhkAreaRange.setText(property.oneBhkAreaRange);
-            holder.oneBhkPriceAreaRange.setText(property.oneBhkPriceAreaRange);
-            holder.oneBhkPriceRange.setText(property.oneBhkPriceRange);
+            holder.oneBhkLabel.setText("1 bhk");
+            holder.oneBhkAreaRange.setText(property.oneBhkMinArea+" - "+property.oneBhkMaxArea+" sq ft");
+            holder.oneBhkPriceAreaRange.setText(property.oneBhkMinPricePerArea+" - "+property.oneBhkMaxPricePerArea+" / sq ft");
+            holder.oneBhkPriceRange.setText("Rs "+property.oneBhkMinPrice+" - "+property.oneBhkMaxPrice);
 
-            holder.twoBhkLabel.setText(property.twoBhk);
-            holder.twoBhkAreaRange.setText(property.twoBhkAreaRange);
-            holder.twoBhkPriceAreaRange.setText(property.twoBhkPriceAreaRange);
-            holder.twoBhkPriceRange.setText(property.twoBhkPriceRange);
+            holder.twoBhkLabel.setText("2 bhk");
+            holder.twoBhkAreaRange.setText(property.twoBhkMinArea+" - "+property.twoBhkMaxArea+" sq ft");
+            holder.twoBhkPriceAreaRange.setText(property.twoBhkMinPricePerArea+" - "+property.twoBhkMaxAPricePerArea+" / sq ft");
+            holder.twoBhkPriceRange.setText("Rs "+property.twoBhkMinPrice+" - "+property.twoBhkMaxPrice);
 
-            holder.threeBhkLabel.setText(property.threeBhk);
-            holder.threeBhkAreaRange.setText(property.threeBhkAreaRange);
-            holder.threeBhkPriceAreaRange.setText(property.threeBhkPriceAreaRange);
-            holder.threeBhkPriceRange.setText(property.threeBhkPriceRange);
+            holder.threeBhkLabel.setText("3 bhk");
+            holder.threeBhkAreaRange.setText(property.threeBhkMinArea+" - "+property.threeBhkMaxArea+" sq ft");
+            holder.threeBhkPriceAreaRange.setText(property.threeBhkMinPricePerArea+" - "+property.threeBhkMaxPricePerArea+" / sq ft");
+            holder.threeBhkPriceRange.setText("Rs "+property.threeBhkMinPrice+" - "+property.threeBhkMaxPrice);
         }
 
         @Override
@@ -125,50 +277,52 @@ public class LocalitiesApartmentsFragment extends Fragment {
 
     }
 
-    public static class Properties {
-        String type;
-        String oneBhk;
-        String twoBhk;
-        String threeBhk;
 
-        String oneBhkPriceRange;
-        String twoBhkPriceRange;
-        String threeBhkPriceRange;
+    private class DataItem{
+        String unitType;
+        Double oneBhkMinPrice, twoBhkMinPrice, threeBhkMinPrice;
+        Double oneBhkMaxPrice, twoBhkMaxPrice, threeBhkMaxPrice;
+        Double oneBhkMaxArea, twoBhkMaxArea, threeBhkMaxArea;
+        Double oneBhkMinArea, twoBhkMinArea, threeBhkMinArea;
+        Double oneBhkMaxPricePerArea, twoBhkMaxAPricePerArea, threeBhkMaxPricePerArea;
+        Double oneBhkMinPricePerArea, twoBhkMinPricePerArea, threeBhkMinPricePerArea;
 
-        String oneBhkAreaRange;
-        String twoBhkAreaRange;
-        String threeBhkAreaRange;
+        public DataItem(String unitType, Double twoBhkMinPricePerArea, Double oneBhkMinPrice, Double twoBhkMinPrice, Double threeBhkMinPrice, Double oneBhkMaxPrice, Double twoBhkMaxPrice, Double threeBhkMaxPrice, Double oneBhkMaxArea, Double twoBhkMaxArea, Double threeBhkMaxArea, Double oneBhkMinArea, Double twoBhkMinArea, Double threeBhkMinArea, Double oneBhkMaxPricePerArea, Double twoBhkMaxAPricePerArea, Double threeBhkMaxPricePerArea, Double oneBhkMinPricePerArea, Double threeBhkMinPricePerArea) {
+            this.unitType = unitType;
+            this.twoBhkMinPricePerArea = twoBhkMinPricePerArea;
+            this.oneBhkMinPrice = oneBhkMinPrice;
+            this.twoBhkMinPrice = twoBhkMinPrice;
+            this.threeBhkMinPrice = threeBhkMinPrice;
+            this.oneBhkMaxPrice = oneBhkMaxPrice;
+            this.twoBhkMaxPrice = twoBhkMaxPrice;
+            this.threeBhkMaxPrice = threeBhkMaxPrice;
+            this.oneBhkMaxArea = oneBhkMaxArea;
+            this.twoBhkMaxArea = twoBhkMaxArea;
+            this.threeBhkMaxArea = threeBhkMaxArea;
+            this.oneBhkMinArea = oneBhkMinArea;
+            this.twoBhkMinArea = twoBhkMinArea;
+            this.threeBhkMinArea = threeBhkMinArea;
+            this.oneBhkMaxPricePerArea = oneBhkMaxPricePerArea;
+            this.twoBhkMaxAPricePerArea = twoBhkMaxAPricePerArea;
+            this.threeBhkMaxPricePerArea = threeBhkMaxPricePerArea;
+            this.oneBhkMinPricePerArea = oneBhkMinPricePerArea;
+            this.threeBhkMinPricePerArea = threeBhkMinPricePerArea;
+        }
 
-        String oneBhkPriceAreaRange;
-        String twoBhkPriceAreaRange;
-        String threeBhkPriceAreaRange;
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
 
-        public Properties(String type,
-                String oneBhk,
-                String twoBhk,
-                String threeBhk,
-                String oneBhkPriceRange,
-                String twoBhkPriceRange,
-                String threeBhkPriceRange,
-                String oneBhkAreaRange,
-                String twoBhkAreaRange,
-                String threeBhkAreaRange,
-                String oneBhkPriceAreaRange,
-                String twoBhkPriceAreaRange,
-                String threeBhkPriceAreaRange) {
-            this.type = type;
-            this.oneBhk = oneBhk;
-            this.twoBhk = twoBhk;
-            this.threeBhk = threeBhk;
-            this.oneBhkPriceRange = oneBhkPriceRange;
-            this.twoBhkPriceRange = twoBhkPriceRange;
-            this.threeBhkPriceRange = threeBhkPriceRange;
-            this.oneBhkAreaRange = oneBhkAreaRange;
-            this.twoBhkAreaRange = twoBhkAreaRange;
-            this.threeBhkAreaRange = threeBhkAreaRange;
-            this.oneBhkPriceAreaRange = oneBhkPriceAreaRange;
-            this.twoBhkPriceAreaRange = twoBhkPriceAreaRange;
-            this.threeBhkPriceAreaRange = threeBhkPriceAreaRange;
+            DataItem dataItem = (DataItem) o;
+
+            return unitType.equals(dataItem.unitType);
+
+        }
+
+        @Override
+        public int hashCode() {
+            return unitType.hashCode();
         }
     }
 }

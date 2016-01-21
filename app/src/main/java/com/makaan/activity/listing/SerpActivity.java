@@ -1,30 +1,28 @@
 package com.makaan.activity.listing;
 
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
+import com.makaan.cache.MasterDataCache;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.fragment.listing.ChildSerpClusterFragment;
 import com.makaan.fragment.listing.FiltersDialogFragment;
 import com.makaan.fragment.listing.SerpListFragment;
 import com.makaan.fragment.listing.SerpMapFragment;
+import com.makaan.request.selector.Selector;
 import com.makaan.response.search.event.SearchResultEvent;
-
 import com.makaan.service.ListingService;
-
-
-import com.makaan.fragment.listing.SerpListFragment;
 import com.makaan.ui.listing.RelevancePopupWindowController;
-
 import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
@@ -33,10 +31,21 @@ import butterknife.OnClick;
 /**
  * Created by rohitgarg on 1/6/16.
  */
-public class SerpActivity extends MakaanBaseSearchActivity implements SerpListFragment.ListingFragmentCallbacks,
+public class SerpActivity extends MakaanBaseSearchActivity implements SerpRequestCallback,
         FiltersDialogFragment.FilterDialogFragmentCallback {
+    public static final String TYPE = "type";
+    public static final int TYPE_FILTER = 1;
+    public static final int TYPE_CLUSTER = 2;
+    public static final int TYPE_SEARCH = 3;
+    public static final int TYPE_SELLER = 4;
+    public static final int TYPE_BUILDER = 5;
+    public static final int TYPE_SORT = 6;
+    public static final int TYPE_UNKNOWN = 7;
+
     public static boolean isChildSerp = false;
     public static boolean isSellerSerp = false;
+
+    private int mSelectedSortIndex = -1;
 
     private SerpListFragment mListingFragment;
     private SerpListFragment mChildSerpListFragment;
@@ -63,6 +72,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpListFr
     private SerpGetEvent mListingGetEvent;
     private boolean mIsMapFragment;
     private SerpMapFragment mMapFragment;
+    private ProgressDialog mProgressDialog;
+    private int mSerpRequestType = SerpActivity.TYPE_UNKNOWN;
 
     @Override
     protected int getContentViewId() {
@@ -72,8 +83,17 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpListFr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO check whether it should be used or not
-        fetchData();
+        Intent intent = getIntent();
+        int type = SerpActivity.TYPE_UNKNOWN;
+        if(intent != null) {
+            type = intent.getIntExtra(SerpActivity.TYPE, SerpActivity.TYPE_UNKNOWN);
+        }
+        if(type == SerpActivity.TYPE_UNKNOWN) {
+            // TODO check whether it should be used or not
+            fetchData();
+        } else {
+            serpRequest(type, MakaanBuyerApplication.serpSelector);
+        }
 
         // init fragments we need to use
         initUi(true);
@@ -82,7 +102,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpListFr
     @Override
     protected void onResume() {
         super.onResume();
-        mAppliedFiltersCountTextView.setText(String.valueOf(MakaanBuyerApplication.serpSelector.getAppliedFilterCount()));
+        mAppliedFiltersCountTextView.setText(String.valueOf(MasterDataCache.getAppliedFilterCount()));
     }
 
     @Override
@@ -104,7 +124,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpListFr
 
     private void fetchData() {
         MakaanBuyerApplication.serpSelector.term("cityId", "11").term("listingCategory", new String[]{"Rental"});
-        new ListingService().handleSerpRequest(MakaanBuyerApplication.serpSelector);
+        serpRequest(SerpActivity.TYPE_UNKNOWN, MakaanBuyerApplication.serpSelector);
     }
 
     @Subscribe
@@ -121,13 +141,13 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpListFr
                 ChildSerpClusterFragment childSerpClusterFragment = ChildSerpClusterFragment.init();
                 // create new listing fragment to show the listings
                 mSellerSerpListFragment = SerpListFragment.init(true);
-                mSellerSerpListFragment.updateListings(listingGetEvent);
+                mSellerSerpListFragment.updateListings(listingGetEvent, this, mSerpRequestType);
 
                 initFragments(new int[]{R.id.activity_serp_similar_properties_frame_layout, R.id.activity_serp_content_frame_layout},
                         new Fragment[]{childSerpClusterFragment, mChildSerpListFragment}, true);
 
             } else {
-                mSellerSerpListFragment.updateListings(listingGetEvent);
+                mSellerSerpListFragment.updateListings(listingGetEvent, this, mSerpRequestType);
             }
         } else if (isChildSerp) {
             setShowSearchBar(false);
@@ -138,15 +158,16 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpListFr
                 ChildSerpClusterFragment childSerpClusterFragment = ChildSerpClusterFragment.init();
                 // create new listing fragment to show the listings
                 mChildSerpListFragment = SerpListFragment.init(true);
-                mChildSerpListFragment.updateListings(listingGetEvent);
+                mChildSerpListFragment.updateListings(listingGetEvent, this, mSerpRequestType);
 
                 initFragments(new int[]{R.id.activity_serp_similar_properties_frame_layout, R.id.activity_serp_content_frame_layout},
                         new Fragment[]{childSerpClusterFragment, mChildSerpListFragment}, true);
 
             } else {
-                mChildSerpListFragment.updateListings(listingGetEvent);
+                mChildSerpListFragment.updateListings(listingGetEvent, this, mSerpRequestType);
             }
         } else {
+            // for buider, seller and normal serp
             mListingGetEvent = listingGetEvent;
             setShowSearchBar(true);
             mFiltersFrameLayout.setVisibility(View.VISIBLE);
@@ -155,12 +176,16 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpListFr
             if (mListingFragment == null) {
                 // create new listing fragment to show the listings
                 mListingFragment = SerpListFragment.init(false);
-                mListingFragment.updateListings(listingGetEvent);
+                mListingFragment.updateListings(listingGetEvent, this, mSerpRequestType);
                 initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
             } else {
                 // update already running listing fragment with the new list
-                mListingFragment.updateListings(listingGetEvent);
+                mListingFragment.updateListings(listingGetEvent, this, mSerpRequestType);
             }
+        }
+
+        if(mProgressDialog != null) {
+            mProgressDialog.dismiss();
         }
     }
 
@@ -200,10 +225,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpListFr
         }
     }*/
 
-    @Override
-    public SerpGetEvent getListings(int flag) {
-        return null;
-    }
     @OnClick(R.id.fragment_filters_filter_relative_layout)
     public void onFilterPressed(View view) {
         FragmentTransaction ft = this.getFragmentManager().beginTransaction();
@@ -221,11 +242,13 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpListFr
                     }
 
                     @Override
-                    public void sortSelected(String sort, String fieldName, String value) {
+                    public void sortSelected(String sort, String fieldName, String value, int i) {
                         mSortTextView.setText(sort);
                         MakaanBuyerApplication.serpSelector.sort(fieldName, value);
+                        mSelectedSortIndex = i;
+                        SerpActivity.this.serpRequest(SerpActivity.TYPE_SORT, MakaanBuyerApplication.serpSelector);
                     }
-                });
+                }, mSelectedSortIndex);
         mMainFrameLayout.getForeground().setAlpha(128);
     }
 
@@ -237,7 +260,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpListFr
     @OnClick(R.id.fragment_filters_map_image_view)
     public void onMapViewPressed(View view) {
         if(mIsMapFragment) {
-            mListingFragment.updateListings(mListingGetEvent);
+            mListingFragment.updateListings(mListingGetEvent, this, mSerpRequestType);
             initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, true);
             mIsMapFragment = false;
         } else {
@@ -252,7 +275,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpListFr
 
     @Override
     public void dialogDismissed() {
-        mAppliedFiltersCountTextView.setText(String.valueOf(MakaanBuyerApplication.serpSelector.getAppliedFilterCount()));
+        mAppliedFiltersCountTextView.setText(String.valueOf(MasterDataCache.getAppliedFilterCount()));
     }
 
     @Override
@@ -260,4 +283,17 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpListFr
         return true;
     }
 
+    @Override
+    public void serpRequest(int type, Selector selector) {
+        new ListingService().handleSerpRequest(selector);
+
+        mSerpRequestType = type;
+
+        if(mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+        }
+        mProgressDialog.setTitle("Loading");
+        mProgressDialog.setMessage("Wait while loading...");
+        mProgressDialog.show();
+    }
 }

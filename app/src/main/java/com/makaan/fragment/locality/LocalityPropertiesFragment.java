@@ -8,13 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.pojo.TaxonomyCard;
 
 import java.util.List;
+
+import butterknife.Bind;
 
 /**
  * Created by tusharchaudhary on 1/19/16.
@@ -39,6 +43,7 @@ public class LocalityPropertiesFragment extends Fragment {
         title = getArguments().getString("title");
         TextView titleTv = (TextView) view.findViewById(R.id.tv_localities_props_title);
         titleTv.setText(title);
+
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_localities_props);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);

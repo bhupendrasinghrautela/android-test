@@ -1,11 +1,9 @@
 package com.makaan.activity.locality;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -19,10 +17,11 @@ import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
+import com.makaan.event.agents.callback.TopAgentsCallback;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.locality.LocalityByIdEvent;
 import com.makaan.event.locality.NearByLocalitiesEvent;
-import com.makaan.event.trend.callback.LocalityTrendCallback;
+import com.makaan.event.locality.TopBuilderInLocalityEvent;
 import com.makaan.fragment.locality.KynFragment;
 import com.makaan.fragment.locality.LocalitiesApartmentsFragment;
 import com.makaan.fragment.locality.LocalityLifestyleFragment;
@@ -31,16 +30,17 @@ import com.makaan.fragment.locality.LocalityPropertiesFragment;
 import com.makaan.fragment.locality.NearByLocalitiesFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.TaxonomyCard;
+import com.makaan.response.agents.TopAgent;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.city.EntityDesc;
 import com.makaan.response.locality.ListingAggregation;
 import com.makaan.response.locality.Locality;
-import com.makaan.response.trend.LocalityPriceTrendDto;
+import com.makaan.response.project.Builder;
+import com.makaan.service.AgentService;
 import com.makaan.service.AmenityService;
 import com.makaan.service.LocalityService;
-import com.makaan.service.PriceTrendService;
+import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.TaxonomyService;
-import com.makaan.util.AppBus;
 import com.makaan.util.Blur;
 import com.squareup.otto.Subscribe;
 
@@ -48,7 +48,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by tusharchaudhary on 1/18/16.
@@ -103,11 +102,11 @@ public class LocalityActivity extends MakaanFragmentActivity {
         if(bundle!=null)
         localityId = bundle.getLong("localityId");
         if(localityId==null)
-            this.localityId = Long.valueOf(50157);
+            this.localityId = Long.valueOf(50001);
     }
 
     private void fetchData() {
-        new LocalityService().getLocalityById(localityId);
+        ((LocalityService)MakaanServiceFactory.getInstance().getService(LocalityService.class)).getLocalityById(localityId);
         addProperties(new TaxonomyService().getTaxonomyCardForLocality(localityId));
        }
 
@@ -117,10 +116,22 @@ public class LocalityActivity extends MakaanFragmentActivity {
         populateLocalityData();
         addLocalitiesLifestyleFragment(locality.entityDescriptions);
         fetchHero();
-        new LocalityService().getNearByLocalities(locality.latitude, locality.longitude, 10);
-        new AmenityService().getAmenitiesByLocation(locality.latitude, locality.longitude, 10);
+        ((LocalityService)MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(locality.latitude, locality.longitude, 10);
+        ((AmenityService)MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(locality.latitude, locality.longitude, 10);
+        ((AgentService)MakaanServiceFactory.getInstance().getService(AgentService.class)).getTopAgentsForLocality(locality.cityId, locality.localityId, 10, false, new TopAgentsCallback() {
+            @Override
+            public void onTopAgentsRcvd(ArrayList<TopAgent> topAgents) {
+                addTopAgentsFragment(topAgents);
+            }
+        });
+        ((LocalityService)MakaanServiceFactory.getInstance().getService(LocalityService.class)).getTopBuildersInLocality(locality.localityId, 10);
+        addPriceTrendFragment();
+        addLocalitiesApartmentsFragment(locality.listingAggregations);
+    }
 
-        addStuff();
+    @Subscribe
+    public void onResults(TopBuilderInLocalityEvent topBuilderInLocalityEvent){
+        addTopBuilders(topBuilderInLocalityEvent.builders);
     }
 
     @Subscribe
@@ -129,7 +140,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
     }
 
     @Subscribe
-    public void onResults(AmenityGetEvent amenityGetEvent){
+    public void onResults(AmenityGetEvent amenityGetEvent) {
         addKyn(amenityGetEvent.amenityClusters);
     }
 
@@ -167,25 +178,6 @@ public class LocalityActivity extends MakaanFragmentActivity {
         }
     }
 
-    private void addStuff() {
-        addTopAgentsFragment();
-        addTopBuilders();
-        addLocalitiesApartmentsFragment();
-        addPriceTrendFragment();
-    }
-
-    private void addKyn(List<AmenityCluster> amenityClusters) {
-        Fragment newFragment = new KynFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("title", "know your neighbourhood");
-        newFragment.setArguments(bundle);
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.container_nearby_localities_kyn, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-        ((KynFragment)newFragment).setData(amenityClusters);
-    }
-
     private void initListeners() {
         mCityScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -200,20 +192,29 @@ public class LocalityActivity extends MakaanFragmentActivity {
         });
     }
 
+    private void addKyn(List<AmenityCluster> amenityClusters) {
+        Fragment newFragment = new KynFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("title", "know your neighbourhood");
+        newFragment.setArguments(bundle);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.container_nearby_localities_kyn, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+        ((KynFragment)newFragment).setData(amenityClusters);
+    }
+
     private void addNearByLocalitiesFragment(ArrayList<Locality> nearbyLocalities) {
-        Fragment newFragment = new NearByLocalitiesFragment();
+        NearByLocalitiesFragment newFragment = new NearByLocalitiesFragment();
         Bundle bundle = new Bundle();
         bundle.putString("title", "nearby localities");
         bundle.putInt("placeholder", R.drawable.placeholder_localities_nearby);
         newFragment.setArguments(bundle);
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.container_nearby_localities, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-        ((NearByLocalitiesFragment)newFragment).setNearByLocalityData(nearbyLocalities);
+        initFragment(R.id.container_nearby_localities, newFragment, false);
+        newFragment.setNearByLocalityData(nearbyLocalities);
     }
 
-    private void addLocalitiesApartmentsFragment() {
+    private void addLocalitiesApartmentsFragment(ArrayList<ListingAggregation> listingAggregations) {
         Fragment newFragment = new LocalitiesApartmentsFragment();
         Bundle bundle = new Bundle();
         bundle.putString("title", "available property status");
@@ -222,7 +223,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
         transaction.replace(R.id.container_nearby_localities_apartments, newFragment);
         transaction.addToBackStack(null);
         transaction.commit();
-        ((LocalitiesApartmentsFragment)newFragment).setData(getDummyDataForApartments());
+        ((LocalitiesApartmentsFragment)newFragment).setData(listingAggregations);
     }
 
     private void addPriceTrendFragment() {
@@ -239,20 +240,20 @@ public class LocalityActivity extends MakaanFragmentActivity {
         initFragment(R.id.container_nearby_localities_price_trends, newFragment, false);
     }
 
-    private List<LocalitiesApartmentsFragment.Properties> getDummyDataForApartments() {
-        List<LocalitiesApartmentsFragment.Properties> properties = new ArrayList<>();
-        LocalitiesApartmentsFragment.Properties property = new LocalitiesApartmentsFragment.Properties(
-                "apartment","1 bhk","2 bhk", "3 bhk","30L - 40L","50L - 660L","70L - 90L","450 - 790 sq ft","450 - 790 sq ft","450 - 790 sq ft","3,475 - 4,580 / sq ft","3,475 - 4,580 / sq ft", "3,475 - 4,580 / sq ft");
-        properties.add(property);
-        properties.add(property);
-        properties.add(property);
-        properties.add(property);
-        properties.add(property);
-        properties.add(property);
-        properties.add(property);
-        properties.add(property);
-        return properties;
-    }
+//    private List<LocalitiesApartmentsFragment.Properties> getDummyDataForApartments() {
+//        List<LocalitiesApartmentsFragment.Properties> properties = new ArrayList<>();
+//        LocalitiesApartmentsFragment.Properties property = new LocalitiesApartmentsFragment.Properties(
+//                "apartment","1 bhk","2 bhk", "3 bhk","30L - 40L","50L - 660L","70L - 90L","450 - 790 sq ft","450 - 790 sq ft","450 - 790 sq ft","3,475 - 4,580 / sq ft","3,475 - 4,580 / sq ft", "3,475 - 4,580 / sq ft");
+//        properties.add(property);
+//        properties.add(property);
+//        properties.add(property);
+//        properties.add(property);
+//        properties.add(property);
+//        properties.add(property);
+//        properties.add(property);
+//        properties.add(property);
+//        return properties;
+//    }
 
     private void addLocalitiesLifestyleFragment(ArrayList<EntityDesc> entityDescriptions) {
         Fragment newFragment = new LocalityLifestyleFragment();
@@ -266,31 +267,26 @@ public class LocalityActivity extends MakaanFragmentActivity {
         ((LocalityLifestyleFragment)newFragment).setData(entityDescriptions);
     }
 
-    private void addTopAgentsFragment() {
-        Fragment newFragment = new NearByLocalitiesFragment();
+    private void addTopAgentsFragment(ArrayList<TopAgent> topAgents) {
+        NearByLocalitiesFragment newFragment = new NearByLocalitiesFragment();
         Bundle bundle = new Bundle();
         bundle.putString("title", "top agents");
         bundle.putInt("placeholder", R.drawable.placeholder_agent);
         newFragment.setArguments(bundle);
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.container_nearby_localities_top_agents, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-        ((NearByLocalitiesFragment)newFragment).setData(getDummyDataForAgents());
+        initFragment(R.id.container_nearby_localities_top_agents, newFragment, false);
+        newFragment.setDataForTopAgents(locality.cityId, locality.localityId, topAgents);
     }
 
 
-    private void addTopBuilders() {
-        Fragment newFragment = new NearByLocalitiesFragment();
+    private void addTopBuilders(ArrayList<Builder> builders) {
+        NearByLocalitiesFragment newFragment = new NearByLocalitiesFragment();
         Bundle bundle = new Bundle();
         bundle.putString("title", "top builders");
         bundle.putInt("placeholder", R.drawable.placeholder_localities_builders);
         newFragment.setArguments(bundle);
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.container_nearby_localities_top_builders, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-        ((NearByLocalitiesFragment)newFragment).setData(getDummyDataForBuilders());
+        initFragment(R.id.container_nearby_localities_top_builders, newFragment, false);
+        newFragment.setDataForTopBuilders(builders);
+
     }
     private void addProperties(List<TaxonomyCard> taxonomyCardList) {
         Fragment newFragment = new LocalityPropertiesFragment();
@@ -303,46 +299,6 @@ public class LocalityActivity extends MakaanFragmentActivity {
         transaction.commit();
         ((LocalityPropertiesFragment)newFragment).setData(taxonomyCardList);
     }
-
-    private List<NearByLocalitiesFragment.NearByLocalities> getDummyDataForAgents() {
-        List<NearByLocalitiesFragment.NearByLocalities> nearByLocalities = new ArrayList<>();
-        NearByLocalitiesFragment.NearByLocalities nearby = new NearByLocalitiesFragment.NearByLocalities("","109 +","552 +","investor clinic","Sachin Singh");
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        return nearByLocalities;
-    }
-
-
-    private List<NearByLocalitiesFragment.NearByLocalities> getDummyDataForBuilders() {
-        List<NearByLocalitiesFragment.NearByLocalities> nearByLocalities = new ArrayList<>();
-        NearByLocalitiesFragment.NearByLocalities nearby = new NearByLocalitiesFragment.NearByLocalities("","42 ","18","experience: 18 years","Supertech Group");
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);
-        nearByLocalities.add(nearby);return nearByLocalities;
-    }
-
-//    private List<LocalityLifestyleFragment.Properties> getDummyDataForLifestyle() {
-//        List<LocalityLifestyleFragment.Properties> nearByLocalities = new ArrayList<>();
-//        LocalityLifestyleFragment.Properties nearby = new LocalityLifestyleFragment.Properties("","schools","with constant monitoring and regular rating, we ensure that best brokers feature more on makaan.com. best brokers feature more on makaan. with constant monitoring and regular rating, we ensure that best brokers feature more on makaan.com. best brokers feature more on makaan with constant monitoring and regular rating brokers feature more on makaan. best brokers feature.");
-//        nearByLocalities.add(nearby);
-//        nearByLocalities.add(nearby);
-//        nearByLocalities.add(nearby);
-//        nearByLocalities.add(nearby);
-//        nearByLocalities.add(nearby);
-//        nearByLocalities.add(nearby);
-//        nearByLocalities.add(nearby);
-//        nearByLocalities.add(nearby);return nearByLocalities;
-//    }
 
     private void fetchHero()
     {

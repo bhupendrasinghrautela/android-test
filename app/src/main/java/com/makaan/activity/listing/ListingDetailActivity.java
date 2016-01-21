@@ -47,7 +47,7 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         //((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).handleSerpRequest(MakaanBuyerApplication.serpSelector);
         //((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getCityById(11L);
         //((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getTopLocalitiesInCity(11L, 5);
-        //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getLocalityById(50186L);
+        ((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getLocalityById(50186L);
         //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getTopBuildersInLocality(50123L, 5);
         //((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getListingDetail(429713L);
         List<Long> tempUsers = new ArrayList<>();

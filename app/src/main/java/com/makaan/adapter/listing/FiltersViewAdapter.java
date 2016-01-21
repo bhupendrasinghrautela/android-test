@@ -1,9 +1,6 @@
 package com.makaan.adapter.listing;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +15,13 @@ import com.makaan.R;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.serp.AbstractFilterValue;
 import com.makaan.response.serp.FilterGroup;
+import com.makaan.response.serp.RangeMinMaxFilter;
 import com.makaan.response.serp.RangeFilter;
 import com.makaan.response.serp.TermFilter;
 import com.makaan.ui.pyr.RangeSeekBar;
 import com.makaan.util.StringUtil;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Filter;
 
 /**
  * Created by root on 5/1/16.
@@ -35,17 +31,20 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
     public static final int SEEKBAR = 2;
     public static final int CHECKBOX = 3;
     public static final int RADIO_BUTTON = 4;
+    public static final int RADIO_BUTTON_MIN_MAX = 5;
 
     private final int type;
     Context context;
     private final FilterGroup filterGroup;
     ArrayList<TermFilter> termValues;
     ArrayList<RangeFilter> rangeValues;
+    ArrayList<RangeMinMaxFilter> rangeMinMaxValues;
 
     public FiltersViewAdapter(Context context, FilterGroup filterGroup, int type) {
         this.context = context;
         this.termValues = filterGroup.termFilterValues;
         this.rangeValues = filterGroup.rangeFilterValues;
+        this.rangeMinMaxValues = filterGroup.rangeMinMaxFilterValues;
         this.filterGroup = filterGroup;
 
         this.type = type;
@@ -55,6 +54,8 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
     public int getCount() {
         if(type == SEEKBAR) {
             return rangeValues.size();
+        } else if(type == RADIO_BUTTON_MIN_MAX) {
+            return rangeMinMaxValues.size();
         } else {
             return termValues.size();
         }
@@ -64,6 +65,8 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
     public AbstractFilterValue getItem(int position) {
         if(type == SEEKBAR) {
             return rangeValues.get(position);
+        } else if(type == RADIO_BUTTON_MIN_MAX) {
+            return rangeMinMaxValues.get(position);
         } else {
             return termValues.get(position);
         }
@@ -71,7 +74,13 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
 
     @Override
     public long getItemId(int position) {
-        return termValues.size();
+        if(type == SEEKBAR) {
+            return rangeValues.size();
+        } else if(type == RADIO_BUTTON_MIN_MAX) {
+            return rangeMinMaxValues.size();
+        } else {
+            return termValues.size();
+        }
     }
 
     @Override
@@ -88,7 +97,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                 holder = new ViewHolder();
                 holder.view = convertView;
                 ((ToggleButton) holder.view).setOnCheckedChangeListener(this);
-            } else if(type == RADIO_BUTTON) {
+            } else if(type == RADIO_BUTTON || type == RADIO_BUTTON_MIN_MAX) {
                 convertView = LayoutInflater.from(context).inflate(R.layout.fragment_dialog_filters_radio_button_item_view, parent, false);
                 holder = new ViewHolder();
                 holder.view = convertView;
@@ -113,7 +122,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
             ((ToggleButton) holder.view).setTextOff(this.getItem(position).displayName);
             ((ToggleButton) holder.view).setText(this.getItem(position).displayName);
             ((ToggleButton) holder.view).setChecked(this.getItem(position).selected);
-        } else if (type == RADIO_BUTTON) {
+        } else if (type == RADIO_BUTTON || type == RADIO_BUTTON_MIN_MAX) {
             ((RadioButton) holder.view).setOnCheckedChangeListener(null);
             ((RadioButton) holder.view).setText(this.getItem(position).displayName);
             ((RadioButton) holder.view).setChecked(this.getItem(position).selected);
@@ -133,20 +142,6 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
         return convertView;
     }
 
-    public List<String> getSelectedOptions() {
-        List<String> list = null;
-        if (termValues != null && termValues.size() > 0) {
-            list = new ArrayList<>();
-            list.add(termValues.get(0).fieldName);
-            for (TermFilter filter : termValues) {
-                if (filter.selected) {
-                    list.add(String.valueOf(filter.value));
-                }
-            }
-        }
-        return list;
-    }
-
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         ViewHolder holder = (ViewHolder) buttonView.getTag();
@@ -164,11 +159,15 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
     }
 
     public void applyFilters(Selector selector, ArrayList<FilterGroup> filterGroups) {
+        FilterGroup currentGroup = clearFilterGroup(filterGroups);
         if(type == SEEKBAR) {
             selector.removeRange(rangeValues.get(0).fieldName);
 
             RangeFilter filter = rangeValues.get(0);
             if(filter.selectedMinValue > filter.minValue || filter.selectedMaxValue < filter.maxValue) {
+                if(currentGroup != null) {
+                    currentGroup.isSelected = true;
+                }
                 selector.range(rangeValues.get(0).fieldName, rangeValues.get(0).selectedMinValue, rangeValues.get(0).selectedMaxValue);
             }
         } else if(type == RADIO_BUTTON) {
@@ -176,6 +175,9 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
 
             for(TermFilter filter : termValues) {
                 if(filter.selected) {
+                    if(currentGroup != null) {
+                        currentGroup.isSelected = true;
+                    }
                     if("-1".equals(filter.value)) {
                         for(TermFilter filter2 : termValues) {
                             if(!filter2.selected && !"-1".equals(filter2.value)) {
@@ -185,16 +187,53 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                     }
                 }
             }
+        } else if(type == RADIO_BUTTON_MIN_MAX) {
+            selector.removeTerm(termValues.get(0).fieldName);
+
+            for(RangeMinMaxFilter filter : rangeMinMaxValues) {
+                if(filter.selected) {
+                    if(currentGroup != null) {
+                        currentGroup.isSelected = true;
+                    }
+                    if(filter.minValue != -1) {
+                        selector.term(filter.minFieldName, String.valueOf(filter.minValue));
+                    }
+                    if(filter.maxValue != -1) {
+                        selector.term(filter.maxFieldName, String.valueOf(filter.maxValue));
+                    }
+                }
+            }
         } else {
             selector.removeTerm(termValues.get(0).fieldName);
 
             for(TermFilter filter : termValues) {
                 if(filter.selected) {
+                    if(currentGroup != null) {
+                        currentGroup.isSelected = true;
+                    }
                     selector.term(filter.fieldName, filter.value);
                 }
             }
         }
-        applyFilterGroup(filterGroups);
+        if(currentGroup != null) {
+            applyFilterGroup(currentGroup);
+        } else {
+            applyFilterGroup(filterGroups);
+        }
+    }
+
+    private FilterGroup clearFilterGroup(ArrayList<FilterGroup> filterGroups) {
+        for(FilterGroup group : filterGroups) {
+            if(group.internalName.equals(filterGroup.internalName)) {
+                group.isSelected = false;
+                return group;
+            }
+        }
+        return null;
+    }
+
+    private void applyFilterGroup(FilterGroup group) {
+        group.applyFilters(filterGroup);
     }
 
     private void applyFilterGroup(ArrayList<FilterGroup> filterGroups) {

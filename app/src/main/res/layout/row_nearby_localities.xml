@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:text="Koramangala"
             android:textSize="24sp"
+            android:singleLine="true"
             android:layout_below="@id/iv_nearby_locality"
             android:textColor="#444444"
             android:id="@+id/tv_nearby_localities_name"

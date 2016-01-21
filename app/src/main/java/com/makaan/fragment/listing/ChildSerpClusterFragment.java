@@ -1,29 +1,25 @@
 package com.makaan.fragment.listing;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.listing.HorizontalScrollFragmentAdapter;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.pojo.TempClusterItem;
 import com.makaan.ui.view.CustomViewPager;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -49,6 +45,7 @@ public class ChildSerpClusterFragment extends MakaanBaseFragment {
     ImageView mRightArrowImageView;
 
     private HorizontalScrollFragmentAdapter mFragmentPagerAdapter;
+    private SerpRequestCallback mCallback;
 
 
     @Override
@@ -79,7 +76,7 @@ public class ChildSerpClusterFragment extends MakaanBaseFragment {
                 mListingAdapter.setData(mListings);
             }
         }*/
-        mFragmentPagerAdapter = new HorizontalScrollFragmentAdapter<>(getActivity().getSupportFragmentManager(), getActivity(), mItems, true);
+        mFragmentPagerAdapter = new HorizontalScrollFragmentAdapter<>(getActivity().getSupportFragmentManager(), getActivity(), mItems, true, mCallback);
 
         mViewPager.setAdapter(mFragmentPagerAdapter);
 

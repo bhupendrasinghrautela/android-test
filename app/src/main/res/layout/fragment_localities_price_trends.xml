@@ -93,15 +93,16 @@
         android:id="@+id/header_text_popular_searches"
         android:gravity="center"
         android:layout_marginTop="18dp"
-        android:textSize="@dimen/city_header_text"
-        android:text="@string/price_trends"
+        android:textSize="16sp"
+        android:text="popular searches in this area"
         android:textColor="@color/listingBlack"
         android:layout_width="match_parent"
+        android:layout_marginBottom="16dp"
         android:layout_height="wrap_content"/>
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="110dp"
-        android:layout_height="110dp"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
         android:id="@+id/rv_localities_recent_searches"
         />
 
