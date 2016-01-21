@@ -12,7 +12,6 @@
         android:layout_height="wrap_content">
     <ImageView
         android:layout_width="match_parent"
-        android:src="@drawable/locality_hero"
         android:scaleType="centerCrop"
         android:id="@+id/iv_nearby_locality"
         android:layout_height="229dp" />

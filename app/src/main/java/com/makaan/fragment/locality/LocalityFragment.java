@@ -9,7 +9,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -71,6 +74,8 @@ public class LocalityFragment extends MakaanBaseFragment{
     TextView annualGrowthTv;
     @Bind(R.id.tv_locality_annual_growth_rent)
     TextView annualRentDemandGrowthTv;
+    @Bind(R.id.ll_locality_fragment)
+    LinearLayout frame;
 
     private static final int BLUR_EFFECT_HEIGHT = 300;
     private float alpha;
@@ -105,6 +110,7 @@ public class LocalityFragment extends MakaanBaseFragment{
     public void onResults(LocalityByIdEvent localityByIdEvent){
         locality = localityByIdEvent.locality;
         populateLocalityData();
+        frame.setVisibility(View.VISIBLE);
         fetchHero();
         mMainCityImage.setDefaultImageResId(R.drawable.locality_hero);
         addLocalitiesLifestyleFragment(locality.entityDescriptions);

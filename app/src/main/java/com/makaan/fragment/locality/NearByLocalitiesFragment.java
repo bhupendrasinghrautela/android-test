@@ -221,11 +221,11 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             final NearByLocalities nearByLocality = nearByLocalitiesList.get(position);
-            holder.medianTv.setText(nearByLocality.medianPrice);
+            holder.medianTv.setText(nearByLocality.medianPrice.equalsIgnoreCase("null")?"":nearByLocality.medianPrice);
             holder.nameTv.setText(nearByLocality.localityName);
             holder.numberOfPropsForSaleTv.setText(nearByLocality.numberOfPropsForSale);
             holder.numberOfPropsForRentTv.setText(nearByLocality.numberOfPropsForRent);
-            holder.localityIv.setImageResource(placeholderResource);
+//            holder.localityIv.setImageResource(placeholderResource);
 
             if(nearByLocality.imgUrl!=null)
             MakaanNetworkClient.getInstance().getImageLoader().get(nearByLocality.imgUrl, new ImageLoader.ImageListener() {
@@ -267,4 +267,5 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment {
         String numberOfPropsForSale;
         String numberOfPropsForRent;
     }
+
 }

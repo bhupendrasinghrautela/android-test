@@ -45,6 +45,7 @@ public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
     @Bind(R.id.rv_localities_aprmnts)
     RecyclerView mRecyclerView;
 
+
     @Override
     protected int getContentViewId() {
         return R.layout.fragment_localities_apartments;
