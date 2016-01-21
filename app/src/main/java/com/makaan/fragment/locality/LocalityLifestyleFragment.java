@@ -57,6 +57,8 @@ public class LocalityLifestyleFragment extends MakaanBaseFragment{
 
     public void setData(ArrayList<EntityDesc> entityDescs) {
             mAdapter = new LocalityLifestyleAdapter(entityDescs);
+        if (mRecyclerView != null)
+            mRecyclerView.setAdapter(mAdapter);
     }
 
 
@@ -93,7 +95,7 @@ public class LocalityLifestyleFragment extends MakaanBaseFragment{
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             final EntityDesc nearByLocalitu = entityDescs.get(position);
-//            holder.descriptionTv.setText(nearByLocalitu.description);
+            holder.descriptionTv.setText(nearByLocalitu.name);
             holder.descriptionFullTv.setText(nearByLocalitu.description);
             holder.localityIv.setImageResource(R.drawable.placeholder_localities_props);
             //TODO: Picasso load imgurl
