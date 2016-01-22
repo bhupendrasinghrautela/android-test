@@ -2,6 +2,7 @@ package com.makaan.service;
 
 import com.google.gson.reflect.TypeToken;
 import com.makaan.constants.ApiConstants;
+import com.makaan.event.locality.GpByIdEvent;
 import com.makaan.event.locality.LocalityByIdEvent;
 import com.makaan.event.locality.NearByLocalitiesEvent;
 import com.makaan.event.locality.TopBuilderInLocalityEvent;
@@ -9,6 +10,7 @@ import com.makaan.event.locality.TrendingSearchLocalityEvent;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
+import com.makaan.response.locality.GpDetail;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Builder;
 import com.makaan.response.search.SearchResponseItem;
@@ -107,7 +109,7 @@ public class LocalityService implements MakaanService {
             Selector topBuilderSelector = new Selector();
 
             topBuilderSelector.fields(new String[]{"id", "name", "establishedDate", "projectCount", "images", "absolutePath", "url", "activeStatus", "projectStatusCount"});
-            topBuilderSelector.term(LOCALITY_ID, localityId.toString()).term(BUILDER_DB_STATUS, "Active").page(0,noOfBuilder);
+            topBuilderSelector.term(LOCALITY_ID, localityId.toString()).term(BUILDER_DB_STATUS, "Active").page(0, noOfBuilder);
 
             String localityTopBuilder = ApiConstants.TOP_BUILDER.concat("?").concat(topBuilderSelector.build());
 
@@ -123,6 +125,22 @@ public class LocalityService implements MakaanService {
                 }
             }, true);
 
+        }
+    }
+
+    public void getGooglePlaceDetail(String gpId) {
+        if (null != gpId) {
+            String gpDetailUrl = ApiConstants.GP_DETAIL.concat("/").concat(gpId);
+
+            Type gpDetailType = new TypeToken<GpDetail>() {
+            }.getType();
+            MakaanNetworkClient.getInstance().get(gpDetailUrl, gpDetailType, new ObjectGetCallback() {
+                @Override
+                public void onSuccess(Object responseObject) {
+                    GpDetail gpDetail = (GpDetail) responseObject;
+                    AppBus.getInstance().post(new GpByIdEvent(gpDetail));
+                }
+            });
         }
     }
 
