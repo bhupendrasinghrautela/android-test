@@ -2,7 +2,6 @@ package com.makaan.response.locality;
 
 import com.makaan.constants.StringConstants;
 import com.makaan.response.city.EntityDesc;
-import com.makaan.util.AppUtils;
 
 import java.util.ArrayList;
 
@@ -30,7 +29,8 @@ public class Locality {
 
 
     public String getDescription() {
-        return AppUtils.stripHtml(description);
+        //return AppUtils.stripHtml(description);
+        return description;
     }
 
     public Double getCityMedianPrice() {

@@ -9,6 +9,7 @@ import com.makaan.event.city.CityTopLocalityEvent;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.event.trend.callback.TopLocalitiesTrendCallback;
 import com.makaan.response.locality.Locality;
+import com.makaan.service.BuilderService;
 import com.makaan.service.CityService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PriceTrendService;
@@ -45,7 +46,7 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
 
         //MakaanBuyerApplication.serpSelector.term("cityId", "11").term("listingCategory", new String[]{"Primary", "Resale"});
         //((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).handleSerpRequest(MakaanBuyerApplication.serpSelector);
-        //((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getCityById(11L);
+        ((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getCityById(11L);
         //((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getTopLocalitiesInCity(11L, 5);
         //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getLocalityById(50186L);
         //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getTopBuildersInLocality(50123L, 5);
@@ -67,8 +68,9 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         topLocalities.add(53476L);
         topLocalities.add(53477L);
         //((PriceTrendService) (MakaanServiceFactory.getInstance().getService(PriceTrendService.class))).getPriceTrendForLocalities(topLocalities, 6, new TopLocalitiesTrendCallback());
-        ((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getPropertyRangeInCity(11L, null,null,false ,10000, 500000, 12250);
-        ((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getPropertyRangeInCity(11L, null,null,true ,10000, 500000, 12250);
+        //((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getPropertyRangeInCity(11L, null,null,false ,10000, 500000, 12250);
+        //((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getPropertyRangeInCity(11L, null,null,true ,10000, 500000, 12250);
+        ((BuilderService) (MakaanServiceFactory.getInstance().getService(BuilderService.class))).getBuilderById(100002L);
         //((AgentService) (MakaanServiceFactory.getInstance().getService(AgentService.class))).getTopAgentsForLocality(2L, 50175L, 5, false, new TopRentAgentsInLocalityCallback());
 
         /*Intent intent = new Intent(this, SerpActivity.class);

@@ -11,12 +11,36 @@ import com.makaan.request.selector.Selector;
 import com.makaan.response.city.City;
 import com.makaan.response.locality.Locality;
 import com.makaan.util.AppBus;
-import com.makaan.util.AppUtils;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import static com.makaan.constants.RequestConstants.*;
+import static com.makaan.constants.RequestConstants.ANNUAL_GROWTH;
+import static com.makaan.constants.RequestConstants.BEDROOMS;
+import static com.makaan.constants.RequestConstants.CENTER_LAT;
+import static com.makaan.constants.RequestConstants.CENTER_LONG;
+import static com.makaan.constants.RequestConstants.CITY_HEROSHOT_IMAGE_URL;
+import static com.makaan.constants.RequestConstants.CITY_ID;
+import static com.makaan.constants.RequestConstants.CITY_TAG_LINE;
+import static com.makaan.constants.RequestConstants.DEMAND_RATE;
+import static com.makaan.constants.RequestConstants.DESCRIPTION;
+import static com.makaan.constants.RequestConstants.ENTITY_DESCRIPTIONS;
+import static com.makaan.constants.RequestConstants.ENTITY_DESCRIPTION_CATEGORIES;
+import static com.makaan.constants.RequestConstants.ID;
+import static com.makaan.constants.RequestConstants.LABEL;
+import static com.makaan.constants.RequestConstants.LISTING_CATEGORY;
+import static com.makaan.constants.RequestConstants.LOCALITY_PRIORITY;
+import static com.makaan.constants.RequestConstants.MASTER_DESCRIPTION_CATEGORIES;
+import static com.makaan.constants.RequestConstants.MASTER_DESCRIPTION_PARENT_CATEGORIES;
+import static com.makaan.constants.RequestConstants.NAME;
+import static com.makaan.constants.RequestConstants.PARENT_CATEGORY;
+import static com.makaan.constants.RequestConstants.PRIMARY;
+import static com.makaan.constants.RequestConstants.RENTAL;
+import static com.makaan.constants.RequestConstants.RENTAL_YIELD;
+import static com.makaan.constants.RequestConstants.RESALE;
+import static com.makaan.constants.RequestConstants.SORT_DESC;
+import static com.makaan.constants.RequestConstants.SUPPLY_RATE;
+import static com.makaan.constants.RequestConstants.UNIT_TYPE_ID;
 
 
 /**
@@ -39,7 +63,7 @@ public class CityService implements MakaanService {
                     ANNUAL_GROWTH, RENTAL_YIELD, DEMAND_RATE, SUPPLY_RATE, LABEL});
 
 
-            String cityUrl = ApiConstants.CITY.concat(cityId.toString()).concat("?").concat(SOURCE_DOMAIN_MAKAAN).concat(citySelector.build());
+            String cityUrl = ApiConstants.CITY.concat(cityId.toString()).concat("?").concat(citySelector.build());
 
             Type cityType = new TypeToken<City>() {
             }.getType();
@@ -48,7 +72,7 @@ public class CityService implements MakaanService {
                 @Override
                 public void onSuccess(Object responseObject) {
                     City city = (City) responseObject;
-                    city.description = AppUtils.stripHtml(city.description);
+                    //city.description = AppUtils.stripHtml(city.description);
                     AppBus.getInstance().post(new CityByIdEvent(city));
                 }
             });

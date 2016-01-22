@@ -13,7 +13,6 @@ import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Builder;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.util.AppBus;
-import com.makaan.util.AppUtils;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -52,7 +51,7 @@ public class LocalityService implements MakaanService {
                 @Override
                 public void onSuccess(Object responseObject) {
                     Locality locality = (Locality) responseObject;
-                    locality.description = AppUtils.stripHtml(locality.description);
+                    //locality.description = AppUtils.stripHtml(locality.description);
                     AppBus.getInstance().post(new LocalityByIdEvent(locality));
                 }
             });

@@ -9,7 +9,6 @@ import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.util.AppBus;
-import com.makaan.util.AppUtils;
 
 import java.lang.reflect.Type;
 
@@ -48,7 +47,7 @@ public class ListingService implements MakaanService {
                 public void onSuccess(Object responseObject) {
                     ListingDetail listingDetail = (ListingDetail) responseObject;
 
-                    listingDetail.description = AppUtils.stripHtml(listingDetail.description);
+                    //listingDetail.description = AppUtils.stripHtml(listingDetail.description);
                     AppBus.getInstance().post(new ListingByIdGetEvent(listingDetail));
                 }
             });

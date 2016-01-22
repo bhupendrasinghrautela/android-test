@@ -93,7 +93,7 @@ public class RequestConstants {
     public static final String STATUS = "status";
     public static final String APARTMENT = "apartment";
 
-    public static final String SOURCE_DOMAIN_MAKAAN = "sourceDomain=Makaan&";
+    public static final String SOURCE_DOMAIN_MAKAAN = "sourceDomain=Makaan";
     public static final String LISTING_CATEGORY = "listingCategory";
 
 

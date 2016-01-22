@@ -1,7 +1,6 @@
 package com.makaan.response.listing.detail;
 
 import com.makaan.response.property.Property;
-import com.makaan.util.AppUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,6 +37,7 @@ public class ListingDetail {
     public ArrayList<HashMap<String,String>> viewDirections;
 
     public String getDescription() {
-        return AppUtils.stripHtml(description);
+        //return AppUtils.stripHtml(description);
+        return description;
     }
 }
