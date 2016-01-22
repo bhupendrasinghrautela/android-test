@@ -14,7 +14,7 @@ import static com.makaan.constants.RequestConstants.LOCALITY_ID;
 import static com.makaan.constants.RequestConstants.PRIMARY;
 import static com.makaan.constants.RequestConstants.RENTAL;
 import static com.makaan.constants.RequestConstants.RESALE;
-import static com.makaan.constants.RequestConstants.UNIT_TYPE;
+import static com.makaan.constants.RequestConstants.*;
 
 /**
  * Created by vaibhav on 20/01/16.
@@ -49,7 +49,7 @@ public class AgentService implements MakaanService{
             }
 
             if (null != unitType) {
-                topAgentsSelector.term(UNIT_TYPE, unitType);
+                topAgentsSelector.term(UNIT_TYPE_ID, unitType);
             }
             if (null != noOfAgents) {
                 topAgentsSelector.page(0, noOfAgents);

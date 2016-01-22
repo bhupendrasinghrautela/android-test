@@ -31,6 +31,7 @@ public class RequestConstants {
     public static final String LISTING_QUALITY_SCORE = "listingQualityScore";
     public static final String PRICE = "price";
     public static final String UNIT_TYPE = "unitType";
+    public static final String UNIT_TYPE_ID = "unitTypeId";
     public static final String FROM = "from";
     public static final String TO = "to";
     public static final String ID = "id";

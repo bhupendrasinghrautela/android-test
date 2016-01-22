@@ -26,7 +26,8 @@ public class CityActivity extends MakaanFragmentActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         if(intent != null) {
-            mCityId = intent.getLongExtra(CITY_ID, 5l);
+            //mCityId = intent.getLongExtra(CITY_ID, 5l);
+            mCityId = 2L;
         }
         mCityOverViewFragment = new CityOverViewFragment();
         initFragment(R.id.container, mCityOverViewFragment, true);
