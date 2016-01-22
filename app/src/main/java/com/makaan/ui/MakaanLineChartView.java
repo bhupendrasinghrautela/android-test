@@ -90,6 +90,9 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
     }
 
     private void generateDataForChart() {
+        if(mLines == null || mAxisXValues == null || mAxisXLabels == null){
+            return;
+        }
         mLines.clear();
         mAxisXLabels.clear();
         mAxisXValues.clear();

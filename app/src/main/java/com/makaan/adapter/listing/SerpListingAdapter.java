@@ -79,11 +79,25 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
     @Override
     public int getItemCount() {
         if(mRequestType == SerpActivity.TYPE_CLUSTER) {
+            if(mItems == null) {
+                return 0;
+            }
             return mItems.size();
         } else if(mRequestType == SerpActivity.TYPE_BUILDER || mRequestType == SerpActivity.TYPE_SELLER) {
+            if(mItems == null) {
+                return 1;
+            }
             return (mItems.size() + 1);
         } else {
-            return (mItems.size() + clusterItems.size());
+            if (mItems == null && clusterItems == null) {
+                return 0;
+            } else if (clusterItems == null) {
+                return mItems.size();
+            } else if (mItems == null) {
+                return clusterItems.size();
+            } else {
+                return (mItems.size() + clusterItems.size());
+            }
         }
     }
 
@@ -108,7 +122,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
         if(clusterItems != null && clusterItems.get(position) != null) {
             viewHolder.populateData(clusterItems.get(position), mCallback);
         } else {
-            if(mRequestType == SerpActivity.TYPE_BUILDER) {
+            if(mRequestType == SerpActivity.TYPE_BUILDER || mRequestType == SerpActivity.TYPE_SELLER) {
                 if(position == 0) {
                     viewHolder.populateData(null, mCallback);
                 } else {
@@ -161,6 +175,10 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
                 items.add(new TempClusterItem("\u20B9 60l to \u20B965l", "3 bhk apartment", "sector 4, sohna road", "300 listings"));
                 items.add(new TempClusterItem("\u20B9 70l to \u20B975l", "4 bhk apartment", "sector 5, sohna road", "400 listings"));
                 clusterItems.append(3, items);
+            }
+        } else {
+            if (clusterItems != null) {
+                this.clusterItems.clear();
             }
         }
         this.mItems.addAll(listings);

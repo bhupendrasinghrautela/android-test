@@ -1,0 +1,424 @@
+{
+  "statusCode": "2XX",
+  "version": "A",
+  "data": {
+    "bookingAmount": 20000,
+    "currentListingPrice": {
+      "id": 0,
+      "listingId": 0,
+      "pricePerUnitArea": 2500,
+      "price": 5000000,
+      "updatedBy": 0
+    },
+    "description": "This is the best property for your family you can ever find in this location.",
+    "expiryAt": 1452936686743,
+    "facingId": 1,
+    "floor": 8,
+    "furnished": "Furnished",
+    "id": 24617,
+    "listingCategory": "Primary",
+    "mainEntryRoadWidth": 12,
+    "maxConstructionCompletionDate": 1349116200000,
+    "minConstructionCompletionDate": 1346437800000,
+    "negotiable": false,
+    "noOfCarParks": 1,
+    "ownerId": 36229,
+    "ownershipTypeId": 1,
+    "possessionDate": 1346437800000,
+    "priceAllInclusive": 1,
+    "property": {
+      "propertyId": 5022667,
+      "projectId": 510331,
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "halls": 0,
+      "storeRoom": 0,
+      "unitType": "Apartment",
+      "unitName": "2BHK+2T (1,200 sq ft)",
+      "size": 1200,
+      "measure": "sq ft",
+      "URL": "bangalore/sethna-constructions-power-tower-hennur-5022667/2bhk-2t-1200-sqft-apartment",
+      "project": {
+        "projectId": 510331,
+        "isHotProject": false,
+        "authorized": true,
+        "localityId": 0,
+        "locality": {
+          "localityId": 0,
+          "authorized": true,
+          "suburbId": 0,
+          "suburb": {
+            "id": 10444,
+            "cityId": 0,
+            "label": "Hennur Main Road",
+            "city": {
+              "id": 2,
+              "authorized": true,
+              "label": "Bangalore",
+              "url": "bangalore/property-sale",
+              "description": "<p style=\"text-align: justify;\">The shining star of the  Plateau which has developed into the most modernized metropolis in India, here is everything you need to know about <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span>:</p>\n<p style=\"text-align: justify;\">The capital city of the Indian state of Karnataka, <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> has just as many names as there are facets to it. Popularly known as the Garden City and the  Valley of India, <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span>, which had been named Bengaluru in the year 2006 is one of the most important cities in India. It is most importantly known for being the country&rsquo;s chief IT hub, offering services related to Information Technology to clients across the globe.</p>\n<p style=\"text-align: justify;\"><span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> is spread out across 1276 square kilometres of land in Southern Karnataka, and it is the third most densely populated city in India, with an ever-increasing population that sums up to well over 1 crore. The city was established in the year 1537, and throughout its history has remained an important region ruled by several dynasties, including the Cholas and the Marathas. It also holds historical significance as it was the capital city of the  Kingdom.</p>\n<p style=\"text-align: justify;\">Enjoying exclusive benefits of being the capital city of Karnataka, <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> is the preferred location for property investments. It is well linked to all other important cities in Karnataka via highways and well-built roads which are served by a good network of public transport. Apart from an efficient railway network that links it to the rest of India, <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> is also one of the few cities in India to have a rapid transit system within the city. It also has an airport that has domestic as well as international connectivity.</p>\n<p style=\"text-align: justify;\"><strong>More about the city</strong></p>\n<p style=\"text-align: justify;\">Culturally speaking, <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> is a melting pot of various cultures, thanks to the eccentric mix of the city&rsquo;s population, which includes locals as well as professionals from across the nation who are operational here. In fact, <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> is said to be one of the most liveable cities in India; it enjoys pleasant weather throughout the year.</p>\n<p style=\"text-align: justify;\">A chief contributor to the economy of India, <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> has witnessed unparalleled economic growth, earning hundreds of billions of Rupees for the Indian economy every year through its various industries which include Information Technology services, Fast Moving Consumer Goods (FMCG) and public sector heavy industries.</p>\n<p style=\"text-align: justify;\"><span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> has an increasing population, most of which comprises entrepreneurs and professionals who are residing here for business and employment purposes. Owing to the influx of resident population, real estate in <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> has been high in demand ever since the city made it to the forefront of India&rsquo;s metropolitan cities.</p>\n<p style=\"text-align: justify;\"><strong>Villages in <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span></strong></p>\n<p style=\"text-align: justify;\"><span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> can broadly be divided into two districts &ndash; urban and rural <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span>. The urban district covers four taluks within it, namely North, East West and South  and Anekal. Some of the important villages in urban <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> include a, <span itemscope itemtype=\"http://schema.org/PostalAddress\"><span itemprop=\"addressLocality\">Bagalur</span></span> and Ajjanahalli. On the other hand, Rural  includes taluks like <a href=\"/bangalore-real-estate/devanahalli-overview-50174\">Devanahalli</a>, <span itemscope itemtype=\"http://schema.org/PostalAddress\"><span itemprop=\"addressLocality\">Hoskote</span></span>, a and Nelamangala. Some of the important villages in rural <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> are <span itemscope itemtype=\"http://schema.org/PostalAddress\"><span itemprop=\"addressLocality\">Kodihalli</span></span>, Akkur, hara Vaddahalli, Honganur and Acharlahalli.</p>\n<p style=\"text-align: justify;\"><strong>Schools and Colleges</strong></p>\n<p style=\"text-align: justify;\"><span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> is a renowned educational hub not just in Karnataka but across India, and it also has some reputed world-class learning institutions operating from within the city. These include schools as well as colleges and universities. Historically, <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> was also a centre for religious education.</p>\n<p style=\"text-align: justify;\">Some of the noteworthy schools in <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> include Bishop Cotton Boys&rsquo; School, Baldwin Girls&rsquo; High School, National Public School, Bethany High School, Kendriya Vidyalaya  and St. Germain High School</p>\n<p style=\"text-align: justify;\">One of <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span>&rsquo;s most famous educational institutions is the  University, which has two colleges within the city and offers affiliation to more than 500 other colleges. There are also several other educational academies that operate from within the city including Indian Institute of gement,  Institute of Technology, University Visvesvaraya College of Engineering, B College of Engineering,  Medical College and Oxford Engineering College.</p>\n<p style=\"text-align: justify;\"><strong>Shopping Malls and Recreation</strong></p>\n<p style=\"text-align: justify;\">Being a highly urbanized settlement, there are endless avenues for recreation that exist within the city. You will find malls and shopping centres across all parts of <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span>, and there are several art galleries, theatres and auditoriums that host various types of events throughout the year.</p>\n<p style=\"text-align: justify;\">Some of the popular shopping malls in <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> include  MarketCity ,   Mall,  Square, Garuda Mall, Lido Mall and UB City Mall.</p>\n<p style=\"text-align: justify;\"><span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> is also famous for its buzzing nightlife and music scene, and there are several bars and pubs located along the city&rsquo;s streets.</p>\n<h3 style=\"font-size: 12px; line-height: 17px; text-align: justify;\"><strong>Real Estate in <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span></strong></h3>\n<p style=\"text-align: justify;\">Property in <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> is the most sought-after investment option in Karnataka, and several reputed builders have come up with benchmark projects across the city over the past two decades. Being the capital city, <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> enjoys exclusive location benefits, which have brought it to the forefront of real estate in India. In fact, the vibrant metropolis finds its place among the top cities for making real estate investments in India.</p>\n<p><span>Property rates in <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span> have risen by upto 116.7% in last 6 months.</span></p>\n<p><span>Some of the recently launched projects in <span itemscope itemtype=\"https://schema.org/City\"><span itemprop=\"name\">Bangalore</span></span>, that you might be interested in, are Coronet Greens Apartment, Park Avenue, Paradise.</span></p>",
+              "isServing": false,
+              "isServingResale": false,
+              "showPolygon": false
+            },
+            "url": "bangalore/property-sale-hennur-main-road-10444",
+            "description": "",
+            "priority": 0,
+            "isDescriptionVerified": false
+          },
+          "cityId": 0,
+          "label": "Hennur",
+          "url": "bangalore/property-sale-hennur-50176",
+          "description": "<p style=\"text-align: justify;\"><span><span><span><span><span><span>Hennur</span></span></span></span></span></span> is an area located in northern part of <span><span><span><span><span><span>Bangalore</span></span></span></span></span></span>. It is 11.4 kilometers away from <span><span><span><span><span><span>Bangalore</span></span></span></span></span></span> city via Road and belongs to <span><span><span><span><span><span>Bangalore</span></span></span></span></span></span> division. It is enclosed by HRBR layouts, Kacharakanahalli, Hormavu and Agara. Once a sleepy village with narrow roads and congested areas, it has now transformed into an active landmark for real estate development with new infrastructural developments. Some of the nearby localities are Kalayn Nagar (3.7 Km), <span><span><span><span><span><span>Horamavu</span></span></span></span></span></span> (3.8Km) and <span><span><span><span><span><span>Banaswadi</span></span></span></span></span></span> (5.4 Km).</p>\n<p style=\"text-align: justify;\"><strong>Connectivity</strong></p>\n<p style=\"text-align: justify;\">Being located in the northern extremes of the city, <span><span><span><span><span><span>Hennur</span></span></span></span></span></span> provides smooth connectivity to other major locations in <span><span><span><span><span><span>Bangalore</span></span></span></span></span></span>. The Road is only 2.8 Kilometer away and connects the locality to HAL International Airport. The HAL International Airport is 14.5 Kms away from <span><span><span><span><span><span>Hennur</span></span></span></span></span></span> via <span><span><span><span><span><span>Outer Ring Road</span></span></span></span></span></span>. The nearest railway station is <span><span><span><span><span><span>Banaswadi</span></span></span></span></span></span> railway station which is 7.6 kilometers away from the region and City Junction railway station is 20.7 kilometers away.</p>\n<p style=\"text-align: justify;\">In addition to these, Road is planned to be widened to a four-lane highway along with a cargo road for the International Airport.</p>\n<p style=\"text-align: justify;\"><strong>Educational Institutions and Hospitals</strong></p>\n<p style=\"text-align: justify;\"><span><span><span><span><span><span>Hennur</span></span></span></span></span></span> is surrounded by many educational institutions and hospitals. Some good schools in the area are High School, YuvaLok Riha Community School, Sinclars High School and Govt Lower Primary School. The list of colleges includes Hasanath Pre University College, NICC - International College of Media &amp; Design, AMODH D.ED College and City College.</p>\n<p style=\"text-align: justify;\">The hospitals providing medical facilities to the residents of <span><span><span><span><span><span>Hennur</span></span></span></span></span></span> are Shree alakshmi Hospital and Trauma Centre, Divine Hospital, Avian Hospitals, Vasan Eye Care and Feran Hospital.</p>\n<p style=\"text-align: justify;\"><strong>Shopping Malls and Recreation</strong></p>\n<p style=\"text-align: justify;\"><span><span><span><span>Hennur</span></span></span></span> is one of the fastest developing areas of <span><span><span><span>Bangalore</span></span></span></span> with quite a number of shopping malls including the popular Mall and Orion Mall. For recreational purposes, the clubs close to <span><span><span><span>Hennur</span></span></span></span> are Country Club India Limited and Rotary Club of Cantonment. Amruth is the nearest cinema hall. Sundar Hospital and Elizabeth Manor wedding hall are other prominent landmarks. Located along <span><span><span><span>Hebbal</span></span></span></span>, <span><span><span><span>Hennur</span></span></span></span> has garnered plenty of tourist attraction of late on account of the Lake.</p>\n<h3 style=\"font-size: 12px; line-height: 17px; text-align: justify;\"><strong>Real Estate in <span><span><span><span><span><span>Hennur</span></span></span></span></span></span></strong></h3>\n<p style=\"text-align: justify;\">With many new developments in the area, <span><span><span><span><span><span>Hennur</span></span></span></span></span></span> witnesses a higher supply of properties in premium segment. Currently, there are 31 ongoing real estate projects in <span><span><span><span><span><span>Hennur</span></span></span></span></span></span> and 11 projects are due for possession in 2014. Spring Nest by D S Max, Karle Town Centre Zenith BY , Paradise by Enterprises and Springdale by <a href=\"ds-max-100573\">DS Max</a> are some ongoing projects in <span><span><span><span><span><span>Hennur</span></span></span></span></span></span> and are at various stages of construction.</p>\n<p style=\"text-align: justify;\">The average property price in <span><span><span><span><span><span>Hennur</span></span></span></span></span></span> is Rs. 4,400 per sq.ft., minimum property price is Rs. 3,400 per sq.ft. and maximum property price is Rs. 8,500 per sq.ft. Planned developments, proximity to the city centre and vicinity to the airport is expected to give the locality new dimensions in the coming years. With this, the real estate prices in <span><span><span><span><span><span>Hennur</span></span></span></span></span></span> are also expected to go up by 15 to 20 percent in coming years.</p>",
+          "priority": 0,
+          "projectStatusCount": {
+            "Not Launched": 3,
+            "Completed": 59,
+            "Under Construction": 13,
+            "Pre Launch": 1
+          },
+          "livabilityScore": 8.3,
+          "isDescriptionVerified": false,
+          "minAffordablePrice": 4000000,
+          "maxAffordablePrice": 8000000,
+          "minLuxuryPrice": 15000000,
+          "maxBudgetPrice": 5000000,
+          "constructionStatusId": 0
+        },
+        "builderId": 0,
+        "builder": {
+          "id": 102027,
+          "name": "Sethna Constructions",
+          "description": "SETHNA GROUP originally started in 1979 as a Partnership firm called SETHNA CONSTRUCTIONS. The firm grew with business &amp; evolved into a group of companies in the years to follow. In 1986 the group expanded in to coffee cultivation &amp; presently has holdings of around 500 Acres of coffee Estates in the Sakleshpur region of Karnataka. The Companies has successfully completed several projects, which include commercial Complexes, hospitals, Factories, High Rise apartments, Condominium Compelexes, Effluent Treatment plants, Sports facilities, Club houses, Underground Reservoirs. We have been repeatedly offered construction works by satisfied clients &amp; architects. This bears ample testimony to our high quality standards &amp; our ability to complete projects within the time frame stipulated. We have been repeatedly offered construction works by satisfied clients &amp; architects. This bear's ample testimony to our high quality standards &amp; out ability to complete projects within the time frame stipulat",
+          "establishedDate": 283977000000,
+          "url": "sethna-constructions-102027",
+          "projectStatusCount": {
+            "pre launch": 0,
+            "under construction": 0,
+            "cancelled": 0,
+            "launch": 0,
+            "completed": 10,
+            "on hold": 0,
+            "not launched": 1
+          },
+          "images": [
+            {
+              "id": 3441,
+              "imageTypeId": 13,
+              "objectId": 0,
+              "statusId": 1,
+              "sizeInBytes": 0,
+              "width": 0,
+              "height": 0,
+              "altText": "Sethna Constructions",
+              "active": false,
+              "activeStatus": 0,
+              "absolutePath": "https://im.proptiger-ws.com/3/2027/13/sethna-constructions-3441.jpg",
+              "imageType": {
+                "id": 13,
+                "objectTypeId": 0,
+                "mediaTypeId": 0,
+                "type": "logo",
+                "priority": 0,
+                "imageSitemapEnabled": 0
+              }
+            }
+          ],
+          "mainImage": {
+            "id": 0,
+            "imageTypeId": 0,
+            "objectId": 0,
+            "statusId": 0,
+            "sizeInBytes": 0,
+            "width": 0,
+            "height": 0,
+            "active": false,
+            "activeStatus": 0
+          },
+          "isBuilderListed": false
+        },
+        "name": "Power Tower",
+        "projectTypeId": 0,
+        "computedPriority": 0.0,
+        "assignedPriority": 0,
+        "possessionDate": 1346437800000,
+        "imageURL": "",
+        "URL": "bangalore/hennur/sethna-constructions-power-tower-510331",
+        "forceResale": 0,
+        "minBedrooms": 0,
+        "maxBedrooms": 0,
+        "projectStatus": "Completed",
+        "isResale": false,
+        "isPrimary": false,
+        "isSoldOut": false,
+        "description": "Sethna Constructions new residential project Sethna Power Tower located at Banaswadi Bangalore. Sethna Power Tower offers luxurious apartments with all modern amenities. The apartments are ready to be moved into and the apartments are available both through the builder as well as via resale. Several amenities are present for the community, including a gymnasium, swimming pool, power back up, children&acirc;&euro;&trade;s play area, club house, and round the clock security amongst others. Perfect for a family, this home is ideally positioned to enjoy the proximity to cafes and restaurants, shopping centres, and a selection of premier schools. The homes have fine aesthetics and designer finishes.",
+        "propertySizeMeasure": "sq ft",
+        "propertyUnitTypes": [
+
+        ],
+        "images": [
+          {
+            "id": 815528,
+            "imageTypeId": 6,
+            "objectId": 0,
+            "statusId": 1,
+            "sizeInBytes": 0,
+            "width": 0,
+            "height": 0,
+            "altText": " power-tower Elevation",
+            "title": "Elevation",
+            "active": false,
+            "activeStatus": 0,
+            "absolutePath": "https://im.proptiger-ws.com/1/510331/6/power-tower-elevation-815528.jpeg",
+            "imageType": {
+              "id": 6,
+              "objectTypeId": 0,
+              "mediaTypeId": 0,
+              "type": "main",
+              "priority": 0,
+              "imageSitemapEnabled": 0
+            }
+          },
+          {
+            "id": 286806,
+            "imageTypeId": 6,
+            "objectId": 0,
+            "statusId": 1,
+            "sizeInBytes": 0,
+            "width": 0,
+            "height": 0,
+            "altText": "Sethna Constructions Power Tower",
+            "active": false,
+            "activeStatus": 0,
+            "absolutePath": "https://im.proptiger-ws.com/1/10331/6/sethna-constructions-power-tower-286806.jpeg",
+            "imageType": {
+              "id": 6,
+              "objectTypeId": 0,
+              "mediaTypeId": 0,
+              "type": "main",
+              "priority": 0,
+              "imageSitemapEnabled": 0
+            }
+          },
+          {
+            "id": 815530,
+            "imageTypeId": 81,
+            "objectId": 0,
+            "statusId": 1,
+            "sizeInBytes": 0,
+            "width": 0,
+            "height": 0,
+            "altText": " power-tower Main Other",
+            "title": "Main Other",
+            "active": false,
+            "activeStatus": 0,
+            "absolutePath": "https://im.proptiger-ws.com/1/510331/81/power-tower-main-other-815530.jpeg",
+            "imageType": {
+              "id": 81,
+              "objectTypeId": 0,
+              "mediaTypeId": 0,
+              "type": "mainOther",
+              "priority": 0,
+              "imageSitemapEnabled": 0
+            }
+          },
+          {
+            "id": 815529,
+            "imageTypeId": 81,
+            "objectId": 0,
+            "statusId": 1,
+            "sizeInBytes": 0,
+            "width": 0,
+            "height": 0,
+            "altText": " power-tower Main Other",
+            "title": "Main Other",
+            "active": false,
+            "activeStatus": 0,
+            "absolutePath": "https://im.proptiger-ws.com/1/510331/81/power-tower-main-other-815529.jpeg",
+            "imageType": {
+              "id": 81,
+              "objectTypeId": 0,
+              "mediaTypeId": 0,
+              "type": "mainOther",
+              "priority": 0,
+              "imageSitemapEnabled": 0
+            }
+          },
+          {
+            "id": 815524,
+            "imageTypeId": 10,
+            "objectId": 0,
+            "statusId": 1,
+            "sizeInBytes": 0,
+            "width": 0,
+            "height": 0,
+            "altText": " power-tower Site Plan",
+            "title": "Site Plan",
+            "active": false,
+            "activeStatus": 0,
+            "absolutePath": "https://im.proptiger-ws.com/1/510331/10/power-tower-site-plan-815524.jpeg",
+            "imageType": {
+              "id": 10,
+              "objectTypeId": 0,
+              "mediaTypeId": 0,
+              "type": "sitePlan",
+              "priority": 0,
+              "imageSitemapEnabled": 0
+            }
+          },
+          {
+            "id": 815660,
+            "imageTypeId": 2,
+            "objectId": 0,
+            "statusId": 1,
+            "sizeInBytes": 0,
+            "width": 0,
+            "height": 0,
+            "altText": " power-tower Power Tower Cluster Plan for 1st Floor",
+            "title": "Power Tower Cluster Plan for 1st Floor",
+            "description": "",
+            "active": false,
+            "activeStatus": 0,
+            "absolutePath": "https://im.proptiger-ws.com/1/510331/2/power-tower-power-tower-cluster-plan-for-1st-floor-815660.jpeg",
+            "imageType": {
+              "id": 2,
+              "objectTypeId": 0,
+              "mediaTypeId": 0,
+              "type": "clusterPlan",
+              "priority": 0,
+              "imageSitemapEnabled": 0
+            }
+          },
+          {
+            "id": 815588,
+            "imageTypeId": 2,
+            "objectId": 0,
+            "statusId": 1,
+            "sizeInBytes": 0,
+            "width": 0,
+            "height": 0,
+            "altText": " power-tower Power Tower Cluster Plan from 2nd to 12th Floor",
+            "title": "Power Tower Cluster Plan from 2nd to 12th Floor",
+            "description": "",
+            "active": false,
+            "activeStatus": 0,
+            "absolutePath": "https://im.proptiger-ws.com/1/510331/2/power-tower-power-tower-cluster-plan-from-2nd-to-12th-floor-815588.jpeg",
+            "imageType": {
+              "id": 2,
+              "objectTypeId": 0,
+              "mediaTypeId": 0,
+              "type": "clusterPlan",
+              "priority": 0,
+              "imageSitemapEnabled": 0
+            }
+          },
+          {
+            "id": 815587,
+            "imageTypeId": 2,
+            "objectId": 0,
+            "statusId": 1,
+            "sizeInBytes": 0,
+            "width": 0,
+            "height": 0,
+            "altText": " power-tower Power Tower Cluster Plan for 13th Floor",
+            "title": "Power Tower Cluster Plan for 13th Floor",
+            "description": "",
+            "active": false,
+            "activeStatus": 0,
+            "absolutePath": "https://im.proptiger-ws.com/1/510331/2/power-tower-power-tower-cluster-plan-for-13th-floor-815587.jpeg",
+            "imageType": {
+              "id": 2,
+              "objectTypeId": 0,
+              "mediaTypeId": 0,
+              "type": "clusterPlan",
+              "priority": 0,
+              "imageSitemapEnabled": 0
+            }
+          },
+          {
+            "id": 815586,
+            "imageTypeId": 2,
+            "objectId": 0,
+            "statusId": 1,
+            "sizeInBytes": 0,
+            "width": 0,
+            "height": 0,
+            "altText": " power-tower Power Tower Cluster Plan for Ground Floor",
+            "title": "Power Tower Cluster Plan for Ground Floor",
+            "description": "",
+            "active": false,
+            "activeStatus": 0,
+            "absolutePath": "https://im.proptiger-ws.com/1/510331/2/power-tower-power-tower-cluster-plan-for-ground-floor-815586.jpeg",
+            "imageType": {
+              "id": 2,
+              "objectTypeId": 0,
+              "mediaTypeId": 0,
+              "type": "clusterPlan",
+              "priority": 0,
+              "imageSitemapEnabled": 0
+            }
+          },
+          {
+            "id": 815585,
+            "imageTypeId": 2,
+            "objectId": 0,
+            "statusId": 1,
+            "sizeInBytes": 0,
+            "width": 0,
+            "height": 0,
+            "altText": " power-tower Power Tower Cluster Plan for 14th Floor",
+            "title": "Power Tower Cluster Plan for 14th Floor",
+            "description": "",
+            "active": false,
+            "activeStatus": 0,
+            "absolutePath": "https://im.proptiger-ws.com/1/510331/2/power-tower-power-tower-cluster-plan-for-14th-floor-815585.jpeg",
+            "imageType": {
+              "id": 2,
+              "objectTypeId": 0,
+              "mediaTypeId": 0,
+              "type": "clusterPlan",
+              "priority": 0,
+              "imageSitemapEnabled": 0
+            }
+          }
+        ],
+        "distinctBedrooms": [
+
+        ],
+        "derivedAvailability": 9,
+        "livabilityScore": 7.1,
+        "has3DImages": false,
+        "resaleEnquiry": false,
+        "hasProjectInsightReport": false,
+        "specifications": {
+
+        }
+      },
+      "studyRoom": 0,
+      "balcony": 2,
+      "displayCarpetArea": 0,
+      "penthouse": false,
+      "studio": false,
+      "isPropertySoldOut": false
+    },
+    "propertyId": 5022667,
+    "relevanceScore": 0.0,
+    "securityDeposit": 150000,
+    "seller": {
+      "id": 36229,
+      "fullName": "Proptiger Broker",
+      "registered": false,
+      "verified": false
+    },
+    "sellerId": 36229,
+    "totalFloors": 17,
+    "viewDirections": [
+      {
+        "viewType": "Garden View"
+      },
+      {
+        "viewType": "Lake View"
+      }
+    ]
+  }
+}

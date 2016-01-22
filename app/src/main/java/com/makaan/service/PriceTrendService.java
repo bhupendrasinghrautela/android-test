@@ -22,7 +22,6 @@ public class PriceTrendService  implements MakaanService{
 
     public void getPriceTrendForLocalities(ArrayList<Long> topLocalityIds, int monthDuration, LocalityTrendCallback localityTrendCallback) {
 
-
         if (null != topLocalityIds && topLocalityIds.size() > 0 && monthDuration > 0) {
             int size = topLocalityIds.size();
             StringBuilder priceTrendUrl = new StringBuilder(ApiConstants.LOCALITY_TREND_URL);

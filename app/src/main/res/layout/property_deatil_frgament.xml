@@ -12,6 +12,12 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <com.makaan.ui.property.PropertyImageViewPager
+        android:id="@+id/property_image_viewpager"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:layout_height="342dp" />
+
     <TextView
         android:layout_margin="12dp"
         android:id="@+id/unit_name"
@@ -102,6 +108,7 @@
         android:layout_width="match_parent"
         android:layout_marginLeft="12dp"
         android:layout_marginBottom="12dp"
+
         android:layout_height="300dp" />
 
 

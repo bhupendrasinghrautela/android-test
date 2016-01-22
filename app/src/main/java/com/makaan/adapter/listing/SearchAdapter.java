@@ -9,11 +9,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.cache.MasterDataCache;
+import com.makaan.response.master.ApiLabel;
 import com.makaan.response.search.SearchResponseHelper;
 import com.makaan.response.search.SearchResponseItem;
+import com.makaan.response.search.SearchSuggestionType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by rohitgarg on 1/9/16.
@@ -41,6 +45,40 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
         this.mSearches.clear();
         this.mSearches.addAll(searches);
+
+        if(mSearches.size() > 0) {
+            SearchResponseItem search = mSearches.get(0);
+            Map<String,ApiLabel> searchResultType = MasterDataCache.getInstance().getSearchTypeMap();
+            String searchField = searchResultType.get(search.type).key;
+
+            if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(search.type)) {
+                try {
+                    SearchResponseItem item = search.clone();
+                    item.displayText = "Know More \n overview - " + item.displayText;
+                    item.type = SearchSuggestionType.LOCALITY_OVERVIEW.getValue();
+                    if(mSearches.size() > 5) {
+                        mSearches.add(5, item);
+                    } else {
+                        mSearches.add(item);
+                    }
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+            } else if(SearchSuggestionType.CITY.getValue().equalsIgnoreCase(search.type)) {
+                try {
+                    SearchResponseItem item = search.clone();
+                    item.displayText = "Know More \n overview - " + item.displayText;
+                    item.type = SearchSuggestionType.CITY_OVERVIEW.getValue();
+                    if(mSearches.size() > 5) {
+                        mSearches.add(5, item);
+                    } else {
+                        mSearches.add(item);
+                    }
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         notifyDataSetChanged();
     }
 

@@ -4,17 +4,13 @@ import android.os.Bundle;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
-import com.makaan.event.amenity.AmenityGetEvent;
-import com.makaan.event.listing.ListingByIdGetEvent;
-import com.makaan.response.listing.detail.ListingDetail;
+
+import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.service.AmenityService;
 import com.makaan.service.ImageService;
 import com.makaan.service.ListingService;
 import com.makaan.service.MakaanServiceFactory;
-import com.makaan.ui.amenity.AmenityViewPager;
 import com.squareup.otto.Subscribe;
-
-import butterknife.Bind;
 
 /**
  * Created by sunil on 17/01/16.
@@ -39,6 +35,7 @@ public class PropertyActivity extends MakaanBaseSearchActivity {
         initFragment(R.id.container, mPropertyDeatilFragment, true);
 
         fetchProjectDetail();
+        initUi(true);
 
     }
 
@@ -53,5 +50,10 @@ public class PropertyActivity extends MakaanBaseSearchActivity {
     @Override
     public boolean isJarvisSupported() {
         return true;
+    }
+
+    @Subscribe
+    public void onResults(SearchResultEvent searchResultEvent) {
+        super.onResults(searchResultEvent);
     }
 }

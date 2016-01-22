@@ -11,7 +11,8 @@ public enum SearchSuggestionType {
     PROJECT("PROJECT"), LOCALITY("LOCALITY"),
     SUBURB("SUBURB"), CITY("CITY"), GOOGLE_PLACE("GP"),
     PROJECT_SUGGESTION("Typeahead-Suggestion-Project"),
-    SUGGESTION("Typeahead-Suggestion"), TEMPLATE("Typeahead-Template");
+    SUGGESTION("Typeahead-Suggestion"), TEMPLATE("Typeahead-Template"),
+    CITY_OVERVIEW("CITY_OVERVIEW"), LOCALITY_OVERVIEW("LOCALITY_OVERVIEW"),;
 
     private String value;
 

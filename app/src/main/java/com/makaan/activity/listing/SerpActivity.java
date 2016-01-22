@@ -22,6 +22,7 @@ import com.makaan.fragment.listing.SerpMapFragment;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.service.ListingService;
+import com.makaan.service.MakaanServiceFactory;
 import com.makaan.ui.listing.RelevancePopupWindowController;
 import com.squareup.otto.Subscribe;
 
@@ -33,14 +34,26 @@ import butterknife.OnClick;
  */
 public class SerpActivity extends MakaanBaseSearchActivity implements SerpRequestCallback,
         FiltersDialogFragment.FilterDialogFragmentCallback {
-    public static final String TYPE = "type";
+    // type of request to open serp, it must be one of the following values
+    public static final String REQUEST_TYPE = "type";
+
+    // data to be used to create serp selector, String value
+    // should be in form {filter1}:{filter_value_1},{filter_value_2};{filter2}:{filter_value_2_1},{filter_value_2_2}
+    // except for TYPE_SUGGESTION, where data itself should be selector string
+    public static final String REQUEST_DATA = "data";
+
+    public static final int TYPE_UNKNOWN = 0;
     public static final int TYPE_FILTER = 1;
     public static final int TYPE_CLUSTER = 2;
     public static final int TYPE_SEARCH = 3;
     public static final int TYPE_SELLER = 4;
     public static final int TYPE_BUILDER = 5;
     public static final int TYPE_SORT = 6;
-    public static final int TYPE_UNKNOWN = 7;
+    public static final int TYPE_LOAD_MORE = 7;
+    public static final int TYPE_SUGGESTION = 8;
+    public static final int TYPE_CITY = 9;
+    public static final int TYPE_PROJECT = 10;
+    public static final int TYPE_LOCALITY = 11;
 
     public static boolean isChildSerp = false;
     public static boolean isSellerSerp = false;
@@ -86,7 +99,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         Intent intent = getIntent();
         int type = SerpActivity.TYPE_UNKNOWN;
         if(intent != null) {
-            type = intent.getIntExtra(SerpActivity.TYPE, SerpActivity.TYPE_UNKNOWN);
+            type = intent.getIntExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_UNKNOWN);
         }
         if(type == SerpActivity.TYPE_UNKNOWN) {
             // TODO check whether it should be used or not
@@ -123,7 +136,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     }
 
     private void fetchData() {
-        MakaanBuyerApplication.serpSelector.term("cityId", "11").term("listingCategory", new String[]{"Rental"});
+        MakaanBuyerApplication.serpSelector.term("cityId", "11").term("listingCategory", new String[]{"Primary"});
         serpRequest(SerpActivity.TYPE_UNKNOWN, MakaanBuyerApplication.serpSelector);
     }
 
@@ -285,15 +298,17 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Override
     public void serpRequest(int type, Selector selector) {
-        new ListingService().handleSerpRequest(selector);
+        ((ListingService)MakaanServiceFactory.getInstance().getService(ListingService.class)).handleSerpRequest(selector);
 
         mSerpRequestType = type;
+        if(type != TYPE_LOAD_MORE) {
 
-        if(mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
+            if (mProgressDialog == null) {
+                mProgressDialog = new ProgressDialog(this);
+            }
+            mProgressDialog.setTitle("Loading");
+            mProgressDialog.setMessage("Wait while loading...");
+            mProgressDialog.show();
         }
-        mProgressDialog.setTitle("Loading");
-        mProgressDialog.setMessage("Wait while loading...");
-        mProgressDialog.show();
     }
 }

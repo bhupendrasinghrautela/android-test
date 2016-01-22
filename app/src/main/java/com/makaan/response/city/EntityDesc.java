@@ -11,6 +11,7 @@ public class EntityDesc {
     public Long id;
     public HashMap<String, String> masterDescriptionCategories = new HashMap<>();
     public String description;
+    public String name;
     public String createdAt;
 
 }

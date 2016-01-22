@@ -36,7 +36,6 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
             showNoNetworkFound();
         }
 
-
     }
 
     @Override

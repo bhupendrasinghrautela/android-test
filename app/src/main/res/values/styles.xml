@@ -16,8 +16,10 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:textColorHint">@color/white</item>
-        <item name="android:spinnerItemStyle">@style/SpinnerItem</item>
-        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItem</item>
+        <item name="android:alertDialogTheme">@style/MyAlertDialogTheme</item>
+    </style>
+    <style name="MyAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/app_red</item>
     </style>
     <style name="SpinnerItem">
         <item name="android:textColor">#993399</item>
@@ -43,6 +45,7 @@
     <style name="Theme.NoActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorAccent</item>
         <item name="colorPrimaryDark">@color/colorAccent</item>
+        <item name="android:windowBackground">@null</item>
     </style>
 
 
@@ -79,5 +82,11 @@
         <item name="android:textSize">16sp</item>
         <item name="colorControlNormal">@color/white</item>
         <item name="colorAccent">@color/app_red</item>
+    </style>
+
+    <style name="customRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/seller_rating_bar_drawable_selector</item>
+        <item name="android:minHeight">100dip</item>
+        <item name="android:maxHeight">100dip</item>
     </style>
 </resources>

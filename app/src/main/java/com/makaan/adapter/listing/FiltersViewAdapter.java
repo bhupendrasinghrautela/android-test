@@ -22,6 +22,8 @@ import com.makaan.ui.pyr.RangeSeekBar;
 import com.makaan.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by root on 5/1/16.
@@ -32,6 +34,9 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
     public static final int CHECKBOX = 3;
     public static final int RADIO_BUTTON = 4;
     public static final int RADIO_BUTTON_MIN_MAX = 5;
+    public static final int RADIO_BUTTON_RANGE = 6;
+
+    private static final int UNEXPECTED_VALUE = -100000;
 
     private final int type;
     Context context;
@@ -52,7 +57,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
 
     @Override
     public int getCount() {
-        if(type == SEEKBAR) {
+        if(type == SEEKBAR || type == RADIO_BUTTON_RANGE) {
             return rangeValues.size();
         } else if(type == RADIO_BUTTON_MIN_MAX) {
             return rangeMinMaxValues.size();
@@ -63,7 +68,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
 
     @Override
     public AbstractFilterValue getItem(int position) {
-        if(type == SEEKBAR) {
+        if(type == SEEKBAR || type == RADIO_BUTTON_RANGE) {
             return rangeValues.get(position);
         } else if(type == RADIO_BUTTON_MIN_MAX) {
             return rangeMinMaxValues.get(position);
@@ -74,7 +79,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
 
     @Override
     public long getItemId(int position) {
-        if(type == SEEKBAR) {
+        if(type == SEEKBAR || type == RADIO_BUTTON_RANGE) {
             return rangeValues.size();
         } else if(type == RADIO_BUTTON_MIN_MAX) {
             return rangeMinMaxValues.size();
@@ -97,7 +102,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                 holder = new ViewHolder();
                 holder.view = convertView;
                 ((ToggleButton) holder.view).setOnCheckedChangeListener(this);
-            } else if(type == RADIO_BUTTON || type == RADIO_BUTTON_MIN_MAX) {
+            } else if(type == RADIO_BUTTON || type == RADIO_BUTTON_MIN_MAX || type == RADIO_BUTTON_RANGE) {
                 convertView = LayoutInflater.from(context).inflate(R.layout.fragment_dialog_filters_radio_button_item_view, parent, false);
                 holder = new ViewHolder();
                 holder.view = convertView;
@@ -122,7 +127,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
             ((ToggleButton) holder.view).setTextOff(this.getItem(position).displayName);
             ((ToggleButton) holder.view).setText(this.getItem(position).displayName);
             ((ToggleButton) holder.view).setChecked(this.getItem(position).selected);
-        } else if (type == RADIO_BUTTON || type == RADIO_BUTTON_MIN_MAX) {
+        } else if (type == RADIO_BUTTON || type == RADIO_BUTTON_MIN_MAX || type == RADIO_BUTTON_RANGE) {
             ((RadioButton) holder.view).setOnCheckedChangeListener(null);
             ((RadioButton) holder.view).setText(this.getItem(position).displayName);
             ((RadioButton) holder.view).setChecked(this.getItem(position).selected);
@@ -148,10 +153,22 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
         int pos = holder.pos;
         if(buttonView instanceof RadioButton && isChecked) {
             // set selected property of all radio buttons to false
-            for(TermFilter filter : termValues) {
-                filter.selected = false;
+            if(type == RADIO_BUTTON) {
+                for (TermFilter filter : termValues) {
+                    filter.selected = false;
+                }
+                termValues.get(pos).selected = true;
+            } else if(type == RADIO_BUTTON_MIN_MAX) {
+                for (RangeMinMaxFilter filter : rangeMinMaxValues) {
+                    filter.selected = false;
+                }
+                rangeMinMaxValues.get(pos).selected = true;
+            } else if(type == RADIO_BUTTON_RANGE) {
+                for (RangeFilter filter : rangeValues) {
+                    filter.selected = false;
+                }
+                rangeValues.get(pos).selected = true;
             }
-            termValues.get(pos).selected = isChecked;
             notifyDataSetChanged();
         } else {
             termValues.get(pos).selected = isChecked;
@@ -184,22 +201,81 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                                 selector.term(filter2.fieldName, filter2.value);
                             }
                         }
+                    } else {
+                        selector.term(filter.fieldName, filter.value);
+                    }
+                }
+            }
+        } else if(type == RADIO_BUTTON_RANGE) {
+            selector.removeRange(rangeValues.get(0).fieldName);
+
+            for(RangeFilter filter : rangeValues) {
+                if(filter.selected) {
+                    if(currentGroup != null) {
+                        currentGroup.isSelected = true;
+                    }
+                    if(filter.minValue != UNEXPECTED_VALUE && filter.maxValue != UNEXPECTED_VALUE) {
+                        if (filterGroup.type.equalsIgnoreCase("year")) {
+                            Calendar cal = Calendar.getInstance();
+                            cal.add(Calendar.YEAR, (int) filter.minValue);
+                            long minValue = cal.getTimeInMillis();
+
+                            cal.add(Calendar.YEAR, -(int)filter.minValue);
+                            cal.add(Calendar.YEAR, (int)filter.maxValue);
+                            long maxValue = cal.getTimeInMillis();
+
+                            selector.range(filter.fieldName, minValue, maxValue);
+                        } else if(filterGroup.type.equalsIgnoreCase("day")) {
+                            Calendar cal = Calendar.getInstance();
+                            cal.add(Calendar.DAY_OF_MONTH, (int) filter.minValue);
+                            long minValue = cal.getTimeInMillis();
+
+                            cal.add(Calendar.DAY_OF_MONTH, -(int)filter.minValue);
+                            cal.add(Calendar.DAY_OF_MONTH, (int)filter.maxValue);
+                            long maxValue = cal.getTimeInMillis();
+
+                            selector.range(filter.fieldName, minValue, maxValue);
+                        } else {
+                            selector.range(filter.fieldName, filter.minValue, filter.maxValue);
+                        }
                     }
                 }
             }
         } else if(type == RADIO_BUTTON_MIN_MAX) {
-            selector.removeTerm(termValues.get(0).fieldName);
+            selector.removeRange(rangeMinMaxValues.get(0).minFieldName);
+            selector.removeRange(rangeMinMaxValues.get(0).maxFieldName);
 
             for(RangeMinMaxFilter filter : rangeMinMaxValues) {
                 if(filter.selected) {
                     if(currentGroup != null) {
                         currentGroup.isSelected = true;
                     }
-                    if(filter.minValue != -1) {
-                        selector.term(filter.minFieldName, String.valueOf(filter.minValue));
-                    }
-                    if(filter.maxValue != -1) {
-                        selector.term(filter.maxFieldName, String.valueOf(filter.maxValue));
+                    if (filterGroup.type.equalsIgnoreCase("year")) {
+                        Calendar cal = Calendar.getInstance();
+                        long minValue = UNEXPECTED_VALUE;
+                        long maxValue = UNEXPECTED_VALUE;
+                        if(filter.minValue != UNEXPECTED_VALUE) {
+                            cal.add(Calendar.YEAR, (int) filter.minValue);
+                            minValue = cal.getTimeInMillis();
+                            cal.add(Calendar.YEAR, -(int) filter.minValue);
+                        }
+                        if(filter.maxValue != UNEXPECTED_VALUE) {
+                            cal.add(Calendar.YEAR, (int) filter.maxValue);
+                            maxValue = cal.getTimeInMillis();
+                        }
+                        if(minValue != UNEXPECTED_VALUE) {
+                            selector.range(filter.minFieldName, minValue, maxValue);
+                        }
+                        if(maxValue != UNEXPECTED_VALUE) {
+                            selector.range(filter.maxFieldName, minValue, maxValue);
+                        }
+                    } else {
+                        if(filter.minValue != UNEXPECTED_VALUE) {
+                            selector.term(filter.minFieldName, String.valueOf(filter.minValue));
+                        }
+                        if(filter.maxValue != UNEXPECTED_VALUE) {
+                            selector.term(filter.maxFieldName, String.valueOf(filter.maxValue));
+                        }
                     }
                 }
             }
@@ -245,11 +321,17 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
     }
 
     public void reset() {
-        if(type == SEEKBAR) {
-            RangeFilter filter = rangeValues.get(0);
-            filter.selectedMinValue = filter.minValue;
-            filter.selectedMaxValue = filter.maxValue;
-        } else {
+        if(type == SEEKBAR || type == RADIO_BUTTON_RANGE) {
+            for(RangeFilter filter : rangeValues) {
+                filter.selectedMinValue = filter.minValue;
+                filter.selectedMaxValue = filter.maxValue;
+                filter.selected = false;
+            }
+        } else if(type == RADIO_BUTTON_MIN_MAX) {
+            for(RangeMinMaxFilter filter : rangeMinMaxValues) {
+                filter.selected = false;
+            }
+        }  else {
             for(TermFilter filter : termValues) {
                 filter.selected = false;
             }

@@ -8,6 +8,7 @@ import com.makaan.MakaanBuyerApplication;
 import com.makaan.activity.city.CityActivity;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
+import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.response.master.ApiLabel;
 import com.makaan.service.ListingService;
@@ -49,8 +50,25 @@ public class SearchResponseHelper {
 
         }
 
+        // handle overview cases
+        if(SearchSuggestionType.CITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+            Intent cityIntent = new Intent(context, CityActivity.class);
+            cityIntent.putExtra(CityActivity.CITY_ID, Long.valueOf(searchResponseItem.entityId));
+            context.startActivity(cityIntent);
+            return;
+        } else if(SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+            Intent cityIntent = new Intent(context, LocalityActivity.class);
+            cityIntent.putExtra(LocalityActivity.LOCALITY_ID, Long.valueOf(searchResponseItem.entityId));
+            context.startActivity(cityIntent);
+            return;
+        }
+
         Map<String,ApiLabel> searchResultType = MasterDataCache.getInstance().getSearchTypeMap();
         String searchField = searchResultType.get(searchResponseItem.type).key;
+
+        MakaanBuyerApplication.serpSelector.removeTerm("builderId");
+        MakaanBuyerApplication.serpSelector.removeTerm("localityId");
+        MakaanBuyerApplication.serpSelector.removeTerm("cityId");
 
         // TODO check if we need to clear all the filters
         //MakaanBuyerApplication.serpSelector.reset();
@@ -63,7 +81,7 @@ public class SearchResponseHelper {
             } else {
                 // because we are in some other activity, so lets start Serp Activity to handle this request
                 Intent intent = new Intent(context, SerpActivity.class);
-                intent.putExtra(SerpActivity.TYPE, SerpActivity.TYPE_BUILDER);
+                intent.putExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_BUILDER);
                 context.startActivity(intent);
             }
             return;
@@ -73,20 +91,38 @@ public class SearchResponseHelper {
 
         } else if (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)) {
 
+            if(context instanceof SerpRequestCallback) {
+                ((SerpRequestCallback)context).serpRequest(SerpActivity.TYPE_LOCALITY, MakaanBuyerApplication.serpSelector);
+            } else {
+                // because we are in some other activity, so lets start Serp Activity to handle this request
+                Intent intent = new Intent(context, SerpActivity.class);
+                intent.putExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_LOCALITY);
+                context.startActivity(intent);
+            }
+            return;
 
         } else if (SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchResponseItem.type)) {
 
 
         } else if (SearchSuggestionType.CITY.getValue().equalsIgnoreCase(searchResponseItem.type)) {
-            Intent cityIntent = new Intent(context, CityActivity.class);
+
+            if(context instanceof SerpRequestCallback) {
+                ((SerpRequestCallback)context).serpRequest(SerpActivity.TYPE_CITY, MakaanBuyerApplication.serpSelector);
+            } else {
+                // because we are in some other activity, so lets start Serp Activity to handle this request
+                Intent intent = new Intent(context, SerpActivity.class);
+                intent.putExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_CITY);
+                context.startActivity(intent);
+            }
+            return;
+            /*Intent cityIntent = new Intent(context, CityActivity.class);
             cityIntent.putExtra(CityActivity.CITY_ID, Long.valueOf(searchResponseItem.entityId));
-            context.startActivity(cityIntent);
+            context.startActivity(cityIntent);*/
 
         } else if (SearchSuggestionType.GOOGLE_PLACE.getValue().equalsIgnoreCase(searchResponseItem.type)) {
             //TODO provide google places field in serp selector
         }
-
-        new ListingService().handleSerpRequest(MakaanBuyerApplication.serpSelector);
+        ((SerpRequestCallback)context).serpRequest(SerpActivity.TYPE_UNKNOWN, MakaanBuyerApplication.serpSelector);
     }
 
     public static String getType(SearchResponseItem searchResponseItem){
