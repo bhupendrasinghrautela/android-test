@@ -57,7 +57,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public static final int TYPE_BUILDER = 0x05;
 
     public static final int MASK_LISTING_TYPE = 0x0f;
-    public static final int MASK_LISTING_UPDATE_TYPE = 0xff;
+    public static final int MASK_LISTING_UPDATE_TYPE = 0xf0;
 
     public static final int TYPE_SORT = 0x10;
     public static final int TYPE_LOAD_MORE = 0x20;
@@ -349,7 +349,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         }
 
         // remove paging if we are loading new serp results
-        if((mSerpRequestType & MASK_LISTING_TYPE) > 0) {
+        if((mSerpRequestType & MASK_LISTING_UPDATE_TYPE) == 0) {
             selector.removePaging();
         }
 
