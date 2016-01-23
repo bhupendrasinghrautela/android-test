@@ -3,17 +3,13 @@ package com.makaan.cache;
 
 import android.content.SharedPreferences;
 
-
-import com.google.android.gms.common.api.Api;
-
 import com.makaan.MakaanBuyerApplication;
-
 import com.makaan.response.amenity.AmenityCluster;
-import com.makaan.response.master.MasterFurnishing;
-import com.makaan.response.master.PropertyAmenity;
-
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.master.ApiLabel;
+import com.makaan.response.master.MasterFurnishing;
+import com.makaan.response.master.MasterSpecification;
+import com.makaan.response.master.PropertyAmenity;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.response.serp.RangeFilter;
 import com.makaan.util.Preference;
@@ -22,8 +18,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by vaibhav on 29/12/15.
@@ -36,14 +33,17 @@ public class MasterDataCache {
     private HashMap<Integer, ApiIntLabel> idToRentPropertyType = new HashMap<>();
 
     private HashMap<Integer, ApiIntLabel> idToPropertyStatus = new HashMap<>();
+    private Map<Integer, ApiIntLabel> idToBhk = new TreeMap<>();
     private HashMap<String, String> apiLabels = new HashMap<>();
     private HashMap<Long, PropertyAmenity> idToPropertyAmenity = new HashMap<>();
     private HashMap<Long, MasterFurnishing> idToMasterFurnishing = new HashMap<>();
+    private HashMap<Long, MasterSpecification> idToMasterSpecification = new HashMap<>();
 
     private HashMap<String, FilterGroup> internalNameToFilterGrpBuy = new HashMap<>();
     private HashMap<String, FilterGroup> internalNameToFilterGrpRent = new HashMap<>();
     private Map<Integer, AmenityCluster> amenityMap = new HashMap<>();
-    private Map<String, ApiLabel> searchTypeMap= new HashMap<>();
+    private Map<String, ApiLabel> searchTypeMap = new HashMap<>();
+    private Map<String, Map<String, Map<String, List<String>>>> propertyDisplayOrder = new HashMap<>();
 
     private HashSet<String> shortlistedPropertiesBuy;
     private HashSet<String> shortlistedPropertiesRent;
@@ -63,8 +63,18 @@ public class MasterDataCache {
         }
     }
 
+    public MasterSpecification getMasterSpecificationById(Long masterSpecId) {
+        return idToMasterSpecification.get(masterSpecId);
+    }
+
     public MasterFurnishing getMasterFurnishingById(Long furnishingId) {
         return idToMasterFurnishing.get(furnishingId);
+    }
+
+    public void addMasterSpecification(MasterSpecification masterSpecification) {
+        if (null != masterSpecification && null != masterSpecification.masterSpecId && null != masterSpecification.masterSpecClassName) {
+            idToMasterSpecification.put(masterSpecification.masterSpecId, masterSpecification);
+        }
     }
 
 
@@ -107,8 +117,8 @@ public class MasterDataCache {
     public void addFilterGroupBuy(FilterGroup filterGroup) {
         if (null != filterGroup && null != filterGroup.internalName) {
             internalNameToFilterGrpBuy.put(filterGroup.internalName, filterGroup);
-            if(filterGroup.rangeFilterValues.size() > 0) {
-                for(RangeFilter filter : filterGroup.rangeFilterValues) {
+            if (filterGroup.rangeFilterValues.size() > 0) {
+                for (RangeFilter filter : filterGroup.rangeFilterValues) {
                     filter.selectedMinValue = filter.minValue;
                     filter.selectedMaxValue = filter.maxValue;
                 }
@@ -119,8 +129,8 @@ public class MasterDataCache {
     public void addFilterGroupRent(FilterGroup filterGroup) {
         if (null != filterGroup && null != filterGroup.internalName) {
             internalNameToFilterGrpRent.put(filterGroup.internalName, filterGroup);
-            if(filterGroup.rangeFilterValues.size() > 0) {
-                for(RangeFilter filter : filterGroup.rangeFilterValues) {
+            if (filterGroup.rangeFilterValues.size() > 0) {
+                for (RangeFilter filter : filterGroup.rangeFilterValues) {
                     filter.selectedMinValue = filter.minValue;
                     filter.selectedMaxValue = filter.maxValue;
                 }
@@ -134,6 +144,12 @@ public class MasterDataCache {
         }
     }
 
+    public void addBhkList(ApiIntLabel apiIntLabel) {
+        if (null != apiIntLabel) {
+            idToBhk.put(apiIntLabel.id, apiIntLabel);
+        }
+    }
+
     public void addSearchType(String type, ApiLabel searchType) {
         if (null != searchType && null != type && null != searchType) {
             searchTypeMap.put(type, searchType);
@@ -142,6 +158,10 @@ public class MasterDataCache {
 
     public void setSearchType(Map<String, ApiLabel> searchTypeMap) {
         this.searchTypeMap = searchTypeMap;
+    }
+
+    public void addPropertyDisplayOrder(Map<String, Map<String, Map<String, List<String>>>> map) {
+        propertyDisplayOrder = map;
     }
 
 
@@ -156,6 +176,13 @@ public class MasterDataCache {
         ArrayList<ApiIntLabel> propertyTypes = new ArrayList<>();
         propertyTypes.addAll(idToRentPropertyType.values());
         return propertyTypes;
+    }
+
+    public ArrayList<ApiIntLabel> getBhkList() {
+
+        ArrayList<ApiIntLabel> bhkList = new ArrayList<>();
+        bhkList.addAll(idToBhk.values());
+        return bhkList;
     }
 
 
@@ -204,7 +231,7 @@ public class MasterDataCache {
 
     public void addShortlistedProperty(SharedPreferences preferences, String key, int id, boolean isBuy) {
         HashSet<String> shortlistedProperties;
-        if(isBuy) {
+        if (isBuy) {
             if (shortlistedPropertiesBuy == null) {
                 getShortlistedPropertiesFromPreferences(preferences, key, isBuy);
             }
@@ -221,7 +248,7 @@ public class MasterDataCache {
 
     public void removeShortlistedProperty(SharedPreferences preferences, String key, int id, boolean isBuy) {
         HashSet<String> shortlistedProperties;
-        if(isBuy) {
+        if (isBuy) {
             if (shortlistedPropertiesBuy == null) {
                 getShortlistedPropertiesFromPreferences(preferences, key, isBuy);
             }
@@ -236,9 +263,13 @@ public class MasterDataCache {
         addShortlistedPropertiesToPreferences(preferences.edit(), key, isBuy);
     }
 
+    public List<String> getDisplayOrder(String category, String type, String card) {
+        return propertyDisplayOrder.get(category).get(type).get(card);
+    }
+
     public boolean isShortlistedProperty(SharedPreferences preferences, String key, int id, boolean isBuy) {
         HashSet<String> shortlistedProperties;
-        if(isBuy) {
+        if (isBuy) {
             if (shortlistedPropertiesBuy == null) {
                 getShortlistedPropertiesFromPreferences(preferences, key, isBuy);
             }
@@ -256,7 +287,7 @@ public class MasterDataCache {
     }
 
     private void addShortlistedPropertiesToPreferences(SharedPreferences.Editor editor, String key, boolean isBuy) {
-        if(isBuy) {
+        if (isBuy) {
             Preference.putStringSet(editor, key, shortlistedPropertiesBuy);
         } else {
             Preference.putStringSet(editor, key, shortlistedPropertiesRent);
@@ -265,7 +296,7 @@ public class MasterDataCache {
     }
 
     private void getShortlistedPropertiesFromPreferences(SharedPreferences preferences, String key, boolean isBuy) {
-        if(isBuy) {
+        if (isBuy) {
             shortlistedPropertiesBuy = Preference.getStringSet(preferences, key);
         } else {
             shortlistedPropertiesRent = Preference.getStringSet(preferences, key);
@@ -280,8 +311,8 @@ public class MasterDataCache {
         } else {
             filterGroups = MasterDataCache.getInstance().getAllRentFilterGroups();
         }
-        for(FilterGroup grp : filterGroups) {
-            if(grp.isSelected) {
+        for (FilterGroup grp : filterGroups) {
+            if (grp.isSelected) {
                 count++;
             }
         }

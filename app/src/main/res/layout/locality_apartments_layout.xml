@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.makaan.ui.locality.LocalityApartmentsView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="290dp"
+    android:layout_marginLeft="20dp"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -19,6 +20,7 @@
             android:layout_marginTop="@dimen/apartments_text_margin_top"
             android:layout_marginBottom="@dimen/apartments_text_margin_bottom"
             android:layout_gravity="center"
+            android:id="@+id/apartment_unit_type"
             android:textSize="@dimen/apartments_text_text_size"
             android:text="apartments"/>
 
@@ -41,7 +43,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/apartments_card_bhk_price_text_size"
+                android:textSize="12sp"
+                android:singleLine="true"
                 android:textColor="@color/listingBlack"
                 android:gravity="end"
                 android:text="34.5L - 57.3L"/>
@@ -58,7 +61,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/apartments_card_area_and_price_sq_ft_text_size"
+                android:textSize="12sp"
+                android:singleLine="true"
                 android:textColor="@color/listingLightGray"
                 android:text="450-790 sq ft"/>
 
@@ -68,7 +72,8 @@
                 android:layout_weight="0.5"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:textSize="@dimen/apartments_card_area_and_price_sq_ft_text_size"
+                android:textSize="12sp"
+                android:singleLine="true"
                 android:textColor="@color/listingLightGray"
                 android:text="3,450 - 5,790/ sq ft"/>
 
@@ -91,7 +96,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/apartments_card_bhk_price_text_size"
+                android:textSize="18sp"
+                android:singleLine="true"
                 android:textColor="@color/listingBlack"
                 android:text="1 bhk"/>
 
@@ -100,7 +106,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/apartments_card_bhk_price_text_size"
+                android:textSize="12sp"
+                android:singleLine="true"
                 android:textColor="@color/listingBlack"
                 android:gravity="end"
                 android:text="34.5L - 57.3L"/>
@@ -117,7 +124,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/apartments_card_area_and_price_sq_ft_text_size"
+                android:textSize="12sp"
+                android:singleLine="true"
                 android:textColor="@color/listingLightGray"
                 android:text="450-790 sq ft"/>
 
@@ -127,7 +135,8 @@
                 android:layout_weight="0.5"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:textSize="@dimen/apartments_card_area_and_price_sq_ft_text_size"
+                android:textSize="12sp"
+                android:singleLine="true"
                 android:textColor="@color/listingLightGray"
                 android:text="3,450 - 5,790/ sq ft"/>
 
@@ -150,7 +159,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/apartments_card_bhk_price_text_size"
+                android:textSize="18sp"
+                android:singleLine="true"
                 android:textColor="@color/listingBlack"
                 android:text="1 bhk"/>
 
@@ -159,7 +169,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/apartments_card_bhk_price_text_size"
+                android:textSize="12sp"
+                android:singleLine="true"
                 android:textColor="@color/listingBlack"
                 android:gravity="end"
                 android:text="34.5L - 57.3L"/>
@@ -176,7 +187,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/apartments_card_area_and_price_sq_ft_text_size"
+                android:textSize="12sp"
+                android:singleLine="true"
                 android:textColor="@color/listingLightGray"
                 android:text="450-790 sq ft"/>
 
@@ -186,7 +198,8 @@
                 android:layout_weight="0.5"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:textSize="@dimen/apartments_card_area_and_price_sq_ft_text_size"
+                android:textSize="12sp"
+                android:singleLine="true"
                 android:textColor="@color/listingLightGray"
                 android:text="3,450 - 5,790/ sq ft"/>
 

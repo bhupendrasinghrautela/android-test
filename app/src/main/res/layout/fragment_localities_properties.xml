@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/locality_kyn_margin_right"
+        android:layout_marginRight="@dimen/locality_kyn_margin_right"
+        android:layout_marginTop="@dimen/locality_kyn_margin_top"
+        android:layout_marginBottom="@dimen/locality_kyn_margin_bottom"
+        android:textColor="@color/white"
+        android:textSize="@dimen/locality_text_big"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/tv_localities_props_title"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_localities_props"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/locality_properties_recycler_height"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</LinearLayout>

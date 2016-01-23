@@ -14,6 +14,7 @@ import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.master.ApiLabel;
 import com.makaan.response.master.MasterFurnishing;
+import com.makaan.response.master.MasterSpecification;
 import com.makaan.response.master.PropertyAmenity;
 import com.makaan.response.serp.FilterGroup;
 
@@ -24,6 +25,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,6 +34,24 @@ import java.util.Map;
 public class MasterDataService implements MakaanService {
 
     public static final String TAG = MasterDataService.class.getSimpleName();
+
+
+    public void populateMasterSpecifications() {
+
+        Type listType = new TypeToken<ArrayList<MasterSpecification>>() {
+        }.getType();
+        MakaanNetworkClient.getInstance().get(ApiConstants.MASTER_FURNISHINGS, listType, new ObjectGetCallback() {
+            @Override
+            @SuppressWarnings("unchecked")
+            public void onSuccess(Object responseObject) {
+                ArrayList<MasterSpecification> masterSpecifications = (ArrayList<MasterSpecification>) responseObject;
+
+                for (MasterSpecification masterSpecification : masterSpecifications) {
+                    MasterDataCache.getInstance().addMasterSpecification(masterSpecification);
+                }
+            }
+        }, true);
+    }
 
 
     public void populateMasterFunishings() {
@@ -105,6 +125,24 @@ public class MasterDataService implements MakaanService {
 
     }
 
+    public void populateBhkList() {
+        Type listType = new TypeToken<HashMap<String, String>>() {
+        }.getType();
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.UNIT_TYPE, listType, new ObjectGetCallback() {
+            @Override
+            @SuppressWarnings("unchecked")
+            public void onSuccess(Object responseObject) {
+                HashMap<String, String> bhks = (HashMap<String, String>) responseObject;
+
+                for (Map.Entry<String, String> bhk : bhks.entrySet()) {
+                    MasterDataCache.getInstance().addBhkList(new ApiIntLabel(bhk.getValue(), Integer.parseInt(bhk.getKey())));
+                }
+            }
+        }, "bhkList.json");
+
+    }
+
     public void populatePropertyStatus() {
         Type listType = new TypeToken<HashMap<String, String>>() {
         }.getType();
@@ -120,6 +158,20 @@ public class MasterDataService implements MakaanService {
                 }
             }
         }, "propertyStatus.json");
+
+    }
+
+    public void populatePropertyDisplayOrder() {
+        final Type propertyDisplay = new TypeToken<HashMap<String, HashMap<String, HashMap<String, ArrayList<String>>>>>() {
+        }.getType();
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.PROPERTY_DISPLAY_ORDER, propertyDisplay, new ObjectGetCallback() {
+            @Override
+            @SuppressWarnings("unchecked")
+            public void onSuccess(Object responseObject) {
+                MasterDataCache.getInstance().addPropertyDisplayOrder((Map<String, Map<String, Map<String, List<String>>>>) responseObject);
+            }
+        }, "propertyPageDisplayOrder.json");
 
     }
 
@@ -142,7 +194,6 @@ public class MasterDataService implements MakaanService {
 
 
     }
-
 
 
     public void populateFilterGroupsBuy() {

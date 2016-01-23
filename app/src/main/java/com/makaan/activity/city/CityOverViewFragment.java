@@ -4,10 +4,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
 import android.text.Html;
 import android.util.Log;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -15,16 +20,23 @@ import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader.ImageContainer;
 import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.makaan.R;
+import com.makaan.cache.MasterDataCache;
 import com.makaan.event.city.CityByIdEvent;
 import com.makaan.event.city.CityTopLocalityEvent;
 import com.makaan.event.trend.callback.LocalityTrendCallback;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.fragment.locality.LocalityLifestyleFragment;
+import com.makaan.fragment.locality.LocalityPropertiesFragment;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.pojo.TaxonomyCard;
 import com.makaan.response.city.City;
+import com.makaan.response.city.EntityDesc;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.trend.LocalityPriceTrendDto;
 import com.makaan.service.PriceTrendService;
+import com.makaan.service.TaxonomyService;
 import com.makaan.ui.MakaanLineChartView;
+import com.makaan.ui.MultiSelectionSpinner;
 import com.makaan.ui.PriceTrendView;
 import com.makaan.ui.city.TopLocalityView;
 import com.makaan.util.Blur;
@@ -32,6 +44,7 @@ import com.makaan.util.StringUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -59,15 +72,23 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     TextView mCityDescription;
     @Bind(R.id.top_locality_layout)
     TopLocalityView mTopLocalityLayout;
-    @Bind(R.id.city_connect_header)
-    TextView mCityConnectHeader;
+/*    @Bind(R.id.city_connect_header)
+    TextView mCityConnectHeader;*/
     @Bind(R.id.price_trend_view)
     PriceTrendView mPriceTrendView;
+    @Bind(R.id.city_property_buy_rent_switch)
+    Switch mPropertyRangeBuyRentSwitch;
+    @Bind(R.id.bhk_spinner)
+    MultiSelectionSpinner mBhkSpinner;
+    @Bind(R.id.property_type_spinner)
+    MultiSelectionSpinner mPropertyTypeSpinner;
 
     private static final int BLUR_EFFECT_HEIGHT = 300;
     private float alpha;
     private Context mContext;
     private City mCity;
+    private String PREFIX_PROPERTY_SPINNER = "property type :";
+    private String POSTFIX_BHK_SPINNER = "bhk";
     private ArrayList<Locality> mCityTopLocalities;
 
     @Override
@@ -79,13 +100,16 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = getActivity();
+        initView();
         initListeners();
     }
 
     private void initUiUsingCityDetails() {
         mMainCityImage.setImageUrl(mCity.cityHeroshotImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
         mCityCollapseToolbar.setTitle(mCity.label);
-        mCityConnectHeader.setText(getString(R.string.city_connect_header_text) + " " + mCity.label);
+        addLocalitiesLifestyleFragment(mCity.entityDescriptions);
+        addProperties(new TaxonomyService().getTaxonomyCardForCity(mCity.id, mCity.minAffordablePrice, mCity.maxAffordablePrice, mCity.minLuxuryPrice, mCity.maxBudgetPrice));
+        //mCityConnectHeader.setText(getString(R.string.city_connect_header_text) + " " + mCity.label);
         MakaanNetworkClient.getInstance().getImageLoader().get(mCity.cityHeroshotImageUrl, new ImageListener() {
             @Override
             public void onResponse(final ImageContainer imageContainer, boolean b) {
@@ -123,6 +147,23 @@ public class CityOverViewFragment extends MakaanBaseFragment{
                 mBlurredCityImage.setAlpha(alpha);
             }
         });
+        mPropertyRangeBuyRentSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    mPropertyTypeSpinner.setItems(MasterDataCache.getInstance().getRentPropertyTypes());
+                } else {
+                    mPropertyTypeSpinner.setItems(MasterDataCache.getInstance().getBuyPropertyTypes());
+                }
+            }
+        });
+    }
+
+    private void initView() {
+        mPropertyTypeSpinner.setMessage(PREFIX_PROPERTY_SPINNER,null);
+        mPropertyTypeSpinner.setItems(MasterDataCache.getInstance().getBuyPropertyTypes());
+        mBhkSpinner.setMessage(null, POSTFIX_BHK_SPINNER);
+        mBhkSpinner.setItems(MasterDataCache.getInstance().getBhkList());
     }
 
     @Subscribe
@@ -143,11 +184,40 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         for(Locality locality:cityTopLocalities){
             localityIds.add(locality.localityId);
         }
-        new PriceTrendService().getPriceTrendForLocalities(localityIds,60, new LocalityTrendCallback() {
+        new PriceTrendService().getPriceTrendForLocalities(localityIds, 60, new LocalityTrendCallback() {
             @Override
             public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
                 mPriceTrendView.bindView(localityPriceTrendDto);
             }
         });
+    }
+
+    private void addLocalitiesLifestyleFragment(ArrayList<EntityDesc> entityDescriptions) {
+        LocalityLifestyleFragment newFragment = new LocalityLifestyleFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("title", getResources().getString(R.string.know_more)+" "+mCity.label);
+        newFragment.setArguments(bundle);
+        initFragment(R.id.container_nearby_localities_lifestyle, newFragment, false);
+        newFragment.setData(entityDescriptions);
+    }
+
+    private void addProperties(List<TaxonomyCard> taxonomyCardList) {
+        LocalityPropertiesFragment newFragment = new LocalityPropertiesFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("title", getResources().getString(R.string.properties_in)+" "+mCity.label);
+        newFragment.setArguments(bundle);
+        initFragment(R.id.container_nearby_localities_props, newFragment, false);
+        newFragment.setData(taxonomyCardList);
+    }
+
+    protected void initFragment(int fragmentHolderId, Fragment fragment, boolean shouldAddToBackStack) {
+        // reference fragment transaction
+        FragmentTransaction fragmentTransaction =((CityActivity) mContext).getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(fragmentHolderId, fragment, fragment.getClass().getName());
+        // if need to be added to the backstack, then do so
+        if (shouldAddToBackStack) {
+            fragmentTransaction.addToBackStack(fragment.getClass().getName());
+        }
+        fragmentTransaction.commitAllowingStateLoss();
     }
 }

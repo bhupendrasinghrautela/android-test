@@ -5,12 +5,17 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -39,8 +44,8 @@ import butterknife.OnClick;
 /**
  * Created by rohitgarg on 1/10/16.
  */
-public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity implements SearchView.OnQueryTextListener,
-        SearchAdapter.SearchAdapterCallbacks {
+public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity implements
+        SearchAdapter.SearchAdapterCallbacks, TextWatcher {
 
     @Bind(R.id.activity_search_base_search_frame_layout)
     FrameLayout mSearchLayoutFrameLayout;
@@ -55,12 +60,16 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     @Bind(R.id.activity_search_base_layout_search_bar_search_text_view)
     TextView mSearchPropertiesTextView;
 
-
-    @Bind(R.id.activity_search_base_layout_search_bar_search_view)
-    SearchView mSearchView;
-
     @Bind(R.id.fragment_search_results_recycler_view)
     RecyclerView mSearchRecyclerView;
+
+    @Bind(R.id.activity_search_base_layout_search_bar_description_relative_view)
+    RelativeLayout mSearchDescriptionRelativeView;
+    @Bind(R.id.activity_search_base_layout_search_bar_search_relative_view)
+    RelativeLayout mSearchRelativeView;
+
+    @Bind(R.id.activity_search_base_layout_search_bar_search_edit_text)
+    EditText mSearchEditText;
 
 
     FrameLayout mContentFrameLayout;
@@ -105,14 +114,21 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         setShowSearchBar(showSearchBar);
 
         // TODO need to check about text style for the search view
-        int id = mSearchView.getContext().getResources()
+        /*int id = mSearchView.getContext().getResources()
                 .getIdentifier("android:id/search_src_text", null, null);
         TextView textView = (TextView) mSearchView.findViewById(id);
-        textView.setTextColor(Color.WHITE);
+        textView.setTextColor(Color.WHITE);*/
 
-        mSearchView.setOnQueryTextListener(this);
+        /*int searchHintIconId = mSearchView.getContext().getResources()
+                .getIdentifier("android:id/search_mag_icon", null, null);
+        ImageView searchHintIcon = (ImageView) mSearchView.findViewById(searchHintIconId);
+        searchHintIcon.setImageResource(R.drawable.search_white);
+        searchHintIcon.setMaxWidth(this.getResources().getDimensionPixelSize(R.dimen.activity_search_base_layout_search_bar_search_image_button_width));
+        searchHintIcon.setMaxHeight(this.getResources().getDimensionPixelSize(R.dimen.activity_search_base_layout_search_bar_search_image_button_height));*/
 
-        // initialize adapter and manager for the recycker view
+        mSearchEditText.addTextChangedListener(this);
+
+        // initialize adapter and manager for the recycler view
         initializeRecyclerViewData();
     }
 
@@ -136,35 +152,14 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
         mSearchAdapter.clear();
 
-        mSearchView.setOnQueryTextListener(null);
-        mSearchView.setQuery(searchResponseItem.displayText, false);
-        mSearchView.setOnQueryTextListener(this);
+        mSearchEditText.removeTextChangedListener(this);
+        mSearchEditText.setText(searchResponseItem.displayText);
+        mSearchEditText.addTextChangedListener(this);
 
         setSearchViewVisibility(false, searchResponseItem.displayText);
 
-        //RecentSearchManager.getInstance(this).addEntryToRecentSearch(search, this);
+        RecentSearchManager.getInstance(this).addEntryToRecentSearch(searchResponseItem, this);
 
-    }
-
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        if (newText != null && !TextUtils.isEmpty(newText)) {
-            mSearchResultFrameLayout.setVisibility(View.VISIBLE);
-            SearchService service = (SearchService) MakaanServiceFactory.getInstance().getService(SearchService.class);
-            try {
-                service.getSearchResults(newText, "gurgaon", SearchType.ALL, false);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-        } else {
-            mSearchResultFrameLayout.setVisibility(View.GONE);
-        }
-        return true;
     }
 
     @OnClick(R.id.activity_search_base_layout_search_bar_back_button)
@@ -178,17 +173,62 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     private void setSearchViewVisibility(boolean searchViewVisible, String searchPropertiesText) {
-        mSearchImageButton.setVisibility(searchViewVisible ? View.GONE : View.VISIBLE);
-        mSearchPropertiesTextView.setVisibility(searchViewVisible ? View.GONE : View.VISIBLE);
-        mSearchView.setVisibility(searchViewVisible ? View.VISIBLE : View.GONE);
+        mSearchDescriptionRelativeView.setVisibility(searchViewVisible ? View.GONE : View.VISIBLE);
+        mSearchRelativeView.setVisibility(searchViewVisible ? View.VISIBLE : View.GONE);
+        mSearchEditText.requestFocus();
 
         if (!searchViewVisible && searchPropertiesText != null && !TextUtils.isEmpty(searchPropertiesText)) {
             mSearchPropertiesTextView.setText(searchPropertiesText);
         }
+        if(searchViewVisible) {
+            showEmptySearchResults();
+        }
+    }
+
+    private void showEmptySearchResults() {
+        ArrayList<SearchResponseItem> searches = RecentSearchManager.getInstance(this).getRecentSearches(this);
+        if(searches != null && searches.size() > 0) {
+            mSearchResultFrameLayout.setVisibility(View.VISIBLE);
+            mSearches = searches;
+            mSearchAdapter.setData(searches);
+        } else {
+            mSearchResultFrameLayout.setVisibility(View.GONE);
+        }
     }
 
     public void onResults(SearchResultEvent searchResultEvent) {
+        mSearchResultFrameLayout.setVisibility(View.VISIBLE);
         this.mSearches = searchResultEvent.searchResponse.getData();
         mSearchAdapter.setData(mSearches);
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+        if (editable != null && !TextUtils.isEmpty(editable.toString())) {
+            SearchService service = (SearchService) MakaanServiceFactory.getInstance().getService(SearchService.class);
+            try {
+                Log.d("DEBUG", editable.toString());
+                service.getSearchResults(editable.toString(), null, SearchType.ALL, false);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        } else {
+//            mSearchResultFrameLayout.setVisibility(View.GONE);
+            showEmptySearchResults();
+        }
+    }
+    @OnClick(R.id.activity_search_base_layout_search_bar_search_close_button)
+    public void onDeletePressed(View view) {
+        mSearchEditText.setText("");
     }
 }

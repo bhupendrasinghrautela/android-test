@@ -20,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
+        android:id="@+id/buy_text"
         android:layout_alignBaseline="@id/city_property_buy_rent_switch"
         android:layout_toLeftOf="@id/city_property_buy_rent_switch"
         android:layout_width="wrap_content"
@@ -29,6 +30,7 @@
         android:textSize="16sp"
         android:layout_height="wrap_content"/>
     <TextView
+        android:id="@+id/rent_text"
         android:layout_alignBaseline="@id/city_property_buy_rent_switch"
         android:layout_toRightOf="@id/city_property_buy_rent_switch"
         android:layout_width="wrap_content"
@@ -37,18 +39,22 @@
         android:text="@string/rent"
         android:textSize="@dimen/city_small_text"
         android:layout_height="wrap_content"/>
-    <Spinner
+    <com.makaan.ui.MultiSelectionSpinner
         android:id="@+id/bhk_spinner"
+        android:layout_alignLeft="@id/buy_text"
+        android:layout_alignRight="@id/rent_text"
         android:layout_marginTop="@dimen/city_property_spinner_margin_top"
         android:layout_below="@+id/city_property_buy_rent_switch"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_centerInParent="true"
         android:layout_height="wrap_content"/>
-    <Spinner
+    <com.makaan.ui.MultiSelectionSpinner
         android:id="@+id/property_type_spinner"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_below="@+id/bhk_spinner"
         android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_marginTop="@dimen/city_property_spinner_margin_top"
         android:layout_height="wrap_content"/>
 </RelativeLayout>

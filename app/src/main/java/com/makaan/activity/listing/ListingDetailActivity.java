@@ -9,9 +9,9 @@ import com.makaan.event.city.CityTopLocalityEvent;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.event.trend.callback.TopLocalitiesTrendCallback;
 import com.makaan.response.locality.Locality;
-import com.makaan.service.LocalityService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PriceTrendService;
+import com.makaan.service.ProjectService;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         //((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).handleSerpRequest(MakaanBuyerApplication.serpSelector);
         //((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getCityById(11L);
         //((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getTopLocalitiesInCity(11L, 5);
-        ((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getLocalityById(50186L);
+        //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getLocalityById(50186L);
         //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getTopBuildersInLocality(50123L, 5);
         //((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getListingDetail(429713L);
         List<Long> tempUsers = new ArrayList<>();
@@ -55,7 +55,7 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         tempUsers.add(3901325L);
         //((UserService) (MakaanServiceFactory.getInstance().getService(UserService.class))).getCompanyUsers(tempUsers);
         //((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(436057L);
-        ((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getNearByLocalities(12.84112072, 77.66799164, 5);
+        //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getNearByLocalities(12.84112072, 77.66799164, 5);
         //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getTrendingSearchesInLocality(50175L);
         //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getTrendingSearchesInLocality(50175L);
         //((AgentService) (MakaanServiceFactory.getInstance().getService(AgentService.class))).getTopAgentsForLocality(2L, 50175L, 5, true, new TopBuyAgentsInLocalityCallback());
@@ -67,6 +67,13 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         topLocalities.add(53476L);
         topLocalities.add(53477L);
         //((PriceTrendService) (MakaanServiceFactory.getInstance().getService(PriceTrendService.class))).getPriceTrendForLocalities(topLocalities, 6, new TopLocalitiesTrendCallback());
+        //((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getPropertyRangeInCity(11L, null,null,false ,10000, 500000, 12250);
+        //((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getPropertyRangeInCity(11L, null,null,true ,10000, 500000, 12250);
+        //((BuilderService) (MakaanServiceFactory.getInstance().getService(BuilderService.class))).getBuilderById(100002L);
+        //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getGooglePlaceDetail("ChIJAQAA8UjkDDkRmdprFuRlLbo");
+        ((ProjectService) (MakaanServiceFactory.getInstance().getService(ProjectService.class))).getProjectById(506147L);
+
+
         //((AgentService) (MakaanServiceFactory.getInstance().getService(AgentService.class))).getTopAgentsForLocality(2L, 50175L, 5, false, new TopRentAgentsInLocalityCallback());
 
         /*Intent intent = new Intent(this, SerpActivity.class);

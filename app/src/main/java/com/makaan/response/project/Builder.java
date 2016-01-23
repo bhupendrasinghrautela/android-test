@@ -10,15 +10,16 @@ import java.util.ArrayList;
 public class Builder {
 
     public Long id;
-    public String name, imageUrl, description, activeStatus;
+    public String name, imageUrl, description, activeStatus,builderWebsite,builderAddress;
 
-    public Double projectCount;
+    public Double projectCount,builderLocalityCount,builderScore;
     public String establishedDate;
 
 
     public ArrayList<Image> images = new ArrayList<>();
     public Image mainImage;
     public ProjectStatusCount projectStatusCount;
+
 
 
 }

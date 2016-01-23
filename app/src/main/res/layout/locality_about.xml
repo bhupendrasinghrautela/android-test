@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="match_parent">
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="@dimen/locality_circular_progress_dimen"
+            android:layout_height="@dimen/locality_circular_progress_dimen"
+            android:id="@+id/locality_score_progress"
+            android:progress="78"
+            android:secondaryProgress="100"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/circular_progress_drawable"
+            android:layout_gravity="center_vertical" />
+        <TextView
+            android:id="@+id/locality_score_text"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/city_very_small_text"/>
+    </FrameLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/locality_about_top_margin"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="@dimen/locality_text_medium"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/locality_about_median_left_margin"
+        android:id="@+id/tv_locality_per_sqr_ft_median_price"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/locality_about_median_top_margin"
+        android:textColor="@color/white"
+        android:text="@string/locality_about_median_price"
+        android:layout_alignLeft="@+id/tv_locality_per_sqr_ft_median_price"
+        android:textSize="@dimen/locality_text_small"
+        android:layout_below="@id/tv_locality_per_sqr_ft_median_price"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="@dimen/locality_text_medium"
+        android:layout_alignLeft="@+id/tv_locality_annual_growth_label"
+        android:id="@+id/tv_locality_annual_growth"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/locality_about_annual_growth"
+        android:id="@+id/tv_locality_annual_growth_label"
+        android:layout_marginTop="@dimen/locality_about_median_top_margin"
+        android:textColor="@color/white"
+        android:layout_alignParentRight="true"
+        android:textSize="@dimen/locality_text_v_small"
+        android:layout_marginRight="@dimen/locality_about_median_left_margin"
+        android:layout_below="@id/tv_locality_annual_growth"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/locality_seperator_height"
+        android:layout_marginTop="@dimen/locality_seperator_top_margin"
+        android:layout_below="@id/tv_locality_annual_growth_label"
+        android:layout_marginLeft="@dimen/locality_seperator_left_margin"
+        android:id="@+id/view_locality_seperator"
+        android:background="@color/locality_light_grey"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_locality_seperator"
+        android:layout_marginTop="@dimen/locality_about_median_rent_top_margin"
+        android:textColor="@color/white"
+        android:textSize="@dimen/locality_text_medium"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/locality_about_median_left_margin"
+        android:id="@+id/tv_locality_per_sqr_ft_median_price_rent"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/locality_about_median_rent"
+        android:layout_marginTop="@dimen/locality_about_median_top_margin"
+        android:textColor="@color/white"
+        android:layout_alignLeft="@+id/tv_locality_per_sqr_ft_median_price_rent"
+        android:textSize="@dimen/locality_text_small"
+        android:layout_below="@id/tv_locality_per_sqr_ft_median_price_rent"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/locality_about_median_rent_top_margin"
+        android:layout_below="@id/view_locality_seperator"
+        android:textColor="@color/white"
+        android:textSize="@dimen/locality_text_medium"
+        android:layout_alignLeft="@+id/tv_locality_annual_growth_label_rent"
+        android:id="@+id/tv_locality_annual_growth_rent"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/locality_rental_demand"
+        android:id="@+id/tv_locality_annual_growth_label_rent"
+        android:layout_marginTop="@dimen/locality_about_median_top_margin"
+        android:textColor="@color/white"
+        android:layout_alignParentRight="true"
+        android:textSize="@dimen/locality_text_small"
+        android:layout_marginRight="@dimen/locality_about_median_left_margin"
+        android:layout_below="@id/tv_locality_annual_growth_rent"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/locality_seperator_height"
+        android:layout_marginTop="@dimen/locality_seperator_top_margin"
+        android:layout_below="@id/tv_locality_annual_growth_label_rent"
+        android:layout_marginLeft="@dimen/locality_seperator_left_margin"
+        android:id="@+id/view_locality_seperator_2"
+        android:background="@color/locality_light_grey"/>
+
+</RelativeLayout>
+
+    <include layout="@layout/compressed_text_layout"/>
+</merge>

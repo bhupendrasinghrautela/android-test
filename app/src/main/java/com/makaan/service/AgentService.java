@@ -14,19 +14,21 @@ import static com.makaan.constants.RequestConstants.LOCALITY_ID;
 import static com.makaan.constants.RequestConstants.PRIMARY;
 import static com.makaan.constants.RequestConstants.RENTAL;
 import static com.makaan.constants.RequestConstants.RESALE;
-import static com.makaan.constants.RequestConstants.UNIT_TYPE;
+import static com.makaan.constants.RequestConstants.*;
 
 /**
  * Created by vaibhav on 20/01/16.
  */
 public class AgentService implements MakaanService{
 
+    /**
+     * http://marketplace-qa.proptiger-ws.com/data/v1/entity/city/2/top-agents?selector={%20%22filters%22:%20{%20%22and%22:%20[{%22equal%22:%20{%20%22localityId%22:%2050175%20}}]%20}%20}&sourceDomain=Makaan
+     */
     public void getTopAgentsForLocality(Long cityId, Long localityId, int noOfAgents, boolean isRental,TopAgentsCallback topAgentsCallback) {
         ArrayList<String> localityIds = new ArrayList<>();
         localityIds.add(localityId.toString());
         getTopAgentsForLocality(cityId, localityIds, null, null, noOfAgents, isRental, topAgentsCallback);
     }
-
 
     public void getTopAgentsForLocality(Long cityId, ArrayList<String> localityIdList, ArrayList<String> bedrooms, String unitType, Integer noOfAgents, boolean isRental, TopAgentsCallback topAgentsCallback) {
 
@@ -49,7 +51,7 @@ public class AgentService implements MakaanService{
             }
 
             if (null != unitType) {
-                topAgentsSelector.term(UNIT_TYPE, unitType);
+                topAgentsSelector.term(UNIT_TYPE_ID, unitType);
             }
             if (null != noOfAgents) {
                 topAgentsSelector.page(0, noOfAgents);

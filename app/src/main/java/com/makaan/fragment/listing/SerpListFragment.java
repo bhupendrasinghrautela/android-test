@@ -81,7 +81,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
             mListingRecyclerView.setPaginableListener(this);
             if(mListings != null) {
                 if(mTotalPropertiesTextView != null) {
-                    mTotalPropertiesTextView.setText(String.format("%d properties in %s", mTotalCount, mCityName));
+                    mTotalPropertiesTextView.setText(String.format("%d properties in %s", mTotalCount, mCityName != null ? mCityName : ""));
                 }
                 mListingAdapter.setData(mListings, mRequestType);
                 if(mTotalCount > mListings.size()) {
@@ -107,7 +107,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
     public void updateListings(SerpGetEvent listingGetEvent, SerpRequestCallback serpRequestCallback, int requestType) {
         this.mSerpRequestCallback = serpRequestCallback;
         this.mRequestType = requestType;
-        if(listingGetEvent == null && listingGetEvent.listingData == null) {
+        if(listingGetEvent == null || listingGetEvent.listingData == null) {
             if(mListingAdapter != null) {
                 mListingAdapter.setData(null, mRequestType);
             }
@@ -123,7 +123,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
                     mTotalPropertiesTextView.setVisibility(View.GONE);
                 } else {
                     mTotalPropertiesTextView.setVisibility(View.VISIBLE);
-                    mTotalPropertiesTextView.setText(String.format("%d properties in %s", mTotalCount, mCityName));
+                    mTotalPropertiesTextView.setText(String.format("%d properties in %s", mTotalCount, mCityName != null ? mCityName : ""));
                 }
             }
 
@@ -155,7 +155,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
             if((mListings.size() / MAX_ITEMS_TO_REQUEST) == (page + 1)) {
                 page++;
                 MakaanBuyerApplication.serpSelector.page(mListings.size(), MAX_ITEMS_TO_REQUEST);
-                new ListingService().handleSerpRequest(MakaanBuyerApplication.serpSelector);
+                mSerpRequestCallback.serpRequest(SerpActivity.TYPE_LOAD_MORE, MakaanBuyerApplication.serpSelector);
             }
         }
     }

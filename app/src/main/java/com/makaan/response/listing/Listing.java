@@ -3,6 +3,7 @@ package com.makaan.response.listing;
 import com.makaan.response.project.Project;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by vaibhav on 24/12/15.
@@ -23,18 +24,20 @@ public class Listing {
     public String bhkInfo, sizeInfo;
     public int imageCount;
 
+    public String unitType,unitName;
+
     public String postedDate, mainImageUrl;
-    public Integer lisitingId;
+    public Integer lisitingId,propertyId,projectId;
     public Long sellerId;
     public String description;
-    public Integer bedrooms, bathrooms, balcony;
+    public Integer bedrooms, bathrooms, balcony,storeRoom, halls,studyRoom,servantRoom, poojaRoom;
 
     public String propertyType;         //like apartment etc.
-    public Integer size;
+    public Double size,budget,minResaleOrPrimaryPrice,maxResaleOrPrimaryPrice;
     public String measure;
 
     public Double latitude, longitude;
-    public Integer studyRoom, servantRoom, poojaRoom;
+
     public Integer pricePerUnitArea;
     public Double price, localityAvgPrice;
     public String relativeCreateDate;
@@ -57,5 +60,6 @@ public class Listing {
     public Project project ;
 
     public Long landMarkDistance;
+
 
 }

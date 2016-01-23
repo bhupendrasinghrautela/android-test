@@ -1,7 +1,6 @@
 package com.makaan.response.listing.detail;
 
 import com.makaan.response.property.Property;
-import com.makaan.util.AppUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,10 +19,13 @@ public class ListingDetail {
     public int facingId;
     public boolean status;
     public int noOfCarParks;
-    public int propertyId;
+    public int propertyId,projectId;
+    public String unitType,unitName, measure;
+    public Integer bedrooms, bathrooms, balcony,storeRoom, halls,studyRoom,servantRoom, poojaRoom;
 
 
-    public double avgPriceRisePercentage, bookingAmount,mainEntryRoadWidth;
+    public Double size,budget,minResaleOrPrimaryPrice,maxResaleOrPrimaryPrice;
+    public Double avgPriceRisePercentage, bookingAmount,mainEntryRoadWidth,pricePerUnitArea;
     public int bookingStatusId,ownershipTypeId;
     public String furnished;
     public int sellerId, totalFloors, floor;
@@ -35,9 +37,11 @@ public class ListingDetail {
     public double securityDeposit;
     public Property property;
 
+
     public ArrayList<HashMap<String,String>> viewDirections;
 
     public String getDescription() {
-        return AppUtils.stripHtml(description);
+        //return AppUtils.stripHtml(description);
+        return description;
     }
 }

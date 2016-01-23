@@ -6,7 +6,9 @@
     "LOCALITY": {"key":"localityId", "value":"locality"},
     "SUBURB": {"key":"suburbId", "value":"suburb"},
     "BUILDER-CITY": {"key":"cityId", "value":"builder-city"},
-    "GP": {"key":"googlePlaceId", "value":"landmark"}
+    "GP": {"key":"googlePlaceId", "value":"landmark"},
+    "CITY_OVERVIEW": {"key":"cityId", "value":"overview"},
+    "LOCALITY_OVERVIEW": {"key":"localityId", "value":"overview"}
   }
 
 }

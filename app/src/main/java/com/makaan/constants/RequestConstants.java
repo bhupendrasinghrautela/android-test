@@ -31,6 +31,7 @@ public class RequestConstants {
     public static final String LISTING_QUALITY_SCORE = "listingQualityScore";
     public static final String PRICE = "price";
     public static final String UNIT_TYPE = "unitType";
+    public static final String UNIT_TYPE_ID = "unitTypeId";
     public static final String FROM = "from";
     public static final String TO = "to";
     public static final String ID = "id";
@@ -47,6 +48,11 @@ public class RequestConstants {
 
 
     public static final String ENTITY_DESCRIPTIONS = "entityDescriptions";
+    public static final String ENTITY_DESCRIPTION_CATEGORIES = "entityDescriptionCategories";
+    public static final String MASTER_DESCRIPTION_CATEGORIES = "masterDescriptionCategories";
+    public static final String MASTER_DESCRIPTION_PARENT_CATEGORIES = "masterDescriptionParentCategories";
+    public static final String PARENT_CATEGORY = "parentCategory";
+    public static final String NAME = "name";
     public static final String CENTER_LAT = "centerLatitude";
     public static final String CENTER_LONG = "centerLongitude";
     public static final String DESCRIPTION = "description";
@@ -89,6 +95,7 @@ public class RequestConstants {
 
     public static final String SOURCE_DOMAIN_MAKAAN = "sourceDomain=Makaan";
     public static final String LISTING_CATEGORY = "listingCategory";
+    public static final String GP_ID = "gpId";
 
 
 

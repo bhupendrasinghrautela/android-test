@@ -2,6 +2,7 @@ package com.makaan.service;
 
 import com.google.gson.reflect.TypeToken;
 import com.makaan.constants.ApiConstants;
+import com.makaan.event.locality.GpByIdEvent;
 import com.makaan.event.locality.LocalityByIdEvent;
 import com.makaan.event.locality.NearByLocalitiesEvent;
 import com.makaan.event.locality.TopBuilderInLocalityEvent;
@@ -9,11 +10,11 @@ import com.makaan.event.locality.TrendingSearchLocalityEvent;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
+import com.makaan.response.locality.GpDetail;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Builder;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.util.AppBus;
-import com.makaan.util.AppUtils;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ import static com.makaan.constants.RequestConstants.SORT_ASC;
 public class LocalityService implements MakaanService {
 
     /**
-     * https://marketplace-qa.proptiger-ws.com/app/v3/locality/50157
+     *  http:/marketplace-qa.makaan-ws.com/app/v3/locality/50157?selector={"fields":["label","cityId","localityId","livabilityScore","latitude","longitude","description","avgPriceRisePercentage","avgPricePerUnitArea","averageRentPerMonth","description","entityDescriptions","minAffordablePrice","maxAffordablePrice","minLuxuryPrice","maxBudgetPrice","buyUrl","avgRentalDemandRisePercentage","localityHeroshotImageUrl","suburb","city","averageRentPerMonth","cityHeroshotImageUrl","listingAggregations","listingCategory","unitType","bedrooms","entityDescriptions","description","entityDescriptionCategories","masterDescriptionCategory","name","masterDescriptionParentCategories","parentCategory","count","minSize","maxSize","minPrice","maxPrice","minPricePerUnitArea","maxPricePerUnitArea"]}&sourceDomain="Makaan"
      */
     public void getLocalityById(Long localityId) {
 
@@ -52,13 +53,17 @@ public class LocalityService implements MakaanService {
                 @Override
                 public void onSuccess(Object responseObject) {
                     Locality locality = (Locality) responseObject;
-                    locality.description = AppUtils.stripHtml(locality.description);
+                    //locality.description = AppUtils.stripHtml(locality.description);
                     AppBus.getInstance().post(new LocalityByIdEvent(locality));
                 }
             });
         }
     }
 
+    /**
+     *
+     http:/marketplace-qa.makaan-ws.com/data/v3/entity/locality?selector={"fields":["localityId"],"filters":{"and":[{"geoDistance":{"geo":{"distance":10,"lat":"12.84112072","lon":"77.66799164"}}}]},"paging":{"start":0,"rows":3},"sort":[{"field":"geoDistance","sortOrder":"ASC"}]}
+     */
     public void getNearByLocalities(double lat, double lon, int noOfLocalities) {
 
         Selector nearByLocalitySelector = new Selector();
@@ -81,6 +86,10 @@ public class LocalityService implements MakaanService {
         }, true);
     }
 
+
+    /**
+     * http://marketplace-qa.proptiger-ws.com/columbus/app/v1/popular/suggestions?entityId=50175&sourceDomain=Makaan
+     */
     public void getTrendingSearchesInLocality(Long localityId) {
 
         if (null != localityId) {
@@ -108,7 +117,7 @@ public class LocalityService implements MakaanService {
             Selector topBuilderSelector = new Selector();
 
             topBuilderSelector.fields(new String[]{"id", "name", "establishedDate", "projectCount", "images", "absolutePath", "url", "activeStatus", "projectStatusCount"});
-            topBuilderSelector.term(LOCALITY_ID, localityId.toString()).term(BUILDER_DB_STATUS, "Active").page(0,noOfBuilder);
+            topBuilderSelector.term(LOCALITY_ID, localityId.toString()).term(BUILDER_DB_STATUS, "Active").page(0, noOfBuilder);
 
             String localityTopBuilder = ApiConstants.TOP_BUILDER.concat("?").concat(topBuilderSelector.build());
 
@@ -124,6 +133,25 @@ public class LocalityService implements MakaanService {
                 }
             }, true);
 
+        }
+    }
+
+    /**
+     * http://mp-qa1.makaan-ws.com/app/v1/gp/place-detail/ChIJAQAA8UjkDDkRmdprFuRlLbo?sourceDomain=Makaan
+     */
+    public void getGooglePlaceDetail(String gpId) {
+        if (null != gpId) {
+            String gpDetailUrl = ApiConstants.GP_DETAIL.concat("/").concat(gpId);
+
+            Type gpDetailType = new TypeToken<GpDetail>() {
+            }.getType();
+            MakaanNetworkClient.getInstance().get(gpDetailUrl, gpDetailType, new ObjectGetCallback() {
+                @Override
+                public void onSuccess(Object responseObject) {
+                    GpDetail gpDetail = (GpDetail) responseObject;
+                    AppBus.getInstance().post(new GpByIdEvent(gpDetail));
+                }
+            });
         }
     }
 

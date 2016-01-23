@@ -2,9 +2,9 @@ package com.makaan.response.locality;
 
 import com.makaan.constants.StringConstants;
 import com.makaan.response.city.EntityDesc;
-import com.makaan.util.AppUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by vaibhav on 09/01/16.
@@ -15,14 +15,19 @@ import java.util.ArrayList;
  */
 public class Locality {
 
-    public String label, description;
+    public String label, description,constructionStatus;
     public Long cityId, localityId;
-    public Double livabilityScore, latitude, longitude,
-            avgPriceRisePercentage, avgPricePerUnitArea, averageRentPerMonth, minAffordablePrice,
-            maxBudgetPrice, maxAffordablePrice, minLuxuryPrice, priceRiseRankPercentage;
-    public Double avgRentalDemandRisePercentage;
-    public String localityHeroshotImageUrl, cityHeroshotImageUrl;
+    public Double livabilityScore, latitude, longitude,localityLivabilityRank,
+            avgPriceRisePercentage, averageRentPerMonth, minAffordablePrice,maxBudgetPrice, maxAffordablePrice, minLuxuryPrice,avgPricePerUnitAreaVilla,
+            priceRiseRankPercentage, avgPriceRisePercentageApartment, avgPriceRiseMonths,avgPricePerUnitArea,avgPricePerUnitAreaPlot;
+    public Double avgRentalDemandRisePercentage,priceRise6Months;
+    public String localityHeroshotImageUrl, cityHeroshotImageUrl,dominantUnitType;
     public Suburb suburb;
+    public Integer projectCount;
+
+
+    public HashMap<String, Integer> amenityTypeCount;
+
 
     public ArrayList<ListingAggregation> listingAggregations = new ArrayList<>();
 
@@ -30,7 +35,8 @@ public class Locality {
 
 
     public String getDescription() {
-        return AppUtils.stripHtml(description);
+        //return AppUtils.stripHtml(description);
+        return description;
     }
 
     public Double getCityMedianPrice() {

@@ -9,6 +9,7 @@ public class Suburb {
 
     public Long id;
     public Long cityId;
+    public String description;
 
     public String label;
 

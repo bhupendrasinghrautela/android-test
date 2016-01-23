@@ -80,7 +80,7 @@ public class ListingParser {
                     ApiIntLabel propertyStatus1 = masterDataCache.getPropertyStatus(listingJson.optInt(CONS_STATUS_ID));
                     listing.propertyStatus = null != propertyStatus1 ? propertyStatus1.name : null;
 
-                    listing.size = property.optInt(SIZE);
+                    listing.size = property.optDouble(SIZE);
                     listing.measure = property.optString(MEASURE);
                     listing.sizeInfo = listing.size > 0 ? listing.size.toString().concat(" ").concat(listing.measure) : null;
 
