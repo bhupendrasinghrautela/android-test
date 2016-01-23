@@ -21,6 +21,8 @@ public class ProjectService implements MakaanService {
 
     /**
      * http://marketplace-qa.proptiger-ws.com/app/v4/project-detail/506147?sourceDomain=Makaan
+     * with specifications
+     * http://mp-qa1.makaan-ws.com/app/v4/project-detail/506417?sourceDomain=Makaan
      */
     public void getProjectById(Long projectId) {
 
@@ -34,6 +36,7 @@ public class ProjectService implements MakaanService {
                 @Override
                 public void onSuccess(Object responseObject) {
                     Project project = (Project) responseObject;
+                    project.getFormattedSpecifications();
                     AppBus.getInstance().post(new ProjectByIdEvent(project));
                 }
             });

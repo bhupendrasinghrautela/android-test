@@ -1,11 +1,13 @@
 package com.makaan.response.project;
 
+import com.makaan.pojo.SpecificaitonsUI;
 import com.makaan.response.image.Image;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.property.Property;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by vaibhav on 24/12/15.
@@ -45,7 +47,39 @@ public class Project {
 
     public ArrayList<Property> properties = new ArrayList<>();
     public ArrayList<ProjectAmenity> projectAmenities = new ArrayList<>();
-    public ArrayList<ProjectSpecification> resiProjectSpecifications;
+    //public ArrayList<ProjectSpecification> resiProjectSpecifications;
+
+    public HashMap<String, Object> specifications;
+
+
+    public HashMap<String, ArrayList<SpecificaitonsUI>> getFormattedSpecifications() {
+        HashMap<String, ArrayList<SpecificaitonsUI>> result = new HashMap<>();
+
+        for (Map.Entry<String, Object> specificationEntry : specifications.entrySet()) {
+            String key = specificationEntry.getKey();
+            Object value = specificationEntry.getValue();
+
+            ArrayList<SpecificaitonsUI> specificaitons = new ArrayList<>();
+            if (value instanceof Map) {
+                Map<String, String> valueMap = (Map<String, String>) value;
+
+                for (Map.Entry<String, String> valueEntry : valueMap.entrySet()) {
+                    SpecificaitonsUI specificaitonsUI = new SpecificaitonsUI();
+                    specificaitonsUI.label1 = valueEntry.getValue();
+                    specificaitonsUI.label2 = valueEntry.getKey();
+                    specificaitons.add(specificaitonsUI);
+                }
+            } else if (value instanceof String) {
+
+                SpecificaitonsUI specificaitonsUI = new SpecificaitonsUI();
+                specificaitonsUI.label1 = (String) value;
+                specificaitons.add(specificaitonsUI);
+            }
+            result.put(key, specificaitons);
+        }
+
+        return result;
+    }
 
     public String getFullName() {
         if (null != fullName) {
