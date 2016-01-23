@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -160,11 +161,40 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
         RecentSearchManager.getInstance(this).addEntryToRecentSearch(searchResponseItem, this);
 
+        showKeypad(mSearchEditText, false);
+    }
+
+    private void showKeypad(View view, boolean show) {
+        if(show) {
+            view.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    manager.showSoftInput(mSearchEditText, InputMethodManager.SHOW_IMPLICIT);
+                }
+            }, 400);
+        } else {
+            view.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    manager.hideSoftInputFromWindow(mSearchEditText.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
+                }
+            }, 400);
+        }
     }
 
     @OnClick(R.id.activity_search_base_layout_search_bar_back_button)
     public void onBackPressed(View view) {
-        onBackPressed();
+
+        // change search view visibility to gone if it is visible
+        if(mSearchRelativeView.getVisibility() == View.VISIBLE) {
+            setSearchViewVisibility(false, null);
+            // hide keypad
+            showKeypad(mSearchEditText, false);
+        } else {
+            onBackPressed();
+        }
     }
 
     @OnClick({R.id.activity_search_base_layout_search_bar_search_image_button, R.id.activity_search_base_layout_search_bar_search_text_view})
@@ -183,6 +213,17 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         if(searchViewVisible) {
             showEmptySearchResults();
         }
+
+        if(!searchViewVisible) {
+            if (mSearchLayoutFrameLayout != null) {
+                mSearchResultFrameLayout.setVisibility(View.GONE);
+            }
+        }
+
+        // show keypad id we need to show serch view
+        if(searchViewVisible) {
+            showKeypad(mSearchEditText, true);
+        }
     }
 
     private void showEmptySearchResults() {
@@ -190,7 +231,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         if(searches != null && searches.size() > 0) {
             mSearchResultFrameLayout.setVisibility(View.VISIBLE);
             mSearches = searches;
-            mSearchAdapter.setData(searches);
+            mSearchAdapter.setData(searches, true);
         } else {
             mSearchResultFrameLayout.setVisibility(View.GONE);
         }
@@ -199,7 +240,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     public void onResults(SearchResultEvent searchResultEvent) {
         mSearchResultFrameLayout.setVisibility(View.VISIBLE);
         this.mSearches = searchResultEvent.searchResponse.getData();
-        mSearchAdapter.setData(mSearches);
+        mSearchAdapter.setData(mSearches, false);
     }
 
     @Override

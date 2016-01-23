@@ -1,4 +1,4 @@
-package com.makaan.ui.view;
+package com.makaan.ui.listing;
 
 import android.content.Context;
 import android.graphics.Bitmap;

@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 
 import com.makaan.R;
 import com.makaan.activity.listing.SerpRequestCallback;
-import com.makaan.ui.view.TempClusterItemView;
-
-import com.makaan.pojo.TempClusterItem;
+import com.makaan.response.listing.GroupListing;
+import com.makaan.ui.listing.ChildSerpGroupListingItemView;
+import com.makaan.ui.listing.GroupListingItemView;
 
 public class HorizontalScrollPageFragment extends Fragment {
 
@@ -29,15 +29,15 @@ public class HorizontalScrollPageFragment extends Fragment {
         }
         if(isChildSerpClusterView) {
             rootView = (ViewGroup) inflater.inflate(
-                    R.layout.cluster_item_view, container, false);
-            if (obj != null && obj instanceof TempClusterItem) {
-                ((TempClusterItemView) rootView).populateView((TempClusterItem) obj, mCallback);
+                    R.layout.child_serp_cluster_item_view, container, false);
+            if (obj != null && obj instanceof GroupListing) {
+                ((ChildSerpGroupListingItemView) rootView).populateView((GroupListing) obj, mCallback);
             }
         } else {
             rootView = (ViewGroup) inflater.inflate(
                     R.layout.cluster_item_view, container, false);
-            if (obj != null && obj instanceof TempClusterItem) {
-                ((TempClusterItemView) rootView).populateView((TempClusterItem) obj, mCallback);
+            if (obj != null && obj instanceof GroupListing) {
+                ((GroupListingItemView) rootView).populateView((GroupListing) obj, mCallback);
             }
         }
 

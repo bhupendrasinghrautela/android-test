@@ -8,13 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.listing.HorizontalScrollFragmentAdapter;
+import com.makaan.event.serp.GroupSerpGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
-import com.makaan.pojo.TempClusterItem;
+import com.makaan.response.listing.GroupListing;
 import com.makaan.ui.view.CustomViewPager;
 
 import java.util.ArrayList;
@@ -26,16 +27,8 @@ import butterknife.OnClick;
  * Created by rohitgarg on 1/11/16.
  */
 public class ChildSerpClusterFragment extends MakaanBaseFragment {
-    private static ArrayList<TempClusterItem> mItems;
-
     @Bind(R.id.fragment_child_serp_cluster_back_button)
     Button mBackButton;
-
-    @Bind(R.id.fragment_child_serp_cluster_info_text_view)
-    TextView mClusterInfoTextView;
-
-    @Bind(R.id.fragment_child_serp_cluster_map_image_view)
-    ImageView mMapImageView;
 
     @Bind(R.id.fragment_child_serp_cluster_view_pager)
     CustomViewPager mViewPager;
@@ -46,6 +39,7 @@ public class ChildSerpClusterFragment extends MakaanBaseFragment {
 
     private HorizontalScrollFragmentAdapter mFragmentPagerAdapter;
     private SerpRequestCallback mCallback;
+    private ArrayList<GroupListing> mListings = new ArrayList<>();
 
 
     @Override
@@ -54,12 +48,6 @@ public class ChildSerpClusterFragment extends MakaanBaseFragment {
     }
 
     public static ChildSerpClusterFragment init() {
-        mItems = new ArrayList<>();
-        mItems.add(new TempClusterItem("\u20B9 40l to \u20B945l", "2 bhk apartment", "sector 2, sohna road", "view 100 listings"));
-        mItems.add(new TempClusterItem("\u20B9 50l to \u20B955l", "3 bhk apartment", "sector 3, sohna road", "view 200 listings"));
-        mItems.add(new TempClusterItem("\u20B9 60l to \u20B965l", "3 bhk apartment", "sector 4, sohna road", "view 300 listings"));
-        mItems.add(new TempClusterItem("\u20B9 70l to \u20B975l", "4 bhk apartment", "sector 5, sohna road", "view 400 listings"));
-
         return new ChildSerpClusterFragment();
     }
 
@@ -67,16 +55,7 @@ public class ChildSerpClusterFragment extends MakaanBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-
-        /*// get listing from parent activity
-        Activity activity = getActivity();
-        if(activity != null && activity instanceof ListingFragmentCallbacks) {
-            initializeRecyclerViewData();
-            if(mListings != null) {
-                mListingAdapter.setData(mListings);
-            }
-        }*/
-        mFragmentPagerAdapter = new HorizontalScrollFragmentAdapter<>(getActivity().getSupportFragmentManager(), getActivity(), mItems, true, mCallback);
+        mFragmentPagerAdapter = new HorizontalScrollFragmentAdapter<>(getActivity().getSupportFragmentManager(), getActivity(), mListings, true, mCallback);
 
         mViewPager.setAdapter(mFragmentPagerAdapter);
 
@@ -103,6 +82,9 @@ public class ChildSerpClusterFragment extends MakaanBaseFragment {
 
             @Override
             public void onPageSelected(int position) {
+                if(mCallback != null && mListings != null && mListings.size() > position) {
+                    mCallback.serpRequest(SerpActivity.TYPE_CLUSTER, mListings.get(position).listing.id);
+                }
 
                 invalidateArrowButtons();
             }
@@ -131,5 +113,13 @@ public class ChildSerpClusterFragment extends MakaanBaseFragment {
     @OnClick(R.id.fragment_child_serp_cluster_back_button)
     public void onBackPressed(View view) {
         getActivity().onBackPressed();
+    }
+
+    public void setData(GroupSerpGetEvent groupListingGetEvent, SerpRequestCallback callback) {
+        mCallback = callback;
+        if(groupListingGetEvent != null && groupListingGetEvent.groupListingData != null) {
+            mListings.clear();
+            mListings.addAll(groupListingGetEvent.groupListingData.groupListings);
+        }
     }
 }

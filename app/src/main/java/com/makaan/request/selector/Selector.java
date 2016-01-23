@@ -20,7 +20,7 @@ import static com.makaan.constants.RequestConstants.SORT;
 /**
  * Created by vaibhav on 08/01/16.
  */
-public class Selector {
+public class Selector implements Cloneable {
 
     public static final String TAG = Selector.class.getSimpleName();
 
@@ -31,6 +31,14 @@ public class Selector {
     private PagingSelector pagingSelector = new PagingSelector();
     private SortSelector sortSelector = new SortSelector();
     private GeoSelector geoSelector = new GeoSelector();
+
+    public Selector() {
+    }
+
+    public Selector(Selector selector) {
+        this.termSelectorHashMap.putAll(selector.termSelectorHashMap);
+        this.rangeSelectorHashMap.putAll(selector.rangeSelectorHashMap);
+    }
 
     public Selector fields(String[] fields) {
         for (String field : fields) {
@@ -288,5 +296,26 @@ public class Selector {
             this.rangeSelectorHashMap.remove(fieldName);
         }
         return this;
+    }
+
+    public Selector removePaging() {
+        pagingSelector.start = null;
+        pagingSelector.rows = null;
+        return this;
+    }
+
+    public Selector clone() {
+        return new Selector(this);
+    }
+
+    public HashSet<String> getTerm(String key) {
+
+        TermSelector termSelector = termSelectorHashMap.get(key);
+
+        if (null == termSelector) {
+            return null;
+        } else {
+            return termSelector.values;
+        }
     }
 }

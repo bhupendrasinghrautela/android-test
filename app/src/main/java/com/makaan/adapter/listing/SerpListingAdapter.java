@@ -1,8 +1,8 @@
 package com.makaan.adapter.listing;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -11,6 +11,7 @@ import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.PaginatedBaseAdapter;
 import com.makaan.adapter.RecycleViewMode;
+import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
 import com.makaan.ui.listing.ListingViewHolderFactory;
 import com.makaan.ui.listing.BaseListingAdapterViewHolder;
@@ -18,18 +19,15 @@ import com.makaan.ui.listing.BaseListingAdapterViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.makaan.pojo.TempClusterItem;
-
 /**
  * Created by rohitgarg on 1/6/16.
  */
 public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
 
-
     private final Context mContext;
     private final SerpRequestCallback mCallback;
-    SparseArray<List<TempClusterItem>> clusterItems;
     private int mRequestType = SerpActivity.TYPE_UNKNOWN;
+    protected ArrayList<GroupListing> mGroupListings;
 
     public SerpListingAdapter(Context context, SerpRequestCallback callbacks) {
         mContext = context;
@@ -66,7 +64,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
                     superItemViewType = RecycleViewMode.DATA_TYPE_LISTING.getValue();
                 }
             } else {
-                if(clusterItems != null && clusterItems.get(position) != null) {
+                if(position == 3 && mGroupListings != null && mGroupListings.size() > 0) {
                     superItemViewType =  RecycleViewMode.DATA_TYPE_CLUSTER.getValue();
                 } else {
                     superItemViewType = RecycleViewMode.DATA_TYPE_LISTING.getValue();
@@ -89,14 +87,18 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
             }
             return (mItems.size() + 1);
         } else {
-            if (mItems == null && clusterItems == null) {
+            if (mItems == null && mGroupListings == null) {
                 return 0;
-            } else if (clusterItems == null) {
+            } else if (mGroupListings == null) {
                 return mItems.size();
             } else if (mItems == null) {
-                return clusterItems.size();
+                return 0;
+                // TODO check for this case
+//                return (mGroupListings.size() / 3);
             } else {
-                return (mItems.size() + clusterItems.size());
+                // TODO need to check for the cluster logic
+                return (mItems.size() + 1);
+//                return (mItems.size() + (mGroupListings.size() / 3));
             }
         }
     }
@@ -119,8 +121,8 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
     @Override
     public void onBindDataViewHolder(RecyclerView.ViewHolder holder, int position) {
         BaseListingAdapterViewHolder viewHolder = (BaseListingAdapterViewHolder) holder;
-        if(clusterItems != null && clusterItems.get(position) != null) {
-            viewHolder.populateData(clusterItems.get(position), mCallback);
+        if(mGroupListings != null && mGroupListings.size() > 0 && position == 3) {
+            viewHolder.populateData(mGroupListings, mCallback);
         } else {
             if(mRequestType == SerpActivity.TYPE_BUILDER || mRequestType == SerpActivity.TYPE_SELLER) {
                 if(position == 0) {
@@ -129,7 +131,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
                     viewHolder.populateData(mItems.get(position - 1), mCallback);
                 }
             } else {
-                if (mRequestType != SerpActivity.TYPE_CLUSTER) {
+                if (mRequestType != SerpActivity.TYPE_CLUSTER && mGroupListings != null && mGroupListings.size() > 0) {
                     if (position > 3) {
                         viewHolder.populateData(mItems.get(position - 1), mCallback);
                     } else {
@@ -152,35 +154,32 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
 
     }
 
+    public void setData(@Nullable List<Listing> listings, List<GroupListing> groupListings, int requestType) {
+
+        if (mGroupListings == null) {
+            mGroupListings = new ArrayList<>();
+        } else {
+            this.mGroupListings.clear();
+        }
+
+        if(groupListings != null) {
+            mGroupListings.addAll(groupListings);
+        }
+        setData(listings, requestType);
+    }
+
     @Override
     public void setData(List<Listing> listings, int requestType) {
         if(this.mItems == null) {
             this.mItems = new ArrayList<Listing>();
         }
         this.mItems.clear();
+
         mRequestType = requestType;
         if(listings == null) {
             return;
         }
-        if(mRequestType == SerpActivity.TYPE_UNKNOWN || mRequestType == SerpActivity.TYPE_SEARCH) {
-            if (clusterItems == null) {
-                clusterItems = new SparseArray<>();
-            } else {
-                this.clusterItems.clear();
-            }
-            if(listings.size() >= 3) {
-                List<TempClusterItem> items = new ArrayList<>();
-                items.add(new TempClusterItem("\u20B9 40l to \u20B945l", "2 bhk apartment", "sector 2, sohna road", "100 listings"));
-                items.add(new TempClusterItem("\u20B9 50l to \u20B955l", "3 bhk apartment", "sector 3, sohna road", "200 listings"));
-                items.add(new TempClusterItem("\u20B9 60l to \u20B965l", "3 bhk apartment", "sector 4, sohna road", "300 listings"));
-                items.add(new TempClusterItem("\u20B9 70l to \u20B975l", "4 bhk apartment", "sector 5, sohna road", "400 listings"));
-                clusterItems.append(3, items);
-            }
-        } else {
-            if (clusterItems != null) {
-                this.clusterItems.clear();
-            }
-        }
+
         this.mItems.addAll(listings);
         notifyDataSetChanged();
     }
