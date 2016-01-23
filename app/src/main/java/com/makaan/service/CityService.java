@@ -108,6 +108,10 @@ public class CityService implements MakaanService {
         }
     }
 
+    /**
+     * http:/marketplace-qa.makaan-ws.com/app/v1/listing?selector={"filters":{"and":[{"equal":{"cityId":"2"}}]},"paging":{"start":0,"rows":5}}&facetRanges=[{"field":"price","start":10000,"end":500000,"gap":12250}]
+     */
+
     public void getPropertyRangeInCity(Long cityId, ArrayList<Long> bedrooms, ArrayList<Long> propertyTypes, boolean isRental, Integer start, Integer end, Integer gap) {
 
         if (null != cityId) {

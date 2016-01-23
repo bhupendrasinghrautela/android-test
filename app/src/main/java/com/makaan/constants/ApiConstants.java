@@ -17,6 +17,7 @@ public class ApiConstants {
     public static final String SEARCH_TYPE = BASE_URL.concat("/data/v1/entity/search-types");
     public static final String PROPERTY_AMENITY = BASE_URL.concat("/data/v1/entity/master-amenities");
     public static final String MASTER_FURNISHINGS = BASE_URL.concat("/data/v1/entity/master-furnishings");
+    public static final String MASTER_SPECIFICATIONS = BASE_URL.concat("/data/v1/entity/master-specifications?filters=masterSpecificationCategory.masterSpecParentCat.masterSpecParentCatId==1&fields=masterSpecId,masterSpecificationCategory,masterSpecClassName,masterSpecCatId,masterSpecCatName,masterSpecCatDisplayName,masterSpecParentCat,masterSpecParentCatId,masterSpecParentDisplayName,masterSpecificationCategory.masterSpecParentCat,masterSpecificationCategory.masterSpecParentCat.masterSpecParentCatId,masterSpecificationCategory.masterSpecParentCat.masterSpecParentDisplayName");
 
     public static final String COMPANY_USERS = BASE_URL.concat("/userservice/data/v1/entity/company-users");
     public static final String LISTING_IMAGE = BASE_URL.concat("/data/v1/entity/image?objectType=listing&objectId=");
@@ -40,6 +41,9 @@ public class ApiConstants {
     public static final String TOP_BUILDER = BASE_URL.concat("/data/v2/entity/builder/top");
     public static final String BUILDER_DETAIL = BASE_URL.concat("/app/v1/builder-detail");
     public static final String GP_DETAIL = BASE_URL.concat("/app/v1/gp/place-detail");
+
+    public static final String PROJECT = BASE_URL.concat("/app/v4/project-detail");
+    public static final String SIMILAR_PROJECT = BASE_URL.concat("/data/v2/recommendation");
 
 
     public static final String COLUMBUS_SUGGESTIONS = BASE_URL.concat("/columbus/app/v1/popular/suggestions");

@@ -13,10 +13,18 @@ public class ProjectStatusCount {
     @SerializedName("under construction")
     public int underConstruction;
 
-    public int cancelled,launch,completed;
+    @SerializedName("cancelled")
+    public int cancelled;
+
+    @SerializedName("launch")
+    public int launch;
+
+    @SerializedName("completed")
+    public int completed;
 
     @SerializedName("on hold")
     public int onHold;
+
     @SerializedName("not launched")
     public int notLaunched;
 

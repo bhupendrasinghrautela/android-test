@@ -2,7 +2,6 @@ package com.makaan.fragment.locality;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
@@ -10,7 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -21,6 +19,7 @@ import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.locality.LocalityActivity;
+import com.makaan.constants.RequestConstants;
 import com.makaan.event.agents.callback.TopAgentsCallback;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.locality.LocalityByIdEvent;
@@ -114,7 +113,7 @@ public class LocalityFragment extends MakaanBaseFragment{
         fetchHero();
         mMainCityImage.setDefaultImageResId(R.drawable.locality_hero);
         addLocalitiesLifestyleFragment(locality.entityDescriptions);
-        addProperties(new TaxonomyService().getTaxonomyCardForLocality(locality.localityId));
+        addProperties(new TaxonomyService().getTaxonomyCardForLocality(locality.localityId, locality.minAffordablePrice, locality.maxAffordablePrice, locality.maxAffordablePrice, locality.maxBudgetPrice));
         ((LocalityService)MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(locality.latitude, locality.longitude, 10);
         ((AmenityService)MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(locality.latitude, locality.longitude, 10);
         ((AgentService)MakaanServiceFactory.getInstance().getService(AgentService.class)).getTopAgentsForLocality(locality.cityId, locality.localityId, 10, false, new TopAgentsCallback() {
@@ -278,8 +277,8 @@ public class LocalityFragment extends MakaanBaseFragment{
         double rentalMedian = 0, saleMedian = 0;
         int countsRental = 0, countsSales = 0;
         for (ListingAggregation ListingAggregation:listingAggregations){
-            if(ListingAggregation.listingCategory.equalsIgnoreCase("primary") ||
-                    ListingAggregation.listingCategory.equalsIgnoreCase("resale")){
+            if(ListingAggregation.listingCategory.equalsIgnoreCase(RequestConstants.PRIMARY) ||
+                    ListingAggregation.listingCategory.equalsIgnoreCase(RequestConstants.RESALE)){
                 saleMedian = saleMedian + ListingAggregation.avgPricePerUnitArea;
                 countsSales++;
             }else{

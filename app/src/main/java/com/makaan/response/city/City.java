@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class City {
 
     public Long id;
-    public Double centerLatitude;
-    public Double centerLongitude, annualGrowth, rentalYield, demandRate, supplyRate;
+    public Double centerLatitude,centerLongitude, annualGrowth, rentalYield, demandRate, supplyRate,localityMaxSafetyScore,
+            localityMinSafetyScore,localityMaxLivabilityScore, localityMinLivabilityScore,minAffordablePrice,maxBudgetPrice, maxAffordablePrice, minLuxuryPrice;
     public String description;
     public String label;
     public String cityTagLine;

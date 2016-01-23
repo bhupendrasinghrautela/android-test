@@ -19,10 +19,13 @@ public class ListingDetail {
     public int facingId;
     public boolean status;
     public int noOfCarParks;
-    public int propertyId;
+    public int propertyId,projectId;
+    public String unitType,unitName, measure;
+    public Integer bedrooms, bathrooms, balcony,storeRoom, halls,studyRoom,servantRoom, poojaRoom;
 
 
-    public double avgPriceRisePercentage, bookingAmount,mainEntryRoadWidth;
+    public Double size,budget,minResaleOrPrimaryPrice,maxResaleOrPrimaryPrice;
+    public Double avgPriceRisePercentage, bookingAmount,mainEntryRoadWidth,pricePerUnitArea;
     public int bookingStatusId,ownershipTypeId;
     public String furnished;
     public int sellerId, totalFloors, floor;
@@ -33,6 +36,7 @@ public class ListingDetail {
 
     public double securityDeposit;
     public Property property;
+
 
     public ArrayList<HashMap<String,String>> viewDirections;
 

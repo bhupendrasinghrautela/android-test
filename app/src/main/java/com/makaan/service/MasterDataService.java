@@ -14,6 +14,7 @@ import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.master.ApiLabel;
 import com.makaan.response.master.MasterFurnishing;
+import com.makaan.response.master.MasterSpecification;
 import com.makaan.response.master.PropertyAmenity;
 import com.makaan.response.serp.FilterGroup;
 
@@ -33,6 +34,24 @@ import java.util.Map;
 public class MasterDataService implements MakaanService {
 
     public static final String TAG = MasterDataService.class.getSimpleName();
+
+
+    public void populateMasterSpecifications() {
+
+        Type listType = new TypeToken<ArrayList<MasterSpecification>>() {
+        }.getType();
+        MakaanNetworkClient.getInstance().get(ApiConstants.MASTER_FURNISHINGS, listType, new ObjectGetCallback() {
+            @Override
+            @SuppressWarnings("unchecked")
+            public void onSuccess(Object responseObject) {
+                ArrayList<MasterSpecification> masterSpecifications = (ArrayList<MasterSpecification>) responseObject;
+
+                for (MasterSpecification masterSpecification : masterSpecifications) {
+                    MasterDataCache.getInstance().addMasterSpecification(masterSpecification);
+                }
+            }
+        }, true);
+    }
 
 
     public void populateMasterFunishings() {
@@ -143,7 +162,7 @@ public class MasterDataService implements MakaanService {
     }
 
     public void populatePropertyDisplayOrder() {
-        final Type propertyDisplay = new TypeToken<HashMap<String, HashMap<String,HashMap<String,ArrayList<String>>>>>() {
+        final Type propertyDisplay = new TypeToken<HashMap<String, HashMap<String, HashMap<String, ArrayList<String>>>>>() {
         }.getType();
 
         MakaanNetworkClient.getInstance().get(ApiConstants.PROPERTY_DISPLAY_ORDER, propertyDisplay, new ObjectGetCallback() {
@@ -175,7 +194,6 @@ public class MasterDataService implements MakaanService {
 
 
     }
-
 
 
     public void populateFilterGroupsBuy() {

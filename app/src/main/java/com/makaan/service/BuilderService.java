@@ -16,6 +16,10 @@ import java.lang.reflect.Type;
  */
 public class BuilderService implements  MakaanService {
 
+
+    /**
+     * http://mp-qa1.makaan-ws.com/app/v1/builder-detail/100002?selector={%22fields%22:[%22id%22,%22name%22,%22description%22,%22imageURL%22,%22projectStatusCount%22,%22establishedDate%22,%22percentageCompletionOnTime%22]}&sourceDomain=Makaan
+     */
     public void getBuilderById(Long builderId) {
 
         if (null != builderId) {

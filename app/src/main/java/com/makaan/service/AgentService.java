@@ -21,6 +21,9 @@ import static com.makaan.constants.RequestConstants.*;
  */
 public class AgentService implements MakaanService{
 
+    /**
+     * http://marketplace-qa.proptiger-ws.com/data/v1/entity/city/2/top-agents?selector={%20%22filters%22:%20{%20%22and%22:%20[{%22equal%22:%20{%20%22localityId%22:%2050175%20}}]%20}%20}&sourceDomain=Makaan
+     */
     public void getTopAgentsForLocality(Long cityId, Long localityId, int noOfAgents, boolean isRental,TopAgentsCallback topAgentsCallback) {
         ArrayList<String> localityIds = new ArrayList<>();
         localityIds.add(localityId.toString());

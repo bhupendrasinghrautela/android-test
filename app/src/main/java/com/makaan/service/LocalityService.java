@@ -33,7 +33,7 @@ import static com.makaan.constants.RequestConstants.SORT_ASC;
 public class LocalityService implements MakaanService {
 
     /**
-     * https://marketplace-qa.proptiger-ws.com/app/v3/locality/50157
+     *  http:/marketplace-qa.makaan-ws.com/app/v3/locality/50157?selector={"fields":["label","cityId","localityId","livabilityScore","latitude","longitude","description","avgPriceRisePercentage","avgPricePerUnitArea","averageRentPerMonth","description","entityDescriptions","minAffordablePrice","maxAffordablePrice","minLuxuryPrice","maxBudgetPrice","buyUrl","avgRentalDemandRisePercentage","localityHeroshotImageUrl","suburb","city","averageRentPerMonth","cityHeroshotImageUrl","listingAggregations","listingCategory","unitType","bedrooms","entityDescriptions","description","entityDescriptionCategories","masterDescriptionCategory","name","masterDescriptionParentCategories","parentCategory","count","minSize","maxSize","minPrice","maxPrice","minPricePerUnitArea","maxPricePerUnitArea"]}&sourceDomain="Makaan"
      */
     public void getLocalityById(Long localityId) {
 
@@ -60,6 +60,10 @@ public class LocalityService implements MakaanService {
         }
     }
 
+    /**
+     *
+     http:/marketplace-qa.makaan-ws.com/data/v3/entity/locality?selector={"fields":["localityId"],"filters":{"and":[{"geoDistance":{"geo":{"distance":10,"lat":"12.84112072","lon":"77.66799164"}}}]},"paging":{"start":0,"rows":3},"sort":[{"field":"geoDistance","sortOrder":"ASC"}]}
+     */
     public void getNearByLocalities(double lat, double lon, int noOfLocalities) {
 
         Selector nearByLocalitySelector = new Selector();
@@ -82,6 +86,10 @@ public class LocalityService implements MakaanService {
         }, true);
     }
 
+
+    /**
+     * http://marketplace-qa.proptiger-ws.com/columbus/app/v1/popular/suggestions?entityId=50175&sourceDomain=Makaan
+     */
     public void getTrendingSearchesInLocality(Long localityId) {
 
         if (null != localityId) {
@@ -128,6 +136,9 @@ public class LocalityService implements MakaanService {
         }
     }
 
+    /**
+     * http://mp-qa1.makaan-ws.com/app/v1/gp/place-detail/ChIJAQAA8UjkDDkRmdprFuRlLbo?sourceDomain=Makaan
+     */
     public void getGooglePlaceDetail(String gpId) {
         if (null != gpId) {
             String gpDetailUrl = ApiConstants.GP_DETAIL.concat("/").concat(gpId);
