@@ -73,7 +73,6 @@ public class JarvisSocket {
             mSocket.emit("join-user", JsonBuilder.toJson(new JoinUser()), new Ack() {
                 @Override
                 public void call(Object... args) {
-                    Log.e("join user", "callback");
                 }
             });
         } catch (JSONException e) {
@@ -91,7 +90,6 @@ public class JarvisSocket {
             mSocket.emit("new-message-for-agent", JsonBuilder.toJson(message), new Ack() {
                 @Override
                 public void call(Object... args) {
-                    Log.e("message to agent", "callback");
                 }
             });
         } catch (JSONException e) {
@@ -105,7 +103,6 @@ public class JarvisSocket {
             mSocket.emit("user-confirms-agent", JsonBuilder.toJson(data), new Ack() {
                 @Override
                 public void call(Object... args) {
-                    Log.e("message to agent", "callback");
                 }
             });
         } catch (JSONException e) {
@@ -162,31 +159,18 @@ public class JarvisSocket {
     };
 
 
-    private Runnable onTypingTimeout = new Runnable() {
-        @Override
-        public void run() {
-            if (!mTyping) return;
-
-            mTyping = false;
-            mSocket.emit("stop typing");
-        }
-    };
-
     private void handleMessage(Object... args)  {
-        Log.e("Message", "dummy");
     }
 
     private SocketMessage parseMessage(JSONObject object){
         Message message = new Message();
-        message.message = object.optString("message");
-        message.appliedFilter = object.optBoolean("appliedFilter");
-        message.filtered = object.optString("filtered");
+        message.message = object.optString(JarvisConstants.MESSAGE);
+        message.appliedFilter = object.optBoolean(JarvisConstants.APPLIED_FILTER);
+        message.filtered = object.optString(JarvisConstants.FILTERED);
 
-        String chatObjString = object.optString("chatObj");
+        String chatObjString = object.optString(JarvisConstants.CHAT_OBJECT);
         ChatObject chatObject = (ChatObject) JsonParser.parseJson(chatObjString.toString(), ChatObject.class);
         message.chatObj = chatObject;
-
-        //Message message = (Message) JsonParser.parseJson(object.toString(), Message.class);
 
         return message;
     }
