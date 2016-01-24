@@ -21,6 +21,8 @@ import com.makaan.fragment.listing.ChildSerpClusterFragment;
 import com.makaan.fragment.listing.FiltersDialogFragment;
 import com.makaan.fragment.listing.SerpListFragment;
 import com.makaan.fragment.listing.SerpMapFragment;
+import com.makaan.jarvis.event.IncomingMessageEvent;
+import com.makaan.jarvis.event.OnExposeEvent;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.service.BuilderService;
@@ -406,5 +408,15 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         mProgressDialog.setCancelable(false);
         mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.show();
+    }
+
+    @Subscribe
+    public void onIncomingMessage(IncomingMessageEvent event){
+        animateJarvisHead();
+    }
+
+    @Subscribe
+    public void onExposeMessage(OnExposeEvent event){
+        displayPopupWindow(event.message);
     }
 }

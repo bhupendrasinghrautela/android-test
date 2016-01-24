@@ -2,6 +2,7 @@ package com.makaan.jarvis;
 
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.OutgoingMessageEvent;
+import com.makaan.jarvis.message.ChatMessages;
 import com.makaan.util.AppBus;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -14,10 +15,11 @@ public class JarvisClient {
     private static JarvisSocket jarvisSocket;
     private static Bus eventBus;
     private static JarvisClient mInstance;
+    private static ChatMessages mChatMessages;
 
     public static JarvisClient getInstance(){
         if(null== mInstance) {
-            new JarvisClient();
+            mInstance = new JarvisClient();
         }
 
         return mInstance;
@@ -25,6 +27,14 @@ public class JarvisClient {
 
     public void destroy(){
         jarvisSocket.close();
+    }
+
+    public ChatMessages getChatMessages(){
+        if(null == mChatMessages){
+            mChatMessages = new ChatMessages();
+        }
+
+        return mChatMessages;
     }
 
     private JarvisClient(){
