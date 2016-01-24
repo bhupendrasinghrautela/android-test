@@ -276,7 +276,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     @OnClick({R.id.activity_search_base_layout_search_bar_search_image_button, R.id.activity_search_base_layout_search_bar_search_text_view})
-    public void onSearchOpenViewPressed(View view) {
+    public void onSearchPressed(View view) {
         setSearchViewVisibility(true);
     }
 
@@ -354,6 +354,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         } else {
             if(TextUtils.isEmpty(mSearchEditText.getText().toString())) {
                 mSearchImageView.setVisibility(View.VISIBLE);
+                mDeleteButton.setVisibility(View.GONE);
                 mSearchImageView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
