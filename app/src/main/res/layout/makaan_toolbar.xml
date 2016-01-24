@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:layout_toLeftOf="@+id/iv_profile"
         android:gravity="center"
-        android:text="login"
+        android:text="@string/login"
         android:textSize="16sp" />
 
     <ImageView

@@ -14,6 +14,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
+        <item name="android:windowBackground">@null</item>
         <item name="windowNoTitle">true</item>
         <item name="android:textColorHint">@color/white</item>
         <item name="android:alertDialogTheme">@style/MyAlertDialogTheme</item>
@@ -67,8 +68,8 @@
 
     <!-- Animations for a non-full-screen window or activity. -->
     <style name="ChatAnimation.Window" parent="@android:style/Animation.Dialog">
-        <item name="android:windowEnterAnimation">@anim/jarvis_chat_in</item>
-        <item name="android:windowExitAnimation">@anim/jarvis_chat_out</item>
+        <item name="android:windowEnterAnimation">@anim/zoom_in</item>
+        <item name="android:windowExitAnimation">@anim/zoom_out</item>
     </style>
 
     <!-- Custom style for customContainer -->
@@ -86,7 +87,12 @@
 
     <style name="customRatingBar" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/seller_rating_bar_drawable_selector</item>
-        <item name="android:minHeight">100dip</item>
-        <item name="android:maxHeight">100dip</item>
+        <item name="android:minHeight">10dip</item>
+        <item name="android:maxHeight">10dip</item>
+    </style>
+    <style name="fullscreen_dialog_fragment_theme" parent="android:Theme" >
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">true</item>
     </style>
 </resources>

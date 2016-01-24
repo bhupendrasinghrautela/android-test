@@ -6,10 +6,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 import com.makaan.jarvis.BaseJarvisActivity;
+import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.ui.MakaanProgressDialog;
 import com.makaan.util.AnimationUtils;
 import com.makaan.util.AppBus;
 import com.makaan.util.AppUtils;
+import com.squareup.otto.Subscribe;
 
 import butterknife.ButterKnife;
 

@@ -8,6 +8,8 @@ import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.event.city.CityTopLocalityEvent;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.event.trend.callback.TopLocalitiesTrendCallback;
+import com.makaan.jarvis.event.IncomingMessageEvent;
+import com.makaan.jarvis.event.OnExposeEvent;
 import com.makaan.response.locality.Locality;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PriceTrendService;
@@ -72,6 +74,7 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         //((BuilderService) (MakaanServiceFactory.getInstance().getService(BuilderService.class))).getBuilderById(100002L);
         //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getGooglePlaceDetail("ChIJAQAA8UjkDDkRmdprFuRlLbo");
         ((ProjectService) (MakaanServiceFactory.getInstance().getService(ProjectService.class))).getProjectById(506147L);
+        //((ProjectService) (MakaanServiceFactory.getInstance().getService(ProjectService.class))).getSimilarProjects(506147L,10);
 
 
         //((AgentService) (MakaanServiceFactory.getInstance().getService(AgentService.class))).getTopAgentsForLocality(2L, 50175L, 5, false, new TopRentAgentsInLocalityCallback());
@@ -98,6 +101,16 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         }
         ((PriceTrendService) (MakaanServiceFactory.getInstance().getService(PriceTrendService.class))).getPriceTrendForLocalities(topLocalities, 6, new TopLocalitiesTrendCallback());
 
+    }
+
+    @Subscribe
+    public void onIncomingMessage(IncomingMessageEvent event){
+        animateJarvisHead();
+    }
+
+    @Subscribe
+    public void onExposeMessage(OnExposeEvent event){
+        animateJarvisHead();
     }
 
     @Override

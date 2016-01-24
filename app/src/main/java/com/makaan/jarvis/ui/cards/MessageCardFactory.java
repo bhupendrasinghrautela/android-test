@@ -26,13 +26,21 @@ public class MessageCardFactory {
             return (SellerOverviewCard) LayoutInflater.from(context)
                     .inflate(R.layout.card_seller, parent, false);
 
-        }else if(messageType == MessageType.serpFilter.value){
-            return (SerpFilterCard) LayoutInflater.from(context)
-                    .inflate(R.layout.card_serp_filter, parent, false);
+        }else if(messageType == MessageType.sendReq.value){
+            return (SendReqCard) LayoutInflater.from(context)
+                    .inflate(R.layout.card_requirement_filter, parent, false);
 
         }else if(messageType == MessageType.signUp.value){
             return (SignupCard) LayoutInflater.from(context)
                     .inflate(R.layout.card_signup, parent, false);
+
+        }else if(messageType == MessageType.propertyOverview.value){
+            return (PropertyCard) LayoutInflater.from(context)
+                    .inflate(R.layout.card_property, parent, false);
+
+        }else if(messageType == MessageType.localityOverview.value){
+            return (LocalityCard) LayoutInflater.from(context)
+                    .inflate(R.layout.card_locality, parent, false);
         }else{
             return null;
         }

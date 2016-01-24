@@ -20,7 +20,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="5dp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="16dp" />
 
 </com.makaan.jarvis.ui.cards.InTextCard>

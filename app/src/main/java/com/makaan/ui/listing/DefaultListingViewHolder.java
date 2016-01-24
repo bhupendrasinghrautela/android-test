@@ -3,8 +3,6 @@ package com.makaan.ui.listing;
 import android.view.View;
 
 import com.makaan.activity.listing.SerpRequestCallback;
-import com.makaan.ui.view.AbstractListingView;
-import com.makaan.ui.view.DefaultListingView;
 
 /**
  * Created by rohitgarg on 1/6/16.

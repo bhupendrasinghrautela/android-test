@@ -7,4 +7,7 @@ import com.makaan.request.selector.Selector;
  */
 public interface SerpRequestCallback {
     public void serpRequest(int type, Selector selector);
+    public void serpRequest(int type, Long id);
+
+    void requestApi(int request, String key);
 }

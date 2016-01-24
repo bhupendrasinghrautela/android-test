@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <View
         android:id="@+id/fragment_dialog_filters_submit_button_empty_view"
@@ -70,7 +71,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         android:orientation="vertical"
         android:layout_above="@id/fragment_dialog_filters_submit_button_empty_view"
         android:layout_below="@id/fragment_dialog_filters_top_bar_relative_layout">

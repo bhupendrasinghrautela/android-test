@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/activity_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <ImageView
-        android:id="@+id/jarvis_head"
-        android:layout_width="@dimen/jarvis_client_dimen"
-        android:layout_height="@dimen/jarvis_client_dimen"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/jarvis_client_margin"
-        android:src="@drawable/jarvis"
-        android:transitionName="@string/jarvis_button_transition"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end">
+
+        <ImageView
+            android:id="@+id/jarvis_head"
+            android:layout_width="@dimen/jarvis_client_dimen"
+            android:layout_height="@dimen/jarvis_client_dimen"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/jarvis_client_margin"
+            android:layout_marginRight="@dimen/jarvis_client_margin"
+            android:src="@drawable/jarvis"
+            android:transitionName="@string/jarvis_button_transition" />
+
+        <LinearLayout
+            android:id="@+id/cta_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/jarvis_head"
+            android:orientation="vertical"
+            android:visibility="gone" />
+    </RelativeLayout>
 
 </FrameLayout>
