@@ -42,7 +42,8 @@
             android:horizontalSpacing="@dimen/fragment_dialog_filters_toggle_button_grid_item_horizontal_padding"
             android:isScrollContainer="false"
             android:numColumns="4"
-            android:verticalSpacing="@dimen/fragment_dialog_filters_checkbox_grid_item_vertical_padding"  />
+            android:verticalSpacing="@dimen/fragment_dialog_filters_checkbox_grid_item_vertical_padding"
+            />
 
     </LinearLayout>
 

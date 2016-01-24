@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
@@ -27,6 +28,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     List<SearchResponseItem> mSearches;
     private final Context mContext;
     private final SearchAdapterCallbacks mCallbacks;
+    private boolean mIsRecent;
 
     public SearchAdapter(Context context, SearchAdapterCallbacks callbacks) {
         mContext = context;
@@ -36,10 +38,10 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public SearchAdapter(Context context, SearchAdapterCallbacks callbacks, List<SearchResponseItem> searches) {
         mContext = context;
         mCallbacks = callbacks;
-        setData((ArrayList<SearchResponseItem>) searches);
+        setData((ArrayList<SearchResponseItem>) searches, false);
     }
 
-    public void setData(ArrayList<SearchResponseItem> searches) {
+    public void setData(ArrayList<SearchResponseItem> searches, boolean isRecent) {
         if (this.mSearches == null) {
             this.mSearches = new ArrayList<SearchResponseItem>();
         }
@@ -79,6 +81,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 }
             }
         }
+        this.mIsRecent = isRecent;
         notifyDataSetChanged();
     }
 
@@ -123,11 +126,17 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             // TODO need to check which kind of data we should map
             ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setText(searchResponseItem.displayText);
-            if(TextUtils.isEmpty(SearchResponseHelper.getType(searchResponseItem))) {
+            if (TextUtils.isEmpty(SearchResponseHelper.getType(searchResponseItem))) {
                 view.findViewById(R.id.search_result_item_type_text_view).setVisibility(View.GONE);
             } else {
                 view.findViewById(R.id.search_result_item_type_text_view).setVisibility(View.VISIBLE);
                 ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText(SearchResponseHelper.getType(searchResponseItem));
+            }
+
+            if (mIsRecent) {
+                ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_history);
+            } else {
+                ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.map_marker);
             }
             //((TextView) view.findViewById(R.id.search_result_item_address_text_view)).setText(search.displayText);
         }

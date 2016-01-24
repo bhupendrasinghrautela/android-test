@@ -25,6 +25,7 @@ public class FilterGroup implements Parcelable, FinderFilterable, Cloneable {
     public String internalName;
     public int displayOrder;
     public int layoutType;
+    public String imageName;
     public String type;
     public boolean isSelected = false;
 
@@ -39,6 +40,7 @@ public class FilterGroup implements Parcelable, FinderFilterable, Cloneable {
         this.internalName = in.readString();
         this.displayOrder = in.readInt();
         this.layoutType = in.readInt();
+        this.imageName = in.readString();
         this.type = in.readString();
 
         this.termFilterValues = new ArrayList<>();
@@ -61,6 +63,7 @@ public class FilterGroup implements Parcelable, FinderFilterable, Cloneable {
         this.internalName = filterGroup.internalName;
         this.displayOrder = filterGroup.displayOrder;
         this.layoutType = filterGroup.layoutType;
+        this.imageName = filterGroup.imageName;
         this.type = filterGroup.type;
 
         for(TermFilter filter : filterGroup.termFilterValues) {
@@ -85,6 +88,7 @@ public class FilterGroup implements Parcelable, FinderFilterable, Cloneable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(displayName);
         parcel.writeString(internalName);
+        parcel.writeString(imageName);
         parcel.writeString(type);
         parcel.writeTypedList(termFilterValues);
         parcel.writeTypedList(rangeFilterValues);

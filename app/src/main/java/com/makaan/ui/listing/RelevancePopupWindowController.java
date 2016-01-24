@@ -87,7 +87,7 @@ public class RelevancePopupWindowController implements PopupWindow.OnDismissList
                 break;
             case R.id.relevance_popup_window_relevance_button:
                 if(callback != null) {
-                    callback.sortSelected("relevance","listingRelevanceScore", "desc", 0);
+                    callback.sortSelected("relevance", "listingRelevanceScore", "desc", 0);
                 }
                 break;
             case R.id.relevance_popup_window_seller_rating_button:

@@ -51,5 +51,7 @@ public class ApiConstants {
 
     public static final String COLUMBUS_SUGGESTIONS = BASE_URL.concat("/columbus/app/v1/popular/suggestions");
 
+    public static final String SIMILAR_LISTING = BASE_URL.concat("/app/v1/similar/listing/");
+
     // public static final String CITY_SELECTOR = {"fields":["entityDescriptions","id","centerLatitude","centerLongitude","description","cityHeroshotImageUrl","annualGrowth","rentalYield","demandRate","supplyRate","label"],"filters":{}};
 }

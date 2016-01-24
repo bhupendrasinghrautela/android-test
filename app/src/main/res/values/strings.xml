@@ -95,4 +95,7 @@
     <string name="locality_properties_label">properties in electronic city</string>
     <string name="locality_switch_buy">buy</string>
     <string name="locality_switch_rent">rent</string>
+    <string name="assist">assist</string>
+    <string name="similar_properties">similar properties</string>
+    <string name="login">login</string>
 </resources>

@@ -1,7 +1,11 @@
-package com.makaan.ui.view;
+package com.makaan.ui.listing;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.os.Build;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -21,14 +25,10 @@ import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.PreferenceConstants;
 import com.makaan.network.MakaanNetworkClient;
-import com.makaan.response.image.Image;
 import com.makaan.response.listing.Listing;
 import com.makaan.util.StringUtil;
 import com.pkmmte.view.CircularImageView;
 
-import org.w3c.dom.Text;
-
-import java.util.Locale;
 import java.util.Random;
 
 import butterknife.Bind;
@@ -239,11 +239,26 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         mPropertyPriceSqFtTextView.setText(String.format("%d/sqft", mListing.pricePerUnitArea));
 
         // set property bhk and size info
-        mPropertyBhkInfoTextView.setText(mListing.bhkInfo);
-        mPropertySizeInfoTextView.setText(mListing.sizeInfo);
+        if(mListing.bhkInfo == null) {
+            mPropertyBhkInfoTextView.setVisibility(View.GONE);
+        } else {
+            mPropertyBhkInfoTextView.setVisibility(View.VISIBLE);
+            mPropertyBhkInfoTextView.setText(mListing.bhkInfo);
+        }
 
-        // set property address info {localityName}_{cityName}
-        mPropertyAddressTextView.setText(String.format("%s, %s", mListing.localityName, mListing.cityName));
+        if(mListing.sizeInfo == null) {
+            mPropertySizeInfoTextView.setVisibility(View.GONE);
+        } else {
+            mPropertySizeInfoTextView.setVisibility(View.VISIBLE);
+            mPropertySizeInfoTextView.setText(mListing.sizeInfo);
+        }
+
+        // set property address info {project_name},{localityName}_{cityName}
+        if(mListing.project.name != null) {
+            mPropertyAddressTextView.setText(String.format("%s, %s, %s", mListing.project.name, mListing.localityName, mListing.cityName));
+        } else {
+            mPropertyAddressTextView.setText(String.format("%s, %s", mListing.localityName, mListing.cityName));
+        }
 
         // set value of floor info of property out of total floors in building
         if(mListing.floor == 1) {
@@ -275,19 +290,13 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         mSellerImageView.setVisibility(View.GONE);
         // show seller first character as logo
         Random random = new Random();
-        switch (random.nextInt(4)) {
-            case 0:
-                mSellerLogoTextView.setBackgroundResource(R.drawable.default_listing_seller_logo_background_grey);
-                break;
-            case 1:
-                mSellerLogoTextView.setBackgroundResource(R.drawable.default_listing_seller_logo_background_red);
-                break;
-            case 2:
-                mSellerLogoTextView.setBackgroundResource(R.drawable.default_listing_seller_logo_background_pink);
-                break;
-            default:
-                mSellerLogoTextView.setBackgroundResource(R.drawable.default_listing_seller_logo_background_yellow);
-                break;
+        ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+        int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
+        drawable.getPaint().setColor(color);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mSellerLogoTextView.setBackground(drawable);
+        } else {
+            mSellerLogoTextView.setBackgroundDrawable(drawable);
         }
 
         // TODO diff image view

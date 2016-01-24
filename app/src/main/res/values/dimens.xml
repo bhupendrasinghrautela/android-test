@@ -185,7 +185,7 @@
     <dimen name="serp_listing_card_badge_text_height">19dp</dimen>
     <dimen name="serp_listing_card_badge_text_size">16sp</dimen>
 
-    <dimen name="serp_listing_card_empty_view_height">3dp</dimen>
+    <dimen name="serp_listing_card_empty_view_height">1dp</dimen>
 
     <dimen name="serp_listing_card_property_image_width">175dp</dimen>
     <dimen name="serp_listing_card_property_image_height">131dp</dimen>
@@ -228,7 +228,6 @@
 
     <dimen name="serp_listing_card_empty_view_after_address_text_view_margin_left">20dp</dimen>
     <dimen name="serp_listing_card_empty_view_after_address_text_view_margin_top">12dp</dimen>
-    <dimen name="serp_listing_card_empty_view_after_property_info_view_margin_top">-2dp</dimen>
     <dimen name="serp_listing_card_empty_view_after_property_info_view_margin_left">2dp</dimen>
     <dimen name="serp_listing_card_empty_view_after_property_detail_view_margin_top">14dp</dimen>
     <dimen name="serp_listing_card_empty_view_after_property_tagline_view_margin_top">14dp</dimen>
@@ -309,7 +308,7 @@
     <dimen name="serp_listing_cluster_card_group_text_view_margin_left">32dp</dimen>
     <dimen name="serp_listing_cluster_card_group_text_view_margin_right">16dp</dimen>
 
-    <dimen name="serp_listing_cluster_card_empty_view_height">3dp</dimen>
+    <dimen name="serp_listing_cluster_card_empty_view_height">1dp</dimen>
     <dimen name="serp_listing_cluster_card_empty_view_2_margin_top">28dp</dimen>
 
     <dimen name="serp_listing_cluster_card_properties_info_text_size">36sp</dimen>
@@ -415,7 +414,7 @@
     <dimen name="fragment_dialog_filters_item_layout_image_view_height">36dp</dimen>
     <dimen name="fragment_dialog_filters_item_layout_image_view_margin_bottom">6dp</dimen>
 
-    <dimen name="fragment_dialog_filters_item_layout_content_width">87dp</dimen>
+    <dimen name="fragment_dialog_filters_item_layout_content_width">95dp</dimen>
 
     <dimen name="fragment_dialog_filters_item_layout_display_text_text_size">16sp</dimen>
 
@@ -427,7 +426,7 @@
 
     <dimen name="fragment_dialog_filters_checkbox_grid_item_text_size">16sp</dimen>
 
-    <dimen name="fragment_dialog_filters_toggle_button_empty_view_height">3dp</dimen>
+    <dimen name="fragment_dialog_filters_toggle_button_empty_view_height">1dp</dimen>
 
     <dimen name="fragment_dialog_filters_radio_button_grid_item_icon_width">20dp</dimen>
     <dimen name="fragment_dialog_filters_radio_button_grid_item_icon_height">20dp</dimen>
@@ -527,7 +526,7 @@
     <dimen name="listing_brief_view_layout_property_info_text_view_top_margin">6dp</dimen>
     <dimen name="listing_brief_view_layout_property_info_text_view_text_size">16sp</dimen>
 
-    <dimen name="listing_brief_view_layout_empty_view_height">3dp</dimen>
+    <dimen name="listing_brief_view_layout_empty_view_height">1dp</dimen>
     <dimen name="listing_brief_view_layout_empty_view_after_property_info_view_margin_top">0dp</dimen>
     <dimen name="listing_brief_view_layout_empty_view_after_property_info_view_margin_left">20dp</dimen>
 
@@ -726,4 +725,12 @@
     <dimen name="locality_text_v_v_small">12sp</dimen>
     <dimen name="locality_switch_margin_left">15dp</dimen>
     <dimen name="locality_nearby_localities_recycler_height">470dp</dimen>
+
+
+    <dimen name="child_serp_cluster_card_price_text_size">18sp</dimen>
+    <dimen name="child_serp_cluster_card_price_margin_top">6dp</dimen>
+
+    <dimen name="child_serp_cluster_card_address_text_size">16sp</dimen>
+    <dimen name="child_serp_cluster_card_address_margin_top">4dp</dimen>
+    <dimen name="child_serp_cluster_card_address_margin_bottom">6dp</dimen>
 </resources>

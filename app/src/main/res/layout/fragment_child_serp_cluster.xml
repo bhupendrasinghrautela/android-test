@@ -3,62 +3,58 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#f00"
     >
 
     <RelativeLayout
         android:id="@+id/fragment_child_serp_cluster_top_relative_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:background="@color/app_red">
         <Button
             android:id="@+id/fragment_child_serp_cluster_back_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center_vertical"
+            android:layout_width="@dimen/activity_search_base_layout_search_bar_back_button_width"
+            android:layout_height="@dimen/activity_search_base_layout_search_bar_back_button_height"
+            android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_back_button_margin_top"
+            android:layout_marginBottom="@dimen/activity_search_base_layout_search_bar_back_button_margin_bottom"
+            android:layout_marginLeft="@dimen/activity_search_base_layout_search_bar_back_button_margin_left"
+            android:layout_marginStart="@dimen/activity_search_base_layout_search_bar_back_button_margin_left"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/back_arrow"/>
-        <ImageView
-            android:id="@+id/fragment_child_serp_cluster_map_image_view"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginRight="4dp"
-            android:src="@drawable/map"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentStart="true"
+            android:background="@drawable/back_arrow_white"/>
         <TextView
             android:id="@+id/fragment_child_serp_cluster_info_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="similar properties"
+            android:text="@string/similar_properties"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="4dp"
-            android:layout_toRightOf="@id/fragment_child_serp_cluster_back_button"
-            android:layout_toLeftOf="@id/fragment_child_serp_cluster_map_image_view"
-            android:gravity="center"
-            />
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_child_serp_cluster_top_relative_view"
-        android:paddingLeft="60dp"
-        android:paddingRight="60dp" >
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:background="@color/white">
         <ImageView
             android:id="@+id/fragment_child_serp_cluster_left_arrow_image_view"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:src="@drawable/arrow_left"/>
         <ImageView
             android:id="@+id/fragment_child_serp_cluster_right_arrow_image_view"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:src="@drawable/arrow_right"/>
         <com.makaan.ui.view.CustomViewPager
             android:id="@+id/fragment_child_serp_cluster_view_pager"
@@ -66,6 +62,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@id/fragment_child_serp_cluster_left_arrow_image_view"
-            android:layout_toLeftOf="@id/fragment_child_serp_cluster_right_arrow_image_view" />
+            android:layout_toEndOf="@id/fragment_child_serp_cluster_left_arrow_image_view"
+            android:layout_toLeftOf="@id/fragment_child_serp_cluster_right_arrow_image_view"
+            android:layout_toStartOf="@id/fragment_child_serp_cluster_right_arrow_image_view" />
     </RelativeLayout>
 </RelativeLayout>
