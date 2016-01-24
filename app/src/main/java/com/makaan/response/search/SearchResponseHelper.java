@@ -13,6 +13,7 @@ import com.makaan.cache.MasterDataCache;
 import com.makaan.response.master.ApiLabel;
 import com.makaan.service.ListingService;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -22,49 +23,51 @@ public class SearchResponseHelper {
 
     //WIP
 
-    public static void resolveSearch(SearchResponseItem searchResponseItem, Context context){
+    public static void resolveSearch(ArrayList<SearchResponseItem> searchResponseArrayList, Context context){
 
-        if (searchResponseItem == null) {
+        if (searchResponseArrayList == null || searchResponseArrayList.size() == 0) {
+            return;
+        }
+        // get last item from the arraylist
+        SearchResponseItem searchItem = searchResponseArrayList.get(searchResponseArrayList.size() - 1);
+
+        if(TextUtils.isEmpty(searchItem.type)){
             return;
         }
 
-        if(TextUtils.isEmpty(searchResponseItem.type)){
-            return;
-        }
-
-        if(searchResponseItem.type.contains(SearchSuggestionType.SUGGESTION.getValue())){
+        if(searchItem.type.contains(SearchSuggestionType.SUGGESTION.getValue())){
 
             //TODO
             return;
-        } else if(searchResponseItem.type.contains(SearchSuggestionType.PROJECT_SUGGESTION.getValue())){
+        } else if(searchItem.type.contains(SearchSuggestionType.PROJECT_SUGGESTION.getValue())){
             //TODO
             return;
 
-        } else if(searchResponseItem.type.contains(SearchSuggestionType.TEMPLATE.getValue())){
+        } else if(searchItem.type.contains(SearchSuggestionType.TEMPLATE.getValue())){
             //TODO
             return;
 
-        } else if (SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+        } else if (SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searchItem.type)) {
             //TODO open project page
             return;
 
         }
 
         // handle overview cases
-        if(SearchSuggestionType.CITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+        if(SearchSuggestionType.CITY_OVERVIEW.getValue().equalsIgnoreCase(searchItem.type)) {
             Intent cityIntent = new Intent(context, CityActivity.class);
-            cityIntent.putExtra(CityActivity.CITY_ID, Long.valueOf(searchResponseItem.entityId));
+            cityIntent.putExtra(CityActivity.CITY_ID, Long.valueOf(searchItem.entityId));
             context.startActivity(cityIntent);
             return;
-        } else if(SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+        } else if(SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchItem.type)) {
             Intent cityIntent = new Intent(context, LocalityActivity.class);
-            cityIntent.putExtra(LocalityActivity.LOCALITY_ID, Long.valueOf(searchResponseItem.entityId));
+            cityIntent.putExtra(LocalityActivity.LOCALITY_ID, Long.valueOf(searchItem.entityId));
             context.startActivity(cityIntent);
             return;
         }
 
         Map<String,ApiLabel> searchResultType = MasterDataCache.getInstance().getSearchTypeMap();
-        String searchField = searchResultType.get(searchResponseItem.type).key;
+        String searchField = searchResultType.get(searchItem.type).key;
 
         MakaanBuyerApplication.serpSelector.removeTerm("builderId");
         MakaanBuyerApplication.serpSelector.removeTerm("localityId");
@@ -72,9 +75,18 @@ public class SearchResponseHelper {
 
         // TODO check if we need to clear all the filters
         //MakaanBuyerApplication.serpSelector.reset();
-        MakaanBuyerApplication.serpSelector.term(searchField, String.valueOf(searchResponseItem.entityId), true);
+        if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchItem.type)) {
+            // as selected item is locality
+            // we need to add all the selected localities to get serp
+            MakaanBuyerApplication.serpSelector.removeTerm(searchField);
+            for(SearchResponseItem item : searchResponseArrayList) {
+                MakaanBuyerApplication.serpSelector.term(searchField, String.valueOf(item.entityId));
+            }
+        } else {
+            MakaanBuyerApplication.serpSelector.term(searchField, String.valueOf(searchItem.entityId), true);
+        }
 
-        if (SearchSuggestionType.BUILDER.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+        if (SearchSuggestionType.BUILDER.getValue().equalsIgnoreCase(searchItem.type)) {
             // if current activity is SerpActivity
             if(context instanceof SerpRequestCallback) {
                 ((SerpRequestCallback)context).serpRequest(SerpActivity.TYPE_BUILDER, MakaanBuyerApplication.serpSelector);
@@ -85,11 +97,11 @@ public class SearchResponseHelper {
                 context.startActivity(intent);
             }
             return;
-        } else if (SearchSuggestionType.BUILDERCITY.getValue().equalsIgnoreCase(searchResponseItem.type)) {
-            MakaanBuyerApplication.serpSelector.term("builderId", String.valueOf(searchResponseItem.builderId), true);
+        } else if (SearchSuggestionType.BUILDERCITY.getValue().equalsIgnoreCase(searchItem.type)) {
+            MakaanBuyerApplication.serpSelector.term("builderId", String.valueOf(searchItem.builderId), true);
 
 
-        } else if (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+        } else if (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchItem.type)) {
 
             if(context instanceof SerpRequestCallback) {
                 ((SerpRequestCallback)context).serpRequest(SerpActivity.TYPE_LOCALITY, MakaanBuyerApplication.serpSelector);
@@ -101,10 +113,10 @@ public class SearchResponseHelper {
             }
             return;
 
-        } else if (SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+        } else if (SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchItem.type)) {
 
 
-        } else if (SearchSuggestionType.CITY.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+        } else if (SearchSuggestionType.CITY.getValue().equalsIgnoreCase(searchItem.type)) {
 
             if(context instanceof SerpRequestCallback) {
                 ((SerpRequestCallback)context).serpRequest(SerpActivity.TYPE_CITY, MakaanBuyerApplication.serpSelector);
@@ -119,7 +131,7 @@ public class SearchResponseHelper {
             cityIntent.putExtra(CityActivity.CITY_ID, Long.valueOf(searchResponseItem.entityId));
             context.startActivity(cityIntent);*/
 
-        } else if (SearchSuggestionType.GOOGLE_PLACE.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+        } else if (SearchSuggestionType.GOOGLE_PLACE.getValue().equalsIgnoreCase(searchItem.type)) {
             //TODO provide google places field in serp selector
         }
         ((SerpRequestCallback)context).serpRequest(SerpActivity.TYPE_UNKNOWN, MakaanBuyerApplication.serpSelector);

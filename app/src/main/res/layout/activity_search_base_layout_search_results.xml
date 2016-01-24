@@ -2,15 +2,39 @@
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/fragment_search_results_recycler_view"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:background="@android:color/transparent"
-        android:clipToPadding="false"
-        android:drawSelectorOnTop="false"
-        android:fastScrollEnabled="true"
-        android:overScrollMode="never"
-        android:scrollbarStyle="insideInset" />
+        android:orientation="vertical">
+
+        <com.makaan.ui.listing.CustomFlowLayout
+            android:id="@+id/fragment_search_results_wrap_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:background="@color/white"
+            android:paddingLeft="20dp"
+            android:paddingStart="20dp"
+            android:paddingRight="20dp"
+            android:paddingEnd="20dp">
+
+        </com.makaan.ui.listing.CustomFlowLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/search_result_item_empty_view_background_color" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fragment_search_results_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:clipToPadding="false"
+            android:drawSelectorOnTop="false"
+            android:fastScrollEnabled="true"
+            android:overScrollMode="never"
+            android:scrollbarStyle="insideInset" />
+
+    </LinearLayout>
 </merge>

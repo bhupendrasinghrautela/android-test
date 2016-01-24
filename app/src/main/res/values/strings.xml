@@ -98,4 +98,8 @@
     <string name="assist">assist</string>
     <string name="similar_properties">similar properties</string>
     <string name="login">login</string>
+    <string name="makaan">makaan</string>
+    <string name="search_by_location">search by location</string>
+    <string name="search_default_hint">pick a location, builder or project</string>
+    <string name="search_locality_hint">add more localities...</string>
 </resources>

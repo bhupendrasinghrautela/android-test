@@ -25,7 +25,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.NoActionBarTheme">
 
-
         </activity>
 
         <activity
@@ -45,24 +44,33 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
+            </intent-filter>-->
         </activity>
 
         <!--<activity android:name=".activity.locality.LocalityActivity">-->
 
 
+
         <activity
             android:name=".activity.listing.SerpActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.NoActionBarTheme">
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <activity
+            android:name=".activity.HomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".activity.pyr.PyrPageActivity"

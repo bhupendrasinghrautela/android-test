@@ -89,9 +89,9 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
         } else {
             if (mItems == null && mGroupListings == null) {
                 return 0;
-            } else if (mGroupListings == null) {
+            } else if (mGroupListings == null || mGroupListings.size() == 0) {
                 return mItems.size();
-            } else if (mItems == null) {
+            } else if (mItems == null || mItems.size() == 0) {
                 return 0;
                 // TODO check for this case
 //                return (mGroupListings.size() / 3);
@@ -154,7 +154,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
 
     }
 
-    public void setData(@Nullable List<Listing> listings, List<GroupListing> groupListings, int requestType) {
+    public void setData(List<Listing> listings, @Nullable List<GroupListing> groupListings, int requestType) {
 
         if (mGroupListings == null) {
             mGroupListings = new ArrayList<>();

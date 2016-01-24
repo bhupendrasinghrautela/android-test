@@ -49,6 +49,10 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     // except for TYPE_SUGGESTION, where data itself should be selector string
     public static final String REQUEST_DATA = "data";
 
+
+    public static final int REQUEST_DATA_HOME_BUY = 0x00;
+    public static final int REQUEST_DATA_HOME_RENT = 0x01;
+
     public static final int TYPE_UNKNOWN = 0x00;
     public static final int TYPE_FILTER = 0x01;
 
@@ -57,6 +61,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public static final int TYPE_SEARCH = 0x03;
     public static final int TYPE_SELLER = 0x04;
     public static final int TYPE_BUILDER = 0x05;
+    public static final int TYPE_HOME = 0x05;
 
     public static final int MASK_LISTING_TYPE = 0x0f;
     public static final int MASK_LISTING_UPDATE_TYPE = 0xf0;
@@ -121,20 +126,35 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        int type = SerpActivity.TYPE_UNKNOWN;
-        if(intent != null) {
-            type = intent.getIntExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_UNKNOWN);
-        }
-        if(type == SerpActivity.TYPE_UNKNOWN) {
-            // TODO check whether it should be used or not
-            fetchData();
-        } else {
-            serpRequest(type, MakaanBuyerApplication.serpSelector);
-        }
 
         // init fragments we need to use
         initUi(true);
+
+        Intent intent = getIntent();
+        int type = SerpActivity.TYPE_UNKNOWN;
+
+        if(intent != null) {
+            type = intent.getIntExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_UNKNOWN);
+            if(type == SerpActivity.TYPE_HOME){
+                int data = intent.getIntExtra(REQUEST_DATA, REQUEST_DATA_HOME_BUY);
+                MakaanBuyerApplication.serpSelector.removeTerm("listingCategory");
+                if(data == REQUEST_DATA_HOME_BUY) {
+                    MakaanBuyerApplication.serpSelector.term("listingCategory", new String[]{"Primary","Resale"});
+                } else {
+                    MakaanBuyerApplication.serpSelector.term("listingCategory", new String[]{"Rental"});
+                }
+
+                openSearch(true);
+
+            } else if (type == SerpActivity.TYPE_UNKNOWN) {
+                // TODO check whether it should be used or not
+                fetchData();
+            } else {
+                serpRequest(type, MakaanBuyerApplication.serpSelector);
+            }
+        } else {
+            fetchData();
+        }
     }
 
     @Override
@@ -186,13 +206,13 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 childSerpClusterFragment.setData(mGroupListingGetEvent, this);
                 // create new listing fragment to show the listings
                 mSellerSerpListFragment = SerpListFragment.init(true);
-                mSellerSerpListFragment.updateListings(listingGetEvent, null, this, (mSerpRequestType & MASK_LISTING_TYPE));
+                mSellerSerpListFragment.updateListings(listingGetEvent, null, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE));
 
                 initFragments(new int[]{R.id.activity_serp_similar_properties_frame_layout, R.id.activity_serp_content_frame_layout},
                         new Fragment[]{childSerpClusterFragment, mChildSerpListFragment}, true);
 
             } else {
-                mSellerSerpListFragment.updateListings(listingGetEvent, null, this, (mSerpRequestType & MASK_LISTING_TYPE));
+                mSellerSerpListFragment.updateListings(listingGetEvent, null, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE));
             }
         } else if ((mSerpRequestType & MASK_LISTING_TYPE) == SerpActivity.TYPE_CLUSTER) {
             setShowSearchBar(false);
@@ -204,13 +224,13 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 childSerpClusterFragment.setData(mGroupListingGetEvent, this);
                 // create new listing fragment to show the listings
                 mChildSerpListFragment = SerpListFragment.init(true);
-                mChildSerpListFragment.updateListings(listingGetEvent, null, this, (mSerpRequestType & MASK_LISTING_TYPE));
+                mChildSerpListFragment.updateListings(listingGetEvent, null, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE));
 
                 initFragments(new int[]{R.id.activity_serp_similar_properties_frame_layout, R.id.activity_serp_content_frame_layout},
                         new Fragment[]{childSerpClusterFragment, mChildSerpListFragment}, true);
 
             } else {
-                mChildSerpListFragment.updateListings(listingGetEvent, null, this, (mSerpRequestType & MASK_LISTING_TYPE));
+                mChildSerpListFragment.updateListings(listingGetEvent, null, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE));
             }
         } else {
             mListingGetEvent = listingGetEvent;
@@ -223,11 +243,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 if (mListingFragment == null) {
                     // create new listing fragment to show the listings
                     mListingFragment = SerpListFragment.init(false);
-                    mListingFragment.updateListings(listingGetEvent, mGroupListingGetEvent, this, (mSerpRequestType & MASK_LISTING_TYPE));
+                    mListingFragment.updateListings(listingGetEvent, mGroupListingGetEvent, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE));
                     initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
                 } else {
                     // update already running listing fragment with the new list
-                    mListingFragment.updateListings(listingGetEvent, mGroupListingGetEvent, this, (mSerpRequestType & MASK_LISTING_TYPE));
+                    mListingFragment.updateListings(listingGetEvent, mGroupListingGetEvent, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE));
                 }
             }
         }
@@ -254,11 +274,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             if (mListingFragment == null) {
                 // create new listing fragment to show the listings
                 mListingFragment = SerpListFragment.init(false);
-                mListingFragment.updateListings(mListingGetEvent, mGroupListingGetEvent, this, (mSerpRequestType & MASK_LISTING_TYPE));
+                mListingFragment.updateListings(mListingGetEvent, mGroupListingGetEvent, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE));
                 initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
             } else {
                 // update already running listing fragment with the new list
-                mListingFragment.updateListings(mListingGetEvent, mGroupListingGetEvent, this, (mSerpRequestType & MASK_LISTING_TYPE));
+                mListingFragment.updateListings(mListingGetEvent, mGroupListingGetEvent, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE));
             }
 
 
@@ -303,7 +323,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     @OnClick(R.id.fragment_filters_map_image_view)
     public void onMapViewPressed(View view) {
         if(mIsMapFragment) {
-            mListingFragment.updateListings(mListingGetEvent, mGroupListingGetEvent, this, (mSerpRequestType & MASK_LISTING_TYPE));
+            mListingFragment.updateListings(mListingGetEvent, mGroupListingGetEvent, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE));
             initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, true);
             mIsMapFragment = false;
             mMapImageView.setImageResource(R.drawable.map);
@@ -405,8 +425,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         }
         mProgressDialog.setTitle("Loading");
         mProgressDialog.setMessage("Wait while loading...");
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.setCanceledOnTouchOutside(false);
+        //mProgressDialog.setCancelable(false);
+        //mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.show();
     }
 

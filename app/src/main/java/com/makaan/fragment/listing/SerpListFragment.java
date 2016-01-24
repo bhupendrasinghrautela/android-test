@@ -19,6 +19,8 @@ import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
 import com.makaan.adapter.listing.SerpListingAdapter;
+import com.makaan.response.search.SearchResponseItem;
+import com.makaan.response.search.SearchSuggestionType;
 import com.makaan.ui.PaginatedListView;
 
 import java.util.ArrayList;
@@ -41,7 +43,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
     private SerpListingAdapter mListingAdapter;
     private LinearLayoutManager mLayoutManager;
     private int mTotalCount;
-    private String mCityName;
+    private String mSearchedEntities = "";
 
     private boolean mIsChildSerp;
 
@@ -87,7 +89,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
             mListingRecyclerView.setPaginableListener(this);
             if(mListings != null) {
                 if(mTotalPropertiesTextView != null) {
-                    mTotalPropertiesTextView.setText(String.format("%d properties in %s", mTotalCount, mCityName != null ? mCityName : ""));
+                    mTotalPropertiesTextView.setText(String.format("%d properties in %s", mTotalCount, mSearchedEntities != null ? mSearchedEntities : ""));
                 }
                 mListingAdapter.setData(mListings, mGroupListings, mRequestType);
                 if(mTotalCount > mListings.size()) {
@@ -110,7 +112,9 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         mListingRecyclerView.setAdapter(mListingAdapter);
     }
 
-    public void updateListings(SerpGetEvent listingGetEvent, GroupSerpGetEvent groupListingGetEvent, SerpRequestCallback serpRequestCallback, int requestType) {
+    public void updateListings(SerpGetEvent listingGetEvent, GroupSerpGetEvent groupListingGetEvent,
+                               ArrayList<SearchResponseItem> selectedSearches, SerpRequestCallback serpRequestCallback,
+                               int requestType) {
         this.mSerpRequestCallback = serpRequestCallback;
         this.mRequestType = requestType;
         if(listingGetEvent == null || listingGetEvent.listingData == null) {
@@ -122,18 +126,27 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         mListingGetEvent = listingGetEvent;
         mGroupListingGetEvent = groupListingGetEvent;
 
+        mSearchedEntities = "";
+        if(selectedSearches != null && selectedSearches.size() > 0) {
+            for(SearchResponseItem search : selectedSearches) {
+                mSearchedEntities = String.format("%s, ", mSearchedEntities.concat(search.entityName));
+            }
+            if(!SearchSuggestionType.CITY.getValue().equals(selectedSearches.get(0).type)) {
+                mSearchedEntities = mSearchedEntities.concat(selectedSearches.get(0).city);
+            }
+        }
+
         if(mListingAdapter != null) {
 
 
             mTotalCount = listingGetEvent.listingData.totalCount;
-            mCityName = listingGetEvent.listingData.cityName;
 
             if(mTotalPropertiesTextView != null) {
                 if(mRequestType == SerpActivity.TYPE_BUILDER || mRequestType == SerpActivity.TYPE_SELLER) {
                     mTotalPropertiesTextView.setVisibility(View.GONE);
                 } else {
                     mTotalPropertiesTextView.setVisibility(View.VISIBLE);
-                    mTotalPropertiesTextView.setText(String.format("%d properties in %s", mTotalCount, mCityName != null ? mCityName : ""));
+                    mTotalPropertiesTextView.setText(String.format("%d properties in %s", mTotalCount, mSearchedEntities != null ? mSearchedEntities : ""));
                 }
             }
 
@@ -163,7 +176,6 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
             }
         } else {
             mTotalCount = listingGetEvent.listingData.totalCount;
-            mCityName = listingGetEvent.listingData.cityName;
 
             mListings.clear();
             mListings.addAll(listingGetEvent.listingData.listings);

@@ -315,9 +315,11 @@
             android:layout_marginLeft="@dimen/serp_listing_card_property_tagline_text_view_left_margin"
             android:layout_marginStart="@dimen/serp_listing_card_property_tagline_text_view_left_margin"
             android:layout_marginTop="@dimen/serp_listing_card_property_tagline_text_view_top_margin"
-            android:text="feel the difference with raheja revanta, constructed by the renowned dubai…"
+            android:text="feel the difference with raheja revanta, constructed by the renowned dubai, feel the difference with raheja revanta, constructed by the renowned dubai…"
             android:textColor="@color/serp_listing_card_default_text_color"
-            android:textSize="@dimen/serp_listing_card_property_tagline_text_view_text_size" />
+            android:textSize="@dimen/serp_listing_card_property_tagline_text_view_text_size"
+            android:maxLines="2"
+            android:ellipsize="end"/>
 
         <View
             android:layout_width="match_parent"
