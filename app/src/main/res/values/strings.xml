@@ -37,7 +37,7 @@
     <string name="filter">filter</string>
     <string name="relevance">relevance</string>
     <string name="apply">apply</string>
-    <string name="jarvis_button_transition">jarvistran</string>
+    <string name="jarvis_button_transition">jarvistransition</string>
     <string name= "no_social_account" > I don\'t have social account </string>
 
     <!--nearby localities card-->
