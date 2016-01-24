@@ -53,6 +53,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setUpWindow();
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
         setupConversationView(savedInstanceState);
 
         eventBus = AppBus.getInstance();
@@ -119,18 +120,9 @@ public class ChatActivity extends AppCompatActivity {
         bootUpChat();
     }
 
-/*    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            this.moveTaskToBack(true);
-            return false;
-        }
-        return super.onKeyDown(keyCode, event);
-    }*/
 
     private void sendMessage(String text){
         if(TextUtils.isEmpty(text)){
-            //this.moveTaskToBack(true);
             finish();
         }else{
             Message message = new Message();
