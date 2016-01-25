@@ -1,37 +1,23 @@
-package com.makaan.ui.view;
+package com.makaan.ui.listing;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.text.Html;
-import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
-import com.makaan.cache.MasterDataCache;
-import com.makaan.constants.PreferenceConstants;
-import com.makaan.network.MakaanNetworkClient;
-import com.makaan.response.listing.Listing;
+import com.makaan.event.builder.BuilderByIdEvent;
+import com.makaan.response.project.Builder;
+import com.makaan.util.AppBus;
 import com.makaan.util.Blur;
-import com.makaan.util.StringUtil;
-import com.pkmmte.view.CircularImageView;
+import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
-import butterknife.OnClick;
 
 /**
  * Created by rohitgarg on 1/7/16.
@@ -39,6 +25,20 @@ import butterknife.OnClick;
 public class BuilderListingView extends AbstractListingView {
     @Bind(R.id.serp_listing_item_builder_background_image_view)
     ImageView mBuilderBackgroundImageView;
+    @Bind(R.id.serp_listing_item_builder_image_view)
+    ImageView mBuilderImageView;
+
+    @Bind(R.id.serp_listing_item_builder_name_text_view)
+    TextView mBuilderNameTextView;
+    @Bind(R.id.serp_listing_item_builder_experience_text_view)
+    TextView mBuilderExperienceTextView;
+    @Bind(R.id.serp_listing_item_builder_ongoing_projects_text_view)
+    TextView mOngoingProjectsTextView;
+    @Bind(R.id.serp_listing_item_builder_past_projects_text_view)
+    TextView mBuilderPastProjectsTextView;
+    @Bind(R.id.serp_listing_item_builder_avg_delay_text_view)
+    TextView mBuilderAvgDelayTextView;
+
 
     public BuilderListingView(Context context) {
         super(context);
@@ -53,8 +53,17 @@ public class BuilderListingView extends AbstractListingView {
     }
 
     @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+    }
+
+    @Override
     public void populateData(Object data, SerpRequestCallback callback) {
         super.populateData(data, callback);
+
+        AppBus.getInstance().register(this);
+
+        callback.requestApi(SerpActivity.REQUEST_BUILDER_API, "builderId");
 
         // TODO need to use original data
         Bitmap bitmap = null;
@@ -72,5 +81,18 @@ public class BuilderListingView extends AbstractListingView {
         final Bitmap newImg = Blur.fastblur(mContext, bitmap, 25);
 
         mBuilderBackgroundImageView.setImageBitmap(newImg);
+    }
+
+    @Subscribe
+    public void onResults(BuilderByIdEvent builderByIdEvent) {
+        Builder builder = builderByIdEvent.builder;
+        mBuilderNameTextView.setText(builder.name);
+        mBuilderExperienceTextView.setText(builder.establishedDate);
+        mOngoingProjectsTextView.setText(String.valueOf(builder.projectStatusCount.underConstruction));
+        mBuilderPastProjectsTextView.setText(String.valueOf(builder.projectStatusCount.completed));
+        // TODO check for avg delay
+        mBuilderAvgDelayTextView.setText(String.format("%d%s", builder.projectStatusCount.cancelled, "%"));
+
+        AppBus.getInstance().unregister(this);
     }
 }

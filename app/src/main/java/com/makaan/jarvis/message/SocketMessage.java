@@ -10,5 +10,5 @@ public class SocketMessage {
     public int index;
     public boolean appliedFilter;
     public String filtered;
-    public ChatObject chatObject;
+    public ChatObject chatObj;
 }

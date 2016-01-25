@@ -13,11 +13,12 @@ import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
+import com.makaan.event.serp.GroupSerpGetEvent;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
 import com.makaan.adapter.listing.SerpListingAdapter;
-import com.makaan.service.ListingService;
 import com.makaan.ui.PaginatedListView;
 
 import java.util.ArrayList;
@@ -39,7 +40,6 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
 
     private SerpListingAdapter mListingAdapter;
     private LinearLayoutManager mLayoutManager;
-    private ArrayList<Listing> mListings = new ArrayList<Listing>();
     private int mTotalCount;
     private String mCityName;
 
@@ -48,6 +48,12 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
     int page;
     private SerpRequestCallback mSerpRequestCallback;
     private int mRequestType;
+
+
+    private SerpGetEvent mListingGetEvent;
+    private GroupSerpGetEvent mGroupListingGetEvent;
+    private ArrayList<Listing> mListings = new ArrayList<Listing>();
+    private ArrayList<GroupListing> mGroupListings = new ArrayList<GroupListing>();
 
     public static SerpListFragment init(boolean isChildSerp) {
         // create listing fragment to show listing of the request we are receiving
@@ -83,7 +89,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
                 if(mTotalPropertiesTextView != null) {
                     mTotalPropertiesTextView.setText(String.format("%d properties in %s", mTotalCount, mCityName != null ? mCityName : ""));
                 }
-                mListingAdapter.setData(mListings, mRequestType);
+                mListingAdapter.setData(mListings, mGroupListings, mRequestType);
                 if(mTotalCount > mListings.size()) {
                     mListingRecyclerView.setHasMoreItems(true);
                 } else {
@@ -104,7 +110,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         mListingRecyclerView.setAdapter(mListingAdapter);
     }
 
-    public void updateListings(SerpGetEvent listingGetEvent, SerpRequestCallback serpRequestCallback, int requestType) {
+    public void updateListings(SerpGetEvent listingGetEvent, GroupSerpGetEvent groupListingGetEvent, SerpRequestCallback serpRequestCallback, int requestType) {
         this.mSerpRequestCallback = serpRequestCallback;
         this.mRequestType = requestType;
         if(listingGetEvent == null || listingGetEvent.listingData == null) {
@@ -113,8 +119,12 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
             }
             return;
         }
+        mListingGetEvent = listingGetEvent;
+        mGroupListingGetEvent = groupListingGetEvent;
 
         if(mListingAdapter != null) {
+
+
             mTotalCount = listingGetEvent.listingData.totalCount;
             mCityName = listingGetEvent.listingData.cityName;
 
@@ -127,12 +137,19 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
                 }
             }
 
-            if(((mListings.size() - 1) / MAX_ITEMS_TO_REQUEST) + 1 >= (page + 1)) {
+            if((requestType & SerpActivity.MASK_LISTING_UPDATE_TYPE) == 0) {
                 mListings.clear();
             }
+
             mListings.addAll(listingGetEvent.listingData.listings);
 
-            mListingAdapter.setData(mListings, mRequestType);
+            if(mGroupListingGetEvent != null && mGroupListingGetEvent.groupListingData != null) {
+                mGroupListings.addAll(mGroupListingGetEvent.groupListingData.groupListings);
+                mListingAdapter.setData(mListings, mGroupListings, mRequestType);
+            } else {
+                mGroupListings.clear();
+                mListingAdapter.setData(mListings, null, mRequestType);
+            }
 
             if(mTotalCount > mListings.size()) {
                 mListingRecyclerView.setHasMoreItems(true);
@@ -140,12 +157,20 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
                 mListingRecyclerView.setHasMoreItems(false);
             }
             mListingRecyclerView.setIsLoading(false);
+
+            if((requestType & SerpActivity.MASK_LISTING_UPDATE_TYPE) == 0) {
+                mListingRecyclerView.scrollToPosition(0);
+            }
         } else {
             mTotalCount = listingGetEvent.listingData.totalCount;
             mCityName = listingGetEvent.listingData.cityName;
 
             mListings.clear();
             mListings.addAll(listingGetEvent.listingData.listings);
+            mGroupListings.clear();
+            if(mGroupListingGetEvent != null && mGroupListingGetEvent.groupListingData != null) {
+                mGroupListings.addAll(mGroupListingGetEvent.groupListingData.groupListings);
+            }
         }
     }
 

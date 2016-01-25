@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="@color/app_grey" android:radius="30dp">
+    <item>
+        <selector>
+
+            <item
+                android:drawable="@drawable/fragment_dialog_filters_radio_button_selected"
+                android:state_checked="true" />
+            <item
+                android:drawable="@drawable/fragment_dialog_filters_radio_button_normal"
+                android:state_checked="false" />
+        </selector>
+    </item>
+</ripple>
