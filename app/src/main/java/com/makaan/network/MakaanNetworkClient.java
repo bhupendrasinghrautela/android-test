@@ -17,6 +17,7 @@ import com.makaan.MakaanBuyerApplication;
 import com.makaan.cache.LruBitmapCache;
 import com.makaan.constants.RequestConstants;
 import com.makaan.constants.ResponseConstants;
+import com.makaan.request.CustomRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -255,8 +256,8 @@ public class MakaanNetworkClient {
     public void loginPost(final String url, final Map<String, String> params,
                      final StringRequestCallback stringRequestCallback, String tag) {
 
-        StringRequest stringRequest = new StringRequest
-                (Request.Method.POST, url, new Response.Listener<String>() {
+        CustomRequest stringRequest = new CustomRequest
+                (Request.Method.POST, url,params, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         completeRequestInQueue(url);
@@ -266,6 +267,8 @@ public class MakaanNetworkClient {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        String errorString = new String(error.networkResponse.data);
+                        Log.e("Error : ", errorString);
                         completeRequestInQueue(url);
                         stringRequestCallback.onError();
                     }
@@ -276,10 +279,6 @@ public class MakaanNetworkClient {
                     return "application/x-www-form-urlencoded; charset=UTF-8";
                 }
 
-                @Override
-                protected Map<String, String> getParams() throws com.android.volley.AuthFailureError {
-                    return params;
-                };
         };
         addToRequestQueue(stringRequest, tag);
     }

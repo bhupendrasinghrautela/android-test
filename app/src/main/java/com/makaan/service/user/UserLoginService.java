@@ -27,15 +27,11 @@ public class UserLoginService implements MakaanService{
 
         String url = buildMakaanSignInRequest();
 
-        JSONObject userDetails = new JSONObject();
-        try {
-            userDetails.put("username", uName);
-            userDetails.put("password", pwd);
-        } catch (Exception e) {
-        }
+
         Map<String, String> pars = new HashMap<String, String>();
         pars.put("username", uName);
         pars.put("password", pwd);
+        pars.put("domainId", "1");
 
         MakaanNetworkClient.getInstance().loginPost(url,pars,new UserLoginCallback(),TAG);
     }

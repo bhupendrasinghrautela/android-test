@@ -45,6 +45,8 @@ public class MasterDataCache {
     private Map<String, ApiLabel> searchTypeMap = new HashMap<>();
     private Map<String, Map<String, Map<String, List<String>>>> propertyDisplayOrder = new HashMap<>();
 
+    private Map<String, Integer> jarvisMessageTypeMap = new HashMap<>();
+
     private HashSet<String> shortlistedPropertiesBuy;
     private HashSet<String> shortlistedPropertiesRent;
 
@@ -164,6 +166,10 @@ public class MasterDataCache {
         propertyDisplayOrder = map;
     }
 
+    public void addJarvisMessageType(Map<String, Integer> map) {
+        jarvisMessageTypeMap = map;
+    }
+
 
     public ArrayList<ApiIntLabel> getBuyPropertyTypes() {
         ArrayList<ApiIntLabel> propertyTypes = new ArrayList<>();
@@ -202,6 +208,10 @@ public class MasterDataCache {
             rentFilterGroups.add(filterGroupIterator.next());
         }
         return rentFilterGroups;
+    }
+
+    public Map<String, Integer> getJarvisMessageTypeMap(){
+        return jarvisMessageTypeMap;
     }
 
 
