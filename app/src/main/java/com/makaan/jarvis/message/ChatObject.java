@@ -10,5 +10,9 @@ public class ChatObject {
     public String builderName;
     public String projectName;
     public String localityName;
+    public int localityId;
+    public int propertyId;
+    public int suburbId;
+    public int suburbName;
     public String cityName;
 }
