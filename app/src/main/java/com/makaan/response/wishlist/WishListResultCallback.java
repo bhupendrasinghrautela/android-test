@@ -5,8 +5,6 @@ import android.util.Log;
 import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.network.StringRequestCallback;
 import com.makaan.response.ResponseError;
-import com.makaan.response.search.SearchResponse;
-import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.util.AppBus;
 import com.makaan.util.JsonParser;
 
