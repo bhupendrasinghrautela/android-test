@@ -43,8 +43,8 @@ public class MessageCardFactory {
                     .inflate(R.layout.card_locality, parent, false);
 
         }else if(messageType == MessageType.plainLink.value){
-            return (LocalityCard) LayoutInflater.from(context)
-                    .inflate(R.layout.text_message_left, parent, false);
+            return (PlainLinkCard) LayoutInflater.from(context)
+                    .inflate(R.layout.card_plainlink, parent, false);
         }else{
             return null;
         }

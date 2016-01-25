@@ -129,6 +129,7 @@ public class ChatActivity extends AppCompatActivity {
             message.messageType = MessageType.outText;
             message.message = text;
             JarvisClient.getInstance().getChatMessages().add(message);
+            addChatMessage(message);
             sendMessageToService(message);
         }
     }

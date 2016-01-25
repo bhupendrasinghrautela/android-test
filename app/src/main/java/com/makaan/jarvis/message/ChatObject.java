@@ -15,4 +15,5 @@ public class ChatObject {
     public int suburbId;
     public int suburbName;
     public String cityName;
+    public String plainLink;
 }
