@@ -46,8 +46,6 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupPopup();
-
     }
 
     @Override
@@ -62,9 +60,14 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         getLayoutInflater().inflate(layoutResID, mActivityContent, true);
         super.setContentView(baseView);
 
+        setupPopup();
+
     }
 
     private void setupPopup(){
+        if(!isJarvisSupported() || null==mCtaCard){
+            return;
+        }
         mPopupDismissRunnable=new Runnable() {
 
             @Override
