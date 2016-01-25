@@ -11,9 +11,9 @@ import com.makaan.event.trend.callback.TopLocalitiesTrendCallback;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.OnExposeEvent;
 import com.makaan.response.locality.Locality;
+import com.makaan.service.BlogService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PriceTrendService;
-import com.makaan.service.ProjectService;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -74,7 +74,8 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         //((BuilderService) (MakaanServiceFactory.getInstance().getService(BuilderService.class))).getBuilderById(100002L);
         //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getGooglePlaceDetail("ChIJAQAA8UjkDDkRmdprFuRlLbo");
         //((ProjectService) (MakaanServiceFactory.getInstance().getService(ProjectService.class))).getProjectById(506147L);
-        ((ProjectService) (MakaanServiceFactory.getInstance().getService(ProjectService.class))).getProjectConfiguration(506147L);
+        //((ProjectService) (MakaanServiceFactory.getInstance().getService(ProjectService.class))).getProjectConfiguration(506147L);
+        ((BlogService) (MakaanServiceFactory.getInstance().getService(BlogService.class))).getBlogs("Home");
         //((ProjectService) (MakaanServiceFactory.getInstance().getService(ProjectService.class))).getSimilarProjects(506147L,10);
 
 
