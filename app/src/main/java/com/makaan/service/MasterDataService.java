@@ -318,4 +318,20 @@ public class MasterDataService implements MakaanService {
         }, "searchResultType.json");
 
     }
+
+    public void populateJarvisMessageType() {
+        Type jarvisMessageType = new TypeToken<HashMap<String, Integer>>() {
+        }.getType();
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.JARVIS_MESSAGE_TYPE, jarvisMessageType, new ObjectGetCallback() {
+            @Override
+            @SuppressWarnings("unchecked")
+            public void onSuccess(Object responseObject) {
+                HashMap<String, Integer> jarvisMessageTypes = (HashMap<String, Integer>) responseObject;
+
+                MasterDataCache.getInstance().addJarvisMessageType(jarvisMessageTypes);
+            }
+        }, "jarvisMessageType.json");
+
+    }
 }

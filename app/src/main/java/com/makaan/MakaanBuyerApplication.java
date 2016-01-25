@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.makaan.cookie.MakaanCookieStore;
 import com.makaan.jarvis.JarvisServiceCreator;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.request.selector.Selector;
@@ -23,7 +24,14 @@ import com.makaan.service.PyrService;
 import com.makaan.service.SearchService;
 import com.makaan.service.TaxonomyService;
 import com.makaan.service.UserService;
+import com.makaan.service.WishListService;
+import com.makaan.service.user.UserLoginService;
 import com.makaan.util.RandomString;
+
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+import java.net.CookieStore;
 
 /**
  * Created by vaibhav on 23/12/15.
@@ -62,6 +70,8 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(AmenityService.class, new AmenityService());
         MakaanServiceFactory.getInstance().registerService(ProjectService.class, new ProjectService());
         MakaanServiceFactory.getInstance().registerService(BlogService.class, new BlogService());
+        MakaanServiceFactory.getInstance().registerService(UserLoginService.class, new UserLoginService());
+        MakaanServiceFactory.getInstance().registerService(WishListService.class, new WishListService());
 
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();
@@ -76,6 +86,12 @@ public class MakaanBuyerApplication extends Application {
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyAmenities();
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateMasterFunishings();
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateMasterFunishings();
+
+        ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateJarvisMessageType();
+
+        CookieStore cookieStore = new MakaanCookieStore(getApplicationContext());
+        CookieManager cookieManager = new CookieManager(cookieStore, CookiePolicy.ACCEPT_ALL);
+        CookieHandler.setDefault(cookieManager);
 
     }
 
