@@ -1,5 +1,7 @@
 package com.makaan.pojo;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -8,9 +10,10 @@ import java.util.Set;
 public class ProjectConfigItem {
 
     public double minPrice, maxPrice;
-    public Set<Integer> bedrooms;
+    public Set<Integer> bedrooms = new HashSet<>();
     public int propertyCount;
     public int sellerCount;
 
+    public HashMap<Long, ProjectConfigSeller> companies = new HashMap<>();
 
 }

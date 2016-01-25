@@ -8,6 +8,7 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.project.Project;
+import com.makaan.response.project.ProjectConfigCallback;
 import com.makaan.util.AppBus;
 
 import java.lang.reflect.Type;
@@ -73,8 +74,15 @@ public class ProjectService implements MakaanService {
         }
     }
 
-    public void getProjectConfiguration(Long projectId){
+    /**
+     * http://mp-qa1.makaan-ws.com/app/v1/project-configuration/500773?sourceDomain=Makaan
+     */
+    public void getProjectConfiguration(Long projectId) {
 
+        if (null != projectId) {
+            String projectConfigUrl = ApiConstants.PROJECT_CONFIG.concat("/").concat(projectId.toString());
+            MakaanNetworkClient.getInstance().get(projectConfigUrl, new ProjectConfigCallback());
+        }
     }
 
 }

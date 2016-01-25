@@ -7,6 +7,8 @@ public class Company {
     public boolean makaanOnly;
     public String name, primaryEmail;
     public String type;
+    public Long id;
+
 
 
 }
