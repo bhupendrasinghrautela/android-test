@@ -48,11 +48,12 @@ public class RangeSeekBar<T extends Number> extends ImageView {
         private double normalizedMinValue = 0d;
         private double normalizedMaxValue = 1d;
         private Thumb pressedThumb = null;
-        private int mstep = 25;
+        private int mstep = 33;
         private double msteps[]=new double[mstep];
         private boolean notifyWhileDragging = false;
         private OnRangeSeekBarChangeListener<T> listener;
-        private double convert[] = {0,0.01,0.02,0.03,0.04,0.05,0.06,0.08,0.1,0.12,0.14,0.16,0.18,0.2,0.25,0.30,0.35,0.4,0.45,0.5,0.6,0.7,0.8,0.9,1.0};
+        private double convert[] = {0,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.12, 0.14,0.16,0.18,0.20,0.24,0.28,0.32,0.36,0.40,0.6,0.8,1.0};
+
 
         /**
          * Default color of a {@link RangeSeekBar}, #FF33B5E5. This is also known as "Ice Cream Sandwich" blue.
@@ -122,6 +123,14 @@ public class RangeSeekBar<T extends Number> extends ImageView {
         public RangeSeekBar(Context context, AttributeSet attrs, int defStyleAttr) {
             super(context, attrs, defStyleAttr);
         }
+
+    public void setStepValues(double convert[]){
+        this.convert=convert;
+    }
+
+    public void setStepCount(int count){
+        mstep=count;
+    }
 
     private void divideInSteps() {
         msteps[0]=0d;

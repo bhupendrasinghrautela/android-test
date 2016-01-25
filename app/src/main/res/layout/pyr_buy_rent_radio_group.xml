@@ -3,11 +3,12 @@
 <RadioGroup
     android:id="@+id/buy_rent_radiogroup"
     android:layout_width="@dimen/pyr_buy_rent_total_width"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/pyr_buy_button_height"
     android:layout_gravity="center"
     android:layout_marginTop="10dp"
     android:orientation="horizontal"
     android:checkedButton="@+id/pyr_buy"
+    android:clipToPadding="false"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RadioButton
@@ -18,7 +19,7 @@
         android:text="@string/pyr_buy"
         android:textSize="@dimen/pyr_buy_rent_text_size"
         android:gravity="center"
-        android:layout_height="@dimen/pyr_buy_button_height"
+        android:layout_height="match_parent"
         android:textColor="@drawable/pyr_buy_text_style"
         android:checked="true">
     </RadioButton>
@@ -33,7 +34,7 @@
         android:textSize="@dimen/pyr_buy_rent_text_size"
         android:checked="false"
         android:textColor="@drawable/pyr_buy_text_style"
-        android:layout_height="@dimen/pyr_rent_button_height"
+        android:layout_height="match_parent"
         >
     </RadioButton>
 

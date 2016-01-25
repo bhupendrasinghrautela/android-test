@@ -6,8 +6,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.response.serp.RangeFilter;
 import com.makaan.ui.listing.BaseCardView;
 import com.makaan.fragment.pyr.PyrPagePresenter;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,9 +23,15 @@ public class PyrBudgetCardView extends BaseCardView {
     @Bind(R.id.min_budget)TextView mMinBudget;
     @Bind(R.id.max_budget)TextView mMaxBudget;
     @Bind(R.id.budget_layout)LinearLayout mBudgetLayout;
-    private static final long MIN_BUDGET = 0l;
-    private static final long MAX_BUDGET = 100000000l;
+    public static final long MIN_BUDGET = 0l;
+    public static final long MAX_BUY_BUDGET = 100000000l;
+    public static final long MAX_RENT_BUDGET = 500000l;
     private PyrPagePresenter pyrPagePresenter=PyrPagePresenter.getPyrPagePresenter();
+    private double rentConvert[] = {0,0.005,0.01,0.015,0.020,0.025,0.030,0.035,0.040,0.045,0.05, 0.055, 0.06, 0.065,0.07, 0.075, 0.080, 0.085, 0.090, 0.095, 0.10,
+                                    0.12, 0.14 ,0.16, 0.18, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.5,1.0};
+    private double buyConvert[] = {0,0.005,0.01,0.015,0.020,0.025,0.030,0.035,0.040,0.045,0.05, 0.06,0.07,0.08,0.09, 0.1, 0.12, 0.14, 0.16, 0.18, 0.2, 0.3, 0.4 ,0.5, 1.0};
+    private RangeFilter mRangeFilter;
+
 
     public PyrBudgetCardView(Context context) {
         super(context);
@@ -40,7 +49,7 @@ public class PyrBudgetCardView extends BaseCardView {
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
-        initBudgetSeekbar();
+        pyrPagePresenter.setBudgetCardViewInstance(this);
     }
 
     @Override
@@ -49,14 +58,20 @@ public class PyrBudgetCardView extends BaseCardView {
     }
 
     private void initBudgetSeekbar() {
-        mBudgetSeekBar.setInitialValues(MIN_BUDGET, MAX_BUDGET);
-        setMinMaxBudgetValues(MIN_BUDGET, MAX_BUDGET);
+        mBudgetSeekBar.setInitialValues((long) mRangeFilter.minValue, (long) mRangeFilter.maxValue);
+
+
+        mBudgetSeekBar.setSelectedMinValue(mRangeFilter.selectedMinValue);
+        mBudgetSeekBar.setSelectedMaxValue(mRangeFilter.selectedMaxValue);
+
+        setMinMaxBudgetValues((long) mRangeFilter.selectedMinValue, (long) mRangeFilter.selectedMaxValue);
+
+
         mBudgetSeekBar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Long>() {
             @Override
             public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar, Long minBudgetValue,
                                                     Long maxBudgetValue) {
                 setMinMaxBudgetValues(minBudgetValue, maxBudgetValue);
-                setMinMaxBudgetPosition(bar.getLeftThumbPosition(), bar.getRightThumbPosition());
             }
         });
 
@@ -65,8 +80,10 @@ public class PyrBudgetCardView extends BaseCardView {
     }
 
     public void setMinMaxBudgetValues(Long minBudget, Long maxBudget){
-        mMinBudget.setText(pyrPagePresenter.getPrice(minBudget));
-        mMaxBudget.setText(pyrPagePresenter.getPrice(maxBudget));
+        mRangeFilter.selectedMinValue = minBudget;
+        mRangeFilter.selectedMaxValue = maxBudget;
+        mMinBudget.setText(pyrPagePresenter.getPrice((long)mRangeFilter.selectedMinValue));
+        mMaxBudget.setText(pyrPagePresenter.getPrice((long)mRangeFilter.selectedMaxValue));
     }
 
     public void setMinMaxBudgetPosition(Float leftThumbPosition, Float rightThumbPosition){
@@ -83,5 +100,11 @@ public class PyrBudgetCardView extends BaseCardView {
     }
 
 
+    public void setValues(ArrayList<RangeFilter> rangeFilterValues) {
 
+        mBudgetSeekBar.setStepValues(buyConvert);
+        mBudgetSeekBar.setStepCount(25);
+        mRangeFilter = rangeFilterValues.get(0);
+        initBudgetSeekbar();
+    }
 }

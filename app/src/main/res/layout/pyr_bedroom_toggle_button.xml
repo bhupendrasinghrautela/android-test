@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ToggleButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fourbhk_toggle_button"
+    android:layout_width="@dimen/bedroom_toggle_button_width_height"
+    android:layout_height="@dimen/bedroom_toggle_button_width_height"
+    android:layout_gravity="center"
+    android:layout_marginLeft="@dimen/bedroom_toggle_button_margin_left"
+    android:background="@drawable/bedroom_toggle_button_drawable"
+    android:textColor="@drawable/bedroom_toggle_button_text_color_selector"
+    android:textSize="@dimen/bedrrom_toggle_button_text_size"
+     />

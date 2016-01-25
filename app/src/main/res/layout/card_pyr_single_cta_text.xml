@@ -10,11 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="20dp"
-        android:textSize="22sp"
+        android:padding="@dimen/give_you_call_back_padding"
+        android:textSize="@dimen/give_you_call_back_text_size"
         android:textColor="@android:color/black"
         android:gravity="center_horizontal"
-        android:text="We'll give you a call back" />
+        android:text="@string/give_you_call_back_string" />
 
 
     <Button
@@ -22,14 +22,14 @@
         android:id="@+id/btn_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
+        android:layout_marginBottom="@dimen/btn_ok_margin_bottom"
+        android:layout_marginTop="@dimen/btn_ok_margin_top"
+        android:paddingLeft="@dimen/btn_ok_padding_left_right"
+        android:paddingRight="@dimen/btn_ok_padding_left_right"
         android:layout_weight="1"
         android:background="@drawable/filled_red"
-        android:text="Ok"
+        android:text="@string/jarvis_apply_button_string"
         android:textColor="@android:color/white"
-        android:textSize="20sp" />
+        android:textSize="@dimen/btn_ok_text_size" />
 
 </LinearLayout>

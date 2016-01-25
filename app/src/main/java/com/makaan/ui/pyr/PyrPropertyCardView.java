@@ -5,8 +5,11 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.response.serp.TermFilter;
 import com.makaan.ui.listing.BaseCardView;
 import com.makaan.fragment.pyr.PyrPagePresenter;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,6 +22,7 @@ public class PyrPropertyCardView extends BaseCardView {
     @Bind(R.id.property_value)TextView mPropertyValue;
     PyrPagePresenter pyrPagePresenter;
     private Context mContext;
+    private ArrayList<TermFilter> mTermFilter;
 
     public PyrPropertyCardView(Context context) {
         super(context);
@@ -49,7 +53,10 @@ public class PyrPropertyCardView extends BaseCardView {
     @OnClick(R.id.select_property_layout)
     public void onPropertyClick(){
         pyrPagePresenter=PyrPagePresenter.getPyrPagePresenter();
-        pyrPagePresenter.showPropertyTypeFragment();
+        pyrPagePresenter.showPropertyTypeFragment(mTermFilter);
     }
 
+    public void setValues(ArrayList<TermFilter> termFilterValues) {
+        mTermFilter = termFilterValues;
+    }
 }

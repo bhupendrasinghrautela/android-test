@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     >
 
-    <item android:drawable="@drawable/circle_tick"
+    <item android:drawable="@drawable/check_tick_red"
 
         android:state_checked="true"/>
 

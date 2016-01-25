@@ -7,18 +7,17 @@
     android:layout_height="wrap_content"
     android:background="@drawable/chat_card_bg"
     android:orientation="vertical"
-    android:layout_margin="20dp"
+    android:layout_margin="@dimen/send_req_card_margin"
     android:gravity="center_horizontal"
-    android:padding="20dp">
-
+    android:padding="@dimen/send_req_card_padding">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="BHK"
-        android:layout_marginBottom="4dp"
-        android:textSize="16sp" />
+        android:text="@string/bhk_string"
+        android:layout_marginBottom="@dimen/bhk_string_margin_bottom"
+        android:textSize="@dimen/bhk_string_text_size" />
 
     <com.makaan.ui.view.ExpandableHeightGridView
         android:id="@+id/fragment_dialog_filters_item_layout_grid_view"
@@ -39,15 +38,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingRight="10dp">
+            android:paddingRight="@dimen/til_type_padding_right">
 
             <EditText
                 android:id="@+id/et_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="type"
+                android:hint="@string/et_type_hint"
                 android:singleLine="true"
-                android:textSize="16sp" />
+                android:textSize="@dimen/et_type_edit_text_size" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -55,15 +54,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingLeft="10dp">
+            android:paddingLeft="@dimen/til_type_padding_left">
 
             <EditText
                 android:id="@+id/et_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="price"
+                android:hint="@string/et_price_hint"
                 android:singleLine="true"
-                android:textSize="16sp" />
+                android:textSize="@dimen/et_price_edit_text_size" />
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
@@ -76,9 +75,9 @@
             android:id="@+id/et_locality"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Locality"
+            android:hint="@string/et_locality_hint"
             android:singleLine="true"
-            android:textSize="16sp" />
+            android:textSize="@dimen/et_locality_edit_text_size" />
     </android.support.design.widget.TextInputLayout>
 
 
@@ -86,12 +85,11 @@
         android:id="@+id/btn_apply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:padding="10dp"
+        android:layout_marginTop="@dimen/btn_apply_margin_top_bottom"
+        android:padding="@dimen/btn_apply_padding"
         android:background="@drawable/filled_red"
-        android:text="Apply"
+        android:text="@string/btn_apply_string"
         android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:textSize="@dimen/btn_apply_text_size" />
 
 </com.makaan.jarvis.ui.cards.SendReqCard>
