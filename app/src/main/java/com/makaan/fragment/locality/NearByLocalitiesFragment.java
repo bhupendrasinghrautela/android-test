@@ -165,7 +165,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment {
     private List<NearByLocalities> getDarForAgents(ArrayList<TopAgent> topAgents) {
         List<NearByLocalities> nearByLocalities = new ArrayList<>();
         for(TopAgent agent:topAgents){
-            nearByLocalities.add(new NearByLocalities("","0",""+agent.listingCount,""+agent.agent.type,""+agent.agent.name));
+            nearByLocalities.add(new NearByLocalities("","0",""+agent.listingCount,""+agent.agent.company.type,""+agent.agent.user.fullName));
         }
         return nearByLocalities;
     }

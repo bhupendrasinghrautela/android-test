@@ -1,0 +1,140 @@
+{
+  "data": {
+    "filters": [
+      {
+        "displayName": "Beds",
+        "internalName": "i_beds",
+        "displayOrder": "1",
+        "layoutType": "1",
+        "termFilterValues": [
+          {
+            "displayName": "1",
+            "displayOrder": "1",
+            "fieldName": "bedrooms",
+            "value": "1",
+            "selected": false
+          },
+          {
+            "displayName": "2",
+            "displayOrder": "2",
+            "fieldName": "bedrooms",
+            "value": "2",
+            "selected": false
+          },
+          {
+            "displayName": "3",
+            "displayOrder": "3",
+            "fieldName": "bedrooms",
+            "value": "3",
+            "selected": false
+          },
+          {
+            "displayName": "3+",
+            "displayOrder": "4",
+            "fieldName": "bedrooms",
+            "value": "4-10",
+            "selected": false
+          }
+        ],
+        "rangeFilterValues": [
+        ],
+        "rangeMinMaxFilterValues": [
+        ]
+      },
+      {
+        "displayName": "Budget",
+        "internalName": "i_budget",
+        "displayOrder": "2",
+        "layoutType": "2",
+        "termFilterValues": [],
+        "rangeFilterValues": [
+          {
+            "displayName": "",
+            "displayOrder": "1",
+            "fieldName": "price",
+            "minValue": 0,
+            "maxValue": 100000000,
+            "selected": false
+          }
+        ],
+        "rangeMinMaxFilterValues": [
+        ]
+      },
+      {
+        "displayName": "Property Type",
+        "internalName": "i_property_type",
+        "displayOrder": "3",
+        "layoutType": "3",
+        "termFilterValues": [
+          {
+            "displayName": "apartment",
+            "displayOrder": "1",
+            "fieldName": "unitTypeId",
+            "value": "Apartment",
+            "selected": false
+          },
+          {
+            "displayName": "villa",
+            "displayOrder": "2",
+            "fieldName": "unitTypeId",
+            "value": "Villa",
+            "selected": false
+          },
+          {
+            "displayName": "independent house",
+            "displayOrder": "3",
+            "fieldName": "unitTypeId",
+            "value": "IndependentHouse",
+            "selected": false
+          },
+          {
+            "displayName": "residential plot",
+            "displayOrder": "4",
+            "fieldName": "unitTypeId",
+            "value": "ResidentialPlot",
+            "selected": false
+          },
+          {
+            "displayName": "independent floor",
+            "displayOrder": "5",
+            "fieldName": "unitTypeId",
+            "value": "BuilderFloor",
+            "selected": false
+          },
+          {
+            "displayName": "farmhouse",
+            "displayOrder": "6",
+            "fieldName": "unitTypeId",
+            "value": "Farmhouse",
+            "selected": false
+          },
+          {
+            "displayName": "studio apartment",
+            "displayOrder": "7",
+            "fieldName": "unitTypeId",
+            "value": "StudioApartment",
+            "selected": false
+          },
+          {
+            "displayName": "independent floor",
+            "displayOrder": "8",
+            "fieldName": "unitTypeId",
+            "value": "IndependentFloor",
+            "selected": false
+          },
+          {
+            "displayName": "penthouse",
+            "displayOrder": "9",
+            "fieldName": "unitTypeId",
+            "value": "Penthouse",
+            "selected": false
+          }
+        ],
+        "rangeFilterValues": [
+        ],
+        "rangeMinMaxFilterValues": [
+        ]
+      }
+    ]
+  }
+}

@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.makaan.ui.pyr.PyrPropertyCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/select_property_layout"
-    >
+    android:layout_centerHorizontal="true"
+    android:background="@color/white"
+    android:clipToPadding="false"
+    android:padding="@dimen/pyr_propert_card_padding">
 
-    <LinearLayout
+    <com.makaan.ui.pyr.PyrPropertyCardView
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:id="@+id/select_property_layout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="@dimen/pyr_property_icon_layout_width"
@@ -21,7 +28,7 @@
                 android:layout_width="@dimen/pyr_property_icon_width"
                 android:layout_height="@dimen/pyr_property_icon_height"
                 android:layout_marginLeft="@dimen/pyr_property_icon_left_margin"
-                android:src="@drawable/money_icon" />
+                android:src="@drawable/house_icon" />
 
             <TextView
                 android:layout_width="@dimen/pyr_property_text_width"
@@ -52,3 +59,18 @@
     </LinearLayout>
 
 </com.makaan.ui.pyr.PyrPropertyCardView>
+
+    <TextView
+        android:id="@+id/pyr_selected_propertyt_type_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/pyr_propert_card_badge_margin_left_right"
+        android:layout_marginTop="@dimen/pyr_propert_card_badge_margin_left_right"
+        android:background="@drawable/badge_circle"
+        android:text="6"
+        android:visibility="visible"
+        android:textColor="@color/white"
+        android:textSize="@dimen/property_card_badge_text_size"
+        android:elevation="@dimen/property_card_badge_elevation"/>
+
+</RelativeLayout>

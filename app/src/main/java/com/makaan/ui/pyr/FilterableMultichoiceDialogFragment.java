@@ -12,8 +12,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.makaan.R;
@@ -48,10 +51,13 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 
 	@Bind(R.id.multichoice_dialog_list_view)ListView mMultiselectionListview;
 	@Bind(R.id.multichoice_dialog_selected_items_list_view)ListView mSelectedListview;
-	@Bind(R.id.clear_button)TextView mClearButton;
 	@Bind(R.id.multichoice_dialog_search_tv)EditText mMultiChoiceSearchTextView;
 	@Bind(R.id.multichoice_card_view)CardView mMultiChoiceCardView;
 	@Bind(R.id.empty_selection)TextView mEmptySelectedItemsTextView;
+	@Bind(R.id.selected_items_view)LinearLayout mSelectedItemsLayout;
+	@Bind(R.id.selected_locality_count)TextView mLocalityCount;
+	//@Bind(R.id.locality_circular_tick)ImageView mLocalityTick;
+
 	private boolean[] mSelectedItemsFlag;
 	private ArrayList<Item> mCompleteItemsList;
 	private ArrayList<SearchResponseItem> mOriginalItemsList;
@@ -85,7 +91,7 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 				mSelectedItemsList.addAll(mPyrPresenter.getAlreadySelectedProjects());
 			}
 			View dialogCustomView = getActivity().getLayoutInflater().inflate(R.layout.multichoice_dialog_fragment_custom_view, null);
-			ButterKnife.bind(this,dialogCustomView);
+			ButterKnife.bind(this, dialogCustomView);
 
 			mUnselectedItemsAdapter = new SearchableListviewAdapter(getActivity(), mUnselectedItemsList,
 					R.layout.unselected_list_item_layout);
@@ -109,13 +115,14 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 			mSelectedListview.setAdapter(mSelectedItemsAdapter);
 			if(mSelectedItemsList.size()>0){
 				mSelectedItemsAdapter.updateDataItems(mSelectedItemsList);
+				mLocalityCount.setVisibility(View.VISIBLE);
+				mLocalityCount.setText(String.valueOf(mSelectedItemsList.size()));
 			}
 
 			multiSelectionDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 			multiSelectionDialog.setContentView(dialogCustomView);
 			multiSelectionDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.YELLOW));
 			multiSelectionDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-	        
 			return multiSelectionDialog;
 		} catch (Exception e) {
 			return null;
@@ -125,6 +132,18 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mPyrPresenter.setLocalitiesOnPyrMainPage();
+	}
+
+	@Override
+	public void dismiss() {
+		super.dismiss();
+		mPyrPresenter.setLocalitiesOnPyrMainPage();
 	}
 
 	@OnTextChanged(R.id.multichoice_dialog_search_tv)
@@ -143,11 +162,17 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 	public void multiChoiceClick(AdapterView<?> arg0, View arg1,
 								 int clicked, long id){
 
-			String clickedItem = (String) mUnselectedItemsAdapter.getItem(clicked).entityName;
-			mPyrPresenter.updateSelectedItemsList(clickedItem, mSelectedItemsList,
-					mUnselectedItemsAdapter.getItem(clicked));
-			mPyrPresenter.setLocalityIds(mUnselectedItemsAdapter.getItem(clicked), getActivity());
-			mSelectedItemsAdapter.updateDataItems(mSelectedItemsList);
+			String clickedItem = (String) mUnselectedItemsAdapter.getItem(clicked).entityId;
+			if(mSelectedItemsList.size()<6) {
+				mPyrPresenter.updateSelectedItemsList(clickedItem, mSelectedItemsList,
+						mUnselectedItemsAdapter.getItem(clicked));
+				mPyrPresenter.setLocalityIds(mUnselectedItemsAdapter.getItem(clicked), getActivity());
+				mSelectedItemsAdapter.updateDataItems(mSelectedItemsList);
+			}
+			else{
+				Toast.makeText(getActivity(), getResources().getString(R.string.listings_limit_toast), Toast.LENGTH_SHORT).show();
+				//return;
+			}
 
 			if (mSelectedItemsList.isEmpty()) {
 				mSelectedItemsAvaliable = false;
@@ -160,6 +185,17 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 					mEmptySelectedItemsTextView.setVisibility(View.GONE);
 				}
 			}
+
+			if(mSelectedItemsList.size()>0) {
+				mLocalityCount.setVisibility(View.VISIBLE);
+				mLocalityCount.setText(String.valueOf(mSelectedItemsList.size()));
+			}
+			else{
+				mLocalityCount.setVisibility(View.GONE);
+			}
+
+			mMultiChoiceCardView.setVisibility(View.GONE);
+			mSelectedItemsLayout.setVisibility(View.VISIBLE);
 	}
 
 	@OnItemClick(R.id.multichoice_dialog_selected_items_list_view)
@@ -170,6 +206,14 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 		mPyrPresenter.removeLocalityId(mSelectedItemsAdapter.getItem(clicked));
 		mSelectedItemsList=mPyrPresenter.getSelectedItemList(clickedItem, mSelectedItemsList);
 		mSelectedItemsAdapter.updateDataItems(mSelectedItemsList);
+
+		if(mSelectedItemsList.size()>0) {
+			mLocalityCount.setVisibility(View.VISIBLE);
+			mLocalityCount.setText(String.valueOf(mSelectedItemsList.size()));
+		}
+		else{
+			mLocalityCount.setVisibility(View.GONE);
+		}
 
 		if (mSelectedItemsList.isEmpty()) {
 			mSelectedItemsAvaliable = false;
@@ -184,18 +228,16 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 		}
 	}
 
-	@OnClick(R.id.clear_button)
-	public void onClearButtonClick(){
-		if(getActivity() == null || getActivity().isFinishing()) {
-			return;
+	@OnClick(R.id.locality_circular_tick)
+	public void dismissDialog(){
+		if(mSelectedItemsList.size()>0) {
+			dismiss();
 		}
+	}
 
-		mSelectedItemsList.clear();
-		mSelectedItemsAvaliable = false;
-		mSelectedListview.setVisibility(View.GONE);
-		mEmptySelectedItemsTextView.setVisibility(View.VISIBLE);
-		mSelectedItemsAdapter.updateDataItems(mSelectedItemsList);
-		mSelectedItemsAdapter.notifyDataSetChanged();
+	@OnClick(R.id.property_search_card_view)
+	public void onSearchCardClick(){
+		dismiss();
 	}
 
 	private class Item {
@@ -237,6 +279,8 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 		for (int i = 0; i < mOriginalList.size(); i++) {
 			mCompleteItemsList.add(new Item(mOriginalList.get(i), mSelectedItemsFlag[i]));
 		}
+		mSelectedItemsLayout.setVisibility(View.GONE);
+		mMultiselectionListview.setVisibility(View.VISIBLE);
 		mUnselectedItemsAdapter.updateDataItems(mOriginalList);
 	}
 

@@ -150,7 +150,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-        if(mCtaCard.getVisibility()==View.VISIBLE){
+        if(mCtaCard!=null && mCtaCard.getVisibility()==View.VISIBLE){
             mCtaCard.removeAllViews();
             mCtaCard.setVisibility(View.GONE);
         }else {

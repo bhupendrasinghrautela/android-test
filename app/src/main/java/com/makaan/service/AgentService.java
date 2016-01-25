@@ -30,7 +30,8 @@ public class AgentService implements MakaanService{
         getTopAgentsForLocality(cityId, localityIds, null, null, noOfAgents, isRental, topAgentsCallback);
     }
 
-    public void getTopAgentsForLocality(Long cityId, ArrayList<String> localityIdList, ArrayList<String> bedrooms, String unitType, Integer noOfAgents, boolean isRental, TopAgentsCallback topAgentsCallback) {
+
+    public void getTopAgentsForLocality(Long cityId, ArrayList<String> localityIdList, ArrayList<String> bedrooms, ArrayList<String> unitType, Integer noOfAgents, boolean isRental, TopAgentsCallback topAgentsCallback) {
 
         if (null != cityId) {
             StringBuilder topAgentsUrl = new StringBuilder(TOP_AGENTS_CITY);
@@ -41,7 +42,7 @@ public class AgentService implements MakaanService{
             if (null != localityIdList && localityIdList.size() > 0) {
                 topAgentsSelector.term(LOCALITY_ID, localityIdList);
             }
-            if (null != bedrooms) {
+            if (null != bedrooms && bedrooms.size()>0) {
                 topAgentsSelector.term(BEDROOMS, bedrooms);
             }
             if (isRental) {
@@ -50,14 +51,17 @@ public class AgentService implements MakaanService{
                 topAgentsSelector.term(LISTING_CATEGORY, new String[]{RESALE, PRIMARY});
             }
 
-            if (null != unitType) {
-                topAgentsSelector.term(UNIT_TYPE_ID, unitType);
+            if (null != unitType && unitType.size()>0) {
+                for(String string:unitType) {
+                    topAgentsSelector.term(UNIT_TYPE, string);
+                }
+
             }
             if (null != noOfAgents) {
                 topAgentsSelector.page(0, noOfAgents);
             }
 
-            topAgentsUrl = topAgentsUrl.append("?").append(topAgentsSelector.build());
+            topAgentsUrl = topAgentsUrl.append("?").append(topAgentsSelector.build().concat("&").concat(SOURCE_DOMAIN_MAKAAN));
             MakaanNetworkClient.getInstance().get(topAgentsUrl.toString(), topAgentsCallback);
         }
 

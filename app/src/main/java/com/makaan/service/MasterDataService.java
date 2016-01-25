@@ -251,6 +251,63 @@ public class MasterDataService implements MakaanService {
             }
 
 
+        }, "pyrGroupRent.json");
+    }
+    public void populatePyrGroupsBuy() {
+        final Type filterGroupTypeList = new TypeToken<ArrayList<FilterGroup>>() {
+        }.getType();
+
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.FILTER_GROUP, new JSONGetCallback() {
+
+            @Override
+            public void onSuccess(JSONObject responseObject) {
+                try {
+
+                    JSONObject object = responseObject.getJSONObject(ResponseConstants.DATA);
+                    JSONArray filters = object.getJSONArray(ResponseConstants.FILTERS);
+
+                    ArrayList<FilterGroup> filterGroups = MakaanBuyerApplication.gson.fromJson(filters.toString(), filterGroupTypeList);
+
+
+                    for (FilterGroup filterGroup : filterGroups) {
+                        MasterDataCache.getInstance().addPyrGroupBuy(filterGroup);
+                    }
+                } catch (JSONException je) {
+                    Log.e(TAG, "Unable to parse pyr groups", je);
+                }
+
+            }
+
+
+        }, "pyrGroupBuy.json");
+    }
+
+
+    public void populatePyrGroupsRent() {
+        final Type filterGroupTypeList = new TypeToken<ArrayList<FilterGroup>>() {
+        }.getType();
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.FILTER_GROUP, new JSONGetCallback() {
+
+            @Override
+            public void onSuccess(JSONObject responseObject) {
+                try {
+                    JSONObject object = responseObject.getJSONObject(ResponseConstants.DATA);
+                    JSONArray filters = object.getJSONArray(ResponseConstants.FILTERS);
+
+                    ArrayList<FilterGroup> filterGroups = MakaanBuyerApplication.gson.fromJson(filters.toString(), filterGroupTypeList);
+
+                    for (FilterGroup filterGroup : filterGroups) {
+                        MasterDataCache.getInstance().addPyrGroupRent(filterGroup);
+                    }
+                } catch (JSONException je) {
+                    Log.e(TAG, "Unable to parse pyr groups", je);
+                }
+
+            }
+
+
         }, "filterGroupRent.json");
     }
 

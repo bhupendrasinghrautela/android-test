@@ -5,47 +5,21 @@
     android:background="@android:color/white"
    >
 
-    <!-- <LinearLayout
-         android:id="@+id/layout_no_enquiries"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:orientation="vertical"
-         android:visibility="gone"
-         android:layout_centerInParent="true">
-
-         <TextView
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:text="@string/we_are_sry"
-             android:textSize="@dimen/sorry_text_size"
-             android:textColor="@color/no_listing_color"
-             android:gravity="center_horizontal"
-             />
-
-         <TextView
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:textSize="@dimen/no_listing_text_size"
-             android:text="@string/no_enquiries"
-             android:gravity="center_horizontal"
-             />
-
-     </LinearLayout>-->
     <TextView
         android:id="@+id/tv_your_prprty_adv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="@dimen/select_sellers_text_size"
         android:textColor="@color/black"
-        android:padding="20dp"
-        android:text="Your Property Advisors"
+        android:padding="@dimen/select_sellers_padding"
+        android:text="@string/select_sellers"
         android:gravity="center_horizontal"
         />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/sellers_recycler_view"
         android:layout_below="@+id/tv_your_prprty_adv"
         android:layout_width="match_parent"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="@dimen/select_sellers_margin_bottom"
         android:layout_height="wrap_content" />
 
     <LinearLayout
@@ -54,17 +28,16 @@
         android:gravity="center_horizontal"
         android:layout_alignParentBottom="true"
         android:background="@android:color/white"
-        android:padding="10dp">
+        android:padding="@dimen/contact_advisors_button_layout_padding">
 
         <Button
             android:id="@+id/btn_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_background_selector"
-            android:padding="10dp"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:text="Contact Top Advisors"
+            android:paddingLeft="@dimen/contact_advisors_button_padding_left_right"
+            android:paddingRight="@dimen/contact_advisors_button_padding_left_right"
+            android:text="@string/contact_top_advisors_string"
             android:textColor="@android:color/white" />
     </LinearLayout>
 

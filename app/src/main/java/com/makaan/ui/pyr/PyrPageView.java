@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.makaan.R;
+import com.makaan.fragment.pyr.PyrPagePresenter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,12 +23,10 @@ import butterknife.OnTextChanged;
  * Created by proptiger on 7/1/16.
  */
 public class PyrPageView extends LinearLayout {
-    @Bind(R.id.buy_rent_radiogroup) RadioGroup buyRent;
-    @Bind(R.id.buy) RadioButton buy;
-    @Bind(R.id.rent) RadioButton rent;
     @Bind(R.id.pyr_page_name)EditText mClientName;
     @Bind(R.id.leadform_mobileno_edittext)EditText mClientMobile;
     @Bind(R.id.pyr_page_email)EditText mClientEmail;
+    PyrPagePresenter mPyrPresenter=PyrPagePresenter.getPyrPagePresenter();
 
     private Context mContext;
 
@@ -55,11 +54,14 @@ public class PyrPageView extends LinearLayout {
     @OnCheckedChanged(R.id.buy) void buyCheckChange(RadioButton buyButton){
         LinearLayout.LayoutParams params;
         if(!buyButton.isChecked()){
-            params = new LinearLayout.LayoutParams(buyButton.getWidth() ,(int) dpToPixel(mContext, 32));
+            params = (LayoutParams) buyButton.getLayoutParams();
+            buyButton.getLayoutParams().height = (int) dpToPixel(mContext, 32);
             buyButton.setLayoutParams(params);
         }
         else{
-            params = new LinearLayout.LayoutParams(buyButton.getWidth() , (int) dpToPixel(mContext, 35));
+            mPyrPresenter.setBuySelected(true);
+            params = (LayoutParams) buyButton.getLayoutParams();
+            buyButton.getLayoutParams().height = (int) dpToPixel(mContext, 35);
             buyButton.setLayoutParams(params);
         }
 
@@ -68,11 +70,14 @@ public class PyrPageView extends LinearLayout {
     @OnCheckedChanged(R.id.rent) void rentCheckChange(RadioButton sellButton) {
         LinearLayout.LayoutParams params;
         if(!sellButton.isChecked()){
-            params = new LinearLayout.LayoutParams(sellButton.getWidth() ,(int) dpToPixel(mContext, 33));
+            params = (LayoutParams) sellButton.getLayoutParams();
+            sellButton.getLayoutParams().height = (int) dpToPixel(mContext, 32);
             sellButton.setLayoutParams(params);
         }
         else{
-            params = new LinearLayout.LayoutParams(sellButton.getWidth(), (int) dpToPixel(mContext, 35));
+            mPyrPresenter.setBuySelected(false);
+            params = (LayoutParams) sellButton.getLayoutParams();
+            sellButton.getLayoutParams().height = (int) dpToPixel(mContext, 35);
             sellButton.setLayoutParams(params);
         }
     }

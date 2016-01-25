@@ -41,6 +41,9 @@ public class MasterDataCache {
 
     private HashMap<String, FilterGroup> internalNameToFilterGrpBuy = new HashMap<>();
     private HashMap<String, FilterGroup> internalNameToFilterGrpRent = new HashMap<>();
+
+    private HashMap<String, FilterGroup> internalNameToPyrGrpBuy = new HashMap<>();
+    private HashMap<String, FilterGroup> internalNameToPyrGrpRent = new HashMap<>();
     private Map<Integer, AmenityCluster> amenityMap = new HashMap<>();
     private Map<String, ApiLabel> searchTypeMap = new HashMap<>();
     private Map<String, Map<String, Map<String, List<String>>>> propertyDisplayOrder = new HashMap<>();
@@ -140,6 +143,30 @@ public class MasterDataCache {
         }
     }
 
+    public void addPyrGroupBuy(FilterGroup filterGroup) {
+        if (null != filterGroup && null != filterGroup.internalName) {
+            internalNameToPyrGrpBuy.put(filterGroup.internalName, filterGroup);
+            if(filterGroup.rangeFilterValues.size() > 0) {
+                for(RangeFilter filter : filterGroup.rangeFilterValues) {
+                    filter.selectedMinValue = filter.minValue;
+                    filter.selectedMaxValue = filter.maxValue;
+                }
+            }
+        }
+    }
+
+    public void addPyrGroupRent(FilterGroup filterGroup) {
+        if (null != filterGroup && null != filterGroup.internalName) {
+            internalNameToPyrGrpRent.put(filterGroup.internalName, filterGroup);
+            if(filterGroup.rangeFilterValues.size() > 0) {
+                for(RangeFilter filter : filterGroup.rangeFilterValues) {
+                    filter.selectedMinValue = filter.minValue;
+                    filter.selectedMaxValue = filter.maxValue;
+                }
+            }
+        }
+    }
+
     public void addAmenityCluster(AmenityCluster amenityCluster) {
         if (null != amenityCluster) {
             amenityMap.put(amenityCluster.placeTypeId, amenityCluster);
@@ -212,6 +239,25 @@ public class MasterDataCache {
 
     public Map<String, Integer> getJarvisMessageTypeMap(){
         return jarvisMessageTypeMap;
+    }
+
+
+    public ArrayList<FilterGroup> getAllBuyPyrGroups() {
+        Iterator<FilterGroup> filterGroupIterator = internalNameToPyrGrpBuy.values().iterator();
+        ArrayList<FilterGroup> buyFilterGroups = new ArrayList<>();
+        while (filterGroupIterator.hasNext()) {
+            buyFilterGroups.add(filterGroupIterator.next());
+        }
+        return buyFilterGroups;
+    }
+
+    public ArrayList<FilterGroup> getAllRentPyrGroups() {
+        Iterator<FilterGroup> filterGroupIterator = internalNameToPyrGrpRent.values().iterator();
+        ArrayList<FilterGroup> rentFilterGroups = new ArrayList<>();
+        while (filterGroupIterator.hasNext()) {
+            rentFilterGroups.add(filterGroupIterator.next());
+        }
+        return rentFilterGroups;
     }
 
 

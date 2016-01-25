@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.makaan.ui.pyr.PyrLocationCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:layout_centerHorizontal="true"
+    android:background="@color/white"
+    android:clipToPadding="false"
+    android:padding="@dimen/pyr_location_card_padding">
+
+    <com.makaan.ui.pyr.PyrLocationCardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,3 +59,17 @@
     </LinearLayout>
 
 </com.makaan.ui.pyr.PyrLocationCardView>
+
+    <TextView
+        android:id="@+id/pyr_selected_locality_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/location_card_badge_margin_left_top"
+        android:layout_marginTop="@dimen/location_card_badge_margin_left_top"
+        android:background="@drawable/badge_circle"
+        android:elevation="@dimen/location_card_badge_elevation"
+        android:text="6"
+        android:textColor="@color/white"
+        android:textSize="@dimen/location_card_badge_text_size" />
+
+</RelativeLayout>

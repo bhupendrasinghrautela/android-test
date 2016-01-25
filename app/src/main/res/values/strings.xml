@@ -10,12 +10,27 @@
     <dimen name= "pyr_medium_text">14sp</dimen>
     <dimen name= "pyr_small_text">10sp</dimen>
     <dimen name= "pyr_very_small_text">5sp</dimen>
+    
+    <!-- jarvis strings-->
+    <string name="sign_up">sign up</string>
+    <string name="get_call_back">get call back</string>
+    <string name="indian_code">+91</string>
+    <string name="instantly">instantly</string>
+    <string name="jarvis_apply_button_string">OK</string>
+    <string name="jarvis_apply_filter_string">Would you like to apply filter?</string>
+    <string name="bhk_string">BHK</string>
+    <string name="et_type_hint">type</string>
+    <string name="et_price_hint">\u20B9 price</string>
+    <string name="et_locality_hint">locality</string>
+    <string name="btn_apply_string">apply</string>
+    <string name="give_you_call_back_string">We\'ll give you a call back</string>
+    
     <string name="pyr_buy">buy</string>
     <string name="pyr_rent">rent</string>
     <string name="pyr_name">name</string>
     <string name="pyr_email">email</string>
     <string name="pyr_mobile">mobile</string>
-    <string name="pyr_requirements">post requirements</string>
+    <string name="pyr_requirements">next</string>
     <string name="select_locality_text">Select Locality</string>
     <string name="select_locality_search_hint">Search Location</string>
     <string name="selected_items_count_text">See your selection below</string>
@@ -39,6 +54,37 @@
     <string name="apply">apply</string>
     <string name="jarvis_button_transition">jarvistransition</string>
     <string name= "no_social_account" > I don\'t have social account </string>
+    <string name="oops">oops!</string>
+    <string name="no_matchin_sellers">no sellers offering matching properties.</string>
+    <string name="hurray">hurray</string>
+    <string name="joy_ride">and the joy ride begins</string>
+    <string name="contacting_makaan_assist">for contacting makaan assists</string>
+    <string name="seller">seller\'s</string>
+    <string name="contact_you">will contact you shortly</string>
+    <string name="thank_you_continue">done</string>
+    <string name="receive_expert">you will shortly receive a call from makaan assist </string>
+    <string name="consultations">consultations, end to end services</string>
+    <string name="privacy">and assured privacy</string>
+    <string name="new_listings">new listings are added daily..</string>
+    <string name="alerts_msg">set alerts to get the latest in your inbox</string>
+    <string name="set_alerts">set alerts</string>
+    <string name="select_sellers">select sellers</string>
+    <string name="contact_top_advisors">contact 4 advisors</string>
+    <string name="contact_string">contact </string>
+    <string name="advisors_string">advisors</string>
+    <string name="add_user_name_toast">add user name</string>
+    <string name="invalid_email_toast">invalid email id</string>
+    <string name="invalid_phone_no_toast">invalid phone no</string>
+    <string name="listings_limit_toast">Only a maximum of 6 listings can be added</string>
+    <string name="otp_string">OTP</string>
+    <string name="verification_code_string">verification code</string>
+    <string name="resend_string">resend?</string>
+    <string name="skip_string">skip</string>
+    <string name="property_string">property</string>
+    <string name="select_property_type_string">select property type</string>
+    <string name="apply_string">apply</string>
+    <string name="contact_top_advisors_string">contact top advisors</string>
+    <string name="no_sellers_assist_string">you will receive properties in your inbox for given requirements</string>
 
     <!--nearby localities card-->
     <string name="property_for_sale_string">properties for\nsale</string>

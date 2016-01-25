@@ -302,7 +302,29 @@ public class MakaanNetworkClient {
                     }
                 });
         addToRequestQueue(stringRequest, tag);
+                }
+
+    public void put(final String url, JSONObject jsonObject,
+                     final StringRequestCallback stringRequestCallback, String tag) {
+
+        StringRequest stringRequest = new StringRequest
+                (Request.Method.PUT, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onSuccess(response);
+
+                    }
+                }, jsonObject, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onError();
+                    }
+                });
+        addToRequestQueue(stringRequest, tag);
     }
+
 
     private void addToRequestQueue(Request req, String tag) {
         if (null == tag) {
