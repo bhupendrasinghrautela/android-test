@@ -48,6 +48,8 @@ public class ApiConstants {
     public static final String SIMILAR_PROJECT = BASE_URL.concat("/data/v2/recommendation");
     public static final String PROJECT_CONFIG = BASE_URL.concat("/app/v1/project-configuration");
 
+    public static final String BLOG_URL = BASE_URL.concat("/data/v1/entity/blog");
+
 
     public static final String COLUMBUS_SUGGESTIONS = BASE_URL.concat("/columbus/app/v1/popular/suggestions");
 

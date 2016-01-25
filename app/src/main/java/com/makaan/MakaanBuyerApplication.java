@@ -9,6 +9,7 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.request.selector.Selector;
 import com.makaan.service.AgentService;
 import com.makaan.service.AmenityService;
+import com.makaan.service.BlogService;
 import com.makaan.service.BuilderService;
 import com.makaan.service.CityService;
 import com.makaan.service.ImageService;
@@ -60,6 +61,7 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(BuilderService.class, new BuilderService());
         MakaanServiceFactory.getInstance().registerService(AmenityService.class, new AmenityService());
         MakaanServiceFactory.getInstance().registerService(ProjectService.class, new ProjectService());
+        MakaanServiceFactory.getInstance().registerService(BlogService.class, new BlogService());
 
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();

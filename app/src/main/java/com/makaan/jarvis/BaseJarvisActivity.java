@@ -3,10 +3,12 @@ package com.makaan.jarvis;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -38,7 +40,8 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     @Bind(R.id.cta_card)
     LinearLayout mCtaCard;
 
-
+    Runnable mPopupDismissRunnable;
+    Handler mPopupDismissHandler =new Handler();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +60,29 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         getLayoutInflater().inflate(layoutResID, mActivityContent, true);
         super.setContentView(baseView);
 
+        setupPopup();
+
+    }
+
+    private void setupPopup(){
+        if(!isJarvisSupported() || null==mCtaCard){
+            return;
+        }
+        mPopupDismissRunnable=new Runnable() {
+
+            @Override
+            public void run() {
+                dismissPopupWithAnim();
+            }
+        };
+
+        mCtaCard.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                mPopupDismissHandler.removeCallbacks(mPopupDismissRunnable);
+                return false;
+            }
+        });
     }
 
     public void startActivity(Intent intent){
@@ -82,6 +108,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         Intent intent = new Intent(this, ChatActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
+
     }
 
     protected void animateJarvisHead() {
@@ -100,24 +127,23 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
             @Override
             public void run() {
                 mCtaCard.removeAllViews();
+
+                //TODO card factory is required to determine type of card
                 SerpFilterCard serpFilterCard =
                         (SerpFilterCard) getLayoutInflater().inflate(R.layout.card_serp_filter, null);
                 serpFilterCard.bindView(getApplicationContext(), message);
                 mCtaCard.addView(serpFilterCard);
-                showWithAnim();
+                showPopupWithAnim();
                 serpFilterCard.setOnApplyClickListener(new SerpFilterCard.OnApplyClickListener() {
                     @Override
                     public void onApplyClick() {
-                        dismissWithAnim();
+                        dismissPopupWithAnim();
                     }
                 });
 
-                mCtaCard.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        dismissWithAnim();
-                    }
-                }, JarvisConstants.JARVIS_ACTION_DISMISS_TIMEOUT);
+                mPopupDismissHandler.postDelayed(mPopupDismissRunnable, JarvisConstants.JARVIS_ACTION_DISMISS_TIMEOUT);
+
+
             }
         });
     }
@@ -132,13 +158,13 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         }
     }
 
-    private void showWithAnim(){
+    private void showPopupWithAnim(){
         mCtaCard.setVisibility(View.VISIBLE);
         Animation zoomin = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoom_in);
         mCtaCard.setAnimation(zoomin);
     }
 
-    private void dismissWithAnim(){
+    private void dismissPopupWithAnim(){
         mCtaCard.setVisibility(View.GONE);
         Animation zoomout = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoom_out);
         mCtaCard.setAnimation(zoomout);

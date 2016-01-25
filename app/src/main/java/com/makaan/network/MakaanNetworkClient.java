@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by vaibhav on 23/12/15.
@@ -235,6 +236,59 @@ public class MakaanNetworkClient {
 
         StringRequest stringRequest = new StringRequest
                 (Request.Method.POST, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onSuccess(response);
+
+                    }
+                }, jsonObject, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onError();
+                    }
+                });
+        addToRequestQueue(stringRequest, tag);
+    }
+
+    public void loginPost(final String url, final Map<String, String> params,
+                     final StringRequestCallback stringRequestCallback, String tag) {
+
+        StringRequest stringRequest = new StringRequest
+                (Request.Method.POST, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onSuccess(response);
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onError();
+                    }
+                }){
+
+                @Override
+                public String getBodyContentType() {
+                    return "application/x-www-form-urlencoded; charset=UTF-8";
+                }
+
+                @Override
+                protected Map<String, String> getParams() throws com.android.volley.AuthFailureError {
+                    return params;
+                };
+        };
+        addToRequestQueue(stringRequest, tag);
+    }
+
+    public void delete(final String url, JSONObject jsonObject,
+                     final StringRequestCallback stringRequestCallback, String tag) {
+
+        StringRequest stringRequest = new StringRequest
+                (Request.Method.DELETE, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         completeRequestInQueue(url);
