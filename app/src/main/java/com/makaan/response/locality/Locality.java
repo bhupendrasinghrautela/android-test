@@ -51,4 +51,30 @@ public class Locality {
     public String getAverageRentalDemanRise() {
         return (null != this.avgRentalDemandRisePercentage && this.avgRentalDemandRisePercentage >= 0) ? StringConstants.AVERAGE : StringConstants.AVERAGE;
     }
+
+    @Override
+    public String toString() {
+        return "Locality{" +
+                "label='" + label + '\'' +
+                ", cityId=" + cityId +
+                ", localityId=" + localityId +
+                ", livabilityScore=" + livabilityScore +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", avgPriceRisePercentage=" + avgPriceRisePercentage +
+                ", avgPricePerUnitArea=" + avgPricePerUnitArea +
+                ", averageRentPerMonth=" + averageRentPerMonth +
+                ", minAffordablePrice=" + minAffordablePrice +
+                ", maxBudgetPrice=" + maxBudgetPrice +
+                ", maxAffordablePrice=" + maxAffordablePrice +
+                ", minLuxuryPrice=" + minLuxuryPrice +
+                ", priceRiseRankPercentage=" + priceRiseRankPercentage +
+                ", avgRentalDemandRisePercentage=" + avgRentalDemandRisePercentage +
+                ", localityHeroshotImageUrl='" + localityHeroshotImageUrl + '\'' +
+                ", cityHeroshotImageUrl='" + cityHeroshotImageUrl + '\'' +
+                ", suburb=" + suburb +
+                ", listingAggregations=" + listingAggregations +
+                ", entityDescriptions=" + entityDescriptions +
+                '}';
+    }
 }

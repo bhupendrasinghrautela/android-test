@@ -60,8 +60,8 @@
     <string name="overview">an overview</string>
     <string name="properties_in">properties in</string>
     <string name="price_trends">price trends</string>
-    <string name="read_more">read more</string>
-    <string name="read_less">read less</string>
+    <string name="read_more">more</string>
+    <string name="read_less">less</string>
     <string name="intrested_in">interested in</string>
     <string name="know_more">know more about</string>
     <string name="name">name</string>
@@ -95,4 +95,7 @@
     <string name="locality_properties_label">properties in electronic city</string>
     <string name="locality_switch_buy">buy</string>
     <string name="locality_switch_rent">rent</string>
+    <string name="locality_nearby_localities_view_details">view details</string>
+    <string name="locality_top_builders_view_details">view seller details</string>
+    <string name="locality_top_agents_view_details">view projects</string>
 </resources>

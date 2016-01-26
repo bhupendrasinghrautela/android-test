@@ -1,13 +1,12 @@
 package com.makaan.fragment.locality;
 
-import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -20,6 +19,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.event.agents.callback.TopAgentsCallback;
+import com.makaan.event.locality.OnNearByLocalityClickEvent;
+import com.makaan.event.locality.OnTopAgentClickEvent;
+import com.makaan.event.locality.OnTopBuilderClickEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.agents.TopAgent;
@@ -28,10 +30,13 @@ import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Builder;
 import com.makaan.service.AgentService;
 import com.makaan.service.MakaanServiceFactory;
-import com.makaan.util.Blur;
+import com.makaan.util.AppBus;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 
@@ -39,7 +44,7 @@ import butterknife.Bind;
 /**
  * Created by tusharchaudhary on 1/19/16.
  */
-public class NearByLocalitiesFragment extends MakaanBaseFragment {
+public class NearByLocalitiesFragment extends MakaanBaseFragment implements View.OnClickListener{
     private LinearLayoutManager mLayoutManager;
     private NearByLocalitiesAdapter mAdapter;
     private String title;
@@ -53,6 +58,9 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment {
     @Bind(R.id.tv_nearby_localities_title)
     public TextView titleTv ;
     Long citId,localitId;
+    CardType cardType;
+    private List<NearByLocalities> nearByLocalities;
+
 
     @Override
     protected int getContentViewId() {
@@ -97,20 +105,22 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment {
     }
 
     public void setData(List<NearByLocalities> nearByLocalities){
-        mAdapter = new NearByLocalitiesAdapter(nearByLocalities);
+        this.nearByLocalities = nearByLocalities;
+        mAdapter = new NearByLocalitiesAdapter(nearByLocalities,this);
         if(mRecyclerView!=null)
             mRecyclerView.setAdapter(mAdapter);
     }
 
     public void setNearByLocalityData(ArrayList<Locality> nearbyLocalities) {
-        setData(getData(nearbyLocalities));
+        setData(getDataForNearByLocalities(nearbyLocalities));
     }
-    private List<NearByLocalitiesFragment.NearByLocalities> getData(ArrayList<Locality> nearbyLocalities) {
+    private List<NearByLocalitiesFragment.NearByLocalities> getDataForNearByLocalities(ArrayList<Locality> nearbyLocalities) {
         List<NearByLocalitiesFragment.NearByLocalities> nearByLocalities = new ArrayList<>();
+        this.cardType = CardType.LOCALITY;
         for(Locality locality:nearbyLocalities){
             int[] counts = getCountOfNumberOfListingsBasedOnType(locality.listingAggregations);
             int[] medians = calculateMedianForListings(locality.listingAggregations);
-            nearByLocalities.add(new NearByLocalitiesFragment.NearByLocalities(""+locality.localityHeroshotImageUrl,""+counts[1]+" +",""+counts[0]+" +","median price: "+medians[0]+"/ sq ft",locality.label));
+            nearByLocalities.add(new NearByLocalitiesFragment.NearByLocalities(""+locality.localityHeroshotImageUrl,""+(counts[1] == 0?"0":counts[1]+" +"),""+(counts[0] == 0?"0":counts[0]+" +"),"median price: "+medians[0]+"/ sq ft",locality.label, locality.localityId));
         }
         return nearByLocalities;
     }
@@ -164,8 +174,9 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment {
 
     private List<NearByLocalities> getDarForAgents(ArrayList<TopAgent> topAgents) {
         List<NearByLocalities> nearByLocalities = new ArrayList<>();
+        this.cardType = CardType.TOPAGENTS;
         for(TopAgent agent:topAgents){
-            nearByLocalities.add(new NearByLocalities("","0",""+agent.listingCount,""+agent.agent.type,""+agent.agent.name));
+            nearByLocalities.add(new NearByLocalities("","0",""+agent.listingCount,""+agent.agent.type,""+agent.agent.name, (long) agent.agent.id));
         }
         return nearByLocalities;
     }
@@ -176,14 +187,61 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment {
 
     private List<NearByLocalities> getDataForTopBuilder(ArrayList<Builder> builders) {
         List<NearByLocalities> nearByLocalities = new ArrayList<>();
+        this.cardType = CardType.TOPBUILDERS;
+        String url = "";
         for(Builder builder: builders){
-            nearByLocalities.add(new NearByLocalities(builder.imageUrl,"", ""+builder.projectCount, ""+builder.description,""+builder.name));
-        }
+
+            if(builder.images !=null && builder.images.size() >0){
+                url = builder.images.get(0).absolutePath;
+            }
+            if(builder.establishedDate!=null) {
+                Date date = new Date(Long.parseLong(builder.establishedDate));
+                int experience = getDiffYears(date, new Date());
+                nearByLocalities.add(new NearByLocalities(url, "0", "" + builder.projectCount.intValue(), "experience : " + experience+" years", "" + builder.name, builder.id));
+            }else{
+                nearByLocalities.add(new NearByLocalities(url, "0", "" + builder.projectCount.intValue(), "", "" + builder.name, builder.id));
+            }
+            }
         return nearByLocalities;
     }
 
+    public static int getDiffYears(Date first, Date last) {
+        Calendar a = getCalendar(first);
+        Calendar b = getCalendar(last);
+        int diff = b.get(Calendar.YEAR) - a.get(Calendar.YEAR);
+        if (a.get(Calendar.MONTH) > b.get(Calendar.MONTH) ||
+                (a.get(Calendar.MONTH) == b.get(Calendar.MONTH) && a.get(Calendar.DATE) > b.get(Calendar.DATE))) {
+            diff--;
+        }
+        return diff;
+    }
+
+    public static Calendar getCalendar(Date date) {
+        Calendar cal = Calendar.getInstance(Locale.getDefault());
+        cal.setTime(date);
+        return cal;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Integer position = (Integer) v.getTag();
+        if(nearByLocalities!=null){
+            switch (cardType){
+                case LOCALITY:
+                    AppBus.getInstance().post(new OnNearByLocalityClickEvent(nearByLocalities.get(position).id));
+                    break;
+                case TOPAGENTS:
+                    AppBus.getInstance().post(new OnTopAgentClickEvent(nearByLocalities.get(position).id));
+                    break;
+                case TOPBUILDERS:
+                    AppBus.getInstance().post(new OnTopBuilderClickEvent(nearByLocalities.get(position).id));
+                    break;
+            }
+        }
+    }
 
     private class NearByLocalitiesAdapter extends RecyclerView.Adapter<NearByLocalitiesAdapter.ViewHolder> {
+        private final View.OnClickListener onClickListener;
         private List<NearByLocalities> nearByLocalitiesList;
 
         public class ViewHolder extends RecyclerView.ViewHolder {
@@ -192,21 +250,27 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment {
             public TextView medianTv;
             public TextView numberOfPropsForSaleTv;
             public TextView numberOfPropsForRentTv;
-            public TextView detailsTv;
             public ImageView localityIv;
+            public LinearLayout rentLl;
+            public CardView cardView;
+            public TextView primarySaleLabelTv;
             public ViewHolder(View v) {
                 super(v);
                 nameTv = (TextView) v.findViewById(R.id.tv_nearby_localities_name);
                 medianTv = (TextView) v.findViewById(R.id.tv_nearby_localities_median);
                 numberOfPropsForSaleTv = (TextView) v.findViewById(R.id.tv_nearby_localities_sale);
                 numberOfPropsForRentTv = (TextView) v.findViewById(R.id.tv_nearby_localities_rent);
-                detailsTv = (TextView) v.findViewById(R.id.tv_nearby_localities_detail);
                 localityIv = (ImageView) v.findViewById(R.id.iv_nearby_locality);
+                rentLl = (LinearLayout) v.findViewById(R.id.ll_nearby_locality_rent);
+                primarySaleLabelTv = (TextView) v.findViewById(R.id.tv_nearby_localities_sale_label);
+                cardView = (CardView) v.findViewById(R.id.card_view_nearby_locality);
+                cardView.setOnClickListener(onClickListener);
             }
         }
 
-        public NearByLocalitiesAdapter(List<NearByLocalities> nearByLocalitiesList) {
+        public NearByLocalitiesAdapter(List<NearByLocalities> nearByLocalitiesList,View.OnClickListener onClickListener) {
             this.nearByLocalitiesList = nearByLocalitiesList;
+            this.onClickListener = onClickListener;
         }
 
         @Override
@@ -225,7 +289,22 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment {
             holder.nameTv.setText(nearByLocality.localityName);
             holder.numberOfPropsForSaleTv.setText(nearByLocality.numberOfPropsForSale);
             holder.numberOfPropsForRentTv.setText(nearByLocality.numberOfPropsForRent);
-//            holder.localityIv.setImageResource(placeholderResource);
+            holder.cardView.setTag(position);
+            switch (cardType){
+                case LOCALITY:
+                    holder.rentLl.setVisibility(View.VISIBLE);
+                    holder.primarySaleLabelTv.setText("properties for sale");
+                    break;
+                case TOPAGENTS:
+                    holder.primarySaleLabelTv.setText("properties for sale");
+                    holder.rentLl.setVisibility(View.GONE);
+                    break;
+                case TOPBUILDERS:
+                    holder.rentLl.setVisibility(View.VISIBLE);
+                    holder.rentLl.setVisibility(View.GONE);
+                    holder.primarySaleLabelTv.setText("total projects");
+                    break;
+            }
 
             if(nearByLocality.imgUrl!=null)
             MakaanNetworkClient.getInstance().getImageLoader().get(nearByLocality.imgUrl, new ImageLoader.ImageListener() {
@@ -255,17 +334,23 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment {
         String imgUrl;
         String localityName;
         String medianPrice;
+        Long id;
 
-        public NearByLocalities(String imgUrl, String numberOfPropsForRent, String numberOfPropsForSale, String medianPrice, String localityName) {
+        public NearByLocalities(String imgUrl, String numberOfPropsForRent, String numberOfPropsForSale, String medianPrice, String localityName, Long id) {
             this.imgUrl = imgUrl;
             this.numberOfPropsForRent = numberOfPropsForRent;
             this.numberOfPropsForSale = numberOfPropsForSale;
             this.medianPrice = medianPrice;
             this.localityName = localityName;
+            this.id = id;
         }
 
         String numberOfPropsForSale;
         String numberOfPropsForRent;
+    }
+
+    public enum CardType{
+        LOCALITY, TOPAGENTS, TOPBUILDERS
     }
 
 }

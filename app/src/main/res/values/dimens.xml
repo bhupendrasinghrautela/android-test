@@ -725,5 +725,5 @@
     <dimen name="locality_properties_recycler_height">234dp</dimen>
     <dimen name="locality_text_v_v_small">12sp</dimen>
     <dimen name="locality_switch_margin_left">15dp</dimen>
-    <dimen name="locality_nearby_localities_recycler_height">470dp</dimen>
+    <dimen name="locality_nearby_localities_recycler_height">440dp</dimen>
 </resources>

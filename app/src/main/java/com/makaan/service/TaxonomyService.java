@@ -30,7 +30,7 @@ public class TaxonomyService implements MakaanService {
         taxonomyCardList.add(luxuryCard);
         Selector luxurySelector = new Selector();
         luxuryCard.label1 = LUXURY_PROPERTIES;
-        luxuryCard.label1 = LUXURY_PROPERTIES_MSG;
+        luxuryCard.label2 = LUXURY_PROPERTIES_MSG;
         luxuryCard.selector = luxurySelector;
 
         luxurySelector.term(CITY_ID, cityId.toString()).range(PRICE, minLuxuryPrice, null);
@@ -39,7 +39,7 @@ public class TaxonomyService implements MakaanService {
         taxonomyCardList.add(affordableCard);
         Selector affordableSelector = new Selector();
         affordableCard.label1 = AFFORDABLE_PROPERTIES;
-        affordableCard.label1 = AFFORDABLE_PROPERTIES_MSG;
+        affordableCard.label2 = AFFORDABLE_PROPERTIES_MSG;
         affordableCard.selector = affordableSelector;
 
         affordableSelector.term(CITY_ID, cityId.toString()).range(PRICE, minAffodablePrice, maxAffodablePrice);
@@ -48,7 +48,7 @@ public class TaxonomyService implements MakaanService {
         taxonomyCardList.add(budgetCard);
         Selector budgetSelector = new Selector();
         budgetCard.label1 = BUDGET_HOMES;
-        budgetCard.label1 = BUDGET_HOMES_MSG;
+        budgetCard.label2 = BUDGET_HOMES_MSG;
         budgetCard.selector = budgetSelector;
 
         budgetSelector.term(CITY_ID, cityId.toString()).range(PRICE, null, maxBudgetPrice);
@@ -59,7 +59,7 @@ public class TaxonomyService implements MakaanService {
         taxonomyCardList.add(bestCard);
         Selector bestSelector = new Selector();
         bestCard.label1 = BEST_PROPERTIES;
-        bestCard.label1 = BEST_PROPERTIES_MSG;
+        bestCard.label2 = BEST_PROPERTIES_MSG;
         bestCard.selector = bestSelector;
 
         bestSelector.term(CITY_ID, cityId.toString()).sort(LISTING_QUALITY_SCORE,SORT_DESC);
@@ -69,7 +69,7 @@ public class TaxonomyService implements MakaanService {
         taxonomyCardList.add(rentalCard);
         Selector rentalSelector = new Selector();
         rentalCard.label1 = NEW_RENTAL_PROPERTIES;
-        rentalCard.label1 = NEW_RENTAL_PROPERTIES_MSG;
+        rentalCard.label2 = NEW_RENTAL_PROPERTIES_MSG;
         rentalCard.selector = rentalSelector;
 
         rentalSelector.term(CITY_ID, cityId.toString()).term(LISTING_CATEGORY,RENTAL).sort(LISTING_CREATED_AT, SORT_DESC);
@@ -87,7 +87,7 @@ public class TaxonomyService implements MakaanService {
         taxonomyCardList.add(luxuryCard);
         Selector luxurySelector = new Selector();
         luxuryCard.label1 = LUXURY_PROPERTIES;
-        luxuryCard.label1 = LUXURY_PROPERTIES_MSG;
+        luxuryCard.label2 = LUXURY_PROPERTIES_MSG;
         luxuryCard.selector = luxurySelector;
 
         luxurySelector.term(LOCALITY_ID, localityId.toString()).range(PRICE, minLuxuryPrice, null);
@@ -96,7 +96,7 @@ public class TaxonomyService implements MakaanService {
         taxonomyCardList.add(affordableCard);
         Selector affordableSelector = new Selector();
         affordableCard.label1 = AFFORDABLE_PROPERTIES;
-        affordableCard.label1 = AFFORDABLE_PROPERTIES_MSG;
+        affordableCard.label2 = AFFORDABLE_PROPERTIES_MSG;
         affordableCard.selector = affordableSelector;
 
         affordableSelector.term(LOCALITY_ID, localityId.toString()).range(PRICE, minAffodablePrice, maxAffodablePrice);
@@ -105,7 +105,7 @@ public class TaxonomyService implements MakaanService {
         taxonomyCardList.add(budgetCard);
         Selector budgetSelector = new Selector();
         budgetCard.label1 = BUDGET_HOMES;
-        budgetCard.label1 = BUDGET_HOMES_MSG;
+        budgetCard.label2 = BUDGET_HOMES_MSG;
         budgetCard.selector = budgetSelector;
 
         budgetSelector.term(LOCALITY_ID, localityId.toString()).range(PRICE, null, maxBudgetPrice);
@@ -116,7 +116,7 @@ public class TaxonomyService implements MakaanService {
         taxonomyCardList.add(bestCard);
         Selector bestSelector = new Selector();
         bestCard.label1 = BEST_PROPERTIES;
-        bestCard.label1 = BEST_PROPERTIES_MSG;
+        bestCard.label2 = BEST_PROPERTIES_MSG;
         bestCard.selector = bestSelector;
 
         bestSelector.term(LOCALITY_ID, localityId.toString()).sort(LISTING_QUALITY_SCORE,SORT_DESC);
@@ -126,7 +126,7 @@ public class TaxonomyService implements MakaanService {
         taxonomyCardList.add(rentalCard);
         Selector rentalSelector = new Selector();
         rentalCard.label1 = NEW_RENTAL_PROPERTIES;
-        rentalCard.label1 = NEW_RENTAL_PROPERTIES_MSG;
+        rentalCard.label2 = NEW_RENTAL_PROPERTIES_MSG;
         rentalCard.selector = rentalSelector;
 
         rentalSelector.term(LOCALITY_ID, localityId.toString()).term(LISTING_CATEGORY,RENTAL).sort(LISTING_CREATED_AT, SORT_DESC);

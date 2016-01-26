@@ -1,20 +1,21 @@
 package com.makaan.fragment.locality;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.FadeInNetworkImageView;
@@ -25,6 +26,9 @@ import com.makaan.event.agents.callback.TopAgentsCallback;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.locality.LocalityByIdEvent;
 import com.makaan.event.locality.NearByLocalitiesEvent;
+import com.makaan.event.locality.OnNearByLocalityClickEvent;
+import com.makaan.event.locality.OnTopAgentClickEvent;
+import com.makaan.event.locality.OnTopBuilderClickEvent;
 import com.makaan.event.locality.TopBuilderInLocalityEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
@@ -40,6 +44,7 @@ import com.makaan.service.AmenityService;
 import com.makaan.service.LocalityService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.TaxonomyService;
+import com.makaan.ui.CompressedTextView;
 import com.makaan.util.Blur;
 import com.squareup.otto.Subscribe;
 
@@ -76,6 +81,8 @@ public class LocalityFragment extends MakaanBaseFragment{
     TextView annualRentDemandGrowthTv;
     @Bind(R.id.ll_locality_fragment)
     LinearLayout frame;
+    @Bind(R.id.compressed_text_view)
+    CompressedTextView compressedTv;
 
     private static final int BLUR_EFFECT_HEIGHT = 300;
     private float alpha;
@@ -109,6 +116,7 @@ public class LocalityFragment extends MakaanBaseFragment{
     @Subscribe
     public void onResults(LocalityByIdEvent localityByIdEvent){
         locality = localityByIdEvent.locality;
+        Log.i(this.getClass().getSimpleName(), locality.toString());
         populateLocalityData();
         frame.setVisibility(View.VISIBLE);
         fetchHero();
@@ -144,10 +152,15 @@ public class LocalityFragment extends MakaanBaseFragment{
     }
 
     private void populateLocalityData() {
+        if(locality.description !=null && !locality.description.isEmpty())
+            overviewContentTV.setText(Html.fromHtml(locality.description));
+        else
+            compressedTv.setVisibility(View.GONE);
         mCityCollapseToolbar.setTitle(locality.label);
-        overviewContentTV.setText(locality.description);
         livinScoreTv.setText("" + locality.livabilityScore);
-        livingScoreProgress.setProgress((int) (locality.livabilityScore * 10));
+        livingScoreProgress.setProgress(locality.livabilityScore == null ? 0 : (int) (locality.livabilityScore * 10));
+        livingScoreProgress.setVisibility(locality.livabilityScore == null ? View.GONE : View.VISIBLE);
+        livinScoreTv.setVisibility(locality.livabilityScore == null ? View.GONE: View.VISIBLE);
         calculateMedian(locality.listingAggregations);
         salesMedianPrice.setText("Rs " + meadianSale + " / sq ft");
         rentMedianPrice.setText("Rs " + meadianRental + " / month");
@@ -163,6 +176,9 @@ public class LocalityFragment extends MakaanBaseFragment{
                 Log.e("value", scrollY + " " + oldScrollY + " " + alpha);
                 if (alpha > 1) {
                     alpha = 1;
+                    mCityCollapseToolbar.setTitle(locality.label+" - "+locality.suburb.city.label);
+                }else{
+                    mCityCollapseToolbar.setTitle(locality.label);
                 }
                 mBlurredCityImage.setAlpha(alpha);
             }
@@ -170,31 +186,37 @@ public class LocalityFragment extends MakaanBaseFragment{
     }
 
     private void addKyn(List<AmenityCluster> amenityClusters) {
-        KynFragment newFragment = new KynFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("title", getResources().getString(R.string.locality_kyn_title));
-        newFragment.setArguments(bundle);
-        initFragment(R.id.container_nearby_localities_kyn, newFragment, false);
-        newFragment.setData(amenityClusters);
+        if(amenityClusters != null && amenityClusters.size()>0) {
+            KynFragment newFragment = new KynFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("title", getResources().getString(R.string.locality_kyn_title));
+            newFragment.setArguments(bundle);
+            initFragment(R.id.container_nearby_localities_kyn, newFragment, false);
+            newFragment.setData(amenityClusters);
+        }
     }
 
     private void addNearByLocalitiesFragment(ArrayList<Locality> nearbyLocalities) {
-        NearByLocalitiesFragment newFragment = new NearByLocalitiesFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("title", getResources().getString(R.string.locality_nearby_localities_title));
-        bundle.putInt("placeholder", R.drawable.placeholder_localities_nearby);
-        newFragment.setArguments(bundle);
-        initFragment(R.id.container_nearby_localities, newFragment, false);
-        newFragment.setNearByLocalityData(nearbyLocalities);
+        if(nearbyLocalities != null && nearbyLocalities.size()>0) {
+            NearByLocalitiesFragment newFragment = new NearByLocalitiesFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("title", getResources().getString(R.string.locality_nearby_localities_title));
+            bundle.putInt("placeholder", R.drawable.placeholder_localities_nearby);
+            newFragment.setArguments(bundle);
+            initFragment(R.id.container_nearby_localities, newFragment, false);
+            newFragment.setNearByLocalityData(nearbyLocalities);
+        }
     }
 
     private void addLocalitiesApartmentsFragment(ArrayList<ListingAggregation> listingAggregations) {
-        LocalitiesApartmentsFragment newFragment = new LocalitiesApartmentsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("title", getResources().getString(R.string.locality_available_locality_status));
-        newFragment.setArguments(bundle);
-        initFragment(R.id.container_nearby_localities_apartments, newFragment, false);
-        newFragment.setData(listingAggregations);
+        if(listingAggregations != null && listingAggregations.size()>0) {
+            LocalitiesApartmentsFragment newFragment = new LocalitiesApartmentsFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("title", getResources().getString(R.string.locality_available_locality_status));
+            newFragment.setArguments(bundle);
+            initFragment(R.id.container_nearby_localities_apartments, newFragment, false);
+            newFragment.setData(listingAggregations);
+        }
     }
 
     private void addPriceTrendFragment() {
@@ -212,41 +234,49 @@ public class LocalityFragment extends MakaanBaseFragment{
 
 
     private void addLocalitiesLifestyleFragment(ArrayList<EntityDesc> entityDescriptions) {
-        LocalityLifestyleFragment newFragment = new LocalityLifestyleFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("title", getResources().getString(R.string.localities_lifestyle_title));
-        newFragment.setArguments(bundle);
-        initFragment(R.id.container_nearby_localities_lifestyle, newFragment, false);
-        newFragment.setData(entityDescriptions);
+        if(entityDescriptions != null && entityDescriptions.size()>0) {
+            LocalityLifestyleFragment newFragment = new LocalityLifestyleFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("title", getResources().getString(R.string.localities_lifestyle_title));
+            newFragment.setArguments(bundle);
+            initFragment(R.id.container_nearby_localities_lifestyle, newFragment, false);
+            newFragment.setData(entityDescriptions);
+        }
     }
 
     private void addTopAgentsFragment(ArrayList<TopAgent> topAgents) {
-        NearByLocalitiesFragment newFragment = new NearByLocalitiesFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("title", getResources().getString(R.string.locality_top_agents_label));
-        bundle.putInt("placeholder", R.drawable.placeholder_agent);
-        newFragment.setArguments(bundle);
-        initFragment(R.id.container_nearby_localities_top_agents, newFragment, false);
-        newFragment.setDataForTopAgents(locality.cityId, locality.localityId, topAgents);
+        if(topAgents != null && topAgents.size()>0) {
+            NearByLocalitiesFragment newFragment = new NearByLocalitiesFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("title", getResources().getString(R.string.locality_top_agents_label));
+            bundle.putInt("placeholder", R.drawable.placeholder_agent);
+            newFragment.setArguments(bundle);
+            initFragment(R.id.container_nearby_localities_top_agents, newFragment, false);
+            newFragment.setDataForTopAgents(locality.cityId, locality.localityId, topAgents);
+        }
     }
 
 
     private void addTopBuilders(ArrayList<Builder> builders) {
-        NearByLocalitiesFragment newFragment = new NearByLocalitiesFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("title", getResources().getString(R.string.locality_top_builders_label));
-        bundle.putInt("placeholder", R.drawable.placeholder_localities_builders);
-        newFragment.setArguments(bundle);
-        initFragment(R.id.container_nearby_localities_top_builders, newFragment, false);
-        newFragment.setDataForTopBuilders(builders);
+        if(builders != null && builders.size()>0) {
+            NearByLocalitiesFragment newFragment = new NearByLocalitiesFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("title", getResources().getString(R.string.locality_top_builders_label));
+            bundle.putInt("placeholder", R.drawable.placeholder_localities_builders);
+            newFragment.setArguments(bundle);
+            initFragment(R.id.container_nearby_localities_top_builders, newFragment, false);
+            newFragment.setDataForTopBuilders(builders);
+        }
     }
     private void addProperties(List<TaxonomyCard> taxonomyCardList) {
-        LocalityPropertiesFragment newFragment = new LocalityPropertiesFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("title", getResources().getString(R.string.locality_properties_label));
-        newFragment.setArguments(bundle);
-        initFragment(R.id.container_nearby_localities_props, newFragment, false);
-        newFragment.setData(taxonomyCardList);
+        if (taxonomyCardList != null && taxonomyCardList.size() > 0) {
+            LocalityPropertiesFragment newFragment = new LocalityPropertiesFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("title", getResources().getString(R.string.locality_properties_label));
+            newFragment.setArguments(bundle);
+            initFragment(R.id.container_nearby_localities_props, newFragment, false);
+            newFragment.setData(taxonomyCardList);
+        }
     }
 
     private void fetchHero()
@@ -305,6 +335,24 @@ public class LocalityFragment extends MakaanBaseFragment{
             fragmentTransaction.addToBackStack(fragment.getClass().getName());
         }
         fragmentTransaction.commitAllowingStateLoss();
+    }
+
+    @Subscribe
+    public void onResult(OnNearByLocalityClickEvent nearByLocalityClickEvent){
+        Toast.makeText(getActivity(), "Nearby clicked, locality id :" + nearByLocalityClickEvent.localityId, Toast.LENGTH_SHORT);
+        Intent intent = new Intent(getActivity(),LocalityActivity.class);
+        intent.putExtra(LocalityActivity.LOCALITY_ID, nearByLocalityClickEvent.localityId);
+        startActivity(intent);
+    }
+
+    @Subscribe
+    public void onResult(OnTopAgentClickEvent onTopAgentClickEvent){
+        Toast.makeText(getActivity(), "Agent clicked, agent id :" + onTopAgentClickEvent.agentId, Toast.LENGTH_SHORT);
+    }
+
+    @Subscribe
+    public void onResult(OnTopBuilderClickEvent onTopBuilderClickEvent){
+        Toast.makeText(getActivity(), "Builder clicked, builder id :" + onTopBuilderClickEvent.builderId, Toast.LENGTH_SHORT);
     }
 
 }
