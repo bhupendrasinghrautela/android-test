@@ -1,7 +1,9 @@
 package com.makaan.util;
 
 import android.content.Context;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.RelativeSizeSpan;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -119,6 +121,61 @@ public class StringUtil {
             //TODO: log atleast
         }
         return "Price on request";
+    }
+
+
+    public static SpannableString getSpannedPrice(double price) {
+        try {
+            if(Double.isNaN(price)) {
+                // TODO check for fail safe value
+                return new SpannableString(String.valueOf(price));
+            }
+            if (price == 0) {
+                return new SpannableString("Price on request");
+            }
+            StringBuilder priceStringBuilder = new StringBuilder();
+            priceStringBuilder.append("\u20B9");
+            double displayPrice = (double) price / 100000.00;
+
+            if(displayPrice < 1) {
+                displayPrice = (double) price / 1000.00;
+                DecimalFormat df = new DecimalFormat("#.#");
+                try {
+                    priceStringBuilder.append(String.format("%.1f",
+                            Double.parseDouble(df.format(displayPrice))));
+                } catch (NumberFormatException nfe) {
+                    return new SpannableString("Price on request");
+                }
+                priceStringBuilder.append(" K");
+            } else if (displayPrice < 100.0) {
+                DecimalFormat df = new DecimalFormat("#.#");
+                try {
+                    priceStringBuilder.append(String.format("%.1f",
+                            Double.parseDouble(df.format(displayPrice))));
+                } catch (NumberFormatException nfe) {
+                    return new SpannableString("Price on request");
+                }
+                priceStringBuilder.append(" L");
+            } else {
+                DecimalFormat df = new DecimalFormat("#.##");
+                displayPrice = displayPrice / 100;
+                try {
+                    priceStringBuilder.append(String.format("%.2f",
+                            Double.parseDouble(df.format(displayPrice))));
+                } catch (NumberFormatException nfe) {
+                    return new SpannableString("Price on request");
+                }
+                priceStringBuilder.append(" Cr");
+            }
+            SpannableString spannableString=  new SpannableString(priceStringBuilder);
+            spannableString.setSpan(new RelativeSizeSpan(0.8f), 0, 1, 0); // set size
+            spannableString.setSpan(new RelativeSizeSpan(0.8f),
+                    priceStringBuilder.length()-2,priceStringBuilder.length() , 0);
+            return spannableString;
+        } catch (Exception e) {
+            //TODO: log atleast
+        }
+        return new SpannableString("Price on request");
     }
 
     public static boolean isValidKeyword(String inputString, String allowedRegex) {

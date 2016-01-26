@@ -23,7 +23,7 @@
         android:id="@+id/fragment_dialog_filters_item_layout_grid_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:horizontalSpacing="@dimen/fragment_dialog_filters_toggle_button_grid_item_horizontal_padding"
+        android:horizontalSpacing="@dimen/jarvis_bhk_horizontal_spacing"
         android:isScrollContainer="false"
         android:numColumns="4"
         android:verticalSpacing="@dimen/fragment_dialog_filters_checkbox_grid_item_vertical_padding"  />
