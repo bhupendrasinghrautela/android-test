@@ -5,9 +5,9 @@
     android:layout_margin="10dp"
     android:orientation="vertical"
     android:background="@null"
-    android:paddingBottom="5dp"
-    android:paddingRight="10dp"
-    android:paddingTop="5dp" >
+    android:paddingBottom="@dimen/out_text_card_padding_top_bottom"
+    android:paddingRight="@dimen/out_text_card_padding_right"
+    android:paddingTop="@dimen/out_text_card_padding_top_bottom" >
 
 
     <TextView
@@ -16,11 +16,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:background="@drawable/bg_message_you"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp"
+        android:paddingBottom="@dimen/out_text_message_padding_top_bottom"
+        android:paddingLeft="@dimen/out_text_message_padding_left_right"
+        android:paddingRight="@dimen/out_text_message_padding_left_right"
+        android:paddingTop="@dimen/out_text_message_padding_top_bottom"
         android:textColor="@color/white"
-        android:textSize="16dp" />
+        android:textSize="@dimen/out_text_message_text_size" />
 
 </com.makaan.jarvis.ui.cards.OutTextCard>
