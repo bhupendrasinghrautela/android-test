@@ -1,5 +1,6 @@
 package com.makaan.activity.listing;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -91,7 +92,7 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
 
         //((AgentService) (MakaanServiceFactory.getInstance().getService(AgentService.class))).getTopAgentsForLocality(2L, 50175L, 5, false, new TopRentAgentsInLocalityCallback());
 
-        /*Intent intent = new Intent(this, SerpActivity.class);
+        /*Intent intent = new Intent(this, PropertyActivity.class);
         startActivity(intent);*/
 
         if(!CookiePreferences.isUserLoggedIn(this)) {
