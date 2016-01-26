@@ -156,7 +156,7 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
 
     @Subscribe
     public void onExposeMessage(OnExposeEvent event){
-        animateJarvisHead();
+        displayPopupWindow(event.message);
     }
 
     @Override
