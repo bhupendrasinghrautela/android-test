@@ -88,6 +88,7 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         //((ProjectService) (MakaanServiceFactory.getInstance().getService(ProjectService.class))).getSimilarProjects(506147L,10);
         //((BlogService) (MakaanServiceFactory.getInstance().getService(BlogService.class))).getBlogs("Home");
         ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getOtherSellersOnListingDetail(654368L,3,3,0,0,0,5);
+        ((PriceTrendService) (MakaanServiceFactory.getInstance().getService(PriceTrendService.class))).getPriceTrendForProject(500773L,12);
 
 
 

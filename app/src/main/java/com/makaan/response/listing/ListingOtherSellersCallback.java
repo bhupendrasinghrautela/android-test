@@ -37,10 +37,14 @@ public class ListingOtherSellersCallback extends JSONGetCallback {
 
             JSONObject facets = data.optJSONObject("facets");
             JSONObject sellerIdFacet = facets.optJSONObject("sellerId");
+            JSONObject bedRoomsFacet = facets.optJSONObject("bedrooms");
 
             Type type = new TypeToken<HashMap<Long, Long>>() {
             }.getType();
-            HashMap<Long, Long> sellerPropCountMap = MakaanBuyerApplication.gson.fromJson(sellerIdFacet.toString(), type);
+            HashMap<Long, Long> sellerPropCountMap = new HashMap<>();
+            if(null != sellerIdFacet) {
+                sellerPropCountMap = MakaanBuyerApplication.gson.fromJson(sellerIdFacet.toString(), type);
+            }
 
 
             Type list = new TypeToken<ArrayList<ListingDetail>>() {

@@ -265,12 +265,12 @@ public class Selector implements Cloneable {
             }
 
             String groupBySelectorJson = groupBySelector.build();
-            if (!StringUtil.isBlank(sortSelectorJson)) {
+            if (!StringUtil.isBlank(groupBySelectorJson)) {
 
                 if (firstElementAdded) {
                     jsonBuilder.append(",\"");
                 }
-                jsonBuilder.append("groupBy").append("\"").append(":").append(sortSelectorJson);
+                jsonBuilder.append("groupBy").append("\"").append(":").append(groupBySelectorJson);
                 firstElementAdded = true;
             }
 

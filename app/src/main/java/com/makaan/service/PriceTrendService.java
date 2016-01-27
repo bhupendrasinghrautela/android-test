@@ -2,13 +2,14 @@ package com.makaan.service;
 
 import com.makaan.constants.ApiConstants;
 import com.makaan.event.trend.callback.LocalityTrendCallback;
+import com.makaan.event.trend.callback.ProjectTrendChartCallback;
 import com.makaan.network.MakaanNetworkClient;
 
 import java.util.ArrayList;
 
 import static com.makaan.constants.RequestConstants.FILTERS;
 import static com.makaan.constants.RequestConstants.LOCALITY_ID;
-import static com.makaan.constants.RequestConstants.MONTH_DURATION;
+import static com.makaan.constants.RequestConstants.*;
 
 /**
  * Created by vaibhav on 13/01/16.
@@ -41,6 +42,14 @@ public class PriceTrendService  implements MakaanService{
         }
     }
 
+
+    public void getPriceTrendForProject(Long projectId, int monthDuration){
+        StringBuilder priceTrendUrl = new StringBuilder(ApiConstants.PROJECT_TREND_URL);
+        priceTrendUrl.append("&").append(MONTH_DURATION).append("=").append(monthDuration).append("&").append(FILTERS).append("=projectId==").append(projectId.toString());
+
+        MakaanNetworkClient.getInstance().get(priceTrendUrl.toString(), new ProjectTrendChartCallback());
+
+    }
 
 
 }
