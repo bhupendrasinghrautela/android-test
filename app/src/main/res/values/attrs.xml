@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Custom styles to be declared here -->
+<resources>
+
+    <!--Custom style for expandablelayout -->
+    <declare-styleable name="expandableLayout">
+        <attr name="ael_duration" format="integer" />
+        <attr name="ael_expanded" format="boolean" />
+        <attr name="handle_resource" format="integer"/>
+        <attr name="header_text" format="string"/>
+        <attr name="footer_resource" format="integer"/>
+        <attr name="content_resource" format="integer"/>
+        <attr name="ael_orientation" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>

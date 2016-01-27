@@ -175,6 +175,20 @@ public class MasterDataService implements MakaanService {
 
     }
 
+    public void populateDefaultAmenityIds() {
+        final Type amenityDefault = new TypeToken<ArrayList<Long>>(){
+        }.getType();
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.DEFAULT_AMENITY, amenityDefault, new ObjectGetCallback() {
+            @Override
+            @SuppressWarnings("unchecked")
+            public void onSuccess(Object responseObject) {
+                MasterDataCache.getInstance().addDefaultAmenities((List<Long>) responseObject);
+            }
+        }, "defaultAmenityIdList.json",true);
+
+    }
+
     public void populateApiLabels() {
         Type listType = new TypeToken<HashMap<String, String>>() {
         }.getType();

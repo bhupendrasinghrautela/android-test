@@ -711,6 +711,8 @@
 
     <dimen name="property_page_pager_image_external_margin">10dp</dimen>
 
+
+    <!--city overview page dimens-->
     <dimen name="city_internal_padding">20dp</dimen>
     <dimen name="city_internal_margin">15dp</dimen>
     <dimen name="city_internal_margin_text">30dp</dimen>
@@ -747,6 +749,26 @@
     <dimen name="similar_project_address_size">16sp</dimen>
 
 
+    <!--Property page dimens-->
+    <dimen name="property_page_stack_like_pager_margin">10dp</dimen>
+    <dimen name="property_page_stack_like_pager_height">342dp</dimen>
+    <dimen name="property_page_external_margin">24dp</dimen>
+    <dimen name="property_page_internal_padding">24dp</dimen>
+    <dimen name="property_page_builder_logo_height">78dp</dimen>
+    <dimen name="property_page_builder_logo_width">125dp</dimen>
+    <dimen name="property_page_text_size">16sp</dimen>
+    <dimen name="property_page_average_text_size">20sp</dimen>
+    <dimen name="property_page_amenities_margin_bottom">12dp</dimen>
+    <dimen name="property_page_amenity_view_pager_height">300dp</dimen>
+    <dimen name="property_page_amenity_view_pager_margin_left">24dp</dimen>
+    <dimen name="property_page_amenity_view_pager_margin_bottom">44dp</dimen>
+    <dimen name="property_empty_view_margin_left">24dp</dimen>
+    <dimen name="property_page_locality_margin_left">24dp</dimen>
+    <dimen name="property_page_locality_margin_right">82dp</dimen>
+    <dimen name="property_page_locality_progress_dimen">45dp</dimen>
+    <dimen name="property_page_locality_frame_margin_right">20dp</dimen>
+    <dimen name="property_page_locality_brief_margin_bottom">20dp</dimen>
+    <dimen name="property_empty_view_height">1dp</dimen>
 
     <dimen name="locality_circular_progress_dimen">42dp</dimen>
 

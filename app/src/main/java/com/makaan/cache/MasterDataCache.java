@@ -47,6 +47,7 @@ public class MasterDataCache {
     private Map<Integer, AmenityCluster> amenityMap = new HashMap<>();
     private Map<String, ApiLabel> searchTypeMap = new HashMap<>();
     private Map<String, Map<String, Map<String, List<String>>>> propertyDisplayOrder = new HashMap<>();
+    private List<Long> defaultAmenityList;
 
     private Map<String, Integer> jarvisMessageTypeMap = new HashMap<>();
 
@@ -373,5 +374,17 @@ public class MasterDataCache {
             }
         }
         return count;
+    }
+
+    public void addDefaultAmenities(List<Long> defaultAmenityList) {
+        this.defaultAmenityList = defaultAmenityList;
+    }
+
+    public HashMap<Long,Boolean> getDefaultAmenityList(){
+        HashMap<Long, Boolean> map = new HashMap<>();
+        for(Long id:defaultAmenityList){
+            map.put(id,false);
+        }
+        return map;
     }
 }

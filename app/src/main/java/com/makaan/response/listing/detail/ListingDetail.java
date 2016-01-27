@@ -34,7 +34,7 @@ public class ListingDetail {
     public int sellerId, totalFloors, floor;
     public ArrayList<Furnishing> furnishings = new ArrayList<>();
 
-    public ArrayList<Long> amenitiesIds = new ArrayList<>();
+    public ArrayList<Long> neighbourhoodAmenitiesIds = new ArrayList<>();
 
 
     public CompanySeller companySeller;

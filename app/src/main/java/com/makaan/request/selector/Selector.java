@@ -335,4 +335,19 @@ public class Selector implements Cloneable {
             return termSelector.values;
         }
     }
+
+    public String getUniqueName(){
+        StringBuilder uniqueString = new StringBuilder();
+        for(TermSelector termSelector:termSelectorHashMap.values()){
+            for(String string:termSelector.values) {
+                uniqueString.append(string);
+            }
+        }
+        for(RangeSelector rangeSelector:rangeSelectorHashMap.values()){
+            uniqueString.append(rangeSelector.to);
+            uniqueString.append("-");
+            uniqueString.append(rangeSelector.from);
+        }
+        return uniqueString.toString();
+    }
 }

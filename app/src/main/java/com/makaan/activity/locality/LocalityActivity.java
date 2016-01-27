@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.fragment.locality.LocalityFragment;
+import com.makaan.util.KeyUtil;
 
 /**
  * Created by tusharchaudhary on 1/18/16.
@@ -29,7 +30,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
     private void addLocalityFragment() {
         localityFragment = new LocalityFragment();
         Bundle bundle = new Bundle();
-        bundle.putLong("localityId",localityId);
+        bundle.putLong(KeyUtil.LOCALITY_ID,localityId);
         localityFragment.setArguments(bundle);
         initFragment(R.id.container, localityFragment,false);
     }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.makaan.ui.property.AmenitiesViewScroll
+    android:id="@+id/amenities_scroll_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/property_page_internal_padding"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:text="amenities"
+        android:textSize="@dimen/property_page_average_text_size"
+        android:layout_marginBottom="@dimen/property_page_amenities_margin_bottom"
+        android:layout_height="wrap_content"/>
+    <com.makaan.ui.listing.CustomHorizontalScrollView
+        android:id="@+id/amenity_data_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.makaan.ui.listing.CustomHorizontalScrollView>
+</com.makaan.ui.property.AmenitiesViewScroll>

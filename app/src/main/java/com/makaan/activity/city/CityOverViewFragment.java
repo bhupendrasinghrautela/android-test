@@ -9,8 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
 import android.text.Html;
 import android.util.Log;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -23,6 +21,7 @@ import com.makaan.R;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.event.city.CityByIdEvent;
 import com.makaan.event.city.CityTopLocalityEvent;
+import com.makaan.event.city.CityTrendEvent;
 import com.makaan.event.trend.callback.LocalityTrendCallback;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.locality.LocalityLifestyleFragment;
@@ -33,10 +32,12 @@ import com.makaan.response.city.City;
 import com.makaan.response.city.EntityDesc;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.trend.LocalityPriceTrendDto;
+import com.makaan.service.CityService;
 import com.makaan.service.PriceTrendService;
 import com.makaan.service.TaxonomyService;
-import com.makaan.ui.MakaanLineChartView;
+import com.makaan.ui.MakaanBarChartView;
 import com.makaan.ui.MultiSelectionSpinner;
+import com.makaan.ui.MultiSelectionSpinner.OnSelectionChangeListener;
 import com.makaan.ui.PriceTrendView;
 import com.makaan.ui.city.TopLocalityView;
 import com.makaan.util.Blur;
@@ -53,7 +54,6 @@ import butterknife.Bind;
  */
 public class CityOverViewFragment extends MakaanBaseFragment{
 
-    @Bind(R.id.line_chart_layout)MakaanLineChartView lineChartLayout;
     @Bind(R.id.main_city_image)
     FadeInNetworkImageView mMainCityImage;
     @Bind(R.id.blurred_city_image)
@@ -76,12 +76,16 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     TextView mCityConnectHeader;*/
     @Bind(R.id.price_trend_view)
     PriceTrendView mPriceTrendView;
+    @Bind(R.id.bar_chart_layout)
+    MakaanBarChartView mBarChartView;
     @Bind(R.id.city_property_buy_rent_switch)
     Switch mPropertyRangeBuyRentSwitch;
     @Bind(R.id.bhk_spinner)
     MultiSelectionSpinner mBhkSpinner;
     @Bind(R.id.property_type_spinner)
     MultiSelectionSpinner mPropertyTypeSpinner;
+    ArrayList<Integer> mSelectedPropertyTypes;
+    ArrayList<Integer> mSelectedBedroomTypes;
 
     private static final int BLUR_EFFECT_HEIGHT = 300;
     private float alpha;
@@ -127,7 +131,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
             }
         });
         mCityTagLine.setText(mCity.cityTagLine);
-        mAnnualGrowth.setText(StringUtil.getTwoDecimalPlaces(mCity.annualGrowth)+"%");
+        mAnnualGrowth.setText(StringUtil.getTwoDecimalPlaces(mCity.annualGrowth) + "%");
         mRentalGrowth.setText(StringUtil.getTwoDecimalPlaces(mCity.rentalYield) + "%");
         mCityDescription.setText(Html.fromHtml(mCity.description));
 
@@ -147,16 +151,26 @@ public class CityOverViewFragment extends MakaanBaseFragment{
                 mBlurredCityImage.setAlpha(alpha);
             }
         });
-        mPropertyRangeBuyRentSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        mPropertyTypeSpinner.setOnSelectionChangeListener(new OnSelectionChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mPropertyTypeSpinner.setItems(MasterDataCache.getInstance().getRentPropertyTypes());
-                } else {
-                    mPropertyTypeSpinner.setItems(MasterDataCache.getInstance().getBuyPropertyTypes());
-                }
+            public void onSelectionChanged() {
+                mSelectedPropertyTypes = (ArrayList<Integer>) mPropertyTypeSpinner.getSelectedIds();
+                makeBarGraphRequest();
             }
         });
+        mBhkSpinner.setOnSelectionChangeListener(new OnSelectionChangeListener() {
+            @Override
+            public void onSelectionChanged() {
+                mSelectedBedroomTypes = (ArrayList<Integer>) mBhkSpinner.getSelectedIds();
+                makeBarGraphRequest();
+            }
+        });
+    }
+
+    private void makeBarGraphRequest() {
+        if(mCity!=null) {
+            new CityService().getPropertyRangeInCity(mCity.id, mSelectedBedroomTypes,mSelectedPropertyTypes, false, 10000, 500000, 50000);
+        }
     }
 
     private void initView() {
@@ -177,6 +191,11 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         mCityTopLocalities = cityTopLocalityEvent.topLocalitiesInCity;
         mTopLocalityLayout.bindView(mCityTopLocalities);
         fetchPriceTrendData(mCityTopLocalities);
+    }
+
+    @Subscribe
+    public void onPriceTrendResults(CityTrendEvent cityTrendEvent){
+        mBarChartView.bindView(cityTrendEvent.cityTrendData);
     }
 
     private void fetchPriceTrendData(ArrayList<Locality> cityTopLocalities) {

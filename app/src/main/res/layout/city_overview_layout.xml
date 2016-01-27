@@ -66,7 +66,7 @@
                 android:layout_margin="@dimen/city_internal_padding"
                 android:layout_height="wrap_content"/>
             <include layout="@layout/city_empty_view"/>
-            <include layout="@layout/compressed_text_layout"/>
+            <include layout="@layout/compressed_text_layout_for_black"/>
             <include layout="@layout/city_empty_view"/>
             <include layout="@layout/property_range_layout"/>
             <include layout="@layout/city_empty_view"/>

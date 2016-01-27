@@ -72,6 +72,10 @@ public class MakaanNetworkClient {
         get(url, type, objectGetCallback, mockFile, null, false);
     }
 
+    public void get(String url, final Type type, final ObjectGetCallback objectGetCallback, String mockFile,boolean isDataArr) {
+        get(url, type, objectGetCallback, mockFile, null, isDataArr);
+    }
+
     public void get(String url, final StringRequestCallback stringRequestCallback) {
         get(url, stringRequestCallback, null);
     }
@@ -253,6 +257,41 @@ public class MakaanNetworkClient {
         addToRequestQueue(stringRequest, tag);
     }
 
+    public void post(final String url, final Type type,JSONObject jsonObject,
+                       final ObjectGetCallback objectGetCallback, String tag, final boolean isDataArr) {
+
+        JsonObjectRequest stringRequest = new JsonObjectRequest
+                (Request.Method.POST,url,jsonObject, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        completeRequestInQueue(url);
+                        if (null != response) {
+                            try {
+                                Object objResponse;
+                                if (isDataArr) {
+                                    JSONArray tempResponse = response.getJSONArray(ResponseConstants.DATA);
+                                    objResponse = MakaanBuyerApplication.gson.fromJson(tempResponse.toString(), type);
+                                } else {
+                                    response = response.getJSONObject(ResponseConstants.DATA);
+                                    objResponse = MakaanBuyerApplication.gson.fromJson(response.toString(), type);
+                                }
+                                objectGetCallback.onSuccess(objResponse);
+
+                            } catch (JSONException e) {
+                                Log.e(TAG, "JSONException", e);
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        completeRequestInQueue(url);
+                        objectGetCallback.onError();
+                    }
+                });
+        addToRequestQueue(stringRequest, tag);
+    }
+
     public void loginPost(final String url, final Map<String, String> params,
                      final StringRequestCallback stringRequestCallback, String tag) {
 
@@ -302,7 +341,42 @@ public class MakaanNetworkClient {
                     }
                 });
         addToRequestQueue(stringRequest, tag);
-                }
+    }
+
+    public void delete(final String url, final Type type,
+                       final ObjectGetCallback objectGetCallback, String tag, final boolean isDataArr) {
+
+        JsonObjectRequest stringRequest = new JsonObjectRequest
+                (Request.Method.DELETE, url,null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        completeRequestInQueue(url);
+                        if (null != response) {
+                            try {
+                                Object objResponse;
+                                if (isDataArr) {
+                                    JSONArray tempResponse = response.getJSONArray(ResponseConstants.DATA);
+                                    objResponse = MakaanBuyerApplication.gson.fromJson(tempResponse.toString(), type);
+                                } else {
+                                    response = response.getJSONObject(ResponseConstants.DATA);
+                                    objResponse = MakaanBuyerApplication.gson.fromJson(response.toString(), type);
+                                }
+                                objectGetCallback.onSuccess(objResponse);
+
+                            } catch (JSONException e) {
+                                Log.e(TAG, "JSONException", e);
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        completeRequestInQueue(url);
+                        objectGetCallback.onError();
+                    }
+                });
+        addToRequestQueue(stringRequest, tag);
+    }
 
     public void put(final String url, JSONObject jsonObject,
                      final StringRequestCallback stringRequestCallback, String tag) {
