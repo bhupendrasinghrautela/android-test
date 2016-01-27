@@ -45,6 +45,5 @@ public class LocalityCard extends BaseView<Message> {
         textViewTitle.setText("Properties in");
         textViewSubTitle.setText(item.chatObj.localityName);
         textViewSubTitle2.setText(item.chatObj.cityName);
-
     }
 }

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/error_icon_width"
+            android:layout_height="@dimen/error_icon_height"
+            android:layout_marginTop="@dimen/error_icon_margin_top"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/error_icon" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/oops_text_margin_top"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/oops_text_size"
+            android:text="@string/oops"
+            android:textColor="@color/listingBlack"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/oops_text_size"
+            android:text="@string/no_matchin_sellers"
+            android:textColor="@color/listingBlack"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
+        android:orientation="vertical">
+
+        <View
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/pyr_light_grey" />
+
+        <TextView
+            android:id="@+id/seller_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/new_listings_margin_top"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/oops_text_size"
+            android:text="@string/new_listings"
+            android:textColor="@color/listingBlack"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/oops_text_size"
+            android:text="@string/alerts_msg"
+            android:gravity="center_horizontal"
+            android:textColor="@color/listingBlack"/>
+
+        <TextView
+            android:id="@+id/set_alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/set_alert_margin_top"
+            android:paddingLeft="@dimen/set_alert_padding_left_right"
+            android:paddingRight="@dimen/set_alert_padding_left_right"
+            android:paddingTop="@dimen/set_alert_padding_top_bottom"
+            android:paddingBottom="@dimen/set_alert_padding_top_bottom"
+            android:background="@drawable/post_requirements_drawable"
+            android:textSize="@dimen/set_alert_text_size"
+            android:textColor="@color/white"
+            android:text="@string/set_alerts"/>
+
+    </LinearLayout>
+
+</LinearLayout>

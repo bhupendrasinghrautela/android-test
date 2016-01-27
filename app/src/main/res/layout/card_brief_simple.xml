@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="240dp"
-    android:layout_height="180dp">
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/jarvis_card_brief_height">
 
     <com.android.volley.toolbox.FadeInNetworkImageView
         android:id="@+id/image"
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp"
+        android:padding="@dimen/card_brief_content_padding"
         android:layout_gravity="bottom"
         android:background="#aa000000">
 
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="@dimen/card_brief_text_line1_text_size" />
 
         <TextView
             android:id="@+id/text_line2"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="@dimen/card_brief_text_line2_text_size" />
 
         <TextView
             android:id="@+id/text_line3"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="@dimen/card_brief_text_line3_text_size" />
     </LinearLayout>
 
 

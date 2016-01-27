@@ -14,6 +14,7 @@ public class RequestConstants {
     public static final String SORT_ASC = "ASC";
     public static final String SORT_DESC = "DESC";
     public static final String START = "start";
+
     public static final String END = "end";
     public static final String GAP = "gap";
     public static final String ROWS = "rows";
@@ -96,6 +97,10 @@ public class RequestConstants {
     public static final String SOURCE_DOMAIN_MAKAAN = "sourceDomain=Makaan";
     public static final String LISTING_CATEGORY = "listingCategory";
     public static final String GP_ID = "gpId";
+    public static final String PROJECT_ID = "projectId";
+    public static final String STUDY_ROOM = "studyRoom";
+    public static final String POOJA_ROOM = "poojaRoom";
+    public static final String SERVANT_ROOM = "servantRoom";
 
 
 

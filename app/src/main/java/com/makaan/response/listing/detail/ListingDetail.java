@@ -2,6 +2,7 @@ package com.makaan.response.listing.detail;
 
 import com.makaan.pojo.SpecificaitonsUI;
 import com.makaan.response.property.Property;
+import com.makaan.response.user.CompanySeller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,9 +34,10 @@ public class ListingDetail {
     public int sellerId, totalFloors, floor;
     public ArrayList<Furnishing> furnishings = new ArrayList<>();
 
-    public ArrayList<Long> amenitiesIds = new ArrayList<>();
+    public ArrayList<Long> neighbourhoodAmenitiesIds = new ArrayList<>();
 
 
+    public CompanySeller companySeller;
     public double securityDeposit;
     public Property property;
 

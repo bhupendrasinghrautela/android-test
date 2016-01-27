@@ -1,32 +1,34 @@
 package com.makaan.request.pyr;
 
+import java.util.ArrayList;
+
 /**
  * Created by makaanuser on 9/1/16.
  */
 public class PyrRequest {
 
-    private String name="asg";
-    private String email="asgairola@gmail.com";
-    private String phone="8789437474";
-    private int countryId=1;
-    private String country="India";
-    private double minBudget= 10000;
-    private double maxBudget=100000;
-    private int domainId=1;
-    private String [] propertyTypes ={"apartment"};
-    private String  salesType="rent";
-    private int [] bhk={2,3};
-    private int cityId=11;
-    private boolean sendOtp=true;
-    private int [] multipleSellerIds={123,123};
-    private int [] localityIds={32,43};
+    private String name;
+    private String email;
+    private String phone;
+    private int countryId;
+    private String country;
+    private double minBudget;
+    private double maxBudget;
+    private int domainId;
+    private ArrayList<String> propertyTypes;
+    private String salesType;
+    private ArrayList<Integer> bhk;
+    private int cityId;
+    private boolean sendOtp;
+    private Long[] multipleSellerIds;
+    private int[] localityIds;
     private PyrEnquiryType enquiryType;
 
-    public int[] getBhk() {
+    public ArrayList<Integer> getBhk() {
         return bhk;
     }
 
-    public void setBhk(int[] bhk) {
+    public void setBhk(ArrayList<Integer> bhk) {
         this.bhk = bhk;
     }
 
@@ -102,11 +104,11 @@ public class PyrRequest {
         this.minBudget = minBudget;
     }
 
-    public int[] getMultipleSellerIds() {
+    public Long[] getMultipleSellerIds() {
         return multipleSellerIds;
     }
 
-    public void setMultipleSellerIds(int[] multipleSellerIds) {
+    public void setMultipleSellerIds(Long[] multipleSellerIds) {
         this.multipleSellerIds = multipleSellerIds;
     }
 
@@ -126,11 +128,11 @@ public class PyrRequest {
         this.phone = phone;
     }
 
-    public String[] getPropertyTypes() {
+    public ArrayList<String> getPropertyTypes() {
         return propertyTypes;
     }
 
-    public void setPropertyTypes(String[] propertyTypes) {
+    public void setPropertyTypes(ArrayList<String> propertyTypes) {
         this.propertyTypes = propertyTypes;
     }
 

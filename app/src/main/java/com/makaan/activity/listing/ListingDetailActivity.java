@@ -2,19 +2,29 @@ package com.makaan.activity.listing;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
+import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.city.CityTopLocalityEvent;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.event.trend.callback.TopLocalitiesTrendCallback;
+import com.makaan.event.user.UserLoginEvent;
+import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.OnExposeEvent;
 import com.makaan.response.locality.Locality;
+import com.makaan.response.wishlist.WishListResponse;
+import com.makaan.service.ImageService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PriceTrendService;
-import com.makaan.service.ProjectService;
+import com.makaan.service.WishListService;
+import com.makaan.service.user.UserLoginService;
+import com.makaan.util.JsonBuilder;
 import com.squareup.otto.Subscribe;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,15 +83,37 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         //((CityService) (MakaanServiceFactory.getInstance().getService(CityService.class))).getPropertyRangeInCity(11L, null,null,true ,10000, 500000, 12250);
         //((BuilderService) (MakaanServiceFactory.getInstance().getService(BuilderService.class))).getBuilderById(100002L);
         //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getGooglePlaceDetail("ChIJAQAA8UjkDDkRmdprFuRlLbo");
-        ((ProjectService) (MakaanServiceFactory.getInstance().getService(ProjectService.class))).getProjectById(506147L);
+        //((ProjectService) (MakaanServiceFactory.getInstance().getService(ProjectService.class))).getProjectById(506147L);
+        //((ProjectService) (MakaanServiceFactory.getInstance().getService(ProjectService.class))).getProjectConfiguration(506147L);
         //((ProjectService) (MakaanServiceFactory.getInstance().getService(ProjectService.class))).getSimilarProjects(506147L,10);
+        //((BlogService) (MakaanServiceFactory.getInstance().getService(BlogService.class))).getBlogs("Home");
+        //((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getOtherSellersOnListingDetail(654368L,3,3,0,0,0,5);
+        //((PriceTrendService) (MakaanServiceFactory.getInstance().getService(PriceTrendService.class))).getPriceTrendForProject(500773L,12);
+        ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(562194L);
+
 
 
         //((AgentService) (MakaanServiceFactory.getInstance().getService(AgentService.class))).getTopAgentsForLocality(2L, 50175L, 5, false, new TopRentAgentsInLocalityCallback());
 
-        /*Intent intent = new Intent(this, SerpActivity.class);
+        /*Intent intent = new Intent(this, PropertyActivity.class);
         startActivity(intent);*/
 
+
+
+        //testWishList();
+
+    }
+
+    private void testWishList(){
+        if(!CookiePreferences.isUserLoggedIn(this)) {
+            UserLoginService userLoginService =
+                    (UserLoginService) MakaanServiceFactory.getInstance().getService(UserLoginService.class);
+            userLoginService.loginWithMakaanAccount("abtest@abtest.com", "abtest1234");
+        }else{
+            WishListService wishListService =
+                    (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
+            wishListService.get();
+        }
     }
 
 
@@ -104,13 +136,36 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
     }
 
     @Subscribe
+    public void onResults(UserLoginEvent userLoginEvent) {
+
+        Toast.makeText(this,userLoginEvent.userResponse.getData().firstName, Toast.LENGTH_SHORT).show();
+        try {
+            CookiePreferences.setUserInfo(this,
+                    JsonBuilder.toJson(userLoginEvent.userResponse).toString());
+            CookiePreferences.setUserLoggedIn(this);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Subscribe
+    public void onResults(WishListResultEvent wishListResultEvent) {
+        WishListResponse response = wishListResultEvent.wishListResponse;
+        Toast.makeText(this,"Wish list  - " + response.totalCount, Toast.LENGTH_SHORT).show();
+
+    }
+
+
+    @Subscribe
     public void onIncomingMessage(IncomingMessageEvent event){
         animateJarvisHead();
     }
 
     @Subscribe
     public void onExposeMessage(OnExposeEvent event){
-        animateJarvisHead();
+        displayPopupWindow(event.message);
     }
 
     @Override

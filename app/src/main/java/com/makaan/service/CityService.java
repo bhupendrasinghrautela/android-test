@@ -112,18 +112,18 @@ public class CityService implements MakaanService {
      * http:/marketplace-qa.makaan-ws.com/app/v1/listing?selector={"filters":{"and":[{"equal":{"cityId":"2"}}]},"paging":{"start":0,"rows":5}}&facetRanges=[{"field":"price","start":10000,"end":500000,"gap":12250}]
      */
 
-    public void getPropertyRangeInCity(Long cityId, ArrayList<Long> bedrooms, ArrayList<Long> propertyTypes, boolean isRental, Integer start, Integer end, Integer gap) {
+    public void getPropertyRangeInCity(Long cityId, ArrayList<Integer> bedrooms, ArrayList<Integer> propertyTypes, boolean isRental, Integer start, Integer end, Integer gap) {
 
         if (null != cityId) {
             Selector cityPropertyRangeSel = new Selector();
             cityPropertyRangeSel.term(CITY_ID, cityId.toString()).page(0, 0);
             if (null != bedrooms && bedrooms.size() > 0) {
-                for (Long bed : bedrooms) {
+                for (Integer bed : bedrooms) {
                     cityPropertyRangeSel.term(BEDROOMS, bed.toString());
                 }
             }
             if (null != propertyTypes && propertyTypes.size() > 0) {
-                for (Long propertyType : propertyTypes) {
+                for (Integer propertyType : propertyTypes) {
                     cityPropertyRangeSel.term(UNIT_TYPE_ID, propertyType.toString());
                 }
             }

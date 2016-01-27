@@ -6,5 +6,5 @@ package com.makaan.response.listing.detail;
 public class CurrentListingPrice {
 
     public double pricePerUnitArea;
-    public double proce;
+    public double price;
 }

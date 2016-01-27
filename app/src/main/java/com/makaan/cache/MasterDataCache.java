@@ -41,9 +41,15 @@ public class MasterDataCache {
 
     private HashMap<String, FilterGroup> internalNameToFilterGrpBuy = new HashMap<>();
     private HashMap<String, FilterGroup> internalNameToFilterGrpRent = new HashMap<>();
+
+    private HashMap<String, FilterGroup> internalNameToPyrGrpBuy = new HashMap<>();
+    private HashMap<String, FilterGroup> internalNameToPyrGrpRent = new HashMap<>();
     private Map<Integer, AmenityCluster> amenityMap = new HashMap<>();
     private Map<String, ApiLabel> searchTypeMap = new HashMap<>();
     private Map<String, Map<String, Map<String, List<String>>>> propertyDisplayOrder = new HashMap<>();
+    private List<Long> defaultAmenityList;
+
+    private Map<String, Integer> jarvisMessageTypeMap = new HashMap<>();
 
     private HashSet<String> shortlistedPropertiesBuy;
     private HashSet<String> shortlistedPropertiesRent;
@@ -138,6 +144,30 @@ public class MasterDataCache {
         }
     }
 
+    public void addPyrGroupBuy(FilterGroup filterGroup) {
+        if (null != filterGroup && null != filterGroup.internalName) {
+            internalNameToPyrGrpBuy.put(filterGroup.internalName, filterGroup);
+            if(filterGroup.rangeFilterValues.size() > 0) {
+                for(RangeFilter filter : filterGroup.rangeFilterValues) {
+                    filter.selectedMinValue = filter.minValue;
+                    filter.selectedMaxValue = filter.maxValue;
+                }
+            }
+        }
+    }
+
+    public void addPyrGroupRent(FilterGroup filterGroup) {
+        if (null != filterGroup && null != filterGroup.internalName) {
+            internalNameToPyrGrpRent.put(filterGroup.internalName, filterGroup);
+            if(filterGroup.rangeFilterValues.size() > 0) {
+                for(RangeFilter filter : filterGroup.rangeFilterValues) {
+                    filter.selectedMinValue = filter.minValue;
+                    filter.selectedMaxValue = filter.maxValue;
+                }
+            }
+        }
+    }
+
     public void addAmenityCluster(AmenityCluster amenityCluster) {
         if (null != amenityCluster) {
             amenityMap.put(amenityCluster.placeTypeId, amenityCluster);
@@ -162,6 +192,10 @@ public class MasterDataCache {
 
     public void addPropertyDisplayOrder(Map<String, Map<String, Map<String, List<String>>>> map) {
         propertyDisplayOrder = map;
+    }
+
+    public void addJarvisMessageType(Map<String, Integer> map) {
+        jarvisMessageTypeMap = map;
     }
 
 
@@ -197,6 +231,29 @@ public class MasterDataCache {
 
     public ArrayList<FilterGroup> getAllRentFilterGroups() {
         Iterator<FilterGroup> filterGroupIterator = internalNameToFilterGrpRent.values().iterator();
+        ArrayList<FilterGroup> rentFilterGroups = new ArrayList<>();
+        while (filterGroupIterator.hasNext()) {
+            rentFilterGroups.add(filterGroupIterator.next());
+        }
+        return rentFilterGroups;
+    }
+
+    public Map<String, Integer> getJarvisMessageTypeMap(){
+        return jarvisMessageTypeMap;
+    }
+
+
+    public ArrayList<FilterGroup> getAllBuyPyrGroups() {
+        Iterator<FilterGroup> filterGroupIterator = internalNameToPyrGrpBuy.values().iterator();
+        ArrayList<FilterGroup> buyFilterGroups = new ArrayList<>();
+        while (filterGroupIterator.hasNext()) {
+            buyFilterGroups.add(filterGroupIterator.next());
+        }
+        return buyFilterGroups;
+    }
+
+    public ArrayList<FilterGroup> getAllRentPyrGroups() {
+        Iterator<FilterGroup> filterGroupIterator = internalNameToPyrGrpRent.values().iterator();
         ArrayList<FilterGroup> rentFilterGroups = new ArrayList<>();
         while (filterGroupIterator.hasNext()) {
             rentFilterGroups.add(filterGroupIterator.next());
@@ -317,5 +374,17 @@ public class MasterDataCache {
             }
         }
         return count;
+    }
+
+    public void addDefaultAmenities(List<Long> defaultAmenityList) {
+        this.defaultAmenityList = defaultAmenityList;
+    }
+
+    public HashMap<Long,Boolean> getDefaultAmenityList(){
+        HashMap<Long, Boolean> map = new HashMap<>();
+        for(Long id:defaultAmenityList){
+            map.put(id,false);
+        }
+        return map;
     }
 }

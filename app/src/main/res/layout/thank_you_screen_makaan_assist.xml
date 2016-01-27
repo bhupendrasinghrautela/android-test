@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:layout_marginTop="@dimen/thank_you_makaan_top_part_margin_top"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/thank_you_makaan_icon_width"
+            android:layout_height="@dimen/thank_you_makaan_icon_height"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/makaan_logo" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/hurray_margin_top"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/hurray_text_size"
+            android:text="@string/hurray"
+            android:textColor="@color/listingBlack"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/hurray_text_size"
+            android:text="@string/joy_ride"
+            android:textColor="@color/listingBlack"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
+
+        <View
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/pyr_light_grey" />
+
+        <TextView
+            android:id="@+id/makaan_assist_mesg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/shortly_receive_call_margin_top"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/hurray_text_size"
+            android:text="@string/receive_expert"
+            android:textColor="@color/listingBlack"/>
+
+        <TextView
+            android:id="@+id/thank_you_continue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="@dimen/done_text_size_margin_top"
+            android:textSize="@dimen/done_text_size"
+            android:textColor="@color/appThemeRed"
+            android:text="@string/thank_you_continue"/>
+
+    </LinearLayout>
+
+</LinearLayout>

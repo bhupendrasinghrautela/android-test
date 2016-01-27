@@ -12,4 +12,5 @@ public interface PyrReplaceFragment {
 
     void showPropertySearchFragment(FilterableMultichoiceDialogFragment fragment);
 
+    void popFromBackstack(int popCount);
 }
