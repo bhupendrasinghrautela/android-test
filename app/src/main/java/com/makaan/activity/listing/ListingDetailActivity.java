@@ -93,6 +93,9 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
 
         //((AgentService) (MakaanServiceFactory.getInstance().getService(AgentService.class))).getTopAgentsForLocality(2L, 50175L, 5, false, new TopRentAgentsInLocalityCallback());
 
+        /*Intent intent = new Intent(this, PropertyActivity.class);
+        startActivity(intent);*/
+
 
 
         //testWishList();
@@ -160,7 +163,7 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
 
     @Subscribe
     public void onExposeMessage(OnExposeEvent event){
-        animateJarvisHead();
+        displayPopupWindow(event.message);
     }
 
     @Override

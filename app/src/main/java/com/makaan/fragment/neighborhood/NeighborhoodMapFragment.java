@@ -26,12 +26,14 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
 import com.makaan.R;
+import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.jarvis.ui.ConversationAdapter;
 import com.makaan.response.amenity.Amenity;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.listing.Listing;
 import com.makaan.util.StringUtil;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,8 +104,15 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
         mMapView.onLowMemory();
     }
 
-    public void setData(List<AmenityCluster> amenityClusters){
-        mAmenityClusters = amenityClusters;
+    public void setCategoryPosition(int position){
+        populateMarker(mAmenityClusters.get(position));
+    }
+
+    @Subscribe
+    public void onResults(AmenityGetEvent amenityGetEvent) {
+        mAmenityClusters = amenityGetEvent.amenityClusters;
+        mNeighborhoodCategoryAdapter.setData(mAmenityClusters);
+        setCategoryPosition(0);
     }
 
     private void initMap(@Nullable Bundle savedInstanceState) {
@@ -123,7 +132,7 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
             }
         });
 
-        mNeighborhoodCategoryAdapter = new NeighborhoodCategoryAdapter(getActivity(), mAmenityClusters, this);
+        mNeighborhoodCategoryAdapter = new NeighborhoodCategoryAdapter(getActivity(), this);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
 
         mNeighborhoodCategoryView.setLayoutManager(mLayoutManager);
@@ -131,7 +140,7 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
     }
 
     private void populateMarker(AmenityCluster amenityCluster){
-
+        mSelectedAmenityCluster = amenityCluster;
         List<Amenity> amenities = amenityCluster.cluster;
         mAllMarkers.clear();
         clearMap();
@@ -149,8 +158,11 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
     }
 
     private void selectMarker(Marker marker){
-        Bitmap markerBitmap = getMarkerBitmap(false, mSelectedMarker.amenity);
-        setMarkerIcon(mSelectedMarker.marker, markerBitmap);
+        Bitmap markerBitmap;
+        if(null!=mSelectedMarker.amenity) {
+            markerBitmap = getMarkerBitmap(false, mSelectedMarker.amenity);
+            setMarkerIcon(mSelectedMarker.marker, markerBitmap);
+        }
 
 
         mSelectedMarker.marker = marker;
@@ -176,16 +188,11 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
     private void addMarker(LatLngBounds.Builder latLngBoundsBuilder,
                            double lat, double lng, Amenity amenity) {
 
-        IconGenerator iconGenerator = new IconGenerator(getActivity());
-        iconGenerator.setStyle(IconGenerator.STYLE_RED);
-        Bitmap markerBitmap =
-                iconGenerator.makeIcon(amenity.displayDistance);
-
         MarkerOptions markerOptions = new MarkerOptions()
                 .position(new LatLng(lat, lng))
                 .title(String.valueOf(amenity.name))
                 .icon(BitmapDescriptorFactory
-                        .fromBitmap(markerBitmap));
+                        .fromBitmap(getMarkerBitmap(false, amenity)));
 
         Marker marker = mPropertyMap.addMarker(markerOptions);
         latLngBoundsBuilder.include(new LatLng(lat, lng));

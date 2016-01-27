@@ -21,6 +21,7 @@ import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.jarvis.ui.cards.SerpFilterCard;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -37,8 +38,8 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     ImageView mJarvisHead;
 
     @Nullable
-    @Bind(R.id.cta_card)
-    LinearLayout mCtaCard;
+    @Bind(R.id.card_cta)
+    LinearLayout mCardCta;
 
     Runnable mPopupDismissRunnable;
     Handler mPopupDismissHandler =new Handler();
@@ -65,9 +66,14 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     }
 
     private void setupPopup(){
-        if(!isJarvisSupported() || null==mCtaCard){
+        if(!isJarvisSupported()){
             return;
         }
+
+        if(null==mCardCta){
+            mCardCta = (LinearLayout) findViewById(R.id.card_cta);
+        }
+
         mPopupDismissRunnable=new Runnable() {
 
             @Override
@@ -76,10 +82,18 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
             }
         };
 
-        mCtaCard.setOnTouchListener(new View.OnTouchListener() {
+        mCardCta.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 mPopupDismissHandler.removeCallbacks(mPopupDismissRunnable);
+                return true;
+            }
+        });
+
+        mActivityContent.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                dismissPopupWithAnim();
                 return false;
             }
         });
@@ -126,13 +140,13 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mCtaCard.removeAllViews();
+                mCardCta.removeAllViews();
 
                 //TODO card factory is required to determine type of card
                 SerpFilterCard serpFilterCard =
                         (SerpFilterCard) getLayoutInflater().inflate(R.layout.card_serp_filter, null);
                 serpFilterCard.bindView(getApplicationContext(), message);
-                mCtaCard.addView(serpFilterCard);
+                mCardCta.addView(serpFilterCard);
                 showPopupWithAnim();
                 serpFilterCard.setOnApplyClickListener(new SerpFilterCard.OnApplyClickListener() {
                     @Override
@@ -141,7 +155,8 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                     }
                 });
 
-                mPopupDismissHandler.postDelayed(mPopupDismissRunnable, JarvisConstants.JARVIS_ACTION_DISMISS_TIMEOUT);
+                mPopupDismissHandler.postDelayed(mPopupDismissRunnable,
+                        JarvisConstants.JARVIS_ACTION_DISMISS_TIMEOUT);
 
 
             }
@@ -150,24 +165,24 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-        if(mCtaCard!=null && mCtaCard.getVisibility()==View.VISIBLE){
-            mCtaCard.removeAllViews();
-            mCtaCard.setVisibility(View.GONE);
+        if(mCardCta!=null && mCardCta.getVisibility()==View.VISIBLE){
+            mCardCta.removeAllViews();
+            mCardCta.setVisibility(View.GONE);
         }else {
             super.onBackPressed();
         }
     }
 
     private void showPopupWithAnim(){
-        mCtaCard.setVisibility(View.VISIBLE);
+        mCardCta.setVisibility(View.VISIBLE);
         Animation zoomin = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoom_in);
-        mCtaCard.setAnimation(zoomin);
+        mCardCta.setAnimation(zoomin);
     }
 
     private void dismissPopupWithAnim(){
-        mCtaCard.setVisibility(View.GONE);
+        mCardCta.setVisibility(View.GONE);
         Animation zoomout = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoom_out);
-        mCtaCard.setAnimation(zoomout);
-        mCtaCard.removeAllViews();
+        mCardCta.setAnimation(zoomout);
+        mCardCta.removeAllViews();
     }
 }

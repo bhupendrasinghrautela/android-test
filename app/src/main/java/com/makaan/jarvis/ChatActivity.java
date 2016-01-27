@@ -12,8 +12,10 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.jarvis.event.IncomingMessageEvent;
@@ -45,7 +47,7 @@ public class ChatActivity extends AppCompatActivity {
     @Bind(R.id.jarvis_head)
     ImageView mButtonSend;
 
-    @Bind(R.id.inputMsg)
+    @Bind(R.id.compose)
     EditText mCompose;
 
 
@@ -117,6 +119,19 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+
+        mCompose.setOnEditorActionListener(
+                new EditText.OnEditorActionListener() {
+                   @Override
+                   public boolean onEditorAction(TextView tv, int actionId, KeyEvent event) {
+                       if (actionId == EditorInfo.IME_ACTION_DONE) {
+                           sendMessage(mCompose.getText().toString());
+                           return true;
+                       }
+                       return false;
+                   }
+               });
+
         bootUpChat();
     }
 
@@ -129,6 +144,7 @@ public class ChatActivity extends AppCompatActivity {
             message.messageType = MessageType.outText;
             message.message = text;
             JarvisClient.getInstance().getChatMessages().add(message);
+            addChatMessage(message);
             sendMessageToService(message);
         }
     }

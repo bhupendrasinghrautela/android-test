@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
 
+import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.service.AmenityService;
 import com.makaan.service.ImageService;
@@ -20,6 +21,7 @@ public class PropertyActivity extends MakaanBaseSearchActivity {
 
 
     private PropertyDetailFragment mPropertyDeatilFragment;
+    private NeighborhoodMapFragment mNeighborhoodMapFragment;
 
     @Override
     protected int getContentViewId() {
@@ -31,8 +33,11 @@ public class PropertyActivity extends MakaanBaseSearchActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mPropertyDeatilFragment = new PropertyDetailFragment();
-        initFragment(R.id.container, mPropertyDeatilFragment, true);
+        //mPropertyDeatilFragment = new PropertyDetailFragment();
+        //initFragment(R.id.container, mPropertyDeatilFragment, true);
+
+        mNeighborhoodMapFragment = new NeighborhoodMapFragment();
+        initFragment(R.id.container, mNeighborhoodMapFragment, false);
 
         fetchProjectDetail();
         initUi(true);
@@ -46,6 +51,8 @@ public class PropertyActivity extends MakaanBaseSearchActivity {
         ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(436057L);
         ((AmenityService) (MakaanServiceFactory.getInstance().getService(AmenityService.class))).getAmenitiesByLocation(13.03244019, 77.6019516, 3);
     }
+
+
 
     @Override
     public boolean isJarvisSupported() {

@@ -28,15 +28,23 @@ public class ChatMessages extends ArrayList<Message> {
             return false;
         }
 
-        boolean result = super.add(message);
+
+        if(null!=message.messageType && MessageType.outText==message.messageType){
+            return super.add(message);
+        }
 
         if(TextUtils.isEmpty(message.filtered)) {
             message.messageType = MessageType.inText;
         }else{
-            message.messageType = MessageType.fromInt(
-                    jarvisMessageTypeMap.get(message.filtered));
+            Integer type = jarvisMessageTypeMap.get(message.filtered);
+            if(null==type){
+                return false;
+            }
+            message.messageType = MessageType.fromInt(type);
+
         }
 
+        boolean result = super.add(message);
         IncomingMessageEvent event = new IncomingMessageEvent();
         event.message = message;
         eventBus.post(event);

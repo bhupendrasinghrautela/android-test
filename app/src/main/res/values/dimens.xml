@@ -543,6 +543,8 @@
     <dimen name="jarvis_chat_divider_height">1dp</dimen>
     <dimen name="jarvis_client_margin">24dp</dimen>
     <dimen name="jarvis_chat_card_stroke_width">1dp</dimen>
+    <dimen name="jarvis_bhk_horizontal_spacing">10dp</dimen>
+    <dimen name="jarvis_chat_card_top_bottom_margin">5dp</dimen>
 
     <!---Amenities-->
     <dimen name="amenity_type_logo_dimen">64dp</dimen>
@@ -554,7 +556,6 @@
     <dimen name="amenity_margin_bottom">18dp</dimen>
     <dimen name="amenity_item_padding">12dp</dimen>
     <dimen name="amenity_card_corner_radius">25dp</dimen>
-
 
     <!-- search result items dimen values -->
     <dimen name="search_result_item_image_width">24dp</dimen>
@@ -893,4 +894,18 @@
     <dimen name="card_brief_text_line1_text_size">18sp</dimen>
     <dimen name="card_brief_text_line2_text_size">16sp</dimen>
     <dimen name="card_brief_text_line3_text_size">14sp</dimen>
+    <dimen name="out_text_card_padding_top_bottom">5dp</dimen>
+    <dimen name="out_text_card_padding_right">10dp</dimen>
+    <dimen name="out_text_message_padding_top_bottom">5dp</dimen>
+    <dimen name="out_text_message_padding_left_right">10dp</dimen>
+    <dimen name="out_text_message_text_size">16sp</dimen>
+    <dimen name="int_text_card_padding_top_bottom">5dp</dimen>
+    <dimen name="in_text_message_padding_top_bottom">5dp</dimen>
+    <dimen name="int_text_message_padding_left_right">10dp</dimen>
+    <dimen name="in_text_message_text_size">16sp</dimen>
+    <dimen name="plain_link_card_padding_top_bottom">5dp</dimen>
+    <dimen name="plain_link_card_padding_right">10dp</dimen>
+    <dimen name="plain_link_card_message_padding_top_bottom">5dp</dimen>
+    <dimen name="plain_link_card_message_padding_left_right">10dp</dimen>
+    <dimen name="plain_link_card_message_text_size">16sp</dimen>
 </resources>

@@ -23,11 +23,14 @@ public class NeighborhoodCategoryAdapter extends RecyclerView.Adapter<RecyclerVi
     private List<AmenityCluster> mItems = new ArrayList<>();
     private CategoryClickListener mCategoryClickListener;
 
-    public NeighborhoodCategoryAdapter(Context context, List<AmenityCluster> items,
+    public NeighborhoodCategoryAdapter(Context context,
                                        CategoryClickListener categoryClickListener){
         mContext = context;
-        mItems.addAll(items);
         mCategoryClickListener = categoryClickListener;
+    }
+
+    public void setData(List<AmenityCluster> items){
+        mItems.addAll(items);
     }
 
     @Override
@@ -57,13 +60,22 @@ public class NeighborhoodCategoryAdapter extends RecyclerView.Adapter<RecyclerVi
             super(itemView);
             label = (TextView) itemView.findViewById(R.id.neighborhood_category_name);
             icon = (ImageView) itemView.findViewById(R.id.neighborhood_category_icon);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(null!=mCategoryClickListener) {
+                        mCategoryClickListener.onItemClick(getAdapterPosition(), view);
+                    }
+                }
+            });
         }
 
         public void bind(AmenityCluster amenityCluster){
             label.setText(amenityCluster.name);
         }
 
-
+        //TODO remove this listener 
         @Override
         public void onClick(View view) {
             if(null!=mCategoryClickListener) {
