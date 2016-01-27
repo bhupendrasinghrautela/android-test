@@ -5,7 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 
 import com.makaan.adapter.property.PropertyImagesPagerAdapter;
-import com.makaan.response.listing.detail.ListingDetailImage;
+import com.makaan.response.image.Image;
 import com.makaan.ui.anim.StackLikePagerTransform;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class PropertyImageViewPager extends ViewPager {
         setPageTransformer(true, new StackLikePagerTransform());
     }
 
-    public void setData(List<ListingDetailImage> listingDetailImageList){
+    public void setData(List<Image> listingDetailImageList){
         mPropertyImagesPagerAdapter.setData(listingDetailImageList);
         setCurrentItem(1, false);
     }

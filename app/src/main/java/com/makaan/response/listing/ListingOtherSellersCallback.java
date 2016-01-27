@@ -36,8 +36,8 @@ public class ListingOtherSellersCallback extends JSONGetCallback {
             JSONArray items = data.optJSONArray("items");
 
             JSONObject facets = data.optJSONObject("facets");
-            JSONObject sellerIdFacet = facets.optJSONObject("sellerId");
-            JSONObject bedRoomsFacet = facets.optJSONObject("bedrooms");
+            JSONArray sellerIdFacet = facets.optJSONArray("sellerId");
+
 
             Type type = new TypeToken<HashMap<Long, Long>>() {
             }.getType();

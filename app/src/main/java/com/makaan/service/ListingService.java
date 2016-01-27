@@ -103,6 +103,9 @@ public class ListingService implements MakaanService {
 
     }
 
+    /**
+     * http:/marketplace-qa.makaan-ws.com/data/v2/entity/domain?selector={"fields":["companyImage","score","contactNumber","contactNumbers","user","name","id","label","sellerId","property","currentListingPrice","price","bedrooms","bathrooms","size","unitTypeId","project","projectId","studyRoom","servantRoom","poojaRoom","companySeller","company","companyScore"],"filters":{"and":[{"equal":{"projectId":["654368"]}},{"equal":{"bedrooms":["3"]}},{"equal":{"bathrooms":["3"]}},{"equal":{"studyRoom":["0"]}},{"equal":{"poojaRoom":["0"]}},{"equal":{"servantRoom":["0"]}}]},"paging":{"start":"0","rows":"5"},"groupBy":{"field":"sellerId","min":"listingSellerCompanyScore"}}&documentType=LISTING&facets=bedrooms,sellerId&sourceDomain=Makaan
+     */
 
     public void getOtherSellersOnListingDetail(Long projectId, Integer bedrooms, Integer bathrooms, Integer studyRoom, Integer poojaRoom, Integer servantRoom, Integer noOfSellers) {
 

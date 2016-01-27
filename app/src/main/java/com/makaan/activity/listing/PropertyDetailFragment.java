@@ -11,7 +11,7 @@ import com.makaan.R;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.listing.ListingByIdGetEvent;
-import com.makaan.event.listing.ListingImagesGetEvent;
+import com.makaan.event.image.ImagesGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.ui.amenity.AmenityViewPager;
@@ -74,9 +74,9 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
     }
 
     @Subscribe
-    public void onResults(ListingImagesGetEvent listingImagesGetEvent){
+    public void onResults(ImagesGetEvent imagesGetEvent){
         mPropertyImageViewPager.bindView();
-        mPropertyImageViewPager.setData(listingImagesGetEvent.listingDetailImages);
+        mPropertyImageViewPager.setData(imagesGetEvent.images);
     }
 
     private void TestUi(ListingDetail listingDetail){

@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.network.MakaanNetworkClient;
-import com.makaan.response.listing.detail.ListingDetailImage;
+import com.makaan.response.image.Image;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -37,7 +37,7 @@ public class PropertyImageCardView extends CardView {
         super(context, attrs, defStyleAttr);
     }
 
-    public void bindView(Context mContext, ListingDetailImage listingDetailImage, int position) {
+    public void bindView(Context mContext, Image listingDetailImage, int position) {
         ButterKnife.bind(this);
 /*        if(position != 1){
             mPropertyImageDetailLayout.setVisibility(GONE);

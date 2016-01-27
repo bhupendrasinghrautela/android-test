@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.makaan.R;
-import com.makaan.response.listing.detail.ListingDetailImage;
+import com.makaan.response.image.Image;
 import com.makaan.ui.property.PropertyImageCardView;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.List;
 public class PropertyImagesPagerAdapter extends PagerAdapter {
 
     private Context mContext;
-    private List<ListingDetailImage> mItems = new ArrayList<>();
+    private List<Image> mItems = new ArrayList<>();
     private int mCount = 0;
     private ViewPager pager;
 
@@ -55,7 +55,7 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
         });
     }
 
-    public void setData(List<ListingDetailImage> list){
+    public void setData(List<Image> list){
         mItems.clear();
        mItems.add(list.get(list.size() - 1));
         mItems.addAll(list);

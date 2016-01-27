@@ -22,7 +22,8 @@ public class ApiConstants {
     public static final String MASTER_SPECIFICATIONS = BASE_URL.concat("/data/v1/entity/master-specifications?filters=masterSpecificationCategory.masterSpecParentCat.masterSpecParentCatId==1&fields=masterSpecId,masterSpecificationCategory,masterSpecClassName,masterSpecCatId,masterSpecCatName,masterSpecCatDisplayName,masterSpecParentCat,masterSpecParentCatId,masterSpecParentDisplayName,masterSpecificationCategory.masterSpecParentCat,masterSpecificationCategory.masterSpecParentCat.masterSpecParentCatId,masterSpecificationCategory.masterSpecParentCat.masterSpecParentDisplayName");
 
     public static final String COMPANY_USERS = BASE_URL.concat("/userservice/data/v1/entity/company-users");
-    public static final String LISTING_IMAGE = BASE_URL.concat("/data/v1/entity/image?objectType=listing&objectId=");
+    public static final String IMAGE = BASE_URL.concat("/data/v4/entity/image");
+
 
     public static final String LISTING = BASE_URL.concat("/app/v1/listing/");
     public static final String SIMILAR_LISTING = BASE_URL.concat("/app/v1/similar/listing");
