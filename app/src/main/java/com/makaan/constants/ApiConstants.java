@@ -6,16 +6,17 @@ package com.makaan.constants;
 public class ApiConstants {
 
 
-//    public static final String BASE_URL = "https://marketplace-qa.proptiger-ws.com";
-    public static final String BASE_URL = "http://mp-qa1.makaan-ws.com";
-//    public static final String BASE_URL = "http://marketplace-qa.makaan-ws.com";
+    //public static final String BASE_URL = "https://marketplace-qa.proptiger-ws.com";
+    public static final String BASE_URL = "http://marketplace-qa.makaan-ws.com";
     //public static final String BASE_URL = "http://mp-qa1.makaan-ws.com/";
     public static final String FILTER_GROUP = BASE_URL.concat("/data/v1/entity/filter-group");           //TODO: need to implement this on server side
     public static final String API_LABEL = BASE_URL.concat("/data/v1/entity/api-label");
     public static final String PROPERTY_STATUS = BASE_URL.concat("/data/v1/entity/property-status");
     public static final String PROPERTY_DISPLAY_ORDER = BASE_URL.concat("/data/v1/entity/property-display-order");
+    public static final String DEFAULT_AMENITY = BASE_URL.concat("/data/v1/entity/default-amenity");
     public static final String UNIT_TYPE = BASE_URL.concat("/data/v1/entity/unit-types");
     public static final String AMENITY = BASE_URL.concat("/data/v1/entity/amenities");
+    public static final String JARVIS_MESSAGE_TYPE = BASE_URL.concat("/data/v1/entity/jarvis/message-type");
     public static final String SEARCH_TYPE = BASE_URL.concat("/data/v1/entity/search-types");
     public static final String PROPERTY_AMENITY = BASE_URL.concat("/data/v1/entity/master-amenities");
     public static final String MASTER_FURNISHINGS = BASE_URL.concat("/data/v1/entity/master-furnishings");
