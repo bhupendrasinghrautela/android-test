@@ -3,7 +3,7 @@ package com.makaan.pojo;
 /**
  * Created by vaibhav on 25/01/16.
  */
-public class ProjectConfigSeller {
+public class SellerCard {
 
     public Long sellerId;
     public Double rating;

@@ -2,7 +2,6 @@ package com.makaan.service;
 
 import com.makaan.constants.ApiConstants;
 import com.makaan.event.trend.callback.LocalityTrendCallback;
-import com.makaan.event.trend.callback.TopLocalitiesTrendCallback;
 import com.makaan.network.MakaanNetworkClient;
 
 import java.util.ArrayList;
@@ -41,4 +40,7 @@ public class PriceTrendService  implements MakaanService{
             MakaanNetworkClient.getInstance().get(priceTrendUrl.toString(), localityTrendCallback);
         }
     }
+
+
+
 }

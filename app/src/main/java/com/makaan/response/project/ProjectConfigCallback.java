@@ -8,7 +8,7 @@ import com.makaan.constants.ResponseConstants;
 import com.makaan.event.project.ProjectConfigEvent;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.pojo.ProjectConfigItem;
-import com.makaan.pojo.ProjectConfigSeller;
+import com.makaan.pojo.SellerCard;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.user.Company;
 import com.makaan.util.AppBus;
@@ -98,16 +98,16 @@ public class ProjectConfigCallback extends JSONGetCallback {
                     projectConfigItem.propertyCount++;
                     projectConfigItem.sellerCount++;
                     Company company = listingDetail.companySeller.company;
-                    ProjectConfigSeller projectConfigSeller = projectConfigItem.companies.get(company.id);
+                    SellerCard sellerCard = projectConfigItem.companies.get(company.id);
 
-                    if (null == projectConfigSeller) {
-                        projectConfigSeller = new ProjectConfigSeller();
-                        projectConfigItem.companies.put(company.id, projectConfigSeller);
-                        projectConfigSeller.sellerId = company.id;
-                        //projectConfigSeller.assist =
-                        projectConfigSeller.name = company.name;
-                        projectConfigSeller.type = company.type;
-                        projectConfigSeller.noOfProperties = sellerPropCountMap.get(company.id);
+                    if (null == sellerCard) {
+                        sellerCard = new SellerCard();
+                        projectConfigItem.companies.put(company.id, sellerCard);
+                        sellerCard.sellerId = company.id;
+                        //sellerCard.assist =
+                        sellerCard.name = company.name;
+                        sellerCard.type = company.type;
+                        sellerCard.noOfProperties = sellerPropCountMap.get(company.id);
                     }
 
                 }

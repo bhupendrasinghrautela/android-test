@@ -15,10 +15,10 @@ import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.OnExposeEvent;
 import com.makaan.response.locality.Locality;
-import com.makaan.service.BlogService;
+import com.makaan.response.wishlist.WishListResponse;
+import com.makaan.service.ListingService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PriceTrendService;
-import com.makaan.response.wishlist.WishListResponse;
 import com.makaan.service.WishListService;
 import com.makaan.service.user.UserLoginService;
 import com.makaan.util.JsonBuilder;
@@ -85,15 +85,21 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         //((LocalityService) (MakaanServiceFactory.getInstance().getService(LocalityService.class))).getGooglePlaceDetail("ChIJAQAA8UjkDDkRmdprFuRlLbo");
         //((ProjectService) (MakaanServiceFactory.getInstance().getService(ProjectService.class))).getProjectById(506147L);
         //((ProjectService) (MakaanServiceFactory.getInstance().getService(ProjectService.class))).getProjectConfiguration(506147L);
-        ((BlogService) (MakaanServiceFactory.getInstance().getService(BlogService.class))).getBlogs("Home");
         //((ProjectService) (MakaanServiceFactory.getInstance().getService(ProjectService.class))).getSimilarProjects(506147L,10);
+        //((BlogService) (MakaanServiceFactory.getInstance().getService(BlogService.class))).getBlogs("Home");
+        ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getOtherSellersOnListingDetail(654368L,3,3,0,0,0,5);
+
 
 
         //((AgentService) (MakaanServiceFactory.getInstance().getService(AgentService.class))).getTopAgentsForLocality(2L, 50175L, 5, false, new TopRentAgentsInLocalityCallback());
 
-        /*Intent intent = new Intent(this, SerpActivity.class);
-        startActivity(intent);*/
 
+
+        //testWishList();
+
+    }
+
+    private void testWishList(){
         if(!CookiePreferences.isUserLoggedIn(this)) {
             UserLoginService userLoginService =
                     (UserLoginService) MakaanServiceFactory.getInstance().getService(UserLoginService.class);
@@ -103,7 +109,6 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
                     (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
             wishListService.get();
         }
-
     }
 
 

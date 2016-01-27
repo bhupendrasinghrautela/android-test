@@ -14,6 +14,6 @@ public class ProjectConfigItem {
     public int propertyCount;
     public int sellerCount;
 
-    public HashMap<Long, ProjectConfigSeller> companies = new HashMap<>();
+    public HashMap<Long, SellerCard> companies = new HashMap<>();
 
 }

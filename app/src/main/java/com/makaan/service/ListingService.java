@@ -8,10 +8,18 @@ import com.makaan.event.serp.GroupSerpCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
+import com.makaan.response.listing.ListingOtherSellersCallback;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.util.AppBus;
 
 import java.lang.reflect.Type;
+
+import static com.makaan.constants.RequestConstants.BATHROOMS;
+import static com.makaan.constants.RequestConstants.BEDROOMS;
+import static com.makaan.constants.RequestConstants.POOJA_ROOM;
+import static com.makaan.constants.RequestConstants.PROJECT_ID;
+import static com.makaan.constants.RequestConstants.SERVANT_ROOM;
+import static com.makaan.constants.RequestConstants.STUDY_ROOM;
 
 /**
  * Created by vaibhav on 23/12/15.
@@ -92,6 +100,44 @@ public class ListingService implements MakaanService {
             });
 
         }
+
+    }
+
+
+    public void getOtherSellersOnListingDetail(Long projectId, Integer bedrooms, Integer bathrooms, Integer studyRoom, Integer poojaRoom, Integer servantRoom, Integer noOfSellers) {
+
+        Selector otherSellersSelector = new Selector();
+        otherSellersSelector.fields(new String[]{"companyImage", "score", "contactNumber", "contactNumbers", "user", "name", "id", "label", "sellerId", "property", "currentListingPrice", "price", "bedrooms", "bathrooms", "size", "unitTypeId", "project", "projectId", "studyRoom", "servantRoom", "poojaRoom", "companySeller", "company", "companyScore"});
+        if (null != projectId) {
+            otherSellersSelector.term(PROJECT_ID, projectId.toString());
+        }
+        if (null != bedrooms) {
+            otherSellersSelector.term(BEDROOMS, bedrooms.toString());
+        }
+        if (null != bathrooms) {
+            otherSellersSelector.term(BATHROOMS, bathrooms.toString());
+        }
+        if (null != studyRoom) {
+            otherSellersSelector.term(STUDY_ROOM, studyRoom.toString());
+        }
+        if (null != poojaRoom) {
+            otherSellersSelector.term(POOJA_ROOM, poojaRoom.toString());
+        }
+        if (null != servantRoom) {
+            otherSellersSelector.term(SERVANT_ROOM, servantRoom.toString());
+        }
+        if (null != noOfSellers) {
+            otherSellersSelector.page(0, noOfSellers);
+        } else {
+            otherSellersSelector.page(0, 5);
+        }
+        otherSellersSelector.groupBy("sellerId", "listingSellerCompanyScore");
+
+        StringBuilder otherSellersUrl = new StringBuilder(ApiConstants.LISTING_OTHER_SELLERS);
+        otherSellersUrl.append("?").append(otherSellersSelector.build()).append("&documentType=LISTING&facets=bedrooms,sellerId");
+
+        MakaanNetworkClient.getInstance().get(otherSellersUrl.toString(), new ListingOtherSellersCallback());
+
 
     }
 

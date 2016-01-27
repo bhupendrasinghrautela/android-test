@@ -35,6 +35,7 @@ public class ApiConstants {
 
     public static final String TREND_URL = BASE_URL.concat("/data/v1/trend/hitherto");
     public static final String LOCALITY_TREND_URL = TREND_URL.concat("?fields=minPricePerUnitArea,localityName,projectName&group=localityId,month");
+    public static final String PROJECT_TREND_URL = TREND_URL.concat("?fields=minPricePerUnitArea,localityName,projectName&group=localityId,month");
 
 
 
@@ -51,6 +52,7 @@ public class ApiConstants {
 
     public static final String BLOG_URL = BASE_URL.concat("/data/v1/entity/blog");
 
+    public static final String LISTING_OTHER_SELLERS = BASE_URL.concat("/data/v2/entity/domain");
 
     public static final String COLUMBUS_SUGGESTIONS = BASE_URL.concat("/columbus/app/v1/popular/suggestions");
 
