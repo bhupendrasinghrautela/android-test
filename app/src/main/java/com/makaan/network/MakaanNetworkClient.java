@@ -17,6 +17,7 @@ import com.makaan.MakaanBuyerApplication;
 import com.makaan.cache.LruBitmapCache;
 import com.makaan.constants.RequestConstants;
 import com.makaan.constants.ResponseConstants;
+import com.makaan.request.CustomRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by vaibhav on 23/12/15.
@@ -250,6 +252,79 @@ public class MakaanNetworkClient {
                 });
         addToRequestQueue(stringRequest, tag);
     }
+
+    public void loginPost(final String url, final Map<String, String> params,
+                     final StringRequestCallback stringRequestCallback, String tag) {
+
+        CustomRequest stringRequest = new CustomRequest
+                (Request.Method.POST, url,params, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onSuccess(response);
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        String errorString = new String(error.networkResponse.data);
+                        Log.e("Error : ", errorString);
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onError();
+                    }
+                }){
+
+                @Override
+                public String getBodyContentType() {
+                    return "application/x-www-form-urlencoded; charset=UTF-8";
+                }
+
+        };
+        addToRequestQueue(stringRequest, tag);
+    }
+
+    public void delete(final String url, JSONObject jsonObject,
+                     final StringRequestCallback stringRequestCallback, String tag) {
+
+        StringRequest stringRequest = new StringRequest
+                (Request.Method.DELETE, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onSuccess(response);
+
+                    }
+                }, jsonObject, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onError();
+                    }
+                });
+        addToRequestQueue(stringRequest, tag);
+                }
+
+    public void put(final String url, JSONObject jsonObject,
+                     final StringRequestCallback stringRequestCallback, String tag) {
+
+        StringRequest stringRequest = new StringRequest
+                (Request.Method.PUT, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onSuccess(response);
+
+                    }
+                }, jsonObject, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onError();
+                    }
+                });
+        addToRequestQueue(stringRequest, tag);
+    }
+
 
     private void addToRequestQueue(Request req, String tag) {
         if (null == tag) {

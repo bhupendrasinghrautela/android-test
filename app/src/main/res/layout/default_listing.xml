@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.makaan.ui.view.DefaultListingView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.makaan.ui.listing.DefaultListingView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/serp_default_listing_card_view"
     android:layout_width="match_parent"
@@ -46,7 +46,8 @@
                 android:layout_marginTop="@dimen/serp_listing_card_property_price_rupee_image_top_margin"
                 android:layout_toEndOf="@+id/serp_default_listing_property_image_image_view"
                 android:layout_toRightOf="@+id/serp_default_listing_property_image_image_view"
-                android:src="@drawable/rupee" />
+                android:src="@drawable/rupee"
+                android:scaleType="centerCrop"/>
 
             <TextView
                 android:id="@+id/serp_default_listing_property_price_text_view"
@@ -147,7 +148,6 @@
                 android:layout_below="@id/serp_default_listing_property_image_image_view"
                 android:layout_marginLeft="@dimen/serp_listing_card_empty_view_after_property_info_view_margin_left"
                 android:layout_marginStart="@dimen/serp_listing_card_empty_view_after_property_info_view_margin_left"
-                android:layout_marginTop="@dimen/serp_listing_card_empty_view_after_property_info_view_margin_top"
                 android:background="@color/serp_listing_view_empty_view_color" />
         </RelativeLayout>
 
@@ -354,7 +354,6 @@
                 android:id="@+id/serp_default_listing_seller_logo_text_view"
                 android:layout_width="@dimen/serp_listing_card_seller_image_view_width"
                 android:layout_height="@dimen/serp_listing_card_seller_image_view_height"
-                android:background="@drawable/default_listing_seller_logo_background_red"
                 android:text="R"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
@@ -389,7 +388,8 @@
                 android:stepSize="0.1"
                 android:rating="3.5"
                 android:numStars="5"
-                style="?android:attr/ratingBarStyleSmall"/>
+                style="@style/customRatingBar"/>
+                <!--style="?android:attr/ratingBarStyleSmall"/>-->
 
             <Button
                 android:id="@+id/serp_default_listing_assist_button"
@@ -404,7 +404,7 @@
                 android:paddingLeft="@dimen/serp_listing_card_assist_button_left_padding"
                 android:paddingStart="@dimen/serp_listing_card_assist_button_left_padding"
                 android:background="@drawable/assist"
-                android:text="assist"
+                android:text="@string/assist"
                 android:textAllCaps="false"
                 android:textColor="@color/serp_listing_card_default_text_color"
                 android:textSize="@dimen/serp_listing_card_assist_button_text_size" />
@@ -467,4 +467,4 @@
             android:textSize="@dimen/serp_listing_card_badge_text_size"
             android:visibility="gone" />
     </FrameLayout>
-</com.makaan.ui.view.DefaultListingView>
+</com.makaan.ui.listing.DefaultListingView>

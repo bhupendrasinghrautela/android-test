@@ -9,6 +9,7 @@ public class ResponseConstants {
     public static final String STATUS_CODE = "statusCode";
     public static final String VERSION = "version";
     public static final String DATA = "data";
+    public static final String FACETS = "facets";
 
     public static final String TOTAL_COUNT = "totalCount";
     public static final String ITEMS = "items";

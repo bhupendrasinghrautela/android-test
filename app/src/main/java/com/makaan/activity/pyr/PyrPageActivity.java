@@ -50,6 +50,15 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
     }
 
     @Override
+    public void popFromBackstack(int popCount) {
+        if (getSupportFragmentManager().getBackStackEntryCount() >=1 ){
+            for(int i=0;i<popCount;i++) {
+                getSupportFragmentManager().popBackStack();
+            }
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 1 ){
             getSupportFragmentManager().popBackStack();

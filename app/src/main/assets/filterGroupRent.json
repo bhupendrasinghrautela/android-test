@@ -6,6 +6,8 @@
         "internalName": "i_beds",
         "displayOrder": "1",
         "layoutType": "1",
+        "imageName":"bed",
+        "type": "",
         "termFilterValues": [
           {
             "displayName": "1",
@@ -46,6 +48,8 @@
         "internalName": "i_budget",
         "displayOrder": "2",
         "layoutType": "2",
+        "imageName":"money",
+        "type": "",
         "termFilterValues": [],
         "rangeFilterValues": [
           {
@@ -65,6 +69,8 @@
         "internalName": "i_property_type",
         "displayOrder": "3",
         "layoutType": "3",
+        "imageName":"property_type",
+        "type": "",
         "termFilterValues": [
           {
             "displayName": "apartment/flat",
@@ -126,6 +132,8 @@
         "internalName": "i_bathroom",
         "displayOrder": "4",
         "layoutType": "1",
+        "imageName":"shower",
+        "type": "",
         "termFilterValues": [
           {
             "displayName": "1",
@@ -166,6 +174,7 @@
         "internalName": "i_possession in",
         "displayOrder": "5",
         "layoutType": "6",
+        "imageName":"available",
         "type": "Day",
         "termFilterValues": [],
         "rangeFilterValues": [
@@ -210,6 +219,8 @@
         "internalName": "i_listed_by",
         "displayOrder": "6",
         "layoutType": "3",
+        "imageName":"listed_by",
+        "type": "",
         "termFilterValues": [
           {
             "displayName": "agent",
@@ -243,6 +254,8 @@
         "internalName": "i_furnishing_status",
         "displayOrder": "7",
         "layoutType": "3",
+        "imageName":"furniture_status",
+        "type": "",
         "termFilterValues": [
           {
             "displayName": "unfurnished",
@@ -276,6 +289,8 @@
         "internalName": "i_furnishings",
         "displayOrder": "8",
         "layoutType": "3",
+        "imageName":"furnishings",
+        "type": "",
         "termFilterValues": [
           {
             "displayName": "wardrobe",
@@ -372,6 +387,8 @@
         "internalName": "i_restrictions",
         "displayOrder": "8",
         "layoutType": "3",
+        "imageName":"restrictions",
+        "type": "",
         "termFilterValues": [
           {
             "displayName": "bachelors",

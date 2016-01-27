@@ -10,16 +10,17 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:orientation="vertical"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="@dimen/otp_name_and_phone_margin_top">
 
         <TextView
+            android:id="@+id/pyr_user_email_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="atanu.dutta@proptiger.com"
             android:layout_gravity="center_horizontal"
             android:textSize="16sp" />
         <TextView
-            android:id="@+id/tv_email"
+            android:id="@+id/pyr_user_phone_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -32,31 +33,29 @@
         android:id="@+id/ll_middle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/otp_icon_layout_margin_top"
         android:orientation="vertical"
-        android:layout_centerInParent="true">
+        android:layout_centerHorizontal="true">
 
         <ImageView
-
             android:layout_gravity="center_horizontal"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/otp_icon_width_height"
+            android:layout_height="@dimen/otp_icon_width_height"
             android:src="@drawable/otp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:text="OTP"
-            android:textSize="18sp" />
+            android:text="@string/otp_string"
+            android:textSize="@dimen/otp_string_text_size" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/ll_middle"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/verification_code_layout_margin_top"
         android:orientation="vertical">
 
         <View
@@ -66,26 +65,26 @@
 
         <TextView
             android:id="@+id/tv_verification_code"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/verification_code_layout_margin_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Verification Code"
+            android:text="@string/verification_code_string"
             android:layout_gravity="center_horizontal"
-            android:textSize="18sp" />
+            android:textSize="@dimen/verification_code_string_text_size" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/verification_input_layout_margin_top"
             android:orientation="horizontal"
             >
 
             <EditText
                 android:id="@+id/et_first_digit"
                 android:layout_width="wrap_content"
-                android:padding="10dp"
-                android:layout_marginRight="5dp"
+                android:padding="@dimen/verification_edit_text_padding"
+                android:layout_marginRight="@dimen/verification_edit_text_margin_right"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edittext_bg_bottom_border"
                 android:inputType="number"
@@ -93,8 +92,8 @@
             <EditText
                 android:id="@+id/et_second_digit"
                 android:layout_width="wrap_content"
-                android:padding="10dp"
-                android:layout_marginRight="5dp"
+                android:padding="@dimen/verification_edit_text_padding"
+                android:layout_marginRight="@dimen/verification_edit_text_margin_right"
                 android:background="@drawable/edittext_bg_bottom_border"
                 android:layout_height="wrap_content"
                 android:inputType="number"
@@ -102,8 +101,8 @@
             <EditText
                 android:id="@+id/et_third_digit"
                 android:layout_width="wrap_content"
-                android:layout_marginRight="5dp"
-                android:padding="10dp"
+                android:layout_marginRight="@dimen/verification_edit_text_margin_right"
+                android:padding="@dimen/verification_edit_text_padding"
                 android:background="@drawable/edittext_bg_bottom_border"
                 android:layout_height="wrap_content"
                 android:inputType="number"
@@ -111,8 +110,8 @@
             <EditText
                 android:id="@+id/et_fourth_digit"
                 android:layout_width="wrap_content"
-                android:padding="10dp"
-                android:layout_marginRight="5dp"
+                android:padding="@dimen/verification_edit_text_padding"
+                android:layout_marginRight="@dimen/verification_edit_text_margin_right"
                 android:background="@drawable/edittext_bg_bottom_border"
                 android:layout_height="wrap_content"
                 android:inputType="number"
@@ -123,18 +122,41 @@
         <ImageView
             android:id="@+id/iv_verify"
             android:layout_gravity="center_horizontal"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/verify_icon_width_height"
+            android:layout_height="@dimen/verify_icon_width_height"
+            android:layout_marginTop="@dimen/verify_icon_margin_top"
             android:src="@drawable/check_tick"/>
 
-        <TextView
-            android:id="@+id/tv_resend"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Resend?"
-            android:textColor="@color/appThemeRed"
-            android:layout_gravity="center_horizontal"
-            android:textSize="16sp" />
+            android:layout_marginTop="@dimen/resend_layout__margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_resend"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:text="@string/resend_string"
+                android:textColor="@color/appThemeRed"
+                android:gravity="end"
+                android:textSize="@dimen/resend_text_size" />
+
+            <TextView
+                android:id="@+id/otp_screen_skip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:layout_marginLeft="@dimen/skip_text_margin_left"
+                android:text="@string/skip_string"
+                android:textColor="@color/appThemeRed"
+                android:layout_gravity="end"
+                android:textSize="@dimen/resend_text_size"
+                android:clickable="false"
+                android:visibility="invisible"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

@@ -20,7 +20,7 @@
                 android:layout_width="@dimen/pyr_bedroom_icon_width"
                 android:layout_height="@dimen/pyr_bedroom_icon_height"
                 android:layout_marginLeft="@dimen/pyr_bedroom_icon_left_margin"
-                android:src="@drawable/money_icon" />
+                android:src="@drawable/bed" />
 
             <TextView
                 android:layout_width="@dimen/pyr_bedroom_text_width"
@@ -41,55 +41,18 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:clipToPadding="false">
 
-            <ToggleButton
-                android:id="@+id/onebhk_toggle_button"
-                android:layout_width="@dimen/bedroom_toggle_button_width_height"
-                android:layout_height="@dimen/bedroom_toggle_button_width_height"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/bedroom_onebhk_toggle_button_margin_left"
-                android:background="@drawable/bedroom_toggle_button_drawable"
-                android:textColor="@drawable/bedroom_toggle_button_text_color_selector"
-                android:textOff="@string/pyr_one_bhk_text"
-                android:textOn="@string/pyr_one_bhk_text"
-                android:textSize="@dimen/bedrrom_toggle_button_text_size" />
-
-            <ToggleButton
-                android:id="@+id/twobhk_toggle_button"
-                android:layout_width="@dimen/bedroom_toggle_button_width_height"
-                android:layout_height="@dimen/bedroom_toggle_button_width_height"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/bedroom_toggle_button_margin_left"
-                android:background="@drawable/bedroom_toggle_button_drawable"
-                android:textColor="@drawable/bedroom_toggle_button_text_color_selector"
-                android:textOff="@string/pyr_two_bhk_text"
-                android:textOn="@string/pyr_two_bhk_text"
-                android:textSize="@dimen/bedrrom_toggle_button_text_size" />
-
-            <ToggleButton
-                android:id="@+id/threebhk_toggle_button"
-                android:layout_width="@dimen/bedroom_toggle_button_width_height"
-                android:layout_height="@dimen/bedroom_toggle_button_width_height"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/bedroom_toggle_button_margin_left"
-                android:background="@drawable/bedroom_toggle_button_drawable"
-                android:textColor="@drawable/bedroom_toggle_button_text_color_selector"
-                android:textOff="@string/pyr_three_bhk_text"
-                android:textOn="@string/pyr_three_bhk_text"
-                android:textSize="@dimen/bedrrom_toggle_button_text_size" />
-
-            <ToggleButton
-                android:id="@+id/fourbhk_toggle_button"
-                android:layout_width="@dimen/bedroom_toggle_button_width_height"
-                android:layout_height="@dimen/bedroom_toggle_button_width_height"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/bedroom_toggle_button_margin_left"
-                android:background="@drawable/bedroom_toggle_button_drawable"
-                android:textColor="@drawable/bedroom_toggle_button_text_color_selector"
-                android:textOff="@string/pyr_four_bhk_text"
-                android:textOn="@string/pyr_three_bhk_text"
-                android:textSize="@dimen/bedrrom_toggle_button_text_size" />
+            <com.makaan.ui.view.ExpandableHeightGridView
+                android:id="@+id/pyr_bedroom_grid_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/bedroom_grid_view_margin_left"
+                android:horizontalSpacing="@dimen/bedroom_grid_view_horizontal_spacing"
+                android:isScrollContainer="false"
+                android:numColumns="4"
+                android:verticalSpacing="@dimen/fragment_dialog_filters_checkbox_grid_item_vertical_padding"  />
 
          </LinearLayout>
 

@@ -6,5 +6,8 @@ package com.makaan.response.image;
 public class ImageType {
 
     public Long id;
-    public String type;
+    public String type, displayName;
+    public Integer objectTypeId, mediaTypeId;
+    public ImageObjectType objectType;
+    public ImageMediaType mediaType;
 }

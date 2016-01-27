@@ -31,6 +31,7 @@ public class RequestConstants {
     public static final String LISTING_QUALITY_SCORE = "listingQualityScore";
     public static final String PRICE = "price";
     public static final String UNIT_TYPE = "unitType";
+    public static final String UNIT_TYPE_ID = "unitTypeId";
     public static final String FROM = "from";
     public static final String TO = "to";
     public static final String ID = "id";
@@ -92,8 +93,9 @@ public class RequestConstants {
     public static final String STATUS = "status";
     public static final String APARTMENT = "apartment";
 
-    public static final String SOURCE_DOMAIN_MAKAAN = "sourceDomain=Makaan&";
+    public static final String SOURCE_DOMAIN_MAKAAN = "sourceDomain=Makaan";
     public static final String LISTING_CATEGORY = "listingCategory";
+    public static final String GP_ID = "gpId";
 
 
 

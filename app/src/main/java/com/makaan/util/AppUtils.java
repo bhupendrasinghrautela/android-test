@@ -17,12 +17,13 @@ public class AppUtils {
 
     public static SimpleDateFormat ddMMYYFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
-    public static String stripHtml(String input) {
+    /*public static String stripHtml(String input) {
         String result =  android.text.Html.fromHtml(input).toString();
         result = result.replaceAll("\\n","");
         result = result.replaceAll("\\t","");
         return result;
-    }
+
+    }*/
 
     public static boolean haveNetworkConnection(Context activityContext) {
         boolean haveConnectedWifi = false;
@@ -101,9 +102,8 @@ public class AppUtils {
             contentTrimmed.append(text);
 
         }
-        String result =  contentTrimmed.toString();
-
-        return stripHtml(result);
+        return contentTrimmed.toString();
+//return stripHtml(result);
     }
 
 

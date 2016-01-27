@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="310dp"
+    android:layout_marginLeft="@dimen/project_similar_project_card_left_margin"
+    android:layout_marginRight="@dimen/project_similar_project_card_left_margin"
+    android:layout_height="240dp"
+    android:id="@+id/card_similar_projects"
+    app:cardCornerRadius="@dimen/project_similar_project_card_radius"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/iv_similar_project"
+            android:scaleType="centerCrop"
+            />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/app_grey"
+            android:alpha="0.5"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:singleLine="true"
+                android:id="@+id/tv_similar_project_price"
+                android:text=""
+                android:textColor="@color/white"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:layout_marginTop="10dp"
+                android:singleLine="true"
+                android:id="@+id/tv_similar_project_name"
+                android:text=""
+                android:textColor="@color/white"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:singleLine="true"
+                android:id="@+id/tv_similar_project_address"
+                android:text=""
+                android:textColor="@color/white"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

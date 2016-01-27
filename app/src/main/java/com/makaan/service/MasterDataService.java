@@ -14,6 +14,7 @@ import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.master.ApiLabel;
 import com.makaan.response.master.MasterFurnishing;
+import com.makaan.response.master.MasterSpecification;
 import com.makaan.response.master.PropertyAmenity;
 import com.makaan.response.serp.FilterGroup;
 
@@ -33,6 +34,24 @@ import java.util.Map;
 public class MasterDataService implements MakaanService {
 
     public static final String TAG = MasterDataService.class.getSimpleName();
+
+
+    public void populateMasterSpecifications() {
+
+        Type listType = new TypeToken<ArrayList<MasterSpecification>>() {
+        }.getType();
+        MakaanNetworkClient.getInstance().get(ApiConstants.MASTER_FURNISHINGS, listType, new ObjectGetCallback() {
+            @Override
+            @SuppressWarnings("unchecked")
+            public void onSuccess(Object responseObject) {
+                ArrayList<MasterSpecification> masterSpecifications = (ArrayList<MasterSpecification>) responseObject;
+
+                for (MasterSpecification masterSpecification : masterSpecifications) {
+                    MasterDataCache.getInstance().addMasterSpecification(masterSpecification);
+                }
+            }
+        }, true);
+    }
 
 
     public void populateMasterFunishings() {
@@ -143,7 +162,7 @@ public class MasterDataService implements MakaanService {
     }
 
     public void populatePropertyDisplayOrder() {
-        final Type propertyDisplay = new TypeToken<HashMap<String, HashMap<String,HashMap<String,ArrayList<String>>>>>() {
+        final Type propertyDisplay = new TypeToken<HashMap<String, HashMap<String, HashMap<String, ArrayList<String>>>>>() {
         }.getType();
 
         MakaanNetworkClient.getInstance().get(ApiConstants.PROPERTY_DISPLAY_ORDER, propertyDisplay, new ObjectGetCallback() {
@@ -175,7 +194,6 @@ public class MasterDataService implements MakaanService {
 
 
     }
-
 
 
     public void populateFilterGroupsBuy() {
@@ -228,6 +246,63 @@ public class MasterDataService implements MakaanService {
                     }
                 } catch (JSONException je) {
                     Log.e(TAG, "Unable to parse filters", je);
+                }
+
+            }
+
+
+        }, "pyrGroupRent.json");
+    }
+    public void populatePyrGroupsBuy() {
+        final Type filterGroupTypeList = new TypeToken<ArrayList<FilterGroup>>() {
+        }.getType();
+
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.FILTER_GROUP, new JSONGetCallback() {
+
+            @Override
+            public void onSuccess(JSONObject responseObject) {
+                try {
+
+                    JSONObject object = responseObject.getJSONObject(ResponseConstants.DATA);
+                    JSONArray filters = object.getJSONArray(ResponseConstants.FILTERS);
+
+                    ArrayList<FilterGroup> filterGroups = MakaanBuyerApplication.gson.fromJson(filters.toString(), filterGroupTypeList);
+
+
+                    for (FilterGroup filterGroup : filterGroups) {
+                        MasterDataCache.getInstance().addPyrGroupBuy(filterGroup);
+                    }
+                } catch (JSONException je) {
+                    Log.e(TAG, "Unable to parse pyr groups", je);
+                }
+
+            }
+
+
+        }, "pyrGroupBuy.json");
+    }
+
+
+    public void populatePyrGroupsRent() {
+        final Type filterGroupTypeList = new TypeToken<ArrayList<FilterGroup>>() {
+        }.getType();
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.FILTER_GROUP, new JSONGetCallback() {
+
+            @Override
+            public void onSuccess(JSONObject responseObject) {
+                try {
+                    JSONObject object = responseObject.getJSONObject(ResponseConstants.DATA);
+                    JSONArray filters = object.getJSONArray(ResponseConstants.FILTERS);
+
+                    ArrayList<FilterGroup> filterGroups = MakaanBuyerApplication.gson.fromJson(filters.toString(), filterGroupTypeList);
+
+                    for (FilterGroup filterGroup : filterGroups) {
+                        MasterDataCache.getInstance().addPyrGroupRent(filterGroup);
+                    }
+                } catch (JSONException je) {
+                    Log.e(TAG, "Unable to parse pyr groups", je);
                 }
 
             }
@@ -298,6 +373,22 @@ public class MasterDataService implements MakaanService {
                 }
             }
         }, "searchResultType.json");
+
+    }
+
+    public void populateJarvisMessageType() {
+        Type jarvisMessageType = new TypeToken<HashMap<String, Integer>>() {
+        }.getType();
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.JARVIS_MESSAGE_TYPE, jarvisMessageType, new ObjectGetCallback() {
+            @Override
+            @SuppressWarnings("unchecked")
+            public void onSuccess(Object responseObject) {
+                HashMap<String, Integer> jarvisMessageTypes = (HashMap<String, Integer>) responseObject;
+
+                MasterDataCache.getInstance().addJarvisMessageType(jarvisMessageTypes);
+            }
+        }, "jarvisMessageType.json");
 
     }
 }

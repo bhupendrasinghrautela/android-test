@@ -7,11 +7,15 @@ import com.github.nkzawa.socketio.client.Ack;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.makaan.jarvis.event.IncomingMessageEvent;
+import com.makaan.jarvis.event.OnExposeEvent;
+import com.makaan.jarvis.message.ChatObject;
+import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.jarvis.message.JoinUser;
 import com.makaan.jarvis.message.Message;
 import com.makaan.jarvis.message.SocketMessage;
 import com.makaan.util.AppBus;
 import com.makaan.util.JsonBuilder;
+import com.makaan.util.JsonParser;
 import com.squareup.otto.Bus;
 
 import org.json.JSONException;
@@ -26,13 +30,12 @@ public class JarvisSocket {
 
     private boolean mTyping = false;
     private static int index = 0;
-    private static Bus eventBus = AppBus.getInstance();
-
 
     public Socket mSocket; {
         try {
 
             mSocket = IO.socket(JarvisConstants.CHAT_SERVER_URL);
+            AppBus.getInstance().register(this);
 
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
@@ -44,6 +47,7 @@ public class JarvisSocket {
         mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
         mSocket.on("user-acquired", onUserAcquired);
         mSocket.on("new-message-for-user", onNewMessageForUser);
+        mSocket.on("expose-session", onExposeSession);
         mSocket.on("agent-confirms-user", onAgentConfirmUser);
         mSocket.connect();
         joinUser();
@@ -55,6 +59,7 @@ public class JarvisSocket {
         mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
         mSocket.off("user-acquired", onUserAcquired);
         mSocket.off("new-message-for-user", onNewMessageForUser);
+        mSocket.off("expose-session", onExposeSession);
         mSocket.off("agent-confirms-user", onAgentConfirmUser);
     }
 
@@ -68,7 +73,6 @@ public class JarvisSocket {
             mSocket.emit("join-user", JsonBuilder.toJson(new JoinUser()), new Ack() {
                 @Override
                 public void call(Object... args) {
-                    Log.e("join user", "callback");
                 }
             });
         } catch (JSONException e) {
@@ -86,7 +90,6 @@ public class JarvisSocket {
             mSocket.emit("new-message-for-agent", JsonBuilder.toJson(message), new Ack() {
                 @Override
                 public void call(Object... args) {
-                    Log.e("message to agent", "callback");
                 }
             });
         } catch (JSONException e) {
@@ -100,7 +103,6 @@ public class JarvisSocket {
             mSocket.emit("user-confirms-agent", JsonBuilder.toJson(data), new Ack() {
                 @Override
                 public void call(Object... args) {
-                    Log.e("message to agent", "callback");
                 }
             });
         } catch (JSONException e) {
@@ -128,10 +130,23 @@ public class JarvisSocket {
         @Override
         public void call(final Object... args) {
             if(null!=args || args.length>0) {
-                IncomingMessageEvent event = new IncomingMessageEvent();
-                event.message = parseMessage((JSONObject) args[0]);
-                eventBus.post(event);
+
+                SocketMessage message = parseMessage((JSONObject) args[0]);
+                JarvisClient.getInstance().getChatMessages().add((Message) message);
                 userConfirmsAgent(args[0]);
+            }
+        }
+    };
+
+    private Emitter.Listener onExposeSession = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            if(null!=args || args.length>0) {
+
+                ExposeMessage message = parseExposeMessage((JSONObject) args[0]);
+                OnExposeEvent event = new OnExposeEvent();
+                event.message = message;
+                AppBus.getInstance().post(event);
             }
         }
     };
@@ -144,25 +159,24 @@ public class JarvisSocket {
     };
 
 
-    private Runnable onTypingTimeout = new Runnable() {
-        @Override
-        public void run() {
-            if (!mTyping) return;
-
-            mTyping = false;
-            mSocket.emit("stop typing");
-        }
-    };
-
     private void handleMessage(Object... args)  {
-        Log.e("Message", "dummy");
     }
 
     private SocketMessage parseMessage(JSONObject object){
         Message message = new Message();
-        message.message = object.optString("message");
-        message.appliedFilter = object.optBoolean("appliedFilter");
-        message.filtered = object.optString("filtered");
+        message.message = object.optString(JarvisConstants.MESSAGE);
+        message.appliedFilter = object.optBoolean(JarvisConstants.APPLIED_FILTER);
+        message.filtered = object.optString(JarvisConstants.FILTERED);
+
+        String chatObjString = object.optString(JarvisConstants.CHAT_OBJECT);
+        ChatObject chatObject = (ChatObject) JsonParser.parseJson(chatObjString.toString(), ChatObject.class);
+        message.chatObj = chatObject;
+
+        return message;
+    }
+
+    private ExposeMessage parseExposeMessage(JSONObject object){
+        ExposeMessage message = (ExposeMessage) JsonParser.parseJson(object.toString(), ExposeMessage.class);
         return message;
     }
 

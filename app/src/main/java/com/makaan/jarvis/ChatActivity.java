@@ -13,7 +13,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.makaan.R;
@@ -22,7 +21,6 @@ import com.makaan.jarvis.event.OutgoingMessageEvent;
 import com.makaan.jarvis.message.Message;
 import com.makaan.jarvis.ui.ConversationAdapter;
 import com.makaan.jarvis.message.*;
-import com.makaan.util.AnimUtil;
 import com.makaan.util.AppBus;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -55,6 +53,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setUpWindow();
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
         setupConversationView(savedInstanceState);
 
         eventBus = AppBus.getInstance();
@@ -79,9 +78,9 @@ public class ChatActivity extends AppCompatActivity {
         int height = size.y;
 
         if (height > width) {
-            getWindow().setLayout((int) (width * .95), (int) (height * .95));
+            getWindow().setLayout((int) (width * .90), (int) (height * .90));
         } else {
-            getWindow().setLayout((int) (width * .95), (int) (height * .95));
+            getWindow().setLayout((int) (width * .90), (int) (height * .90));
         }
     }
 
@@ -117,32 +116,27 @@ public class ChatActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        bootUpChat();
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            this.moveTaskToBack(true);
-            return false;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 
     private void sendMessage(String text){
         if(TextUtils.isEmpty(text)){
-            this.moveTaskToBack(true);
+            finish();
         }else{
             Message message = new Message();
             message.messageType = MessageType.outText;
             message.message = text;
-            mAdapter.addMessage(message);
+            JarvisClient.getInstance().getChatMessages().add(message);
+            addChatMessage(message);
             sendMessageToService(message);
         }
     }
 
     private void scrollToEnd(){
         if(mAdapter.getItemCount()>0){
-            mConRecyclerView.scrollToPosition(mAdapter.getItemCount()-1);
+            mConRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
         }
     }
 
@@ -156,17 +150,10 @@ public class ChatActivity extends AppCompatActivity {
     public void onIncomingMessage(IncomingMessageEvent event){
         //TODO code cleanup
         final Message message = (Message) event.message;
+        addChatMessage(message);
+    }
 
-        if(TextUtils.isEmpty(message.filtered)) {
-            message.messageType = MessageType.inText;
-        }else{
-            if ("details".equalsIgnoreCase(message.filtered)){
-                message.messageType = MessageType.serpFilter;
-            } else if ("signup".equalsIgnoreCase(message.filtered)){
-                message.messageType = MessageType.signUp;
-            }
-        }
-
+    private void addChatMessage(final Message message){
 
         runOnUiThread(new Runnable() {
             @Override
@@ -175,6 +162,14 @@ public class ChatActivity extends AppCompatActivity {
                 scrollToEnd();
             }
         });
+    }
+
+    private void bootUpChat(){
+        ChatMessages messages = JarvisClient.getInstance().getChatMessages();
+        //TODO this should be bulk update
+        for(Message message : messages){
+            addChatMessage(message);
+        }
     }
 
 

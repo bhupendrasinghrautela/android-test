@@ -4,4 +4,4 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textColor="@color/listingBlack"
-    android:textSize="@dimen/fragment_dialog_filters_checkbox_grid_item_text_size"/>
+    android:textSize="@dimen/fragment_dialog_filters_checkbox_grid_item_text_size" />

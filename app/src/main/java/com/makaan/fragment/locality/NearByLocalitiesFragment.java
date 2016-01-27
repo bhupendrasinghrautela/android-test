@@ -176,7 +176,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         List<NearByLocalities> nearByLocalities = new ArrayList<>();
         this.cardType = CardType.TOPAGENTS;
         for(TopAgent agent:topAgents){
-            nearByLocalities.add(new NearByLocalities("","0",""+agent.listingCount,""+agent.agent.type,""+agent.agent.name, (long) agent.agent.id));
+            nearByLocalities.add(new NearByLocalities("","0",""+agent.listingCount,""+agent.agent.company.type,""+agent.agent.user.fullName,(long) agent.agent.id));
         }
         return nearByLocalities;
     }

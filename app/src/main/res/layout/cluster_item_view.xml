@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.makaan.ui.view.TempClusterItemView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.makaan.ui.listing.GroupListingItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/serp_listing_cluster_card_view"
     android:layout_width="match_parent"
@@ -31,15 +31,26 @@
             android:layout_below="@id/serp_listing_cluster_group_empty_view" />
 
         <TextView
-            android:id="@+id/cluster_item_view_property_type_text_view"
+            android:id="@+id/cluster_item_view_property_size_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/serp_listing_cluster_card_properties_info_margin_left"
             android:layout_marginStart="@dimen/serp_listing_cluster_card_properties_info_margin_left"
-            android:text="2 bhk apartment"
+            android:text="2 bhk"
             android:textColor="@color/white"
             android:textSize="@dimen/serp_listing_cluster_card_properties_info_text_size"
             android:layout_below="@id/cluster_item_view_property_price_range_text_view" />
+
+        <TextView
+            android:id="@+id/cluster_item_view_property_type_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" apartment"
+            android:textColor="@color/white"
+            android:textSize="@dimen/serp_listing_cluster_card_properties_info_text_size"
+            android:layout_below="@id/cluster_item_view_property_price_range_text_view"
+            android:layout_toRightOf="@id/cluster_item_view_property_size_text_view"
+            android:layout_toEndOf="@id/cluster_item_view_property_size_text_view"/>
 
         <View
             android:id="@+id/serp_listing_cluster_group_empty_view_2"
@@ -73,6 +84,7 @@
             android:textSize="@dimen/serp_listing_cluster_card_total_properties_text_size"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_below="@id/serp_listing_cluster_group_empty_view" />
+            android:layout_below="@id/serp_listing_cluster_group_empty_view"
+            android:src="@drawable/house"/>
     </RelativeLayout>
-</com.makaan.ui.view.TempClusterItemView>
+</com.makaan.ui.listing.GroupListingItemView>

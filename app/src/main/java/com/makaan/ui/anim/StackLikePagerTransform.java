@@ -22,9 +22,11 @@ public class StackLikePagerTransform implements PageTransformer {
         } else */
         if(position <-1 && position>-2){
             view.setRotation(-90);
+            view.setAlpha(1);
         }
         else if(position<=-2){
             view.setRotation(0);
+            view.setAlpha(0);
         }
         else if (position <= 0) { // [-1,0]
             // Use the default slide transition when moving to the left page
@@ -47,6 +49,9 @@ public class StackLikePagerTransform implements PageTransformer {
         } else if (position==1) {
             view.setAlpha(1);
 //      view.setPadding(0,15,0,0);
+        }
+        if(position>1){
+            view.setAlpha(0);
         }
 /*        else { // (1,+Infinity]
             // This page is way off-screen to the right.

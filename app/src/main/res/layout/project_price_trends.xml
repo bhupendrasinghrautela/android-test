@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--TODO :: hardcoded values, work in progress-->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/price_trend_view"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/project_seperator"/>
+
+    <TextView
+        android:id="@+id/header_text"
+        android:gravity="center"
+        android:textSize="@dimen/city_header_text"
+        android:padding="20dp"
+        android:text="@string/price_trends"
+        android:textColor="@color/listingBlack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_margin="20dp"
+        android:layout_height="wrap_content">
+    <TextView
+        android:textSize="32sp"
+        android:text="5"
+        android:layout_marginLeft="40dp"
+        android:id="@+id/tv_price_trend_years"
+        android:textColor="@color/listingBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+        <TextView
+        android:textSize="20sp"
+        android:text="years"
+            android:layout_toRightOf="@+id/tv_price_trend_years"
+            android:layout_alignBottom="@+id/tv_price_trend_years"
+        android:id="@+id/tv_price_trend_years_text"
+        android:textColor="#999"
+            android:layout_marginLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+        <TextView
+            android:textSize="20sp"
+            android:text=""
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/tv_price_trend_years_text"
+            android:id="@+id/tv_price_trend_price"
+            android:textColor="@color/listingBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+    <include
+        android:padding="20dp"
+        layout="@layout/line_chart_view_layout"/>
+
+
+
+</LinearLayout>

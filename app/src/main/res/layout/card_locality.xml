@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.makaan.jarvis.ui.cards.LocalityCard
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="@dimen/jarvis_card_locality_width"
+    android:layout_margin="@dimen/jarvis_card_loaclity_layout_margin"
+    android:paddingLeft="@dimen/jarvis_card_locality_left_right_padding"
+    android:paddingRight="@dimen/jarvis_card_locality_left_right_padding"
+    android:paddingTop="@dimen/jarvis_card_locality_paddding_top_bottom"
+    android:paddingBottom="@dimen/jarvis_card_locality_paddding_top_bottom"
+    android:background="@drawable/chat_card_bg"
+    android:layout_height="wrap_content">
+
+    <include layout="@layout/card_brief_simple"/>
+
+
+</com.makaan.jarvis.ui.cards.LocalityCard>

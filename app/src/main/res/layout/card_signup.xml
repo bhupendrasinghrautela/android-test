@@ -3,14 +3,12 @@
 <!-- TODO WIP, hardcoded  dimen-->
 
 <com.makaan.jarvis.ui.cards.SignupCard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
     android:orientation="vertical"
-    android:layout_marginLeft="10dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
-    android:layout_marginRight="56dp"
+    android:layout_width="@dimen/sign_up_card_width"
+    android:layout_margin="@dimen/sign_up_card_margin"
+    android:paddingTop="@dimen/sign_up_card_padding_top"
+    android:paddingBottom="@dimen/sign_up_card_padding_bottom"
     android:gravity="center_horizontal"
     android:background="@drawable/chat_card_bg">
 
@@ -18,12 +16,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Sign up"
-        android:textSize="22sp" />
+        android:text="@string/sign_up"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sign_up_text_size" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/facebook_login_margin_top"
+        android:layout_marginBottom="@dimen/facebook_login_margin_bottom"
         android:gravity="center">
 
 
@@ -51,6 +52,6 @@
         android:gravity="center"
         android:text="@string/no_social_account"
         android:textColor="@color/appThemeRed"
-        android:textSize="18sp" />
+        android:textSize="@dimen/no_social_account_text_size" />
 
 </com.makaan.jarvis.ui.cards.SignupCard>

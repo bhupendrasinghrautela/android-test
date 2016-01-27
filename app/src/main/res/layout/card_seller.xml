@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!-- TODO WIP, hardcoded  dimen-->
-
 <com.makaan.jarvis.ui.cards.SellerOverviewCard xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="8dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
-    android:layout_marginRight="56dp"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/seller_overview_card_padding"
+    android:layout_width="@dimen/seller_overview_card_width"
+    android:layout_margin="@dimen/seller_overview_card_margin"
     android:background="@drawable/chat_card_bg">
 
     <LinearLayout
@@ -19,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginRight="8dp">
+        android:layout_marginRight="@dimen/seller_pic_rating_margin_right">
 
         <com.pkmmte.view.CircularImageView
             android:layout_width="@dimen/jarvis_seller_card_profile_pic_dimen"
@@ -68,7 +62,6 @@
             android:layout_height="wrap_content"
             android:text="Gurgaon, sector 32, sector 56"
             android:textSize="@dimen/jarvis_seller_card_agent_detail_text_size"/>
-
 
     </LinearLayout>
 

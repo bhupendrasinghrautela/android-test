@@ -9,10 +9,11 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import com.makaan.R;
-import com.makaan.response.master.ApiIntLabel;
+import com.makaan.fragment.pyr.PropertyTypeFragment;
+import com.makaan.fragment.pyr.PyrPagePresenter;
+import com.makaan.response.serp.TermFilter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by makaanuser on 6/1/16.
@@ -20,12 +21,26 @@ import java.util.List;
 public class PropertyTypeListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Context mContext;
-    List<ApiIntLabel> listPropertyType;
-    ArrayList<String> listPropertyTypeSelected= new ArrayList<String>();
+    ArrayList<TermFilter> listPropertyType;
+    PyrPagePresenter pyrPagePresenter=PyrPagePresenter.getPyrPagePresenter();
+    PropertyTypeFragment propertyTypeFragment;
 
-    public PropertyTypeListingAdapter(Context mContext , List<ApiIntLabel> listPropertyType) {
+    public PropertyTypeListingAdapter(Context mContext , ArrayList<TermFilter> listPropertyType, PropertyTypeFragment propertyTypeFragment) {
         this.mContext = mContext;
         this.listPropertyType=listPropertyType;
+        this.propertyTypeFragment=propertyTypeFragment;
+        int count = getSelectedCount();
+        propertyTypeFragment.updateCount(count);
+    }
+
+    private int getSelectedCount() {
+        int count = 0;
+        for(TermFilter filter : listPropertyType) {
+            if(filter.selected) {
+                count++;
+            }
+        }
+        return count;
     }
 
     @Override
@@ -40,24 +55,25 @@ public class PropertyTypeListingAdapter extends RecyclerView.Adapter<RecyclerVie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         final PropertyTypeViewHolder mPropertyTypeViewHolder = (PropertyTypeViewHolder) holder;
-        mPropertyTypeViewHolder.mTextViewPropertyType.setText(listPropertyType.get(position).name.toLowerCase());
+        mPropertyTypeViewHolder.mTextViewPropertyType.setText(listPropertyType.get(position).displayName.toLowerCase());
+        if(listPropertyType.get(position).selected){
+            mPropertyTypeViewHolder.mTextViewPropertyType.setTextColor(mContext.getResources().getColor(R.color.appThemeRed));
+            mPropertyTypeViewHolder.mCheckboxSelect.setChecked(true);
+        }
 
         mPropertyTypeViewHolder.mCheckboxSelect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                listPropertyType.get(position).selected = isChecked;
+                if (isChecked)
                 {
-                    listPropertyTypeSelected.add("" + position);
                     mPropertyTypeViewHolder.mTextViewPropertyType.setTextColor(mContext.getResources().getColor(R.color.appThemeRed));
-                    //((PyrPageActivity) mContext).updateCount(listPropertyTypeSelected.size());
                 }
                 else
                 {
-                    listPropertyTypeSelected.remove("" + position);
                     mPropertyTypeViewHolder.mTextViewPropertyType.setTextColor(Color.GRAY);
-                    //((SelectPropertyActivity) mContext).updateCount(listPropertyTypeSelected.size());
                 }
-
+                propertyTypeFragment.updateCount(getSelectedCount());
             }
         });
 

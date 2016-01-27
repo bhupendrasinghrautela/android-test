@@ -35,6 +35,7 @@
                 android:layout_marginTop="@dimen/fragment_filters_filter_text_view_margin_top"
                 android:layout_toEndOf="@id/fragment_filters_filter_image_view"
                 android:layout_toRightOf="@id/fragment_filters_filter_image_view"
+
                 android:text="@string/filter"
                 android:textColor="@color/serp_listing_card_default_text_color"
                 android:textSize="@dimen/fragment_filters_filter_text_view_text_size" />
@@ -108,7 +109,8 @@
                 android:layout_marginRight="@dimen/fragment_filters_map_image_view_margin_right"
                 android:layout_marginEnd="@dimen/fragment_filters_map_image_view_margin_right"
                 android:layout_marginTop="@dimen/fragment_filters_map_image_view_margin_top"
-                android:src="@drawable/map" />
+                android:src="@drawable/map"
+                android:scaleType="centerCrop"/>
         </RelativeLayout>
 
     </RelativeLayout>

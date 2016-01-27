@@ -1,5 +1,6 @@
 package com.makaan.activity.pyr;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
@@ -20,7 +21,7 @@ public class SellerViewHolder extends RecyclerView.ViewHolder{
     @Bind(R.id.cb_tick)
     CheckBox mCheckBoxTick;
     @Bind(R.id.iv_seller_image)
-    ImageView mSellerImage;
+    TextView mSellerImage;
     @Bind(R.id.tv_seller_name)
     TextView mSellerName;
     @Bind(R.id.tv_details_expertise)
@@ -31,6 +32,6 @@ public class SellerViewHolder extends RecyclerView.ViewHolder{
 
     public SellerViewHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(this,itemView);
+        ButterKnife.bind(this, itemView);
     }
 }

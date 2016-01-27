@@ -15,14 +15,30 @@ import static com.makaan.constants.RequestConstants.*;
  */
 public class TaxonomyService implements MakaanService {
 
-    private Double minAffodablePrice = 4000000D,
-            maxAffodablePrice = 8000000D,
-            minLuxuryPrice = 15000000D,
-            maxBudgetPrice = 5000000D;
+    private Double
+            defaultMinAffodablePrice = 4000000D,
+            defaultMaxAffodablePrice = 8000000D,
+            defaultMinLuxuryPrice = 15000000D,
+            defaultMaxBudgetPrice = 5000000D;
 
 
+    private void applyPricingDefaults(Double minAffordablePrice, Double maxAffordablePrice, Double minLuxuryPrice, Double maxBudgetPrice) {
+        if (null == minAffordablePrice) {
+            minAffordablePrice = defaultMinAffodablePrice;
+        }
+        if (null == maxAffordablePrice) {
+            maxAffordablePrice = defaultMaxAffodablePrice;
+        }
+        if (null == minLuxuryPrice) {
+            minLuxuryPrice = defaultMinLuxuryPrice;
+        }
+        if (null == maxBudgetPrice) {
+            maxBudgetPrice = defaultMaxBudgetPrice;
+        }
+    }
 
-    public List<TaxonomyCard> getTaxonomyCardForCity(Long cityId) {
+    public List<TaxonomyCard> getTaxonomyCardForCity(Long cityId, Double minAffordablePrice, Double maxAffordablePrice, Double minLuxuryPrice, Double maxBudgetPrice) {
+        applyPricingDefaults(minAffordablePrice, maxAffordablePrice, minLuxuryPrice, maxBudgetPrice);
         List<TaxonomyCard> taxonomyCardList = new ArrayList<>();
 
 
@@ -42,7 +58,7 @@ public class TaxonomyService implements MakaanService {
         affordableCard.label2 = AFFORDABLE_PROPERTIES_MSG;
         affordableCard.selector = affordableSelector;
 
-        affordableSelector.term(CITY_ID, cityId.toString()).range(PRICE, minAffodablePrice, maxAffodablePrice);
+        affordableSelector.term(CITY_ID, cityId.toString()).range(PRICE, minAffordablePrice, maxAffordablePrice);
 
         TaxonomyCard budgetCard = new TaxonomyCard();
         taxonomyCardList.add(budgetCard);
@@ -54,7 +70,6 @@ public class TaxonomyService implements MakaanService {
         budgetSelector.term(CITY_ID, cityId.toString()).range(PRICE, null, maxBudgetPrice);
 
 
-
         TaxonomyCard bestCard = new TaxonomyCard();
         taxonomyCardList.add(bestCard);
         Selector bestSelector = new Selector();
@@ -62,7 +77,7 @@ public class TaxonomyService implements MakaanService {
         bestCard.label2 = BEST_PROPERTIES_MSG;
         bestCard.selector = bestSelector;
 
-        bestSelector.term(CITY_ID, cityId.toString()).sort(LISTING_QUALITY_SCORE,SORT_DESC);
+        bestSelector.term(CITY_ID, cityId.toString()).sort(LISTING_QUALITY_SCORE, SORT_DESC);
 
 
         TaxonomyCard rentalCard = new TaxonomyCard();
@@ -72,14 +87,15 @@ public class TaxonomyService implements MakaanService {
         rentalCard.label2 = NEW_RENTAL_PROPERTIES_MSG;
         rentalCard.selector = rentalSelector;
 
-        rentalSelector.term(CITY_ID, cityId.toString()).term(LISTING_CATEGORY,RENTAL).sort(LISTING_CREATED_AT, SORT_DESC);
+        rentalSelector.term(CITY_ID, cityId.toString()).term(LISTING_CATEGORY, RENTAL).sort(LISTING_CREATED_AT, SORT_DESC);
 
 
         return taxonomyCardList;
     }
 
 
-    public List<TaxonomyCard> getTaxonomyCardForLocality(Long localityId) {
+    public List<TaxonomyCard> getTaxonomyCardForLocality(Long localityId, Double minAffordablePrice, Double maxAffordablePrice, Double minLuxuryPrice, Double maxBudgetPrice) {
+        applyPricingDefaults(minAffordablePrice, maxAffordablePrice, minLuxuryPrice, maxBudgetPrice);
         List<TaxonomyCard> taxonomyCardList = new ArrayList<>();
 
 
@@ -99,7 +115,7 @@ public class TaxonomyService implements MakaanService {
         affordableCard.label2 = AFFORDABLE_PROPERTIES_MSG;
         affordableCard.selector = affordableSelector;
 
-        affordableSelector.term(LOCALITY_ID, localityId.toString()).range(PRICE, minAffodablePrice, maxAffodablePrice);
+        affordableSelector.term(LOCALITY_ID, localityId.toString()).range(PRICE, minAffordablePrice, maxAffordablePrice);
 
         TaxonomyCard budgetCard = new TaxonomyCard();
         taxonomyCardList.add(budgetCard);
@@ -111,7 +127,6 @@ public class TaxonomyService implements MakaanService {
         budgetSelector.term(LOCALITY_ID, localityId.toString()).range(PRICE, null, maxBudgetPrice);
 
 
-
         TaxonomyCard bestCard = new TaxonomyCard();
         taxonomyCardList.add(bestCard);
         Selector bestSelector = new Selector();
@@ -119,7 +134,7 @@ public class TaxonomyService implements MakaanService {
         bestCard.label2 = BEST_PROPERTIES_MSG;
         bestCard.selector = bestSelector;
 
-        bestSelector.term(LOCALITY_ID, localityId.toString()).sort(LISTING_QUALITY_SCORE,SORT_DESC);
+        bestSelector.term(LOCALITY_ID, localityId.toString()).sort(LISTING_QUALITY_SCORE, SORT_DESC);
 
 
         TaxonomyCard rentalCard = new TaxonomyCard();
@@ -129,7 +144,7 @@ public class TaxonomyService implements MakaanService {
         rentalCard.label2 = NEW_RENTAL_PROPERTIES_MSG;
         rentalCard.selector = rentalSelector;
 
-        rentalSelector.term(LOCALITY_ID, localityId.toString()).term(LISTING_CATEGORY,RENTAL).sort(LISTING_CREATED_AT, SORT_DESC);
+        rentalSelector.term(LOCALITY_ID, localityId.toString()).term(LISTING_CATEGORY, RENTAL).sort(LISTING_CREATED_AT, SORT_DESC);
 
 
         return taxonomyCardList;

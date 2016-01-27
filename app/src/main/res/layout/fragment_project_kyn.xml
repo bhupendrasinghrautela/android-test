@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/project_seperator"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/project_kyn_margin_right"
+        android:layout_marginRight="@dimen/project_kyn_margin_right"
+        android:layout_marginTop="@dimen/locality_kyn_margin_top"
+        android:layout_marginBottom="@dimen/locality_kyn_margin_bottom"
+        android:textColor="@color/project_similar_projects_default_color"
+        android:textSize="@dimen/locality_text_big"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/tv_localities_kyn_title"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/project_similar_projects_default_color"
+            android:textSize="@dimen/locality_text_small"
+            android:maxLines="5"
+            android:layout_toLeftOf="@+id/rl_locality_score_container"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:id="@+id/tv_localities_kyn_description"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:id="@+id/rl_locality_score_container"
+            >
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/frame_locality_score"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content">
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="@dimen/locality_circular_progress_dimen"
+                    android:layout_height="@dimen/locality_circular_progress_dimen"
+                    android:id="@+id/locality_score_progress"
+                    android:progress="78"
+                    android:secondaryProgress="100"
+                    android:indeterminate="false"
+                    android:progressDrawable="@drawable/circular_progress_drawable"
+                    android:layout_gravity="center_vertical" />
+                <TextView
+                    android:id="@+id/locality_score_text"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/project_similar_projects_default_color"
+                    android:textSize="@dimen/city_very_small_text"/>
+            </FrameLayout>
+            <TextView
+                android:id="@+id/locality_score_label"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/frame_locality_score"
+                android:layout_height="wrap_content"
+                android:text="locality score"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/project_similar_projects_default_color"
+                android:textSize="@dimen/city_very_small_text"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_localities_kyn"
+        android:layout_width="wrap_content"
+        android:overScrollMode="never"
+        android:layout_height="@dimen/locality_kyn_recycler_height"/>
+
+</LinearLayout>

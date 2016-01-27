@@ -2,18 +2,25 @@ package com.makaan.activity.project;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.makaan.R;
-import com.makaan.activity.MakaanFragmentActivity;
-import com.makaan.fragment.locality.LocalityFragment;
+import com.makaan.activity.MakaanBaseSearchActivity;
+import com.makaan.event.project.ProjectByIdEvent;
+import com.makaan.event.project.ProjectConfigEvent;
+import com.makaan.event.project.SimilarProjectGetEvent;
+import com.makaan.fragment.project.ProjectFragment;
+import com.makaan.service.MakaanServiceFactory;
+import com.makaan.service.ProjectService;
+import com.squareup.otto.Subscribe;
 
 /**
  * Created by tusharchaudhary on 1/26/16.
  */
-public class ProjectActivity extends MakaanFragmentActivity {
+public class ProjectActivity extends MakaanBaseSearchActivity {
 
-    public static final String LOCALITY_ID = "localityId";
-    private Long localityId;
+    public static final String PROJECT_ID = "projectId";
+    private Long projectId;
     private ProjectFragment projectFragment;
 
     @Override
@@ -26,12 +33,20 @@ public class ProjectActivity extends MakaanFragmentActivity {
         super.onCreate(savedInstanceState);
         setProjectId();
         addProjectFragment();
+        initUi(true);
+        fetchData();
+    }
+
+    private void fetchData() {
+        ((ProjectService) MakaanServiceFactory.getInstance().getService(ProjectService.class)).getProjectById(projectId);
+        ((ProjectService) MakaanServiceFactory.getInstance().getService(ProjectService.class)).getProjectConfiguration(projectId);
+        ((ProjectService) MakaanServiceFactory.getInstance().getService(ProjectService.class)).getSimilarProjects(projectId, 10);
     }
 
     private void addProjectFragment() {
         projectFragment = new ProjectFragment();
         Bundle bundle = new Bundle();
-        bundle.putLong("localityId",localityId);
+        bundle.putLong(PROJECT_ID, projectId);
         projectFragment.setArguments(bundle);
         initFragment(R.id.container, projectFragment, false);
     }
@@ -39,9 +54,9 @@ public class ProjectActivity extends MakaanFragmentActivity {
     private void setProjectId() {
         Intent intent = getIntent();
         if(intent != null) {
-            localityId = intent.getLongExtra(LOCALITY_ID, 50001); //use  50157 for electronic city
+            projectId = intent.getLongExtra(PROJECT_ID, 506147);
         }else{
-            localityId = Long.valueOf(50001);
+            projectId = Long.valueOf(506147);
         }
     }
 

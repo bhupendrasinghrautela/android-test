@@ -6,6 +6,8 @@
         "internalName": "i_beds",
         "displayOrder": "1",
         "layoutType": "1",
+        "imageName":"bed",
+        "type": "",
         "termFilterValues": [
           {
             "displayName": "1",
@@ -46,6 +48,8 @@
         "internalName": "i_budget",
         "displayOrder": "2",
         "layoutType": "2",
+        "imageName":"money",
+        "type": "",
         "termFilterValues": [],
         "rangeFilterValues": [
           {
@@ -65,6 +69,8 @@
         "internalName": "i_property_type",
         "displayOrder": "3",
         "layoutType": "3",
+        "imageName":"property_type",
+        "type": "",
         "termFilterValues": [
           {
             "displayName": "apartment/flat",
@@ -133,6 +139,8 @@
         "internalName": "i_bathroom",
         "displayOrder": "4",
         "layoutType": "1",
+        "imageName":"shower",
+        "type": "",
         "termFilterValues": [
           {
             "displayName": "1",
@@ -173,6 +181,7 @@
         "internalName": "i_possession in",
         "displayOrder": "5",
         "layoutType": "6",
+        "imageName":"under_construction",
         "type": "Year",
         "termFilterValues": [],
         "rangeFilterValues": [
@@ -217,6 +226,7 @@
         "internalName": "i_ready_to_move",
         "displayOrder": "6",
         "layoutType": "5",
+        "imageName":"ready_to_move",
         "type": "Year",
         "termFilterValues": [
         ],
@@ -271,6 +281,8 @@
         "internalName": "i_sq_ft",
         "displayOrder": "7",
         "layoutType": "2",
+        "imageName":"area",
+        "type": "",
         "termFilterValues": [],
         "rangeFilterValues": [
           {
@@ -290,6 +302,8 @@
         "internalName": "i_new_resale",
         "displayOrder": "8",
         "layoutType": "4",
+        "imageName":"new_resale",
+        "type": "",
         "termFilterValues": [
           {
             "displayName": "new",
@@ -323,6 +337,8 @@
         "internalName": "i_listed_by",
         "displayOrder": "9",
         "layoutType": "3",
+        "imageName":"listed_by",
+        "type": "",
         "termFilterValues": [
           {
             "displayName": "agent",
@@ -343,24 +359,6 @@
             "displayOrder": "3",
             "fieldName": "listingSellerCompanyType",
             "value": "Owner",
-            "selected": false
-          }
-        ],
-        "rangeFilterValues": [
-        ],
-        "rangeMinMaxFilterValues": [
-        ]
-      },
-      {
-        "displayName": "Locality",
-        "internalName": "i_locality",
-        "displayOrder": "-1",
-        "termFilterValues": [
-          {
-            "displayName": "Locality",
-            "displayOrder": "-1",
-            "fieldName": "localityId",
-            "value": "1",
             "selected": false
           }
         ],

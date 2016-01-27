@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <permission
         android:name="com.makaan.permission.MAPS_RECEIVE"
@@ -25,33 +27,50 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.NoActionBarTheme">
 
+
+        </activity>
+
+        <activity
+            android:name=".activity.project.ProjectActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".activity.city.CityActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+           <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
+            </intent-filter>-->
+
         </activity>
-        <!--<activity-->
-            <!--android:name=".activity.listing.ListingDetailActivity"-->
-            <!--android:label="@string/app_name"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/NoActionBarTheme">-->
+
+        <activity
+            android:name=".activity.listing.ListingDetailActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
 
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
-        <!--</activity>-->
+
+        </activity>
 
         <!--<activity android:name=".activity.locality.LocalityActivity">-->
 
-        <!--<activity android:name=".activity.city.CityActivity"-->
-            <!--android:theme="@style/AppTheme.NoActionBar"/>-->
 
-
-        <activity android:name=".activity.listing.SerpActivity"
+        <activity
+            android:name=".activity.listing.SerpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.NoActionBarTheme">
-
         </activity>
         <activity
             android:name=".activity.pyr.PyrPageActivity"
@@ -67,6 +86,11 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.NoActionBarTheme">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+
+            <!--</intent-filter>-->
 
         </activity>
 
@@ -75,7 +99,8 @@
             android:name=".jarvis.ChatActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.FloatingWindow.Popup" />
 
         <service android:name=".jarvis.JarvisService"></service>

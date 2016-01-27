@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginRight="@dimen/locality_search_margin_right"
-    android:layout_marginLeft="@dimen/locality_search_margin_left"
+    android:paddingLeft="@dimen/locality_search_margin_right"
+    android:paddingRight="@dimen/locality_search_margin_left"
+    android:paddingTop="@dimen/locality_search_margin_right"
+    android:layout_centerHorizontal="true"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:clipToPadding="false">
 
     <com.makaan.ui.pyr.PyrPropertySearchCardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/property_search_card_view"
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/property_search_card_view_margin_bottom"
-        android:layout_gravity="center_horizontal"
-        >
+        android:layout_gravity="center_horizontal">
 
         <LinearLayout
-            android:layout_width="@dimen/select_locality_width"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/select_locality_height"
             android:orientation="horizontal">
 
@@ -36,7 +38,7 @@
                 android:layout_width="@dimen/location_text_width"
                 android:layout_height="@dimen/location_text_height"
                 android:textColor="@color/black"
-                android:text="location"
+                android:text="@string/pyr_location_string"
                 android:textSize="@dimen/location_text_size"
                 android:gravity="center_horizontal"
                 android:layout_gravity="center_horizontal"/>
@@ -49,8 +51,8 @@
                 android:background="@color/pyr_light_grey"/>
 
             <TextView
-                android:layout_width="@dimen/select_locality_text_width"
-                android:layout_height="@dimen/select_locality_text_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/select_locality_margin_right"
                 android:layout_marginLeft="@dimen/select_locality_margin_left"
                 android:orientation="horizontal"
@@ -60,21 +62,26 @@
                 android:layout_gravity="center_vertical" />
 
 
-            <ImageView
-                android:layout_width="@dimen/red_tick_width"
-                android:layout_height="@dimen/red_tick_height"
-                android:src="@drawable/circle_tick_icon"
+            <TextView
+                android:id="@+id/locality_circular_tick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/apply"
+                android:textColor="@color/appThemeRed"
                 android:layout_gravity="center_vertical"
+                android:gravity="end"
                 android:layout_marginRight="@dimen/red_tick_margin_right"/>
 
         </LinearLayout>
 
     </com.makaan.ui.pyr.PyrPropertySearchCardView>
 
+
     <android.support.v7.widget.CardView
-        android:layout_width="@dimen/select_locality_search_width"
+        android:id="@+id/search_result_card"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/select_locality_search_height"
-        android:layout_gravity="center_horizontal">
+        android:layout_below="@+id/property_search_card_view">
 
     <EditText
         android:id="@+id/multichoice_dialog_search_tv"
@@ -91,10 +98,11 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/multichoice_card_view"
-        android:layout_width="@dimen/multi_choice_search_width"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/multi_choice_search_height"
         android:layout_marginTop="1dp"
         android:orientation="vertical"
+        android:layout_below="@+id/search_result_card"
         android:layout_gravity="center_horizontal">
 
         <ListView
@@ -106,8 +114,10 @@
     </android.support.v7.widget.CardView>
 
     <LinearLayout
+        android:id="@+id/selected_items_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/search_result_card"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -127,19 +137,6 @@
                 android:text="@string/selected_items_count_text"
                 android:textColor="@color/white"
                 android:textSize="@dimen/selected_items_count_text_size" />
-            
-            <TextView
-                android:id="@+id/clear_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/clear_button_margin"
-                android:background="@drawable/list_filter_button_background_selector"
-                android:paddingBottom="@dimen/clear_button_padding_top_bottom"
-                android:paddingLeft="@dimen/clear_button_pading_left_right"
-                android:paddingRight="@dimen/clear_button_pading_left_right"
-                android:paddingTop="@dimen/clear_button_padding_top_bottom"
-                android:text="@string/clear_button_text"
-                android:textSize="@dimen/clear_button_text_size" />
 
         </LinearLayout>
 
@@ -166,6 +163,24 @@
                 android:textSize="@dimen/empty_selection_text_size"
                 android:visibility="gone"/>
         </LinearLayout>
+
     </LinearLayout>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/selected_locality_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/locality_badge_margin_left_top"
+        android:layout_marginTop="@dimen/locality_badge_margin_left_top"
+        android:background="@drawable/badge_circle"
+        android:text="6"
+        android:elevation="@dimen/locality_badge_elevation"
+        android:gravity="center"
+        android:visibility="gone"
+        android:shadowColor="@android:color/transparent"
+        android:textColor="@color/white"
+        android:layout_alignParentTop="true"
+        android:textSize="@dimen/locality_badge_text_size" />
+
+</RelativeLayout>

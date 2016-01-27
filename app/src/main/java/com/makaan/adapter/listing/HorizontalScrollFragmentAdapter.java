@@ -19,7 +19,8 @@ public class HorizontalScrollFragmentAdapter<T> extends FragmentStatePagerAdapte
     private final SerpRequestCallback mCallback;
     private boolean mIsChildSerpClusterAdapter;
 
-    public HorizontalScrollFragmentAdapter(FragmentManager fm, Context context, List<T> data, boolean isChildSerpClusterView, SerpRequestCallback callback) {
+    public HorizontalScrollFragmentAdapter(FragmentManager fm, Context context, List<T> data,
+                                           boolean isChildSerpClusterView, SerpRequestCallback callback) {
         super(fm);
         this.mContext = context;
         this.mListing = data;
