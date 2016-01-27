@@ -188,10 +188,10 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                 selector.range(rangeValues.get(0).fieldName, rangeValues.get(0).selectedMinValue, rangeValues.get(0).selectedMaxValue);
             }
         } else if(type == RADIO_BUTTON) {
-            selector.removeTerm(termValues.get(0).fieldName);
 
             for(TermFilter filter : termValues) {
                 if(filter.selected) {
+                    selector.removeTerm(termValues.get(0).fieldName);
                     if(currentGroup != null) {
                         currentGroup.isSelected = true;
                     }

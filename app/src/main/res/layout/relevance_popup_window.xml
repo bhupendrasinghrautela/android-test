@@ -78,6 +78,22 @@
             style="?android:attr/borderlessButtonStyle" />
 
         <Button
+            android:id="@+id/relevance_popup_window_date_posted_button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/relevance_popup_window_button_height"
+            android:paddingLeft="@dimen/relevance_popup_window_button_padding_right"
+            android:paddingStart="@dimen/relevance_popup_window_button_padding_left"
+            android:paddingRight="@dimen/relevance_popup_window_button_padding_right"
+            android:paddingEnd="@dimen/relevance_popup_window_button_padding_left"
+            android:background="@drawable/relevance_popup_item_background_selector"
+            android:text="date posted"
+            android:textColor="@color/relevance_poup_window_text_color"
+            android:textSize="@dimen/relevance_popup_window_text_size"
+            android:textAllCaps="false"
+            android:gravity="start|center_vertical"
+            style="?android:attr/borderlessButtonStyle" />
+
+        <Button
             android:id="@+id/relevance_popup_window_livability_score_button"
             android:layout_width="match_parent"
             android:layout_height="@dimen/relevance_popup_window_button_height"

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -15,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
@@ -26,9 +28,11 @@ import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.PreferenceConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.listing.Listing;
+import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
 import com.pkmmte.view.CircularImageView;
 
+import java.text.NumberFormat;
 import java.util.Random;
 
 import butterknife.Bind;
@@ -77,7 +81,7 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
     @Bind(R.id.serp_default_listing_property_bathroom_number_date_text_view)
     TextView mPropertyBathroomNumberTextView;
     @Bind(R.id.serp_default_listing_property_tagline_text_view)
-    TextView mPropertyTaglineTextView;
+    TextView mPropertyDescriptionTextView;
     @Bind(R.id.serp_default_listing_seller_name_text_view)
     TextView mPropertySellerNameTextView;
     @Bind(R.id.serp_default_listing_badge_text_view)
@@ -94,9 +98,12 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
     @Bind(R.id.serp_default_listing_seller_rating)
     RatingBar mSellerRatingBar;
 
+    @Bind(R.id.serp_default_listing_property_seller_info_relative_layout)
+    RelativeLayout mSellerInfoRelativeLayout;
 
     private SharedPreferences mPreferences;
     private Listing mListing;
+    private SerpRequestCallback mCallback;
 
     public DefaultListingView(Context context) {
         super(context);
@@ -116,6 +123,7 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         if(!(data instanceof Listing)) {
             return;
         }
+        mCallback = callback;
 
         boolean isBuy = MakaanBuyerApplication.serpSelector.isBuyContext();
 
@@ -236,7 +244,7 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         // set price info
         mPropertyPriceTextView.setText(priceString);
         mPropertyPriceUnitTextView.setText(priceUnit);
-        mPropertyPriceSqFtTextView.setText(String.format("%d/sqft", mListing.pricePerUnitArea));
+        mPropertyPriceSqFtTextView.setText(String.format("%s/sqft", StringUtil.getFormattedNumber(mListing.pricePerUnitArea)));
 
         // set property bhk and size info
         if(mListing.bhkInfo == null) {
@@ -276,39 +284,45 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         mPropertyBathroomNumberTextView.setText(String.valueOf(mListing.bathrooms));
 
         // set property tagline or detailed info
-        mPropertyTaglineTextView.setText(mListing.description);
+        mPropertyDescriptionTextView.setText(Html.fromHtml(mListing.description));
 
-        // TODO check seller name
-        if(mListing.lisitingPostedBy != null) {
-            mPropertySellerNameTextView.setText(String.format("%s(%s)",mListing.project.builderName, mListing.lisitingPostedBy.type));
+        if(callback.needSellerInfoInSerp()) {
+            mSellerInfoRelativeLayout.setVisibility(View.VISIBLE);
+
+            // TODO check seller name
+            if(mListing.lisitingPostedBy != null) {
+                mPropertySellerNameTextView.setText(String.format("%s(%s)",mListing.lisitingPostedBy.name, mListing.lisitingPostedBy.type));
+            } else {
+                mPropertySellerNameTextView.setText(mListing.project.builderName);
+            }
+
+            // todo need to show seller logo image if available
+            mSellerLogoTextView.setText(String.valueOf(mListing.lisitingPostedBy.name.charAt(0)));
+            mSellerLogoTextView.setVisibility(View.VISIBLE);
+            mSellerImageView.setVisibility(View.GONE);
+            // show seller first character as logo
+            Random random = new Random();
+            ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+            int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
+            drawable.getPaint().setColor(color);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                mSellerLogoTextView.setBackground(drawable);
+            } else {
+                mSellerLogoTextView.setBackgroundDrawable(drawable);
+            }
+
+            // show or hide assist button
+            if(mListing.lisitingPostedBy == null || !mListing.lisitingPostedBy.assist) {
+                mAssistButton.setVisibility(View.GONE);
+            } else {
+                mAssistButton.setVisibility(View.VISIBLE);
+            }
         } else {
-            mPropertySellerNameTextView.setText(mListing.project.builderName);
-        }
-        // todo need to show seller logo image if available
-        mSellerLogoTextView.setText(String.valueOf(mListing.project.builderName.charAt(0)));
-        mSellerLogoTextView.setVisibility(View.VISIBLE);
-        mSellerImageView.setVisibility(View.GONE);
-        // show seller first character as logo
-        Random random = new Random();
-        ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
-        int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
-        drawable.getPaint().setColor(color);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            mSellerLogoTextView.setBackground(drawable);
-        } else {
-            mSellerLogoTextView.setBackgroundDrawable(drawable);
+            mSellerInfoRelativeLayout.setVisibility(View.GONE);
         }
 
         // TODO diff image view
-
         mPropertyShortlistCheckbox.setOnCheckedChangeListener(this);
-
-        // show or hide assist button
-        if(mListing.lisitingPostedBy == null || !mListing.lisitingPostedBy.assist) {
-            mAssistButton.setVisibility(View.GONE);
-        } else {
-            mAssistButton.setVisibility(View.VISIBLE);
-        }
 
     }
 
@@ -329,10 +343,32 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         }
     }
 
-    @OnClick(R.id.serp_default_listing_seller_image_view)
-    public void onSellerImageViewPressed(View view) {
-        SerpActivity.isSellerSerp = true;
-        MakaanBuyerApplication.serpSelector.reset();
+    @OnClick({R.id.serp_default_listing_seller_image_view, R.id.serp_default_listing_seller_name_text_view})
+    public void onSellerPressed(View view) {
+        // TODO discuss what should be done if listing posted by is not present
+
+        MakaanBuyerApplication.serpSelector.removeTerm("builderId");
+        MakaanBuyerApplication.serpSelector.removeTerm("localityId");
+        MakaanBuyerApplication.serpSelector.removeTerm("cityId");
+        MakaanBuyerApplication.serpSelector.removeTerm("suburbId");
+
+        MakaanBuyerApplication.serpSelector.term("listingCompanyId", String.valueOf(mListing.lisitingPostedBy.id), true);
+
+        mCallback.serpRequest(SerpActivity.TYPE_SELLER, MakaanBuyerApplication.serpSelector);
+
+//        MakaanBuyerApplication.serpSelector.term("sellerId", String.valueOf(mListing.sellerId));
+    }
+
+    @OnClick(R.id.serp_default_listing_property_bhk_info_text_view)
+    public void onPropertyPressed(View view) {
+
+        Bundle bundle = new Bundle();
+        bundle.putLong(KeyUtil.LISTING_ID, mListing.id);
+        bundle.putDouble(KeyUtil.LISTING_LAT, mListing.latitude);
+        bundle.putDouble(KeyUtil.LISTING_LON, mListing.longitude);
+
+        mCallback.requestDetailPage(SerpActivity.REQUEST_PROPERTY_PAGE, bundle);
+
 //        MakaanBuyerApplication.serpSelector.term("sellerId", String.valueOf(mListing.sellerId));
     }
 }

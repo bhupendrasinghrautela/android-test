@@ -51,6 +51,8 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
 
     @Override
     public void bindView(Builder item) {
-        mBuilderLogo.setImageUrl(item.imageUrl, MakaanNetworkClient.getInstance().getImageLoader());
+        if(item != null) {
+            mBuilderLogo.setImageUrl(item.imageURL, MakaanNetworkClient.getInstance().getImageLoader());
+        }
     }
 }

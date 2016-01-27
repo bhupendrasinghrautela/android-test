@@ -21,20 +21,19 @@ public class ImageService implements MakaanService {
 
 
     public void getListingImages(final Long listingId) {
-        getImages(listingId, ENTITY_MAP.get(ImageConstants.LISTING), BATHROOM);
+        getImages(listingId, ENTITY_MAP.get(ImageConstants.LISTING));
 
     }
 
 
-    public void getImages(final Long objectId, final Integer objectType, final String imageType) {
+    public void getImages(final Long objectId, final Integer objectType) {
         if (null != objectId) {
             Type listingDetailImageList = new TypeToken<ArrayList<Image>>() {
             }.getType();
             String detailImageListUrl = ApiConstants.IMAGE;
-            detailImageListUrl = detailImageListUrl.concat("?filters=(objectId==OBJ_ID;imageTypeObj.objectTypeId==OBJ_TYPE_ID;imageTypeObj.type==IMG_TYPE)&sourceDomain=Makaan");
+            detailImageListUrl = detailImageListUrl.concat("?filters=(objectId==OBJ_ID;imageTypeObj.objectTypeId==OBJ_TYPE_ID)&sourceDomain=Makaan");
             detailImageListUrl = detailImageListUrl.replaceAll("OBJ_ID", objectId.toString());
             detailImageListUrl = detailImageListUrl.replaceAll("OBJ_TYPE_ID", objectType.toString());
-            detailImageListUrl = detailImageListUrl.replaceAll("IMG_TYPE", imageType);
 
 
             MakaanNetworkClient.getInstance().get(detailImageListUrl, listingDetailImageList, new ObjectGetCallback() {
@@ -44,7 +43,6 @@ public class ImageService implements MakaanService {
                     ImagesGetEvent imagesGetEvent = new ImagesGetEvent();
                     imagesGetEvent.objectId = objectId;
                     imagesGetEvent.objectType = objectType;
-                    imagesGetEvent.imageType = imageType;
 
                     imagesGetEvent.images = images;
                     AppBus.getInstance().post(imagesGetEvent);

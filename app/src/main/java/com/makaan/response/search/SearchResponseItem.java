@@ -13,9 +13,11 @@ public class SearchResponseItem implements Cloneable{
 
 	public boolean isSuggestion, isGooglePlace;
 	private double latitude, longitude;
+	public long cityId;
 
 	public SearchResponseItem(SearchResponseItem search) {
 		this.id = search.id;
+		this.cityId = search.cityId;
 		this.entityId = search.entityId;
 		this.entityName = search.entityName;
 		this.type = search.type;

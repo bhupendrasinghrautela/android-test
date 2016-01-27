@@ -26,17 +26,32 @@ public class SearchService implements MakaanService {
     public static final String TYPEAHEAD_ROWS = "&rows=5";
     public static final String TYPEAHEAD_ENHANCE_GP = "&enhance=gp";
     public static final String TYPEAHEAD_CITY = "&city=";
-
+    public static final String TYPEAHEAD_CATEGORY = "&category=";
+    public static final String TYPEAHEAD_BUYER = "&view=buyer";
+    public static final String TYPEAHEAD_FORMAT = "&format=json";
 
 
     /**
      * Gets search results
      * @param keyword search key
+     * @param category search category buy/rent
      * @param city search city
      * @param type search result type
-     * @param supportGooglePlace are google places results required
-     * */
-    public void getSearchResults(String keyword, String city, SearchType type, boolean supportGooglePlace)
+     * @param supportGooglePlace are google places results required    */
+    public void getSearchResults(String keyword, String category, String city, SearchType type, boolean supportGooglePlace)
+            throws UnsupportedEncodingException {
+
+        getSearchResults(keyword, category, city, new SearchType[] {type}, supportGooglePlace);
+    }
+
+    /**
+     * Gets search results
+     * @param keyword search key
+     * @param category search category buy/rent
+     * @param city search city
+     * @param type search result type
+     * @param supportGooglePlace are google places results required    */
+    public void getSearchResults(String keyword, String category, String city, SearchType[] type, boolean supportGooglePlace)
             throws UnsupportedEncodingException {
 
         if(TextUtils.isEmpty(keyword)){
@@ -49,7 +64,7 @@ public class SearchService implements MakaanService {
                 throw new IllegalArgumentException("Invalid keyword");
             }
 
-            String requestUrl = buildSearchUrl(keyword, city, type, supportGooglePlace);
+            String requestUrl = buildSearchUrl(keyword, category, city, type, supportGooglePlace);
             makeSearchRequest(requestUrl);
         }
     }
@@ -58,11 +73,11 @@ public class SearchService implements MakaanService {
         MakaanNetworkClient.getInstance().getSearch(requestUrl, new SearchResultCallback(), TAG);
     }
 
-    private String buildSearchUrl(String key, String city, SearchType type, boolean supportGooglePlace){
+    private String buildSearchUrl(String key, String category, String city, SearchType[] type, boolean supportGooglePlace){
         StringBuilder urlBuilder = new StringBuilder();
         urlBuilder.append(TYPEAHEAD_BASE_URL);
 
-        if (type == SearchType.ALL) {
+        if(type.length == 1 && type[0] == SearchType.ALL) {
             urlBuilder.append(TYPEAHEAD_QUERY);
             urlBuilder.append(key);
             if(supportGooglePlace){
@@ -71,7 +86,13 @@ public class SearchService implements MakaanService {
 
         } else {
             urlBuilder.append(TYPEAHEAD_TYPE);
-            urlBuilder.append(type.getValue());
+            String prefix = "";
+            for(SearchType searchType : type) {
+                urlBuilder.append(prefix);
+                prefix = ",";
+                urlBuilder.append(searchType.getValue());
+            }
+
             urlBuilder.append("&");
             urlBuilder.append(TYPEAHEAD_QUERY);
             urlBuilder.append(key);
@@ -81,6 +102,13 @@ public class SearchService implements MakaanService {
             urlBuilder.append(TYPEAHEAD_CITY);
             urlBuilder.append(city);
         }
+
+        if(!TextUtils.isEmpty(category)) {
+            urlBuilder.append(TYPEAHEAD_CATEGORY);
+            urlBuilder.append(category);
+        }
+        urlBuilder.append(TYPEAHEAD_BUYER);
+        urlBuilder.append(TYPEAHEAD_FORMAT);
 
         urlBuilder.append(TYPEAHEAD_ROWS);
         return urlBuilder.toString();

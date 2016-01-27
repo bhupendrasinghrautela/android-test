@@ -13,6 +13,8 @@ import com.makaan.cache.MasterDataCache;
 import com.makaan.response.master.ApiLabel;
 import com.makaan.service.ListingService;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -36,7 +38,7 @@ public class SearchResponseHelper {
         }
 
         if(searchItem.type.contains(SearchSuggestionType.SUGGESTION.getValue())){
-
+            ((SerpRequestCallback)context).serpRequest(SerpActivity.TYPE_SUGGESTION, searchItem.redirectUrlFilters);
             //TODO
             return;
         } else if(searchItem.type.contains(SearchSuggestionType.PROJECT_SUGGESTION.getValue())){
@@ -56,12 +58,26 @@ public class SearchResponseHelper {
         // handle overview cases
         if(SearchSuggestionType.CITY_OVERVIEW.getValue().equalsIgnoreCase(searchItem.type)) {
             Intent cityIntent = new Intent(context, CityActivity.class);
-            cityIntent.putExtra(CityActivity.CITY_ID, Long.valueOf(searchItem.entityId));
+
+            // check from id if entity id is not present
+            if(TextUtils.isEmpty(searchItem.entityId)) {
+                cityIntent.putExtra(CityActivity.CITY_ID, Long.valueOf(searchItem.id.replace("TYPEAHEAD-CITY-OVERVIEW-", "")));
+            } else {
+                cityIntent.putExtra(CityActivity.CITY_ID, Long.valueOf(searchItem.entityId));
+            }
+
             context.startActivity(cityIntent);
             return;
         } else if(SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchItem.type)) {
             Intent cityIntent = new Intent(context, LocalityActivity.class);
-            cityIntent.putExtra(LocalityActivity.LOCALITY_ID, Long.valueOf(searchItem.entityId));
+
+            // check from id if entity id is not present
+            if(TextUtils.isEmpty(searchItem.entityId)) {
+                cityIntent.putExtra(LocalityActivity.LOCALITY_ID, Long.valueOf(searchItem.id.replace("TYPEAHEAD-LOCALITY-OVERVIEW-", "")));
+            } else {
+                cityIntent.putExtra(LocalityActivity.LOCALITY_ID, Long.valueOf(searchItem.entityId));
+            }
+
             context.startActivity(cityIntent);
             return;
         }
@@ -72,16 +88,19 @@ public class SearchResponseHelper {
         MakaanBuyerApplication.serpSelector.removeTerm("builderId");
         MakaanBuyerApplication.serpSelector.removeTerm("localityId");
         MakaanBuyerApplication.serpSelector.removeTerm("cityId");
+        MakaanBuyerApplication.serpSelector.removeTerm("suburbId");
 
         // TODO check if we need to clear all the filters
         //MakaanBuyerApplication.serpSelector.reset();
-        if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchItem.type)) {
+        if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchItem.type)
+                || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchItem.type)) {
             // as selected item is locality
             // we need to add all the selected localities to get serp
             MakaanBuyerApplication.serpSelector.removeTerm(searchField);
             for(SearchResponseItem item : searchResponseArrayList) {
                 MakaanBuyerApplication.serpSelector.term(searchField, String.valueOf(item.entityId));
             }
+            MakaanBuyerApplication.serpSelector.term("cityId", String.valueOf(searchItem.cityId));
         } else {
             MakaanBuyerApplication.serpSelector.term(searchField, String.valueOf(searchItem.entityId), true);
         }
@@ -115,6 +134,15 @@ public class SearchResponseHelper {
 
         } else if (SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchItem.type)) {
 
+            if(context instanceof SerpRequestCallback) {
+                ((SerpRequestCallback)context).serpRequest(SerpActivity.TYPE_SUBURB, MakaanBuyerApplication.serpSelector);
+            } else {
+                // because we are in some other activity, so lets start Serp Activity to handle this request
+                Intent intent = new Intent(context, SerpActivity.class);
+                intent.putExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_SUBURB);
+                context.startActivity(intent);
+            }
+            return;
 
         } else if (SearchSuggestionType.CITY.getValue().equalsIgnoreCase(searchItem.type)) {
 
@@ -133,6 +161,19 @@ public class SearchResponseHelper {
 
         } else if (SearchSuggestionType.GOOGLE_PLACE.getValue().equalsIgnoreCase(searchItem.type)) {
             //TODO provide google places field in serp selector
+            MakaanBuyerApplication.serpSelector.removeTerm(searchField);
+
+            if(context instanceof SerpRequestCallback) {
+                ((SerpRequestCallback)context).serpRequest(SerpActivity.TYPE_GPID, MakaanBuyerApplication.serpSelector, searchItem.googlePlaceId);
+            } else {
+                // because we are in some other activity, so lets start Serp Activity to handle this request
+                Intent intent = new Intent(context, SerpActivity.class);
+                intent.putExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_GPID);
+                intent.putExtra(SerpActivity.REQUEST_DATA, searchItem.googlePlaceId);
+                context.startActivity(intent);
+            }
+            return;
+
         }
         ((SerpRequestCallback)context).serpRequest(SerpActivity.TYPE_UNKNOWN, MakaanBuyerApplication.serpSelector);
     }

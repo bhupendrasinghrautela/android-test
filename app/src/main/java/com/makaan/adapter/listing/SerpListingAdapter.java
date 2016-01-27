@@ -11,6 +11,7 @@ import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.PaginatedBaseAdapter;
 import com.makaan.adapter.RecycleViewMode;
+import com.makaan.pojo.GroupCluster;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
 import com.makaan.ui.listing.ListingViewHolderFactory;
@@ -27,7 +28,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
     private final Context mContext;
     private final SerpRequestCallback mCallback;
     private int mRequestType = SerpActivity.TYPE_UNKNOWN;
-    protected ArrayList<GroupListing> mGroupListings;
+    protected ArrayList<GroupCluster> mGroupClusterListings;
 
     public SerpListingAdapter(Context context, SerpRequestCallback callbacks) {
         mContext = context;
@@ -46,7 +47,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
         mContext = context;
         mCallback = callbacks;
         recycleViewMode = RecycleViewMode.DATA;
-        this.mRequestType = requestType;
+        this.mRequestType = requestType & SerpActivity.MASK_LISTING_TYPE;
     }
 
     @Override
@@ -64,7 +65,8 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
                     superItemViewType = RecycleViewMode.DATA_TYPE_LISTING.getValue();
                 }
             } else {
-                if(position == 3 && mGroupListings != null && mGroupListings.size() > 0) {
+                if((position % 10) == GroupCluster.CLUSTER_POS_IN_SERP_PER_TEN && mGroupClusterListings != null
+                        && mGroupClusterListings.size() > (position / 10)) {
                     superItemViewType =  RecycleViewMode.DATA_TYPE_CLUSTER.getValue();
                 } else {
                     superItemViewType = RecycleViewMode.DATA_TYPE_LISTING.getValue();
@@ -87,18 +89,14 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
             }
             return (mItems.size() + 1);
         } else {
-            if (mItems == null && mGroupListings == null) {
+            if (mItems == null && mGroupClusterListings == null) {
                 return 0;
-            } else if (mGroupListings == null || mGroupListings.size() == 0) {
+            } else if (mGroupClusterListings == null || mGroupClusterListings.size() == 0) {
                 return mItems.size();
             } else if (mItems == null || mItems.size() == 0) {
                 return 0;
-                // TODO check for this case
-//                return (mGroupListings.size() / 3);
             } else {
-                // TODO need to check for the cluster logic
-                return (mItems.size() + 1);
-//                return (mItems.size() + (mGroupListings.size() / 3));
+                return (mItems.size() + mGroupClusterListings.size());
             }
         }
     }
@@ -118,29 +116,36 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
         return null;
     }
 
+
     @Override
     public void onBindDataViewHolder(RecyclerView.ViewHolder holder, int position) {
         BaseListingAdapterViewHolder viewHolder = (BaseListingAdapterViewHolder) holder;
-        if(mGroupListings != null && mGroupListings.size() > 0 && position == 3) {
-            viewHolder.populateData(mGroupListings, mCallback);
+        int type = getItemViewType(position);
+        if(type == RecycleViewMode.DATA_TYPE_CLUSTER.getValue()) {
+            viewHolder.populateData(mGroupClusterListings.get(position / 10), mCallback);
+        } else if(type == RecycleViewMode.DATA_TYPE_BUILDER.getValue()
+                || type == RecycleViewMode.DATA_TYPE_SELLER.getValue()) {
+            viewHolder.populateData(null, mCallback);
         } else {
-            if(mRequestType == SerpActivity.TYPE_BUILDER || mRequestType == SerpActivity.TYPE_SELLER) {
-                if(position == 0) {
-                    viewHolder.populateData(null, mCallback);
+            int extraCount = 0;
+            if(mRequestType == SerpActivity.TYPE_BUILDER
+                    || mRequestType == SerpActivity.TYPE_SELLER) {
+                extraCount = 1;
+            } else if(mRequestType != SerpActivity.TYPE_CLUSTER) {
+                int tens = position / 10;
+                int digit = position % 10;
+                if(tens > mGroupClusterListings.size()) {
+                    extraCount = mGroupClusterListings.size();
                 } else {
-                    viewHolder.populateData(mItems.get(position - 1), mCallback);
-                }
-            } else {
-                if (mRequestType != SerpActivity.TYPE_CLUSTER && mGroupListings != null && mGroupListings.size() > 0) {
-                    if (position > 3) {
-                        viewHolder.populateData(mItems.get(position - 1), mCallback);
+                    if (digit > GroupCluster.CLUSTER_POS_IN_SERP_PER_TEN) {
+                        extraCount = tens - 1;
                     } else {
-                        viewHolder.populateData(mItems.get(position), mCallback);
+                        extraCount = tens;
                     }
-                } else {
-                    viewHolder.populateData(mItems.get(position), mCallback);
                 }
+                viewHolder.populateData(mItems.get(position - extraCount), mCallback);
             }
+            viewHolder.populateData(mItems.get(position - extraCount), mCallback);
         }
     }
 
@@ -156,14 +161,14 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
 
     public void setData(List<Listing> listings, @Nullable List<GroupListing> groupListings, int requestType) {
 
-        if (mGroupListings == null) {
-            mGroupListings = new ArrayList<>();
+        if (mGroupClusterListings == null) {
+            mGroupClusterListings = new ArrayList<>();
         } else {
-            this.mGroupListings.clear();
+            this.mGroupClusterListings.clear();
         }
 
         if(groupListings != null) {
-            mGroupListings.addAll(groupListings);
+            mGroupClusterListings.addAll(GroupCluster.getGroupCluster((ArrayList<GroupListing>) groupListings));
         }
         setData(listings, requestType);
     }
@@ -175,7 +180,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
         }
         this.mItems.clear();
 
-        mRequestType = requestType;
+        mRequestType = requestType & SerpActivity.MASK_LISTING_TYPE;
         if(listings == null) {
             return;
         }

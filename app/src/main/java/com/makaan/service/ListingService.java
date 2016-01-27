@@ -13,6 +13,7 @@ import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.util.AppBus;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 
 import static com.makaan.constants.RequestConstants.BATHROOMS;
 import static com.makaan.constants.RequestConstants.BEDROOMS;
@@ -28,12 +29,12 @@ public class ListingService implements MakaanService {
 
 
     public void handleSerpRequest(Selector serpSelector) {
-        handleSerpRequest(serpSelector, null, false);
+        handleSerpRequest(serpSelector, null, false, null);
     }
 
 
-    public void handleSerpRequest(Selector serpSelector, boolean needGroupings) {
-        handleSerpRequest(serpSelector, null, needGroupings);
+    public void handleSerpRequest(Selector serpSelector, boolean needGroupings, Selector groupSelector) {
+        handleSerpRequest(serpSelector, null, needGroupings, groupSelector);
     }
 
     public void handleSerpRequest(String selector) {
@@ -41,18 +42,20 @@ public class ListingService implements MakaanService {
     }
 
 
-    public void handleSerpRequest(Selector serpSelector, String gpId, boolean needGroupings) {
+    public void handleSerpRequest(Selector serpSelector, String gpId, boolean needGroupings, Selector groupSelector) {
         String serpDetailsURL = ApiConstants.LISTING.concat("?").concat(serpSelector.build());
         if (null != gpId) {
-            serpDetailsURL = serpDetailsURL.concat("&gpid").concat(gpId);
+            serpDetailsURL = serpDetailsURL.concat("&gpid=").concat(gpId);
         }
         MakaanNetworkClient.getInstance().get(serpDetailsURL, new BaseSerpCallback());
         if (needGroupings) {
-            // TODO check if we can restrict to needed fields
-            Selector groupSelector = serpSelector.clone();
-            groupSelector.field("groupingAttributes").field("groupedListings").field("listing").field("id");
             serpDetailsURL = ApiConstants.LISTING.concat("?").concat(groupSelector.build());
-            serpDetailsURL = serpDetailsURL.concat("&sourceDomain=Makaan&group=true");
+
+            if (null != gpId) {
+                serpDetailsURL = serpDetailsURL.concat("&gpid=").concat(gpId);
+            }
+
+            serpDetailsURL = serpDetailsURL.concat("&group=true&sourceDomain=Makaan");
             MakaanNetworkClient.getInstance().get(serpDetailsURL, new GroupSerpCallback());
         }
     }
@@ -61,16 +64,6 @@ public class ListingService implements MakaanService {
     public void handleChildSerpRequest(Selector serpSelector, long id) {
         if (null != serpSelector) {
             String serpDetailsURL = ApiConstants.SIMILAR_LISTING.concat(String.valueOf(id)).concat("?").concat(serpSelector.build());
-            MakaanNetworkClient.getInstance().get(serpDetailsURL, new BaseSerpCallback());
-        }
-    }
-
-    public void handleSerpRequest(String selector, String gpId) {
-        if (null != selector) {
-            String serpDetailsURL = ApiConstants.LISTING.concat("?selector={\"filters\":").concat(selector).concat("}");
-            if (null != gpId) {
-                serpDetailsURL = serpDetailsURL.concat("&gpid").concat(gpId);
-            }
             MakaanNetworkClient.getInstance().get(serpDetailsURL, new BaseSerpCallback());
         }
     }
@@ -102,6 +95,7 @@ public class ListingService implements MakaanService {
         }
 
     }
+
 
     /**
      * http:/marketplace-qa.makaan-ws.com/data/v2/entity/domain?selector={"fields":["companyImage","score","contactNumber","contactNumbers","user","name","id","label","sellerId","property","currentListingPrice","price","bedrooms","bathrooms","size","unitTypeId","project","projectId","studyRoom","servantRoom","poojaRoom","companySeller","company","companyScore"],"filters":{"and":[{"equal":{"projectId":["654368"]}},{"equal":{"bedrooms":["3"]}},{"equal":{"bathrooms":["3"]}},{"equal":{"studyRoom":["0"]}},{"equal":{"poojaRoom":["0"]}},{"equal":{"servantRoom":["0"]}}]},"paging":{"start":"0","rows":"5"},"groupBy":{"field":"sellerId","min":"listingSellerCompanyScore"}}&documentType=LISTING&facets=bedrooms,sellerId&sourceDomain=Makaan
@@ -140,7 +134,18 @@ public class ListingService implements MakaanService {
         otherSellersUrl.append("?").append(otherSellersSelector.build()).append("&documentType=LISTING&facets=bedrooms,sellerId");
 
         MakaanNetworkClient.getInstance().get(otherSellersUrl.toString(), new ListingOtherSellersCallback());
+    }
 
+
+
+    public void handleSerpRequest(String selector, String gpId) {
+        if (null != selector) {
+            String serpDetailsURL = ApiConstants.LISTING.concat("?selector={\"filters\":").concat(selector).concat("}");
+            if (null != gpId) {
+                serpDetailsURL = serpDetailsURL.concat("&gpid").concat(gpId);
+            }
+            MakaanNetworkClient.getInstance().get(serpDetailsURL, new BaseSerpCallback());
+        }
 
     }
 

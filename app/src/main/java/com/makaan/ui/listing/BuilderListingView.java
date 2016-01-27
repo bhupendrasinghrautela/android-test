@@ -5,17 +5,24 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.event.builder.BuilderByIdEvent;
+import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.project.Builder;
 import com.makaan.util.AppBus;
 import com.makaan.util.Blur;
+import com.makaan.util.StringUtil;
 import com.squareup.otto.Subscribe;
+
+import java.util.Calendar;
 
 import butterknife.Bind;
 
@@ -61,9 +68,14 @@ public class BuilderListingView extends AbstractListingView {
     public void populateData(Object data, SerpRequestCallback callback) {
         super.populateData(data, callback);
 
-        AppBus.getInstance().register(this);
+        try {
+            AppBus.getInstance().register(this);
+        } catch(IllegalArgumentException ex) {
+            ex.printStackTrace();
+        }
 
         callback.requestApi(SerpActivity.REQUEST_BUILDER_API, "builderId");
+        this.setVisibility(View.GONE);
 
         // TODO need to use original data
         Bitmap bitmap = null;
@@ -87,12 +99,38 @@ public class BuilderListingView extends AbstractListingView {
     public void onResults(BuilderByIdEvent builderByIdEvent) {
         Builder builder = builderByIdEvent.builder;
         mBuilderNameTextView.setText(builder.name);
-        mBuilderExperienceTextView.setText(builder.establishedDate);
+        try {
+            mBuilderExperienceTextView.setText(StringUtil.getAgeFromTimeStamp(Long.valueOf(builder.establishedDate), Calendar.YEAR));
+        } catch(NumberFormatException ex) {
+            // TODO
+            ex.printStackTrace();
+        }
+
         mOngoingProjectsTextView.setText(String.valueOf(builder.projectStatusCount.underConstruction));
         mBuilderPastProjectsTextView.setText(String.valueOf(builder.projectStatusCount.completed));
         // TODO check for avg delay
         mBuilderAvgDelayTextView.setText(String.format("%d%s", builder.projectStatusCount.cancelled, "%"));
 
+        if(builder.imageURL != null) {
+            // get seller image
+            MakaanNetworkClient.getInstance().getImageLoader().get(builder.imageURL, new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
+                    if (b && imageContainer.getBitmap() == null) {
+                        return;
+                    }
+                    final Bitmap image = imageContainer.getBitmap();
+                    mBuilderImageView.setImageBitmap(image);
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+
+                }
+            });
+        }
+
+        this.setVisibility(View.VISIBLE);
         AppBus.getInstance().unregister(this);
     }
 }

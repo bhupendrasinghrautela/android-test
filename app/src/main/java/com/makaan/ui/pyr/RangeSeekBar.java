@@ -87,7 +87,6 @@ public class RangeSeekBar<T extends Number> extends ImageView {
          *            The minimum value of the selectable range.
          * @param absoluteMaxValue
          *            The maximum value of the selectable range.
-         * @param context
          * @throws IllegalArgumentException
          *             Will be thrown if min/max value type is not one of Long, Double, Integer, Float, Short, Byte or BigDecimal.
          */
@@ -126,6 +125,7 @@ public class RangeSeekBar<T extends Number> extends ImageView {
 
     public void setStepValues(double convert[]){
         this.convert=convert;
+        mstep = convert.length;
     }
 
     public void setStepCount(int count){
@@ -142,6 +142,7 @@ public class RangeSeekBar<T extends Number> extends ImageView {
 
     private final void init() {
                 mScaledTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
+        mstep = convert.length;
         }
 
         public boolean isNotifyWhileDragging() {

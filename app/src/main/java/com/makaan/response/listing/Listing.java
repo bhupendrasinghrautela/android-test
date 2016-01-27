@@ -47,6 +47,7 @@ public class Listing {
     public String possessionDate;
     public Double listingPriceDiff;
     public String localityName, suburbName, cityName;
+    public String listingCategory;
 
     public LisitingPostedBy lisitingPostedBy;
 

@@ -16,6 +16,7 @@ import java.util.List;
 
 import butterknife.Bind;
 
+import com.makaan.pojo.GroupCluster;
 import com.makaan.response.listing.GroupListing;
 
 /**
@@ -44,17 +45,23 @@ public class ClusterListingView extends AbstractListingView {
     @Override
     public void populateData(Object data, SerpRequestCallback callback) {
         super.populateData(data, callback);
-        if(data!= null && data instanceof ArrayList<?>) {
-            if(((ArrayList<?>)data).size() > 0 && ((ArrayList<?>)data).get(0) instanceof GroupListing) {
+        if(data != null && data instanceof GroupCluster) {
+            fragmentPagerAdapter = new HorizontalScrollFragmentAdapter<GroupListing>(
+                    ((FragmentActivity) mContext).getSupportFragmentManager(), mContext,
+                    (List<GroupListing>) (((GroupCluster) data).groupListings), false, callback);
+            viewPager.setAdapter(fragmentPagerAdapter);
+        }
+        /*if(data!= null && data instanceof ArrayList<?>) {
+            if(((ArrayList<?>)data).size() > 0 && ((ArrayList<?>)data).get(0) instanceof GroupCluster) {
                 mListing = (ArrayList<GroupListing>) data;
                 if (mContext instanceof FragmentActivity) {
-                    fragmentPagerAdapter = new HorizontalScrollFragmentAdapter<GroupListing>(
+                    fragmentPagerAdapter = new HorizontalScrollFragmentAdapter<GroupCluster>(
                             ((FragmentActivity) mContext).getSupportFragmentManager(), mContext,
-                            (List<GroupListing>) data, false, callback);
+                            (List<GroupCluster>) data, false, callback);
 
                     viewPager.setAdapter(fragmentPagerAdapter);
                 }
             }
-        }
+        }*/
     }
 }

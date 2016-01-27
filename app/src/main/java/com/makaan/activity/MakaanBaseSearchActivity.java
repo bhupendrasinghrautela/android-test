@@ -35,10 +35,13 @@ import com.makaan.service.SearchService;
 
 import com.makaan.ui.listing.CustomFlowLayout;
 import com.makaan.util.RecentSearchManager;
+import com.makaan.util.StringUtil;
 
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -48,6 +51,12 @@ import butterknife.OnClick;
  */
 public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity implements
         SearchAdapter.SearchAdapterCallbacks, TextWatcher, CustomFlowLayout.ItemRemoveListener {
+
+    public static final int SERP_CONTEXT_BUY = 1;
+    public static final int SERP_CONTEXT_RENT = 2;
+
+    // current context of serp, SERP_CONTEXT_BUY or SERP_CONTEXT_RENT
+    protected int mSerpContext = SERP_CONTEXT_BUY;
 
     @Bind(R.id.activity_search_base_search_frame_layout)
     FrameLayout mSearchLayoutFrameLayout;
@@ -187,7 +196,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     public void onSearchItemClick(SearchResponseItem searchResponseItem) {
         setSearchResultFrameLayoutVisibility(false);
 
-        if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+        if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)
+                || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchResponseItem.type)) {
             // if adapter doesn't have any item, then it means previous search was either project, city, builder etc
             // or there is no earlier search present, so just clear selected search array
             if(mSelectedSearchAdapter.getItemCount() == 0) {
@@ -399,6 +409,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         if(searches != null && searches.size() > 0) {
             setSearchResultFrameLayoutVisibility(true);
             mSearches = searches;
+            clearSelectedSearches();
             mSearchAdapter.setData(searches, true);
         } else {
             setSearchResultFrameLayoutVisibility(false);
@@ -419,7 +430,27 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     public void onResults(SearchResultEvent searchResultEvent) {
         setSearchResultFrameLayoutVisibility(true);
         this.mSearches = searchResultEvent.searchResponse.getData();
+        clearSelectedSearches();
         mSearchAdapter.setData(mSearches, false);
+    }
+
+    private void clearSelectedSearches() {
+        if(mSelectedSearches.size() > 0) {
+            if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(mSelectedSearches.get(0).type)
+                    || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(mSelectedSearches.get(0).type)) {
+                HashSet<String> searches = new HashSet<>();
+                for(SearchResponseItem search : mSelectedSearches) {
+                    searches.add(search.id);
+                }
+
+                for (Iterator<SearchResponseItem> iterator = mSearches.iterator(); iterator.hasNext();) {
+                    SearchResponseItem search = iterator.next();
+                    if (!searches.add(search.id)) {
+                        iterator.remove();
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -441,10 +472,12 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 // if selected search adapter has items already, then it means there is some locality already selected
                 // so we need to search for localities only in the selected city
                 if(mSelectedSearchAdapter.getItemCount() > 0) {
-                    service.getSearchResults(editable.toString(), mSelectedSearches.get(0).city, SearchType.LOCALITY, false);
+                    service.getSearchResults(editable.toString(), (mSerpContext == SERP_CONTEXT_BUY ? "buy" : "rent"),
+                            mSelectedSearches.get(0).city, new SearchType[] {SearchType.LOCALITY, SearchType.SUBURB}, false);
                 } else {
                     // search for everything everywhere
-                    service.getSearchResults(editable.toString(), null, SearchType.ALL, false);
+                    service.getSearchResults(editable.toString(), (mSerpContext == SERP_CONTEXT_BUY ? "buy" : "rent"),
+                            null, SearchType.ALL, true);
                 }
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();

@@ -7,8 +7,8 @@
     "SUBURB": {"key":"suburbId", "value":"suburb"},
     "BUILDER-CITY": {"key":"cityId", "value":"builder-city"},
     "GP": {"key":"googlePlaceId", "value":"landmark"},
-    "CITY_OVERVIEW": {"key":"cityId", "value":"overview"},
-    "LOCALITY_OVERVIEW": {"key":"localityId", "value":"overview"}
+    "CITY-OVERVIEW": {"key":"cityId", "value":"overview"},
+    "LOCALITY-OVERVIEW": {"key":"localityId", "value":"overview"}
   }
 
 }
