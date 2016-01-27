@@ -16,6 +16,7 @@ import java.util.List;
 public class PropertyImageViewPager extends ViewPager {
 
     private static final int H_PADDING = 120;
+    private static final int MARGIN = 30;
     private Context mContext;
     PropertyImagesPagerAdapter mPropertyImagesPagerAdapter;
 
@@ -30,15 +31,18 @@ public class PropertyImageViewPager extends ViewPager {
     }
 
     public void bindView(){
-        mPropertyImagesPagerAdapter = new PropertyImagesPagerAdapter(this,mContext);
+        if(mPropertyImagesPagerAdapter == null) {
+            mPropertyImagesPagerAdapter = new PropertyImagesPagerAdapter(this, mContext);
+        }
         setAdapter(mPropertyImagesPagerAdapter);
         setClipToPadding(false);
+        setPageMargin(MARGIN);
         setPadding(10, 10, 10, 10);
         setPageTransformer(true, new StackLikePagerTransform());
     }
 
-    public void setData(List<Image> listingDetailImageList){
-        mPropertyImagesPagerAdapter.setData(listingDetailImageList);
+    public void setData(List<Image> listingDetailImageList,Double price){
+        mPropertyImagesPagerAdapter.setData(listingDetailImageList,price);
         setCurrentItem(1, false);
     }
 }

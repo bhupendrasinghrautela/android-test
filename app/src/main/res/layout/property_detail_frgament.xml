@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--Work in progress, a lot of dimens are hard coded-->
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.makaan.ui.property.PropertyImageViewPager
+        android:id="@+id/property_image_viewpager"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/property_page_stack_like_pager_margin"
+        android:layout_height="@dimen/property_page_stack_like_pager_height" />
+
+    <TextView
+        android:layout_margin="@dimen/property_page_external_margin"
+        android:id="@+id/unit_name"
+        android:textSize="@dimen/property_page_text_size"
+        android:textColor="@color/listingBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <include layout="@layout/property_empty_view"/>
+    <include layout="@layout/builder_brief_layout"/>
+    <include layout="@layout/property_empty_view"/>
+    <include layout="@layout/listing_over_view_scroll_layout"/>
+    <include layout="@layout/property_empty_view"/>
+    <include layout="@layout/compressed_text_layout_for_white"/>
+    <include layout="@layout/property_empty_view"/>
+    <include layout="@layout/amenties_view_scroll_layout"/>
+    <include layout="@layout/property_empty_view"/>
+    <include layout="@layout/more_about_locality_layout"/>
+    <com.makaan.ui.amenity.AmenityViewPager
+        android:id="@+id/amenity_viewpager"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/property_page_amenity_view_pager_margin_left"
+        android:layout_marginBottom="@dimen/property_page_amenity_view_pager_margin_bottom"
+        android:layout_height="@dimen/property_page_amenity_view_pager_height" />
+    <include layout="@layout/property_empty_view"/>
+    <include layout="@layout/similar_properties"/>
+</LinearLayout>
+</ScrollView>

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +24,8 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
     private List<Image> mItems = new ArrayList<>();
     private int mCount = 0;
     private ViewPager pager;
+    private Double price;
+    private PropertyImageCardView mCurrentPropertyImageCardView;
 
     public PropertyImagesPagerAdapter(final ViewPager pager,Context context) {
         this.mContext = context;
@@ -37,14 +38,10 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
 
             @Override
             public void onPageSelected(int position) {
-                int pageCount = getCount();
-                Log.d("position current", position + " " + pageCount);
-                if (position == 0){
-                    pager.setCurrentItem(5, false);
-                    Log.d("position changed", 3 + " ");
-                } else if (position == pageCount-1){
+                if (position == 0) {
+                    pager.setCurrentItem(mCount - 2, false);
+                } else if (position == mCount - 1) {
                     pager.setCurrentItem(1, false);
-                    Log.d("position changed", 1 + " ");
                 }
             }
 
@@ -55,9 +52,13 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
         });
     }
 
-    public void setData(List<Image> list){
+    public void setData(List<Image> list,Double price){
+        if(list == null || list.isEmpty()){
+            return;
+        }
         mItems.clear();
-       mItems.add(list.get(list.size() - 1));
+        this.price = price;
+        mItems.add(list.get(list.size() - 1));
         mItems.addAll(list);
         mItems.add(list.get(0));
         mCount = mItems.size();
@@ -85,12 +86,12 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
         LayoutInflater mLayoutInflater =
                 (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        PropertyImageCardView propertyImageCardView =
+        mCurrentPropertyImageCardView =
                 (PropertyImageCardView) mLayoutInflater.inflate(R.layout.property_images_viewpager_item, null);
 
-        propertyImageCardView.bindView(mContext, mItems.get(position),position);
-        container.addView(propertyImageCardView,0);
-        return propertyImageCardView;
+        mCurrentPropertyImageCardView.bindView(mContext, mItems.get(position),position,price);
+        container.addView(mCurrentPropertyImageCardView,0);
+        return mCurrentPropertyImageCardView;
 
     }
 
@@ -98,5 +99,4 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         ((ViewPager) container).removeView((View) object);
     }
-
 }

@@ -106,8 +106,9 @@
     <string name="overview">an overview</string>
     <string name="properties_in">properties in</string>
     <string name="price_trends">price trends</string>
-    <string name="read_more">read more</string>
-    <string name="read_less">read less</string>
+    <string name="read_more">more</string>
+    <string name="more_about">more about</string>
+    <string name="read_less">less</string>
     <string name="intrested_in">interested in</string>
     <string name="know_more">know more about</string>
     <string name="name">name</string>

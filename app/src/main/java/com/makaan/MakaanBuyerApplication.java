@@ -5,7 +5,6 @@ import android.app.Application;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.makaan.cookie.MakaanCookieStore;
-import com.makaan.activity.pyr.PyrOtpVerification;
 import com.makaan.jarvis.JarvisServiceCreator;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.request.selector.Selector;
@@ -17,7 +16,6 @@ import com.makaan.service.CityService;
 import com.makaan.service.ImageService;
 import com.makaan.service.ListingService;
 import com.makaan.service.LocalityService;
-import com.makaan.service.MakaanService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.MasterDataService;
 import com.makaan.service.OtpVerificationService;
@@ -89,6 +87,7 @@ public class MakaanBuyerApplication extends Application {
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateSearchType();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyAmenities();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateMasterFunishings();
+        ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateDefaultAmenityIds();
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyDisplayOrder();
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateBhkList();
 

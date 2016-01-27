@@ -13,6 +13,7 @@ public class ApiConstants {
     public static final String API_LABEL = BASE_URL.concat("/data/v1/entity/api-label");
     public static final String PROPERTY_STATUS = BASE_URL.concat("/data/v1/entity/property-status");
     public static final String PROPERTY_DISPLAY_ORDER = BASE_URL.concat("/data/v1/entity/property-display-order");
+    public static final String DEFAULT_AMENITY = BASE_URL.concat("/data/v1/entity/default-amenity");
     public static final String UNIT_TYPE = BASE_URL.concat("/data/v1/entity/unit-types");
     public static final String AMENITY = BASE_URL.concat("/data/v1/entity/amenities");
     public static final String JARVIS_MESSAGE_TYPE = BASE_URL.concat("/data/v1/entity/jarvis/message-type");
@@ -38,7 +39,8 @@ public class ApiConstants {
     public static final String LOCALITY_TREND_URL = TREND_URL.concat("?fields=minPricePerUnitArea,localityName,projectName&group=localityId,month");
     public static final String PROJECT_TREND_URL = TREND_URL.concat("?fields=minBuyPricePerUnitArea,localityName,projectName&group=projectId,month");
 
-
+    public static final String SAVED_SEARCH_URL = BASE_URL.concat("/data/v1/entity/user/saved-searches");
+    public static final String SAVE_NEW_SEARCH_URL = BASE_URL.concat("data/v1/entity/saved-searches");
 
     public static final String TOP_AGENTS_CITY = BASE_URL.concat("/data/v1/entity/city/");
     public static final String TOP_AGENTS = "/top-agents";
