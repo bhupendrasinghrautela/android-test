@@ -106,27 +106,27 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                 switch (overview) {
                     case STATUS:
                         overViewItem.name = overview.toString();
-                        overViewItem.resourceId = R.drawable.possesion;
+                        overViewItem.resourceId = R.drawable.possession;
                         overViewItem.value = mDetail.property.project.projectStatus;
                         break;
                     case AGE:
                         overViewItem.name = overview.toString();
-                        overViewItem.resourceId = R.drawable.possesion;
+                        overViewItem.resourceId = R.drawable.possession;
                         overViewItem.value = mDetail.possessionDate;
                         break;
                     case BATH:
                         overViewItem.name = overview.toString();
-                        overViewItem.resourceId = R.drawable.possesion;
+                        overViewItem.resourceId = R.drawable.possession;
                         overViewItem.value = String.valueOf(mDetail.property.bathrooms);
                         break;
                     case FLOOR:
                         overViewItem.name = overview.toString();
-                        overViewItem.resourceId = R.drawable.possesion;
+                        overViewItem.resourceId = R.drawable.possession;
                         overViewItem.value = String.valueOf(mDetail.floor);
                         break;
                     case FACING:
                         overViewItem.name = overview.toString();
-                        overViewItem.resourceId = R.drawable.possesion;
+                        overViewItem.resourceId = R.drawable.possession;
                         overViewItem.value = String.valueOf(mDetail.facingId);
                         break;
                     default:

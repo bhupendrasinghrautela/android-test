@@ -24,6 +24,9 @@ import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.locality.LocalityPropertiesFragment;
 import com.makaan.pojo.TaxonomyCard;
 import com.makaan.response.listing.detail.ListingDetail;
+import com.makaan.response.locality.Locality;
+import com.makaan.response.project.Project;
+import com.makaan.response.property.Property;
 import com.makaan.service.ImageService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.ui.amenity.AmenityViewPager;
@@ -85,6 +88,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
     TextView mListingBrief;
 
     private ListingDetail mListingDetail;
+    private Long listingId;
     private Context mContext;
 
 
@@ -103,6 +107,9 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = getActivity();
+        Bundle args = getArguments();
+        listingId = args.getLong(KeyUtil.LISTING_ID);
+
     }
 
     @Subscribe
@@ -115,25 +122,45 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
     public void onResults(ListingByIdGetEvent listingByIdGetEvent) {
         mListingDetail = listingByIdGetEvent.listingDetail;
         TestUi(mListingDetail);
-        ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(323996L);
+        ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId);
     }
 
     @Subscribe
     public void onResults(ImagesGetEvent imagesGetEvent){
         mPropertyImageViewPager.bindView();
-        mPropertyImageViewPager.setData(imagesGetEvent.images,mListingDetail.currentListingPrice.price);
+        mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price);
     }
 
     private void TestUi(ListingDetail listingDetail){
         mListingDataOverViewScroll.bindView(listingDetail);
         mAmenitiesViewScroll.bindView(listingDetail);
-        mUnitName.setText(listingDetail.property.bedrooms + "bhk " + listingDetail.property.unitType + " - " + listingDetail.property.size + " " + listingDetail.property.measure);
-        mAboutLocality.setText("about ".concat(listingDetail.property.project.locality.label));
-        mLocalityBrief.setText(Html.fromHtml(listingDetail.property.project.locality.description));
-        mABoutBuilderLayout.bindView(listingDetail.property.project.builder);
-        mListingBrief.setText(listingDetail.description);
-        mLocalityScoreProgress.setProgress((int) (listingDetail.property.project.locality.livabilityScore * 10));
-        mLocalityScoreText.setText(String.valueOf(listingDetail.property.project.locality.livabilityScore));
+        if(listingDetail.property != null) {
+            Property property = listingDetail.property;
+
+            mUnitName.setText(listingDetail.property.bedrooms + "bhk " +
+                    (property.unitType != null ? property.unitType : "") + " - " +
+                    (property.size != null ? property.size : "") + " " +
+                    (property.measure != null ? property.measure : ""));
+            if(property.project != null) {
+                Project project = property.project;
+
+                mABoutBuilderLayout.bindView(listingDetail.property.project.builder);
+
+                if(project.locality != null) {
+                    Locality locality = project.locality;
+                    mAboutLocality.setText("about ".concat((locality.label != null ? locality.label : "")));
+                    mLocalityBrief.setText(Html.fromHtml((locality.description != null ? locality.description : "")));
+                    if(locality.livabilityScore != null) {
+                        mLocalityScoreProgress.setProgress((int) (locality.livabilityScore * 10));
+                        mLocalityScoreText.setText(String.valueOf(locality.livabilityScore));
+                    } else {
+                        mLocalityScoreProgress.setProgress(0);
+                        mLocalityScoreText.setText("NA");
+                    }
+                }
+            }
+            mListingBrief.setText((listingDetail.description != null ? listingDetail.description : ""));
+        }
         mListingBrief.setTextColor(getResources().getColor(R.color.listingBlack));
         MasterDataCache.getInstance().getDisplayOrder(listingDetail.listingCategory, listingDetail.property.unitType, "overview");
     }

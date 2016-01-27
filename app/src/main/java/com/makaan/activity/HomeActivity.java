@@ -1,20 +1,17 @@
 package com.makaan.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.listing.SerpActivity;
 //import com.makaan.fragment.listing.SearchBarFragment;
 
 public class HomeActivity extends AppCompatActivity {
@@ -36,11 +33,31 @@ public class HomeActivity extends AppCompatActivity {
         //initFragment(R.id.top_bar, searchBarFragment, false);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        tvSearch =(TextView) findViewById(R.id.et_search);
+        tvSearch =(TextView) findViewById(R.id.activity_home_search_text_view);
         tvSearch.setFocusable(false);
-        rgType=(RadioGroup) findViewById(R.id.rg_property_type);
+        rgType=(RadioGroup) findViewById(R.id.activity_home_property_type_radio_group);
 
-        rlSearch = (RelativeLayout) findViewById(R.id.rl_footer);
+
+        View searchView = findViewById(R.id.activity_home_search_relative_view);
+
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, SerpActivity.class);
+                intent.putExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_HOME);
+                switch (rgType.getCheckedRadioButtonId()) {
+                    case R.id.activity_home_property_buy_radio_button:
+                        intent.putExtra(SerpActivity.REQUEST_DATA, SerpActivity.REQUEST_DATA_HOME_BUY);
+                        break;
+                    case R.id.activity_home_property_rent_radio_button:
+                        intent.putExtra(SerpActivity.REQUEST_DATA, SerpActivity.REQUEST_DATA_HOME_RENT);
+                        break;
+                }
+                startActivity(intent);
+            }
+        });
+
+        /*rlSearch = (RelativeLayout) findViewById(R.id.rl_footer);
         rlSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
             }
-        });
+        });*/
 
         /*setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);*/
@@ -66,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
         */
     }
 
-    public void slideToTop() {
+    /*public void slideToTop() {
         Animation slide;
         slide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
                 Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
@@ -156,5 +173,5 @@ public class HomeActivity extends AppCompatActivity {
         // check if we this can be called from any background thread or after background to ui thread communication
         // then we need to make use of commitAllowingStateLoss()
         fragmentTransaction.commit();
-    }
+    }*/
 }

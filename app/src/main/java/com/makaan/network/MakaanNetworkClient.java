@@ -216,18 +216,19 @@ public class MakaanNetworkClient {
 
     public void getSearch(final String inputUrl, final StringRequestCallback stringRequestCallback, String tag) {
 
+        final String urlToHit = appendSourceDomain(inputUrl);
         StringRequest stringRequest = new StringRequest
-                (Request.Method.GET, inputUrl, new Response.Listener<String>() {
+                (Request.Method.GET, urlToHit, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        completeRequestInQueue(inputUrl);
+                        completeRequestInQueue(urlToHit);
                         stringRequestCallback.onSuccess(response);
 
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        completeRequestInQueue(inputUrl);
+                        completeRequestInQueue(urlToHit);
                         stringRequestCallback.onError();
                         Log.e(TAG, "Network error", error);
                     }

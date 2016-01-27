@@ -27,8 +27,12 @@ public class AmenitiesPagerAdapter extends PagerAdapter {
     }
 
     public void setData(List<AmenityCluster> list){
-        mItems.clear();
-        mItems.addAll(list);
+        if(list == null || list.size() == 0) {
+            mItems.clear();
+        } else {
+            mItems.clear();
+            mItems.addAll(list);
+        }
         this.notifyDataSetChanged();
     }
 

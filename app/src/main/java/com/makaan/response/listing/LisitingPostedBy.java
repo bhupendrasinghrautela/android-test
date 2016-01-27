@@ -10,5 +10,6 @@ public class LisitingPostedBy {
     public String imageUrl;
     public int rating;
     public boolean assist;
+    public long id;
 
 }

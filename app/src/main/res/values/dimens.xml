@@ -309,7 +309,7 @@
     <dimen name="serp_listing_card_property_shortlist_checkbox_width">20dp</dimen>
     <dimen name="serp_listing_card_property_shortlist_checkbox_height">20dp</dimen>
 
-    <dimen name="serp_listing_card_property_area_sq_ft_text_view_left_margin">29dp</dimen>
+    <dimen name="serp_listing_card_property_area_sq_ft_text_view_left_margin">20dp</dimen>
     <dimen name="serp_listing_card_property_area_sq_ft_text_view_top_margin">0dp</dimen>
     <dimen name="serp_listing_card_property_area_sq_ft_text_view_text_size">16sp</dimen>
 
@@ -391,7 +391,7 @@
     <dimen name="serp_listing_card_assist_button_height">30dp</dimen>
     <dimen name="serp_listing_card_assist_button_right_margin">36dp</dimen>
     <dimen name="serp_listing_card_assist_button_top_margin">22dp</dimen>
-    <dimen name="serp_listing_card_assist_button_left_padding">26dp</dimen>
+    <dimen name="serp_listing_card_assist_button_left_padding">20dp</dimen>
     <dimen name="serp_listing_card_assist_button_text_size">14sp</dimen>
 
     <dimen name="serp_listing_card_call_button_width">152dp</dimen>
@@ -404,6 +404,11 @@
     <dimen name="serp_listing_card_seller_rating_min_height">10dp</dimen>
     <dimen name="serp_listing_card_seller_rating_max_height">10dp</dimen>
     <dimen name="serp_listing_card_seller_rating_margin_top">3dp</dimen>
+
+    <dimen name="serp_listing_card_seller_rating_item_margin_left">0dp</dimen>
+    <dimen name="serp_listing_card_seller_rating_item_margin_right">2dp</dimen>
+    <dimen name="serp_listing_card_seller_rating_item_width">10dp</dimen>
+    <dimen name="serp_listing_card_seller_rating_item_height">10dp</dimen>
 
     <dimen name="serp_listing_cluster_card_group_text_view_text_size">26sp</dimen>
     <dimen name="serp_listing_cluster_card_group_text_view_margin_left">32dp</dimen>
@@ -804,6 +809,11 @@
     <dimen name="serp_listing_item_seller_company_name_text_view_margin_top">3dp</dimen>
     <dimen name="serp_listing_item_seller_company_name_text_view_text_size">18sp</dimen>
 
+    <dimen name="serp_listing_item_seller_rating_bar_item_width">12dp</dimen>
+    <dimen name="serp_listing_item_seller_rating_bar_item_height">12dp</dimen>
+    <dimen name="serp_listing_item_seller_rating_bar_item_margin_left">0dp</dimen>
+    <dimen name="serp_listing_item_seller_rating_bar_item_margin_right">2dp</dimen>
+
     <dimen name="serp_listing_item_seller_rating_margin_top">12dp</dimen>
 
     <dimen name="serp_listing_item_seller_empty_view_height">2dp</dimen>
@@ -857,6 +867,54 @@
     <dimen name="child_serp_cluster_card_address_text_size">16sp</dimen>
     <dimen name="child_serp_cluster_card_address_margin_top">4dp</dimen>
     <dimen name="child_serp_cluster_card_address_margin_bottom">6dp</dimen>
+
+
+    <!-- Home Activity dimens -->
+    <dimen name="makaan_toolbar_logo_image_view_width">20dp</dimen>
+    <dimen name="makaan_toolbar_logo_image_view_height">20dp</dimen>
+    <dimen name="makaan_toolbar_logo_image_view_margin_top">20dp</dimen>
+    <dimen name="makaan_toolbar_logo_image_view_margin_left">-4dp</dimen>
+
+    <dimen name="makaan_toolbar_logo_text_view_margin_top">28dp</dimen>
+    <dimen name="makaan_toolbar_logo_text_view_margin_left">20dp</dimen>
+    <dimen name="makaan_toolbar_logo_text_view_text_size">24sp</dimen>
+
+    <dimen name="makaan_toolbar_login_text_view_margin_top">34dp</dimen>
+    <dimen name="makaan_toolbar_login_text_view_margin_right">9dp</dimen>
+    <dimen name="makaan_toolbar_login_text_view_text_size">14sp</dimen>
+
+    <dimen name="makaan_toolbar_profile_image_view_width">36dp</dimen>
+    <dimen name="makaan_toolbar_profile_image_view_height">36dp</dimen>
+    <dimen name="makaan_toolbar_profile_image_view_margin_top">26dp</dimen>
+    <dimen name="makaan_toolbar_profile_image_view_margin_right">15dp</dimen>
+
+    <dimen name="activity_home_search_text_view_width">312dp</dimen>
+    <dimen name="activity_home_search_text_view_height">96dp</dimen>
+
+    <dimen name="activity_home_search_icon_width">32dp</dimen>
+    <dimen name="activity_home_search_icon_height">32dp</dimen>
+    <dimen name="activity_home_search_icon_margin_left">14dp</dimen>
+
+    <dimen name="activity_home_search_text_margin_left">19dp</dimen>
+    <dimen name="activity_home_search_text_text_size">22sp</dimen>
+
+    <dimen name="activity_home_empty_view_margin_top">19dp</dimen>
+    <dimen name="activity_home_empty_view_margin_start">4dp</dimen>
+
+    <!-- selected search item values -->
+    <dimen name="selected_search_item_view_padding_top">4dp</dimen>
+    <dimen name="selected_search_item_view_padding_bottom">4dp</dimen>
+    <dimen name="selected_search_item_view_margin_top">13dp</dimen>
+    <dimen name="selected_search_item_view_margin_bottom">7dp</dimen>
+    <dimen name="selected_search_item_view_margin_right">10dp</dimen>
+
+    <dimen name="selected_search_item_view_delete_button_width">20dp</dimen>
+    <dimen name="selected_search_item_view_delete_button_height">20dp</dimen>
+    <dimen name="selected_search_item_view_delete_button_left_margin">17dp</dimen>
+    <dimen name="selected_search_item_view_delete_button_right_margin">9dp</dimen>
+
+    <dimen name="selected_search_item_view_text_view_left_margin">9dp</dimen>
+    <dimen name="selected_search_item_view_text_view_text_size">16sp</dimen>
 
     <!--jarvis crads-->
     <dimen name="sign_up_text_size">22sp</dimen>
@@ -930,4 +988,5 @@
     <dimen name="plain_link_card_message_padding_top_bottom">5dp</dimen>
     <dimen name="plain_link_card_message_padding_left_right">10dp</dimen>
     <dimen name="plain_link_card_message_text_size">16sp</dimen>
+
 </resources>

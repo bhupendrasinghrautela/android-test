@@ -50,9 +50,12 @@ public class RelevancePopupWindowController implements PopupWindow.OnDismissList
                     popupView.findViewById(R.id.relevance_popup_window_seller_rating_button).setPressed(true);
                     break;
                 case 4:
-                    popupView.findViewById(R.id.relevance_popup_window_livability_score_button).setPressed(true);
+                    popupView.findViewById(R.id.relevance_popup_window_date_posted_button).setPressed(true);
                     break;
                 case 5:
+                    popupView.findViewById(R.id.relevance_popup_window_livability_score_button).setPressed(true);
+                    break;
+                case 6:
                     popupView.findViewById(R.id.relevance_popup_window_distance_button).setPressed(true);
                     break;
             }
@@ -61,17 +64,18 @@ public class RelevancePopupWindowController implements PopupWindow.OnDismissList
 
     @OnClick({R.id.relevance_popup_window_distance_button, R.id.relevance_popup_window_livability_score_button,
             R.id.relevance_popup_window_price_high_to_low_button, R.id.relevance_popup_window_price_low_to_high_button,
-            R.id.relevance_popup_window_relevance_button, R.id.relevance_popup_window_seller_rating_button})
+            R.id.relevance_popup_window_relevance_button, R.id.relevance_popup_window_seller_rating_button,
+            R.id.relevance_popup_window_date_posted_button})
     void onRelevanceClicked(View view) {
         switch (view.getId()) {
             case R.id.relevance_popup_window_price_high_to_low_button:
                 if(callback != null) {
-                    callback.sortSelected("price - high to low","price", "desc", 1);
+                    callback.sortSelected("price - high to low","price", "DESC", 1);
                 }
                 break;
             case R.id.relevance_popup_window_price_low_to_high_button:
                 if(callback != null) {
-                    callback.sortSelected("price - low to high","price", "asc", 2);
+                    callback.sortSelected("price - low to high","price", "ASC", 2);
                 }
                 break;
             case R.id.relevance_popup_window_distance_button:
@@ -82,18 +86,23 @@ public class RelevancePopupWindowController implements PopupWindow.OnDismissList
                 break;
             case R.id.relevance_popup_window_livability_score_button:
                 if(callback != null) {
-                    callback.sortSelected("livability","listingLivabilityScore", "desc", 4);
+                    callback.sortSelected("livability","listingLivabilityScore", "DESC", 5);
                 }
                 break;
             case R.id.relevance_popup_window_relevance_button:
                 if(callback != null) {
-                    callback.sortSelected("relevance", "listingRelevanceScore", "desc", 0);
+                    callback.sortSelected("relevance", null, null, 0);
                 }
                 break;
             case R.id.relevance_popup_window_seller_rating_button:
-                /*if(callback != null) {
-                    callback.sortSelected("Relevance score","listingRelevanceScore", "desc", 3);
-                }*/
+                if(callback != null) {
+                    callback.sortSelected("seller rating","listingSellerCompanyScore", "DESC", 3);
+                }
+                break;
+            case R.id.relevance_popup_window_date_posted_button:
+                if(callback != null) {
+                    callback.sortSelected("date posted","listingPostedDate", "DESC", 4);
+                }
                 break;
         }
         mPopupWindow.dismiss();

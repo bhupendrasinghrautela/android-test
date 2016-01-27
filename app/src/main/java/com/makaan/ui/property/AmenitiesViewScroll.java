@@ -81,7 +81,7 @@ public class AmenitiesViewScroll extends BaseLinearLayout<ListingDetail> {
                     HorizontalScrollItem amenityItem = new HorizontalScrollItem();
                     Long id = Long.parseLong(amenityId);
                     if(mAmenitiesToDisplay.get(id)){
-                        amenityItem.resourceId = R.drawable.possesion;
+                        amenityItem.resourceId = R.drawable.possession;
                     }
                     else{
                         amenityItem.resourceId = R.drawable.oval_gray_background;

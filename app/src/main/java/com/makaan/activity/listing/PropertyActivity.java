@@ -1,5 +1,6 @@
 package com.makaan.activity.listing;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.makaan.R;
@@ -9,6 +10,7 @@ import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.service.AmenityService;
 import com.makaan.service.ListingService;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.util.KeyUtil;
 import com.squareup.otto.Subscribe;
 
 /**
@@ -20,6 +22,9 @@ public class PropertyActivity extends MakaanBaseSearchActivity {
 
     private PropertyDetailFragment mPropertyDeatilFragment;
     private NeighborhoodMapFragment mNeighborhoodMapFragment;
+    private long mListingId;
+    private double mListingLon;
+    private double mListingLat;
 
     @Override
     protected int getContentViewId() {
@@ -30,12 +35,19 @@ public class PropertyActivity extends MakaanBaseSearchActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        if(intent != null) {
+            Bundle extras = intent.getExtras();
+            mListingId = extras.getLong(KeyUtil.LISTING_ID);
+            mListingLon = extras.getDouble(KeyUtil.LISTING_LON);
+            mListingLat = extras.getDouble(KeyUtil.LISTING_LAT);
+            mPropertyDeatilFragment = new PropertyDetailFragment();
+            mPropertyDeatilFragment.setArguments(extras);
+            initFragment(R.id.container, mPropertyDeatilFragment, false);
+        }
 
-        //mPropertyDeatilFragment = new PropertyDetailFragment();
-        //initFragment(R.id.container, mPropertyDeatilFragment, true);
-
-        mNeighborhoodMapFragment = new NeighborhoodMapFragment();
-        initFragment(R.id.container, mNeighborhoodMapFragment, false);
+//        mNeighborhoodMapFragment = new NeighborhoodMapFragment();
+//        initFragment(R.id.container, mNeighborhoodMapFragment, false);
 
         fetchProjectDetail();
         initUi(true);
@@ -45,8 +57,8 @@ public class PropertyActivity extends MakaanBaseSearchActivity {
     private void fetchProjectDetail(){
         //Intent intent = getIntent();
         //long listingId = intent.getExtras().getLong("listingId");
-        ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getListingDetail(323996L);
-        ((AmenityService) (MakaanServiceFactory.getInstance().getService(AmenityService.class))).getAmenitiesByLocation(13.03244019, 77.6019516, 3);
+        ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getListingDetail(mListingId);
+        ((AmenityService) (MakaanServiceFactory.getInstance().getService(AmenityService.class))).getAmenitiesByLocation(mListingLon, mListingLat, 3);
     }
 
 

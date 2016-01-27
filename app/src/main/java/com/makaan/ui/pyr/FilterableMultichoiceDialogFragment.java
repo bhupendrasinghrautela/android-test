@@ -151,7 +151,7 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 		SearchService searchService = (SearchService) MakaanServiceFactory.getInstance().getService(SearchService.class);
 		try {
 			if(!cs.toString().isEmpty()) {
-				searchService.getSearchResults(cs.toString(), "noida", SearchType.LOCALITY, false);
+				searchService.getSearchResults(cs.toString(), null, "noida", SearchType.LOCALITY, false);
 			}
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();

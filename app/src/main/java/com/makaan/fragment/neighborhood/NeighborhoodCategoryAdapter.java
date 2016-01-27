@@ -29,8 +29,12 @@ public class NeighborhoodCategoryAdapter extends RecyclerView.Adapter<RecyclerVi
         mCategoryClickListener = categoryClickListener;
     }
 
-    public void setData(List<AmenityCluster> items){
-        mItems.addAll(items);
+    public void setData(List<AmenityCluster> items) {
+        if(items == null) {
+            mItems.clear();
+        } else {
+            mItems.addAll(items);
+        }
     }
 
     @Override

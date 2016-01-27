@@ -332,7 +332,7 @@ public class Selector implements Cloneable {
         if (null == termSelector) {
             return null;
         } else {
-            return termSelector.values;
+            return new TermSelector(termSelector).values;
         }
     }
 

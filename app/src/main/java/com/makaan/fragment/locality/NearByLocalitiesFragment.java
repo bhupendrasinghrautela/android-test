@@ -1,13 +1,11 @@
 package com.makaan.fragment.locality;
 
-import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -28,7 +26,6 @@ import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Builder;
 import com.makaan.service.AgentService;
 import com.makaan.service.MakaanServiceFactory;
-import com.makaan.util.Blur;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -177,7 +174,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment {
     private List<NearByLocalities> getDataForTopBuilder(ArrayList<Builder> builders) {
         List<NearByLocalities> nearByLocalities = new ArrayList<>();
         for(Builder builder: builders){
-            nearByLocalities.add(new NearByLocalities(builder.imageUrl,"", ""+builder.projectCount, ""+builder.description,""+builder.name));
+            nearByLocalities.add(new NearByLocalities(builder.imageURL,"", ""+builder.projectCount, ""+builder.description,""+builder.name));
         }
         return nearByLocalities;
     }

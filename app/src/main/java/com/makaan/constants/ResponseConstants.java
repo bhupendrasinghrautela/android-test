@@ -41,6 +41,7 @@ public class ResponseConstants {
     public static final String PRICE_PER_UNIT_AREA = "pricePerUnitArea";
     public static final String LOCALITY_AVG_PRICE = "localityAvgPrice";
     public static final String CONS_STATUS_ID = "constructionStatusId";
+    public static final String LISTING_CATEGORY = "listingCategory";
     public static final String CREATED_AT = "createdAt";
     public static final String POSSESSION_DATE = "possessionDate";
     public static final String STATUS = "status";
@@ -51,7 +52,8 @@ public class ResponseConstants {
     public static final String BUILDER = "builder";
     public static final String LABEL = "label";
     public static final String TYPE = "type";
-    public static final String COMPANY_SCORE = "companyScore";
+//    public static final String COMPANY_SCORE = "companyScore";
+    public static final String COMPANY_SCORE = "score";
     public static final String ASSIST = "assist";
     public static final String IS_OFFERED = "isOffered";
     public static final String MAIN_IMAGE_URL = "mainImageURL";
@@ -69,6 +71,8 @@ public class ResponseConstants {
     public static final String UNIT_TYPE = "unitType";
     public static final String LISTING = "listing";
     public static final String MIN_PRICE_PER_UNIT_AREA = "minPricePerUnitArea";
+    public static final String MIN_CONST_COMPLETION_DATE = "minConstructionCompletionDate";
+    public static final String MAX_CONST_COMPLETION_DATE = "maxConstructionCompletionDate";
 
     public static final String TERM_FILTER_VALUES = "termFilterValues";
     public static final String RANGE_FILTER_VALUES = "rangeFilterValues";

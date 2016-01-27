@@ -10,13 +10,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by aishwarya on 23/10/15.
  */
 public class StringUtil {
+
+    private static NumberFormat numberFormatter = NumberFormat.getNumberInstance(new Locale("hi", "IN"));
 
     public static String convertStringArrayToSingleString(List<String >stringList,String delimiter){
         if(stringList == null || stringList.isEmpty() || delimiter == null){
@@ -221,5 +226,47 @@ public class StringUtil {
 
     public static String getTwoDecimalPlaces(Double num){
         return  new DecimalFormat("#.##").format(num);
+    }
+
+    /**
+     * Get age string from its timestamp, string will be returned based on the type parameter
+     * @param time timestamp in milliseconds
+     * @param type Calendar.MONTH, Calendar.YEAR, Calendar.DAY_OF_MONTH
+     * @return
+     */
+    public static String getAgeFromTimeStamp(Long time, int type) {
+        Calendar cal = Calendar.getInstance();
+        long currentTime = cal.getTimeInMillis();
+
+        long age = currentTime - time;
+
+        cal.setTimeInMillis(age);
+
+        StringBuilder builder = new StringBuilder();
+        if((cal.get(Calendar.YEAR) - 1970) <= 1) {
+            builder.append(String.format("%d yr", cal.get(Calendar.YEAR) - 1970));
+        } else {
+            builder.append(String.format("%d yrs", cal.get(Calendar.YEAR) - 1970));
+        }
+
+        if(type == Calendar.MONTH || type == Calendar.DAY_OF_MONTH) {
+            if(cal.get(Calendar.YEAR) <= 1) {
+                builder.append(String.format(", %d month", cal.get(Calendar.MONTH)));
+            } else {
+                builder.append(String.format(", %d months", cal.get(Calendar.MONTH)));
+            }
+            if(type == Calendar.DAY_OF_MONTH) {
+                if(cal.get(Calendar.YEAR) <= 1) {
+                    builder.append(String.format(", %d day", cal.get(Calendar.DAY_OF_MONTH)));
+                } else {
+                    builder.append(String.format(", %d days", cal.get(Calendar.DAY_OF_MONTH)));
+                }
+            }
+        }
+        return builder.toString();
+    }
+
+    public static String getFormattedNumber(double in) {
+        return numberFormatter.format(in);
     }
 }
