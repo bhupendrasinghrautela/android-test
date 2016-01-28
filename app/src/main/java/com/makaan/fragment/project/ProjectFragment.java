@@ -19,6 +19,7 @@ import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.image.ImagesGetEvent;
 import com.makaan.event.listing.ListingByIdGetEvent;
 import com.makaan.event.project.OnSimilarProjectClickedEvent;
+import com.makaan.event.project.OnViewAllPropertiesClicked;
 import com.makaan.event.project.ProjectByIdEvent;
 import com.makaan.event.project.ProjectConfigEvent;
 import com.makaan.event.project.SimilarProjectGetEvent;
@@ -32,7 +33,6 @@ import com.makaan.ui.locality.ProjectConfigView;
 import com.makaan.ui.project.ProjectSpecificationView;
 import com.makaan.ui.property.AboutBuilderExpandedLayout;
 import com.makaan.ui.property.PropertyImageViewPager;
-import com.makaan.util.AppBus;
 import com.makaan.util.DateUtil;
 import com.squareup.otto.Subscribe;
 
@@ -60,6 +60,7 @@ public class ProjectFragment extends MakaanBaseFragment{
     @Bind(R.id.tv_project_average_delay) TextView projectAverageDelayTv;
     @Bind(R.id.tv_project_ongoing_delay) TextView projectOngoingTv;
     @Bind(R.id.tv_project_past) TextView projectPastTv;
+    @Bind(R.id.content_text) TextView descriptionTv;
     private Context mContext;
     private Project project;
 
@@ -73,11 +74,6 @@ public class ProjectFragment extends MakaanBaseFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         mContext = getActivity();
-        if(project!= null) {
-            ProjectByIdEvent projectByIdEvent = new ProjectByIdEvent();
-            projectByIdEvent.project = project;
-            AppBus.getInstance().post(projectByIdEvent);
-        }
         return view;
     }
 
@@ -102,6 +98,7 @@ public class ProjectFragment extends MakaanBaseFragment{
     }
 
     private void initUi() {
+        descriptionTv.setText(Html.fromHtml(project.description));
         aboutBuilderExpandedLayout.bindView(project.builder);
         builderDescriptionTv.setText(Html.fromHtml(project.builder.description));
         projectScoreProgreessBar.setProgress(project.projectSocietyScore.intValue() * 10);
@@ -110,10 +107,10 @@ public class ProjectFragment extends MakaanBaseFragment{
         projectLocationTv.setText(project.address);
         Date date = new Date(Long.parseLong(project.builder.establishedDate));
         int experience = DateUtil.getDiffYears(date, new Date());
-        projectExperienceTv.setText(""+experience);
-        projectAverageDelayTv.setText(""+project.delayInMonths.intValue());
-        projectOngoingTv.setText(""+project.builder.projectStatusCount.underConstruction);
-        projectPastTv.setText(""+project.builder.projectStatusCount.launch);
+        projectExperienceTv.setText("" + experience);
+        projectAverageDelayTv.setText("" + project.delayInMonths.intValue());
+        projectOngoingTv.setText("" + project.builder.projectStatusCount.underConstruction);
+        projectPastTv.setText("" + project.builder.projectStatusCount.launch);
     }
 
     @Subscribe
@@ -123,7 +120,12 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResult(ProjectConfigEvent projectConfigEvent){
-        projectConfigView.bindView(projectConfigEvent,getActivity());
+        projectConfigView.bindView(projectConfigEvent, getActivity());
+    }
+
+    @Subscribe
+    public void onResult(OnViewAllPropertiesClicked viewAllPropertiesClicked){
+        //TODO :  Integrate with i don't know who.
     }
 
     @Subscribe

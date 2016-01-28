@@ -10,21 +10,21 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.event.project.OnViewAllPropertiesClicked;
 import com.makaan.event.project.ProjectConfigEvent;
 import com.makaan.fragment.project.ProjectConfigFragment;
-import com.makaan.fragment.project.ProjectSpecificationPagerFragment;
 import com.makaan.pojo.ProjectConfigItem;
-import com.makaan.pojo.SpecificaitonsUI;
-import com.makaan.ui.view.WrapContentViewPager;
+import com.makaan.util.AppBus;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by tusharchaudhary on 1/27/16.
@@ -35,6 +35,8 @@ public class ProjectConfigView extends LinearLayout{
     @Bind(R.id.project_config_view_pager)
     ViewPager viewPager;
     private Context mContext;
+    @Bind(R.id.project_specification_view_all_props)
+    TextView viewAllPropsTv;
     private ProjectConfigEvent projectConfigEvent;
 
     public ProjectConfigView(Context context) {
@@ -47,17 +49,25 @@ public class ProjectConfigView extends LinearLayout{
         this.mContext = context;
     }
 
-
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
     }
 
+    @OnClick(R.id.project_specification_view_all_props)
+    public void onViewAllPropertiesClicked(){
+        AppBus.getInstance().post(new OnViewAllPropertiesClicked());
+    }
+
 
     public void bindView(ProjectConfigEvent projectConfigEvent, FragmentActivity compatActivity) {
-        this.projectConfigEvent = projectConfigEvent;
-        initView(compatActivity);
+        if(projectConfigEvent.buyProjectConfigItems.size()==0 && projectConfigEvent.rentProjectConfigItems.size()==0)
+            this.setVisibility(GONE);
+        else {
+            this.projectConfigEvent = projectConfigEvent;
+            initView(compatActivity);
+        }
     }
 
     private void initView(FragmentActivity compatActivity){

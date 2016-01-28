@@ -48,4 +48,14 @@
         android:overScrollMode="never"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
 
+    <TextView
+        android:layout_marginTop="@dimen/project_specification_view_all_margin_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/project_specification_view_all_props"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/project_similar_projects_red"
+        android:text="@string/project_specification_view_all_props"
+        />
+
 </com.makaan.ui.locality.ProjectConfigView>
