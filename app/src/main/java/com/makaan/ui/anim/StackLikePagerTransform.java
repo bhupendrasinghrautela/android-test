@@ -49,8 +49,7 @@ public class StackLikePagerTransform implements PageTransformer {
         } else if (position==1) {
             view.setAlpha(1);
 //      view.setPadding(0,15,0,0);
-        }
-        else if(position>1){
+        }else if(position>1){
             view.setAlpha(0);
         }
 /*        else { // (1,+Infinity]

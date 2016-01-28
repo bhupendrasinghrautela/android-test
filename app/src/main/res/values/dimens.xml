@@ -556,7 +556,8 @@
     <dimen name="amenity_type_text_size">22sp</dimen>
     <dimen name="amenity_name_text_size">16sp</dimen>
     <dimen name="amenity_map_icon_dimen">28sp</dimen>
-    <dimen name="amenity_type_logo_margin">12dp</dimen>
+    <dimen name="amenity_type_logo_margin">5dp</dimen>
+    <dimen name="amenity_type_label_margin_bottom">20dp</dimen>
     <dimen name="amenity_margin_top">12dp</dimen>
     <dimen name="amenity_margin_bottom">18dp</dimen>
     <dimen name="amenity_item_padding">12dp</dimen>
@@ -849,7 +850,7 @@
     <dimen name="locality_seperator_left_margin">20dp</dimen>
     <dimen name="locality_seperator_height">1dp</dimen>
     <dimen name="locality_about_median_rent_top_margin">22dp</dimen>
-    <dimen name="locality_kyn_recycler_height">350dp</dimen>
+    <dimen name="locality_kyn_recycler_height">340dp</dimen>
     <dimen name="locality_text_big">24sp</dimen>
     <dimen name="locality_kyn_margin_bottom">25dp</dimen>
     <dimen name="locality_kyn_margin_top">32dp</dimen>
@@ -974,6 +975,22 @@
     <dimen name="card_brief_text_line1_text_size">18sp</dimen>
     <dimen name="card_brief_text_line2_text_size">16sp</dimen>
     <dimen name="card_brief_text_line3_text_size">14sp</dimen>
+    <dimen name="project_button_contact_seller_height">44dp</dimen>
+    <dimen name="project_button_contact_seller_text_height">16sp</dimen>
+    <dimen name="project_yellow_strip_above_contact_seller_button_height">5dp</dimen>
+    <dimen name="project_similar_project_recycler_height">240dp</dimen>
+    <dimen name="project_similar_project_card_left_margin">10dp</dimen>
+    <dimen name="project_similar_project_card_radius">20dp</dimen>
+    <dimen name="project_text_big">20sp</dimen>
+    <dimen name="project_contact_seller_top_margin">100dp</dimen>
+    <dimen name="project_kyn_margin_right">40dp</dimen>
+    <dimen name="project_specification_heading_text_size">18sp</dimen>
+    <dimen name="project_specification_label_text_size">16sp</dimen>
+    <dimen name="project_specification_label_margin_top">10dp</dimen>
+    <dimen name="project_specification_item_margin">20dp</dimen>
+    <dimen name="project_specification_label_margin_bottom">5dp</dimen>
+    <dimen name="project_specification_heading_margin_top">25dp</dimen>
+    <dimen name="project_specification_tab_layout_margins">20dp</dimen>
     <dimen name="out_text_card_padding_top_bottom">5dp</dimen>
     <dimen name="out_text_card_padding_right">10dp</dimen>
     <dimen name="out_text_message_padding_top_bottom">5dp</dimen>
@@ -988,6 +1005,13 @@
     <dimen name="plain_link_card_message_padding_top_bottom">5dp</dimen>
     <dimen name="plain_link_card_message_padding_left_right">10dp</dimen>
     <dimen name="plain_link_card_message_text_size">16sp</dimen>
+    <dimen name="project_config_item_margin">20dp</dimen>
+    <dimen name="project_config_item_stroke_width">1dp</dimen>
+    <dimen name="project_config_label_margin">15dp</dimen>
+    <dimen name="project_basic_detail_top_margin">20dp</dimen>
+    <dimen name="project_text_small">16sp</dimen>
+    <dimen name="project_past_margin_top">10dp</dimen>
+    <dimen name="project_more_about_builder_margin_top">10dp</dimen>
 
 
     <!--content card search -->
@@ -1010,7 +1034,5 @@
     <dimen name="view_height">920dp</dimen>
     <dimen name="view_left_margin">17dp</dimen>
     <dimen name="view_top_margin">40dp</dimen>
-
-
 
 </resources>

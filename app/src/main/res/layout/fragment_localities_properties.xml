@@ -18,7 +18,7 @@
         android:id="@+id/tv_localities_props_title"
         />
 
-    <android.support.v7.widget.RecyclerView
+    <com.makaan.ui.view.HorizontalRecyclerView
         android:id="@+id/rv_localities_props"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/locality_properties_recycler_height"

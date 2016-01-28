@@ -9,25 +9,29 @@
     android:orientation="vertical"
     android:background="@color/white"
     android:layout_width="match_parent"
-    android:padding="@dimen/city_internal_padding"
     android:layout_height="match_parent">
     <TextView
         android:id="@+id/header_text"
         android:gravity="center"
         android:textSize="@dimen/city_header_text"
+        android:padding="20dp"
         android:text="@string/price_trends"
         android:textColor="@color/listingBlack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <android.support.design.widget.TabLayout
         android:id="@+id/price_range_tabs"
+        android:padding="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabMode="fixed"
         app:tabGravity="fill" />
-    <include layout="@layout/line_chart_view_layout"/>
+    <include
+        android:padding="20dp"
+        layout="@layout/line_chart_view_layout"/>
 
     <RelativeLayout
+        android:padding="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -94,9 +98,12 @@
 
     <TextView
         android:id="@+id/header_text_popular_searches"
-        android:gravity="center"
+        android:gravity="left"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
         android:layout_marginTop="18dp"
         android:textSize="16sp"
+        android:visibility="gone"
         android:text="popular searches in this area"
         android:textColor="@color/listingBlack"
         android:layout_width="match_parent"
@@ -106,6 +113,7 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="130dp"
+        android:visibility="gone"
         android:id="@+id/rv_localities_recent_searches"
         />
 

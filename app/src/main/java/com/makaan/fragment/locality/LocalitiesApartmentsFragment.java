@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -44,6 +45,9 @@ public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
     TextView titleTv;
     @Bind(R.id.rv_localities_aprmnts)
     RecyclerView mRecyclerView;
+    @Bind(R.id.ll_property_status)
+    LinearLayout frame;
+    private Set<DataItem> dataItemSet;
 
 
     @Override
@@ -67,7 +71,6 @@ public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
         values_Category[1] = "2 BHK";
         values_Category[2] = "3 BHK";
         if(values_num.length>0) {
-            donutChart.setVisibility(View.VISIBLE);
             donutChart.setCategories(values_Category);
             PieChartDTO pieChartDTO = new PieChartDTO(values_num, 15, values_Category);
             donutChart.setPieChartData(pieChartDTO.getData());
@@ -86,10 +89,14 @@ public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
     }
 
     private void initRecyclerView() {
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
+        if(dataItemSet!=null && dataItemSet.size()>0) {
+            mRecyclerView.setHasFixedSize(true);
+            mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+            mRecyclerView.setAdapter(mAdapter);
+        }else{
+            frame.setVisibility(View.GONE);
+        }
     }
 
     private void initSwitch() {
@@ -103,10 +110,11 @@ public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
     }
 
     public void setData(ArrayList<ListingAggregation> nearByLocalities) {
-        mAdapter = new AvailablePropertyStatusAdapter(getData(nearByLocalities));
-        mAdapterSecondary = new AvailablePropertyStatusAdapter(removeAndCalculateMinMax(secondaryListingAggregations));
-        if (mRecyclerView != null)
-            mRecyclerView.setAdapter(mAdapter);
+        dataItemSet = getData(nearByLocalities);
+            mAdapter = new AvailablePropertyStatusAdapter(dataItemSet);
+            mAdapterSecondary = new AvailablePropertyStatusAdapter(removeAndCalculateMinMax(secondaryListingAggregations));
+            if (mRecyclerView != null)
+                mRecyclerView.setAdapter(mAdapter);
     }
 
     private void changeAdapter(boolean isChecked){
@@ -125,7 +133,7 @@ public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
         Set<DataItem> dataItemSet = getSetOfDataItemsBasedOnUnitTypes(primaryListingAggregations);
         for(DataItem dataItem : dataItemSet){
             for(ListingAggregation listingAggregation:primaryListingAggregations){
-                if(listingAggregation.unitType.equalsIgnoreCase(dataItem.unitType)){
+                if(listingAggregation.listingCategory.equalsIgnoreCase(dataItem.unitType)){
                     switch (listingAggregation.bedrooms){
                         case 1:
                             calculateMaxForOneBhks(dataItem, listingAggregation);
@@ -151,7 +159,8 @@ public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
     private Set<DataItem> getSetOfDataItemsBasedOnUnitTypes(List<ListingAggregation> primaryListingAggregations) {
         Set<DataItem> dataItemSet = new HashSet<>();
         for(ListingAggregation listingAggregation:primaryListingAggregations){
-            dataItemSet.add(new DataItem(listingAggregation.unitType,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d));
+            if(listingAggregation.listingCategory!=null)
+            dataItemSet.add(new DataItem(listingAggregation.listingCategory,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d,0d));
         }
         return dataItemSet;
     }

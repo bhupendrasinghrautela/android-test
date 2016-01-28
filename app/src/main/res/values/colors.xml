@@ -103,6 +103,13 @@
     <color name="serp_listing_item_seller_empty_view_background_color">#4CFFFFFF</color>
     <color name="dark_grey">#888</color>
     <color name="locality_light_grey">#979797</color>
+    <color name="project_similar_projects_default_color">#444444</color>
+    <color name="project_similar_projects_red">#e71c28</color>
+    <color name="project_specification_dark_color">#444</color>
+    <color name="project_specification_default_color">#888</color>
+    <color name="tab_stroke">#ccc</color>
+    <color name="project_config_item_stroke_color">#ccc</color>
+    <color name="project_similar_projects_light_color">#999</color>
 
     <!-- Home Activity colors -->
     <color name="activity_home_search_background">#abffffff</color>

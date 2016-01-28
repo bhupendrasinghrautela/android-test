@@ -65,11 +65,13 @@ public class LocalityPropertiesFragment extends MakaanBaseFragment {
         public class ViewHolder extends RecyclerView.ViewHolder {
             // each data item is just a string in this case
             public TextView descriptionTv;
+            public TextView typeTv;
             public ImageView localityIv;
 
             public ViewHolder(View v) {
                 super(v);
                 descriptionTv = (TextView) v.findViewById(R.id.tv_localities_props_label);
+                typeTv = (TextView) v.findViewById(R.id.tv_localities_props_label_type);
                 localityIv = (ImageView) v.findViewById(R.id.iv_localitites_props);
             }
         }
@@ -90,7 +92,8 @@ public class LocalityPropertiesFragment extends MakaanBaseFragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             final TaxonomyCard taxonomyCard = taxonomyCardList.get(position);
-            holder.descriptionTv.setText(taxonomyCard.label1);
+            holder.descriptionTv.setText(taxonomyCard.label2);
+            holder.typeTv.setText(taxonomyCard.label1);
             holder.localityIv.setImageResource(R.drawable.placeholder_localities_props);
             //TODO: Picasso load imgurl
         }

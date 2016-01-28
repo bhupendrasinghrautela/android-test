@@ -50,6 +50,8 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
     public TextView titleTv;
     @Bind(R.id.rv_localities_recent_searches)
     RecyclerView mRecyclerView;
+    @Bind(R.id.header_text_popular_searches)
+    public TextView popularSearchesTv;
     private LinearLayoutManager mLayoutManager;
     private PopularSearchesAdapter mAdapter;
 
@@ -70,7 +72,6 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
     private void fetchData(int months) {
         ArrayList<Long> localityIds = new ArrayList<>();
         localityIds.add(localityId);
-        localityIds.add((long) 53250);
         new PriceTrendService().getPriceTrendForLocalities(localityIds, months, new LocalityTrendCallback() {
             @Override
             public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
@@ -137,11 +138,15 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
     }
 
     private void initPopularSearches(List<SearchResponseItem> searchResponseItems) {
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new PopularSearchesAdapter(searchResponseItems);
-        mRecyclerView.setAdapter(mAdapter);
+        if(searchResponseItems!=null && searchResponseItems.size()>0) {
+            popularSearchesTv.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mRecyclerView.setHasFixedSize(true);
+            mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+            mAdapter = new PopularSearchesAdapter(searchResponseItems);
+            mRecyclerView.setAdapter(mAdapter);
+        }
     }
 
     private class PopularSearchesAdapter extends RecyclerView.Adapter<PopularSearchesAdapter.ViewHolder> {

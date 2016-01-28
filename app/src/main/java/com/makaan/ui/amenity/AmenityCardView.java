@@ -49,16 +49,16 @@ public class AmenityCardView extends BaseCardView<AmenityCluster> {
                 (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         mAmenityTitle.setText(item.name);
-        if(item.cluster.size()>2) {
             for (int i = 0; i < 3; i++) {
-                Amenity amenity = item.cluster.get(i);
                 final View amenityItem =
                         mLayoutInflater.inflate(R.layout.amenity_item_layout, null);
+                if(i < item.cluster.size()) {
+                    Amenity amenity = item.cluster.get(i);
 
-                ((TextView) amenityItem.findViewById(R.id.amenity_name)).setText(amenity.name);
-                ((TextView) amenityItem.findViewById(R.id.amenity_distance)).setText(amenity.displayDistance);
+                    ((TextView) amenityItem.findViewById(R.id.amenity_name)).setText(amenity.name);
+                    ((TextView) amenityItem.findViewById(R.id.amenity_distance)).setText(amenity.displayDistance);
+                }
                 mAmenityListLayout.addView(amenityItem);
-            }
         }
 
     }

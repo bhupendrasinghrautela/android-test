@@ -22,4 +22,24 @@ public class City {
 
     public ArrayList<ListingAggregation> listingAggregations = new ArrayList<>();
     public ArrayList<EntityDesc> entityDescriptions = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "id=" + id +
+                ", centerLatitude=" + centerLatitude +
+                ", centerLongitude=" + centerLongitude +
+                ", annualGrowth=" + annualGrowth +
+                ", rentalYield=" + rentalYield +
+                ", demandRate=" + demandRate +
+                ", supplyRate=" + supplyRate +
+                ", label='" + label + '\'' +
+                ", cityTagLine='" + cityTagLine + '\'' +
+                ", cityHeroshotImageUrl='" + cityHeroshotImageUrl + '\'' +
+                ", avgPricePerUnitArea=" + avgPricePerUnitArea +
+                ", averageRentPerMonth=" + averageRentPerMonth +
+                ", listingAggregations=" + listingAggregations +
+                ", entityDescriptions=" + entityDescriptions +
+                '}';
+    }
 }

@@ -14,4 +14,14 @@ public class Suburb {
     public String label;
 
     public City city;
+
+    @Override
+    public String toString() {
+        return "Suburb{" +
+                "id=" + id +
+                ", cityId=" + cityId +
+                ", label='" + label + '\'' +
+                ", city=" + city +
+                '}';
+    }
 }

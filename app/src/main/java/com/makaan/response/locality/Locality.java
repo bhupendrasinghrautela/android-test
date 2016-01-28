@@ -2,6 +2,7 @@ package com.makaan.response.locality;
 
 import com.makaan.constants.StringConstants;
 import com.makaan.response.city.EntityDesc;
+import com.makaan.util.AppUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +36,7 @@ public class Locality {
 
 
     public String getDescription() {
-        //return AppUtils.stripHtml(description);
+//        return AppUtils.stripHtml(description);
         return description;
     }
 
@@ -56,5 +57,31 @@ public class Locality {
 
     public String getAverageRentalDemanRise() {
         return (null != this.avgRentalDemandRisePercentage && this.avgRentalDemandRisePercentage >= 0) ? StringConstants.AVERAGE : StringConstants.AVERAGE;
+    }
+
+    @Override
+    public String toString() {
+        return "Locality{" +
+                "label='" + label + '\'' +
+                ", cityId=" + cityId +
+                ", localityId=" + localityId +
+                ", livabilityScore=" + livabilityScore +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", avgPriceRisePercentage=" + avgPriceRisePercentage +
+                ", avgPricePerUnitArea=" + avgPricePerUnitArea +
+                ", averageRentPerMonth=" + averageRentPerMonth +
+                ", minAffordablePrice=" + minAffordablePrice +
+                ", maxBudgetPrice=" + maxBudgetPrice +
+                ", maxAffordablePrice=" + maxAffordablePrice +
+                ", minLuxuryPrice=" + minLuxuryPrice +
+                ", priceRiseRankPercentage=" + priceRiseRankPercentage +
+                ", avgRentalDemandRisePercentage=" + avgRentalDemandRisePercentage +
+                ", localityHeroshotImageUrl='" + localityHeroshotImageUrl + '\'' +
+                ", cityHeroshotImageUrl='" + cityHeroshotImageUrl + '\'' +
+                ", suburb=" + suburb +
+                ", listingAggregations=" + listingAggregations +
+                ", entityDescriptions=" + entityDescriptions +
+                '}';
     }
 }

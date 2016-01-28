@@ -29,6 +29,6 @@
         android:layout_height="wrap_content"
         android:textColor="@color/appThemeRed"
         android:clickable="true"
-        android:text="about builder"
+        android:text="@string/more_about_builder"
         android:layout_gravity="start" />
 </com.makaan.ui.property.AboutBuilderExpandedLayout>

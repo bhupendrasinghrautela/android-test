@@ -15,9 +15,9 @@ import java.util.Map;
 public class Project {
 
 
-    private String fullName, address, completeProjectAddress, paymentPlanUrl;
+    private String fullName, completeProjectAddress, paymentPlanUrl;
 
-
+    public String address;
     public String name, url, newsTag;
     public String builderName;          //used may be only in serp listing parse
     public boolean actual;
@@ -88,9 +88,17 @@ public class Project {
             return builderName.concat(" ").concat(name);
         } else if (null != name && null != builder && null != builder.name) {
             return builder.name.concat(" ").concat(name);
-        }
+        }else if(null != name)
+            return name;
         return null;
     }
 
+
+    public String getMinPriceOnwards() {
+        if(minPrice == null)
+            return "";
+        else
+            return "\u20B9 "+(minPrice/100000)+" L onwards";
+    }
 
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_margin="@dimen/project_basic_detail_top_margin"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_project_name"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/rl_builder_score"
+            android:textColor="@color/project_similar_projects_default_color"
+            android:textSize="@dimen/locality_text_big"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_project_name"
+            android:id="@+id/tv_project_location"
+            android:layout_toLeftOf="@+id/rl_builder_score"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/project_similar_projects_default_color"
+            android:textSize="@dimen/locality_text_medium"
+            />
+
+        <RelativeLayout
+            android:layout_alignParentRight="true"
+            android:layout_width="100dp"
+            android:id="@+id/rl_builder_score"
+            android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/frame_locality_score"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content">
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="@dimen/locality_circular_progress_dimen"
+                android:layout_height="@dimen/locality_circular_progress_dimen"
+                android:id="@+id/project_score_progress"
+                android:progress="78"
+                android:secondaryProgress="100"
+                android:indeterminate="false"
+                android:progressDrawable="@drawable/circular_progress_drawable"
+                android:layout_gravity="center_vertical" />
+            <TextView
+                android:id="@+id/project_score_text"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/project_similar_projects_default_color"
+                android:textSize="@dimen/city_very_small_text"/>
+        </FrameLayout>
+        <TextView
+            android:id="@+id/locality_score_label"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/frame_locality_score"
+            android:layout_height="wrap_content"
+            android:text="@string/project_score"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/project_similar_projects_default_color"
+            android:textSize="@dimen/city_very_small_text"/>
+        </RelativeLayout>
+
+</RelativeLayout>

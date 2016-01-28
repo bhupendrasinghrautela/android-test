@@ -49,7 +49,6 @@ public class ProjectService implements MakaanService {
      * http://marketplace-qa.makaan-ws.com/data/v2/recommendation?type=similar&projectId=506147&selector={"fields":["projectId","URL","imageURL","altText","mainImage","minPrice","minResaleOrPrimaryPrice","id","city","suburb","label","name","type","user","contactNumbers","locality","contactNumber","sellerId","listingCategory","property","currentListingPrice","price","bedrooms","bathrooms","size","unitTypeId","project","projectId","studyRoom","servantRoom","poojaRoom","companySeller","company","companyScore"],"paging":{"start":0,"rows":15}}&sourceDomain=Makaan
      */
     public void getSimilarProjects(final Long projectId, int noOfSimilar) {
-
         if (null != projectId) {
             final Selector similarProjectSel = new Selector();
             similarProjectSel.fields(new String[]{"projectId", "URL", "imageURL", "altText", "mainImage", "minPrice", "minResaleOrPrimaryPrice", "id", "city", "suburb", "label", "name", "type", "user", "contactNumbers", "locality", "contactNumber", "sellerId", "listingCategory", "property", "currentListingPrice", "price", "bedrooms", "bathrooms", "size", "unitTypeId", "project", "projectId", "studyRoom", "servantRoom", "poojaRoom", "companySeller", "company", "companyScore"});
@@ -73,6 +72,7 @@ public class ProjectService implements MakaanService {
             }, true);
         }
     }
+
 
     /**
      * http://mp-qa1.makaan-ws.com/app/v1/project-configuration/500773?sourceDomain=Makaan

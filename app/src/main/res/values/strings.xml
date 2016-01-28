@@ -144,9 +144,27 @@
     <string name="locality_properties_label">properties in electronic city</string>
     <string name="locality_switch_buy">buy</string>
     <string name="locality_switch_rent">rent</string>
+
+    <string name="locality_nearby_localities_view_details">view details</string>
+    <string name="locality_top_builders_view_details">view seller details</string>
+    <string name="locality_top_agents_view_details">view projects</string>
+
     <string name="assist">assist</string>
     <string name="similar_properties">similar properties</string>
     <string name="login">login</string>
+    <string name="project_button_contact_seller_text">contact seller</string>
+    <string name="project_similar_project_title">similar projects</string>
+    <string name="project_price_trends_title">price trends</string>
+    <string name="project_construction_title">construction photos</string>
+    <string name="project_specification_title">specifications</string>
+    <string name="project_config_title">configurations</string>
+    <string name="project_score">project score</string>
+    <string name="project_experience_label">experience</string>
+    <string name="project_average_delay_label">avg delay</string>
+    <string name="project_ongoing_label">ongoing</string>
+    <string name="project_past_label">past</string>
+    <string name="more_about_builder">more about builder</string>
+    <string name="less_about_builder">less about builder</string>
     <string name="makaan">makaan</string>
     <string name="search_by_location">search by location</string>
     <string name="search_default_hint">pick a location, builder or project</string>
@@ -165,8 +183,5 @@
     <string name="moving_in">moving in or renting? get help</string>
     <string name="best_legal">best legal advice on your side</string>
     <string name="best_advise">best advise for your requirements </string>
-
-
-
 
 </resources>

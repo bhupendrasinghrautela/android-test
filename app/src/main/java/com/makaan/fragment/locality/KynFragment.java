@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
@@ -89,7 +91,7 @@ public class KynFragment extends MakaanBaseFragment {
 
         @Override
         public KnowYourNeighbourhoodAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                                     int viewType) {
+                                                                          int viewType) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.row_localities_kyn, parent, false);
             ViewHolder vh = new ViewHolder(v);
@@ -108,7 +110,6 @@ public class KynFragment extends MakaanBaseFragment {
         }
 
     }
-
 
 }
 
