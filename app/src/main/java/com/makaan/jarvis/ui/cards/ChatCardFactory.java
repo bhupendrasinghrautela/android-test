@@ -15,7 +15,7 @@ import com.makaan.ui.view.BaseView;
 /**
  * Created by sunil on 14/01/16.
  */
-public class MessageCardFactory {
+public class ChatCardFactory {
     public static BaseView createCard(Context context, ViewGroup parent, int messageType){
         DisplayMetrics displaymetrics = new DisplayMetrics();
         ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);

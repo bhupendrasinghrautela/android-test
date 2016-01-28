@@ -98,6 +98,7 @@ public class MakaanBuyerApplication extends Application {
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateBhkList();
 
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateJarvisMessageType();
+        ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateJarvisCtaMessageType();
 
         CookieStore cookieStore = new MakaanCookieStore(getApplicationContext());
         CookieManager cookieManager = new CookieManager(cookieStore, CookiePolicy.ACCEPT_ALL);
