@@ -110,4 +110,10 @@
     <!-- selected search item values -->
     <color name="selected_search_item_view_background_color">#f7f7f7</color>
     <color name="selected_search_item_view_text_color">#444444</color>
+
+    <!--buyer journey-->
+    <color name="dark_grey_text">#555555</color>
+    <color name="light_grey_text">#999999</color>
+
+>>>>>>> Stashed changes
 </resources>
