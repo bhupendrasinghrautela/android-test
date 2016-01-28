@@ -1,21 +1,29 @@
 package com.makaan.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.makaan.R;
-//import com.makaan.fragment.listing.SearchBarFragment;
+import com.makaan.activity.listing.SerpActivity;
+import com.makaan.cookie.CookiePreferences;
+import com.makaan.event.user.UserLoginEvent;
+import com.makaan.event.wishlist.WishListResultEvent;
+import com.makaan.response.wishlist.WishListResponse;
+import com.makaan.service.MakaanServiceFactory;
+import com.makaan.service.WishListService;
+import com.makaan.service.user.UserLoginService;
+import com.makaan.util.JsonBuilder;
+import com.squareup.otto.Subscribe;
+
+import org.json.JSONException;
 
 public class HomeActivity extends AppCompatActivity {
     boolean isBottom = true;
@@ -31,16 +39,34 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         topBar=(FrameLayout) findViewById(R.id.top_bar);
-        // new fragment to show search bar top of listing
-        //SearchBarFragment searchBarFragment = SearchBarFragment.init(SearchBarFragment.TYPE_SEARCH);
-        //initFragment(R.id.top_bar, searchBarFragment, false);
-
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        tvSearch =(TextView) findViewById(R.id.et_search);
+        tvSearch =(TextView) findViewById(R.id.activity_home_search_text_view);
         tvSearch.setFocusable(false);
-        rgType=(RadioGroup) findViewById(R.id.rg_property_type);
+        rgType=(RadioGroup) findViewById(R.id.activity_home_property_type_radio_group);
 
-        rlSearch = (RelativeLayout) findViewById(R.id.rl_footer);
+
+        View searchView = findViewById(R.id.activity_home_search_relative_view);
+
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, SerpActivity.class);
+                intent.putExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_HOME);
+                switch (rgType.getCheckedRadioButtonId()) {
+                    case R.id.activity_home_property_buy_radio_button:
+                        intent.putExtra(SerpActivity.REQUEST_DATA, SerpActivity.REQUEST_DATA_HOME_BUY);
+                        break;
+                    case R.id.activity_home_property_rent_radio_button:
+                        intent.putExtra(SerpActivity.REQUEST_DATA, SerpActivity.REQUEST_DATA_HOME_RENT);
+                        break;
+                }
+                startActivity(intent);
+            }
+        });
+
+        testWishList();
+
+        /*rlSearch = (RelativeLayout) findViewById(R.id.rl_footer);
         rlSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +81,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
             }
-        });
+        });*/
 
         /*setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);*/
@@ -66,7 +92,41 @@ public class HomeActivity extends AppCompatActivity {
         */
     }
 
-    public void slideToTop() {
+    private void testWishList(){
+        if(!CookiePreferences.isUserLoggedIn(this)) {
+            UserLoginService userLoginService =
+                    (UserLoginService) MakaanServiceFactory.getInstance().getService(UserLoginService.class);
+            userLoginService.loginWithMakaanAccount("harvi@proptiger.com", "123456");
+        }else{
+            WishListService wishListService =
+                    (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
+            wishListService.get();
+        }
+    }
+
+    @Subscribe
+    public void onResults(UserLoginEvent userLoginEvent) {
+
+        Toast.makeText(this, userLoginEvent.userResponse.getData().firstName, Toast.LENGTH_SHORT).show();
+        try {
+            CookiePreferences.setUserInfo(this,
+                    JsonBuilder.toJson(userLoginEvent.userResponse).toString());
+            CookiePreferences.setUserLoggedIn(this);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Subscribe
+    public void onResults(WishListResultEvent wishListResultEvent) {
+        WishListResponse response = wishListResultEvent.wishListResponse;
+        Toast.makeText(this,"Wish list  - " + response.totalCount, Toast.LENGTH_SHORT).show();
+
+    }
+
+    /*public void slideToTop() {
         Animation slide;
         slide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
                 Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
@@ -156,5 +216,5 @@ public class HomeActivity extends AppCompatActivity {
         // check if we this can be called from any background thread or after background to ui thread communication
         // then we need to make use of commitAllowingStateLoss()
         fragmentTransaction.commit();
-    }
+    }*/
 }

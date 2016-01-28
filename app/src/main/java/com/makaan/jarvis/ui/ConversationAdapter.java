@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.makaan.jarvis.message.Message;
-import com.makaan.jarvis.ui.cards.MessageCardFactory;
+import com.makaan.jarvis.ui.cards.ChatCardFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<MessageViewHolder>
 
     @Override
     public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MessageViewHolder(MessageCardFactory.createCard(mContext, parent, viewType));
+        return new MessageViewHolder(ChatCardFactory.createCard(mContext, parent, viewType));
     }
 
     @Override

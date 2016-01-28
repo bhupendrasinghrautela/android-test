@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selected_search_item_view_background"
+    android:paddingTop="@dimen/selected_search_item_view_padding_top"
+    android:paddingBottom="@dimen/selected_search_item_view_padding_bottom"
+    android:layout_marginTop="@dimen/selected_search_item_view_margin_top"
+    android:layout_marginBottom="@dimen/selected_search_item_view_margin_bottom"
+    android:layout_marginRight="@dimen/selected_search_item_view_margin_right"
+    android:layout_marginEnd="@dimen/selected_search_item_view_margin_right">
+    <TextView
+        android:id="@+id/selected_search_item_view_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/selected_search_item_view_text_view_left_margin"
+        android:layout_marginStart="@dimen/selected_search_item_view_text_view_left_margin"
+        android:textSize="@dimen/selected_search_item_view_text_view_text_size"
+        android:textColor="@color/selected_search_item_view_text_color"
+        android:text="raheja vihar"
+        android:singleLine="true"
+        android:layout_centerVertical="true"/>
+    <ImageButton
+        android:id="@+id/selected_search_item_view_delete_image_button"
+        android:layout_width="@dimen/selected_search_item_view_delete_button_width"
+        android:layout_height="@dimen/selected_search_item_view_delete_button_height"
+        android:layout_marginLeft="@dimen/selected_search_item_view_delete_button_left_margin"
+        android:layout_marginStart="@dimen/selected_search_item_view_delete_button_left_margin"
+        android:layout_marginRight="@dimen/selected_search_item_view_delete_button_right_margin"
+        android:layout_marginEnd="@dimen/selected_search_item_view_delete_button_right_margin"
+        android:background="@drawable/fill_close"
+        android:scaleType="centerCrop"
+        android:layout_toRightOf="@id/selected_search_item_view_text_view"
+        android:layout_toEndOf="@id/selected_search_item_view_text_view"
+        android:layout_centerVertical="true" />
+</RelativeLayout>

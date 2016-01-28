@@ -50,6 +50,7 @@ public class MasterDataCache {
     private List<Long> defaultAmenityList;
 
     private Map<String, Integer> jarvisMessageTypeMap = new HashMap<>();
+    private Map<String, Integer> jarvisCtaMessageTypeMap = new HashMap<>();
 
     private HashSet<String> shortlistedPropertiesBuy;
     private HashSet<String> shortlistedPropertiesRent;
@@ -198,6 +199,10 @@ public class MasterDataCache {
         jarvisMessageTypeMap = map;
     }
 
+    public void addJarvisCtaMessageType(Map<String, Integer> map) {
+        jarvisCtaMessageTypeMap = map;
+    }
+
 
     public ArrayList<ApiIntLabel> getBuyPropertyTypes() {
         ArrayList<ApiIntLabel> propertyTypes = new ArrayList<>();
@@ -240,6 +245,10 @@ public class MasterDataCache {
 
     public Map<String, Integer> getJarvisMessageTypeMap(){
         return jarvisMessageTypeMap;
+    }
+
+    public Map<String, Integer> getJarvisCtaMessageTypeMap(){
+        return jarvisCtaMessageTypeMap;
     }
 
 

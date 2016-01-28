@@ -48,7 +48,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         this.mSearches.clear();
         this.mSearches.addAll(searches);
 
-        if(mSearches.size() > 0) {
+        /*if(mSearches.size() > 0) {
             SearchResponseItem search = mSearches.get(0);
             Map<String,ApiLabel> searchResultType = MasterDataCache.getInstance().getSearchTypeMap();
             String searchField = searchResultType.get(search.type).key;
@@ -80,7 +80,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     e.printStackTrace();
                 }
             }
-        }
+        }*/
         this.mIsRecent = isRecent;
         notifyDataSetChanged();
     }

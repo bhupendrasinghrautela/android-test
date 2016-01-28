@@ -1,29 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:background="@android:color/transparent">
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@mipmap/makaan_logo" />
+    android:layout_height="?attr/actionBarSize">
 
     <TextView
+        android:id="@+id/makaan_toolbar_logo_text_view"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_toLeftOf="@+id/iv_profile"
-        android:gravity="center"
-        android:text="@string/login"
-        android:textSize="16sp" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/makaan_toolbar_logo_text_view_margin_top"
+        android:layout_marginLeft="@dimen/makaan_toolbar_logo_text_view_margin_left"
+        android:layout_marginStart="@dimen/makaan_toolbar_logo_text_view_margin_left"
+        android:text="@string/makaan"
+        android:textSize="@dimen/makaan_toolbar_logo_text_view_text_size"
+        android:textColor="@color/listingBlack"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <ImageView
-        android:id="@+id/iv_profile"
+        android:id="@+id/makaan_toolbar_logo_image_view"
+        android:layout_width="@dimen/makaan_toolbar_logo_image_view_width"
+        android:layout_height="@dimen/makaan_toolbar_logo_image_view_height"
+        android:layout_marginTop="@dimen/makaan_toolbar_logo_image_view_margin_top"
+        android:layout_marginLeft="@dimen/makaan_toolbar_logo_image_view_margin_left"
+        android:layout_marginStart="@dimen/makaan_toolbar_logo_image_view_margin_left"
+        android:layout_toRightOf="@id/makaan_toolbar_logo_text_view"
+        android:layout_toEndOf="@id/makaan_toolbar_logo_text_view"
+        android:background="@drawable/makaan_logo"
+        android:scaleType="centerCrop"/>
+
+    <FrameLayout
+        android:id="@+id/makaan_toolbar_profile_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_margin="8dp"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_alignParentEnd="true">
+
+        <ImageView
+            android:id="@+id/makaan_toolbar_profile_icon_image_view"
+            android:layout_width="@dimen/makaan_toolbar_profile_image_view_width"
+            android:layout_height="@dimen/makaan_toolbar_profile_image_view_width"
+            android:layout_marginTop="@dimen/makaan_toolbar_profile_image_view_margin_top"
+            android:layout_marginRight="@dimen/makaan_toolbar_profile_image_view_margin_right"
+            android:layout_marginEnd="@dimen/makaan_toolbar_profile_image_view_margin_right"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/makaan_toolbar_profile_icon_text_view"
+            android:layout_width="@dimen/makaan_toolbar_profile_image_view_width"
+            android:layout_height="@dimen/makaan_toolbar_profile_image_view_width"
+            android:layout_marginTop="@dimen/makaan_toolbar_profile_image_view_margin_top"
+            android:layout_marginRight="@dimen/makaan_toolbar_profile_image_view_margin_right"
+            android:layout_marginEnd="@dimen/makaan_toolbar_profile_image_view_margin_right"
+            android:background="@color/white" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/makaan_toolbar_login_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/makaan_toolbar_login_text_view_margin_top"
+        android:layout_marginRight="@dimen/makaan_toolbar_login_text_view_margin_right"
+        android:layout_marginEnd="@dimen/makaan_toolbar_login_text_view_margin_right"
+        android:layout_toLeftOf="@+id/makaan_toolbar_profile_icon"
+        android:layout_toStartOf="@+id/makaan_toolbar_profile_icon"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textSize="@dimen/makaan_toolbar_login_text_view_text_size" />
 
 </RelativeLayout>

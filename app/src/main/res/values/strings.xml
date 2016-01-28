@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">MarketPlaceBuyer</string>
     <string name="action_settings">Settings</string>
+    <string name="item_settings">account settings</string>
+    <string name="item_logout">logout</string>
     <string name="gps_network_not_enabled">Location settings disabled</string>
     <string name="gps_network_enable_prompt">Would you like to enable location settings?</string>
 
@@ -163,4 +165,23 @@
     <string name="project_past_label">past</string>
     <string name="more_about_builder">more about builder</string>
     <string name="less_about_builder">less about builder</string>
+    <string name="makaan">makaan</string>
+    <string name="search_by_location">search by location</string>
+    <string name="search_default_hint">pick a location, builder or project</string>
+    <string name="search_locality_hint">add more localities...</string>
+
+    <!--buyer journey-->
+    <string name="search">search</string>
+    <string name="shortlist">shortlist</string>
+    <string name="site_visit">site visit</string>
+    <string name="effective_home_search">effective home search</string>
+    <string name="home_loan">home loan</string>
+    <string name="unit_booking">unit booking</string>
+    <string name="possession">possession</string>
+    <string name="registration">registration</string>
+    <string name="expert_help">expert help for peace of mind</string>
+    <string name="moving_in">moving in or renting? get help</string>
+    <string name="best_legal">best legal advice on your side</string>
+    <string name="best_advise">best advise for your requirements </string>
+
 </resources>

@@ -6,9 +6,11 @@ import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Ack;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
+import com.makaan.cache.MasterDataCache;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.OnExposeEvent;
 import com.makaan.jarvis.message.ChatObject;
+import com.makaan.jarvis.message.CtaType;
 import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.jarvis.message.JoinUser;
 import com.makaan.jarvis.message.Message;
@@ -22,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
+import java.util.Map;
 
 /**
  * Created by sunil on 07/01/16.
@@ -142,8 +145,11 @@ public class JarvisSocket {
         @Override
         public void call(final Object... args) {
             if(null!=args || args.length>0) {
-
+                Map<String, Integer> jarvisCtaMessageTypeMap =
+                        MasterDataCache.getInstance().getJarvisCtaMessageTypeMap();
                 ExposeMessage message = parseExposeMessage((JSONObject) args[0]);
+                Integer type = jarvisCtaMessageTypeMap.get(message.properties.type);
+                message.properties.ctaType = CtaType.fromInt(type);
                 OnExposeEvent event = new OnExposeEvent();
                 event.message = message;
                 AppBus.getInstance().post(event);

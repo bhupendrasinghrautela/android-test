@@ -12,7 +12,7 @@ public enum SearchSuggestionType {
     SUBURB("SUBURB"), CITY("CITY"), GOOGLE_PLACE("GP"),
     PROJECT_SUGGESTION("Typeahead-Suggestion-Project"),
     SUGGESTION("Typeahead-Suggestion"), TEMPLATE("Typeahead-Template"),
-    CITY_OVERVIEW("CITY_OVERVIEW"), LOCALITY_OVERVIEW("LOCALITY_OVERVIEW"),;
+    CITY_OVERVIEW("CITY-OVERVIEW"), LOCALITY_OVERVIEW("LOCALITY-OVERVIEW"),;
 
     private String value;
 

@@ -12,5 +12,6 @@ public class ExposeMessage {
     public static class Properties{
         public String suggest_filter;
         public String type;
+        public CtaType ctaType;
     }
 }

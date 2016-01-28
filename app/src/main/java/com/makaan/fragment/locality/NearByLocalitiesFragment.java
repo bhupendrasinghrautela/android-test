@@ -32,12 +32,9 @@ import com.makaan.service.AgentService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.AppBus;
 import com.makaan.util.DateUtil;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.Bind;
 
@@ -191,7 +188,6 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         this.cardType = CardType.TOPBUILDERS;
         String url = "";
         for(Builder builder: builders){
-
             if(builder.images !=null && builder.images.size() >0){
                 url = builder.images.get(0).absolutePath;
             }
@@ -203,6 +199,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                 nearByLocalities.add(new NearByLocalities(url, "0", "" + builder.projectCount.intValue(), "", "" + builder.name, builder.id));
             }
             }
+
         return nearByLocalities;
     }
 

@@ -79,6 +79,7 @@ public class ListingParser {
 
                     ApiIntLabel propertyStatus1 = masterDataCache.getPropertyStatus(listingJson.optInt(CONS_STATUS_ID));
                     listing.propertyStatus = null != propertyStatus1 ? propertyStatus1.name : null;
+                    listing.listingCategory = listingJson.optString(LISTING_CATEGORY);
 
                     listing.size = property.optDouble(SIZE);
                     listing.measure = property.optString(MEASURE);
@@ -140,6 +141,7 @@ public class ListingParser {
                                 || listing.lisitingPostedBy.type.equalsIgnoreCase(POSTED_BY_OWNER)
                                 || listing.lisitingPostedBy.type.equalsIgnoreCase(POSTED_BY_BUILDER)) {
                             listing.lisitingPostedBy.name = sellerCompany.optString(NAME);
+                            listing.lisitingPostedBy.id = sellerCompany.optLong(ID);
                             //listing.lisitingPostedBy.image = sellerCompany.companyImage; //TODO: implement image
                             listing.lisitingPostedBy.rating = Math.round(sellerCompany.optInt(COMPANY_SCORE) * 10) / (10 * 2); // devided by 2 to show rating out of 5
                             listing.lisitingPostedBy.assist = sellerCompany.optBoolean(ASSIST);

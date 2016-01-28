@@ -27,6 +27,11 @@ public class TermSelector implements MakaanReqSelector{
 
     }
 
+    public TermSelector(TermSelector selector) {
+        this.name = selector.name;
+        this.values.addAll(selector.values);
+    }
+
     @Override
     public String build(){
 

@@ -26,13 +26,12 @@ import butterknife.OnClick;
 /**
  * Created by sunil on 23/01/16.
  */
-public class SerpFilterCard extends BaseView<ExposeMessage> {
+public class SerpFilterCard extends BaseCtaView<ExposeMessage>{
 
     @Bind(R.id.serp_jarvis_filters_item_layout_grid_view)
     ExpandableHeightGridView mFilterGridView;
 
     private Context mContext;
-    private OnApplyClickListener mOnApplyClickListener;
 
     public SerpFilterCard(Context context) {
         super(context);
@@ -49,9 +48,6 @@ public class SerpFilterCard extends BaseView<ExposeMessage> {
         mContext = context;
     }
 
-    public interface OnApplyClickListener{
-        void onApplyClick();
-    }
 
     @Override
     public void bindView(Context context, ExposeMessage item) {
@@ -73,10 +69,6 @@ public class SerpFilterCard extends BaseView<ExposeMessage> {
             ex.printStackTrace();
         }
 
-    }
-
-    public void setOnApplyClickListener(OnApplyClickListener onApplyClickListener){
-        mOnApplyClickListener = onApplyClickListener;
     }
 
     private void populateFilters(ArrayList<FilterGroup> filterGroups, String filter) {

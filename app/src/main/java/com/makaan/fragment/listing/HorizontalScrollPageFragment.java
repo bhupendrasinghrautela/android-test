@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.makaan.R;
 import com.makaan.activity.listing.SerpRequestCallback;
+import com.makaan.pojo.GroupCluster;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.ui.listing.ChildSerpGroupListingItemView;
 import com.makaan.ui.listing.GroupListingItemView;
@@ -30,13 +31,13 @@ public class HorizontalScrollPageFragment extends Fragment {
         if(isChildSerpClusterView) {
             rootView = (ViewGroup) inflater.inflate(
                     R.layout.child_serp_cluster_item_view, container, false);
-            if (obj != null && obj instanceof GroupListing) {
+            if (obj != null && obj instanceof GroupCluster) {
                 ((ChildSerpGroupListingItemView) rootView).populateView((GroupListing) obj, mCallback);
             }
         } else {
             rootView = (ViewGroup) inflater.inflate(
                     R.layout.cluster_item_view, container, false);
-            if (obj != null && obj instanceof GroupListing) {
+            if (obj != null && obj instanceof GroupCluster) {
                 ((GroupListingItemView) rootView).populateView((GroupListing) obj, mCallback);
             }
         }

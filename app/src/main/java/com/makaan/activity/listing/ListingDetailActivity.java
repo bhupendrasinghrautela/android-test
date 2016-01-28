@@ -108,7 +108,7 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         if(!CookiePreferences.isUserLoggedIn(this)) {
             UserLoginService userLoginService =
                     (UserLoginService) MakaanServiceFactory.getInstance().getService(UserLoginService.class);
-            userLoginService.loginWithMakaanAccount("abtest@abtest.com", "abtest1234");
+            userLoginService.loginWithMakaanAccount("harvi@proptiger.com", "123456");
         }else{
             WishListService wishListService =
                     (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);

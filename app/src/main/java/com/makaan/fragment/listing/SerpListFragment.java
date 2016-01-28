@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,13 @@ import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.event.serp.GroupSerpGetEvent;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.pojo.GroupCluster;
+import com.makaan.request.selector.Selector;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
 import com.makaan.adapter.listing.SerpListingAdapter;
+import com.makaan.response.search.SearchResponseItem;
+import com.makaan.response.search.SearchSuggestionType;
 import com.makaan.ui.PaginatedListView;
 
 import java.util.ArrayList;
@@ -31,7 +36,8 @@ import butterknife.Bind;
  */
 public class SerpListFragment extends MakaanBaseFragment implements PaginatedListView.PaginationListener {
     private static final String KEY_IS_CHILD_SERP = "is_child_serp";
-    private static final int MAX_ITEMS_TO_REQUEST = 10;
+    private static final int MAX_ITEMS_TO_REQUEST = 20;
+    private static final int MAX_GROUP_ITEMS_TO_REQUEST = 2 * GroupCluster.MAX_CLUSTERS_IN_GROUP;
 
     @Bind(R.id.fragment_listing_recycler_view)
     PaginatedListView mListingRecyclerView;
@@ -41,7 +47,8 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
     private SerpListingAdapter mListingAdapter;
     private LinearLayoutManager mLayoutManager;
     private int mTotalCount;
-    private String mCityName;
+    private int mTotalGroupCount;
+    private String mSearchedEntities = "";
 
     private boolean mIsChildSerp;
 
@@ -87,7 +94,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
             mListingRecyclerView.setPaginableListener(this);
             if(mListings != null) {
                 if(mTotalPropertiesTextView != null) {
-                    mTotalPropertiesTextView.setText(String.format("%d properties in %s", mTotalCount, mCityName != null ? mCityName : ""));
+                    mTotalPropertiesTextView.setText(String.format("%d %s", mTotalCount, mSearchedEntities));
                 }
                 mListingAdapter.setData(mListings, mGroupListings, mRequestType);
                 if(mTotalCount > mListings.size()) {
@@ -110,7 +117,9 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         mListingRecyclerView.setAdapter(mListingAdapter);
     }
 
-    public void updateListings(SerpGetEvent listingGetEvent, GroupSerpGetEvent groupListingGetEvent, SerpRequestCallback serpRequestCallback, int requestType) {
+    public void updateListings(SerpGetEvent listingGetEvent, GroupSerpGetEvent groupListingGetEvent,
+                               ArrayList<SearchResponseItem> selectedSearches, SerpRequestCallback serpRequestCallback,
+                               int requestType) {
         this.mSerpRequestCallback = serpRequestCallback;
         this.mRequestType = requestType;
         if(listingGetEvent == null || listingGetEvent.listingData == null) {
@@ -122,23 +131,61 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         mListingGetEvent = listingGetEvent;
         mGroupListingGetEvent = groupListingGetEvent;
 
-        if(mListingAdapter != null) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(" properties ");
 
+        if(selectedSearches.size() > 0 && SearchSuggestionType.GOOGLE_PLACE.getValue()
+                .equalsIgnoreCase(selectedSearches.get(0).type)) {
+            builder.append("near ");
+        } else {
+            builder.append("in ");
+        }
 
+        if(selectedSearches != null && selectedSearches.size() > 0) {
+            if(SearchSuggestionType.CITY.getValue().equals(selectedSearches.get(0).type)) {
+                if(!TextUtils.isEmpty(selectedSearches.get(0).city)) {
+                    builder.append(selectedSearches.get(0).city);
+                }
+            } else {
+                for(SearchResponseItem search : selectedSearches) {
+                    if(!TextUtils.isEmpty(search.entityName)) {
+                        if(SearchSuggestionType.GOOGLE_PLACE.getValue().equalsIgnoreCase(search.type)) {
+                            builder.append(search.entityName);
+                        } else {
+                            builder.append(String.format("%s, ", search.entityName));
+                        }
+                    }
+                }
+                if(!TextUtils.isEmpty(selectedSearches.get(0).city)) {
+                    builder.append(selectedSearches.get(0).city);
+                }
+            }
+        }
+        mSearchedEntities = builder.toString();
+
+        if((requestType & SerpActivity.MASK_LISTING_UPDATE_TYPE) != SerpActivity.TYPE_LOAD_MORE) {
             mTotalCount = listingGetEvent.listingData.totalCount;
-            mCityName = listingGetEvent.listingData.cityName;
+            if (groupListingGetEvent != null && groupListingGetEvent.groupListingData != null) {
+                mTotalGroupCount = groupListingGetEvent.groupListingData.totalCount;
+            }
+        }
+
+        if(mListingAdapter != null) {
 
             if(mTotalPropertiesTextView != null) {
                 if(mRequestType == SerpActivity.TYPE_BUILDER || mRequestType == SerpActivity.TYPE_SELLER) {
                     mTotalPropertiesTextView.setVisibility(View.GONE);
                 } else {
                     mTotalPropertiesTextView.setVisibility(View.VISIBLE);
-                    mTotalPropertiesTextView.setText(String.format("%d properties in %s", mTotalCount, mCityName != null ? mCityName : ""));
+                    mTotalPropertiesTextView.setText(String.format("%d %s", mTotalCount, mSearchedEntities));
                 }
             }
 
-            if((requestType & SerpActivity.MASK_LISTING_UPDATE_TYPE) == 0) {
+            if((requestType & SerpActivity.MASK_LISTING_UPDATE_TYPE) != SerpActivity.TYPE_LOAD_MORE) {
                 mListings.clear();
+                mGroupListings.clear();
+                page = 0;
+                mListingRecyclerView.scrollToPosition(0);
             }
 
             mListings.addAll(listingGetEvent.listingData.listings);
@@ -147,7 +194,6 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
                 mGroupListings.addAll(mGroupListingGetEvent.groupListingData.groupListings);
                 mListingAdapter.setData(mListings, mGroupListings, mRequestType);
             } else {
-                mGroupListings.clear();
                 mListingAdapter.setData(mListings, null, mRequestType);
             }
 
@@ -157,14 +203,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
                 mListingRecyclerView.setHasMoreItems(false);
             }
             mListingRecyclerView.setIsLoading(false);
-
-            if((requestType & SerpActivity.MASK_LISTING_UPDATE_TYPE) == 0) {
-                mListingRecyclerView.scrollToPosition(0);
-            }
         } else {
-            mTotalCount = listingGetEvent.listingData.totalCount;
-            mCityName = listingGetEvent.listingData.cityName;
-
             mListings.clear();
             mListings.addAll(listingGetEvent.listingData.listings);
             mGroupListings.clear();
@@ -180,6 +219,12 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
             if((mListings.size() / MAX_ITEMS_TO_REQUEST) == (page + 1)) {
                 page++;
                 MakaanBuyerApplication.serpSelector.page(mListings.size(), MAX_ITEMS_TO_REQUEST);
+
+                if(mTotalGroupCount > mGroupListings.size()) {
+                    Selector groupSelector = mSerpRequestCallback.getGroupSelector();
+                    groupSelector.page(mGroupListings.size(), MAX_GROUP_ITEMS_TO_REQUEST);
+                }
+
                 mSerpRequestCallback.serpRequest(SerpActivity.TYPE_LOAD_MORE, MakaanBuyerApplication.serpSelector);
             }
         }

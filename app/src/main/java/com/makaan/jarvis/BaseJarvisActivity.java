@@ -18,6 +18,8 @@ import android.widget.LinearLayout;
 
 import com.makaan.R;
 import com.makaan.jarvis.message.ExposeMessage;
+import com.makaan.jarvis.ui.cards.BaseCtaView;
+import com.makaan.jarvis.ui.cards.CtaCardFactory;
 import com.makaan.jarvis.ui.cards.SerpFilterCard;
 
 import butterknife.Bind;
@@ -143,12 +145,12 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                 mCardCta.removeAllViews();
 
                 //TODO card factory is required to determine type of card
-                SerpFilterCard serpFilterCard =
-                        (SerpFilterCard) getLayoutInflater().inflate(R.layout.card_serp_filter, null);
-                serpFilterCard.bindView(getApplicationContext(), message);
-                mCardCta.addView(serpFilterCard);
+
+                BaseCtaView card = CtaCardFactory.createCard(getApplicationContext(), message);
+
+                mCardCta.addView(card);
                 showPopupWithAnim();
-                serpFilterCard.setOnApplyClickListener(new SerpFilterCard.OnApplyClickListener() {
+                card.setOnApplyClickListener(new SerpFilterCard.OnApplyClickListener() {
                     @Override
                     public void onApplyClick() {
                         dismissPopupWithAnim();
