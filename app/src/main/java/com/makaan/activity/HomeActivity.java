@@ -9,9 +9,21 @@ import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
+import com.makaan.cookie.CookiePreferences;
+import com.makaan.event.user.UserLoginEvent;
+import com.makaan.event.wishlist.WishListResultEvent;
+import com.makaan.response.wishlist.WishListResponse;
+import com.makaan.service.MakaanServiceFactory;
+import com.makaan.service.WishListService;
+import com.makaan.service.user.UserLoginService;
+import com.makaan.util.JsonBuilder;
+import com.squareup.otto.Subscribe;
+
+import org.json.JSONException;
 //import com.makaan.fragment.listing.SearchBarFragment;
 
 public class HomeActivity extends AppCompatActivity {
@@ -57,6 +69,8 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        testWishList();
+
         /*rlSearch = (RelativeLayout) findViewById(R.id.rl_footer);
         rlSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +95,40 @@ public class HomeActivity extends AppCompatActivity {
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         */
+    }
+
+    private void testWishList(){
+        if(!CookiePreferences.isUserLoggedIn(this)) {
+            UserLoginService userLoginService =
+                    (UserLoginService) MakaanServiceFactory.getInstance().getService(UserLoginService.class);
+            userLoginService.loginWithMakaanAccount("harvi@proptiger.com", "123456");
+        }else{
+            WishListService wishListService =
+                    (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
+            wishListService.get();
+        }
+    }
+
+    @Subscribe
+    public void onResults(UserLoginEvent userLoginEvent) {
+
+        Toast.makeText(this, userLoginEvent.userResponse.getData().firstName, Toast.LENGTH_SHORT).show();
+        try {
+            CookiePreferences.setUserInfo(this,
+                    JsonBuilder.toJson(userLoginEvent.userResponse).toString());
+            CookiePreferences.setUserLoggedIn(this);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Subscribe
+    public void onResults(WishListResultEvent wishListResultEvent) {
+        WishListResponse response = wishListResultEvent.wishListResponse;
+        Toast.makeText(this,"Wish list  - " + response.totalCount, Toast.LENGTH_SHORT).show();
+
     }
 
     /*public void slideToTop() {

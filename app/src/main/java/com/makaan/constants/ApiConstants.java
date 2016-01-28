@@ -17,6 +17,7 @@ public class ApiConstants {
     public static final String UNIT_TYPE = BASE_URL.concat("/data/v1/entity/unit-types");
     public static final String AMENITY = BASE_URL.concat("/data/v1/entity/amenities");
     public static final String JARVIS_MESSAGE_TYPE = BASE_URL.concat("/data/v1/entity/jarvis/message-type");
+    public static final String JARVIS_CTA_MESSAGE_TYPE = BASE_URL.concat("/data/v1/entity/jarvis/cta-message-type");
     public static final String SEARCH_TYPE = BASE_URL.concat("/data/v1/entity/search-types");
     public static final String PROPERTY_AMENITY = BASE_URL.concat("/data/v1/entity/master-amenities");
     public static final String MASTER_FURNISHINGS = BASE_URL.concat("/data/v1/entity/master-furnishings");
