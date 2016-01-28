@@ -6,5 +6,6 @@ package com.makaan.pojo;
 public class HorizontalScrollItem {
     public String value;
     public int resourceId;
+    public boolean activated;
     public String name;
 }

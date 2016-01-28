@@ -3,9 +3,9 @@ package com.makaan.ui.property;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.adapter.listing.CustomAbstractHorizontalScrollViewAdapter;
 import com.makaan.cache.MasterDataCache;
@@ -142,7 +142,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
     public class ListingOverViewAdapter extends CustomAbstractHorizontalScrollViewAdapter<HorizontalScrollItem>{
 
         @Bind(R.id.image)
-        ImageView imageView;
+        FadeInNetworkImageView imageView;
         @Bind(R.id.name)
         TextView nameText;
         @Bind(R.id.value)
