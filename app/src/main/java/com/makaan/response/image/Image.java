@@ -11,6 +11,7 @@ public class Image {
     public String altText, activeStatus;
     public String title, absolutePath;
     public ImageType imageType;
+    public double width,height;
 
 
 }

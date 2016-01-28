@@ -132,5 +132,5 @@
 
 </RelativeLayout>
 
-    <include layout="@layout/compressed_text_layout"/>
+    <include layout="@layout/compressed_text_layout_for_black"/>
 </merge>

@@ -2,12 +2,10 @@
 <com.makaan.jarvis.ui.cards.InTextCard xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
     android:orientation="vertical"
     android:background="@null"
-    android:paddingBottom="5dp"
-    android:paddingRight="10dp"
-    android:paddingTop="5dp" >
+    android:paddingBottom="@dimen/int_text_card_padding_top_bottom"
+    android:paddingTop="@dimen/int_text_card_padding_top_bottom" >
 
 
     <TextView
@@ -16,11 +14,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:background="@drawable/bg_message_from"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp"
+        android:paddingBottom="@dimen/in_text_message_padding_top_bottom"
+        android:paddingLeft="@dimen/int_text_message_padding_left_right"
+        android:paddingRight="@dimen/int_text_message_padding_left_right"
+        android:paddingTop="@dimen/in_text_message_padding_top_bottom"
         android:textColor="@color/black"
-        android:textSize="16dp" />
+        android:textSize="@dimen/in_text_message_text_size" />
 
 </com.makaan.jarvis.ui.cards.InTextCard>

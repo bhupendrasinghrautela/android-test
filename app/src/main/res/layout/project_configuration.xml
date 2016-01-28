@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.makaan.ui.locality.ProjectConfigView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/project_config_view"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <include layout="@layout/project_seperator"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/project_kyn_margin_right"
+        android:layout_marginRight="@dimen/project_kyn_margin_right"
+        android:layout_marginTop="@dimen/locality_kyn_margin_top"
+        android:layout_marginBottom="@dimen/locality_kyn_margin_bottom"
+        android:textColor="@color/project_similar_projects_default_color"
+        android:textSize="@dimen/locality_text_big"
+        android:gravity="center_horizontal"
+        android:text="@string/project_config_title"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/tv_localities_kyn_title"
+        />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/project_config_tab_layout"
+        android:layout_width="wrap_content"
+        app:tabBackground="@drawable/tab_color_selector"
+        app:tabSelectedTextColor="@color/white"
+        app:tabPadding="10dp"
+        app:tabIndicatorHeight="0dp"
+        app:tabTextColor="@color/project_specification_default_color"
+        android:layout_marginLeft="@dimen/project_specification_tab_layout_margins"
+        android:layout_marginRight="@dimen/project_specification_tab_layout_margins"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:tabMode="fixed"
+        app:tabGravity="fill"/>
+
+    <android.support.v4.view.ViewPager
+        android:layout_marginLeft="@dimen/project_specification_tab_layout_margins"
+        android:layout_marginRight="@dimen/project_specification_tab_layout_margins"
+        android:id="@+id/project_config_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:overScrollMode="never"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
+
+</com.makaan.ui.locality.ProjectConfigView>

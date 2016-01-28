@@ -3,8 +3,6 @@ package com.makaan.ui.view;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 
 import com.makaan.event.project.SpecificationLessClickedEvent;
@@ -21,29 +19,14 @@ public class WrapContentViewPager extends ViewPager {
     private int mCurrentPagePosition = 0;
     private int minHeight = 1400;
     private int initalMinHeight = 1400;
+    private int lastMinHeightAdded = 0;
 
     public WrapContentViewPager(Context context) {
         super(context);
-        mGestureDetector = new GestureDetector(context, new YScrollDetector());
     }
 
     public WrapContentViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mGestureDetector = new GestureDetector(context, new YScrollDetector());
-    }
-
-    private GestureDetector mGestureDetector;
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return super.onInterceptTouchEvent(ev) && mGestureDetector.onTouchEvent(ev);
-    }
-
-    // Return false if we're scrolling in the y direction
-    class YScrollDetector extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            return Math.abs(distanceY) < Math.abs(distanceX);
-        }
     }
 
     @Override
@@ -66,6 +49,10 @@ public class WrapContentViewPager extends ViewPager {
     }
 
     public void reMeasureCurrentPage(int position) {
+        if(lastMinHeightAdded !=0) {
+            minHeight = minHeight - lastMinHeightAdded;
+            lastMinHeightAdded = 0;
+        }
         mCurrentPagePosition = position;
         minHeight = initalMinHeight;
         requestLayout();
@@ -74,11 +61,13 @@ public class WrapContentViewPager extends ViewPager {
     @Subscribe
     public void onResult(SpecificationMoreClickedEvent specificationMoreClickedEvent){
         minHeight = minHeight + specificationMoreClickedEvent.heightToAdd;
+        lastMinHeightAdded = specificationMoreClickedEvent.heightToAdd;
         requestLayout();
     }
 
     @Subscribe
     public void onResult(SpecificationLessClickedEvent specificationMoreClickedEvent){
+        lastMinHeightAdded = 0;
         minHeight = minHeight - specificationMoreClickedEvent.heightToRemove;
         requestLayout();
     }

@@ -23,7 +23,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/project_specification_label_margin_top"
         android:layout_marginBottom="@dimen/project_specification_label_margin_bottom"
-        android:layout_below="@+id/tv_project_specification_item_labe_one"
+        android:layout_below="@id/tv_project_specification_item_labe_one"
         android:id="@+id/tv_project_specification_item_labe_two"
         android:textSize="@dimen/project_specification_label_text_size"
         android:textColor="@color/project_specification_default_color"

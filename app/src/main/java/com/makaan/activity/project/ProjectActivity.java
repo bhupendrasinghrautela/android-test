@@ -6,10 +6,13 @@ import android.util.Log;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
+import com.makaan.event.project.OnSeeOnMapClicked;
 import com.makaan.event.project.ProjectByIdEvent;
 import com.makaan.event.project.ProjectConfigEvent;
 import com.makaan.event.project.SimilarProjectGetEvent;
+import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
 import com.makaan.fragment.project.ProjectFragment;
+import com.makaan.service.ListingService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.ProjectService;
 import com.squareup.otto.Subscribe;
@@ -22,6 +25,7 @@ public class ProjectActivity extends MakaanBaseSearchActivity {
     public static final String PROJECT_ID = "projectId";
     private Long projectId;
     private ProjectFragment projectFragment;
+    private NeighborhoodMapFragment mNeighborhoodMapFragment;
 
     @Override
     protected int getContentViewId() {
@@ -41,6 +45,7 @@ public class ProjectActivity extends MakaanBaseSearchActivity {
         ((ProjectService) MakaanServiceFactory.getInstance().getService(ProjectService.class)).getProjectById(projectId);
         ((ProjectService) MakaanServiceFactory.getInstance().getService(ProjectService.class)).getProjectConfiguration(projectId);
         ((ProjectService) MakaanServiceFactory.getInstance().getService(ProjectService.class)).getSimilarProjects(projectId, 10);
+        ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getListingDetail(323996L);
     }
 
     private void addProjectFragment() {
@@ -58,6 +63,12 @@ public class ProjectActivity extends MakaanBaseSearchActivity {
         }else{
             projectId = Long.valueOf(506147);
         }
+    }
+
+    @Subscribe
+    public void onResult(OnSeeOnMapClicked seeOnMapClicked){
+        mNeighborhoodMapFragment = new NeighborhoodMapFragment();
+        initFragment(R.id.container, mNeighborhoodMapFragment, true);
     }
 
     @Override

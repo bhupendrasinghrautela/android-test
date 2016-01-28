@@ -107,6 +107,7 @@
     <string name="properties_in">properties in</string>
     <string name="price_trends">price trends</string>
     <string name="read_more">more</string>
+    <string name="more_about">more about</string>
     <string name="read_less">less</string>
     <string name="intrested_in">interested in</string>
     <string name="know_more">know more about</string>
@@ -154,4 +155,12 @@
     <string name="project_price_trends_title">price trends</string>
     <string name="project_construction_title">construction photos</string>
     <string name="project_specification_title">specifications</string>
+    <string name="project_config_title">configurations</string>
+    <string name="project_score">project score</string>
+    <string name="project_experience_label">experience</string>
+    <string name="project_average_delay_label">avg delay</string>
+    <string name="project_ongoing_label">ongoing</string>
+    <string name="project_past_label">past</string>
+    <string name="more_about_builder">more about builder</string>
+    <string name="less_about_builder">less about builder</string>
 </resources>

@@ -31,6 +31,7 @@ import com.makaan.response.project.Builder;
 import com.makaan.service.AgentService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.AppBus;
+import com.makaan.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -196,30 +197,13 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
             }
             if(builder.establishedDate!=null) {
                 Date date = new Date(Long.parseLong(builder.establishedDate));
-                int experience = getDiffYears(date, new Date());
+                int experience = DateUtil.getDiffYears(date, new Date());
                 nearByLocalities.add(new NearByLocalities(url, "0", "" + builder.projectCount.intValue(), "experience : " + experience+" years", "" + builder.name, builder.id));
             }else{
                 nearByLocalities.add(new NearByLocalities(url, "0", "" + builder.projectCount.intValue(), "", "" + builder.name, builder.id));
             }
             }
         return nearByLocalities;
-    }
-
-    public static int getDiffYears(Date first, Date last) {
-        Calendar a = getCalendar(first);
-        Calendar b = getCalendar(last);
-        int diff = b.get(Calendar.YEAR) - a.get(Calendar.YEAR);
-        if (a.get(Calendar.MONTH) > b.get(Calendar.MONTH) ||
-                (a.get(Calendar.MONTH) == b.get(Calendar.MONTH) && a.get(Calendar.DATE) > b.get(Calendar.DATE))) {
-            diff--;
-        }
-        return diff;
-    }
-
-    public static Calendar getCalendar(Date date) {
-        Calendar cal = Calendar.getInstance(Locale.getDefault());
-        cal.setTime(date);
-        return cal;
     }
 
     @Override

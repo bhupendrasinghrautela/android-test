@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     android:layout_margin="10dp"
     android:background="@null"
-    android:paddingBottom="5dp"
-    android:paddingRight="10dp"
-    android:paddingTop="5dp" >
+    android:paddingBottom="@dimen/plain_link_card_padding_top_bottom"
+    android:paddingRight="@dimen/plain_link_card_padding_right"
+    android:paddingTop="@dimen/plain_link_card_padding_top_bottom" >
 
     <TextView
         android:id="@+id/plain_link"
@@ -16,11 +16,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:background="@drawable/bg_message_from"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp"
+        android:paddingBottom="@dimen/plain_link_card_message_padding_top_bottom"
+        android:paddingLeft="@dimen/plain_link_card_message_padding_left_right"
+        android:paddingRight="@dimen/plain_link_card_message_padding_left_right"
+        android:paddingTop="@dimen/plain_link_card_message_padding_top_bottom"
         android:textColor="@color/black"
-        android:textSize="16dp" />
+        android:textSize="@dimen/plain_link_card_message_text_size" />
 
 </com.makaan.jarvis.ui.cards.PlainLinkCard>

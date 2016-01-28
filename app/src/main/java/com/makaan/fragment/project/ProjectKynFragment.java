@@ -14,14 +14,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.event.project.OnSeeOnMapClicked;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.ui.amenity.AmenityCardView;
+import com.makaan.util.AppBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by tusharchaudhary on 1/27/16.
@@ -130,6 +133,11 @@ public class ProjectKynFragment extends MakaanBaseFragment{
             return amenityClusters.size();
         }
 
+    }
+
+    @OnClick(R.id.amenity_see_on_map)
+    public void showMap(){
+        AppBus.getInstance().post(new OnSeeOnMapClicked());
     }
 
 

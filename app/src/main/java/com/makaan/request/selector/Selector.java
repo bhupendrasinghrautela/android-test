@@ -31,6 +31,7 @@ public class Selector implements Cloneable {
     private PagingSelector pagingSelector = new PagingSelector();
     private SortSelector sortSelector = new SortSelector();
     private GeoSelector geoSelector = new GeoSelector();
+    private GroupBySelector groupBySelector = new GroupBySelector();
 
     public Selector() {
     }
@@ -65,6 +66,12 @@ public class Selector implements Cloneable {
             termSelector.values.add(value);
         }
 
+        return this;
+    }
+
+    public Selector groupBy(String field, String min) {
+        this.groupBySelector.field = field;
+        this.groupBySelector.min = min;
         return this;
     }
 
@@ -190,7 +197,7 @@ public class Selector implements Cloneable {
                     String termSelectorJson = entry.getValue().build();
                     if (!StringUtil.isBlank(termSelectorJson)) {
 
-                        if (i != 0 ) {
+                        if (i != 0) {
                             andStrBuilder.append(",").append(termSelectorJson);
                         } else {
                             andStrBuilder.append(termSelectorJson);
@@ -222,7 +229,7 @@ public class Selector implements Cloneable {
                     if (firstFilterAdded) {
                         andStrBuilder.append(",").append(geoSelector.build());
                         firstFilterAdded = true;
-                    }else{
+                    } else {
                         andStrBuilder.append(geoSelector.build());
                         firstFilterAdded = true;
                     }
@@ -230,7 +237,7 @@ public class Selector implements Cloneable {
                 }
 
                 andStrBuilder.append("]");
-                if(firstElementAdded){
+                if (firstElementAdded) {
                     jsonBuilder.append(",");
                 }
                 jsonBuilder.append("\"").append(FILTERS).append("\"").append(":{").append(andStrBuilder.toString()).append("}");
@@ -254,6 +261,16 @@ public class Selector implements Cloneable {
                     jsonBuilder.append(",\"");
                 }
                 jsonBuilder.append(SORT).append("\"").append(":").append(sortSelectorJson);
+                firstElementAdded = true;
+            }
+
+            String groupBySelectorJson = groupBySelector.build();
+            if (!StringUtil.isBlank(groupBySelectorJson)) {
+
+                if (firstElementAdded) {
+                    jsonBuilder.append(",\"");
+                }
+                jsonBuilder.append("groupBy").append("\"").append(":").append(groupBySelectorJson);
                 firstElementAdded = true;
             }
 
@@ -317,5 +334,20 @@ public class Selector implements Cloneable {
         } else {
             return termSelector.values;
         }
+    }
+
+    public String getUniqueName(){
+        StringBuilder uniqueString = new StringBuilder();
+        for(TermSelector termSelector:termSelectorHashMap.values()){
+            for(String string:termSelector.values) {
+                uniqueString.append(string);
+            }
+        }
+        for(RangeSelector rangeSelector:rangeSelectorHashMap.values()){
+            uniqueString.append(rangeSelector.to);
+            uniqueString.append("-");
+            uniqueString.append(rangeSelector.from);
+        }
+        return uniqueString.toString();
     }
 }

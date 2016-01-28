@@ -44,7 +44,7 @@ public class PropertyCard extends BaseView<Message> {
 
     @Override
     public void bindView(Context context, Message item) {
-        textViewTitle.setText(StringUtil.getDisplayPrice(item.chatObj.minPrice));
+        textViewTitle.setText(StringUtil.getSpannedPrice(item.chatObj.minPrice));
         textViewSubTitle.setText(item.chatObj.builderName + " " + item.chatObj.projectName);
         textViewSubTitle2.setText(item.chatObj.localityName + " " + item.chatObj.cityName);
         imageView.setImageUrl(item.chatObj.image, MakaanNetworkClient.getInstance().getImageLoader());

@@ -108,5 +108,7 @@
     <color name="project_specification_dark_color">#444</color>
     <color name="project_specification_default_color">#888</color>
     <color name="tab_stroke">#ccc</color>
+    <color name="project_config_item_stroke_color">#ccc</color>
+    <color name="project_similar_projects_light_color">#999</color>
 
 </resources>

@@ -543,6 +543,8 @@
     <dimen name="jarvis_chat_divider_height">1dp</dimen>
     <dimen name="jarvis_client_margin">24dp</dimen>
     <dimen name="jarvis_chat_card_stroke_width">1dp</dimen>
+    <dimen name="jarvis_bhk_horizontal_spacing">10dp</dimen>
+    <dimen name="jarvis_chat_card_top_bottom_margin">5dp</dimen>
 
     <!---Amenities-->
     <dimen name="amenity_type_logo_dimen">64dp</dimen>
@@ -555,7 +557,6 @@
     <dimen name="amenity_margin_bottom">18dp</dimen>
     <dimen name="amenity_item_padding">12dp</dimen>
     <dimen name="amenity_card_corner_radius">25dp</dimen>
-
 
     <!-- search result items dimen values -->
     <dimen name="search_result_item_image_width">24dp</dimen>
@@ -711,6 +712,8 @@
 
     <dimen name="property_page_pager_image_external_margin">10dp</dimen>
 
+
+    <!--city overview page dimens-->
     <dimen name="city_internal_padding">20dp</dimen>
     <dimen name="city_internal_margin">15dp</dimen>
     <dimen name="city_internal_margin_text">30dp</dimen>
@@ -747,6 +750,26 @@
     <dimen name="similar_project_address_size">16sp</dimen>
 
 
+    <!--Property page dimens-->
+    <dimen name="property_page_stack_like_pager_margin">10dp</dimen>
+    <dimen name="property_page_stack_like_pager_height">342dp</dimen>
+    <dimen name="property_page_external_margin">24dp</dimen>
+    <dimen name="property_page_internal_padding">24dp</dimen>
+    <dimen name="property_page_builder_logo_height">78dp</dimen>
+    <dimen name="property_page_builder_logo_width">125dp</dimen>
+    <dimen name="property_page_text_size">16sp</dimen>
+    <dimen name="property_page_average_text_size">20sp</dimen>
+    <dimen name="property_page_amenities_margin_bottom">12dp</dimen>
+    <dimen name="property_page_amenity_view_pager_height">300dp</dimen>
+    <dimen name="property_page_amenity_view_pager_margin_left">24dp</dimen>
+    <dimen name="property_page_amenity_view_pager_margin_bottom">44dp</dimen>
+    <dimen name="property_empty_view_margin_left">24dp</dimen>
+    <dimen name="property_page_locality_margin_left">24dp</dimen>
+    <dimen name="property_page_locality_margin_right">82dp</dimen>
+    <dimen name="property_page_locality_progress_dimen">45dp</dimen>
+    <dimen name="property_page_locality_frame_margin_right">20dp</dimen>
+    <dimen name="property_page_locality_brief_margin_bottom">20dp</dimen>
+    <dimen name="property_empty_view_height">1dp</dimen>
 
     <dimen name="locality_circular_progress_dimen">42dp</dimen>
 
@@ -817,7 +840,7 @@
     <dimen name="locality_seperator_left_margin">20dp</dimen>
     <dimen name="locality_seperator_height">1dp</dimen>
     <dimen name="locality_about_median_rent_top_margin">22dp</dimen>
-    <dimen name="locality_kyn_recycler_height">360dp</dimen>
+    <dimen name="locality_kyn_recycler_height">340dp</dimen>
     <dimen name="locality_text_big">24sp</dimen>
     <dimen name="locality_kyn_margin_bottom">25dp</dimen>
     <dimen name="locality_kyn_margin_top">32dp</dimen>
@@ -910,4 +933,25 @@
     <dimen name="project_specification_label_margin_bottom">5dp</dimen>
     <dimen name="project_specification_heading_margin_top">25dp</dimen>
     <dimen name="project_specification_tab_layout_margins">20dp</dimen>
+    <dimen name="out_text_card_padding_top_bottom">5dp</dimen>
+    <dimen name="out_text_card_padding_right">10dp</dimen>
+    <dimen name="out_text_message_padding_top_bottom">5dp</dimen>
+    <dimen name="out_text_message_padding_left_right">10dp</dimen>
+    <dimen name="out_text_message_text_size">16sp</dimen>
+    <dimen name="int_text_card_padding_top_bottom">5dp</dimen>
+    <dimen name="in_text_message_padding_top_bottom">5dp</dimen>
+    <dimen name="int_text_message_padding_left_right">10dp</dimen>
+    <dimen name="in_text_message_text_size">16sp</dimen>
+    <dimen name="plain_link_card_padding_top_bottom">5dp</dimen>
+    <dimen name="plain_link_card_padding_right">10dp</dimen>
+    <dimen name="plain_link_card_message_padding_top_bottom">5dp</dimen>
+    <dimen name="plain_link_card_message_padding_left_right">10dp</dimen>
+    <dimen name="plain_link_card_message_text_size">16sp</dimen>
+    <dimen name="project_config_item_margin">20dp</dimen>
+    <dimen name="project_config_item_stroke_width">1dp</dimen>
+    <dimen name="project_config_label_margin">15dp</dimen>
+    <dimen name="project_basic_detail_top_margin">20dp</dimen>
+    <dimen name="project_text_small">16sp</dimen>
+    <dimen name="project_past_margin_top">10dp</dimen>
+    <dimen name="project_more_about_builder_margin_top">10dp</dimen>
 </resources>

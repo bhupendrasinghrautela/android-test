@@ -41,6 +41,7 @@
             android:text="82.2"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/price_unit"
             android:layout_alignBaseline="@id/price_text"
             android:layout_toRightOf="@+id/price_text"
             android:layout_marginLeft="5dp"

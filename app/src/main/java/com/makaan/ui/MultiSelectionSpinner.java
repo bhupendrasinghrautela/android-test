@@ -7,6 +7,7 @@ package com.makaan.ui;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
@@ -29,8 +30,13 @@ public class MultiSelectionSpinner extends Spinner implements  OnMultiChoiceClic
     boolean doneClicked = false;
     private String mPrefix,mPostFix;
     private AlertDialog.Builder builder;
+    private String displayString;
 
     ArrayAdapter<String> simple_adapter;
+    private OnSelectionChangeListener listener;
+    public interface OnSelectionChangeListener{
+        public void onSelectionChanged();
+    }
 
     public MultiSelectionSpinner(Context context) {
         super(context);
@@ -63,12 +69,26 @@ public class MultiSelectionSpinner extends Spinner implements  OnMultiChoiceClic
         }
     }
 
+    public void setOnSelectionChangeListener(OnSelectionChangeListener selectionChangeListener){
+        this.listener = selectionChangeListener;
+    }
+
     @Override
     public boolean performClick() {
         builder = new AlertDialog.Builder(getContext());
         builder.setMultiChoiceItems(_items, mSelection, this);
         AlertDialog d = builder.create();
         d.show();
+        d.setOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if(displayString == null || !displayString.equals(buildSelectedItemString())){
+                    if(listener !=null){
+                        listener.onSelectionChanged();
+                    }
+                }
+            }
+        });
         return true;
     }
 
@@ -159,7 +179,7 @@ public class MultiSelectionSpinner extends Spinner implements  OnMultiChoiceClic
 
     public List<String> getSelectedStrings() {
         List<String> selection = new LinkedList<String>();
-        for (int i = 0; i < _items.length; ++i) {
+        for (int i = 0; i < _items.length;i++) {
             if (mSelection[i]) {
                 selection.add(_items[i]);
             }
@@ -169,7 +189,7 @@ public class MultiSelectionSpinner extends Spinner implements  OnMultiChoiceClic
 
     public List<Integer> getSelectedIndicies() {
         List<Integer> selection = new LinkedList<Integer>();
-        for (int i = 0; i < _items.length; ++i) {
+        for (int i = 0; i < _items.length;i++) {
             if (mSelection[i]) {
                 selection.add(i);
             }
@@ -178,8 +198,8 @@ public class MultiSelectionSpinner extends Spinner implements  OnMultiChoiceClic
     }
 
     public List<Integer> getSelectedIds(){
-        List<Integer> ids = new LinkedList<Integer>();
-        for (int i = 0; i < _items.length; ++i) {
+        List<Integer> ids = new ArrayList<>();
+        for (int i = 0; i < _items.length;i++) {
             if (mSelection[i]) {
                 ids.add(_ids[i]);
             }
@@ -194,7 +214,7 @@ public class MultiSelectionSpinner extends Spinner implements  OnMultiChoiceClic
             sb.append(mPrefix);
         }
         String prefix = " ";
-        for (int i = 0; i < _items.length; ++i) {
+        for (int i = 0; i < _items.length;i++) {
             if (mSelection[i]) {
                 sb.append(prefix);
                 prefix = ",";
@@ -212,7 +232,7 @@ public class MultiSelectionSpinner extends Spinner implements  OnMultiChoiceClic
         StringBuilder sb = new StringBuilder();
         boolean foundOne = false;
 
-        for (int i = 0; i < _items.length; ++i) {
+        for (int i = 0; i < _items.length;i++) {
             if (mSelection[i]) {
                 if (foundOne) {
                     sb.append(", ");
