@@ -104,13 +104,13 @@ public class SerpMapFragment extends MakaanBaseFragment {
         mMapView.onLowMemory();
     }
 
-    public void setData(ListingData data){
+    public void setData(ArrayList<Listing>listings){
         if(mListings == null) {
             mListings = new ArrayList<Listing>();
         } else {
             mListings.clear();
         }
-        mListings.addAll(data.listings);
+        mListings.addAll(listings);
         if(mProjectViewPager != null) {
             populateMarker(mListings);
             mProjectViewPager.setData(mListings);

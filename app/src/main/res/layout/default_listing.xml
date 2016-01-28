@@ -199,8 +199,8 @@
                 android:layout_marginRight="@dimen/serp_listing_card_floor_image_view_right_margin"
                 android:layout_marginStart="@dimen/serp_listing_card_floor_image_view_left_margin"
                 android:layout_marginTop="@dimen/serp_listing_card_floor_image_view_top_margin"
-                android:layout_toEndOf="@+id/serp_default_listing_property_possession_image_view"
-                android:layout_toRightOf="@+id/serp_default_listing_property_possession_image_view"
+                android:layout_toEndOf="@id/serp_default_listing_property_possession_image_view"
+                android:layout_toRightOf="@id/serp_default_listing_property_possession_image_view"
                 android:scaleType="centerCrop"
                 android:src="@drawable/floor" />
 
@@ -212,52 +212,56 @@
                 android:layout_marginLeft="@dimen/serp_listing_card_bathroom_image_view_left_margin"
                 android:layout_marginStart="@dimen/serp_listing_card_bathroom_image_view_left_margin"
                 android:layout_marginTop="@dimen/serp_listing_card_bathroom_image_view_top_margin"
-                android:layout_toEndOf="@+id/serp_default_listing_property_floor_image_view"
-                android:layout_toRightOf="@+id/serp_default_listing_property_floor_image_view"
+                android:layout_toEndOf="@id/serp_default_listing_property_floor_image_view"
+                android:layout_toRightOf="@id/serp_default_listing_property_floor_image_view"
                 android:scaleType="centerCrop"
                 android:src="@drawable/shower" />
-
-            <TextView
-                android:id="@+id/serp_default_listing_property_possession_date_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/serp_default_listing_property_possession_image_view"
-                android:layout_alignStart="@+id/serp_default_listing_property_possession_image_view"
-                android:layout_below="@+id/serp_default_listing_property_possession_image_view"
-                android:layout_marginLeft="@dimen/serp_listing_card_possession_date_text_view_left_margin"
-                android:layout_marginStart="@dimen/serp_listing_card_possession_date_text_view_left_margin"
-                android:layout_marginTop="@dimen/serp_listing_card_possession_date_text_view_top_margin"
-                android:text="aug, 2017"
-                android:textColor="@color/serp_listing_card_default_text_color"
-                android:textSize="@dimen/serp_listing_card_possession_date_text_view_text_size" />
-
-            <TextView
-                android:id="@+id/serp_default_listing_property_floor_info_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/serp_default_listing_property_floor_image_view"
-                android:layout_alignStart="@+id/serp_default_listing_property_floor_image_view"
-                android:layout_below="@+id/serp_default_listing_property_floor_image_view"
-                android:layout_marginLeft="@dimen/serp_listing_card_floor_info_text_view_left_margin"
-                android:layout_marginStart="@dimen/serp_listing_card_floor_info_text_view_left_margin"
-                android:layout_marginTop="@dimen/serp_listing_card_floor_info_text_view_top_margin"
-                android:text="3rd of 15th"
-                android:textColor="@color/serp_listing_card_default_text_color"
-                android:textSize="@dimen/serp_listing_card_floor_info_text_view_text_size" />
 
             <TextView
                 android:id="@+id/serp_default_listing_property_bathroom_number_date_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/serp_default_listing_property_bathroom_image_view"
-                android:layout_alignStart="@+id/serp_default_listing_property_bathroom_image_view"
-                android:layout_below="@+id/serp_default_listing_property_bathroom_image_view"
+                android:layout_alignLeft="@id/serp_default_listing_property_bathroom_image_view"
+                android:layout_alignStart="@id/serp_default_listing_property_bathroom_image_view"
+                android:layout_below="@id/serp_default_listing_property_bathroom_image_view"
                 android:layout_marginLeft="@dimen/serp_listing_card_bathroom_number_text_view_left_margin"
                 android:layout_marginStart="@dimen/serp_listing_card_bathroom_number_text_view_left_margin"
                 android:layout_marginTop="@dimen/serp_listing_card_bathroom_number_text_view_top_margin"
                 android:text="2"
                 android:textColor="@color/serp_listing_card_default_text_color"
                 android:textSize="@dimen/serp_listing_card_bathroom_number_text_view_text_size" />
+
+            <TextView
+                android:id="@+id/serp_default_listing_property_floor_info_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/serp_default_listing_property_floor_image_view"
+                android:layout_alignStart="@id/serp_default_listing_property_floor_image_view"
+                android:layout_below="@id/serp_default_listing_property_floor_image_view"
+                android:layout_marginLeft="@dimen/serp_listing_card_floor_info_text_view_left_margin"
+                android:layout_marginStart="@dimen/serp_listing_card_floor_info_text_view_left_margin"
+                android:layout_marginTop="@dimen/serp_listing_card_floor_info_text_view_top_margin"
+                android:text="3rd of 15th"
+                android:textColor="@color/serp_listing_card_default_text_color"
+                android:textSize="@dimen/serp_listing_card_floor_info_text_view_text_size"
+                android:layout_toLeftOf="@id/serp_default_listing_property_bathroom_number_date_text_view"
+                android:layout_toStartOf="@id/serp_default_listing_property_bathroom_number_date_text_view" />
+
+            <TextView
+                android:id="@+id/serp_default_listing_property_possession_date_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/serp_default_listing_property_possession_image_view"
+                android:layout_alignStart="@id/serp_default_listing_property_possession_image_view"
+                android:layout_below="@id/serp_default_listing_property_possession_image_view"
+                android:layout_marginLeft="@dimen/serp_listing_card_possession_date_text_view_left_margin"
+                android:layout_marginStart="@dimen/serp_listing_card_possession_date_text_view_left_margin"
+                android:layout_marginTop="@dimen/serp_listing_card_possession_date_text_view_top_margin"
+                android:text="aug, 2017"
+                android:textColor="@color/serp_listing_card_default_text_color"
+                android:textSize="@dimen/serp_listing_card_possession_date_text_view_text_size"
+                android:layout_toLeftOf="@id/serp_default_listing_property_floor_info_text_view"
+                android:layout_toStartOf="@id/serp_default_listing_property_floor_info_text_view"/>
 
             <TextView
                 android:id="@+id/serp_default_listing_property_possession_text_view"
@@ -274,6 +278,7 @@
                 android:textSize="@dimen/serp_listing_card_possession_text_text_view_text_size" />
 
             <TextView
+                android:id="@+id/serp_default_listing_property_floor_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/serp_default_listing_property_floor_info_text_view"
@@ -287,6 +292,7 @@
                 android:textSize="@dimen/serp_listing_card_floor_text_text_view_text_size" />
 
             <TextView
+                android:id="@+id/serp_default_listing_property_bathroom_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/serp_default_listing_property_bathroom_number_date_text_view"
@@ -420,7 +426,8 @@
                 app:itemMarginLeft="@dimen/serp_listing_card_seller_rating_item_margin_left"
                 app:itemMarginRight="@dimen/serp_listing_card_seller_rating_item_margin_right"
                 app:itemProgressIcon="@drawable/star_selected"
-                app:itemSecondaryProgressIcon="@drawable/star_unselected" />
+                app:itemSecondaryProgressIcon="@drawable/star_unselected"
+                style="?android:attr/ratingBarStyleSmall"/>
                 <!--style="?android:attr/ratingBarStyleSmall" />-->
             <!--style="@style/customRatingBar"/>-->
         </RelativeLayout>

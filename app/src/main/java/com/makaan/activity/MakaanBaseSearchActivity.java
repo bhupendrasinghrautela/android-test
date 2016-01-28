@@ -235,6 +235,10 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     private void handleSearch() {
+
+        // hide the keypad
+        showKeypad(mSearchEditText, false);
+
         // TODO need to handle all cases
         SearchResponseHelper.resolveSearch(mSelectedSearches, this);
 
@@ -245,9 +249,6 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         mSearchEditText.removeTextChangedListener(this);
         mSearchEditText.setText("");
         mSearchEditText.addTextChangedListener(this);
-
-        // hide the keypad
-        showKeypad(mSearchEditText, false);
 
         // hide search view and show default
         setSearchViewVisibility(false);

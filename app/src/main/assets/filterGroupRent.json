@@ -295,84 +295,84 @@
           {
             "displayName": "wardrobe",
             "displayOrder": "1",
-            "fieldName": "listingFurnishings",
+            "fieldName": "listingFurnishingIds",
             "value": "1",
             "selected": false
           },
           {
             "displayName": "double bed",
             "displayOrder": "2",
-            "fieldName": "listingFurnishings",
+            "fieldName": "listingFurnishingIds",
             "value": "2",
             "selected": false
           },
           {
             "displayName": "tv",
             "displayOrder": "3",
-            "fieldName": "listingFurnishings",
+            "fieldName": "listingFurnishingIds",
             "value": "3",
             "selected": false
           },
           {
             "displayName": "refrigerator",
             "displayOrder": "4",
-            "fieldName": "listingFurnishings",
+            "fieldName": "listingFurnishingIds",
             "value": "4",
             "selected": false
           },
           {
             "displayName": "sofa",
             "displayOrder": "5",
-            "fieldName": "listingFurnishings",
+            "fieldName": "listingFurnishingIds",
             "value": "5",
             "selected": false
           },
           {
             "displayName": "washing machine",
             "displayOrder": "5",
-            "fieldName": "listingFurnishings",
+            "fieldName": "listingFurnishingIds",
             "value": "6",
             "selected": false
           },
           {
             "displayName": "wifi",
             "displayOrder": "5",
-            "fieldName": "listingFurnishings",
+            "fieldName": "listingFurnishingIds",
             "value": "7",
             "selected": false
           },
           {
             "displayName": "microwave",
             "displayOrder": "5",
-            "fieldName": "listingFurnishings",
+            "fieldName": "listingFurnishingIds",
             "value": "8",
             "selected": false
           },
           {
             "displayName": "dining table",
             "displayOrder": "5",
-            "fieldName": "listingFurnishings",
+            "fieldName": "listingFurnishingIds",
             "value": "9",
             "selected": false
           },
           {
             "displayName": "gas connection",
             "displayOrder": "5",
-            "fieldName": "listingFurnishings",
+            "fieldName": "listingFurnishingIds",
             "value": "10",
             "selected": false
           },
           {
             "displayName": "ac",
             "displayOrder": "5",
-            "fieldName": "listingFurnishings",
+            "fieldName": "listingFurnishingIds",
             "value": "11",
             "selected": false
           },
           {
             "displayName": "bed",
             "displayOrder": "5",
-            "fieldName": "listingFurnishings",
+            "fieldName": "listingFurnishingIds",
             "value": "12",
             "selected": false
           }
@@ -393,31 +393,31 @@
           {
             "displayName": "bachelors",
             "displayOrder": "1",
-            "fieldName": "listingTenantTypes",
+            "fieldName": "listingTenantTypeIds",
             "value": "1",
             "selected": false
           },{
             "displayName": "family",
             "displayOrder": "2",
-            "fieldName": "listingTenantTypes",
+            "fieldName": "listingTenantTypeIds",
             "value": "2",
             "selected": false
           },{
             "displayName": "pets allowed",
             "displayOrder": "3",
-            "fieldName": "listingTenantTypes",
+            "fieldName": "listingTenantTypeIds",
             "value": "3",
             "selected": false
           },{
             "displayName": "non vegetarian",
             "displayOrder": "4",
-            "fieldName": "listingTenantTypes",
+            "fieldName": "listingTenantTypeIds",
             "value": "4",
             "selected": false
           },{
             "displayName": "company lease",
             "displayOrder": "5",
-            "fieldName": "listingTenantTypes",
+            "fieldName": "listingTenantTypeIds",
             "value": "5",
             "selected": false
           }

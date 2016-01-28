@@ -55,6 +55,9 @@ public class Listing {
     public Integer floor, totalFloors;
     public String facing;
     public String furnished;
+    public String ownershipType;
+    public Integer noOfOpenSides;
+    public Integer securityDeposit;
 
     public ArrayList<ListingImage> images = new ArrayList<>();
 
