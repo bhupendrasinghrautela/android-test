@@ -989,4 +989,28 @@
     <dimen name="plain_link_card_message_padding_left_right">10dp</dimen>
     <dimen name="plain_link_card_message_text_size">16sp</dimen>
 
+
+    <!--content card search -->
+    <dimen name="card_margin">5dp</dimen>
+    <dimen name="card_radius">25dp</dimen>
+    <dimen name="image_height">180dp</dimen>
+    <dimen name="cancel_image_margin">20dp</dimen>
+    <dimen name="layout_padding">20dp</dimen>
+    <dimen name="title_text_size">22sp</dimen>
+    <dimen name="content_text_size">16sp</dimen>
+
+    <!--buyer journey -->
+    <dimen name="card_elevation">5dp</dimen>
+    <dimen name="header_height">200dp</dimen>
+    <dimen name="text_size_medium">16sp</dimen>
+    <dimen name="text_size_small">13sp</dimen>
+    <dimen name="text_size_large">18sp</dimen>
+
+    <dimen name="padding_layout">10dp</dimen>
+    <dimen name="view_height">920dp</dimen>
+    <dimen name="view_left_margin">17dp</dimen>
+    <dimen name="view_top_margin">40dp</dimen>
+
+
+
 </resources>

@@ -24,7 +24,6 @@ import com.makaan.util.JsonBuilder;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
-//import com.makaan.fragment.listing.SearchBarFragment;
 
 public class HomeActivity extends AppCompatActivity {
     boolean isBottom = true;
@@ -40,10 +39,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         topBar=(FrameLayout) findViewById(R.id.top_bar);
-        // new fragment to show search bar top of listing
-        //SearchBarFragment searchBarFragment = SearchBarFragment.init(SearchBarFragment.TYPE_SEARCH);
-        //initFragment(R.id.top_bar, searchBarFragment, false);
-
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         tvSearch =(TextView) findViewById(R.id.activity_home_search_text_view);
         tvSearch.setFocusable(false);
