@@ -29,14 +29,14 @@
         android:layout_width="wrap_content"
         app:tabBackground="@drawable/tab_color_selector"
         app:tabSelectedTextColor="@color/white"
-        app:tabPadding="10dp"
         app:tabIndicatorHeight="0dp"
         app:tabTextColor="@color/project_specification_default_color"
+        app:tabTextAppearance="@style/tab_text_appearance"
         android:layout_marginLeft="@dimen/project_specification_tab_layout_margins"
         android:layout_marginRight="@dimen/project_specification_tab_layout_margins"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        app:tabMode="fixed"
+        app:tabMode="scrollable"
         app:tabGravity="fill"/>
 
     <android.support.v4.view.ViewPager

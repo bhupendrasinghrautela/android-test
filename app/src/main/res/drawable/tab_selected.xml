@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <corners android:radius="5dp"></corners>
-    <padding android:left="5dp" android:right="5dp" android:top="5dp" android:bottom="5dp"/>
     <solid android:color="@color/colorAccent"></solid>
+    <padding
+    android:left="@dimen/tab_selected_padding_left"
+    android:right="@dimen/tab_selected_padding_right"
+    android:top="@dimen/tab_padding_top"
+    android:bottom="@dimen/tab_padding_bottom"/>
 </shape>

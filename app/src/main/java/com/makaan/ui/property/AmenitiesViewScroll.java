@@ -13,6 +13,8 @@ import com.makaan.cache.MasterDataCache;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.HorizontalScrollItem;
 import com.makaan.response.listing.detail.ListingAmenity;
+import com.makaan.response.project.Project;
+import com.makaan.response.project.ProjectAmenity;
 import com.makaan.ui.BaseLinearLayout;
 import com.makaan.ui.listing.CustomHorizontalScrollView;
 
@@ -65,22 +67,27 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
             createAmenitiesToDisplay();
             createAdapterDataForProperty();
         }
-        else{
-            createAdapterDataForProject();
-        }
         ListingOverViewAdapter listingOverViewAdapter = new ListingOverViewAdapter(mContext,mAmenityItems);
         mAmenityScroll.setAdapter(listingOverViewAdapter);
     }
 
-    private void createAdapterDataForProject() {
+    public void bindView(List<ProjectAmenity> projectAmenities){
+        createAdapterDataForProject(projectAmenities);
+    }
+
+    private void createAdapterDataForProject(List<ProjectAmenity> projectAmenities) {
         mAmenityItems = new ArrayList<>();
-        for(ListingAmenity amenityId:mAmenityIdList){
-            HorizontalScrollItem amenityItem = new HorizontalScrollItem();
-            amenityItem.resourceId = R.drawable.possession;
-            amenityItem.value = MasterDataCache.getInstance().getPropertyAmenityById(amenityId.amenity.amenityMaster.amenityId).amenityName;
-            amenityItem.name = String.valueOf(amenityId.amenity.amenityMaster.amenityId);
-            mAmenityItems.add(amenityItem);
+        for(ProjectAmenity projectAmenity : projectAmenities){
+            try {
+                HorizontalScrollItem amenityItem = new HorizontalScrollItem();
+                amenityItem.resourceId = R.drawable.possession;
+                amenityItem.value = MasterDataCache.getInstance().getPropertyAmenityById(projectAmenity.amenityMaster.amenityId).amenityName;
+                amenityItem.name = String.valueOf(projectAmenity.amenityMaster.amenityId);
+                mAmenityItems.add(amenityItem);
+            }catch (Exception e){}
         }
+        ListingOverViewAdapter listingOverViewAdapter = new ListingOverViewAdapter(mContext,mAmenityItems);
+        mAmenityScroll.setAdapter(listingOverViewAdapter);
     }
 
     private void createAmenitiesToDisplay() {

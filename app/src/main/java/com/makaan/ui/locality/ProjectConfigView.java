@@ -29,7 +29,7 @@ import butterknife.OnClick;
 /**
  * Created by tusharchaudhary on 1/27/16.
  */
-public class ProjectConfigView extends LinearLayout{
+public class ProjectConfigView extends LinearLayout implements ViewPager.OnPageChangeListener {
     @Bind(R.id.project_config_tab_layout)
     TabLayout tabLayout;
     @Bind(R.id.project_config_view_pager)
@@ -38,6 +38,7 @@ public class ProjectConfigView extends LinearLayout{
     @Bind(R.id.project_specification_view_all_props)
     TextView viewAllPropsTv;
     private ProjectConfigEvent projectConfigEvent;
+    private int currentPage;
 
     public ProjectConfigView(Context context) {
         super(context);
@@ -49,15 +50,19 @@ public class ProjectConfigView extends LinearLayout{
         this.mContext = context;
     }
 
+    @OnClick(R.id.project_specification_view_all_props)
+    public void viewAllPropertiesClicked(){
+        if(currentPage == 0){//buy
+            AppBus.getInstance().post(new OnViewAllPropertiesClicked(false));
+        }else{//rent
+            AppBus.getInstance().post(new OnViewAllPropertiesClicked(true));
+        }
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
-    }
-
-    @OnClick(R.id.project_specification_view_all_props)
-    public void onViewAllPropertiesClicked(){
-        AppBus.getInstance().post(new OnViewAllPropertiesClicked());
     }
 
 
@@ -76,13 +81,14 @@ public class ProjectConfigView extends LinearLayout{
     }
 
     private void setupViewPager(final ViewPager viewPager, FragmentActivity compatActivity) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(compatActivity.getSupportFragmentManager());
-
+            ViewPagerAdapter adapter = new ViewPagerAdapter(compatActivity.getSupportFragmentManager());
+            viewPager.addOnPageChangeListener(this);
             //buy
             ArrayList<ProjectConfigItem> projectConfigItems = projectConfigEvent.buyProjectConfigItems;
             ProjectConfigFragment fragment = new ProjectConfigFragment();
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("configs", projectConfigItems);
+            bundle.putBoolean("isRent", false);
             fragment.setArguments(bundle);
             adapter.addFrag(fragment, "buy");
 
@@ -91,10 +97,26 @@ public class ProjectConfigView extends LinearLayout{
             ProjectConfigFragment fragmentrent = new ProjectConfigFragment();
             Bundle bundlerent = new Bundle();
             bundlerent.putParcelableArrayList("configs", projectConfigItemsrent);
+            bundlerent.putBoolean("isRent",true);
             fragmentrent.setArguments(bundlerent);
             adapter.addFrag(fragmentrent, "rent");
 
             viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        currentPage = position;
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

@@ -1006,7 +1006,7 @@
     <dimen name="plain_link_card_message_padding_left_right">10dp</dimen>
     <dimen name="plain_link_card_message_text_size">16sp</dimen>
     <dimen name="project_config_item_margin">10dp</dimen>
-    <dimen name="project_config_item_stroke_width">1dp</dimen>
+    <dimen name="project_config_item_stroke_width">0.5dp</dimen>
     <dimen name="project_config_label_margin">15dp</dimen>
     <dimen name="project_basic_detail_top_margin">20dp</dimen>
     <dimen name="project_text_small">16sp</dimen>
@@ -1036,5 +1036,11 @@
     <dimen name="view_top_margin">40dp</dimen>
     <dimen name="project_specification_view_all_margin_top">10dp</dimen>
     <dimen name="project_text_v_small">14sp</dimen>
+    <dimen name="tab_padding_left">20dp</dimen>
+    <dimen name="tab_padding_bottom">20dp</dimen>
+    <dimen name="tab_padding_top">20dp</dimen>
+    <dimen name="tab_padding_right">20dp</dimen>
+    <dimen name="tab_selected_padding_right">30dp</dimen>
+    <dimen name="tab_selected_padding_left">30dp</dimen>
 
 </resources>

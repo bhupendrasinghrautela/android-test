@@ -30,6 +30,7 @@
         android:textSize="@dimen/project_specification_heading_text_size"
         android:textColor="@color/project_specification_dark_color"
         />
+
     <TextView
         android:layout_width="0dp"
         android:layout_weight="1"
