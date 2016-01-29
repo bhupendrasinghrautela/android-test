@@ -29,6 +29,8 @@ import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.OnExposeEvent;
 import com.makaan.pojo.GroupCluster;
 import com.makaan.request.selector.Selector;
+import com.makaan.response.listing.GroupListing;
+import com.makaan.response.listing.Listing;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.service.BuilderService;
 import com.makaan.service.ListingService;
@@ -90,6 +92,10 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     public static final int REQUEST_PROPERTY_PAGE = 1;
 
+
+    private static final int MAX_ITEMS_TO_REQUEST = 20;
+    private static final int MAX_GROUP_ITEMS_TO_REQUEST = 2 * GroupCluster.MAX_CLUSTERS_IN_GROUP;
+
     public static boolean isSellerSerp = false;
 
     private int mSelectedSortIndex = 0;
@@ -131,6 +137,16 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     private Long mChildListingId;
     private Selector mGroupSelector;
 
+    private ArrayList<Listing> mListings;
+    private ArrayList<GroupListing> mGroupListings;
+    private int mListingPage;
+    private int mListingCount;
+    private int mGroupListingCount;
+    private Long mChildSerpId;
+    private ArrayList<Listing> mChildListings;
+    private int mChildListingCount;
+    private int mChildListingPage;
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_serp;
@@ -152,6 +168,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         if(intent != null) {
             type = intent.getIntExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_UNKNOWN);
             if(type == SerpActivity.TYPE_HOME){
+                MakaanBuyerApplication.serpSelector.reset();
                 int data = intent.getIntExtra(REQUEST_DATA, REQUEST_DATA_HOME_BUY);
                 MakaanBuyerApplication.serpSelector.removeTerm("listingCategory");
                 if(data == REQUEST_DATA_HOME_BUY) {
@@ -195,6 +212,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public void onBackPressed() {
         super.onBackPressed();
         if ((mSerpRequestType & MASK_LISTING_TYPE) == SerpActivity.TYPE_CLUSTER) {
+            mSerpRequestType = TYPE_SEARCH;
             setShowSearchBar(true);
             mFiltersFrameLayout.setVisibility(View.VISIBLE);
             mSimilarPropertiesFrameLayout.setVisibility(View.GONE);
@@ -218,7 +236,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public synchronized void onResults(SerpGetEvent listingGetEvent) {
         if(mIsMapFragment && mMapFragment != null) {
             mListingGetEvent = listingGetEvent;
-            mMapFragment.setData(mListingGetEvent.listingData);
+            updateListings(listingGetEvent, null);
+            mMapFragment.setData(mListings);
         } else if (isSellerSerp) {
             setShowSearchBar(false);
             mFiltersFrameLayout.setVisibility(View.VISIBLE);
@@ -226,16 +245,18 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             if (mSellerSerpListFragment == null || !mSellerSerpListFragment.isVisible()) {
                 // create new child serp cluster fragment to show the cluster items
                 ChildSerpClusterFragment childSerpClusterFragment = ChildSerpClusterFragment.init();
-                childSerpClusterFragment.setData(mGroupListingGetEvent, this);
+                childSerpClusterFragment.setData(mGroupListings, mChildSerpId, this);
                 // create new listing fragment to show the listings
                 mSellerSerpListFragment = SerpListFragment.init(true);
-                mSellerSerpListFragment.updateListings(listingGetEvent, null, getSelectedSearches(), this, mSerpRequestType);
+                updateListings(listingGetEvent, null);
+                mSellerSerpListFragment.updateListings(mListings, null, getSelectedSearches(), this, mSerpRequestType, mListingCount);
 
                 initFragments(new int[]{R.id.activity_serp_similar_properties_frame_layout, R.id.activity_serp_content_frame_layout},
                         new Fragment[]{childSerpClusterFragment, mChildSerpListFragment}, true);
 
             } else {
-                mSellerSerpListFragment.updateListings(listingGetEvent, null, getSelectedSearches(), this, mSerpRequestType);
+                updateListings(listingGetEvent, null);
+                mSellerSerpListFragment.updateListings(mListings, null, getSelectedSearches(), this, mSerpRequestType, mListingCount);
             }
         } else if ((mSerpRequestType & MASK_LISTING_TYPE) == SerpActivity.TYPE_CLUSTER) {
             setShowSearchBar(false);
@@ -244,16 +265,18 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             if (mChildSerpListFragment == null || !mChildSerpListFragment.isVisible()) {
                 // create new child serp cluster fragment to show the cluster items
                 ChildSerpClusterFragment childSerpClusterFragment = ChildSerpClusterFragment.init();
-                childSerpClusterFragment.setData(mGroupListingGetEvent, this);
+                childSerpClusterFragment.setData(mGroupListings, mChildSerpId, this);
                 // create new listing fragment to show the listings
                 mChildSerpListFragment = SerpListFragment.init(true);
-                mChildSerpListFragment.updateListings(listingGetEvent, null, getSelectedSearches(), this, mSerpRequestType);
+                updateListings(listingGetEvent, null);
+                mChildSerpListFragment.updateListings(mChildListings, null, getSelectedSearches(), this, mSerpRequestType, mChildListingCount);
 
                 initFragments(new int[]{R.id.activity_serp_similar_properties_frame_layout, R.id.activity_serp_content_frame_layout},
                         new Fragment[]{childSerpClusterFragment, mChildSerpListFragment}, true);
 
             } else {
-                mChildSerpListFragment.updateListings(listingGetEvent, null, getSelectedSearches(), this, mSerpRequestType);
+                updateListings(listingGetEvent, null);
+                mChildSerpListFragment.updateListings(mChildListings, null, getSelectedSearches(), this, mSerpRequestType, mChildListingCount);
             }
         } else {
             mListingGetEvent = listingGetEvent;
@@ -266,11 +289,14 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 if (mListingFragment == null) {
                     // create new listing fragment to show the listings
                     mListingFragment = SerpListFragment.init(false);
-                    mListingFragment.updateListings(listingGetEvent, mGroupListingGetEvent, getSelectedSearches(), this, mSerpRequestType);
+
+                    updateListings(listingGetEvent, mGroupListingGetEvent);
+                    mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, mSerpRequestType, mListingCount);
                     initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
                 } else {
                     // update already running listing fragment with the new list
-                    mListingFragment.updateListings(listingGetEvent, mGroupListingGetEvent, getSelectedSearches(), this, mSerpRequestType);
+                    updateListings(listingGetEvent, mGroupListingGetEvent);
+                    mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, mSerpRequestType, mListingCount);
                 }
             }
         }
@@ -297,17 +323,67 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             if (mListingFragment == null) {
                 // create new listing fragment to show the listings
                 mListingFragment = SerpListFragment.init(false);
-                mListingFragment.updateListings(mListingGetEvent, mGroupListingGetEvent, getSelectedSearches(), this, mSerpRequestType);
+                updateListings(mListingGetEvent, mGroupListingGetEvent);
+                mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, mSerpRequestType, mListingCount);
                 initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
             } else {
                 // update already running listing fragment with the new list
-                mListingFragment.updateListings(mListingGetEvent, mGroupListingGetEvent, getSelectedSearches(), this, mSerpRequestType);
+                updateListings(mListingGetEvent, mGroupListingGetEvent);
+                mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, mSerpRequestType, mListingCount);
             }
 
 
             if(mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
+        }
+    }
+
+
+
+    public void updateListings(SerpGetEvent listingGetEvent, GroupSerpGetEvent groupListingGetEvent) {
+        if(listingGetEvent == null || listingGetEvent.listingData == null) {
+            return;
+        }
+        ArrayList<Listing> listings;
+        boolean isChildSerp = (mSerpRequestType & MASK_LISTING_TYPE) == TYPE_CLUSTER;
+        if(isChildSerp) {
+            if(mChildListings == null) {
+                mChildListings = new ArrayList<>();
+            }
+            listings = mChildListings;
+        } else {
+            if(mListings == null) {
+                mListings = new ArrayList<>();
+            }
+            listings = mListings;
+        }
+        if(mGroupListings == null) {
+            mGroupListings = new ArrayList<>();
+        }
+
+        if((mSerpRequestType & SerpActivity.MASK_LISTING_UPDATE_TYPE) != SerpActivity.TYPE_LOAD_MORE) {
+            listings.clear();
+            if(!isChildSerp) {
+                mGroupListings.clear();
+                mGroupListingCount = 0;
+                mListingPage = 0;
+                mListingCount = 0;
+            } else {
+                mChildListingPage = 0;
+                mChildListingCount = 0;
+            }
+        }
+        listings.addAll(listingGetEvent.listingData.listings);
+        if(isChildSerp) {
+            mChildListingCount = listingGetEvent.listingData.totalCount;
+        } else {
+            mListingCount = listingGetEvent.listingData.totalCount;
+        }
+
+        if(!isChildSerp && groupListingGetEvent != null && groupListingGetEvent.groupListingData != null) {
+            mGroupListings.addAll(groupListingGetEvent.groupListingData.groupListings);
+            mGroupListingCount = groupListingGetEvent.groupListingData.totalCount;
         }
     }
 
@@ -357,14 +433,14 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     @OnClick(R.id.fragment_filters_map_image_view)
     public void onMapViewPressed(View view) {
         if(mIsMapFragment) {
-            mListingFragment.updateListings(mListingGetEvent, mGroupListingGetEvent, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE));
+            mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE), mListingCount);
             initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, true);
             mIsMapFragment = false;
             mMapImageView.setImageResource(R.drawable.map);
         } else {
             if (mListingGetEvent != null) {
                 mMapFragment = new SerpMapFragment();
-                mMapFragment.setData(mListingGetEvent.listingData);
+                mMapFragment.setData(mListings);
                 initFragment(R.id.activity_serp_content_frame_layout, mMapFragment, true);
                 mIsMapFragment = true;
                 mMapImageView.setImageResource(R.drawable.listed_by);
@@ -389,6 +465,10 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Override
     public void serpRequest(int type, Selector selector) {
+        serpRequest(type, selector, true);
+    }
+
+    public void serpRequest(int type, Selector selector, boolean needGrouping) {
         if((type & MASK_LISTING_TYPE) > 0) {
             mSerpRequestType = type;
         } else {
@@ -432,10 +512,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             mGroupReceived = true;
             mSerpReceived = false;
         } else {
-            ((ListingService) MakaanServiceFactory.getInstance().getService(ListingService.class)).handleSerpRequest(selector, true, mGroupSelector);
-            mGroupsRequested = true;
+
+            ((ListingService) MakaanServiceFactory.getInstance().getService(ListingService.class)).handleSerpRequest(selector, needGrouping, mGroupSelector);
+            mGroupsRequested = needGrouping;
             mSerpReceived = false;
-            mGroupReceived = false;
+            mGroupReceived = !needGrouping;
         }
     }
 
@@ -444,12 +525,15 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         mChildListingId = id;
         if((type & MASK_LISTING_TYPE) > 0) {
             mSerpRequestType = type;
+            MakaanBuyerApplication.serpSelector.removePaging();
+            MakaanBuyerApplication.serpSelector.page(0, MAX_ITEMS_TO_REQUEST);
         } else {
             mSerpRequestType = (mSerpRequestType & MASK_LISTING_TYPE) | type;
         }
-        if(mSerpRequestType == TYPE_CLUSTER) {
+        if((mSerpRequestType & MASK_LISTING_TYPE) == TYPE_CLUSTER) {
             ((ListingService) MakaanServiceFactory.getInstance().getService(ListingService.class))
                     .handleChildSerpRequest(MakaanBuyerApplication.serpSelector, id);
+            mChildSerpId = id;
             mGroupsRequested = false;
             mGroupReceived = true;
             mSerpReceived = false;
@@ -510,6 +594,34 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             Intent intent = new Intent(this, PropertyActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
+        }
+    }
+
+    @Override
+    public void loadMoreItems() {
+        if(mListings != null) {
+            if((mSerpRequestType & MASK_LISTING_TYPE) == TYPE_CLUSTER) {
+                if ((mChildListings.size() / MAX_ITEMS_TO_REQUEST) == (mChildListingPage + 1) && mChildListings.size() < mChildListingCount) {
+                    mChildListingPage++;
+                    MakaanBuyerApplication.serpSelector.page(mChildListings.size(), MAX_ITEMS_TO_REQUEST);
+
+                    serpRequest(SerpActivity.TYPE_LOAD_MORE, mChildListingId);
+                }
+            } else {
+                if ((mListings.size() / MAX_ITEMS_TO_REQUEST) == (mListingPage + 1) && mListings.size() < mListingCount) {
+                    mListingPage++;
+                    MakaanBuyerApplication.serpSelector.page(mListings.size(), MAX_ITEMS_TO_REQUEST);
+
+                    if (mGroupListingCount > mGroupListings.size()) {
+                        Selector groupSelector = getGroupSelector();
+                        groupSelector.page(mGroupListings.size(), MAX_GROUP_ITEMS_TO_REQUEST);
+                        serpRequest(SerpActivity.TYPE_LOAD_MORE, MakaanBuyerApplication.serpSelector, true);
+                    } else {
+                        serpRequest(SerpActivity.TYPE_LOAD_MORE, MakaanBuyerApplication.serpSelector, false);
+                    }
+
+                }
+            }
         }
     }
 

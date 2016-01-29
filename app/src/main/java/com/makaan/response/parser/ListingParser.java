@@ -68,6 +68,9 @@ public class ListingParser {
                     listing.description = listingJson.optString(DESCRIPTION);
                     listing.description = stripContent(listing.description, 100, true);
 
+                    listing.facing = masterDataCache.getDirection(listingJson.optInt(FACING_ID));
+                    listing.ownershipType = masterDataCache.getOwnershipType(listingJson.optInt(OWNERSHIP_TYPE_ID));
+
                     listing.bedrooms = property.optInt(BEDROOMS);
                     listing.bathrooms = property.optInt(BATHROOMS);
 
@@ -106,6 +109,8 @@ public class ListingParser {
                     String possessionDateStr = listingJson.optString(POSSESSION_DATE);
                     listing.propertyAge = !StringUtil.isBlank(possessionDateStr) ? getElapsedDaysFromNow(possessionDateStr).toString().concat(DAYS) : null;
                     listing.possessionDate = !StringUtil.isBlank(possessionDateStr) ? getMMMYYYYDateStringFromEpoch(possessionDateStr) : null;
+                    listing.noOfOpenSides = listingJson.optInt(NO_OPEN_SIDES);
+                    listing.securityDeposit = listingJson.optInt(NO_OPEN_SIDES);
 
                     //TODO: check if we need diff
                     /*if (listing.price != null && listing.localityAvgPrice != null) {

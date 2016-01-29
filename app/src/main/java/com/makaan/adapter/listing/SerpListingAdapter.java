@@ -138,7 +138,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
                     extraCount = mGroupClusterListings.size();
                 } else {
                     if (digit > GroupCluster.CLUSTER_POS_IN_SERP_PER_TEN) {
-                        extraCount = tens - 1;
+                        extraCount = tens + 1;
                     } else {
                         extraCount = tens;
                     }
@@ -168,7 +168,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
         }
 
         if(groupListings != null) {
-            mGroupClusterListings.addAll(GroupCluster.getGroupCluster((ArrayList<GroupListing>) groupListings));
+            mGroupClusterListings.addAll(GroupCluster.getGroupClusters((ArrayList<GroupListing>) groupListings));
         }
         setData(listings, requestType);
     }

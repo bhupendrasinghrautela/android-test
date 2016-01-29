@@ -1,16 +1,16 @@
 {
-  "data": [
+  "data":
     {
       "buyProperties": [
         {
           "displayName":"status",
           "fieldName":"propertyStatus",
-          "imageName":"shower"
+          "imageName":"under_construction"
         },
         {
           "displayName":"age",
           "fieldName":"propertyAge",
-          "imageName":"possession"
+          "imageName":"ready_to_move"
         },
         {
           "displayName":"possession",
@@ -34,25 +34,25 @@
         },
         {
           "displayName":"new/resale",
-          "fieldName":"category",
-          "imageName":"category"
+          "fieldName":"listingCategory",
+          "imageName":"new_resale"
         }
       ],
       "plotBuyProperties": [
         {
           "displayName":"age",
-          "fieldName":"age",
-          "imageName":"age"
+          "fieldName":"propertyAge",
+          "imageName":"ready_to_move"
         },
         {
           "displayName":"possession",
-          "fieldName":"possession",
+          "fieldName":"possessionDate",
           "imageName":"possession"
         },
         {
-          "displayName":"open ides",
-          "fieldName":"open ides",
-          "imageName":"open ides"
+          "displayName":"open sides",
+          "fieldName":"noOfOpenSides",
+          "imageName":"shower"
         },
         {
           "displayName":"bookamt",
@@ -62,34 +62,34 @@
         {
           "displayName":"facing",
           "fieldName":"facing",
-          "imageName":"facing"
+          "imageName":"shower"
         },
         {
-          "displayName":"ownertype",
-          "fieldName":"ownertype",
-          "imageName":"ownertype"
+          "displayName":"ownership",
+          "fieldName":"ownershipType",
+          "imageName":"shower"
         }
       ],
       "rentProperties": [
         {
-          "displayName":"furnishstat",
-          "fieldName":"furnishstat",
-          "imageName":"furnishstat"
+          "displayName":"status",
+          "fieldName":"furnished",
+          "imageName":"furniture_status"
         },
         {
-          "displayName":"securitydeposit",
-          "fieldName":"securitydeposit",
-          "imageName":"securitydeposit"
+          "displayName":"security deposit",
+          "fieldName":"securityDeposit",
+          "imageName":"shower"
         },
         {
           "displayName":"availability",
-          "fieldName":"availability",
-          "imageName":"availability"
+          "fieldName":"isReadyToMove",
+          "imageName":"ready_to_move"
         },
         {
-          "displayName":"bath",
-          "fieldName":"bath",
-          "imageName":"bath"
+          "displayName":"bathroom",
+          "fieldName":"bathroom",
+          "imageName":"shower"
         },
         {
           "displayName":"floor",
@@ -99,14 +99,15 @@
         {
           "displayName":"balcony",
           "fieldName":"balcony",
-          "imageName":"balcony"
+          "imageName":"shower"
         },
         {
-          "displayName":"tenantpref",
-          "fieldName":"tenantpref",
-          "imageName":"tenantpref"
+          /* TODO */
+          "displayName":"tenant allowed",
+          "fieldName":"tenantTypes",
+          "imageName":"shower"
         }
       ]
     }
-  ]
+
 }

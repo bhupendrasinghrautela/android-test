@@ -28,11 +28,13 @@ import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.PreferenceConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.listing.Listing;
+import com.makaan.response.serp.ListingInfoMap;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
 import com.pkmmte.view.CircularImageView;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Random;
 
 import butterknife.Bind;
@@ -55,6 +57,10 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
 
     @Bind(R.id.serp_default_listing_property_possession_image_view)
     ImageView mPossessionImageView;
+    @Bind(R.id.serp_default_listing_property_floor_image_view)
+    ImageView mFloorImageView;
+    @Bind(R.id.serp_default_listing_property_bathroom_image_view)
+    ImageView mBathroomImageView;
 
     @Bind(R.id.serp_default_listing_seller_image_view)
     CircularImageView mSellerImageView;
@@ -74,12 +80,6 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
     TextView mPropertySizeInfoTextView;
     @Bind(R.id.serp_default_listing_property_address_text_view)
     TextView mPropertyAddressTextView;
-    @Bind(R.id.serp_default_listing_property_possession_date_text_view)
-    TextView mPropertyPossessionDateTextView;
-    @Bind(R.id.serp_default_listing_property_floor_info_text_view)
-    TextView mPropertyFloorInfoTextView;
-    @Bind(R.id.serp_default_listing_property_bathroom_number_date_text_view)
-    TextView mPropertyBathroomNumberTextView;
     @Bind(R.id.serp_default_listing_property_tagline_text_view)
     TextView mPropertyDescriptionTextView;
     @Bind(R.id.serp_default_listing_seller_name_text_view)
@@ -87,8 +87,19 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
     @Bind(R.id.serp_default_listing_badge_text_view)
     TextView mBadgeTextView;
 
+    @Bind(R.id.serp_default_listing_property_possession_date_text_view)
+    TextView mPropertyPossessionDateTextView;
+    @Bind(R.id.serp_default_listing_property_floor_info_text_view)
+    TextView mPropertyFloorInfoTextView;
+    @Bind(R.id.serp_default_listing_property_bathroom_number_date_text_view)
+    TextView mPropertyBathroomNumberTextView;
+
     @Bind(R.id.serp_default_listing_property_possession_text_view)
     TextView mPossesionTextView;
+    @Bind(R.id.serp_default_listing_property_floor_text_view)
+    TextView mFloorTextView;
+    @Bind(R.id.serp_default_listing_property_bathroom_text_view)
+    TextView mBathroomTextView;
 
     @Bind(R.id.serp_default_listing_assist_button)
     Button mAssistButton;
@@ -104,6 +115,10 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
     private SharedPreferences mPreferences;
     private Listing mListing;
     private SerpRequestCallback mCallback;
+
+    ArrayList<ImageView> mPropertyInfoImageViews = new ArrayList<>();
+    ArrayList<TextView> mPropertyInfoTextViews = new ArrayList<>();
+    ArrayList<TextView> mPropertyInfoNameTextViews = new ArrayList<>();
 
     public DefaultListingView(Context context) {
         super(context);
@@ -123,6 +138,23 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         if(!(data instanceof Listing)) {
             return;
         }
+
+        mPropertyInfoImageViews.clear();
+        mPropertyInfoTextViews.clear();
+        mPropertyInfoNameTextViews.clear();
+
+        mPropertyInfoImageViews.add(mPossessionImageView);
+        mPropertyInfoImageViews.add(mFloorImageView);
+        mPropertyInfoImageViews.add(mBathroomImageView);
+
+        mPropertyInfoTextViews.add(mPropertyPossessionDateTextView);
+        mPropertyInfoTextViews.add(mPropertyFloorInfoTextView);
+        mPropertyInfoTextViews.add(mPropertyBathroomNumberTextView);
+
+        mPropertyInfoNameTextViews.add(mPossesionTextView);
+        mPropertyInfoNameTextViews.add(mFloorTextView);
+        mPropertyInfoNameTextViews.add(mBathroomTextView);
+
         mCallback = callback;
 
         boolean isBuy = MakaanBuyerApplication.serpSelector.isBuyContext();
@@ -202,6 +234,8 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         } else {
             mSellerRatingBar.setRating(mListing.lisitingPostedBy.rating);
         }
+        mapPropertyInfo(isBuy);
+
 
         // TODO check for unit info
         String priceString = StringUtil.getDisplayPrice(mListing.price);
@@ -213,32 +247,6 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         priceString = priceParts[0];
         if(priceParts.length > 1) {
             priceUnit = priceParts[1];
-        }
-
-        // check possession for under construction properties
-        // or age of property for reseller properties
-        // or furnished/unfurnished/semi-furnished for rental properties
-        if(isBuy) {
-            if (mListing.isReadyToMove && mListing.propertyAge != null && !TextUtils.isEmpty(mListing.propertyAge)) {
-                mPossesionTextView.setText("Age of Property");
-                mPropertyPossessionDateTextView.setText(mListing.propertyAge);
-            } else if(mListing.possessionDate != null && !TextUtils.isEmpty(mListing.possessionDate)) {
-                mPossesionTextView.setText("Possession");
-                mPropertyPossessionDateTextView.setText(mListing.possessionDate);
-            } else {
-                mPossesionTextView.setVisibility(View.GONE);
-                mPropertyPossessionDateTextView.setVisibility(View.GONE);
-                mPossessionImageView.setVisibility(View.GONE);
-            }
-        } else {
-            if(mListing.furnished != null && !TextUtils.isEmpty(mListing.furnished)) {
-                mPossesionTextView.setText("Furnished");
-                mPropertyPossessionDateTextView.setText(mListing.furnished);
-            } else {
-                mPossesionTextView.setVisibility(View.GONE);
-                mPropertyPossessionDateTextView.setVisibility(View.GONE);
-                mPossessionImageView.setVisibility(View.GONE);
-            }
         }
 
         // set price info
@@ -267,21 +275,6 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         } else {
             mPropertyAddressTextView.setText(String.format("%s, %s", mListing.localityName, mListing.cityName));
         }
-
-        // set value of floor info of property out of total floors in building
-        if(mListing.floor == 1) {
-            mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format("%d<sup>st</sup> of %d", mListing.floor, mListing.totalFloors)));
-        } else if(mListing.floor == 2) {
-            mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format("%d<sup>nd</sup> of %d", mListing.floor, mListing.totalFloors)));
-        } else if(mListing.floor == 3) {
-            mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format("%d<sup>rd</sup> of %d", mListing.floor, mListing.totalFloors)));
-        } else {
-            mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format("%d<sup>th</sup> of %d", mListing.floor, mListing.totalFloors)));
-        }
-
-        // set bathroom info of property
-        // TODO check if need to be replaced by any other value if bathroom value is 0 or negative
-        mPropertyBathroomNumberTextView.setText(String.valueOf(mListing.bathrooms));
 
         // set property tagline or detailed info
         mPropertyDescriptionTextView.setText(Html.fromHtml(mListing.description));
@@ -324,6 +317,213 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         // TODO diff image view
         mPropertyShortlistCheckbox.setOnCheckedChangeListener(this);
 
+        this.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListing != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putLong(KeyUtil.LISTING_ID, mListing.id);
+                    bundle.putDouble(KeyUtil.LISTING_LAT, mListing.latitude);
+                    bundle.putDouble(KeyUtil.LISTING_LON, mListing.longitude);
+
+                    mCallback.requestDetailPage(SerpActivity.REQUEST_PROPERTY_PAGE, bundle);
+                }
+            }
+        });
+
+    }
+
+    private void mapPropertyInfo(boolean isBuy) {
+        // check possession for under construction properties
+        // or age of property for reseller properties
+        // or furnished/unfurnished/semi-furnished for rental properties
+        if(isBuy) {
+            if(!TextUtils.isEmpty(mListing.propertyType) && "Residential Plot".equals(mListing.propertyType)) {
+                ArrayList<ListingInfoMap.InfoMap> map = MasterDataCache.getInstance().getListingMapInfo(ListingInfoMap.MAP_BUY_PLOT_PROPERTIES);
+                mapPropertyInfo(map);
+            } else {
+                ArrayList<ListingInfoMap.InfoMap> map = MasterDataCache.getInstance().getListingMapInfo(ListingInfoMap.MAP_BUY_PROPERTIES);
+                mapPropertyInfo(map);
+                /*if (mListing.isReadyToMove && mListing.propertyAge != null && !TextUtils.isEmpty(mListing.propertyAge)) {
+                    mPossesionTextView.setText("Age of Property");
+                    mPropertyPossessionDateTextView.setText(mListing.propertyAge);
+                } else if (mListing.possessionDate != null && !TextUtils.isEmpty(mListing.possessionDate)) {
+                    mPossesionTextView.setText("Possession");
+                    mPropertyPossessionDateTextView.setText(mListing.possessionDate);
+                } else {
+                    mPossesionTextView.setVisibility(View.GONE);
+                    mPropertyPossessionDateTextView.setVisibility(View.GONE);
+                    mPossessionImageView.setVisibility(View.GONE);
+                }*/
+            }
+        } else {
+            ArrayList<ListingInfoMap.InfoMap> map = MasterDataCache.getInstance().getListingMapInfo(ListingInfoMap.MAP_RENT_PROPERTIES);
+            mapPropertyInfo(map);
+            /*if(mListing.furnished != null && !TextUtils.isEmpty(mListing.furnished)) {
+                mPossesionTextView.setText("Furnished");
+                mPropertyPossessionDateTextView.setText(mListing.furnished);
+            } else {
+                mPossesionTextView.setVisibility(View.GONE);
+                mPropertyPossessionDateTextView.setVisibility(View.GONE);
+                mPossessionImageView.setVisibility(View.GONE);
+            }*/
+        }
+
+        /*// set value of floor info of property out of total floors in building
+        if(mListing.floor == 1) {
+            mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format("%d<sup>st</sup> of %d", mListing.floor, mListing.totalFloors)));
+        } else if(mListing.floor == 2) {
+            mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format("%d<sup>nd</sup> of %d", mListing.floor, mListing.totalFloors)));
+        } else if(mListing.floor == 3) {
+            mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format("%d<sup>rd</sup> of %d", mListing.floor, mListing.totalFloors)));
+        } else {
+            mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format("%d<sup>th</sup> of %d", mListing.floor, mListing.totalFloors)));
+        }
+
+        // set bathroom info of property
+        // TODO check if need to be replaced by any other value if bathroom value is 0 or negative
+        mPropertyBathroomNumberTextView.setText(String.valueOf(mListing.bathrooms));*/
+    }
+
+    private void mapPropertyInfo(ArrayList<ListingInfoMap.InfoMap> map) {
+        int j = 0;
+        for(int i = 0; i < map.size() && j < mPropertyInfoImageViews.size(); i++) {
+            if(mapPropertyInfo(map.get(i), j)) {
+                mPropertyInfoImageViews.get(j).setVisibility(View.VISIBLE);
+                mPropertyInfoTextViews.get(j).setVisibility(View.VISIBLE);
+                mPropertyInfoNameTextViews.get(j).setVisibility(View.VISIBLE);
+                j++;
+            }
+        }
+        while(j < mPropertyInfoImageViews.size()) {
+            mPropertyInfoImageViews.get(j).setVisibility(View.GONE);
+            mPropertyInfoTextViews.get(j).setVisibility(View.GONE);
+            mPropertyInfoNameTextViews.get(j).setVisibility(View.GONE);
+            j++;
+        }
+    }
+
+    private boolean mapPropertyInfo(ListingInfoMap.InfoMap infoMap, int j) {
+        switch (infoMap.fieldName) {
+            case "propertyStatus":
+                if(!TextUtils.isEmpty(mListing.propertyStatus)) {
+                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
+                    mPropertyInfoTextViews.get(j).setText(mListing.propertyStatus);
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    return true;
+                }
+                break;
+            case "propertyAge":
+                if(mListing.isReadyToMove && !TextUtils.isEmpty(mListing.propertyAge)) {
+                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
+                    mPropertyInfoTextViews.get(j).setText(mListing.propertyAge);
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    return true;
+                }
+                break;
+            case "possessionDate":
+                if(!mListing.isReadyToMove && !TextUtils.isEmpty(mListing.possessionDate)) {
+                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
+                    mPropertyInfoTextViews.get(j).setText(mListing.possessionDate);
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    return true;
+                }
+                break;
+            case "bathrooms":
+                if(mListing.bathrooms != null && mListing.bathrooms != 0) {
+                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
+                    mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.bathrooms));
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    return true;
+                }
+                break;
+            case "floor,totalFloors":
+                if(mListing.floor != null && mListing.totalFloors != null && mListing.floor != 0 && mListing.totalFloors != 0) {
+                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
+                    if(mListing.floor == 1) {
+                        mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format("%d<sup>st</sup> of %d", mListing.floor, mListing.totalFloors)));
+                    } else if(mListing.floor == 2) {
+                        mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format("%d<sup>nd</sup> of %d", mListing.floor, mListing.totalFloors)));
+                    } else if(mListing.floor == 3) {
+                        mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format("%d<sup>rd</sup> of %d", mListing.floor, mListing.totalFloors)));
+                    } else {
+                        mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format("%d<sup>th</sup> of %d", mListing.floor, mListing.totalFloors)));
+                    }
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    return true;
+                }
+                break;
+            case "balcony":
+                if(mListing.balcony != null && mListing.balcony != 0) {
+                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
+                    mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.balcony));
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    return true;
+                }
+                break;
+            case "listingCategory":
+                if(!TextUtils.isEmpty(mListing.listingCategory)) {
+                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
+                    mPropertyInfoTextViews.get(j).setText(mListing.listingCategory);
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    return true;
+                }
+                break;
+            case "facing":
+                if(!TextUtils.isEmpty(mListing.facing)) {
+                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
+                    mPropertyInfoTextViews.get(j).setText(mListing.facing);
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    return true;
+                }
+                break;
+            case "ownershipType":
+                if(!TextUtils.isEmpty(mListing.ownershipType)) {
+                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
+                    mPropertyInfoTextViews.get(j).setText(mListing.ownershipType);
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    return true;
+                }
+                break;
+            case "furnished":
+                if(!TextUtils.isEmpty(mListing.furnished)) {
+                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
+                    mPropertyInfoTextViews.get(j).setText(mListing.furnished);
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    return true;
+                }
+                break;
+            case "isReadyToMove":
+                if(!mListing.isReadyToMove && TextUtils.isEmpty(mListing.possessionDate)) {
+                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
+                    mPropertyInfoTextViews.get(j).setText(mListing.possessionDate);
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    return true;
+                } else if(mListing.isReadyToMove) {
+                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
+                    mPropertyInfoTextViews.get(j).setText("ready to move in");
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    return true;
+                }
+                break;
+            case "noOfOpenSides":
+                if(mListing.noOfOpenSides != null && mListing.noOfOpenSides != 0) {
+                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
+                    mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.noOfOpenSides));
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    return true;
+                }
+                break;
+            case "securityDeposit":
+                if(mListing.securityDeposit != null && mListing.securityDeposit != 0) {
+                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
+                    mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.securityDeposit));
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    return true;
+                }
+                break;
+        }
+        return false;
     }
 
     @Override
@@ -355,19 +555,6 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         MakaanBuyerApplication.serpSelector.term("listingCompanyId", String.valueOf(mListing.lisitingPostedBy.id), true);
 
         mCallback.serpRequest(SerpActivity.TYPE_SELLER, MakaanBuyerApplication.serpSelector);
-
-//        MakaanBuyerApplication.serpSelector.term("sellerId", String.valueOf(mListing.sellerId));
-    }
-
-    @OnClick(R.id.serp_default_listing_property_bhk_info_text_view)
-    public void onPropertyPressed(View view) {
-
-        Bundle bundle = new Bundle();
-        bundle.putLong(KeyUtil.LISTING_ID, mListing.id);
-        bundle.putDouble(KeyUtil.LISTING_LAT, mListing.latitude);
-        bundle.putDouble(KeyUtil.LISTING_LON, mListing.longitude);
-
-        mCallback.requestDetailPage(SerpActivity.REQUEST_PROPERTY_PAGE, bundle);
 
 //        MakaanBuyerApplication.serpSelector.term("sellerId", String.valueOf(mListing.sellerId));
     }

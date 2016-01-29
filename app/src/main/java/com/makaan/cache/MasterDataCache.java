@@ -2,6 +2,7 @@ package com.makaan.cache;
 
 
 import android.content.SharedPreferences;
+import android.util.SparseArray;
 
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.response.amenity.AmenityCluster;
@@ -11,6 +12,7 @@ import com.makaan.response.master.MasterFurnishing;
 import com.makaan.response.master.MasterSpecification;
 import com.makaan.response.master.PropertyAmenity;
 import com.makaan.response.serp.FilterGroup;
+import com.makaan.response.serp.ListingInfoMap;
 import com.makaan.response.serp.RangeFilter;
 import com.makaan.util.Preference;
 
@@ -54,6 +56,9 @@ public class MasterDataCache {
 
     private HashSet<String> shortlistedPropertiesBuy;
     private HashSet<String> shortlistedPropertiesRent;
+    private ListingInfoMap listingInfoMap;
+    private SparseArray<String> directionApiList = new SparseArray<>();
+    private SparseArray<String> ownershipTypeApiList = new SparseArray<>();
 
     private MasterDataCache() {
 
@@ -395,5 +400,30 @@ public class MasterDataCache {
             map.put(id,false);
         }
         return map;
+    }
+
+    public void addListingInfoMap(ListingInfoMap listingInfoMap) {
+        this.listingInfoMap = listingInfoMap;
+        this.listingInfoMap.initialize();
+    }
+
+    public ArrayList<ListingInfoMap.InfoMap> getListingMapInfo(int type) {
+        return listingInfoMap.map.get(type);
+    }
+
+    public void addDirection(int id, String direction) {
+        directionApiList.put(id, direction);
+    }
+
+    public String getDirection(int id) {
+        return directionApiList.get(id);
+    }
+
+    public void addOwnershipType(int id, String direction) {
+        ownershipTypeApiList.put(id, direction);
+    }
+
+    public String getOwnershipType(int id) {
+        return ownershipTypeApiList.get(id);
     }
 }

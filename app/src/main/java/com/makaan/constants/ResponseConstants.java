@@ -65,6 +65,8 @@ public class ResponseConstants {
     public static final String FLOOR = "floor";
     public static final String TOTAL_FLOORS = "totalFloors";
     public static final String FACING_ID = "facingId";
+    public static final String OWNERSHIP_TYPE_ID = "ownershipTypeId";
+    public static final String DISPLAY_NAME = "displayName";
     public static final String DIRECTION = "direction";
     public static final String FURNISHED = "furnished";
     public static final String LANDMARK_DISTANCE = "landmarkDistance";
@@ -73,6 +75,8 @@ public class ResponseConstants {
     public static final String MIN_PRICE_PER_UNIT_AREA = "minPricePerUnitArea";
     public static final String MIN_CONST_COMPLETION_DATE = "minConstructionCompletionDate";
     public static final String MAX_CONST_COMPLETION_DATE = "maxConstructionCompletionDate";
+    public static final String NO_OPEN_SIDES = "noOfOpenSides";
+    public static final String SECURITY_DEPOSIT = "securityDeposit";
 
     public static final String TERM_FILTER_VALUES = "termFilterValues";
     public static final String RANGE_FILTER_VALUES = "rangeFilterValues";

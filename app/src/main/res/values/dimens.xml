@@ -330,23 +330,23 @@
     <dimen name="serp_listing_card_empty_view_after_address_text_view_margin_left">20dp</dimen>
     <dimen name="serp_listing_card_empty_view_after_address_text_view_margin_top">12dp</dimen>
     <dimen name="serp_listing_card_empty_view_after_property_info_view_margin_left">2dp</dimen>
-    <dimen name="serp_listing_card_empty_view_after_property_detail_view_margin_top">14dp</dimen>
-    <dimen name="serp_listing_card_empty_view_after_property_tagline_view_margin_top">14dp</dimen>
+    <dimen name="serp_listing_card_empty_view_after_property_detail_view_margin_top">6dp</dimen>
+    <dimen name="serp_listing_card_empty_view_after_property_tagline_view_margin_top">6dp</dimen>
 
     <dimen name="serp_listing_card_possession_image_view_left_margin">21dp</dimen>
     <dimen name="serp_listing_card_possession_image_view_right_margin">79dp</dimen>
-    <dimen name="serp_listing_card_possession_image_view_top_margin">14dp</dimen>
+    <dimen name="serp_listing_card_possession_image_view_top_margin">6dp</dimen>
     <dimen name="serp_listing_card_possession_image_view_width">21.2dp</dimen>
     <dimen name="serp_listing_card_possession_image_view_height">24dp</dimen>
 
     <dimen name="serp_listing_card_floor_image_view_left_margin">21dp</dimen>
     <dimen name="serp_listing_card_floor_image_view_right_margin">69dp</dimen>
-    <dimen name="serp_listing_card_floor_image_view_top_margin">14dp</dimen>
+    <dimen name="serp_listing_card_floor_image_view_top_margin">6dp</dimen>
     <dimen name="serp_listing_card_floor_image_view_width">19.8dp</dimen>
     <dimen name="serp_listing_card_floor_image_view_height">24dp</dimen>
 
     <dimen name="serp_listing_card_bathroom_image_view_left_margin">21dp</dimen>
-    <dimen name="serp_listing_card_bathroom_image_view_top_margin">15dp</dimen>
+    <dimen name="serp_listing_card_bathroom_image_view_top_margin">6dp</dimen>
     <dimen name="serp_listing_card_bathroom_image_view_width">17.6dp</dimen>
     <dimen name="serp_listing_card_bathroom_image_view_height">24dp</dimen>
 
@@ -375,11 +375,11 @@
     <dimen name="serp_listing_card_bathroom_text_text_view_text_size">14sp</dimen>
 
     <dimen name="serp_listing_card_property_tagline_text_view_left_margin">20dp</dimen>
-    <dimen name="serp_listing_card_property_tagline_text_view_top_margin">7dp</dimen>
+    <dimen name="serp_listing_card_property_tagline_text_view_top_margin">6dp</dimen>
     <dimen name="serp_listing_card_property_tagline_text_view_text_size">14sp</dimen>
 
     <dimen name="serp_listing_card_seller_image_view_left_margin">20dp</dimen>
-    <dimen name="serp_listing_card_seller_image_view_top_margin">12dp</dimen>
+    <dimen name="serp_listing_card_seller_image_view_top_margin">8dp</dimen>
     <dimen name="serp_listing_card_seller_image_view_width">44dp</dimen>
     <dimen name="serp_listing_card_seller_image_view_height">44dp</dimen>
 

@@ -15,6 +15,7 @@ import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.listing.HorizontalScrollFragmentAdapter;
 import com.makaan.event.serp.GroupSerpGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.pojo.GroupCluster;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.ui.view.CustomViewPager;
 
@@ -39,7 +40,7 @@ public class ChildSerpClusterFragment extends MakaanBaseFragment {
 
     private HorizontalScrollFragmentAdapter mFragmentPagerAdapter;
     private SerpRequestCallback mCallback;
-    private ArrayList<GroupListing> mListings = new ArrayList<>();
+    private GroupCluster mCluster;
 
 
     @Override
@@ -55,58 +56,60 @@ public class ChildSerpClusterFragment extends MakaanBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        mFragmentPagerAdapter = new HorizontalScrollFragmentAdapter<>(getActivity().getSupportFragmentManager(), getActivity(), mListings, true, mCallback);
+        if(mCluster != null) {
+            mFragmentPagerAdapter = new HorizontalScrollFragmentAdapter<>(getActivity().getSupportFragmentManager(), getActivity(), mCluster.groupListings, true, mCallback);
 
-        mViewPager.setAdapter(mFragmentPagerAdapter);
+            mViewPager.setAdapter(mFragmentPagerAdapter);
 
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                invalidateArrowButtons();
-            }
-
-            private void invalidateArrowButtons() {
-                if (!mViewPager.canScrollHorizontally(1)) {
-                    mRightArrowImageView.setVisibility(View.GONE);
-                } else {
-                    mRightArrowImageView.setVisibility(View.VISIBLE);
-                }
-                if (!mViewPager.canScrollHorizontally(-1)) {
-                    mLeftArrowImageView.setVisibility(View.GONE);
-                } else {
-                    mLeftArrowImageView.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if(mCallback != null && mListings != null && mListings.size() > position) {
-                    mCallback.serpRequest(SerpActivity.TYPE_CLUSTER, mListings.get(position).listing.id);
+                    invalidateArrowButtons();
                 }
 
-                invalidateArrowButtons();
-            }
+                private void invalidateArrowButtons() {
+                    if (!mViewPager.canScrollHorizontally(1)) {
+                        mRightArrowImageView.setVisibility(View.GONE);
+                    } else {
+                        mRightArrowImageView.setVisibility(View.VISIBLE);
+                    }
+                    if (!mViewPager.canScrollHorizontally(-1)) {
+                        mLeftArrowImageView.setVisibility(View.GONE);
+                    } else {
+                        mLeftArrowImageView.setVisibility(View.VISIBLE);
+                    }
+                }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
+                @Override
+                public void onPageSelected(int position) {
+                    if (mCallback != null && mCluster != null && mCluster.groupListings.size() > position) {
+                        mCallback.serpRequest(SerpActivity.TYPE_CLUSTER, mCluster.groupListings.get(position).listing.id);
+                    }
 
-            }
-        });
+                    invalidateArrowButtons();
+                }
 
-        mLeftArrowImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1, true);
-            }
-        });
-        mRightArrowImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1, true);
-            }
-        });
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
+
+            mLeftArrowImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1, true);
+                }
+            });
+            mRightArrowImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1, true);
+                }
+            });
+        }
         return view;
     }
 
@@ -115,11 +118,10 @@ public class ChildSerpClusterFragment extends MakaanBaseFragment {
         getActivity().onBackPressed();
     }
 
-    public void setData(GroupSerpGetEvent groupListingGetEvent, SerpRequestCallback callback) {
+    public void setData(ArrayList<GroupListing> groupListings, Long childSerpId, SerpRequestCallback callback) {
         mCallback = callback;
-        if(groupListingGetEvent != null && groupListingGetEvent.groupListingData != null) {
-            mListings.clear();
-            mListings.addAll(groupListingGetEvent.groupListingData.groupListings);
+        if(groupListings != null) {
+            mCluster = GroupCluster.getGroupCluster(groupListings, childSerpId);
         }
     }
 }

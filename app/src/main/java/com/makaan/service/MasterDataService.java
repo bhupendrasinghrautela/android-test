@@ -17,6 +17,7 @@ import com.makaan.response.master.MasterFurnishing;
 import com.makaan.response.master.MasterSpecification;
 import com.makaan.response.master.PropertyAmenity;
 import com.makaan.response.serp.FilterGroup;
+import com.makaan.response.serp.ListingInfoMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -265,7 +266,7 @@ public class MasterDataService implements MakaanService {
             }
 
 
-        }, "pyrGroupRent.json");
+        }, "filterGroupRent.json");
     }
     public void populatePyrGroupsBuy() {
         final Type filterGroupTypeList = new TypeToken<ArrayList<FilterGroup>>() {
@@ -322,7 +323,7 @@ public class MasterDataService implements MakaanService {
             }
 
 
-        }, "filterGroupRent.json");
+        }, "pyrGroupRent.json");
     }
 
     public void populateAmenityMap() {
@@ -406,6 +407,7 @@ public class MasterDataService implements MakaanService {
 
     }
 
+
     public void populateJarvisCtaMessageType() {
         Type jarvisMessageType = new TypeToken<HashMap<String, Integer>>() {
         }.getType();
@@ -419,6 +421,68 @@ public class MasterDataService implements MakaanService {
                 MasterDataCache.getInstance().addJarvisCtaMessageType(jarvisMessageTypes);
             }
         }, "jarvisCtaMessageType.json");
+    }
 
+
+    public void populateListingInfoList() {
+
+        final Type listingInfoTypeList = new TypeToken<ListingInfoMap>() {
+        }.getType();
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.LISTING_INFO_MAP, new JSONGetCallback() {
+
+            @Override
+            public void onSuccess(JSONObject responseObject) {
+                try {
+                    JSONObject object = responseObject.getJSONObject(ResponseConstants.DATA);
+
+                    ListingInfoMap listingInfoMap = MakaanBuyerApplication.gson.fromJson(object.toString(), listingInfoTypeList);
+                    MasterDataCache.getInstance().addListingInfoMap(listingInfoMap);
+                } catch (JSONException je) {
+                    Log.e(TAG, "Unable to parse Listing info map", je);
+                }
+
+            }
+
+
+        }, "listingInfoMap.json");
+    }
+
+    public void populateDirectionList() {
+
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.DIRECTIONS, new JSONGetCallback() {
+
+            @Override
+            public void onSuccess(JSONObject responseObject) {
+                try {
+                    JSONArray jsonArray = responseObject.getJSONArray(ResponseConstants.DATA);
+                    for(int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject obj = jsonArray.getJSONObject(i);
+                        MasterDataCache.getInstance().addDirection(obj.getInt(ResponseConstants.ID), obj.getString(ResponseConstants.DIRECTION));
+                    }
+                } catch (JSONException je) {
+                    Log.e(TAG, "Unable to parse Direction info map", je);
+                }
+            }
+        }, null);
+    }
+
+    public void populateOwnershipTypeList() {
+        MakaanNetworkClient.getInstance().get(ApiConstants.OWNERSHIP_TYPE, new JSONGetCallback() {
+
+            @Override
+            public void onSuccess(JSONObject responseObject) {
+                try {
+                    JSONArray jsonArray = responseObject.getJSONArray(ResponseConstants.DATA);
+                    for(int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject obj = jsonArray.getJSONObject(i);
+                        MasterDataCache.getInstance().addOwnershipType(obj.getInt(ResponseConstants.ID), obj.getString(ResponseConstants.DISPLAY_NAME));
+                    }
+                } catch (JSONException je) {
+                    Log.e(TAG, "Unable to parse Direction info map", je);
+                }
+            }
+        }, null);
     }
 }
