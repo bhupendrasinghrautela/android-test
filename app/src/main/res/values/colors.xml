@@ -122,4 +122,6 @@
     <color name="dark_grey_text">#555555</color>
     <color name="light_grey_text">#999999</color>
 
+    <!-- Lead form Colors-->
+    <color name="seller_name_text_color">#888888</color>
 </resources>
