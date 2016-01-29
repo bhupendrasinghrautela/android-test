@@ -124,4 +124,6 @@
     <color name="project_config_item_seperator">#dedede</color>
     <color name="project_config_item_selected_stroke_color">#e71c28</color>
 
+    <!-- Lead form Colors-->
+    <color name="seller_name_text_color">#888888</color>
 </resources>

@@ -14,6 +14,7 @@ import com.makaan.service.BlogService;
 import com.makaan.service.BuilderService;
 import com.makaan.service.CityService;
 import com.makaan.service.ImageService;
+import com.makaan.service.LeadInstantCallbackService;
 import com.makaan.service.ListingService;
 import com.makaan.service.LocalityService;
 import com.makaan.service.MakaanServiceFactory;
@@ -80,8 +81,9 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(AgentService.class, new AgentService());
         MakaanServiceFactory.getInstance().registerService(OtpVerificationService.class, new OtpVerificationService());
         MakaanServiceFactory.getInstance().registerService(AmenityService.class, new AmenityService());
+        MakaanServiceFactory.getInstance().registerService(LeadInstantCallbackService.class, new LeadInstantCallbackService());
 
-        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
+                ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateBuyPropertyTypes();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateRentPropertyTypes();

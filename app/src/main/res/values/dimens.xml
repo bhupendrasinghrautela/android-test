@@ -861,7 +861,6 @@
     <dimen name="locality_switch_margin_left">15dp</dimen>
     <dimen name="locality_nearby_localities_recycler_height">470dp</dimen>
 
-
     <dimen name="child_serp_cluster_card_price_text_size">18sp</dimen>
     <dimen name="child_serp_cluster_card_price_margin_top">6dp</dimen>
 
@@ -1042,5 +1041,21 @@
     <dimen name="tab_padding_right">20dp</dimen>
     <dimen name="tab_selected_padding_right">30dp</dimen>
     <dimen name="tab_selected_padding_left">30dp</dimen>
+
+    <!--Lead Form UI dimensions-->
+    <dimen name="lead_form_seller_image_width">64dp</dimen>
+    <dimen name="lead_form_seller_image_margin_bottom">10dp</dimen>
+    <dimen name="lead_form_later_margin_bottom">22dp</dimen>
+    <dimen name="button_padding">40dp</dimen>
+    <dimen name="button_text_size">16sp</dimen>
+
+    <!--Shortlist card dimensions-->
+    <dimen name="fav_card_height">220dp</dimen>
+    <dimen name="enq_card_height">250dp</dimen>
+    <dimen name="shortlist_text_size_extra_large">42sp</dimen>
+    <dimen name="shortlist_text_size_large">24sp</dimen>
+    <dimen name="shortlist_text_size_medium">18sp</dimen>
+    <dimen name="shortlist_text_size_small">16sp</dimen>
+
 
 </resources>
