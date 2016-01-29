@@ -96,6 +96,9 @@ public class MakaanBuyerApplication extends Application {
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateDefaultAmenityIds();
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyDisplayOrder();
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateBhkList();
+        ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateListingInfoList();
+        ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateDirectionList();
+        ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateOwnershipTypeList();
 
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateJarvisMessageType();
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateJarvisCtaMessageType();

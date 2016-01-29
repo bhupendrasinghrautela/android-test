@@ -20,4 +20,6 @@ public interface SerpRequestCallback {
     Selector getGroupSelector();
 
     void requestDetailPage(int typeSeller, Bundle bundle);
+
+    void loadMoreItems();
 }

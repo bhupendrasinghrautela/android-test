@@ -36,8 +36,6 @@ import butterknife.Bind;
  */
 public class SerpListFragment extends MakaanBaseFragment implements PaginatedListView.PaginationListener {
     private static final String KEY_IS_CHILD_SERP = "is_child_serp";
-    private static final int MAX_ITEMS_TO_REQUEST = 20;
-    private static final int MAX_GROUP_ITEMS_TO_REQUEST = 2 * GroupCluster.MAX_CLUSTERS_IN_GROUP;
 
     @Bind(R.id.fragment_listing_recycler_view)
     PaginatedListView mListingRecyclerView;
@@ -46,8 +44,6 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
 
     private SerpListingAdapter mListingAdapter;
     private LinearLayoutManager mLayoutManager;
-    private int mTotalCount;
-    private int mTotalGroupCount;
     private String mSearchedEntities = "";
 
     private boolean mIsChildSerp;
@@ -56,11 +52,9 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
     private SerpRequestCallback mSerpRequestCallback;
     private int mRequestType;
 
-
-    private SerpGetEvent mListingGetEvent;
-    private GroupSerpGetEvent mGroupListingGetEvent;
     private ArrayList<Listing> mListings = new ArrayList<Listing>();
     private ArrayList<GroupListing> mGroupListings = new ArrayList<GroupListing>();
+    private int mTotalCount;
 
     public static SerpListFragment init(boolean isChildSerp) {
         // create listing fragment to show listing of the request we are receiving
@@ -117,19 +111,18 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         mListingRecyclerView.setAdapter(mListingAdapter);
     }
 
-    public void updateListings(SerpGetEvent listingGetEvent, GroupSerpGetEvent groupListingGetEvent,
+    public void updateListings(ArrayList<Listing> listings, ArrayList<GroupListing> groupListings,
                                ArrayList<SearchResponseItem> selectedSearches, SerpRequestCallback serpRequestCallback,
-                               int requestType) {
+                               int requestType, int listingTotalCount) {
         this.mSerpRequestCallback = serpRequestCallback;
         this.mRequestType = requestType;
-        if(listingGetEvent == null || listingGetEvent.listingData == null) {
+        if(groupListings == null && listings == null) {
             if(mListingAdapter != null) {
                 mListingAdapter.setData(null, mRequestType);
             }
             return;
         }
-        mListingGetEvent = listingGetEvent;
-        mGroupListingGetEvent = groupListingGetEvent;
+        mTotalCount = listingTotalCount;
 
         StringBuilder builder = new StringBuilder();
         builder.append(" properties ");
@@ -163,41 +156,33 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         }
         mSearchedEntities = builder.toString();
 
-        if((requestType & SerpActivity.MASK_LISTING_UPDATE_TYPE) != SerpActivity.TYPE_LOAD_MORE) {
-            mTotalCount = listingGetEvent.listingData.totalCount;
-            if (groupListingGetEvent != null && groupListingGetEvent.groupListingData != null) {
-                mTotalGroupCount = groupListingGetEvent.groupListingData.totalCount;
-            }
-        }
-
-        if(mListingAdapter != null) {
+        if(mListingAdapter != null && mListingRecyclerView != null) {
 
             if(mTotalPropertiesTextView != null) {
                 if(mRequestType == SerpActivity.TYPE_BUILDER || mRequestType == SerpActivity.TYPE_SELLER) {
                     mTotalPropertiesTextView.setVisibility(View.GONE);
                 } else {
                     mTotalPropertiesTextView.setVisibility(View.VISIBLE);
-                    mTotalPropertiesTextView.setText(String.format("%d %s", mTotalCount, mSearchedEntities));
+                    mTotalPropertiesTextView.setText(String.format("%d %s", listingTotalCount, mSearchedEntities));
                 }
             }
 
             if((requestType & SerpActivity.MASK_LISTING_UPDATE_TYPE) != SerpActivity.TYPE_LOAD_MORE) {
-                mListings.clear();
-                mGroupListings.clear();
-                page = 0;
                 mListingRecyclerView.scrollToPosition(0);
             }
+            mListings.clear();
+            mGroupListings.clear();
 
-            mListings.addAll(listingGetEvent.listingData.listings);
+            mListings.addAll(listings);
 
-            if(mGroupListingGetEvent != null && mGroupListingGetEvent.groupListingData != null) {
-                mGroupListings.addAll(mGroupListingGetEvent.groupListingData.groupListings);
+            if(groupListings != null) {
+                mGroupListings.addAll(groupListings);
                 mListingAdapter.setData(mListings, mGroupListings, mRequestType);
             } else {
                 mListingAdapter.setData(mListings, null, mRequestType);
             }
 
-            if(mTotalCount > mListings.size()) {
+            if(listingTotalCount > mListings.size()) {
                 mListingRecyclerView.setHasMoreItems(true);
             } else {
                 mListingRecyclerView.setHasMoreItems(false);
@@ -205,28 +190,16 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
             mListingRecyclerView.setIsLoading(false);
         } else {
             mListings.clear();
-            mListings.addAll(listingGetEvent.listingData.listings);
+            mListings.addAll(listings);
             mGroupListings.clear();
-            if(mGroupListingGetEvent != null && mGroupListingGetEvent.groupListingData != null) {
-                mGroupListings.addAll(mGroupListingGetEvent.groupListingData.groupListings);
+            if(groupListings != null) {
+                mGroupListings.addAll(groupListings);
             }
         }
     }
 
     @Override
     public void onLoadMoreItems() {
-        if(mListings != null) {
-            if((mListings.size() / MAX_ITEMS_TO_REQUEST) == (page + 1)) {
-                page++;
-                MakaanBuyerApplication.serpSelector.page(mListings.size(), MAX_ITEMS_TO_REQUEST);
-
-                if(mTotalGroupCount > mGroupListings.size()) {
-                    Selector groupSelector = mSerpRequestCallback.getGroupSelector();
-                    groupSelector.page(mGroupListings.size(), MAX_GROUP_ITEMS_TO_REQUEST);
-                }
-
-                mSerpRequestCallback.serpRequest(SerpActivity.TYPE_LOAD_MORE, MakaanBuyerApplication.serpSelector);
-            }
-        }
+        mSerpRequestCallback.loadMoreItems();
     }
 }

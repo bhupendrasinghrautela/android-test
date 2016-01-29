@@ -1,6 +1,7 @@
 package com.makaan.response.listing.detail;
 
 import com.makaan.pojo.SpecificaitonsUI;
+import com.makaan.response.project.ProjectAmenity;
 import com.makaan.response.property.Property;
 import com.makaan.response.user.CompanySeller;
 
@@ -33,6 +34,7 @@ public class ListingDetail {
     public String furnished;
     public int sellerId, totalFloors, floor;
     public ArrayList<Furnishing> furnishings = new ArrayList<>();
+    public ArrayList<ListingAmenity> listingAmenities;
 
     public ArrayList<Long> neighbourhoodAmenitiesIds = new ArrayList<>();
 

@@ -31,13 +31,13 @@ public class HorizontalScrollPageFragment extends Fragment {
         if(isChildSerpClusterView) {
             rootView = (ViewGroup) inflater.inflate(
                     R.layout.child_serp_cluster_item_view, container, false);
-            if (obj != null && obj instanceof GroupCluster) {
+            if (obj != null && obj instanceof GroupListing) {
                 ((ChildSerpGroupListingItemView) rootView).populateView((GroupListing) obj, mCallback);
             }
         } else {
             rootView = (ViewGroup) inflater.inflate(
                     R.layout.cluster_item_view, container, false);
-            if (obj != null && obj instanceof GroupCluster) {
+            if (obj != null && obj instanceof GroupListing) {
                 ((GroupListingItemView) rootView).populateView((GroupListing) obj, mCallback);
             }
         }

@@ -114,7 +114,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/serp_listing_item_seller_add_image_view_margin_right"
                 android:layout_marginRight="@dimen/serp_listing_item_seller_add_image_view_margin_right"
-                android:src="@drawable/money" />
+                android:src="@drawable/add_white" />
         </RelativeLayout>
 
         <View
@@ -143,7 +143,7 @@
                 <ImageView
                     android:layout_width="@dimen/serp_listing_item_seller_info_image_view_width"
                     android:layout_height="@dimen/serp_listing_item_seller_info_image_view_height"
-                    android:src="@drawable/money" />
+                    android:src="@drawable/sale_rent" />
             </LinearLayout>
 
             <LinearLayout
@@ -213,7 +213,7 @@
                 <ImageView
                     android:layout_width="@dimen/serp_listing_item_seller_info_image_view_width"
                     android:layout_height="@dimen/serp_listing_item_seller_info_image_view_height"
-                    android:src="@drawable/money" />
+                    android:src="@drawable/property_white" />
             </LinearLayout>
 
             <LinearLayout
@@ -225,7 +225,7 @@
                 <ImageView
                     android:layout_width="@dimen/serp_listing_item_seller_info_image_view_width"
                     android:layout_height="@dimen/serp_listing_item_seller_info_image_view_height"
-                    android:src="@drawable/money" />
+                    android:src="@drawable/projects" />
             </LinearLayout>
         </LinearLayout>
 

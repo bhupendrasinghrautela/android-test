@@ -28,7 +28,7 @@
         android:layout_marginStart="@dimen/selected_search_item_view_delete_button_left_margin"
         android:layout_marginRight="@dimen/selected_search_item_view_delete_button_right_margin"
         android:layout_marginEnd="@dimen/selected_search_item_view_delete_button_right_margin"
-        android:background="@drawable/fill_close"
+        android:background="@drawable/close_black"
         android:scaleType="centerCrop"
         android:layout_toRightOf="@id/selected_search_item_view_text_view"
         android:layout_toEndOf="@id/selected_search_item_view_text_view"
