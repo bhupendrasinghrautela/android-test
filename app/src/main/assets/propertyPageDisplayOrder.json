@@ -105,7 +105,7 @@
           "10"
         ]
       },
-      "Independent House": {
+      "IndependentHouse": {
         "overview": [
           "status",
           "age",
@@ -309,7 +309,7 @@
           "10"
         ]
       },
-      "Studio Apartment": {
+      "StudioApartment": {
         "overview": [
           "status",
           "age",
@@ -509,7 +509,7 @@
           "10"
         ]
       },
-      "Independent House": {
+      "IndependentHouse": {
         "overview": [
           "bath",
           "floor",
@@ -701,7 +701,7 @@
           "10"
         ]
       },
-      "Studio Apartment": {
+      "StudioApartment": {
         "overview": [
           "bath",
           "floor",
@@ -911,7 +911,7 @@
           "10"
         ]
       },
-      "Independent House": {
+      "IndependentHouse": {
         "overview": [
           "status",
           "age",
@@ -1135,7 +1135,7 @@
           "10"
         ]
       },
-      "Studio Apartment": {
+      "StudioApartment": {
         "overview": [
           "status",
           "age",

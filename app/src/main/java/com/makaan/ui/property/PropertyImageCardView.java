@@ -61,6 +61,7 @@ public class PropertyImageCardView extends CardView {
             priceText.setText(String.valueOf(priceString));
             priceUnitText.setText(priceUnit);
         }
+        mPropertyImageView.setDefaultImageResId(R.drawable.luxury_project);
         mPropertyImageView.setImageUrl(listingDetailImage.absolutePath, MakaanNetworkClient.getInstance().getImageLoader());
     }
 }

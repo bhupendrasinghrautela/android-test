@@ -133,7 +133,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
 
     private void TestUi(ListingDetail listingDetail){
         mListingDataOverViewScroll.bindView(listingDetail);
-        mAmenitiesViewScroll.bindView(listingDetail);
+        mAmenitiesViewScroll.bindView(listingDetail.listingCategory, listingDetail.unitType, listingDetail.listingAmenities);
         if(listingDetail.property != null) {
             Property property = listingDetail.property;
 
@@ -159,7 +159,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
                     }
                 }
             }
-            mListingBrief.setText((listingDetail.description != null ? listingDetail.description : ""));
+            mListingBrief.setText((listingDetail.description != null ? Html.fromHtml(listingDetail.description) : ""));
         }
         mListingBrief.setTextColor(getResources().getColor(R.color.listingBlack));
         MasterDataCache.getInstance().getDisplayOrder(listingDetail.listingCategory, listingDetail.property.unitType, "overview");
