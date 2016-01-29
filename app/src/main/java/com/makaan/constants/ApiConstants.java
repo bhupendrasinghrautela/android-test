@@ -46,7 +46,6 @@ public class ApiConstants {
 
     public static final String SAVED_SEARCH_URL = BASE_URL.concat("/data/v1/entity/user/saved-searches");
     public static final String SAVE_NEW_SEARCH_URL = BASE_URL.concat("data/v1/entity/saved-searches");
-
     public static final String TOP_AGENTS_CITY = BASE_URL.concat("/data/v1/entity/city/");
     public static final String TOP_AGENTS = "/top-agents";
     public static final String PYR = BASE_URL.concat("/data/v1/entity/enquiry");
@@ -54,15 +53,12 @@ public class ApiConstants {
     public static final String BUILDER_DETAIL = BASE_URL.concat("/app/v1/builder-detail");
     public static final String SELLER_DETAIL = BASE_URL.concat("/app/v1/company");
     public static final String GP_DETAIL = BASE_URL.concat("/app/v1/gp/place-detail");
-
     public static final String PROJECT = BASE_URL.concat("/app/v4/project-detail");
     public static final String SIMILAR_PROJECT = BASE_URL.concat("/data/v2/recommendation");
     public static final String PROJECT_CONFIG = BASE_URL.concat("/app/v1/project-configuration");
-
     public static final String BLOG_URL = BASE_URL.concat("/data/v1/entity/blog");
-
     public static final String LISTING_OTHER_SELLERS = BASE_URL.concat("/data/v2/entity/domain");
-
+    public static final String LEAD_INSTANT_CALLBACK_URL= BASE_URL.concat("/app/v1/callNow");
     public static final String COLUMBUS_SUGGESTIONS = BASE_URL.concat("/columbus/app/v1/popular/suggestions");
 
     //public static final String SIMILAR_LISTING = BASE_URL.concat("/app/v1/similar/listing/");

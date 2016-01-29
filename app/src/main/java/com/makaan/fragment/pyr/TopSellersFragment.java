@@ -110,6 +110,7 @@ public class TopSellersFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        if(jsonObject!=null)
         ((PyrService) (MakaanServiceFactory.getInstance().getService(PyrService.class))).makePyrRequest(jsonObject);
     }
 
