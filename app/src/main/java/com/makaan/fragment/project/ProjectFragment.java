@@ -14,26 +14,33 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.image.ImagesGetEvent;
 import com.makaan.event.listing.ListingByIdGetEvent;
 import com.makaan.event.project.OnSimilarProjectClickedEvent;
+import com.makaan.event.project.OnViewAllPropertiesClicked;
 import com.makaan.event.project.ProjectByIdEvent;
 import com.makaan.event.project.ProjectConfigEvent;
+import com.makaan.event.project.ProjectConfigItemClickListener;
 import com.makaan.event.project.SimilarProjectGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.amenity.AmenityCluster;
+import com.makaan.response.listing.detail.ListingAmenity;
 import com.makaan.response.project.Project;
+import com.makaan.response.project.ProjectAmenity;
 import com.makaan.service.AmenityService;
 import com.makaan.service.ImageService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.ui.locality.ProjectConfigView;
+import com.makaan.ui.project.ProjectConfigItemView;
 import com.makaan.ui.project.ProjectSpecificationView;
 import com.makaan.ui.property.AboutBuilderExpandedLayout;
+import com.makaan.ui.property.AmenitiesViewScroll;
 import com.makaan.ui.property.PropertyImageViewPager;
-import com.makaan.util.AppBus;
 import com.makaan.util.DateUtil;
+import com.makaan.util.KeyUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -60,6 +67,8 @@ public class ProjectFragment extends MakaanBaseFragment{
     @Bind(R.id.tv_project_average_delay) TextView projectAverageDelayTv;
     @Bind(R.id.tv_project_ongoing_delay) TextView projectOngoingTv;
     @Bind(R.id.tv_project_past) TextView projectPastTv;
+    @Bind(R.id.content_text) TextView descriptionTv;
+    @Bind(R.id.amenities_scroll_layout) AmenitiesViewScroll mAmenitiesViewScroll;
     private Context mContext;
     private Project project;
 
@@ -73,12 +82,54 @@ public class ProjectFragment extends MakaanBaseFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         mContext = getActivity();
-        if(project!= null) {
-            ProjectByIdEvent projectByIdEvent = new ProjectByIdEvent();
-            projectByIdEvent.project = project;
-            AppBus.getInstance().post(projectByIdEvent);
-        }
         return view;
+    }
+
+    @Subscribe
+    public void onResults(OnViewAllPropertiesClicked onViewAllPropertiesClicked){
+        Intent i = new Intent(getActivity(), SerpActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putLong(KeyUtil.PROJECT_ID, project.projectId);
+        bundle.putLong(KeyUtil.LOCALITY_ID, project.localityId);
+        bundle.putLong(KeyUtil.CITY_ID, project.locality.cityId);
+        if(onViewAllPropertiesClicked.isRent) {
+            bundle.putString(KeyUtil.LISTING_CATEGORY, "rent");
+            i.putExtra(SerpActivity.REQUEST_DATA, bundle);
+        }else {
+            bundle.putString(KeyUtil.LISTING_CATEGORY, "buy");
+            i.putExtra(SerpActivity.REQUEST_DATA, bundle);
+        }
+        startActivity(i);
+    }
+
+    @Subscribe
+    public void onResults(ProjectConfigItemClickListener configItemClickListener){
+        switch (configItemClickListener.configItemType){
+            case SELLER:
+                //TODO: open seller screen
+                break;
+            case PROPERTIES:
+                startSerpActivity(configItemClickListener);
+                break;
+        }
+    }
+
+    private void startSerpActivity(ProjectConfigItemClickListener configItemClickListener) {
+        Bundle bundle = new Bundle();
+        bundle.putLong(KeyUtil.PROJECT_ID,project.projectId);
+        bundle.putLong(KeyUtil.LOCALITY_ID,project.localityId);
+        bundle.putLong(KeyUtil.CITY_ID, project.locality.cityId);
+        bundle.putDouble(KeyUtil.MIN_BUDGET, configItemClickListener.projectConfigItem.maxPrice);
+        bundle.putDouble(KeyUtil.MAX_BUDGET, configItemClickListener.projectConfigItem.minPrice);
+        Intent i = new Intent(getActivity(), SerpActivity.class);
+        if(configItemClickListener.isRent) {
+            bundle.putString(KeyUtil.LISTING_CATEGORY, "rent");
+            i.putExtra(SerpActivity.REQUEST_DATA, bundle);
+        }else {
+            bundle.putString(KeyUtil.LISTING_CATEGORY, "buy");
+            i.putExtra(SerpActivity.REQUEST_DATA, bundle);
+        }
+        startActivity(i);
     }
 
     @Subscribe
@@ -93,6 +144,7 @@ public class ProjectFragment extends MakaanBaseFragment{
     @Subscribe
     public void onResult(ProjectByIdEvent projectByIdEvent){
         project = projectByIdEvent.project;
+        mAmenitiesViewScroll.bindView(project.projectAmenities);
         projectSpecificationView.bindView(project.getFormattedSpecifications(), getActivity());
         initUi();
         addPriceTrendsFragment();
@@ -102,6 +154,7 @@ public class ProjectFragment extends MakaanBaseFragment{
     }
 
     private void initUi() {
+        descriptionTv.setText(Html.fromHtml(project.description));
         aboutBuilderExpandedLayout.bindView(project.builder);
         builderDescriptionTv.setText(Html.fromHtml(project.builder.description));
         projectScoreProgreessBar.setProgress(project.projectSocietyScore.intValue() * 10);
@@ -110,10 +163,10 @@ public class ProjectFragment extends MakaanBaseFragment{
         projectLocationTv.setText(project.address);
         Date date = new Date(Long.parseLong(project.builder.establishedDate));
         int experience = DateUtil.getDiffYears(date, new Date());
-        projectExperienceTv.setText(""+experience);
-        projectAverageDelayTv.setText(""+project.delayInMonths.intValue());
-        projectOngoingTv.setText(""+project.builder.projectStatusCount.underConstruction);
-        projectPastTv.setText(""+project.builder.projectStatusCount.launch);
+        projectExperienceTv.setText("" + experience);
+        projectAverageDelayTv.setText("" + project.delayInMonths.intValue());
+        projectOngoingTv.setText("" + project.builder.projectStatusCount.underConstruction);
+        projectPastTv.setText("" + project.builder.projectStatusCount.launch);
     }
 
     @Subscribe
@@ -123,7 +176,7 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResult(ProjectConfigEvent projectConfigEvent){
-        projectConfigView.bindView(projectConfigEvent,getActivity());
+        projectConfigView.bindView(projectConfigEvent, getActivity());
     }
 
     @Subscribe
@@ -159,6 +212,7 @@ public class ProjectFragment extends MakaanBaseFragment{
         ConstructionTimelineFragment fragment = new ConstructionTimelineFragment();
         Bundle bundle = new Bundle();
         bundle.putString("title", getString(R.string.project_construction_title));
+        bundle.putLong("projectId",project.projectId);
         fragment.setArguments(bundle);
         initFragment(R.id.container_construction_photos, fragment, false);
     }

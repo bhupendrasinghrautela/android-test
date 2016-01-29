@@ -29,7 +29,7 @@ public class ProjectConfigFragment extends MakaanBaseFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        projectConfigItemView.bindView(getArguments().<ProjectConfigItem>getParcelableArrayList("configs"), projectConfigItemView);
+        projectConfigItemView.bindView(getArguments().<ProjectConfigItem>getParcelableArrayList("configs"), projectConfigItemView,getArguments().getBoolean("isRent"));
         return view;
     }
 }

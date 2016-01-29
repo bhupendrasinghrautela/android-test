@@ -8,7 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.constants.ImageConstants;
+import com.makaan.event.image.ImagesGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.response.image.Image;
+import com.makaan.service.ImageService;
+import com.makaan.service.MakaanServiceFactory;
+import com.squareup.otto.Subscribe;
 import com.tusharchoudhary.timeline.Timeline;
 import com.tusharchoudhary.timeline.TimelineView;
 
@@ -37,8 +43,20 @@ public class ConstructionTimelineFragment extends MakaanBaseFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         titleTv.setText(getArguments().getString("title"));
-        timeline.bindView(getDummy(),timeline);
+        Long projectId = getArguments().getLong("projectId");
+        ((ImageService)MakaanServiceFactory.getInstance().getService(ImageService.class)).getProjectTimelineImages(projectId);
         return view;
+    }
+
+    @Subscribe
+    public void onResult(ImagesGetEvent imagesGetEvent){
+        List<TimelineView.TimelineDataItem> list = new ArrayList<>();
+        for(Image image : imagesGetEvent.images)
+            list.add(new TimelineView.TimelineDataItem(image.createdAt, image.absolutePath));//TODO: replace createdAt with imageTakenAt when ever it is available
+        if(imagesGetEvent.images.size()>0)
+            timeline.bindView(list, timeline);
+        else
+            timeline.bindView(getDummy(), timeline);
     }
 
     private List<TimelineView.TimelineDataItem> getDummy() {
@@ -50,7 +68,7 @@ public class ConstructionTimelineFragment extends MakaanBaseFragment{
         list.add(new TimelineView.TimelineDataItem(1430083876000l,"https://lametthesource.files.wordpress.com/2015/07/la-brea-abuttment-2-stem-wall-pour.jpg"));
         list.add(new TimelineView.TimelineDataItem(1424986276000l,"https://c1.staticflickr.com/9/8049/8119382290_e28b0eb43a_b.jpg"));
         list.add(new TimelineView.TimelineDataItem(1417037476000l,"http://www.nkcproject.com/images/yamuna-expressway-project.jpg"));
-        list.add(new TimelineView.TimelineDataItem(1411767076000l,"https://media.licdn.com/mpr/mpr/AAEAAQAAAAAAAAXBAAAAJGJkYjdlNDNhLTJhMzYtNGI1ZC1hZGZkLTZhMjk4ZWQ4NzQyMQ.jpg"));
+        list.add(new TimelineView.TimelineDataItem(1411767076000l, "https://media.licdn.com/mpr/mpr/AAEAAQAAAAAAAAXBAAAAJGJkYjdlNDNhLTJhMzYtNGI1ZC1hZGZkLTZhMjk4ZWQ4NzQyMQ.jpg"));
         return list;
     }
 

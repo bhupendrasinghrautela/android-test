@@ -6,7 +6,7 @@ package com.makaan.response.image;
 public class Image {
 
     public Long id;
-    public Long imageTypeId,objectId;
+    public Long imageTypeId,objectId, createdAt;
     public int statusId;
     public String altText, activeStatus;
     public String title, absolutePath;

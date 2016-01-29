@@ -29,6 +29,7 @@
         android:layout_width="match_parent"
         app:tabBackground="@drawable/tab_color_selector"
         app:tabSelectedTextColor="@color/white"
+        app:tabTextAppearance="@style/tab_text_appearance"
         app:tabIndicatorHeight="0dp"
         app:tabTextColor="@color/project_specification_default_color"
         android:layout_marginLeft="@dimen/project_specification_tab_layout_margins"

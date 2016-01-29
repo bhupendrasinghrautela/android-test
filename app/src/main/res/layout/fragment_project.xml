@@ -19,13 +19,13 @@
         android:layout_margin="@dimen/property_page_stack_like_pager_margin"
         android:layout_height="@dimen/property_page_stack_like_pager_height" />
 
-
    <include layout="@layout/project_builder_basic_details"/>
-    <include layout="@layout/property_empty_view"/>
+    <include layout="@layout/project_seperator"/>
     <include layout="@layout/project_builder_brief_layout"/>
-    <include layout="@layout/property_empty_view"/>
-
+    <include layout="@layout/project_seperator"/>
+    <include layout="@layout/project_amenties_view_scroll_layout"/>
     <include layout="@layout/project_configuration"/>
+    <include layout="@layout/project_description" />
     <include layout="@layout/project_specification"/>
 
     <FrameLayout

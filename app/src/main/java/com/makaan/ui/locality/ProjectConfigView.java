@@ -10,32 +10,35 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.event.project.OnViewAllPropertiesClicked;
 import com.makaan.event.project.ProjectConfigEvent;
 import com.makaan.fragment.project.ProjectConfigFragment;
-import com.makaan.fragment.project.ProjectSpecificationPagerFragment;
 import com.makaan.pojo.ProjectConfigItem;
-import com.makaan.pojo.SpecificaitonsUI;
-import com.makaan.ui.view.WrapContentViewPager;
+import com.makaan.util.AppBus;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by tusharchaudhary on 1/27/16.
  */
-public class ProjectConfigView extends LinearLayout{
+public class ProjectConfigView extends LinearLayout implements ViewPager.OnPageChangeListener {
     @Bind(R.id.project_config_tab_layout)
     TabLayout tabLayout;
     @Bind(R.id.project_config_view_pager)
     ViewPager viewPager;
     private Context mContext;
+    @Bind(R.id.project_specification_view_all_props)
+    TextView viewAllPropsTv;
     private ProjectConfigEvent projectConfigEvent;
+    private int currentPage;
 
     public ProjectConfigView(Context context) {
         super(context);
@@ -47,6 +50,14 @@ public class ProjectConfigView extends LinearLayout{
         this.mContext = context;
     }
 
+    @OnClick(R.id.project_specification_view_all_props)
+    public void viewAllPropertiesClicked(){
+        if(currentPage == 0){//buy
+            AppBus.getInstance().post(new OnViewAllPropertiesClicked(false));
+        }else{//rent
+            AppBus.getInstance().post(new OnViewAllPropertiesClicked(true));
+        }
+    }
 
     @Override
     protected void onFinishInflate() {
@@ -56,8 +67,12 @@ public class ProjectConfigView extends LinearLayout{
 
 
     public void bindView(ProjectConfigEvent projectConfigEvent, FragmentActivity compatActivity) {
-        this.projectConfigEvent = projectConfigEvent;
-        initView(compatActivity);
+        if(projectConfigEvent.buyProjectConfigItems.size()==0 && projectConfigEvent.rentProjectConfigItems.size()==0)
+            this.setVisibility(GONE);
+        else {
+            this.projectConfigEvent = projectConfigEvent;
+            initView(compatActivity);
+        }
     }
 
     private void initView(FragmentActivity compatActivity){
@@ -66,13 +81,14 @@ public class ProjectConfigView extends LinearLayout{
     }
 
     private void setupViewPager(final ViewPager viewPager, FragmentActivity compatActivity) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(compatActivity.getSupportFragmentManager());
-
+            ViewPagerAdapter adapter = new ViewPagerAdapter(compatActivity.getSupportFragmentManager());
+            viewPager.addOnPageChangeListener(this);
             //buy
             ArrayList<ProjectConfigItem> projectConfigItems = projectConfigEvent.buyProjectConfigItems;
             ProjectConfigFragment fragment = new ProjectConfigFragment();
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("configs", projectConfigItems);
+            bundle.putBoolean("isRent", false);
             fragment.setArguments(bundle);
             adapter.addFrag(fragment, "buy");
 
@@ -81,10 +97,26 @@ public class ProjectConfigView extends LinearLayout{
             ProjectConfigFragment fragmentrent = new ProjectConfigFragment();
             Bundle bundlerent = new Bundle();
             bundlerent.putParcelableArrayList("configs", projectConfigItemsrent);
+            bundlerent.putBoolean("isRent",true);
             fragmentrent.setArguments(bundlerent);
             adapter.addFrag(fragmentrent, "rent");
 
             viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        currentPage = position;
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

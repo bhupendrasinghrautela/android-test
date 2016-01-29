@@ -50,4 +50,8 @@ public class ImageService implements MakaanService {
             }, true);
         }
     }
+
+    public void getProjectTimelineImages(Long projectId) {
+        getImages(projectId, ENTITY_MAP.get(ImageConstants.PROJECT));
+    }
 }

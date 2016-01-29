@@ -183,6 +183,8 @@
     <string name="moving_in">moving in or renting? get help</string>
     <string name="best_legal">best legal advice on your side</string>
     <string name="best_advise">best advise for your requirements </string>
+    <string name="project_specification_view_all_props">view all properties</string>
+    <string name="project_description_title">description</string>
 
     <!--Lead Form Strings-->
     <string name="call">call</string>
