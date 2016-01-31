@@ -2,14 +2,15 @@ package com.makaan.fragment.neighborhood;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
-import com.makaan.jarvis.ui.MessageViewHolder;
 import com.makaan.response.amenity.AmenityCluster;
 
 import java.util.ArrayList;
@@ -22,6 +23,8 @@ public class NeighborhoodCategoryAdapter extends RecyclerView.Adapter<RecyclerVi
     private Context mContext;
     private List<AmenityCluster> mItems = new ArrayList<>();
     private CategoryClickListener mCategoryClickListener;
+    private CheckBox lastAmenityView;
+    private int selectedPosition=0;
 
     public NeighborhoodCategoryAdapter(Context context,
                                        CategoryClickListener categoryClickListener){
@@ -30,10 +33,11 @@ public class NeighborhoodCategoryAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
     public void setData(List<AmenityCluster> items) {
-        if(items == null) {
+        if (items == null) {
             mItems.clear();
         } else {
             mItems.addAll(items);
+            notifyDataSetChanged();
         }
     }
 
@@ -49,6 +53,13 @@ public class NeighborhoodCategoryAdapter extends RecyclerView.Adapter<RecyclerVi
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         CategoryViewHolder categoryViewHolder = (CategoryViewHolder) holder;
         categoryViewHolder.bind(mItems.get(position));
+        if(position==selectedPosition){
+            categoryViewHolder.checkBox.setChecked(true);
+            setLastAmenityView(categoryViewHolder.checkBox);
+        }
+        else{
+            categoryViewHolder.checkBox.setChecked(false);
+        }
     }
 
     @Override
@@ -59,24 +70,36 @@ public class NeighborhoodCategoryAdapter extends RecyclerView.Adapter<RecyclerVi
     private class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView label;
         ImageView icon;
+        CheckBox checkBox;
 
         public CategoryViewHolder(View itemView) {
             super(itemView);
             label = (TextView) itemView.findViewById(R.id.neighborhood_category_name);
             icon = (ImageView) itemView.findViewById(R.id.neighborhood_category_icon);
+            checkBox=(CheckBox)itemView.findViewById(R.id.amenity_selector);
+            checkBox.setOnCheckedChangeListener(null);
+            checkBox.setClickable(false);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(null!=mCategoryClickListener) {
+                    if (null != mCategoryClickListener) {
                         mCategoryClickListener.onItemClick(getAdapterPosition(), view);
+                        if (checkBox.isChecked()) {
+                        } else {
+                            selectedPosition = getAdapterPosition();
+                            uncheckLastAmenity();
+                            checkBox.setChecked(true);
+                            setLastAmenityView(checkBox);
+                        }
                     }
                 }
             });
         }
 
         public void bind(AmenityCluster amenityCluster){
-            label.setText(amenityCluster.name);
+                label.setText(amenityCluster.name);
         }
 
         //TODO remove this listener 
@@ -90,5 +113,15 @@ public class NeighborhoodCategoryAdapter extends RecyclerView.Adapter<RecyclerVi
 
     public interface CategoryClickListener {
         void onItemClick(int position, View v);
+    }
+
+    public void uncheckLastAmenity(){
+        if(lastAmenityView!=null) {
+            lastAmenityView.setChecked(false);
+        }
+    }
+
+    public void setLastAmenityView(CheckBox checkBox){
+        lastAmenityView=checkBox;
     }
 }
