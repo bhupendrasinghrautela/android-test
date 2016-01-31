@@ -7,8 +7,9 @@ public enum MessageType {
 
     //TODO WIP , to be defined in config
 
-    outText(0), inText(1), projectOverview(2), sellerOverView(3), sendReq(4),
-    signUp(5), propertyOverview(6), localityOverview(7), plainLink(8);
+    outText(0), inText(1), projectOverview(2), sellerOverView(3), askReq(4), sendReq(5),
+    signUp(6), propertyOverview(7), localityOverview(8), localityBuy(9), localityRent(10),
+    plainLink(11), sellerSerp(12), sellerSerpMap(13), agentRating(14);
 
     public int value;
 

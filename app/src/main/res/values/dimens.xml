@@ -966,9 +966,8 @@
     <dimen name="btn_ok_padding_left_right">37dp</dimen>
     <dimen name="btn_ok_text_size">20sp</dimen>
     <dimen name="jarvis_card_locality_width">240dp</dimen>
-    <dimen name="jarvis_card_loaclity_layout_margin">10dp</dimen>
-    <dimen name="jarvis_card_locality_left_right_padding">20dp</dimen>
-    <dimen name="jarvis_card_locality_paddding_top_bottom">30dp</dimen>
+    <dimen name="jarvis_card_brief_layout_margin">10dp</dimen>
+    <dimen name="jarvis_card_brief_padding">8dp</dimen>
     <dimen name="jarvis_card_brief_height">150dp</dimen>
     <dimen name="card_brief_content_padding">12dp</dimen>
     <dimen name="card_brief_text_line1_text_size">18sp</dimen>

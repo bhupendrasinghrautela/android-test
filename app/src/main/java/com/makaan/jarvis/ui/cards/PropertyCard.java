@@ -1,14 +1,20 @@
 package com.makaan.jarvis.ui.cards;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
+import com.makaan.activity.listing.PropertyActivity;
+import com.makaan.activity.listing.SerpActivity;
 import com.makaan.jarvis.message.Message;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.ui.view.BaseView;
+import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
 
 import butterknife.Bind;
@@ -43,11 +49,25 @@ public class PropertyCard extends BaseView<Message> {
     }
 
     @Override
-    public void bindView(Context context, Message item) {
+    public void bindView(final Context context, final Message item) {
         textViewTitle.setText(StringUtil.getSpannedPrice(item.chatObj.minPrice));
         textViewSubTitle.setText(item.chatObj.builderName + " " + item.chatObj.projectName);
         textViewSubTitle2.setText(item.chatObj.localityName + " " + item.chatObj.cityName);
         imageView.setImageUrl(item.chatObj.image, MakaanNetworkClient.getInstance().getImageLoader());
 
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putLong(KeyUtil.LISTING_ID, item.chatObj.propertyId);
+                Intent intent = new Intent(context, PropertyActivity.class);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+
+            }
+        });
+
     }
+
+
 }

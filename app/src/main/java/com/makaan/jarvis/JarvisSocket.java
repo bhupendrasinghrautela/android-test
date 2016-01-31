@@ -88,8 +88,8 @@ public class JarvisSocket {
         message.index = index;
         message.deliveryId = JarvisConstants.DELIVERY_ID;
         index++;
-
         try {
+            Log.e("Payload : ", JsonBuilder.toJson(message).toString());
             mSocket.emit("new-message-for-agent", JsonBuilder.toJson(message), new Ack() {
                 @Override
                 public void call(Object... args) {

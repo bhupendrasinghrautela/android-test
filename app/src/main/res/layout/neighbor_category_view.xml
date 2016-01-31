@@ -12,8 +12,8 @@
     <ImageView
         android:id="@+id/neighborhood_category_icon"
         android:layout_width="@dimen/neighbor_category_icon_width_height"
-        android:layout_height="@dimen/neighbor_category_icon_width_height"
-        android:src="@drawable/bed_icon"/>
+        android:layout_height="@dimen/neighbor_category_icon_width_height"/>
+        <!--android:src="@drawable/bed_icon"/>-->
 
     <TextView
         android:layout_width="wrap_content"
