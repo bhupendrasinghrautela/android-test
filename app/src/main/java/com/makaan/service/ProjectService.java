@@ -40,7 +40,9 @@ public class ProjectService implements MakaanService {
                     project.getFormattedSpecifications();
                     AppBus.getInstance().post(new ProjectByIdEvent(project));
                 }
-            });
+            }
+
+            );
         }
     }
 

@@ -10,6 +10,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -69,6 +70,7 @@ public class ProjectFragment extends MakaanBaseFragment{
     @Bind(R.id.tv_project_past) TextView projectPastTv;
     @Bind(R.id.content_text) TextView descriptionTv;
     @Bind(R.id.amenities_scroll_layout) AmenitiesViewScroll mAmenitiesViewScroll;
+    @Bind(R.id.ll_project_container) LinearLayout projectContainer;
     private Context mContext;
     private Project project;
 
@@ -150,10 +152,11 @@ public class ProjectFragment extends MakaanBaseFragment{
         addPriceTrendsFragment();
         addConstructionTimelineFragment();
         ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(project.locality.latitude, project.locality.longitude, 10);
-        ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getProjectTimelineImages(project.projectId);
+        ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(594531L);
     }
 
     private void initUi() {
+        projectContainer.setVisibility(View.VISIBLE);
         descriptionTv.setText(Html.fromHtml(project.description));
         aboutBuilderExpandedLayout.bindView(project.builder);
         builderDescriptionTv.setText(Html.fromHtml(project.builder.description));

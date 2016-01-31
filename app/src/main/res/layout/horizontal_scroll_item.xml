@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:paddingRight="24dp"
+              android:paddingRight="12dp"
+              android:paddingLeft="12dp"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <com.android.volley.toolbox.FadeInNetworkImageView
         android:id="@+id/image"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:src="@drawable/possession"/>
+        android:src="@drawable/possession"
+        android:layout_gravity="center_horizontal" />
     <TextView
         android:id="@+id/value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="aug, 2017"
         android:textColor="@color/serp_listing_card_default_text_color"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:layout_gravity="center_horizontal" />
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="possession"
         android:textColor="@color/serp_listing_card_property_detail_info_text_color"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>

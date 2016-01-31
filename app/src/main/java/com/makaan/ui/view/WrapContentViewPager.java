@@ -83,4 +83,10 @@ public class WrapContentViewPager extends ViewPager {
         super.onDetachedFromWindow();
         AppBus.getInstance().unregister(this);
     }
+
+    public void setHeight(int height) {
+        minHeight = height;
+        initalMinHeight = height;
+        requestLayout();
+    }
 }

@@ -163,7 +163,7 @@
     <string name="project_average_delay_label">avg delay</string>
     <string name="project_ongoing_label">ongoing</string>
     <string name="project_past_label">past</string>
-    <string name="more_about_builder">more about builder</string>
+    <string name="more_about_builder">about builder</string>
     <string name="less_about_builder">less about builder</string>
     <string name="makaan">makaan</string>
     <string name="search_by_location">search by location</string>
@@ -197,5 +197,6 @@
 
     <!--Shortlist strings -->
     <string name="request_site_visit">request site visit</string>
+    <string name="project_amenities_title">amenities</string>
 
 </resources>

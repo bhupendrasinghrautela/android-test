@@ -58,7 +58,7 @@ public class ProjectActivity extends MakaanBaseSearchActivity {
     private void setProjectId() {
         Intent intent = getIntent();
         if(intent != null) {
-            projectId = intent.getLongExtra(PROJECT_ID, 506147);
+            projectId = intent.getLongExtra(PROJECT_ID, 506147);//the kove 506147
         }else{
             projectId = Long.valueOf(506147);
         }

@@ -147,7 +147,6 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 
     @Subscribe

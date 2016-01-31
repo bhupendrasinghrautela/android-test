@@ -9,7 +9,9 @@
 
 <LinearLayout
     android:orientation="vertical"
+    android:id="@+id/ll_project_container"
     android:layout_width="match_parent"
+    android:visibility="gone"
     android:layout_height="match_parent">
 
     <com.makaan.ui.property.PropertyImageViewPager
@@ -22,10 +24,10 @@
    <include layout="@layout/project_builder_basic_details"/>
     <include layout="@layout/project_seperator"/>
     <include layout="@layout/project_builder_brief_layout"/>
-    <include layout="@layout/project_seperator"/>
-    <include layout="@layout/project_amenties_view_scroll_layout"/>
     <include layout="@layout/project_configuration"/>
     <include layout="@layout/project_description" />
+    <include layout="@layout/project_seperator"/>
+    <include layout="@layout/project_amenties_view_scroll_layout"/>
     <include layout="@layout/project_specification"/>
 
     <FrameLayout

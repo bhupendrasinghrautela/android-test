@@ -1,6 +1,8 @@
 package com.makaan.fragment.project;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
@@ -30,6 +32,8 @@ public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
     public TextView titleTv;
     @Bind(R.id.tv_price_trend_price)
     public TextView priceTv;
+    @Bind(R.id.price_trend_view)
+    LinearLayout priceTrendViewl;
 
 
     @Override
@@ -51,6 +55,7 @@ public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
         new PriceTrendService().getPriceTrendForLocalities(localityIds, months, new LocalityTrendCallback() {
             @Override
             public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
+                priceTrendViewl.setVisibility(View.VISIBLE);
                 priceTrendView.bindView(localityPriceTrendDto.data);
             }
         });

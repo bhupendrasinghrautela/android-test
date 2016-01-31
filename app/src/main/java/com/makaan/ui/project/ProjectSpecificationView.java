@@ -15,6 +15,7 @@ import com.makaan.R;
 import com.makaan.fragment.project.ProjectSpecificationPagerFragment;
 import com.makaan.pojo.SpecificaitonsUI;
 import com.makaan.ui.view.WrapContentViewPager;
+import com.makaan.util.CommonUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,14 +69,19 @@ public class ProjectSpecificationView extends LinearLayout{
 
     private void setupViewPager(final WrapContentViewPager viewPager, FragmentActivity compatActivity) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(compatActivity.getSupportFragmentManager());
+        int max = 0;
         for(String tab:map.keySet()) {
             ArrayList<SpecificaitonsUI> specificaitonsUIs = map.get(tab);
+            if(specificaitonsUIs.size()>max)
+                max = specificaitonsUIs.size();
+
             ProjectSpecificationPagerFragment fragment = new ProjectSpecificationPagerFragment();
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("specs", specificaitonsUIs);
             fragment.setArguments(bundle);
             adapter.addFrag(fragment, tab);
         }
+        viewPager.setHeight(max > 4 && max > 0 ? CommonUtil.dpToPixel(mContext,4 * 105): CommonUtil.dpToPixel(mContext,max * 105));
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

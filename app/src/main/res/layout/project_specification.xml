@@ -36,6 +36,7 @@
         android:layout_marginRight="@dimen/project_specification_tab_layout_margins"
         android:layout_height="wrap_content"
         app:tabMode="scrollable"
+        android:layout_gravity="center_horizontal"
         app:tabGravity="fill"/>
 
         <com.makaan.ui.view.WrapContentViewPager
