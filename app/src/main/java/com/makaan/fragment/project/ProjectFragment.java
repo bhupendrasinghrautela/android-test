@@ -150,7 +150,7 @@ public class ProjectFragment extends MakaanBaseFragment{
         addPriceTrendsFragment();
         addConstructionTimelineFragment();
         ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(project.locality.latitude, project.locality.longitude, 10);
-        ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(323996L);
+        ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getProjectTimelineImages(project.projectId);
     }
 
     private void initUi() {
