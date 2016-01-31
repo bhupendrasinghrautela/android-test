@@ -60,4 +60,5 @@ dependencies {
     compile 'org.apmem.tools:layouts:1.10@aar'
     compile 'com.facebook.android:facebook-android-sdk:4.1.0'
     compile 'com.tusharchoudhary:timeline:1.2.0'
+    compile 'com.segment.analytics.android:analytics:4.+'
 }

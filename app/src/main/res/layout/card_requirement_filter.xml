@@ -2,7 +2,7 @@
 
 <!-- TODO WIP, hardcoded  dimen-->
 
-<com.makaan.jarvis.ui.cards.SendReqCard xmlns:android="http://schemas.android.com/apk/res/android"
+<com.makaan.jarvis.ui.cards.AskReqCard xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/chat_card_bg"
@@ -92,4 +92,4 @@
         android:textColor="@color/white"
         android:textSize="@dimen/btn_apply_text_size" />
 
-</com.makaan.jarvis.ui.cards.SendReqCard>
+</com.makaan.jarvis.ui.cards.AskReqCard>

@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.makaan.R;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.OutgoingMessageEvent;
+import com.makaan.jarvis.event.SendRequirementEvent;
 import com.makaan.jarvis.message.Message;
 import com.makaan.jarvis.ui.ConversationAdapter;
 import com.makaan.jarvis.message.*;
@@ -166,6 +167,14 @@ public class ChatActivity extends AppCompatActivity {
         //TODO code cleanup
         final Message message = (Message) event.message;
         addChatMessage(message);
+    }
+
+    @Subscribe
+    public void onSendRequirementMessage(SendRequirementEvent event){
+        //TODO code cleanup
+        final Message message = (Message) event.message;
+        sendMessageToService(message);
+        //addChatMessage(message);
     }
 
     private void addChatMessage(final Message message){

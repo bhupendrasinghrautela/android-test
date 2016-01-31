@@ -6,6 +6,7 @@ package com.makaan.jarvis.message;
 public class ChatObject {
 
     public String image;
+    public String imageURL;
     public long minPrice;
     public String builderName;
     public String projectName;
@@ -16,4 +17,17 @@ public class ChatObject {
     public int suburbName;
     public String cityName;
     public String plainLink;
+    public String beds;
+    public String propertyType;
+    public int budget;
+    public String locality;
+    public String sellerName;
+    public int age;
+    public int id;
+    public int localitiesCount;
+    public String cityCountText;
+    public String areaOfService;
+    public int listingCount;
+    public int score;
+
 }

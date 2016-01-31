@@ -14,10 +14,13 @@ import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.adapter.listing.FiltersViewAdapter;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.jarvis.event.SendRequirementEvent;
+import com.makaan.jarvis.message.ChatObject;
 import com.makaan.jarvis.message.Message;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.ui.view.BaseView;
 import com.makaan.ui.view.ExpandableHeightGridView;
+import com.makaan.util.AppBus;
 
 import java.util.ArrayList;
 
@@ -26,21 +29,21 @@ import butterknife.OnClick;
 /**
  * Created by sunil on 19/01/16.
  */
-public class SendReqCard extends BaseView<Message> {
+public class AskReqCard extends BaseView<Message> {
 
     private Context mContext;
 
-    public SendReqCard(Context context) {
+    public AskReqCard(Context context) {
         super(context);
         mContext = context;
     }
 
-    public SendReqCard(Context context, AttributeSet attrs) {
+    public AskReqCard(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
     }
 
-    public SendReqCard(Context context, AttributeSet attrs, int defStyleAttr) {
+    public AskReqCard(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
     }
@@ -92,9 +95,18 @@ public class SendReqCard extends BaseView<Message> {
 
     @OnClick(R.id.btn_apply)
     public void onFilterApply(){
-        Intent intent = new Intent(mContext, SerpActivity.class);
-        intent.putExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_FILTER);
-        mContext.startActivity(intent);
+        AppBus.getInstance().register(this);
+        Message sendReqMessage = new Message();
+        sendReqMessage.appliedFilter = true;
+        sendReqMessage.filtered = "plainLink";
+        sendReqMessage.chatObj = new ChatObject();
+        sendReqMessage.chatObj.beds = "3";
+        sendReqMessage.chatObj.propertyType = "Apartment";
+        sendReqMessage.chatObj.budget = 100000;
+        sendReqMessage.chatObj.locality = "Whitefield";
+        SendRequirementEvent sendRequirementEvent = new SendRequirementEvent();
+        sendRequirementEvent.message = sendReqMessage;
+        AppBus.getInstance().post(sendRequirementEvent);
     }
 
 }

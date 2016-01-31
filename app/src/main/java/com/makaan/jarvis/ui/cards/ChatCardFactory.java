@@ -52,15 +52,15 @@ public class ChatCardFactory {
             sellerOverviewCard.setLayoutParams(param);
             return sellerOverviewCard;
 
-        }else if(messageType == MessageType.sendReq.value){
+        }else if(messageType == MessageType.askReq.value){
             param.rightMargin=margin;
             param.leftMargin=defaultLeftMargin;
             param.topMargin=defaultTopBottomMargin;
             param.bottomMargin=defaultTopBottomMargin;
-            SendReqCard sendReqCard=(SendReqCard) LayoutInflater.from(context)
+            AskReqCard askReqCard =(AskReqCard) LayoutInflater.from(context)
                     .inflate(R.layout.card_requirement_filter, parent, false);
-            sendReqCard.setLayoutParams(param);
-            return sendReqCard;
+            askReqCard.setLayoutParams(param);
+            return askReqCard;
 
         }else if(messageType == MessageType.signUp.value){
             param.rightMargin=margin;
@@ -82,7 +82,9 @@ public class ChatCardFactory {
             propertyCard.setLayoutParams(param);
             return  propertyCard;
 
-        }else if(messageType == MessageType.localityOverview.value){
+        }else if(messageType == MessageType.localityOverview.value ||
+                messageType == MessageType.localityBuy.value ||
+                messageType == MessageType.localityRent.value){
             param.rightMargin=margin;
             param.leftMargin=defaultLeftMargin;
             param.topMargin=defaultTopBottomMargin;
@@ -99,6 +101,27 @@ public class ChatCardFactory {
                     .inflate(R.layout.card_plainlink, parent, false);
             plainLinkCard.setLayoutParams(param);
             return plainLinkCard;
+
+        }else if(messageType == MessageType.sellerSerp.value ||
+                messageType == MessageType.sellerSerpMap.value){
+            param.rightMargin=margin;
+            param.leftMargin=defaultLeftMargin;
+            param.topMargin=defaultTopBottomMargin;
+            param.bottomMargin=defaultTopBottomMargin;
+            SellerOverviewCard sellerOverviewCard=(SellerOverviewCard) LayoutInflater.from(context)
+                    .inflate(R.layout.card_seller, parent, false);
+            sellerOverviewCard.setLayoutParams(param);
+            return sellerOverviewCard;
+
+        }else if(messageType == MessageType.agentRating.value ){
+            param.rightMargin=margin;
+            param.leftMargin=defaultLeftMargin;
+            param.topMargin=defaultTopBottomMargin;
+            param.bottomMargin=defaultTopBottomMargin;
+            AgentRatingCard agentRatingCard=(AgentRatingCard) LayoutInflater.from(context)
+                    .inflate(R.layout.card_agent, parent, false);
+            agentRatingCard.setLayoutParams(param);
+            return agentRatingCard;
 
         }else{
             return null;

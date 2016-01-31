@@ -30,6 +30,7 @@ import com.makaan.service.UserService;
 import com.makaan.service.WishListService;
 import com.makaan.service.user.UserLoginService;
 import com.makaan.util.RandomString;
+import com.segment.analytics.Analytics;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
@@ -108,6 +109,9 @@ public class MakaanBuyerApplication extends Application {
         CookieStore cookieStore = new MakaanCookieStore(getApplicationContext());
         CookieManager cookieManager = new CookieManager(cookieStore, CookiePolicy.ACCEPT_ALL);
         CookieHandler.setDefault(cookieManager);
+
+        Analytics analytics = new Analytics.Builder(this, "421fc86dfc325acc836597f1f0157cae").build();
+        Analytics.setSingletonInstance(analytics);
 
     }
 

@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="wrap_content"
-    android:layout_margin="10dp"
-    android:padding="8dp"
+    android:layout_margin="@dimen/jarvis_card_brief_layout_margin"
+    android:padding="@dimen/jarvis_card_brief_padding"
     android:background="@drawable/chat_card_bg"
     android:layout_height="wrap_content">
 
