@@ -84,7 +84,7 @@
             android:textSize="@dimen/serp_listing_cluster_card_total_properties_text_size"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_below="@id/serp_listing_cluster_group_empty_view"
+            android:layout_below="@id/cluster_item_view_property_type_text_view"
             android:src="@drawable/house"/>
     </RelativeLayout>
 </com.makaan.ui.listing.GroupListingItemView>

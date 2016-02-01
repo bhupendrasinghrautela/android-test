@@ -31,10 +31,10 @@
             "selected": false
           },
           {
-            "displayName": "4",
+            "displayName": "3+",
             "displayOrder": "4",
             "fieldName": "bedrooms",
-            "value": "4",
+            "value": "4-10",
             "selected": false
           }
         ],
@@ -49,7 +49,7 @@
         "displayOrder": "2",
         "layoutType": "2",
         "imageName":"money",
-        "type": "",
+        "type": "currency",
         "termFilterValues": [],
         "rangeFilterValues": [
           {
@@ -164,10 +164,10 @@
             "selected": false
           },
           {
-            "displayName": "4",
+            "displayName": "3+",
             "displayOrder": "4",
             "fieldName": "bathrooms",
-            "value": "4",
+            "value": "4-10",
             "selected": false
           }
         ],
@@ -186,7 +186,7 @@
         "termFilterValues": [],
         "rangeFilterValues": [
           {
-            "displayName": "1yr",
+            "displayName": "1 year",
             "displayOrder": "1",
             "fieldName": "listingPossessionDate",
             "minValue": 0,
@@ -194,18 +194,18 @@
             "selected": false
           },
           {
-            "displayName": "2yrs",
+            "displayName": "2 years",
             "displayOrder": "2",
             "fieldName": "listingPossessionDate",
-            "minValue": 1,
+            "minValue": 0,
             "maxValue": 2,
             "selected": false
           },
           {
-            "displayName": "3yrs",
+            "displayName": "3 years",
             "displayOrder": "3",
             "fieldName": "listingPossessionDate",
-            "minValue": 2,
+            "minValue": 0,
             "maxValue": 3,
             "selected": false
           },
@@ -213,8 +213,8 @@
             "displayName": "any",
             "displayOrder": "4",
             "fieldName": "listingPossessionDate",
-            "minValue": -100000,
-            "maxValue": -100000,
+            "minValue": -1000000,
+            "maxValue": -1000000,
             "selected": false
           }
         ],
@@ -245,7 +245,7 @@
             "selected": false
           },
           {
-            "displayName": "1-2 year",
+            "displayName": "1-2 years",
             "displayOrder": "2",
             "fieldName": "listingMinConstructionCompletionDate",
             "minFieldName": "listingMinConstructionCompletionDate",
@@ -255,7 +255,7 @@
             "selected": false
           },
           {
-            "displayName": "2-5 year",
+            "displayName": "2-5 years",
             "displayOrder": "3",
             "fieldName": "listingMinConstructionCompletionDate",
             "minFieldName": "listingMinConstructionCompletionDate",
@@ -270,8 +270,8 @@
             "fieldName": "listingMinConstructionCompletionDate",
             "minFieldName": "listingMinConstructionCompletionDate",
             "maxFieldName": "listingMaxConstructionCompletionDate",
-            "minValue": -100000,
-            "maxValue": -100000,
+            "minValue": -1000000,
+            "maxValue": -1000000,
             "selected": false
           }
         ]
@@ -341,7 +341,7 @@
         "type": "",
         "termFilterValues": [
           {
-            "displayName": "agent",
+            "displayName": "seller",
             "displayOrder": "1",
             "fieldName": "listingSellerCompanyType",
             "value": "Broker",

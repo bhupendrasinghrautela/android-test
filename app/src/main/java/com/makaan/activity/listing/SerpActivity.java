@@ -17,6 +17,7 @@ import com.google.gson.internal.LinkedTreeMap;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
+import com.makaan.activity.project.ProjectActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.event.locality.GpByIdEvent;
 import com.makaan.event.serp.GroupSerpGetEvent;
@@ -91,6 +92,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public static final int REQUEST_SELLER_API = 0x02;
 
     public static final int REQUEST_PROPERTY_PAGE = 1;
+    public static final int REQUEST_PROJECT_PAGE = 2;
 
 
     private static final int MAX_ITEMS_TO_REQUEST = 20;
@@ -161,9 +163,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
         Intent intent = getIntent();
         int type = SerpActivity.TYPE_UNKNOWN;
-        mGroupSelector = MakaanBuyerApplication.serpSelector.clone();
-        mGroupSelector.field("groupingAttributes").field("groupedListings").field("listing").field("id");
-        mGroupSelector.page(0, (2 * GroupCluster.MAX_CLUSTERS_IN_GROUP));
+        generateGroupSelector();
 
         if(intent != null) {
             type = intent.getIntExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_UNKNOWN);
@@ -197,6 +197,12 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         }
     }
 
+    private void generateGroupSelector() {
+        mGroupSelector = MakaanBuyerApplication.serpSelector.clone();
+        mGroupSelector.field("groupingAttributes").field("groupedListings").field("listing").field("id");
+        mGroupSelector.page(0, (2 * GroupCluster.MAX_CLUSTERS_IN_GROUP));
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -216,6 +222,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             setShowSearchBar(true);
             mFiltersFrameLayout.setVisibility(View.VISIBLE);
             mSimilarPropertiesFrameLayout.setVisibility(View.GONE);
+            mMapImageView.setImageResource(R.drawable.map);
 
             MakaanBuyerApplication.serpSelector.removePaging();
         } else if(mIsMapFragment) {
@@ -443,7 +450,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 mMapFragment.setData(mListings);
                 initFragment(R.id.activity_serp_content_frame_layout, mMapFragment, true);
                 mIsMapFragment = true;
-                mMapImageView.setImageResource(R.drawable.listed_by);
+                mMapImageView.setImageResource(R.drawable.list);
             }
         }
     }
@@ -493,10 +500,10 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             } else {
                 selector.removeTerm("builderId");
                 selector.removeTerm("listingCompanyId");
-                mGroupSelector = selector.clone();
-                mGroupSelector.page(0, (2 * GroupCluster.MAX_CLUSTERS_IN_GROUP));
-                mGroupSelector.field("groupingAttributes").field("groupedListings").field("listing").field("id");
+                generateGroupSelector();
             }
+        } else if((type & MASK_LISTING_UPDATE_TYPE) == TYPE_FILTER) {
+            generateGroupSelector();
         }
 
         if((mSerpRequestType & MASK_LISTING_TYPE) == TYPE_CLUSTER) {
@@ -592,6 +599,10 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public void requestDetailPage(int type, Bundle bundle) {
         if(type == REQUEST_PROPERTY_PAGE) {
             Intent intent = new Intent(this, PropertyActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        } else if(type == REQUEST_PROJECT_PAGE) {
+            Intent intent = new Intent(this, ProjectActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
         }

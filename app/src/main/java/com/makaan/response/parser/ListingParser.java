@@ -34,7 +34,7 @@ public class ListingParser {
             POSTED_BY_BROKER = "BROKER",
             POSTED_BY_OWNER = "PRIVATEEQUITY",
             POSTED_BY_BUILDER = "BUILDER",
-            BHK_STR = " BHK ",
+            BHK_STR = " bhk ",
             DAYS = " days";
 
 
@@ -58,12 +58,14 @@ public class ListingParser {
                         null != project && null != locality && null != suburb && null != city) {
 
                     JSONObject seller = listingJson.optJSONObject(COMPANY_SELLER);
+                    JSONObject user = null != seller ? seller.optJSONObject(USER) : null;
                     JSONObject sellerCompany = null != seller ? seller.optJSONObject(COMPANY) : null;
                     JSONArray images = listingJson.optJSONArray(IMAGES);
 
 
                     listing.postedDate = getDateStringFromEpoch(listingJson.optString(POSTED_DATE));
                     listing.lisitingId = listingJson.optInt(ID);
+                    listing.projectId = project.optInt(PROJECT_ID);
 
                     listing.description = listingJson.optString(DESCRIPTION);
                     listing.description = stripContent(listing.description, 100, true);
@@ -152,6 +154,8 @@ public class ListingParser {
                             listing.lisitingPostedBy.assist = sellerCompany.optBoolean(ASSIST);
                         }
                     }
+                    listing.lisitingPostedBy.profilePictureURL = null != user ?
+                            (user.optString(PROFILE_PICTURE_URL) != null ? user.optString(PROFILE_PICTURE_URL) : null) : null;
 
 
                     listing.hasOffer = listingJson.optString(IS_OFFERED) != null && listingJson.optBoolean(IS_OFFERED);

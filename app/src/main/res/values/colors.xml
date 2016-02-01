@@ -124,11 +124,15 @@
     <color name="project_config_item_seperator">#dedede</color>
     <color name="project_config_item_selected_stroke_color">#e71c28</color>
 
+
     <!-- Lead form Colors-->
     <color name="seller_name_text_color">#888888</color>
 
     <!--Login colors-->
     <color name="view_line_grey">#c0c0c0</color>
     <color name="Gray">#808080</color>
+
+    <color name="buyer_dashboard_background">#FFFBFBFB</color>
+
 
 </resources>
