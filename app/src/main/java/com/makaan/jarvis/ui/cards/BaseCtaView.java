@@ -7,6 +7,8 @@ import android.widget.LinearLayout;
 import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.ui.view.BaseView;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by sunil on 27/01/16.
  */
@@ -33,6 +35,12 @@ public abstract class BaseCtaView<D> extends LinearLayout {
 
     public BaseCtaView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        ButterKnife.bind(this);
     }
 
     public void setOnApplyClickListener(OnApplyClickListener onApplyClickListener){

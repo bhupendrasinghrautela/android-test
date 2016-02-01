@@ -102,9 +102,9 @@
     <dimen name="pyr_rent_unselected_radius">8dp</dimen>
     <dimen name="pyr_buy_button_width">167dp</dimen>
     <dimen name="pyr_buy_button_height">35dp</dimen>
-    <dimen name="pyr_rent_button_width">167dp</dimen>
+    <dimen name="pyr_rent_button_width">170dp</dimen>
     <dimen name="pyr_rent_button_height">32dp</dimen>
-    <dimen name="pyr_buy_rent_total_width">321dp</dimen>
+    <dimen name="pyr_buy_rent_total_width">340dp</dimen>
     <dimen name="pyr_page_card_width">320dp</dimen>
     <dimen name="pyr_page_card_height">100dp</dimen>
     <dimen name="pyr_page_margin_top">16dp</dimen>
@@ -982,9 +982,8 @@
     <dimen name="btn_ok_padding_left_right">37dp</dimen>
     <dimen name="btn_ok_text_size">20sp</dimen>
     <dimen name="jarvis_card_locality_width">240dp</dimen>
-    <dimen name="jarvis_card_loaclity_layout_margin">10dp</dimen>
-    <dimen name="jarvis_card_locality_left_right_padding">20dp</dimen>
-    <dimen name="jarvis_card_locality_paddding_top_bottom">30dp</dimen>
+    <dimen name="jarvis_card_brief_layout_margin">10dp</dimen>
+    <dimen name="jarvis_card_brief_padding">8dp</dimen>
     <dimen name="jarvis_card_brief_height">150dp</dimen>
     <dimen name="card_brief_content_padding">12dp</dimen>
     <dimen name="card_brief_text_line1_text_size">18sp</dimen>
@@ -1073,5 +1072,32 @@
     <dimen name="shortlist_text_size_medium">18sp</dimen>
     <dimen name="shortlist_text_size_small">16sp</dimen>
 
+    <dimen name="zero_weight">0dp</dimen>
+    <dimen name="drawable_top_padding">10dp</dimen>
+    <dimen name="enquiry_medium_text">18sp</dimen>
+    <dimen name="input_top_margin">20dp</dimen>
+    <dimen name="medium_text">14sp</dimen>
+    <dimen name="edit_internal_padding">8dp</dimen>
+    <dimen name="button_padding_left_right">80dp</dimen>
+    <dimen name="average_text">16sp</dimen>
+    <dimen name="signup_text_padding">10dp</dimen>
+    <dimen name="login_view_height">1px</dimen>
+    <dimen name="name_text_size">18sp</dimen>
+    <dimen name="dialog_min_width">300dp</dimen>
+    <dimen name="dialog_padding">10dp</dimen>
+    <dimen name="normal_text">20sp</dimen>
+    <dimen name="makaan_label_top_padding">66dp</dimen>
+
+    <!--neighbor category view-->
+    <dimen name="neighbor_category_view_width">60dp</dimen>
+    <dimen name="neighbor_category_view_margin">10dp</dimen>
+    <dimen name="neighbor_category_icon_width_height">28dp</dimen>
+    <dimen name="neighborhood_category_name_top_margin">-4dp</dimen>
+    <dimen name="neighborhood_category_name_margin_bottom">2dp</dimen>_
+    <dimen name="neighborhood_category_name_padding_left_right">3dp</dimen>
+    <dimen name="amenity_selector_width">58dp</dimen>
+    <dimen name="amenity_selector_layout_height">10dp</dimen>
+    <dimen name="neighbor_category_text_view_drawable_left_right_radius">16dp</dimen>
+    <dimen name="neighbor_category_drawable_radius">12dp</dimen>
 
 </resources>

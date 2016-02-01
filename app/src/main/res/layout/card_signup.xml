@@ -25,6 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/facebook_login_margin_top"
         android:layout_marginBottom="@dimen/facebook_login_margin_bottom"
+        android:paddingLeft="@dimen/jarvis_card_brief_padding"
+        android:paddingRight="@dimen/jarvis_card_brief_padding"
         android:gravity="center">
 
 

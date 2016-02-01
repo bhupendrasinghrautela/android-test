@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.makaan.jarvis.ui.cards.AgentRatingCard
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/seller_overview_card_padding"
+    android:layout_width="@dimen/seller_overview_card_width"
+    android:layout_margin="@dimen/seller_overview_card_margin"
+    android:background="@drawable/chat_card_bg">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/seller_overview_card_padding"
+        android:text="please rate your experience with"
+        android:layout_gravity="center"
+        android:textSize="16sp"/>
+
+    <com.pkmmte.view.CircularImageView
+        android:layout_width="@dimen/jarvis_seller_card_profile_pic_dimen"
+        android:layout_height="@dimen/jarvis_seller_card_profile_pic_dimen"
+        android:layout_margin="@dimen/thumbnail_margin"
+        android:tint="@color/white"
+        android:layout_gravity="center"
+        android:src="@drawable/star"
+        app:border="true"
+        app:border_color="@color/light_gray"
+        app:border_width="@dimen/border_width"
+        app:shadow="true"/>
+
+    <RatingBar
+        android:id="@+id/ratingbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/jarvis_card_brief_layout_margin"
+        android:numStars="5"
+        android:stepSize="1.0"
+        android:isIndicator="true"
+        style="?android:attr/ratingBarStyleSmall"/>
+
+</com.makaan.jarvis.ui.cards.AgentRatingCard>

@@ -47,20 +47,20 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="D bhatia"
+            android:id="@+id/name"
             android:textSize="@dimen/jarvis_seller_card_agent_name_text_size"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="158 properties"
+            android:id="@+id/properties"
             android:layout_marginBottom="8dp"
             android:textSize="@dimen/jarvis_seller_card_agent_detail_text_size"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gurgaon, sector 32, sector 56"
+            android:id="@+id/locations"
             android:textSize="@dimen/jarvis_seller_card_agent_detail_text_size"/>
 
     </LinearLayout>
