@@ -5,8 +5,8 @@
         "overview": [
           "status",
           "age",
-          "posession",
-          "bath",
+          "possession",
+          "bathrooms",
           "floor",
           "balcony",
           "totalFloor",
@@ -56,8 +56,8 @@
         "overview": [
           "status",
           "age",
-          "posession",
-          "bath",
+          "possession",
+          "bathrooms",
           "floor",
           "category",
           "entryRoadWd",
@@ -109,8 +109,8 @@
         "overview": [
           "status",
           "age",
-          "posession",
-          "bath",
+          "possession",
+          "bathrooms",
           "floor",
           "category",
           "entryRoadWd",
@@ -160,8 +160,8 @@
         "overview": [
           "status",
           "age",
-          "posession",
-          "bath",
+          "possession",
+          "bathrooms",
           "floor",
           "category",
           "entryRoadWd",
@@ -211,12 +211,12 @@
         "overview": [
           "status",
           "age",
-          "posession",
+          "possession",
           "openSides",
           "bookamt",
           "facing",
           "category",
-          "bath",
+          "bathrooms",
           "floor",
           "entryRoadWd",
           "balcony",
@@ -262,8 +262,8 @@
         "overview": [
           "status",
           "age",
-          "posession",
-          "bath",
+          "possession",
+          "bathrooms",
           "floor",
           "category",
           "balcony",
@@ -313,8 +313,8 @@
         "overview": [
           "status",
           "age",
-          "posession",
-          "bath",
+          "possession",
+          "bathrooms",
           "floor",
           "category",
           "balcony",
@@ -364,8 +364,8 @@
         "overview": [
           "status",
           "age",
-          "posession",
-          "bath",
+          "possession",
+          "bathrooms",
           "balcony",
           "floor",
           "category",
@@ -415,7 +415,7 @@
     "Rental": {
       "Apartment": {
         "overview": [
-          "bath",
+          "bathrooms",
           "floor",
           "balcony",
           "furnishStat",
@@ -463,7 +463,7 @@
       },
       "BuilderFloor": {
         "overview": [
-          "bath",
+          "bathrooms",
           "floor",
           "balcony",
           "furnishStat",
@@ -511,7 +511,7 @@
       },
       "IndependentHouse": {
         "overview": [
-          "bath",
+          "bathrooms",
           "floor",
           "balcony",
           "furnishStat",
@@ -559,7 +559,7 @@
       },
       "Villa": {
         "overview": [
-          "bath",
+          "bathrooms",
           "floor",
           "balcony",
           "furnishStat",
@@ -609,7 +609,7 @@
         "overview": [
           "openSides",
           "facing",
-          "bath",
+          "bathrooms",
           "floor",
           "balcony",
           "furnishStat",
@@ -655,7 +655,7 @@
       },
       "Penthouse": {
         "overview": [
-          "bath",
+          "bathrooms",
           "floor",
           "balcony",
           "openSides",
@@ -703,7 +703,7 @@
       },
       "StudioApartment": {
         "overview": [
-          "bath",
+          "bathrooms",
           "floor",
           "balcony",
           "furnishStat",
@@ -751,7 +751,7 @@
       },
       "Farmhouse": {
         "overview": [
-          "bath",
+          "bathrooms",
           "balcony",
           "furnishStat",
           "floor",
@@ -803,8 +803,8 @@
         "overview": [
           "status",
           "age",
-          "posession",
-          "bath",
+          "possession",
+          "bathrooms",
           "floor",
           "balcony",
           "furnishStat",
@@ -859,8 +859,8 @@
         "overview": [
           "status",
           "age",
-          "posession",
-          "bath",
+          "possession",
+          "bathrooms",
           "floor",
           "category",
           "entryRoadWd",
@@ -915,8 +915,8 @@
         "overview": [
           "status",
           "age",
-          "posession",
-          "bath",
+          "possession",
+          "bathrooms",
           "floor",
           "category",
           "entryRoadWd",
@@ -971,8 +971,8 @@
         "overview": [
           "status",
           "age",
-          "posession",
-          "bath",
+          "possession",
+          "bathrooms",
           "floor",
           "category",
           "entryRoadWd",
@@ -1027,12 +1027,12 @@
         "overview": [
           "status",
           "age",
-          "posession",
+          "possession",
           "openSides",
           "bookamt",
           "facing",
           "category",
-          "bath",
+          "bathrooms",
           "floor",
           "entryRoadWd",
           "balcony",
@@ -1083,8 +1083,8 @@
         "overview": [
           "status",
           "age",
-          "posession",
-          "bath",
+          "possession",
+          "bathrooms",
           "floor",
           "category",
           "balcony",
@@ -1139,8 +1139,8 @@
         "overview": [
           "status",
           "age",
-          "posession",
-          "bath",
+          "possession",
+          "bathrooms",
           "floor",
           "category",
           "balcony",
@@ -1195,8 +1195,8 @@
         "overview": [
           "status",
           "age",
-          "posession",
-          "bath",
+          "possession",
+          "bathrooms",
           "balcony",
           "furnishStat",
           "floor",
