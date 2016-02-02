@@ -75,6 +75,7 @@
     <string name="contact_top_advisors">contact 4 advisors</string>
     <string name="contact_string">contact </string>
     <string name="advisors_string">advisors</string>
+    <string name="view_all_sellers">view all sellers</string>
     <string name="add_user_name_toast">add user name</string>
     <string name="invalid_email_toast">invalid email id</string>
     <string name="invalid_phone_no_toast">invalid phone no</string>
@@ -115,6 +116,10 @@
     <string name="intrested_in">interested in</string>
     <string name="know_more">know more about</string>
     <string name="name">name</string>
+    <string name="projects">projects</string>
+    <string name="project">project</string>
+    <string name="years">years</string>
+    <string name="months">months</string>
     <string name="buy">buy</string>
     <string name="rent">rent</string>
     <string name="email">email</string>
@@ -164,7 +169,7 @@
     <string name="project_average_delay_label">avg delay</string>
     <string name="project_ongoing_label">ongoing</string>
     <string name="project_past_label">past</string>
-    <string name="more_about_builder">more about builder</string>
+    <string name="more_about_builder">about builder</string>
     <string name="less_about_builder">less about builder</string>
     <string name="makaan">makaan</string>
     <string name="search_by_location">search by location</string>

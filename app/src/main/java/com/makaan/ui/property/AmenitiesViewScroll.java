@@ -13,7 +13,6 @@ import com.makaan.cache.MasterDataCache;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.HorizontalScrollItem;
 import com.makaan.response.listing.detail.ListingAmenity;
-import com.makaan.response.project.Project;
 import com.makaan.response.project.ProjectAmenity;
 import com.makaan.ui.BaseLinearLayout;
 import com.makaan.ui.listing.CustomHorizontalScrollView;
@@ -66,9 +65,12 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
             mAmenitiesPriority = MasterDataCache.getInstance().getDisplayOrder(listingCategory, unitType, "amenity");
             createAmenitiesToDisplay();
             createAdapterDataForProperty();
+            if(mAmenityItems.size()>0){
+                this.setVisibility(VISIBLE);
+            }
+            ListingOverViewAdapter listingOverViewAdapter = new ListingOverViewAdapter(mContext,mAmenityItems);
+            mAmenityScroll.setAdapter(listingOverViewAdapter);
         }
-        ListingOverViewAdapter listingOverViewAdapter = new ListingOverViewAdapter(mContext,mAmenityItems);
-        mAmenityScroll.setAdapter(listingOverViewAdapter);
     }
 
     public void bindView(List<ProjectAmenity> projectAmenities){
@@ -85,6 +87,9 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
                 amenityItem.name = String.valueOf(projectAmenity.amenityMaster.amenityId);
                 mAmenityItems.add(amenityItem);
             }catch (Exception e){}
+        }
+        if(mAmenityItems.size()>0){
+            this.setVisibility(VISIBLE);
         }
         ListingOverViewAdapter listingOverViewAdapter = new ListingOverViewAdapter(mContext,mAmenityItems);
         mAmenityScroll.setAdapter(listingOverViewAdapter);
@@ -109,12 +114,11 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
                 if((mAmenitiesToDisplay.get(Long.parseLong(amenityId)))!=null){
                     HorizontalScrollItem amenityItem = new HorizontalScrollItem();
                     Long id = Long.parseLong(amenityId);
+                    amenityItem.resourceId = R.drawable.possession;
                     if(mAmenitiesToDisplay.get(id)){
-                        amenityItem.resourceId = R.drawable.possession;
                         amenityItem.activated = true;
                     }
                     else{
-                        amenityItem.resourceId = R.drawable.oval_gray_background;
                         amenityItem.activated = false;
                     }
                     amenityItem.value = MasterDataCache.getInstance().getPropertyAmenityById(id).amenityName;
@@ -161,7 +165,11 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
             finalImageUrl.append(dataItem.name);
             finalImageUrl.append(".png");
             imageView.setImageUrl(finalImageUrl.toString(), MakaanNetworkClient.getInstance().getImageLoader());
-            nameText.setText(dataItem.name);
+            if(!dataItem.activated){
+                imageView.setAlpha(0.5f);
+                valueText.setTextColor(mContext.getResources().getColor(R.color.pyr_light_grey));
+            }
+            nameText.setVisibility(GONE);
             valueText.setText(dataItem.value);
             return view;
         }

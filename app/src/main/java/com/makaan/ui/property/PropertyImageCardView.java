@@ -27,6 +27,8 @@ public class PropertyImageCardView extends CardView {
     TextView priceText;
     @Bind(R.id.price_unit)
     TextView priceUnitText;
+    @Bind(R.id.area_text)
+    TextView sizeText;
 
     public PropertyImageCardView(Context context) {
         super(context);
@@ -40,7 +42,7 @@ public class PropertyImageCardView extends CardView {
         super(context, attrs, defStyleAttr);
     }
 
-    public void bindView(Context mContext, Image listingDetailImage, int position,Double price) {
+    public void bindView(Context mContext, Image listingDetailImage, int position, Double price, Double size) {
         ButterKnife.bind(this);
         if(position != 1){
             mPropertyImageDetailLayout.setVisibility(GONE);
@@ -60,6 +62,9 @@ public class PropertyImageCardView extends CardView {
             }
             priceText.setText(String.valueOf(priceString));
             priceUnitText.setText(priceUnit);
+        }
+        if(size != null){
+            sizeText.setText(size+" "+mContext.getString(R.string.avg_price_postfix));
         }
         mPropertyImageView.setDefaultImageResId(R.drawable.luxury_project);
         mPropertyImageView.setImageUrl(listingDetailImage.absolutePath, MakaanNetworkClient.getInstance().getImageLoader());

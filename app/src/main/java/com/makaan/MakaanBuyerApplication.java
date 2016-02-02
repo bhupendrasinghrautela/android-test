@@ -23,6 +23,7 @@ import com.makaan.service.OtpVerificationService;
 import com.makaan.service.PriceTrendService;
 import com.makaan.service.ProjectService;
 import com.makaan.service.PyrService;
+import com.makaan.service.SaveSearchService;
 import com.makaan.service.SearchService;
 import com.makaan.service.SellerService;
 import com.makaan.service.TaxonomyService;
@@ -68,6 +69,7 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(SearchService.class, new SearchService());
         MakaanServiceFactory.getInstance().registerService(CityService.class, new CityService());
         MakaanServiceFactory.getInstance().registerService(PyrService.class, new PyrService());
+        MakaanServiceFactory.getInstance().registerService(SaveSearchService.class,new SaveSearchService());
 
         MakaanServiceFactory.getInstance().registerService(LocalityService.class, new LocalityService());
         MakaanServiceFactory.getInstance().registerService(PriceTrendService.class, new PriceTrendService());

@@ -38,7 +38,6 @@ import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
 import com.pkmmte.view.CircularImageView;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -340,6 +339,7 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
                     bundle.putLong(KeyUtil.LISTING_ID, mListing.id);
                     bundle.putDouble(KeyUtil.LISTING_LAT, mListing.latitude);
                     bundle.putDouble(KeyUtil.LISTING_LON, mListing.longitude);
+                    bundle.putString(KeyUtil.LISTING_Image,mListing.mainImageUrl);
 
                     mCallback.requestDetailPage(SerpActivity.REQUEST_PROPERTY_PAGE, bundle);
                 }

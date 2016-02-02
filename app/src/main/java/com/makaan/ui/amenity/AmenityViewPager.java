@@ -1,19 +1,11 @@
 package com.makaan.ui.amenity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
-import com.makaan.R;
 import com.makaan.adapter.AmenitiesPagerAdapter;
-import com.makaan.adapter.listing.ListingPagerAdapter;
 import com.makaan.response.amenity.AmenityCluster;
-import com.makaan.response.listing.Listing;
-import com.makaan.util.AnimUtil;
 
 import java.util.List;
 
@@ -40,7 +32,7 @@ public class AmenityViewPager extends ViewPager {
         setAdapter(mAmenityPagerAdapter);
         setClipToPadding(false);
         setPageMargin(MARGIN);
-        setPadding(0, 0, H_PADDING, 0);
+        setPadding(10, 10, H_PADDING, 10);
         setOffscreenPageLimit(2);
     }
 

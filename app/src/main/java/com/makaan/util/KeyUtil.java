@@ -8,6 +8,7 @@ public class KeyUtil {
     public static final String PROJECT_ID = "projectId";
     public static final String LISTING_ID = "listingId";
     public static final String LISTING_LON = "listingLon";
+    public static final String LISTING_Image = "listingImage";
     public static final String LISTING_LAT = "listingLat";
 
     public static final String CITY_ID = "cityId";

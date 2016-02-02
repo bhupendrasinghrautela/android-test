@@ -25,6 +25,7 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
     private int mCount = 0;
     private ViewPager pager;
     private Double price;
+    private Double size;
     private PropertyImageCardView mCurrentPropertyImageCardView;
 
     public PropertyImagesPagerAdapter(final ViewPager pager,Context context) {
@@ -52,15 +53,21 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
         });
     }
 
-    public void setData(List<Image> list,Double price){
+    public void setData(List<Image> list, Double price, Double size){
         if(list == null || list.isEmpty()){
             return;
         }
         mItems.clear();
         this.price = price;
-        mItems.add(list.get(list.size() - 1));
-        mItems.addAll(list);
-        mItems.add(list.get(0));
+        this.size = size;
+        if(list.size()>1) {
+            mItems.add(list.get(list.size() - 1));
+            mItems.addAll(list);
+            mItems.add(list.get(0));
+        }
+        else{
+            mItems.addAll(list);
+        }
         mCount = mItems.size();
         this.notifyDataSetChanged();
     }
@@ -89,7 +96,12 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
         mCurrentPropertyImageCardView =
                 (PropertyImageCardView) mLayoutInflater.inflate(R.layout.property_images_viewpager_item, null);
 
-        mCurrentPropertyImageCardView.bindView(mContext, mItems.get(position),position,price);
+        if(mCount == 1) {
+            mCurrentPropertyImageCardView.bindView(mContext, mItems.get(position),1, price,size);
+        }
+        else {
+            mCurrentPropertyImageCardView.bindView(mContext, mItems.get(position), position, price,size);
+        }
         container.addView(mCurrentPropertyImageCardView,0);
         return mCurrentPropertyImageCardView;
 

@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.makaan.ui.property.ListingDataOverViewScroll
     android:id="@+id/listing_over_view_scroll_layout"
+    android:visibility="gone"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_margin="@dimen/property_page_internal_padding"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <include layout="@layout/property_empty_view"/>
     <com.makaan.ui.listing.CustomHorizontalScrollView
         android:id="@+id/listing_data_overview_scroll"
         android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/property_page_overview_margin_left"
+        android:layout_marginTop="@dimen/property_page_overview_margin_top"
+        android:layout_marginBottom="@dimen/property_page_overview_margin_bottom"
         android:layout_height="wrap_content">
     </com.makaan.ui.listing.CustomHorizontalScrollView>
 </com.makaan.ui.property.ListingDataOverViewScroll>
