@@ -1,5 +1,13 @@
 package com.makaan.util;
 
+import android.content.Context;
+
+import com.makaan.R;
+
+import org.joda.time.LocalDate;
+import org.joda.time.Months;
+import org.joda.time.Years;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,6 +39,19 @@ public class DateUtil {
             diff--;
         }
         return diff;
+    }
+
+    public static String getDiffUsingTimeStamp(Context context,Long time){
+        LocalDate original = LocalDate.fromDateFields(new Date(time));
+        LocalDate now = LocalDate.now();
+        Years years = Years.yearsBetween(original, now);
+        if(years.getYears()>1){
+            return years.getYears() +" "+ context.getString(R.string.years);
+        }
+        else{
+            Months months = Months.monthsBetween(original,now);
+            return months.getMonths()+" "+ context.getString(R.string.months);
+        }
     }
 
     public static Calendar getCalendar(Date date) {

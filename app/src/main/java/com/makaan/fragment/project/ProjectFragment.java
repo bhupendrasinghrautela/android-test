@@ -27,14 +27,11 @@ import com.makaan.event.project.ProjectConfigItemClickListener;
 import com.makaan.event.project.SimilarProjectGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.amenity.AmenityCluster;
-import com.makaan.response.listing.detail.ListingAmenity;
 import com.makaan.response.project.Project;
-import com.makaan.response.project.ProjectAmenity;
 import com.makaan.service.AmenityService;
 import com.makaan.service.ImageService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.ui.locality.ProjectConfigView;
-import com.makaan.ui.project.ProjectConfigItemView;
 import com.makaan.ui.project.ProjectSpecificationView;
 import com.makaan.ui.property.AboutBuilderExpandedLayout;
 import com.makaan.ui.property.AmenitiesViewScroll;
@@ -137,7 +134,7 @@ public class ProjectFragment extends MakaanBaseFragment{
         if(imagesGetEvent.images.size()>0) {
             mPropertyImageViewPager.setVisibility(View.VISIBLE);
             mPropertyImageViewPager.bindView();
-            mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice);
+            mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice,null);
         }
     }
 

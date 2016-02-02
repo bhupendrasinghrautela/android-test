@@ -335,6 +335,12 @@ public class MasterDataCache {
     }
 
     public List<String> getDisplayOrder(String category, String type, String card) {
+        if(propertyDisplayOrder.get(category)==null){
+            return propertyDisplayOrder.get("Primary").get("Apartment").get(card);
+        }
+        if(propertyDisplayOrder.get(category).get(card)==null){
+            return propertyDisplayOrder.get("Primary").get("Apartment").get(card);
+        }
         return propertyDisplayOrder.get(category).get(type).get(card);
     }
 

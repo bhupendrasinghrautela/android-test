@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -28,11 +27,8 @@ import com.google.maps.android.ui.IconGenerator;
 import com.makaan.R;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
-import com.makaan.jarvis.ui.ConversationAdapter;
 import com.makaan.response.amenity.Amenity;
 import com.makaan.response.amenity.AmenityCluster;
-import com.makaan.response.listing.Listing;
-import com.makaan.util.StringUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -68,6 +64,7 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mNeighborhoodCategoryAdapter = new NeighborhoodCategoryAdapter(getActivity(), this);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -105,11 +102,17 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
     }
 
     public void setCategoryPosition(int position){
+        if(mAmenityClusters == null || mPropertyMap == null){
+            return;
+        }
         populateMarker(mAmenityClusters.get(position));
     }
 
     @Subscribe
     public void onResults(AmenityGetEvent amenityGetEvent) {
+        if(amenityGetEvent == null || amenityGetEvent.amenityClusters == null){
+            return;
+        }
         mAmenityClusters = amenityGetEvent.amenityClusters;
         mNeighborhoodCategoryAdapter.setData(mAmenityClusters);
         setCategoryPosition(0);
@@ -131,12 +134,11 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
                 return false;
             }
         });
-
-        mNeighborhoodCategoryAdapter = new NeighborhoodCategoryAdapter(getActivity(), this);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
 
         mNeighborhoodCategoryView.setLayoutManager(mLayoutManager);
         mNeighborhoodCategoryView.setAdapter(mNeighborhoodCategoryAdapter);
+        setCategoryPosition(0);
     }
 
     private void populateMarker(AmenityCluster amenityCluster){

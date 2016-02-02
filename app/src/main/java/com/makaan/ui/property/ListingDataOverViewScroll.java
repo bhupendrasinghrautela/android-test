@@ -1,6 +1,7 @@
 package com.makaan.ui.property;
 
 import android.content.Context;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import com.makaan.pojo.HorizontalScrollItem;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.ui.BaseLinearLayout;
 import com.makaan.ui.listing.CustomHorizontalScrollView;
+import com.makaan.util.AppUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +52,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
             "addRoom",
             "ownerType"*/
     private enum OVERVIEW{
-        STATUS("status"),AGE("age"),BATH("bath"),FLOOR("floor"),BALCONY("balcony"),
+        STATUS("status"),POSSESSION("possession"),AGE("age"),BATH("bathrooms"),FLOOR("floor"),BALCONY("balcony"),
         TOTAL_FLOOR("totalFloor"),CATEGORY("category"),BOOK_AMOUNT("bookamt"),
         OPEN_SIDES("openSides"),ENTRY_ROAD_WIDTH("entryRoadWidth"),FACING("facing"),
         PARKING("parking"),OVERLOOK("overlook"),ADD_ROOM("addroom"),OWNER_TYPE("ownerType");
@@ -93,6 +95,9 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
         mDetail = item;
         mOverViewOrder = MasterDataCache.getInstance().getDisplayOrder(item.listingCategory,item.property.unitType,"overview");
         createAdapterData();
+        if(mOverViewItems!=null){
+            this.setVisibility(VISIBLE);
+        }
         ListingOverViewAdapter listingOverViewAdapter = new ListingOverViewAdapter(mContext,mOverViewItems);
         mOverViewScroll.setAdapter(listingOverViewAdapter);
     }
@@ -105,34 +110,87 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                 HorizontalScrollItem overViewItem = new HorizontalScrollItem();
                 switch (overview) {
                     case STATUS:
-                        overViewItem.name = overview.toString();
-                        overViewItem.resourceId = R.drawable.possession;
-                        overViewItem.value = mDetail.property.project.projectStatus;
+                        if(mDetail.property!=null && mDetail.property.project!=null && mDetail.property.project.projectStatus!=null) {
+                            overViewItem.name = overview.toString();
+                            overViewItem.resourceId = R.drawable.under_construction;
+                            overViewItem.value = mDetail.property.project.projectStatus;
+                        }
                         break;
-                    case AGE:
-                        overViewItem.name = overview.toString();
-                        overViewItem.resourceId = R.drawable.possession;
-                        overViewItem.value = mDetail.possessionDate;
+                    case POSSESSION:
+                        if(mDetail.possessionDate!=null) {
+                            overViewItem.name = overview.toString();
+                            overViewItem.resourceId = R.drawable.possession;
+                            overViewItem.value = AppUtils.getMMMYYYYDateStringFromEpoch(mDetail.possessionDate);
+                        }
                         break;
                     case BATH:
-                        overViewItem.name = overview.toString();
-                        overViewItem.resourceId = R.drawable.possession;
-                        overViewItem.value = String.valueOf(mDetail.property.bathrooms);
+                        if(mDetail.property!=null && mDetail.property.bathrooms!=null) {
+                            overViewItem.name = overview.toString();
+                            overViewItem.resourceId = R.drawable.shower;
+                            overViewItem.value = String.valueOf(mDetail.property.bathrooms);
+                        }
                         break;
                     case FLOOR:
+                        if(mDetail.floor != null && mDetail.totalFloors != null && mDetail.floor != 0 && mDetail.totalFloors != 0) {
+                            if(mDetail.floor == 1) {
+                                overViewItem.value = String.format("%d<sup>st</sup> of %d", mDetail.floor, mDetail.totalFloors);
+                            } else if(mDetail.floor == 2) {
+                               overViewItem.value = String.format("%d<sup>nd</sup> of %d", mDetail.floor, mDetail.totalFloors);
+                            } else if(mDetail.floor == 3) {
+                                overViewItem.value = String.format("%d<sup>rd</sup> of %d", mDetail.floor, mDetail.totalFloors);
+                            } else {
+                                overViewItem.value = String.format("%d<sup>th</sup> of %d", mDetail.floor, mDetail.totalFloors);
+                            }
+                        }
                         overViewItem.name = overview.toString();
-                        overViewItem.resourceId = R.drawable.possession;
-                        overViewItem.value = String.valueOf(mDetail.floor);
+                        overViewItem.resourceId = R.drawable.floor;
+                        break;
+                    case OWNER_TYPE:
+                        if(mDetail.ownershipTypeId!=null) {
+                            overViewItem.name = overview.toString();
+                            overViewItem.resourceId = R.drawable.possession;
+                            overViewItem.value = MasterDataCache.getInstance().getOwnershipType(mDetail.ownershipTypeId);
+                        }
+                        break;
+                    case OPEN_SIDES:
+                        if(mDetail.noOfOpenSides!=null) {
+                            overViewItem.name = overview.toString();
+                            overViewItem.resourceId = R.drawable.possession;
+                            overViewItem.value = String.valueOf(mDetail.noOfOpenSides);
+                        }
+                        break;
+                    case BALCONY:
+                        if(mDetail.balcony!=null) {
+                            overViewItem.name = overview.toString();
+                            overViewItem.resourceId = R.drawable.possession;
+                            overViewItem.value = String.valueOf(mDetail.balcony);
+                        }
+                        break;
+                    case CATEGORY:
+                        if(mDetail.listingCategory!=null) {
+                            overViewItem.name = overview.toString();
+                            overViewItem.resourceId = R.drawable.new_resale;
+                            overViewItem.value = String.valueOf(mDetail.listingCategory);
+                        }
+                        break;
+                    case ENTRY_ROAD_WIDTH:
+                        if(mDetail.mainEntryRoadWidth!=null) {
+                            overViewItem.name = overview.toString();
+                            overViewItem.resourceId = R.drawable.possession;
+                            overViewItem.value = String.valueOf(mDetail.mainEntryRoadWidth);
+                        }
                         break;
                     case FACING:
-                        overViewItem.name = overview.toString();
-                        overViewItem.resourceId = R.drawable.possession;
-                        overViewItem.value = String.valueOf(mDetail.facingId);
+                        if(mDetail.facingId!=null) {
+                            overViewItem.name = overview.toString();
+                            overViewItem.resourceId = R.drawable.possession;
+                            overViewItem.value = String.valueOf(mDetail.facingId);
+                        }
                         break;
                     default:
                         overViewItem = null;
                 }
-                if (overViewItem != null) {
+                if (overViewItem != null && overViewItem.value!=null && !overViewItem.value.equals("0")) {
                     mOverViewItems.add(overViewItem);
                 }
             }
@@ -164,11 +222,11 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
 
         @Override
         public View inflateAndBindDataToView(HorizontalScrollItem dataItem, int positon) {
-            final View view = mInflater.inflate(R.layout.horizontal_scroll_item,null);
+            final View view = mInflater.inflate(R.layout.horizontal_overview_scroll_item,null);
             ButterKnife.bind(this,view);
-            imageView.setImageResource(dataItem.resourceId);
+            imageView.setDefaultImageResId(dataItem.resourceId);
             nameText.setText(dataItem.name);
-            valueText.setText(dataItem.value);
+            valueText.setText(Html.fromHtml(dataItem.value));
             return view;
         }
     }

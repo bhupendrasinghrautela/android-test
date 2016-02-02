@@ -1,47 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
     <!--Work in progress, a lot of dimens are hard coded-->
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
-
-    <com.makaan.ui.property.PropertyImageViewPager
-        android:id="@+id/property_image_viewpager"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_margin="@dimen/property_page_stack_like_pager_margin"
-        android:layout_height="@dimen/property_page_stack_like_pager_height" />
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_margin="@dimen/property_page_external_margin"
-        android:id="@+id/unit_name"
-        android:textSize="@dimen/property_page_text_size"
-        android:textColor="@color/listingBlack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <include layout="@layout/property_empty_view"/>
-    <include layout="@layout/builder_brief_layout"/>
-    <include layout="@layout/property_empty_view"/>
-    <include layout="@layout/listing_over_view_scroll_layout"/>
-    <include layout="@layout/property_empty_view"/>
-    <include layout="@layout/compressed_text_layout_for_white"/>
-    <include layout="@layout/property_empty_view"/>
-    <include layout="@layout/amenties_view_scroll_layout"/>
-    <include layout="@layout/property_empty_view"/>
-    <include layout="@layout/more_about_locality_layout"/>
-    <com.makaan.ui.amenity.AmenityViewPager
-        android:id="@+id/amenity_viewpager"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="@dimen/property_page_amenity_view_pager_margin_left"
-        android:layout_marginBottom="@dimen/property_page_amenity_view_pager_margin_bottom"
-        android:layout_height="@dimen/property_page_amenity_view_pager_height" />
-    <include layout="@layout/property_empty_view"/>
-    <include layout="@layout/similar_properties"/>
-</LinearLayout>
+        <com.makaan.ui.property.PropertyImageViewPager
+            android:visibility="gone"
+            android:id="@+id/property_image_viewpager"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/property_page_stack_like_pager_margin"
+            android:layout_height="@dimen/property_page_stack_like_pager_height" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/property_page_external_margin"
+            android:layout_marginTop="@dimen/property_page_unit_margin_top"
+            android:layout_marginBottom="@dimen/property_page_unit_margin_bottom"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/unit_name"
+                android:textSize="@dimen/property_page_text_size"
+                android:textColor="@color/listingBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/unit_area"
+                android:layout_toRightOf="@+id/unit_name"
+                android:textSize="@dimen/property_page_text_size"
+                android:textColor="@color/app_grey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <include layout="@layout/builder_brief_layout"/>
+        <include layout="@layout/listing_over_view_scroll_layout"/>
+        <include layout="@layout/compressed_text_layout_for_white"/>
+        <include layout="@layout/all_seller_layout"/>
+        <include layout="@layout/amenties_view_scroll_layout"/>
+        <include layout="@layout/project_specification"/>
+        <include layout="@layout/more_about_locality_layout"/>
+        <include layout="@layout/amenity_holder"/>
+        <FrameLayout
+            android:id="@+id/container_similar_projects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <View
+            android:layout_gravity="bottom"
+            android:layout_marginTop="@dimen/project_contact_seller_top_margin"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/project_yellow_strip_above_contact_seller_button_height"
+            android:background="@color/app_yellow"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/project_button_contact_seller_height"
+            android:textColor="@color/white"
+            android:textSize="@dimen/project_button_contact_seller_text_height"
+            android:background="@color/project_similar_projects_red"
+            android:textAllCaps="false"
+            android:text="@string/project_button_contact_seller_text"
+            />
+    </LinearLayout>
 </ScrollView>
