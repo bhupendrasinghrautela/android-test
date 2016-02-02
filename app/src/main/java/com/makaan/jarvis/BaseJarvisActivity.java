@@ -146,7 +146,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
                 //TODO card factory is required to determine type of card
 
-                BaseCtaView card = CtaCardFactory.createCard(getApplicationContext(), message);
+                BaseCtaView card = CtaCardFactory.createCard(BaseJarvisActivity.this, message);
 
                 mCardCta.addView(card);
                 showPopupWithAnim();
