@@ -17,6 +17,7 @@ import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.event.serp.GroupSerpGetEvent;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.jarvis.JarvisConstants;
 import com.makaan.pojo.GroupCluster;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.listing.GroupListing;
@@ -25,6 +26,8 @@ import com.makaan.adapter.listing.SerpListingAdapter;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.SearchSuggestionType;
 import com.makaan.ui.PaginatedListView;
+import com.segment.analytics.Analytics;
+import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
 
@@ -201,5 +204,13 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
     @Override
     public void onLoadMoreItems() {
         mSerpRequestCallback.loadMoreItems();
+
+        //TODO temp for testing
+        Analytics.with(getActivity()).track(JarvisConstants.DELIVERY_ID, new Properties()
+                .putValue("listing_id", mListings.get(9).id)
+                .putValue("serp_visible_item", 9)
+                .putValue("serp_filter_budget", null)
+                .putValue("serp_filter_property_type", null)
+                .putValue("serp_filter_bhk", null));
     }
 }

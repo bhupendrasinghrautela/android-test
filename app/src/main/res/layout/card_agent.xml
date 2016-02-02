@@ -40,4 +40,36 @@
         android:isIndicator="true"
         style="?android:attr/ratingBarStyleSmall"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+
+        <Button
+            android:id="@+id/btn_no"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_red"
+            android:text="Cancel"
+            android:textColor="@color/app_red"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn_yes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/filled_red"
+            android:text="Submit"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
 </com.makaan.jarvis.ui.cards.AgentRatingCard>
