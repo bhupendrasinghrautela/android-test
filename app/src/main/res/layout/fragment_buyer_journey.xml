@@ -9,11 +9,11 @@
         android:layout_height="wrap_content">
 
         <View
-            android:layout_width="1dp"
+            android:layout_width="1px"
             android:layout_height="@dimen/view_height"
             android:layout_marginLeft="@dimen/view_left_margin"
             android:layout_marginTop="@dimen/view_top_margin"
-            android:background="@color/app_grey" />
+            android:background="@color/buyer_journey_view_grey_color" />
 
         <LinearLayout
             android:id="@+id/ll_home_search"
@@ -24,6 +24,7 @@
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
+                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -44,9 +45,11 @@
             android:layout_below="@+id/ll_home_search"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/padding_layout"
+            android:paddingLeft="@dimen/view_left_padding_layout"
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
+                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -74,6 +77,7 @@
             </LinearLayout>
 
             <ImageView
+                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -87,9 +91,11 @@
             android:layout_below="@+id/ll_first"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/padding_layout"
+            android:paddingLeft="@dimen/view_left_padding_layout"
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
+                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -116,6 +122,7 @@
             </LinearLayout>
 
             <ImageView
+                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -129,9 +136,11 @@
             android:layout_below="@+id/ll_second"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/padding_layout"
+            android:paddingLeft="@dimen/view_left_padding_layout"
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
+                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -158,6 +167,7 @@
             </LinearLayout>
 
             <ImageView
+                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -175,6 +185,7 @@
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
+                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -225,6 +236,7 @@
                 android:background="@drawable/white_stroke_button"
                 android:padding="5dp"
                 android:text="get rs 15000"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -240,6 +252,7 @@
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
+                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -260,9 +273,11 @@
             android:layout_below="@+id/ll_booking"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/padding_layout"
+            android:paddingLeft="@dimen/view_left_padding_layout"
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
+                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -290,6 +305,7 @@
             </LinearLayout>
 
             <ImageView
+                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -303,13 +319,16 @@
             android:layout_below="@+id/ll_fifth"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/padding_layout"
+            android:paddingLeft="@dimen/view_left_padding_layout"
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
+                android:layout_marginLeft="1dp"
+                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/journey_lock" />
+                android:src="@drawable/journey_unit_booking" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -333,6 +352,7 @@
             </LinearLayout>
 
             <ImageView
+                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -346,9 +366,12 @@
             android:layout_below="@+id/ll_sixth"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/padding_layout"
+            android:paddingLeft="@dimen/view_left_padding_layout"
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
+                android:layout_marginLeft="2dp"
+                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -376,6 +399,7 @@
             </LinearLayout>
 
             <ImageView
+                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -389,9 +413,12 @@
             android:layout_below="@+id/ll_seventh"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/padding_layout"
+            android:layout_marginLeft="@dimen/view_left_padding_layout"
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
+                android:layout_marginLeft="@dimen/view_left_padding_layout"
+                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -419,6 +446,7 @@
             </LinearLayout>
 
             <ImageView
+                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
