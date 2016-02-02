@@ -1071,6 +1071,10 @@
     <dimen name="shortlist_text_size_large">24sp</dimen>
     <dimen name="shortlist_text_size_medium">18sp</dimen>
     <dimen name="shortlist_text_size_small">16sp</dimen>
+    <dimen name="prject_amenities_margin_bottom">12dp</dimen>
+    <dimen name="prject_amenities_margin_right">12dp</dimen>
+    <dimen name="prject_amenities_margin_left">12dp</dimen>
+    <dimen name="prject_amenities_margin_top">12dp</dimen>
 
     <dimen name="zero_weight">0dp</dimen>
     <dimen name="drawable_top_padding">10dp</dimen>

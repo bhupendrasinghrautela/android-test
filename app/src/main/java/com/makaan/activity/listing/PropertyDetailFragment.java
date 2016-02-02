@@ -161,7 +161,6 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
         Bundle args = getArguments();
         listingId = args.getLong(KeyUtil.LISTING_ID);
         listingMainUrl = args.getString(KeyUtil.LISTING_Image);
-
     }
 
     @Produce

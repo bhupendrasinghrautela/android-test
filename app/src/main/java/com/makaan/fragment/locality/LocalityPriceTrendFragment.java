@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
@@ -38,8 +40,6 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
 
     @Bind(R.id.price_trend_view)
     public PriceTrendView priceTrendView;
-    @Bind(R.id.price_range_tabs)
-    public TabLayout tabLayout;
     @Bind(R.id.tv_price_trends_median_desc)
     public TextView trendsMedianTv;
     @Bind(R.id.tv_price_trends_growth_desc)
@@ -52,8 +52,17 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
     RecyclerView mRecyclerView;
     @Bind(R.id.header_text_popular_searches)
     public TextView popularSearchesTv;
+    @Bind(R.id.ll_price_trends_first)
+    LinearLayout priceTrendsFirstLl;
+    @Bind(R.id.ll_price_trends_second)
+    LinearLayout priceTrendsSecondLl;
+    @Bind(R.id.ll_price_trends_third)
+    LinearLayout priceTrendsThirdLl;
+
+
     private LinearLayoutManager mLayoutManager;
     private PopularSearchesAdapter mAdapter;
+    private String localityName;
 
 
     @Override
@@ -66,7 +75,7 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         super.onActivityCreated(savedInstanceState);
         initView();
         new LocalityService().getTrendingSearchesInLocality(localityId);
-        fetchData(12);
+        fetchData(60);
     }
 
     private void fetchData(int months) {
@@ -75,7 +84,10 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         new PriceTrendService().getPriceTrendForLocalities(localityIds, months, new LocalityTrendCallback() {
             @Override
             public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
-                priceTrendView.bindView(localityPriceTrendDto);
+                if (localityPriceTrendDto.data != null && localityPriceTrendDto.data.size() != 0)
+                    priceTrendView.bindView(localityPriceTrendDto);
+                else
+                    priceTrendView.setVisibility(View.GONE);
             }
         });
 
@@ -94,28 +106,24 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         primaryRise = getArguments().getDouble("primaryRise");
         secondaryAverage = getArguments().getDouble("secondaryAverage");
         secondaryMedian = getArguments().getInt("secondaryMedian");
+        localityName = getArguments().getString("localityName");
 
         titleTv.setText(title);
-        trendsMedianTv.setText("the median home value in electronic city is "+primaryMedian+" / sq ft.");
-        trendsGrowthTv.setText("electronic city home values have gone up +" + primaryRise + " over the past year and makaan predicts they will rise around 0% withing the next year.");
-        trendsRentGrowthTv.setText("the average rent price in electronic city is " + secondaryAverage + " which is higher than city median of " + secondaryMedian);
-
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                fetchData(getMonths(tab.getPosition()));
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+        if(primaryMedian != 0) {
+            trendsMedianTv.setText("the median home value in " + localityName + " is " + primaryMedian + " / sq ft.");
+        }else{
+            priceTrendsFirstLl.setVisibility(View.GONE);
+        }
+        if(primaryRise != 0)
+            trendsGrowthTv.setText(localityName+" home values have gone up +" + primaryRise + " over the past year");
+        else{
+            priceTrendsSecondLl.setVisibility(View.GONE);
+        }
+        if(secondaryAverage !=0 && secondaryMedian!=0)
+            trendsRentGrowthTv.setText("the average rent price in "+localityName+" is " + secondaryAverage + " which is higher than city median of " + secondaryMedian);
+        else{
+            priceTrendsThirdLl.setVisibility(View.GONE);
+        }
     }
 
     private int getMonths(int position) {

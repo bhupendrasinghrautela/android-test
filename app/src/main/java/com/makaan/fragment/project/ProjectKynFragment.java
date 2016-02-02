@@ -49,6 +49,7 @@ public class ProjectKynFragment extends MakaanBaseFragment{
     private String description;
     private Double score;
     private Context context;
+    private List<AmenityCluster> amenityClusters;
 
     @Override
     protected int getContentViewId() {
@@ -74,14 +75,18 @@ public class ProjectKynFragment extends MakaanBaseFragment{
         }
         descriptionTv.setText(Html.fromHtml(description));
         titleTv.setText(title);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
+        if(amenityClusters.size()>0) {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mRecyclerView.setHasFixedSize(true);
+            mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+            mRecyclerView.setAdapter(mAdapter);
+        }
     }
 
     public void setData(List<AmenityCluster> amenityClusters) {
-        mAdapter = new KnowYourNeighbourhoodAdapter(filterDataWithLessThan3Amenities(amenityClusters));
+        this.amenityClusters = filterDataWithLessThan3Amenities(amenityClusters);
+        mAdapter = new KnowYourNeighbourhoodAdapter(this.amenityClusters);
         if (mRecyclerView != null)
             mRecyclerView.setAdapter(mAdapter);
     }

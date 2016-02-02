@@ -27,8 +27,9 @@
     android:layout_marginLeft="80dp"
     android:layout_marginRight="80dp"
     android:textColor="@color/white"
+    android:id="@+id/tv_locality_interested_in"
     android:textSize="24sp"
-    android:text="interested in electronic city?"
+    android:text=""
     />
 <Button
     android:layout_width="150dp"

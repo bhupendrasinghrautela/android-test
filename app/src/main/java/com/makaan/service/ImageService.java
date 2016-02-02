@@ -25,7 +25,6 @@ public class ImageService implements MakaanService {
 
     }
 
-
     public void getImages(final Long objectId, final Integer objectType) {
         if (null != objectId) {
             Type listingDetailImageList = new TypeToken<ArrayList<Image>>() {

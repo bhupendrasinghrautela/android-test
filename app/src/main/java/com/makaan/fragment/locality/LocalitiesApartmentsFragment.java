@@ -172,20 +172,20 @@ public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
     }
 
     private void calculateMinForOneBhks(DataItem dataItem, ListingAggregation listingAggregation) {
-        if(dataItem.oneBhkMinArea == 0)
+        if(dataItem.oneBhkMinArea == 0&&listingAggregation.minSize>100)
             dataItem.oneBhkMinArea= listingAggregation.minSize;
         else
-        if(dataItem.oneBhkMinArea>listingAggregation.minSize){dataItem.oneBhkMinArea=listingAggregation.minSize;}
+        if(dataItem.oneBhkMinArea>listingAggregation.minSize&&listingAggregation.minSize>100){dataItem.oneBhkMinArea=listingAggregation.minSize;}
 
-        if(dataItem.oneBhkMinPricePerArea == 0)
+        if(dataItem.oneBhkMinPricePerArea == 0&&listingAggregation.minPricePerUnitArea>100)
             dataItem.oneBhkMinPricePerArea= listingAggregation.minPricePerUnitArea;
         else
-        if(dataItem.oneBhkMinPricePerArea>listingAggregation.minPricePerUnitArea){dataItem.oneBhkMinPricePerArea=listingAggregation.minPricePerUnitArea;}
+        if(dataItem.oneBhkMinPricePerArea>listingAggregation.minPricePerUnitArea&&listingAggregation.minPricePerUnitArea>100){dataItem.oneBhkMinPricePerArea=listingAggregation.minPricePerUnitArea;}
 
-        if(dataItem.oneBhkMinPrice == 0)
+        if(dataItem.oneBhkMinPrice == 0&&listingAggregation.minPrice>100000)
             dataItem.oneBhkMinPrice= listingAggregation.minPrice;
         else
-        if(dataItem.oneBhkMinPrice>listingAggregation.minPrice){dataItem.oneBhkMinPrice=listingAggregation.minPrice;}
+        if(dataItem.oneBhkMinPrice>listingAggregation.minPrice&&listingAggregation.minPrice>100000){dataItem.oneBhkMinPrice=listingAggregation.minPrice;}
 
     }
 
@@ -196,20 +196,20 @@ public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
     }
 
     private void calculateMinForTwoBhks(DataItem dataItem, ListingAggregation listingAggregation) {
-        if(dataItem.twoBhkMinArea == 0)
+        if(dataItem.twoBhkMinArea == 0&&listingAggregation.minSize>100)
             dataItem.twoBhkMinArea= listingAggregation.minSize;
         else
-        if(dataItem.twoBhkMinArea>listingAggregation.minSize){dataItem.twoBhkMinArea=listingAggregation.minSize;}
+        if(dataItem.twoBhkMinArea>listingAggregation.minSize&&listingAggregation.minSize>100){dataItem.twoBhkMinArea=listingAggregation.minSize;}
 
-        if(dataItem.twoBhkMinPricePerArea == 0)
+        if(dataItem.twoBhkMinPricePerArea == 0&&listingAggregation.minPrice>100000)
             dataItem.twoBhkMinPricePerArea= listingAggregation.minPrice;
         else
-        if(dataItem.twoBhkMinPricePerArea>listingAggregation.minPrice){dataItem.twoBhkMinPricePerArea=listingAggregation.minPrice;}
+        if(dataItem.twoBhkMinPricePerArea>listingAggregation.minPrice&&listingAggregation.minPrice>100000){dataItem.twoBhkMinPricePerArea=listingAggregation.minPrice;}
 
-        if(dataItem.twoBhkMinPrice == 0)
+        if(dataItem.twoBhkMinPrice == 0&&listingAggregation.minPricePerUnitArea>100)
             dataItem.twoBhkMinPrice= listingAggregation.minPricePerUnitArea;
         else
-        if(dataItem.twoBhkMinPrice>listingAggregation.minPricePerUnitArea){dataItem.twoBhkMinPrice=listingAggregation.minPricePerUnitArea;}
+        if(dataItem.twoBhkMinPrice>listingAggregation.minPricePerUnitArea&&listingAggregation.minPricePerUnitArea>100){dataItem.twoBhkMinPrice=listingAggregation.minPricePerUnitArea;}
     }
 
     private void calculateMaxForThreeBhks(DataItem dataItem, ListingAggregation listingAggregation) {
@@ -219,20 +219,20 @@ public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
     }
 
     private void calculateMinsForThreeBhks(DataItem dataItem, ListingAggregation listingAggregation) {
-        if(dataItem.threeBhkMinArea == 0)
+        if(dataItem.threeBhkMinArea == 0&&listingAggregation.minSize>100)
             dataItem.threeBhkMinArea= listingAggregation.minSize;
         else
-        if(dataItem.threeBhkMinArea>listingAggregation.minSize){dataItem.threeBhkMinArea=listingAggregation.minSize;}
+        if(dataItem.threeBhkMinArea>listingAggregation.minSize&&listingAggregation.minSize>100){dataItem.threeBhkMinArea=listingAggregation.minSize;}
 
-        if(dataItem.threeBhkMinPricePerArea == 0)
+        if(dataItem.threeBhkMinPricePerArea == 0&&listingAggregation.minPricePerUnitArea>100)
             dataItem.threeBhkMinPricePerArea= listingAggregation.minPricePerUnitArea;
         else
-        if(dataItem.threeBhkMinPricePerArea>listingAggregation.minPricePerUnitArea){dataItem.threeBhkMinPricePerArea=listingAggregation.minPricePerUnitArea;}
+        if(dataItem.threeBhkMinPricePerArea>listingAggregation.minPricePerUnitArea&&listingAggregation.minPricePerUnitArea>100){dataItem.threeBhkMinPricePerArea=listingAggregation.minPricePerUnitArea;}
 
-        if(dataItem.threeBhkMinPrice == 0)
+        if(dataItem.threeBhkMinPrice == 0&&listingAggregation.minPrice>100000)
             dataItem.threeBhkMinPrice= listingAggregation.minPrice;
         else
-        if(dataItem.threeBhkMinPrice>listingAggregation.minPrice){dataItem.threeBhkMinPrice=listingAggregation.minPrice;}
+        if(dataItem.threeBhkMinPrice>listingAggregation.minPrice&&listingAggregation.minPrice>100000){dataItem.threeBhkMinPrice=listingAggregation.minPrice;}
     }
 
     private void filterPrimaryAndSecondary(ArrayList<ListingAggregation> nearByLocalities) {
@@ -301,17 +301,17 @@ public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
             holder.oneBhkLabel.setText("1 bhk");
             holder.oneBhkAreaRange.setText(property.oneBhkMinArea+" - "+property.oneBhkMaxArea+" sq ft");
             holder.oneBhkPriceAreaRange.setText(property.oneBhkMinPricePerArea+" - "+property.oneBhkMaxPricePerArea+" / sq ft");
-            holder.oneBhkPriceRange.setText("Rs "+property.oneBhkMinPrice+" - "+property.oneBhkMaxPrice);
+            holder.oneBhkPriceRange.setText("\u20B9 "+(String.format("%.1f", property.oneBhkMinPrice/100000))+" L"+" - "+(String.format("%.1f", property.oneBhkMaxPrice/100000))+" L");
+
 
             holder.twoBhkLabel.setText("2 bhk");
             holder.twoBhkAreaRange.setText(property.twoBhkMinArea+" - "+property.twoBhkMaxArea+" sq ft");
-            holder.twoBhkPriceAreaRange.setText(property.twoBhkMinPricePerArea+" - "+property.twoBhkMaxAPricePerArea+" / sq ft");
-            holder.twoBhkPriceRange.setText("Rs "+property.twoBhkMinPrice+" - "+property.twoBhkMaxPrice);
+            holder.twoBhkPriceRange.setText("\u20B9 "+(String.format("%.1f", property.twoBhkMinPrice/100000))+" L"+" - "+(String.format("%.1f", property.twoBhkMaxPrice/100000))+" L");
 
             holder.threeBhkLabel.setText("3 bhk");
             holder.threeBhkAreaRange.setText(property.threeBhkMinArea+" - "+property.threeBhkMaxArea+" sq ft");
             holder.threeBhkPriceAreaRange.setText(property.threeBhkMinPricePerArea+" - "+property.threeBhkMaxPricePerArea+" / sq ft");
-            holder.threeBhkPriceRange.setText("Rs "+property.threeBhkMinPrice+" - "+property.threeBhkMaxPrice);
+            holder.threeBhkPriceRange.setText("\u20B9 "+(String.format("%.1f", property.threeBhkMinPrice/100000))+" L"+" - "+(String.format("%.1f", property.threeBhkMaxPrice/100000))+" L");
         }
 
         @Override

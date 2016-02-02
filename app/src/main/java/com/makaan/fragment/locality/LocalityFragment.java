@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
+import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.constants.RequestConstants;
 import com.makaan.event.agents.callback.TopAgentsCallback;
@@ -53,6 +54,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by tusharchaudhary on 1/21/16.
@@ -74,16 +76,30 @@ public class LocalityFragment extends MakaanBaseFragment{
     ProgressBar livingScoreProgress;
     @Bind(R.id.tv_locality_per_sqr_ft_median_price)
     TextView salesMedianPrice;
+    @Bind(R.id.tv_locality_per_sqr_ft_median_price_label)
+    TextView salesMedianPriceLabel;
     @Bind(R.id.tv_locality_per_sqr_ft_median_price_rent)
     TextView rentMedianPrice;
+    @Bind(R.id.tv_locality_per_sqr_ft_median_price_rent_label)
+    TextView rentMedianPriceLabel;
     @Bind(R.id.tv_locality_annual_growth)
     TextView annualGrowthTv;
+    @Bind(R.id.tv_locality_annual_growth_label)
+    TextView annualGrowthLabelTv;
     @Bind(R.id.tv_locality_annual_growth_rent)
     TextView annualRentDemandGrowthTv;
+    @Bind(R.id.tv_locality_annual_growth_label_rent)
+    TextView annualRentDemandGrowthLabelTv;
     @Bind(R.id.ll_locality_fragment)
     LinearLayout frame;
     @Bind(R.id.compressed_text_view)
     CompressedTextView compressedTv;
+    @Bind(R.id.view_locality_seperator)
+    View firstSectionSeperator;
+    @Bind(R.id.view_locality_seperator_2)
+    View secondSectionSeperator;
+    @Bind(R.id.tv_locality_interested_in)
+    TextView interestedInTv;
 
     private static final int BLUR_EFFECT_HEIGHT = 300;
     private float alpha;
@@ -155,18 +171,56 @@ public class LocalityFragment extends MakaanBaseFragment{
     private void populateLocalityData() {
         if(locality.description !=null && !locality.description.isEmpty())
             overviewContentTV.setText(Html.fromHtml(locality.description));
-        else
+        else {
             compressedTv.setVisibility(View.GONE);
+        }
         mCityCollapseToolbar.setTitle(locality.label);
         livinScoreTv.setText("" + locality.livabilityScore);
         livingScoreProgress.setProgress(locality.livabilityScore == null ? 0 : (int) (locality.livabilityScore * 10));
         livingScoreProgress.setVisibility(locality.livabilityScore == null ? View.GONE : View.VISIBLE);
-        livinScoreTv.setVisibility(locality.livabilityScore == null ? View.GONE: View.VISIBLE);
+        livinScoreTv.setVisibility(locality.livabilityScore == null ? View.GONE : View.VISIBLE);
         calculateMedian(locality.listingAggregations);
-        salesMedianPrice.setText("Rs " + meadianSale + " / sq ft");
-        rentMedianPrice.setText("Rs " + meadianRental + " / month");
-        annualGrowthTv.setText(locality.avgPriceRisePercentage == null ? "N/A" : "" + locality.avgPriceRisePercentage + " %");
-        annualRentDemandGrowthTv.setText(locality.avgRentalDemandRisePercentage == null ? "N/A" : "" + locality.avgPriceRisePercentage + " %");
+        interestedInTv.setText("interested in "+locality.label+"?");
+        boolean showFirstSectionDivider = false;
+        boolean showSecondSectionDivider = false;
+        if(meadianSale != null && meadianSale.intValue() != 0) {
+            showFirstSectionDivider = true;
+            salesMedianPrice.setVisibility(View.VISIBLE);
+            salesMedianPriceLabel.setVisibility(View.VISIBLE);
+            salesMedianPrice.setText("\u20B9 " + meadianSale + " / sq ft");
+        }
+        if(meadianRental != null && meadianRental.intValue() != 0) {
+            showSecondSectionDivider = true;
+            rentMedianPrice.setVisibility(View.VISIBLE);
+            rentMedianPriceLabel.setVisibility(View.VISIBLE);
+            rentMedianPrice.setText("\u20B9 " + meadianRental + " / month");
+        }
+        if(locality.avgPriceRisePercentage!=null){
+            showFirstSectionDivider = true;
+            annualGrowthLabelTv.setVisibility(View.VISIBLE);
+            annualGrowthTv.setVisibility(View.VISIBLE);
+            annualGrowthTv.setText(locality.avgPriceRisePercentage + " %");
+        }
+       if(locality.avgRentalDemandRisePercentage != null) {
+            showSecondSectionDivider = true;
+            annualRentDemandGrowthTv.setVisibility(View.VISIBLE);
+            annualRentDemandGrowthLabelTv.setVisibility(View.VISIBLE);
+            annualRentDemandGrowthTv.setText(locality.avgPriceRisePercentage + " %");
+        }
+        if(!showSecondSectionDivider) {
+            rentMedianPrice.setVisibility(View.GONE);
+            rentMedianPriceLabel.setVisibility(View.GONE);
+            annualRentDemandGrowthLabelTv.setVisibility(View.GONE);
+            annualRentDemandGrowthTv.setVisibility(View.GONE);
+            secondSectionSeperator.setVisibility(View.GONE);
+        }
+        if(!showFirstSectionDivider) {
+            annualGrowthTv.setVisibility(View.GONE);
+            annualGrowthLabelTv.setVisibility(View.GONE);
+            firstSectionSeperator.setVisibility(View.GONE);
+            salesMedianPrice.setVisibility(View.GONE);
+            salesMedianPriceLabel.setVisibility(View.GONE);
+        }
     }
 
     private void initListeners() {
@@ -229,6 +283,7 @@ public class LocalityFragment extends MakaanBaseFragment{
         bundle.putDouble("primaryRise", locality.avgPriceRisePercentage == null ? 0 : locality.avgPriceRisePercentage);
         bundle.putDouble("secondaryAverage", locality.averageRentPerMonth == null ? 0 : locality.averageRentPerMonth);
         bundle.putInt("secondaryMedian", meadianRental == null ? 0 : meadianRental);
+        bundle.putString("localityName", locality.label);
         newFragment.setArguments(bundle);
         initFragment(R.id.container_nearby_localities_price_trends, newFragment, false);
     }
@@ -238,7 +293,7 @@ public class LocalityFragment extends MakaanBaseFragment{
         if(entityDescriptions != null && entityDescriptions.size()>0) {
             LocalityLifestyleFragment newFragment = new LocalityLifestyleFragment();
             Bundle bundle = new Bundle();
-            bundle.putString("title", getResources().getString(R.string.localities_lifestyle_title));
+            bundle.putString("title", getResources().getString(R.string.localities_lifestyle_title)+" "+locality.label);
             newFragment.setArguments(bundle);
             initFragment(R.id.container_nearby_localities_lifestyle, newFragment, false);
             newFragment.setData(entityDescriptions);
@@ -273,7 +328,7 @@ public class LocalityFragment extends MakaanBaseFragment{
         if (taxonomyCardList != null && taxonomyCardList.size() > 0) {
             LocalityPropertiesFragment newFragment = new LocalityPropertiesFragment();
             Bundle bundle = new Bundle();
-            bundle.putString("title", getResources().getString(R.string.locality_properties_label));
+            bundle.putString("title", getResources().getString(R.string.locality_properties_label)+" "+locality.label);
             newFragment.setArguments(bundle);
             initFragment(R.id.container_nearby_localities_props, newFragment, false);
             newFragment.setData(taxonomyCardList);
@@ -306,30 +361,26 @@ public class LocalityFragment extends MakaanBaseFragment{
 
 
     private void calculateMedian(ArrayList<ListingAggregation> listingAggregations) {
-        double rentalMedian = 0, saleMedian = 0;
-        int countsRental = 0, countsSales = 0;
-        for (ListingAggregation ListingAggregation:listingAggregations){
-            if(ListingAggregation.listingCategory.equalsIgnoreCase(RequestConstants.PRIMARY) ||
-                    ListingAggregation.listingCategory.equalsIgnoreCase(RequestConstants.RESALE)){
+        double saleMedian = 0;
+        int countsSales = 0;
+        for (ListingAggregation ListingAggregation:listingAggregations) {
+            if (ListingAggregation.listingCategory.equalsIgnoreCase(RequestConstants.PRIMARY) ||
+                    ListingAggregation.listingCategory.equalsIgnoreCase(RequestConstants.RESALE)) {
                 saleMedian = saleMedian + ListingAggregation.avgPricePerUnitArea;
                 countsSales++;
-            }else{
-                rentalMedian = rentalMedian + ListingAggregation.avgPricePerUnitArea;
-                countsRental++;
             }
+        }
             if(countsSales!=0)
                 saleMedian = saleMedian / countsSales;
-            if(countsRental!=0)
-                rentalMedian = rentalMedian / countsRental;
 
             meadianSale = (int) saleMedian;
-            meadianRental = (int) rentalMedian;
-        }
+            meadianRental = locality.averageRentPerMonth == null? null : locality.averageRentPerMonth.intValue();
+
     }
 
     protected void initFragment(int fragmentHolderId, Fragment fragment, boolean shouldAddToBackStack) {
         // reference fragment transaction
-        FragmentTransaction fragmentTransaction =((LocalityActivity) mContext).getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(fragmentHolderId, fragment, fragment.getClass().getName());
         // if need to be added to the backstack, then do so
         if (shouldAddToBackStack) {

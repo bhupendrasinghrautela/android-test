@@ -144,10 +144,10 @@
     <string name="locality_nearby_localities_title">nearby localities</string>
     <string name="locality_available_locality_status">available property status</string>
     <string name="locality_price_trends_label">price trends</string>
-    <string name="localities_lifestyle_title">lifestyle in electronic city</string>
+    <string name="localities_lifestyle_title">lifestyle in</string>
     <string name="locality_top_agents_label">top agents</string>
     <string name="locality_top_builders_label">top builders</string>
-    <string name="locality_properties_label">properties in electronic city</string>
+    <string name="locality_properties_label">properties in</string>
     <string name="locality_switch_buy">buy</string>
     <string name="locality_switch_rent">rent</string>
 
@@ -204,6 +204,7 @@
 
     <!--Shortlist strings -->
     <string name="request_site_visit">request site visit</string>
+    <string name="project_amenities_title">amenities</string>
 
 
     <!--login strings-->

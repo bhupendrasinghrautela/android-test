@@ -1,0 +1,89 @@
+<LinearLayout
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginBottom="20dp"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:id="@+id/ll_price_trends_first"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:id="@+id/iv_price_trends_median"
+            android:src="@drawable/icon_yellow_heart"
+            />
+        <TextView
+            android:id="@+id/tv_price_trends_median_desc"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#444"
+            android:textSize="16sp"
+            android:layout_toRightOf="@id/iv_price_trends_median"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:id="@+id/ll_price_trends_second"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_below="@id/iv_price_trends_median"
+            android:id="@+id/iv_price_trends_growth"
+            android:src="@drawable/icon_yellow_heart"
+            />
+
+        <TextView
+            android:id="@+id/tv_price_trends_growth_desc"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_alignTop="@+id/iv_price_trends_growth"
+            android:layout_height="wrap_content"
+            android:textColor="#444"
+            android:textSize="16sp"
+            android:layout_toRightOf="@id/iv_price_trends_growth"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:id="@+id/ll_price_trends_third"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_below="@id/iv_price_trends_growth"
+            android:id="@+id/iv_price_trends_rent_growth"
+            android:src="@drawable/icon_yellow_heart"
+            />
+
+        <TextView
+            android:id="@+id/tv_price_trends_rent_growth_desc"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_alignTop="@id/iv_price_trends_rent_growth"
+            android:layout_height="wrap_content"
+            android:textColor="#444"
+            android:textSize="16sp"
+            android:layout_toRightOf="@id/iv_price_trends_growth"
+            />
+    </LinearLayout>
+
+</LinearLayout>

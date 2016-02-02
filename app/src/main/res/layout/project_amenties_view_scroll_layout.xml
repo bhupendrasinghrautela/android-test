@@ -3,12 +3,27 @@
     android:id="@+id/amenities_scroll_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:overScrollMode="never"
-    android:layout_margin="@dimen/property_page_internal_padding"
+    android:layout_marginBottom="@dimen/property_page_internal_padding"
+    android:layout_marginTop="@dimen/property_page_internal_padding"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/prject_amenities_margin_left"
+        android:layout_marginRight="@dimen/prject_amenities_margin_right"
+        android:layout_marginBottom="@dimen/prject_amenities_margin_bottom"
+        android:textColor="@color/project_similar_projects_default_color"
+        android:textSize="@dimen/locality_text_big"
+        android:gravity="center_horizontal"
+        android:text="@string/project_amenities_title"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/tv_localities_kyn_title"
+        />
+
     <com.makaan.ui.listing.CustomHorizontalScrollView
         android:id="@+id/amenity_data_scroll"
+        android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </com.makaan.ui.listing.CustomHorizontalScrollView>
