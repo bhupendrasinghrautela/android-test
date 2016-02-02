@@ -153,7 +153,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     private int mChildListingCount;
     private int mChildListingPage;
 
-    public Selector serpSelector = new Selector();
+    public Selector serpSelector = MakaanBuyerApplication.serpSelector;
 
     @Override
     protected int getContentViewId() {
