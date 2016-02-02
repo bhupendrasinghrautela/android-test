@@ -73,6 +73,6 @@ public class ProjectActivity extends MakaanBaseSearchActivity {
 
     @Override
     public boolean isJarvisSupported() {
-        return false;
+        return true;
     }
 }
