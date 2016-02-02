@@ -3,6 +3,7 @@ package com.makaan.activity;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.content.Intent;
 import android.graphics.Point;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
 import com.makaan.adapter.listing.SearchAdapter;
 import com.makaan.adapter.listing.SelectedSearchAdapter;
 import com.makaan.response.search.SearchResponseHelper;
@@ -72,6 +74,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
     @Bind(R.id.activity_search_base_layout_search_bar_user_image_view)
     ImageView mUserImageView;
+
     @Bind(R.id.activity_search_base_layout_search_bar_search_image_view)
     ImageView mSearchImageView;
 
@@ -599,7 +602,16 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         return list;
     }
 
+
     protected int getSearchBarHeight() {
         return mSearchLayoutFrameLayout.getHeight();
+    }
+
+    /**
+     * open buyer journey activity
+     */
+    @OnClick(R.id.activity_search_base_layout_search_bar_user_image_view)
+    public void click(){
+        startActivity(new Intent(MakaanBaseSearchActivity.this, BuyerJourneyActivity.class));
     }
 }

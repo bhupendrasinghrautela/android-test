@@ -35,6 +35,7 @@
                 android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_top"
                 android:layout_marginRight="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_right"
                 android:layout_marginEnd="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_right"
+                android:src="@drawable/profile_pic"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
                 <!--android:src="@color/app_grey" />-->

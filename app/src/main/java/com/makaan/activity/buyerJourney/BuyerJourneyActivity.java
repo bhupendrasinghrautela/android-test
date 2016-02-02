@@ -1,5 +1,6 @@
 package com.makaan.activity.buyerJourney;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -13,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.makaan.R;
+import com.makaan.activity.MakaanBaseSearchActivity;
+import com.makaan.ui.view.BadgeView;
 import com.pkmmte.view.CircularImageView;
 
 import butterknife.Bind;
@@ -68,7 +71,7 @@ public class BuyerJourneyActivity extends AppCompatActivity {
     private void setUserData() {
         //UserInfo userInfo = Preferences.getUserInfo(this);
         //mProfileImage.setImageURI(Uri.parse(userInfo.getData().getProfileImageUrl()));
-        mCollapsingToolbar.setTitle("User");
+        //mCollapsingToolbar.setTitle("User");
     }
 
     private void setupAppBar() {
@@ -91,6 +94,10 @@ public class BuyerJourneyActivity extends AppCompatActivity {
                 (getSupportFragmentManager(), mTabLayout.getTabCount());
 
         mViewPager.setAdapter(adapter);
+
+        BadgeView badge=new BadgeView(this,mTabLayout);
+        badge.setText("22");
+        badge.show();
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
@@ -125,6 +132,9 @@ public class BuyerJourneyActivity extends AppCompatActivity {
                 break;
             case R.id.item_logout:
                 //TODO
+                break;
+            case android.R.id.home:
+                onBackPressed();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
