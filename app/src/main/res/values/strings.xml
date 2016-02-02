@@ -222,7 +222,24 @@
     <string name="forgot_paswrd_heading">forgot password</string>
     <string name="send_reset">send reset link</string>
     <string name="user_name">user name</string>
+    <string name="guest_text">hi guest,\nlog into makaan for benefits</string>
+
+
+    <!--notifications strings -->
+    <string name="title_txt">title</string>
+    <string name="sub_title_txt">sub title</string>
+
+    <!--edit profile strings -->
+    <string name="my_account">my account</string>
+    <string name="contact_number">contact number</string>
+    <string name="current_password">current password</string>
+    <string name="new_password">new password</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="save">save</string>
+
+
 
 
 
 </resources>
+

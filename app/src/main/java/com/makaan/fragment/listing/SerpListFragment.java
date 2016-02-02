@@ -8,18 +8,16 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
-import com.makaan.event.serp.GroupSerpGetEvent;
-import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
+
 import com.makaan.jarvis.JarvisConstants;
 import com.makaan.pojo.GroupCluster;
 import com.makaan.request.selector.Selector;
+
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
 import com.makaan.adapter.listing.SerpListingAdapter;
@@ -37,13 +35,13 @@ import butterknife.Bind;
  * Created by rohitgarg on 1/6/16.
  * Listing Fragment which will house a recycler view to show all the listing as per user's search criteria
  */
-public class SerpListFragment extends MakaanBaseFragment implements PaginatedListView.PaginationListener {
+public class SerpListFragment extends MakaanBaseFragment implements PaginatedListView.PaginationListener, PaginatedListView.ScrollListener {
     private static final String KEY_IS_CHILD_SERP = "is_child_serp";
 
     @Bind(R.id.fragment_listing_recycler_view)
     PaginatedListView mListingRecyclerView;
-    @Bind(R.id.fragment_listing_total_properties_text_view)
-    TextView mTotalPropertiesTextView;
+    /*@Bind(R.id.fragment_listing_total_properties_text_view)
+    TextView mTotalPropertiesTextView;*/
 
     private SerpListingAdapter mListingAdapter;
     private LinearLayoutManager mLayoutManager;
@@ -89,11 +87,12 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         if(activity != null) {
             initializeRecyclerViewData();
             mListingRecyclerView.setPaginableListener(this);
+            mListingRecyclerView.setScrollListener(this);
             if(mListings != null) {
-                if(mTotalPropertiesTextView != null) {
+                /*if(mTotalPropertiesTextView != null) {
                     mTotalPropertiesTextView.setText(String.format("%d %s", mTotalCount, mSearchedEntities));
-                }
-                mListingAdapter.setData(mListings, mGroupListings, mRequestType);
+                }*/
+                mListingAdapter.setData(String.format("%d %s", mTotalCount, mSearchedEntities), mListings, mGroupListings, mRequestType);
                 if(mTotalCount > mListings.size()) {
                     mListingRecyclerView.setHasMoreItems(true);
                 } else {
@@ -161,14 +160,14 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
 
         if(mListingAdapter != null && mListingRecyclerView != null) {
 
-            if(mTotalPropertiesTextView != null) {
+            /*if(mTotalPropertiesTextView != null) {
                 if(mRequestType == SerpActivity.TYPE_BUILDER || mRequestType == SerpActivity.TYPE_SELLER) {
                     mTotalPropertiesTextView.setVisibility(View.GONE);
                 } else {
                     mTotalPropertiesTextView.setVisibility(View.VISIBLE);
                     mTotalPropertiesTextView.setText(String.format("%d %s", listingTotalCount, mSearchedEntities));
                 }
-            }
+            }*/
 
             if((requestType & SerpActivity.MASK_LISTING_UPDATE_TYPE) != SerpActivity.TYPE_LOAD_MORE) {
                 mListingRecyclerView.scrollToPosition(0);
@@ -180,9 +179,9 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
 
             if(groupListings != null) {
                 mGroupListings.addAll(groupListings);
-                mListingAdapter.setData(mListings, mGroupListings, mRequestType);
+                mListingAdapter.setData(String.format("%d %s", listingTotalCount, mSearchedEntities), mListings, mGroupListings, mRequestType);
             } else {
-                mListingAdapter.setData(mListings, null, mRequestType);
+                mListingAdapter.setData(String.format("%d %s", listingTotalCount, mSearchedEntities), mListings, null, mRequestType);
             }
 
             if(listingTotalCount > mListings.size()) {
@@ -212,5 +211,10 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
                 .putValue("serp_filter_budget", null)
                 .putValue("serp_filter_property_type", null)
                 .putValue("serp_filter_bhk", null));
+    }
+
+    @Override
+    public void onScrolled(int dx, int dy, int state) {
+        mSerpRequestCallback.onListScrolled(dx, dy, state);
     }
 }

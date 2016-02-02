@@ -35,6 +35,7 @@
                 android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_top"
                 android:layout_marginRight="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_right"
                 android:layout_marginEnd="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_right"
+                android:src="@drawable/profile_pic"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
                 <!--android:src="@color/app_grey" />-->
@@ -106,6 +107,7 @@
                 android:layout_marginStart="@dimen/activity_search_base_layout_search_bar_search_text_view_margin_left"
                 android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_search_text_view_margin_top"
                 android:textColor="@color/white"
+                android:textColorHint="@color/white_hint_color"
                 android:textSize="@dimen/activity_search_base_layout_search_bar_search_text_view_text_size"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
@@ -114,7 +116,8 @@
                 android:singleLine="true"
                 android:background="@null"
                 android:imeOptions="actionSearch"
-                android:textCursorDrawable="@drawable/search_view_white_cursor"/>
+                android:textCursorDrawable="@drawable/search_view_white_cursor"
+                android:hint="@string/search_default_hint"/>
 
         </RelativeLayout>
     </RelativeLayout>

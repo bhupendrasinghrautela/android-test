@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
  */
 public class BuyerJourneyPagerAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
-
     public BuyerJourneyPagerAdapter(FragmentManager fm, int numOfTabs) {
         super(fm);
         this.mNumOfTabs = numOfTabs;
@@ -23,7 +22,7 @@ public class BuyerJourneyPagerAdapter extends FragmentStatePagerAdapter {
                 BuyerJourneyFragment journeyFragment = new BuyerJourneyFragment();
                 return journeyFragment;
             case 1:
-                BuyerJourneyFragment notificationsFragment = new BuyerJourneyFragment();
+                NotificationsFragment notificationsFragment = new NotificationsFragment();
                 return notificationsFragment;
             default:
                 return null;

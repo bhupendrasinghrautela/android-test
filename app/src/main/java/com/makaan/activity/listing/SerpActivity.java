@@ -5,7 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -45,7 +47,6 @@ import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.logging.Filter;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -152,6 +153,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     private int mChildListingCount;
     private int mChildListingPage;
 
+    public Selector serpSelector = MakaanBuyerApplication.serpSelector;
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_serp;
@@ -171,13 +174,13 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         if(intent != null) {
             type = intent.getIntExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_UNKNOWN);
             if(type == SerpActivity.TYPE_HOME){
-                MakaanBuyerApplication.serpSelector.reset();
+                serpSelector.reset();
                 int data = intent.getIntExtra(REQUEST_DATA, REQUEST_DATA_HOME_BUY);
-                MakaanBuyerApplication.serpSelector.removeTerm("listingCategory");
+                serpSelector.removeTerm("listingCategory");
                 if(data == REQUEST_DATA_HOME_BUY) {
-                    MakaanBuyerApplication.serpSelector.term("listingCategory", new String[]{"Primary","Resale"});
+                    serpSelector.term("listingCategory", new String[]{"Primary","Resale"});
                 } else {
-                    MakaanBuyerApplication.serpSelector.term("listingCategory", new String[]{"Rental"});
+                    serpSelector.term("listingCategory", new String[]{"Rental"});
                 }
 
                 mSerpContext = MakaanBaseSearchActivity.SERP_CONTEXT_BUY;
@@ -187,23 +190,23 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             } else if (type == SerpActivity.TYPE_GPID) {
                 String gpId = intent.getStringExtra(REQUEST_DATA);
                 if(!TextUtils.isEmpty(gpId)) {
-                    serpRequest(SerpActivity.TYPE_GPID, MakaanBuyerApplication.serpSelector, gpId);
+                    serpRequest(SerpActivity.TYPE_GPID, serpSelector, gpId);
                 }
             } else if (type == SerpActivity.TYPE_PROJECT) {
-                MakaanBuyerApplication.serpSelector.reset();
+                serpSelector.reset();
                 Bundle bundle = intent.getExtras();
 
                 Long l = bundle.getLong(KeyUtil.PROJECT_ID);
                 if(l > 0) {
-                    MakaanBuyerApplication.serpSelector.term(KeyUtil.PROJECT_ID, String.valueOf(l));
+                    serpSelector.term(KeyUtil.PROJECT_ID, String.valueOf(l));
                 }
                 l = bundle.getLong(KeyUtil.LOCALITY_ID);
                 if(l > 0) {
-                    MakaanBuyerApplication.serpSelector.term(KeyUtil.LOCALITY_ID, String.valueOf(l));
+                    serpSelector.term(KeyUtil.LOCALITY_ID, String.valueOf(l));
                 }
                 l = bundle.getLong(KeyUtil.CITY_ID);
                 if(l > 0) {
-                    MakaanBuyerApplication.serpSelector.term(KeyUtil.CITY_ID, String.valueOf(l));
+                    serpSelector.term(KeyUtil.CITY_ID, String.valueOf(l));
                 }
 
                 Double minBudget = bundle.getDouble(KeyUtil.MIN_BUDGET);
@@ -213,16 +216,16 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 if(!TextUtils.isEmpty(string)) {
                     ArrayList<FilterGroup> grps = null;
                     if("buy".equalsIgnoreCase(string)) {
-                        MakaanBuyerApplication.serpSelector.term("listingCategory", new String[]{"Primary", "Resale"});
+                        serpSelector.term("listingCategory", new String[]{"Primary", "Resale"});
                         grps = MasterDataCache.getInstance().getAllBuyFilterGroups();
                     } else if("rent".equalsIgnoreCase(string)) {
                         grps = MasterDataCache.getInstance().getAllRentFilterGroups();
-                        MakaanBuyerApplication.serpSelector.term("listingCategory", new String[]{"Rental"});
+                        serpSelector.term("listingCategory", new String[]{"Rental"});
                     }
 
                     if(minBudget > 0 && !Double.isNaN(minBudget)
                             && maxBudget > 0 && !Double.isNaN(maxBudget)) {
-                        MakaanBuyerApplication.serpSelector.range("budget", minBudget, maxBudget);
+                        serpSelector.range("budget", minBudget, maxBudget);
 
                         for(FilterGroup grp : grps) {
                             if(grp.rangeFilterValues.size() > 0 && "budget".equalsIgnoreCase(grp.rangeFilterValues.get(0).fieldName)) {
@@ -231,7 +234,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                             }
                         }
                     } else if(minBudget > 0 && !Double.isNaN(minBudget)) {
-                        MakaanBuyerApplication.serpSelector.range("budget", minBudget, null);
+                        serpSelector.range("budget", minBudget, null);
 
                         for(FilterGroup grp : grps) {
                             if(grp.rangeFilterValues.size() > 0 && "budget".equalsIgnoreCase(grp.rangeFilterValues.get(0).fieldName)) {
@@ -239,7 +242,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                             }
                         }
                     } else if(maxBudget > 0 && !Double.isNaN(maxBudget)) {
-                        MakaanBuyerApplication.serpSelector.range("budget", null, maxBudget);
+                        serpSelector.range("budget", null, maxBudget);
 
                         for(FilterGroup grp : grps) {
                             if(grp.rangeFilterValues.size() > 0 && "budget".equalsIgnoreCase(grp.rangeFilterValues.get(0).fieldName)) {
@@ -248,13 +251,13 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                         }
                     }
                 }
-                serpRequest(SerpActivity.TYPE_PROJECT, MakaanBuyerApplication.serpSelector);
+                serpRequest(SerpActivity.TYPE_PROJECT, serpSelector);
 
             } else if (type == SerpActivity.TYPE_UNKNOWN) {
                 // TODO check whether it should be used or not
                 fetchData();
             } else {
-                serpRequest(type, MakaanBuyerApplication.serpSelector);
+                serpRequest(type, serpSelector);
             }
         } else {
             fetchData();
@@ -262,7 +265,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     }
 
     private void generateGroupSelector() {
-        mGroupSelector = MakaanBuyerApplication.serpSelector.clone();
+        mGroupSelector = serpSelector.clone();
         mGroupSelector.field("groupingAttributes").field("groupedListings").field("listing").field("id");
         mGroupSelector.page(0, (2 * GroupCluster.MAX_CLUSTERS_IN_GROUP));
     }
@@ -283,12 +286,12 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         super.onBackPressed();
         if ((mSerpRequestType & MASK_LISTING_TYPE) == SerpActivity.TYPE_CLUSTER) {
             mSerpRequestType = TYPE_SEARCH;
-            setShowSearchBar(true);
+            setShowSearchBar(true, false);
             mFiltersFrameLayout.setVisibility(View.VISIBLE);
             mSimilarPropertiesFrameLayout.setVisibility(View.GONE);
             mMapImageView.setImageResource(R.drawable.map);
 
-            MakaanBuyerApplication.serpSelector.removePaging();
+            serpSelector.removePaging();
         } else if(mIsMapFragment) {
             mIsMapFragment = false;
         }
@@ -299,8 +302,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     }
 
     private void fetchData() {
-        MakaanBuyerApplication.serpSelector.term("cityId", "11").term("listingCategory", new String[]{"Primary"});
-        serpRequest(SerpActivity.TYPE_UNKNOWN, MakaanBuyerApplication.serpSelector);
+        serpSelector.term("cityId", "11").term("listingCategory", new String[]{"Primary"});
+        serpRequest(SerpActivity.TYPE_UNKNOWN, serpSelector);
     }
 
     @Subscribe
@@ -310,7 +313,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             updateListings(listingGetEvent, null);
             mMapFragment.setData(mListings);
         } else if (isSellerSerp) {
-            setShowSearchBar(false);
+            setShowSearchBar(false, false);
             mFiltersFrameLayout.setVisibility(View.VISIBLE);
             mSimilarPropertiesFrameLayout.setVisibility(View.GONE);
             if (mSellerSerpListFragment == null || !mSellerSerpListFragment.isVisible()) {
@@ -330,7 +333,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 mSellerSerpListFragment.updateListings(mListings, null, getSelectedSearches(), this, mSerpRequestType, mListingCount);
             }
         } else if ((mSerpRequestType & MASK_LISTING_TYPE) == SerpActivity.TYPE_CLUSTER) {
-            setShowSearchBar(false);
+            setShowSearchBar(false, false);
             mFiltersFrameLayout.setVisibility(View.GONE);
             mSimilarPropertiesFrameLayout.setVisibility(View.VISIBLE);
             if (mChildSerpListFragment == null || !mChildSerpListFragment.isVisible()) {
@@ -353,7 +356,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             mListingGetEvent = listingGetEvent;
             // for buider, seller and normal serp
             if(!mGroupsRequested || mGroupReceived) {
-                setShowSearchBar(true);
+                setShowSearchBar(true, false);
                 mFiltersFrameLayout.setVisibility(View.VISIBLE);
                 mSimilarPropertiesFrameLayout.setVisibility(View.GONE);
                 // check if we have working listing fragment at this time
@@ -386,7 +389,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         mGroupReceived = true;
 
         if(mSerpReceived) {
-            setShowSearchBar(true);
+            setShowSearchBar(true, false);
             mFiltersFrameLayout.setVisibility(View.VISIBLE);
             mSimilarPropertiesFrameLayout.setVisibility(View.GONE);
 
@@ -477,9 +480,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                     @Override
                     public void sortSelected(String sort, String fieldName, String value, int i) {
                         mSortTextView.setText(sort);
-                        MakaanBuyerApplication.serpSelector.sort(fieldName, value);
+                        serpSelector.sort(fieldName, value);
                         mSelectedSortIndex = i;
-                        SerpActivity.this.serpRequest(SerpActivity.TYPE_SORT, MakaanBuyerApplication.serpSelector);
+                        SerpActivity.this.serpRequest(SerpActivity.TYPE_SORT, serpSelector);
                     }
                 }, mSelectedSortIndex);
         mMainFrameLayout.getForeground().setAlpha(128);
@@ -495,9 +498,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         if(gpIdResultEvent == null || gpIdResultEvent.gpDetail == null) {
             return;
         }
-        MakaanBuyerApplication.serpSelector.term("cityId", String.valueOf(gpIdResultEvent.gpDetail.cityid));
+        serpSelector.term("cityId", String.valueOf(gpIdResultEvent.gpDetail.cityid));
         ((ListingService) MakaanServiceFactory.getInstance().getService(ListingService.class))
-                .handleSerpRequest(MakaanBuyerApplication.serpSelector, gpIdResultEvent.gpDetail.placeId, true, mGroupSelector);
+                .handleSerpRequest(serpSelector, gpIdResultEvent.gpDetail.placeId, true, mGroupSelector);
         showProgress();
     }
 
@@ -572,7 +575,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
         if((mSerpRequestType & MASK_LISTING_TYPE) == TYPE_CLUSTER) {
             ((ListingService) MakaanServiceFactory.getInstance().getService(ListingService.class))
-                    .handleChildSerpRequest(MakaanBuyerApplication.serpSelector, mChildListingId);
+                    .handleChildSerpRequest(serpSelector, mChildListingId);
             mGroupsRequested = false;
             mGroupReceived = true;
             mSerpReceived = false;
@@ -596,14 +599,14 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         mChildListingId = id;
         if((type & MASK_LISTING_TYPE) > 0) {
             mSerpRequestType = type;
-            MakaanBuyerApplication.serpSelector.removePaging();
-            MakaanBuyerApplication.serpSelector.page(0, MAX_ITEMS_TO_REQUEST);
+            serpSelector.removePaging();
+            serpSelector.page(0, MAX_ITEMS_TO_REQUEST);
         } else {
             mSerpRequestType = (mSerpRequestType & MASK_LISTING_TYPE) | type;
         }
         if((mSerpRequestType & MASK_LISTING_TYPE) == TYPE_CLUSTER) {
             ((ListingService) MakaanServiceFactory.getInstance().getService(ListingService.class))
-                    .handleChildSerpRequest(MakaanBuyerApplication.serpSelector, id);
+                    .handleChildSerpRequest(serpSelector, id);
             mChildSerpId = id;
             mGroupsRequested = false;
             mGroupReceived = true;
@@ -632,13 +635,13 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     @Override
     public void requestApi(int request, String key) {
         if(request == REQUEST_BUILDER_API) {
-            HashSet<String> ids = MakaanBuyerApplication.serpSelector.getTerm(key);
+            HashSet<String> ids = serpSelector.getTerm(key);
             if(ids.size() == 1) {
                 ((BuilderService)MakaanServiceFactory.getInstance().getService(BuilderService.class))
                         .getBuilderById(Long.valueOf((String)(ids.toArray()[0])));
             }
         } else if(request == REQUEST_SELLER_API) {
-            HashSet<String> ids = MakaanBuyerApplication.serpSelector.getTerm(key);
+            HashSet<String> ids = serpSelector.getTerm(key);
             if(ids.size() == 1) {
                 ((SellerService)MakaanServiceFactory.getInstance().getService(SellerService.class))
                         .getSellerById(Long.valueOf((String)(ids.toArray()[0])));
@@ -678,25 +681,48 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             if((mSerpRequestType & MASK_LISTING_TYPE) == TYPE_CLUSTER) {
                 if ((mChildListings.size() / MAX_ITEMS_TO_REQUEST) == (mChildListingPage + 1) && mChildListings.size() < mChildListingCount) {
                     mChildListingPage++;
-                    MakaanBuyerApplication.serpSelector.page(mChildListings.size(), MAX_ITEMS_TO_REQUEST);
+                    serpSelector.page(mChildListings.size(), MAX_ITEMS_TO_REQUEST);
 
                     serpRequest(SerpActivity.TYPE_LOAD_MORE, mChildListingId);
                 }
             } else {
                 if ((mListings.size() / MAX_ITEMS_TO_REQUEST) == (mListingPage + 1) && mListings.size() < mListingCount) {
                     mListingPage++;
-                    MakaanBuyerApplication.serpSelector.page(mListings.size(), MAX_ITEMS_TO_REQUEST);
+                    serpSelector.page(mListings.size(), MAX_ITEMS_TO_REQUEST);
 
                     if (mGroupListingCount > mGroupListings.size()) {
                         Selector groupSelector = getGroupSelector();
                         groupSelector.page(mGroupListings.size(), MAX_GROUP_ITEMS_TO_REQUEST);
-                        serpRequest(SerpActivity.TYPE_LOAD_MORE, MakaanBuyerApplication.serpSelector, true);
+                        serpRequest(SerpActivity.TYPE_LOAD_MORE, serpSelector, true);
                     } else {
-                        serpRequest(SerpActivity.TYPE_LOAD_MORE, MakaanBuyerApplication.serpSelector, false);
+                        serpRequest(SerpActivity.TYPE_LOAD_MORE, serpSelector, false);
                     }
 
                 }
             }
+        }
+    }
+
+    @Override
+    public void onListScrolled(int dx, int dy, int state) {
+        int searchBarHeight = getSearchBarHeight();
+        if(dy > (searchBarHeight / 2) || dy < -(searchBarHeight / 2)) {
+            return;
+        }
+        if(state != RecyclerView.SCROLL_STATE_DRAGGING) {
+            return;
+        }
+        if (scrolledDistance > searchBarHeight && controlsVisible) {
+            setShowSearchBar(false, true);
+            controlsVisible = false;
+            scrolledDistance = 0;
+        } else if (scrolledDistance < -searchBarHeight && !controlsVisible) {
+            setShowSearchBar(true, true);
+            controlsVisible = true;
+            scrolledDistance = 0;
+        }
+        if((controlsVisible && dy>0) || (!controlsVisible && dy<0)) {
+            scrolledDistance += dy;
         }
     }
 
@@ -723,7 +749,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     }
 
     private void parseAndApplyFilter(String json) {
-        MakaanBuyerApplication.serpSelector.reset();
+        serpSelector.reset();
         GsonBuilder builder = new GsonBuilder();
         Object o = builder.create().fromJson(json, Object.class);
         parseObject(o);
@@ -741,7 +767,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                             || obj2 instanceof Double
                             || obj2 instanceof Integer) {
                         if("localityId".equals(key)) {
-                            MakaanBuyerApplication.serpSelector.term((String)key, String.valueOf(obj2));
+                            serpSelector.term((String)key, String.valueOf(obj2));
                         }
                     }
                 }
