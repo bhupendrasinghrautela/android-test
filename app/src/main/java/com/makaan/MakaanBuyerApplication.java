@@ -5,6 +5,7 @@ import android.app.Application;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.makaan.cookie.MakaanCookieStore;
+import com.makaan.jarvis.JarvisConstants;
 import com.makaan.jarvis.JarvisServiceCreator;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.request.selector.Selector;
@@ -118,8 +119,9 @@ public class MakaanBuyerApplication extends Application {
         CookieManager cookieManager = new CookieManager(cookieStore, CookiePolicy.ACCEPT_ALL);
         CookieHandler.setDefault(cookieManager);
 
-        Analytics analytics = new Analytics.Builder(this, "421fc86dfc325acc836597f1f0157cae").build();
+        Analytics analytics = new Analytics.Builder(this, "xMHqomsTMdGwOiJByBsKUbH78Akhbaku").build();
         Analytics.setSingletonInstance(analytics);
+        Analytics.with(this).identify("Moto-x-test1234");
 
     }
 

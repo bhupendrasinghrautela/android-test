@@ -27,10 +27,10 @@ public class CtaCardFactory {
             serpFilterCard.bindView(context, message);
             return serpFilterCard;
 
-        } else if (CtaType.serpScroll == message.properties.ctaType) {
+        } else if (CtaType.enquiryDropped == message.properties.ctaType) {
             MultiPropertyCard multiPropertyCard =
                     (MultiPropertyCard) LayoutInflater.from(context).inflate(
-                            R.layout.card_serp_filter, null);
+                            R.layout.card_multi_property, null);
             multiPropertyCard.bindView(context, message);
             return multiPropertyCard;
 
