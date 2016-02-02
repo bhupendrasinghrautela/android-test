@@ -123,7 +123,7 @@ public class Selector implements Cloneable {
     }
 
 
-    public Selector range(String fieldName, long from, long to) {
+    public Selector range(String fieldName, Long from, Long to) {
         RangeSelector rangeSelector = rangeSelectorHashMap.get(fieldName);
         if (null == rangeSelector) {
             rangeSelector = new RangeSelector<Long>(fieldName, from, to);

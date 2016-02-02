@@ -2,6 +2,7 @@ package com.makaan.response.search;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.makaan.MakaanBuyerApplication;
@@ -9,6 +10,7 @@ import com.makaan.activity.city.CityActivity;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.activity.locality.LocalityActivity;
+import com.makaan.activity.project.ProjectActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.response.master.ApiLabel;
 import com.makaan.service.ListingService;
@@ -49,10 +51,6 @@ public class SearchResponseHelper {
             //TODO
             return;
 
-        } else if (SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searchItem.type)) {
-            //TODO open project page
-            return;
-
         }
 
         // handle overview cases
@@ -80,6 +78,19 @@ public class SearchResponseHelper {
 
             context.startActivity(cityIntent);
             return;
+        } else if(SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searchItem.type)) {
+            Intent projectIntent = new Intent(context, ProjectActivity.class);
+            Bundle bundle = new Bundle();
+
+            // check from id if entity id is not present
+            if(TextUtils.isEmpty(searchItem.entityId)) {
+                bundle.putLong(ProjectActivity.PROJECT_ID, Long.valueOf(searchItem.id.replace("TYPEAHEAD-PROJECT-", "")));
+            } else {
+                bundle.putLong(ProjectActivity.PROJECT_ID, Long.valueOf(searchItem.entityId));
+            }
+            projectIntent.putExtras(bundle);
+            context.startActivity(projectIntent);
+            return;
         }
 
         Map<String,ApiLabel> searchResultType = MasterDataCache.getInstance().getSearchTypeMap();
@@ -89,18 +100,28 @@ public class SearchResponseHelper {
         MakaanBuyerApplication.serpSelector.removeTerm("localityId");
         MakaanBuyerApplication.serpSelector.removeTerm("cityId");
         MakaanBuyerApplication.serpSelector.removeTerm("suburbId");
+        MakaanBuyerApplication.serpSelector.removeTerm("localityOrSuburbId");
 
         // TODO check if we need to clear all the filters
         //MakaanBuyerApplication.serpSelector.reset();
         if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchItem.type)
                 || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchItem.type)) {
-            // as selected item is locality
-            // we need to add all the selected localities to get serp
-            MakaanBuyerApplication.serpSelector.removeTerm(searchField);
+            // as selected item is locality/suburb
+            // we need to add all the selected localities/suburbs to get serp
+
+            for(SearchResponseItem item : searchResponseArrayList) {
+                if(searchField.equals(searchResultType.get(item.type).key)) {
+                    continue;
+                } else {
+                    searchField = "localityOrSuburbId";
+                }
+            }
+
             for(SearchResponseItem item : searchResponseArrayList) {
                 MakaanBuyerApplication.serpSelector.term(searchField, String.valueOf(item.entityId));
             }
-            MakaanBuyerApplication.serpSelector.term("cityId", String.valueOf(searchItem.cityId));
+            // TODO cityId is not coming in search results
+//            MakaanBuyerApplication.serpSelector.term("cityId", String.valueOf(searchItem.cityId));
         } else {
             MakaanBuyerApplication.serpSelector.term(searchField, String.valueOf(searchItem.entityId), true);
         }

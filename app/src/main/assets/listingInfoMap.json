@@ -3,11 +3,6 @@
     {
       "buyProperties": [
         {
-          "displayName":"status",
-          "fieldName":"propertyStatus",
-          "imageName":"under_construction"
-        },
-        {
           "displayName":"age",
           "fieldName":"propertyAge",
           "imageName":"ready_to_move"
@@ -26,6 +21,11 @@
           "displayName":"floor",
           "fieldName":"floor,totalFloors",
           "imageName":"floor"
+        },
+        {
+          "displayName":"status",
+          "fieldName":"propertyStatus",
+          "imageName":"under_construction"
         },
         {
           "displayName":"balcony",

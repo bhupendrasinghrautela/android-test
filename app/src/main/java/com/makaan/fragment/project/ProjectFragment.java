@@ -96,6 +96,7 @@ public class ProjectFragment extends MakaanBaseFragment{
             bundle.putString(KeyUtil.LISTING_CATEGORY, "buy");
             i.putExtra(SerpActivity.REQUEST_DATA, bundle);
         }
+        i.putExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_PROJECT);
         startActivity(i);
     }
 
@@ -126,6 +127,7 @@ public class ProjectFragment extends MakaanBaseFragment{
             bundle.putString(KeyUtil.LISTING_CATEGORY, "buy");
             i.putExtra(SerpActivity.REQUEST_DATA, bundle);
         }
+        i.putExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_PROJECT);
         startActivity(i);
     }
 

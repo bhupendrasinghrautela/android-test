@@ -36,7 +36,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
     public static final int RADIO_BUTTON_MIN_MAX = 5;
     public static final int RADIO_BUTTON_RANGE = 6;
 
-    private static final int UNEXPECTED_VALUE = -100000;
+    private static final int UNEXPECTED_VALUE = -1000000;
 
     private final int type;
     Context context;
@@ -136,12 +136,21 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
             RangeSeekBar<Double> seekBar = (RangeSeekBar<Double>) holder.view.findViewById(R.id.fragment_dialog_filter_seekbar_item_view_seekbar);
             seekBar.setInitialValues(((RangeFilter) this.getItem(position)).minValue, ((RangeFilter) this.getItem(position)).maxValue);
             seekBar.setNotifyWhileDragging(true);
+
+            if("currency".equalsIgnoreCase(filterGroup.type)) {
+                ((TextView) holder.view.findViewById(R.id.fragment_dialog_filter_seekbar_item_view_textview)).setText(
+                        String.format("%s - %s", StringUtil.getDisplayPrice(((RangeFilter) this.getItem(holder.pos)).selectedMinValue),
+                                StringUtil.getDisplayPrice((((RangeFilter) this.getItem(holder.pos)).selectedMaxValue))));
+            } else {
+                ((TextView) holder.view.findViewById(R.id.fragment_dialog_filter_seekbar_item_view_textview)).setText(
+                        String.format("%s - %s", ((RangeFilter) this.getItem(holder.pos)).selectedMinValue,
+                                (((RangeFilter) this.getItem(holder.pos)).selectedMaxValue)));
+                seekBar.setStepValues(new double[] {0, 0.0416, 0.0833, 0.125, 0.1666, 0.2083, 0.25, 0.2916, 0.333, 0.375, 0.416,
+                        0.4583, 0.5, 0.5416, 0.5833, 0.625, 0.666, 0.7083, 0.75, 0.7916, 0.833, 0.875, 0.916, 0.9583, 1});
+            }
             seekBar.setSelectedMinValue(((RangeFilter) this.getItem(holder.pos)).selectedMinValue);
             seekBar.setSelectedMaxValue(((RangeFilter) this.getItem(holder.pos)).selectedMaxValue);
             seekBar.setOnRangeSeekBarChangeListener(this);
-            ((TextView)holder.view.findViewById(R.id.fragment_dialog_filter_seekbar_item_view_textview)).setText(
-                    String.format("%s - %s", StringUtil.getDisplayPrice(((RangeFilter) this.getItem(holder.pos)).selectedMinValue),
-                            StringUtil.getDisplayPrice((((RangeFilter) this.getItem(holder.pos)).selectedMaxValue))));
         }
 
         return convertView;
@@ -214,25 +223,47 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                     if(currentGroup != null) {
                         currentGroup.isSelected = true;
                     }
-                    if(filter.minValue != UNEXPECTED_VALUE && filter.maxValue != UNEXPECTED_VALUE) {
+                    if(filter.minValue != UNEXPECTED_VALUE || filter.maxValue != UNEXPECTED_VALUE) {
+                        Long minValue = (long)UNEXPECTED_VALUE;
+                        Long maxValue = (long)UNEXPECTED_VALUE;
                         if (filterGroup.type.equalsIgnoreCase("year")) {
                             Calendar cal = Calendar.getInstance();
-                            cal.add(Calendar.YEAR, (int) filter.minValue);
-                            long minValue = cal.getTimeInMillis();
+                            if(filter.minValue != UNEXPECTED_VALUE) {
+                                cal.add(Calendar.YEAR, (int) filter.minValue);
+                                minValue = cal.getTimeInMillis();
+                                cal.add(Calendar.YEAR, -(int)filter.minValue);
+                            }
 
-                            cal.add(Calendar.YEAR, -(int)filter.minValue);
-                            cal.add(Calendar.YEAR, (int)filter.maxValue);
-                            long maxValue = cal.getTimeInMillis();
+                            if(filter.maxValue != UNEXPECTED_VALUE) {
+                                cal.add(Calendar.YEAR, (int) filter.maxValue);
+                                maxValue = cal.getTimeInMillis();
+                            }
+                            if(minValue == UNEXPECTED_VALUE) {
+                                minValue = null;
+                            }
+                            if(maxValue == UNEXPECTED_VALUE) {
+                                maxValue = null;
+                            }
 
                             selector.range(filter.fieldName, minValue, maxValue);
                         } else if(filterGroup.type.equalsIgnoreCase("day")) {
                             Calendar cal = Calendar.getInstance();
-                            cal.add(Calendar.DAY_OF_MONTH, (int) filter.minValue);
-                            long minValue = cal.getTimeInMillis();
+                            if(filter.minValue != UNEXPECTED_VALUE) {
+                                cal.add(Calendar.DAY_OF_MONTH, (int) filter.minValue);
+                                minValue = cal.getTimeInMillis();
+                                cal.add(Calendar.DAY_OF_MONTH, -(int)filter.minValue);
+                            }
 
-                            cal.add(Calendar.DAY_OF_MONTH, -(int)filter.minValue);
-                            cal.add(Calendar.DAY_OF_MONTH, (int)filter.maxValue);
-                            long maxValue = cal.getTimeInMillis();
+                            if(filter.maxValue != UNEXPECTED_VALUE) {
+                                cal.add(Calendar.DAY_OF_MONTH, (int) filter.maxValue);
+                                maxValue = cal.getTimeInMillis();
+                            }
+                            if(minValue == UNEXPECTED_VALUE) {
+                                minValue = null;
+                            }
+                            if(maxValue == UNEXPECTED_VALUE) {
+                                maxValue = null;
+                            }
 
                             selector.range(filter.fieldName, minValue, maxValue);
                         } else {
@@ -264,10 +295,12 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                             maxValue = cal.getTimeInMillis();
                         }
                         if(minValue != UNEXPECTED_VALUE) {
-                            selector.range(filter.minFieldName, minValue, maxValue);
+                            Long temp = null;
+                            selector.range(filter.minFieldName, minValue, temp);
                         }
                         if(maxValue != UNEXPECTED_VALUE) {
-                            selector.range(filter.maxFieldName, minValue, maxValue);
+                            Long temp = null;
+                            selector.range(filter.maxFieldName, temp, maxValue);
                         }
                     } else {
                         if(filter.minValue != UNEXPECTED_VALUE) {
@@ -287,7 +320,18 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                     if(currentGroup != null) {
                         currentGroup.isSelected = true;
                     }
-                    selector.term(filter.fieldName, filter.value);
+                    if(filter.displayName.contains("+")) {
+                        String[] val = filter.value.split("-");
+                        int min = Integer.valueOf(val[0]);
+                        int max = Integer.valueOf(val[1]);
+                        for(int i = min; i <= max; i++) {
+                            selector.term(filter.fieldName, String.valueOf(i));
+                        }
+                    } else {
+                        selector.term(filter.fieldName, filter.value);
+                    }
+
+
                 }
             }
         }
@@ -342,12 +386,22 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
     @Override
     public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar, Double minValue, Double maxValue) {
         ViewHolder holder = (ViewHolder) ((View)bar.getParent()).getTag();
-        ((RangeFilter) this.getItem(holder.pos)).selectedMinValue = minValue;
-        ((RangeFilter) this.getItem(holder.pos)).selectedMaxValue = maxValue;
+        ((RangeFilter) this.getItem(holder.pos)).selectedMinValue = normalize(minValue);
+        ((RangeFilter) this.getItem(holder.pos)).selectedMaxValue = normalize(maxValue);
 
-        ((TextView)holder.view.findViewById(R.id.fragment_dialog_filter_seekbar_item_view_textview)).setText(
-                String.format("%s - %s", StringUtil.getDisplayPrice(((RangeFilter) this.getItem(holder.pos)).selectedMinValue),
-                        StringUtil.getDisplayPrice((((RangeFilter) this.getItem(holder.pos)).selectedMaxValue))));
+        if("currency".equalsIgnoreCase(filterGroup.type)) {
+            ((TextView) holder.view.findViewById(R.id.fragment_dialog_filter_seekbar_item_view_textview)).setText(
+                    String.format("%s - %s", StringUtil.getDisplayPrice(((RangeFilter) this.getItem(holder.pos)).selectedMinValue),
+                            StringUtil.getDisplayPrice((((RangeFilter) this.getItem(holder.pos)).selectedMaxValue))));
+        } else {
+            ((TextView) holder.view.findViewById(R.id.fragment_dialog_filter_seekbar_item_view_textview)).setText(
+                    String.format("%s - %s", ((RangeFilter) this.getItem(holder.pos)).selectedMinValue,
+                            (((RangeFilter) this.getItem(holder.pos)).selectedMaxValue)));
+        }
+    }
+
+    private int normalize(Double value) {
+        return ((int)((value + 50) / 100)) * 100;
     }
 
     class ViewHolder {
