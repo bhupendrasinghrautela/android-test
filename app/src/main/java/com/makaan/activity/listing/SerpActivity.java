@@ -33,16 +33,19 @@ import com.makaan.request.selector.Selector;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.search.event.SearchResultEvent;
+import com.makaan.response.serp.FilterGroup;
 import com.makaan.service.BuilderService;
 import com.makaan.service.ListingService;
 import com.makaan.service.LocalityService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SellerService;
 import com.makaan.ui.listing.RelevancePopupWindowController;
+import com.makaan.util.KeyUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.logging.Filter;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -186,6 +189,67 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 if(!TextUtils.isEmpty(gpId)) {
                     serpRequest(SerpActivity.TYPE_GPID, MakaanBuyerApplication.serpSelector, gpId);
                 }
+            } else if (type == SerpActivity.TYPE_PROJECT) {
+                MakaanBuyerApplication.serpSelector.reset();
+                Bundle bundle = intent.getExtras();
+
+                Long l = bundle.getLong(KeyUtil.PROJECT_ID);
+                if(l > 0) {
+                    MakaanBuyerApplication.serpSelector.term(KeyUtil.PROJECT_ID, String.valueOf(l));
+                }
+                l = bundle.getLong(KeyUtil.LOCALITY_ID);
+                if(l > 0) {
+                    MakaanBuyerApplication.serpSelector.term(KeyUtil.LOCALITY_ID, String.valueOf(l));
+                }
+                l = bundle.getLong(KeyUtil.CITY_ID);
+                if(l > 0) {
+                    MakaanBuyerApplication.serpSelector.term(KeyUtil.CITY_ID, String.valueOf(l));
+                }
+
+                Double minBudget = bundle.getDouble(KeyUtil.MIN_BUDGET);
+                Double maxBudget = bundle.getDouble(KeyUtil.MAX_BUDGET);
+
+                String string = bundle.getString(KeyUtil.LISTING_CATEGORY);
+                if(!TextUtils.isEmpty(string)) {
+                    ArrayList<FilterGroup> grps = null;
+                    if("buy".equalsIgnoreCase(string)) {
+                        MakaanBuyerApplication.serpSelector.term("listingCategory", new String[]{"Primary", "Resale"});
+                        grps = MasterDataCache.getInstance().getAllBuyFilterGroups();
+                    } else if("rent".equalsIgnoreCase(string)) {
+                        grps = MasterDataCache.getInstance().getAllRentFilterGroups();
+                        MakaanBuyerApplication.serpSelector.term("listingCategory", new String[]{"Rental"});
+                    }
+
+                    if(minBudget > 0 && !Double.isNaN(minBudget)
+                            && maxBudget > 0 && !Double.isNaN(maxBudget)) {
+                        MakaanBuyerApplication.serpSelector.range("budget", minBudget, maxBudget);
+
+                        for(FilterGroup grp : grps) {
+                            if(grp.rangeFilterValues.size() > 0 && "budget".equalsIgnoreCase(grp.rangeFilterValues.get(0).fieldName)) {
+                                grp.rangeFilterValues.get(0).selectedMinValue = minBudget;
+                                grp.rangeFilterValues.get(0).selectedMaxValue = maxBudget;
+                            }
+                        }
+                    } else if(minBudget > 0 && !Double.isNaN(minBudget)) {
+                        MakaanBuyerApplication.serpSelector.range("budget", minBudget, null);
+
+                        for(FilterGroup grp : grps) {
+                            if(grp.rangeFilterValues.size() > 0 && "budget".equalsIgnoreCase(grp.rangeFilterValues.get(0).fieldName)) {
+                                grp.rangeFilterValues.get(0).selectedMinValue = minBudget;
+                            }
+                        }
+                    } else if(maxBudget > 0 && !Double.isNaN(maxBudget)) {
+                        MakaanBuyerApplication.serpSelector.range("budget", null, maxBudget);
+
+                        for(FilterGroup grp : grps) {
+                            if(grp.rangeFilterValues.size() > 0 && "budget".equalsIgnoreCase(grp.rangeFilterValues.get(0).fieldName)) {
+                                grp.rangeFilterValues.get(0).selectedMaxValue = maxBudget;
+                            }
+                        }
+                    }
+                }
+                serpRequest(SerpActivity.TYPE_PROJECT, MakaanBuyerApplication.serpSelector);
+
             } else if (type == SerpActivity.TYPE_UNKNOWN) {
                 // TODO check whether it should be used or not
                 fetchData();
