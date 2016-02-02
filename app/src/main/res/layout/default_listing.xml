@@ -166,6 +166,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/serp_listing_card_property_address_text_view_left_margin"
             android:layout_marginStart="@dimen/serp_listing_card_property_address_text_view_left_margin"
+            android:layout_marginRight="@dimen/serp_listing_card_property_address_text_view_right_margin"
+            android:layout_marginEnd="@dimen/serp_listing_card_property_address_text_view_right_margin"
             android:layout_marginTop="@dimen/serp_listing_card_property_address_text_view_top_margin"
             android:text="sector - 2 sohna, gurgaon"
             android:textColor="@color/serp_listing_card_default_text_color"
@@ -349,6 +351,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/serp_listing_card_property_tagline_text_view_left_margin"
             android:layout_marginStart="@dimen/serp_listing_card_property_tagline_text_view_left_margin"
+            android:layout_marginRight="@dimen/serp_listing_card_property_tagline_text_view_right_margin"
+            android:layout_marginEnd="@dimen/serp_listing_card_property_tagline_text_view_right_margin"
             android:layout_marginTop="@dimen/serp_listing_card_property_tagline_text_view_top_margin"
             android:ellipsize="end"
             android:maxLines="2"
@@ -356,7 +360,8 @@
             android:textColor="@color/serp_listing_card_default_text_color"
             android:textSize="@dimen/serp_listing_card_property_tagline_text_view_text_size"
             android:textAllCaps="false"
-            android:typeface="serif" />
+            android:typeface="serif"
+            android:lineSpacingExtra="2dp" />
 
         <RelativeLayout
             android:id="@+id/serp_default_listing_property_seller_info_relative_layout"
@@ -434,6 +439,8 @@
                 android:layout_marginStart="@dimen/serp_listing_card_seller_name_text_view_left_margin"
                 android:layout_marginTop="@dimen/serp_listing_card_seller_name_text_view_top_margin"
                 android:layout_toEndOf="@id/serp_default_listing_seller_image_frame_layout"
+                android:layout_marginRight="@dimen/serp_listing_card_seller_name_text_view_right_margin"
+                android:layout_marginEnd="@dimen/serp_listing_card_seller_name_text_view_right_margin"
                 android:layout_toRightOf="@id/serp_default_listing_seller_image_frame_layout"
                 android:text="d bhatia (agent)"
                 android:textColor="@color/serp_listing_card_default_text_color"
@@ -441,7 +448,9 @@
                 android:layout_toLeftOf="@id/serp_default_listing_assist_button"
                 android:layout_toStartOf="@id/serp_default_listing_assist_button"
                 android:textAllCaps="false"
-                android:typeface="serif"/>
+                android:typeface="serif"
+                android:singleLine="true"
+                android:ellipsize="end"/>
 
             <com.makaan.ui.view.CustomRatingBar
                 android:id="@+id/serp_default_listing_seller_rating"

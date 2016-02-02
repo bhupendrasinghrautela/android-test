@@ -24,11 +24,17 @@ public class PaginatedListView extends RecyclerView {
         void onLoadMoreItems();
     }
 
+    public interface ScrollListener {
+        void onScrolled(int dx, int dy, int state);
+    }
+
     private boolean isLoading;
     private boolean hasMoreItems;
     private PaginationListener pagingableListener;
     private LayoutManager mLayoutManager;
     private int firstVisibleItem, visibleItemCount, totalItemCount;
+
+    private ScrollListener scrollListener;
 
 
     public PaginatedListView(Context context) {
@@ -76,6 +82,10 @@ public class PaginatedListView extends RecyclerView {
         this.pagingableListener = pagingableListener;
     }
 
+    public void setScrollListener(ScrollListener scrollListener) {
+        this.scrollListener = scrollListener;
+    }
+
     public void setHasMoreItems(boolean hasMoreItems) {
         this.hasMoreItems = hasMoreItems;
     }
@@ -105,9 +115,10 @@ public class PaginatedListView extends RecyclerView {
         isLoading = false;
         addFooterView();
         super.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            int mState = 0;
             @Override
             public void onScrollStateChanged(RecyclerView view, int scrollState) {
-
+                mState = scrollState;
                 if (scrollState == SCROLL_STATE_IDLE || scrollState == SCROLL_STATE_SETTLING ) {
                     notifyAdapterOfScrollingState(false);
                 } else {
@@ -139,7 +150,13 @@ public class PaginatedListView extends RecyclerView {
                         }
                     }
                 }
+
+                // handling top bar show/hide
+                if(scrollListener != null) {
+                    scrollListener.onScrolled(dx, dy, mState);
+                }
             }
+
         });
     }
 

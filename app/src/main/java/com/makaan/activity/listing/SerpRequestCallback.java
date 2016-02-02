@@ -22,4 +22,6 @@ public interface SerpRequestCallback {
     void requestDetailPage(int type, Bundle bundle);
 
     void loadMoreItems();
+
+    void onListScrolled(int dx, int dy, int state);
 }

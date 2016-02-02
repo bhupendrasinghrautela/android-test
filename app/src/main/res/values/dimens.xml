@@ -297,7 +297,7 @@
     <dimen name="serp_listing_card_property_price_rupee_image_height">16dp</dimen>
 
     <dimen name="serp_listing_card_property_price_left_margin">5dp</dimen>
-    <dimen name="serp_listing_card_property_price_top_margin">13dp</dimen>
+    <dimen name="serp_listing_card_property_price_top_margin">15dp</dimen>
     <dimen name="serp_listing_card_property_price_text_size">32sp</dimen>
 
     <dimen name="serp_listing_card_property_price_unit_left_margin">5dp</dimen>
@@ -320,33 +320,34 @@
 
     <!-- TODO serp_listing_card_property_info_text_view_left_margin should be 27 as per GUI-->
     <dimen name="serp_listing_card_property_info_text_view_left_margin">0dp</dimen>
-    <dimen name="serp_listing_card_property_info_text_view_top_margin">6dp</dimen>
+    <dimen name="serp_listing_card_property_info_text_view_top_margin">10dp</dimen>
     <dimen name="serp_listing_card_property_info_text_view_text_size">16sp</dimen>
 
-    <dimen name="serp_listing_card_property_address_text_view_left_margin">19dp</dimen>
-    <dimen name="serp_listing_card_property_address_text_view_top_margin">13dp</dimen>
+    <dimen name="serp_listing_card_property_address_text_view_left_margin">20dp</dimen>
+    <dimen name="serp_listing_card_property_address_text_view_right_margin">20dp</dimen>
+    <dimen name="serp_listing_card_property_address_text_view_top_margin">10dp</dimen>
     <dimen name="serp_listing_card_property_address_text_view_text_size">16sp</dimen>
 
     <dimen name="serp_listing_card_empty_view_after_address_text_view_margin_left">20dp</dimen>
-    <dimen name="serp_listing_card_empty_view_after_address_text_view_margin_top">12dp</dimen>
+    <dimen name="serp_listing_card_empty_view_after_address_text_view_margin_top">10dp</dimen>
     <dimen name="serp_listing_card_empty_view_after_property_info_view_margin_left">2dp</dimen>
-    <dimen name="serp_listing_card_empty_view_after_property_detail_view_margin_top">6dp</dimen>
-    <dimen name="serp_listing_card_empty_view_after_property_tagline_view_margin_top">6dp</dimen>
+    <dimen name="serp_listing_card_empty_view_after_property_detail_view_margin_top">10dp</dimen>
+    <dimen name="serp_listing_card_empty_view_after_property_tagline_view_margin_top">10dp</dimen>
 
-    <dimen name="serp_listing_card_possession_image_view_left_margin">21dp</dimen>
-    <dimen name="serp_listing_card_possession_image_view_right_margin">79dp</dimen>
-    <dimen name="serp_listing_card_possession_image_view_top_margin">6dp</dimen>
+    <dimen name="serp_listing_card_possession_image_view_left_margin">20dp</dimen>
+    <dimen name="serp_listing_card_possession_image_view_right_margin">80dp</dimen>
+    <dimen name="serp_listing_card_possession_image_view_top_margin">10dp</dimen>
     <dimen name="serp_listing_card_possession_image_view_width">20dp</dimen>
     <dimen name="serp_listing_card_possession_image_view_height">20dp</dimen>
 
-    <dimen name="serp_listing_card_floor_image_view_left_margin">21dp</dimen>
-    <dimen name="serp_listing_card_floor_image_view_right_margin">69dp</dimen>
-    <dimen name="serp_listing_card_floor_image_view_top_margin">6dp</dimen>
+    <dimen name="serp_listing_card_floor_image_view_left_margin">20dp</dimen>
+    <dimen name="serp_listing_card_floor_image_view_right_margin">70dp</dimen>
+    <dimen name="serp_listing_card_floor_image_view_top_margin">10dp</dimen>
     <dimen name="serp_listing_card_floor_image_view_width">20dp</dimen>
     <dimen name="serp_listing_card_floor_image_view_height">20dp</dimen>
 
-    <dimen name="serp_listing_card_bathroom_image_view_left_margin">21dp</dimen>
-    <dimen name="serp_listing_card_bathroom_image_view_top_margin">6dp</dimen>
+    <dimen name="serp_listing_card_bathroom_image_view_left_margin">20dp</dimen>
+    <dimen name="serp_listing_card_bathroom_image_view_top_margin">10dp</dimen>
     <dimen name="serp_listing_card_bathroom_image_view_width">20dp</dimen>
     <dimen name="serp_listing_card_bathroom_image_view_height">20dp</dimen>
 
@@ -359,7 +360,7 @@
     <dimen name="serp_listing_card_floor_info_text_view_text_size">16sp</dimen>
 
     <dimen name="serp_listing_card_bathroom_number_text_view_left_margin">1dp</dimen>
-    <dimen name="serp_listing_card_bathroom_number_text_view_top_margin">5dp</dimen>
+    <dimen name="serp_listing_card_bathroom_number_text_view_top_margin">6dp</dimen>
     <dimen name="serp_listing_card_bathroom_number_text_view_text_size">16sp</dimen>
 
     <dimen name="serp_listing_card_possession_text_text_view_left_margin">0dp</dimen>
@@ -375,29 +376,31 @@
     <dimen name="serp_listing_card_bathroom_text_text_view_text_size">14sp</dimen>
 
     <dimen name="serp_listing_card_property_tagline_text_view_left_margin">20dp</dimen>
-    <dimen name="serp_listing_card_property_tagline_text_view_top_margin">6dp</dimen>
+    <dimen name="serp_listing_card_property_tagline_text_view_right_margin">20dp</dimen>
+    <dimen name="serp_listing_card_property_tagline_text_view_top_margin">10dp</dimen>
     <dimen name="serp_listing_card_property_tagline_text_view_text_size">14sp</dimen>
 
     <dimen name="serp_listing_card_seller_image_view_left_margin">20dp</dimen>
-    <dimen name="serp_listing_card_seller_image_view_top_margin">8dp</dimen>
+    <dimen name="serp_listing_card_seller_image_view_top_margin">10dp</dimen>
     <dimen name="serp_listing_card_seller_image_view_width">44dp</dimen>
     <dimen name="serp_listing_card_seller_image_view_height">44dp</dimen>
 
     <dimen name="serp_listing_card_seller_name_text_view_left_margin">7dp</dimen>
+    <dimen name="serp_listing_card_seller_name_text_view_right_margin">20dp</dimen>
     <dimen name="serp_listing_card_seller_name_text_view_top_margin">3dp</dimen>
     <dimen name="serp_listing_card_seller_name_text_view_text_size">16sp</dimen>
 
     <dimen name="serp_listing_card_assist_button_width">79dp</dimen>
     <dimen name="serp_listing_card_assist_button_height">30dp</dimen>
-    <dimen name="serp_listing_card_assist_button_right_margin">36dp</dimen>
-    <dimen name="serp_listing_card_assist_button_top_margin">22dp</dimen>
+    <dimen name="serp_listing_card_assist_button_right_margin">20dp</dimen>
+    <dimen name="serp_listing_card_assist_button_top_margin">12dp</dimen>
     <dimen name="serp_listing_card_assist_button_left_padding">20dp</dimen>
     <dimen name="serp_listing_card_assist_button_text_size">14sp</dimen>
 
     <dimen name="serp_listing_card_call_button_width">152dp</dimen>
     <dimen name="serp_listing_card_call_button_height">39dp</dimen>
     <dimen name="serp_listing_card_call_button_right_margin">0dp</dimen>
-    <dimen name="serp_listing_card_call_button_top_margin">10dp</dimen>
+    <dimen name="serp_listing_card_call_button_top_margin">2dp</dimen>
     <dimen name="serp_listing_card_call_button_text_size">16sp</dimen>
     <dimen name="serp_listing_card_call_left_button_right_margin">6dp</dimen>
 
@@ -413,6 +416,8 @@
     <dimen name="serp_listing_cluster_card_group_text_view_text_size">26sp</dimen>
     <dimen name="serp_listing_cluster_card_group_text_view_margin_left">32dp</dimen>
     <dimen name="serp_listing_cluster_card_group_text_view_margin_right">16dp</dimen>
+    <dimen name="serp_listing_cluster_card_group_text_view_margin_top">14dp</dimen>
+    <dimen name="serp_listing_cluster_card_group_text_view_margin_bottom">16dp</dimen>
 
     <dimen name="serp_listing_cluster_card_empty_view_height">1dp</dimen>
     <dimen name="serp_listing_cluster_card_empty_view_2_margin_top">28dp</dimen>
@@ -432,8 +437,8 @@
     <dimen name="serp_listing_cluster_card_home_image_view_height">76dp</dimen>
 
     <dimen name="fragment_listing_total_properties_text_view_margin_left">17dp</dimen>
-    <dimen name="fragment_listing_total_properties_text_view_margin_top">16dp</dimen>
-    <dimen name="fragment_listing_total_properties_text_view_margin_bottom">3dp</dimen>
+    <dimen name="fragment_listing_total_properties_text_view_margin_top">10dp</dimen>
+    <dimen name="fragment_listing_total_properties_text_view_margin_bottom">0dp</dimen>
     <dimen name="fragment_listing_total_properties_text_view_text_size">14sp</dimen>
 
     <!-- search bar dimen values -->
