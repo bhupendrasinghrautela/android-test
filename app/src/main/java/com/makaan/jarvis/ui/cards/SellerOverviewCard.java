@@ -39,14 +39,26 @@ public class SellerOverviewCard extends BaseView<Message> {
     @Override
     public void bindView(Context context, Message item) {
 
-        if(!TextUtils.isEmpty(item.chatObj.sellerName)) {
-            name.setText(item.chatObj.sellerName);
+        if(!TextUtils.isEmpty(item.chatObj.name)) {
+            name.setText(item.chatObj.name);
         }
-        if(item.chatObj.listingCount<1) {
-            properties.setText(item.chatObj.listingCount + item.chatObj.listingCount > 1 ? " properties" : " property");
+        if(item.chatObj.listingCount>0) {
+            properties.setText(item.chatObj.listingCount + (item.chatObj.listingCount > 1 ? " properties" : " property"));
         }
         if(!TextUtils.isEmpty(item.chatObj.localityName + item.chatObj.cityName)) {
-            locations.setText(item.chatObj.localityName + " " + item.chatObj.cityName);
+            StringBuilder builder = new StringBuilder();
+            if(item.chatObj.localitiesCount>0){
+                builder.append("in " + item.chatObj.localitiesCount + " localities ");
+            }
+
+            if(!TextUtils.isEmpty(item.chatObj.cityCountText)){
+                builder.append(item.chatObj.cityCountText);
+            }
+
+            if(!TextUtils.isEmpty(builder.toString())){
+                locations.setText(builder.toString());
+            }
+
         }
 
         //item.chatObj.image = item.chatObj.imageURL;//TODO this temp due to api
