@@ -133,6 +133,11 @@
     <color name="Gray">#808080</color>
 
     <color name="buyer_dashboard_background">#FFFBFBFB</color>
+    <color name="project_light_text">#999</color>
+    <color name="project_item_seperator">#979797</color>
+    <color name="project_text_default">#434343</color>
+    <color name="project_text_light">#666</color>
+    <color name="project_text_red">#e71c28</color>
 
 
 </resources>

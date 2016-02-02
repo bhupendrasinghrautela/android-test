@@ -10,7 +10,7 @@ public class FontUtils {
 
     public static Typeface getRegularTypeFace(Context mContext)
     {
-        Typeface typeFaceRegular = Typeface.createFromAsset(mContext.getAssets(), "fonts/ProximaNova-Regular.otf");
+        Typeface typeFaceRegular = Typeface.createFromAsset(mContext.getAssets(), "fonts/proxima.otf");
         return typeFaceRegular;
     }
 
@@ -28,7 +28,7 @@ public class FontUtils {
 
     public static Typeface getLightTypeFace(Context mContext)
     {
-        Typeface typeFaceRegular = Typeface.createFromAsset(mContext.getAssets(), "fonts/ProximaNova-Light.otf");
+        Typeface typeFaceRegular = Typeface.createFromAsset(mContext.getAssets(), "fonts/proxima-light.otf");
         return typeFaceRegular;
     }
 

@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:font="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
     <include layout="@layout/project_seperator"/>
 
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:id="@+id/header_text"
         android:gravity="center"
-        android:textSize="@dimen/city_header_text"
+        android:textSize="@dimen/project_text_big"
         android:padding="20dp"
         android:text="@string/price_trends"
-        android:textColor="@color/listingBlack"
+        font:fontName="comforta.ttf"
+        android:textColor="@color/project_text_default"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

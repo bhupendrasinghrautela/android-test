@@ -10,6 +10,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -38,12 +39,10 @@ import com.makaan.ui.project.ProjectSpecificationView;
 import com.makaan.ui.property.AboutBuilderExpandedLayout;
 import com.makaan.ui.property.AmenitiesViewScroll;
 import com.makaan.ui.property.PropertyImageViewPager;
-import com.makaan.util.DateUtil;
 import com.makaan.util.KeyUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -65,6 +64,7 @@ public class ProjectFragment extends MakaanBaseFragment{
     @Bind(R.id.content_text) TextView descriptionTv;
     @Bind(R.id.amenities_scroll_layout) AmenitiesViewScroll mAmenitiesViewScroll;
     @Bind(R.id.ll_project_container) LinearLayout projectContainer;
+    @Bind(R.id.frame_locality_score) FrameLayout scoreFrameLayout;
     private Context mContext;
     private Project project;
     private long projectId;
@@ -169,8 +169,12 @@ public class ProjectFragment extends MakaanBaseFragment{
         descriptionTv.setText(Html.fromHtml(project.description));
         aboutBuilderExpandedLayout.bindView(project.builder);
         builderDescriptionTv.setText(Html.fromHtml(project.builder.description));
-        projectScoreProgreessBar.setProgress(project.livabilityScore.intValue() * 10);
-        projectScoreTv.setText(""+project.livabilityScore);
+        if(project.livabilityScore !=null) {
+            projectScoreProgreessBar.setProgress(project.livabilityScore.intValue() * 10);
+            projectScoreTv.setText("" + project.livabilityScore);
+        }else{
+            scoreFrameLayout.setVisibility(View.GONE);
+        }
         projectNameTv.setText(project.name);
         projectLocationTv.setText(project.address);
     }

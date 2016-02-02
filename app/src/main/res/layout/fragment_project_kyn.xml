@@ -2,21 +2,23 @@
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:font="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_marginTop="10dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <include layout="@layout/project_seperator"/>
 
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/project_kyn_margin_right"
         android:layout_marginRight="@dimen/project_kyn_margin_right"
         android:layout_marginTop="@dimen/locality_kyn_margin_top"
         android:layout_marginBottom="@dimen/locality_kyn_margin_bottom"
-        android:textColor="@color/project_similar_projects_default_color"
-        android:textSize="@dimen/locality_text_big"
+        android:textColor="@color/project_text_default"
+        android:textSize="@dimen/project_text_big"
+        font:fontName="comforta.ttf"
         android:gravity="center_horizontal"
         android:layout_gravity="center_horizontal"
         android:id="@+id/tv_localities_kyn_title"
@@ -26,13 +28,14 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         >
-        <TextView
+        <com.makaan.ui.view.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:textColor="@color/project_similar_projects_default_color"
-            android:textSize="@dimen/locality_text_small"
+            android:textColor="@color/project_text_default"
+            android:textSize="@dimen/project_text_medium"
+            font:fontName="proxima.otf"
             android:maxLines="5"
             android:layout_toLeftOf="@+id/rl_locality_score_container"
             android:layout_alignParentLeft="true"
@@ -63,15 +66,16 @@
                     android:indeterminate="false"
                     android:progressDrawable="@drawable/circular_progress_drawable"
                     android:layout_gravity="center_vertical" />
-                <TextView
+                <com.makaan.ui.view.FontTextView
                     android:id="@+id/locality_score_text"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/project_similar_projects_default_color"
-                    android:textSize="@dimen/city_very_small_text"/>
+                    font:fontName="proxima.otf"
+                    android:textColor="@color/project_text_default"
+                    android:textSize="@dimen/project_text_big"/>
             </FrameLayout>
-            <TextView
+            <com.makaan.ui.view.FontTextView
                 android:id="@+id/locality_score_label"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -79,9 +83,10 @@
                 android:layout_below="@+id/frame_locality_score"
                 android:layout_height="wrap_content"
                 android:text="locality score"
+                font:fontName="proxima.otf"
                 android:layout_marginRight="10dp"
-                android:textColor="@color/project_similar_projects_default_color"
-                android:textSize="@dimen/city_very_small_text"/>
+                android:textColor="@color/project_light_text"
+                android:textSize="@dimen/project_text_v_small"/>
 
         </RelativeLayout>
     </RelativeLayout>
@@ -108,12 +113,14 @@
             android:src="@drawable/placeholder_see_on_map"
             />
 
-        <TextView
+        <com.makaan.ui.view.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="see on map"
+            android:textSize="@dimen/project_text_small"
             android:id="@+id/amenity_see_on_map"
-            android:textColor="#e71c28"
+            android:textColor="@color/project_text_red"
+            font:fontName="proxima.otf"
             android:layout_marginLeft="5dp"
             />
     </LinearLayout>

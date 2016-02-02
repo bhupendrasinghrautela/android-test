@@ -2,8 +2,8 @@
 
 <!--TODO :: hardcoded values, work in progress-->
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:font="http://schemas.android.com/apk/res-auto"
     android:id="@+id/price_trend_view"
     android:visibility="gone"
     android:orientation="vertical"
@@ -12,13 +12,14 @@
     android:layout_height="match_parent">
     <include layout="@layout/project_seperator"/>
 
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:id="@+id/header_text"
         android:gravity="center"
-        android:textSize="@dimen/city_header_text"
+        android:textSize="@dimen/project_text_big"
         android:padding="20dp"
         android:text="@string/price_trends"
-        android:textColor="@color/listingBlack"
+        android:textColor="@color/project_text_default"
+        font:fontName="comforta.ttf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -26,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_margin="20dp"
         android:layout_height="wrap_content">
-    <TextView
+        <com.makaan.ui.view.FontTextView
         android:textSize="32sp"
         android:text="5"
         android:layout_marginLeft="40dp"
@@ -34,23 +35,25 @@
         android:textColor="@color/listingBlack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-        <TextView
-        android:textSize="20sp"
+        <com.makaan.ui.view.FontTextView
+        android:textSize="@dimen/project_super_big"
         android:text="years"
             android:layout_toRightOf="@+id/tv_price_trend_years"
             android:layout_alignBottom="@+id/tv_price_trend_years"
         android:id="@+id/tv_price_trend_years_text"
-        android:textColor="#999"
+            font:fontName="proxima.otf"
+        android:textColor="@color/project_text_default"
             android:layout_marginLeft="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-        <TextView
-            android:textSize="20sp"
+        <com.makaan.ui.view.FontTextView
+            android:textSize="@dimen/project_text_small"
             android:text=""
+            font:fontName="proxima.otf"
             android:layout_alignParentRight="true"
             android:layout_alignBottom="@+id/tv_price_trend_years_text"
             android:id="@+id/tv_price_trend_price"
-            android:textColor="@color/listingBlack"
+            android:textColor="@color/project_text_light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </RelativeLayout>

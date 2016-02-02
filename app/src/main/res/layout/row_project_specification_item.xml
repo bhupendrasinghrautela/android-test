@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:font="http://schemas.android.com/apk/res-auto"
     android:id="@+id/project_specification_row_container"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
+        font:fontName="proxima.otf"
         android:layout_marginTop="@dimen/project_specification_heading_margin_top"
         android:layout_gravity="center_horizontal"
         android:id="@+id/tv_project_specification_item_labe_one"
-        android:textSize="@dimen/project_specification_heading_text_size"
-        android:textColor="@color/project_specification_dark_color"
+        android:textSize="@dimen/project_text_medium"
+        android:textStyle="bold"
+        android:textColor="@color/project_text_default"
         />
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/project_specification_label_margin_top"
         android:layout_marginBottom="@dimen/project_specification_label_margin_bottom"
+        font:fontName="proxima-light.otf"
         android:layout_below="@id/tv_project_specification_item_labe_one"
         android:id="@+id/tv_project_specification_item_labe_two"
-        android:textSize="@dimen/project_specification_label_text_size"
-        android:textColor="@color/project_specification_default_color"
+        android:textSize="@dimen/project_text_small"
+        android:textColor="@color/project_text_light"
         />
 
 </LinearLayout>

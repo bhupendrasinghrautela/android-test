@@ -11,19 +11,19 @@
         android:layout_height="32dp"
         android:src="@drawable/possession"
         android:layout_gravity="center_horizontal" />
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:id="@+id/value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="aug, 2017"
         android:textColor="@color/serp_listing_card_default_text_color"
-        android:textSize="16sp"
+        android:textSize="@dimen/project_text_small"
         android:layout_gravity="center_horizontal" />
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/serp_listing_card_property_detail_info_text_color"
-        android:textSize="14sp"
+        android:textSize="@dimen/project_text_v_small"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>

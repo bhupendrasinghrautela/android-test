@@ -2,19 +2,21 @@
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:font="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <include layout="@layout/project_seperator"/>
 
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/locality_kyn_margin_right"
         android:layout_marginRight="@dimen/locality_kyn_margin_right"
         android:layout_marginTop="@dimen/locality_kyn_margin_top"
         android:layout_marginBottom="@dimen/locality_kyn_margin_bottom"
-        android:textColor="@color/project_similar_projects_default_color"
+        android:textColor="@color/project_text_default"
+        font:fontName="comforta.ttf"
         android:textSize="@dimen/project_text_big"
         android:layout_gravity="center_horizontal"
         android:id="@+id/tv_similar_project_title"

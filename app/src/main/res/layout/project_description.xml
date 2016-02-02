@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout
-        android:layout_marginTop="26dp"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:layout_marginTop="26dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
+    xmlns:font="http://schemas.android.com/apk/res-auto">
     <include layout="@layout/project_seperator"/>
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/project_kyn_margin_right"
         android:layout_marginRight="@dimen/project_kyn_margin_right"
         android:layout_marginTop="@dimen/locality_kyn_margin_top"
         android:layout_marginBottom="@dimen/locality_kyn_margin_bottom"
-        android:textColor="@color/project_similar_projects_default_color"
-        android:textSize="@dimen/locality_text_big"
+        font:fontName="comforta.ttf"
+        android:textColor="@color/project_text_default"
+        android:textSize="@dimen/project_text_big"
         android:gravity="center_horizontal"
         android:text="@string/project_description_title"
         android:layout_gravity="center_horizontal"

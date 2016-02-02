@@ -24,4 +24,9 @@
         <attr name="itemProgressIcon" format="reference" />
         <attr name="itemSecondaryProgressIcon" format="reference" />
     </declare-styleable>
+
+        <declare-styleable name="fontTextView">
+            <attr name="fontName" format="string" />
+        </declare-styleable>
+
 </resources>

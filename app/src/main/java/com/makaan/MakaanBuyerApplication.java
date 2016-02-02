@@ -5,7 +5,6 @@ import android.app.Application;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.makaan.cookie.MakaanCookieStore;
-import com.makaan.jarvis.JarvisConstants;
 import com.makaan.jarvis.JarvisServiceCreator;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.request.selector.Selector;
@@ -57,8 +56,8 @@ public class MakaanBuyerApplication extends Application {
         super.onCreate();
 
         FontTypeface.setDefaultFont(this, "DEFAULT", "fonts/ProximaNova-Bold.otf");
-        FontTypeface.setDefaultFont(this, "MONOSPACE", "fonts/ProximaNova-Regular.otf");
-        FontTypeface.setDefaultFont(this, "SERIF", "fonts/ProximaNova-Light.otf");
+        FontTypeface.setDefaultFont(this, "MONOSPACE", "fonts/proxima.otf");
+        FontTypeface.setDefaultFont(this, "SERIF", "fonts/proxima-light.otf");
         FontTypeface.setDefaultFont(this, "SANS_SERIF", "fonts/ProximaNova-Semibold.otf");
 
         MakaanNetworkClient.init(this);
