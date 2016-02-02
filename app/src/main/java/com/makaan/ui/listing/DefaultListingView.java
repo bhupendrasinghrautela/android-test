@@ -2,6 +2,7 @@ package com.makaan.ui.listing;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
@@ -19,16 +20,20 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.FadeInNetworkImageView;
+import com.android.volley.toolbox.ImageLoader;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
+import com.makaan.activity.project.ProjectActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.PreferenceConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.serp.ListingInfoMap;
+import com.makaan.util.Blur;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
 import com.pkmmte.view.CircularImageView;
@@ -249,58 +254,68 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         }
 
         // set price info
-        mPropertyPriceTextView.setText(priceString);
+        mPropertyPriceTextView.setText(priceString.toLowerCase());
         mPropertyPriceUnitTextView.setText(priceUnit);
-        mPropertyPriceSqFtTextView.setText(String.format("%s/sqft", StringUtil.getFormattedNumber(mListing.pricePerUnitArea)));
+        mPropertyPriceSqFtTextView.setText(String.format("%s/sqft", StringUtil.getFormattedNumber(mListing.pricePerUnitArea)).toLowerCase());
 
         // set property bhk and size info
         if(mListing.bhkInfo == null) {
             mPropertyBhkInfoTextView.setVisibility(View.GONE);
         } else {
             mPropertyBhkInfoTextView.setVisibility(View.VISIBLE);
-            mPropertyBhkInfoTextView.setText(mListing.bhkInfo);
+            mPropertyBhkInfoTextView.setText(mListing.bhkInfo.toLowerCase());
         }
 
         if(mListing.sizeInfo == null) {
             mPropertySizeInfoTextView.setVisibility(View.GONE);
         } else {
             mPropertySizeInfoTextView.setVisibility(View.VISIBLE);
-            mPropertySizeInfoTextView.setText(mListing.sizeInfo);
+            mPropertySizeInfoTextView.setText(mListing.sizeInfo.toLowerCase());
         }
 
         // set property address info {project_name},{localityName}_{cityName}
         if(mListing.project.name != null) {
-            mPropertyAddressTextView.setText(String.format("%s, %s, %s", mListing.project.name, mListing.localityName, mListing.cityName));
+            mPropertyAddressTextView.setText(String.format("%s, %s, %s", mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase());
         } else {
-            mPropertyAddressTextView.setText(String.format("%s, %s", mListing.localityName, mListing.cityName));
+            mPropertyAddressTextView.setText(String.format("%s, %s", mListing.localityName, mListing.cityName).toLowerCase());
         }
 
         // set property tagline or detailed info
-        mPropertyDescriptionTextView.setText(Html.fromHtml(mListing.description));
+        String text = Html.fromHtml(mListing.description.toLowerCase()).toString();
+        text = text.replace("\t", "").replace("\n", "");
+
+        mPropertyDescriptionTextView.setText(text);
 
         if(callback.needSellerInfoInSerp()) {
             mSellerInfoRelativeLayout.setVisibility(View.VISIBLE);
 
             // TODO check seller name
             if(mListing.lisitingPostedBy != null) {
-                mPropertySellerNameTextView.setText(String.format("%s(%s)",mListing.lisitingPostedBy.name, mListing.lisitingPostedBy.type));
+                mPropertySellerNameTextView.setText(String.format("%s(%s)",mListing.lisitingPostedBy.name, mListing.lisitingPostedBy.type).toLowerCase());
             } else {
-                mPropertySellerNameTextView.setText(mListing.project.builderName);
+                mPropertySellerNameTextView.setText(mListing.project.builderName.toLowerCase());
             }
 
             // todo need to show seller logo image if available
-            mSellerLogoTextView.setText(String.valueOf(mListing.lisitingPostedBy.name.charAt(0)));
-            mSellerLogoTextView.setVisibility(View.VISIBLE);
-            mSellerImageView.setVisibility(View.GONE);
-            // show seller first character as logo
-            Random random = new Random();
-            ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
-            int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
-            drawable.getPaint().setColor(color);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                mSellerLogoTextView.setBackground(drawable);
+            if(mListing.lisitingPostedBy.profilePictureURL != null) {
+                mSellerLogoTextView.setVisibility(View.GONE);
+                mSellerImageView.setVisibility(View.VISIBLE);
+                MakaanNetworkClient.getInstance().getImageLoader().get(mListing.lisitingPostedBy.profilePictureURL, new ImageLoader.ImageListener() {
+                    @Override
+                    public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
+                        if (b && imageContainer.getBitmap() == null) {
+                            return;
+                        }
+                        mSellerImageView.setImageBitmap(imageContainer.getBitmap());
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        showTextAsImage();
+                    }
+                });
             } else {
-                mSellerLogoTextView.setBackgroundDrawable(drawable);
+                showTextAsImage();
             }
 
             // show or hide assist button
@@ -331,6 +346,22 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
             }
         });
 
+    }
+
+    private void showTextAsImage() {
+        mSellerLogoTextView.setText(String.valueOf(mListing.lisitingPostedBy.name.charAt(0)));
+        mSellerLogoTextView.setVisibility(View.VISIBLE);
+        mSellerImageView.setVisibility(View.GONE);
+        // show seller first character as logo
+        Random random = new Random();
+        ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+        int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
+        drawable.getPaint().setColor(color);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mSellerLogoTextView.setBackground(drawable);
+        } else {
+            mSellerLogoTextView.setBackgroundDrawable(drawable);
+        }
     }
 
     private void mapPropertyInfo(boolean isBuy) {
@@ -408,32 +439,32 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
             case "propertyStatus":
                 if(!TextUtils.isEmpty(mListing.propertyStatus)) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
-                    mPropertyInfoTextViews.get(j).setText(mListing.propertyStatus);
-                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    mPropertyInfoTextViews.get(j).setText(mListing.propertyStatus.toLowerCase());
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
                 }
                 break;
             case "propertyAge":
                 if(mListing.isReadyToMove && !TextUtils.isEmpty(mListing.propertyAge)) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
-                    mPropertyInfoTextViews.get(j).setText(mListing.propertyAge);
-                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    mPropertyInfoTextViews.get(j).setText(mListing.propertyAge.toLowerCase());
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
                 }
                 break;
             case "possessionDate":
                 if(!mListing.isReadyToMove && !TextUtils.isEmpty(mListing.possessionDate)) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
-                    mPropertyInfoTextViews.get(j).setText(mListing.possessionDate);
-                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    mPropertyInfoTextViews.get(j).setText(mListing.possessionDate.toLowerCase());
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
                 }
                 break;
             case "bathrooms":
                 if(mListing.bathrooms != null && mListing.bathrooms != 0) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
-                    mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.bathrooms));
-                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.bathrooms).toLowerCase());
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
                 }
                 break;
@@ -441,84 +472,84 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
                 if(mListing.floor != null && mListing.totalFloors != null && mListing.floor != 0 && mListing.totalFloors != 0) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     if(mListing.floor == 1) {
-                        mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format("%d<sup>st</sup> of %d", mListing.floor, mListing.totalFloors)));
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup>st</sup> of %d", mListing.floor, mListing.totalFloors).toLowerCase()));
                     } else if(mListing.floor == 2) {
-                        mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format("%d<sup>nd</sup> of %d", mListing.floor, mListing.totalFloors)));
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup>nd</sup> of %d", mListing.floor, mListing.totalFloors).toLowerCase()));
                     } else if(mListing.floor == 3) {
-                        mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format("%d<sup>rd</sup> of %d", mListing.floor, mListing.totalFloors)));
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup>rd</sup> of %d", mListing.floor, mListing.totalFloors).toLowerCase()));
                     } else {
-                        mPropertyFloorInfoTextView.setText(Html.fromHtml(String.format("%d<sup>th</sup> of %d", mListing.floor, mListing.totalFloors)));
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup>th</sup> of %d", mListing.floor, mListing.totalFloors).toLowerCase()));
                     }
-                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
                 }
                 break;
             case "balcony":
                 if(mListing.balcony != null && mListing.balcony != 0) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
-                    mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.balcony));
-                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.balcony).toLowerCase());
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
                 }
                 break;
             case "listingCategory":
                 if(!TextUtils.isEmpty(mListing.listingCategory)) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
-                    mPropertyInfoTextViews.get(j).setText(mListing.listingCategory);
-                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    mPropertyInfoTextViews.get(j).setText(mListing.listingCategory.toLowerCase());
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
                 }
                 break;
             case "facing":
                 if(!TextUtils.isEmpty(mListing.facing)) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
-                    mPropertyInfoTextViews.get(j).setText(mListing.facing);
-                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    mPropertyInfoTextViews.get(j).setText(mListing.facing.toLowerCase());
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
                 }
                 break;
             case "ownershipType":
                 if(!TextUtils.isEmpty(mListing.ownershipType)) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
-                    mPropertyInfoTextViews.get(j).setText(mListing.ownershipType);
-                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    mPropertyInfoTextViews.get(j).setText(mListing.ownershipType.toLowerCase());
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
                 }
                 break;
             case "furnished":
                 if(!TextUtils.isEmpty(mListing.furnished)) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
-                    mPropertyInfoTextViews.get(j).setText(mListing.furnished);
-                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    mPropertyInfoTextViews.get(j).setText(mListing.furnished.toLowerCase());
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
                 }
                 break;
             case "isReadyToMove":
                 if(!mListing.isReadyToMove && TextUtils.isEmpty(mListing.possessionDate)) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
-                    mPropertyInfoTextViews.get(j).setText(mListing.possessionDate);
-                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    mPropertyInfoTextViews.get(j).setText(mListing.possessionDate.toLowerCase());
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
                 } else if(mListing.isReadyToMove) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText("ready to move in");
-                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
                 }
                 break;
             case "noOfOpenSides":
                 if(mListing.noOfOpenSides != null && mListing.noOfOpenSides != 0) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
-                    mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.noOfOpenSides));
-                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.noOfOpenSides).toLowerCase());
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
                 }
                 break;
             case "securityDeposit":
                 if(mListing.securityDeposit != null && mListing.securityDeposit != 0) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
-                    mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.securityDeposit));
-                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName);
+                    mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.securityDeposit).toLowerCase());
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
                 }
                 break;
@@ -557,5 +588,14 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         mCallback.serpRequest(SerpActivity.TYPE_SELLER, MakaanBuyerApplication.serpSelector);
 
 //        MakaanBuyerApplication.serpSelector.term("sellerId", String.valueOf(mListing.sellerId));
+    }
+
+    @OnClick(R.id.serp_default_listing_property_address_text_view)
+    public void onProjectClicked(View view) {
+        if(mListing.projectId != null && mListing.projectId != 0) {
+            Bundle bundle = new Bundle();
+            bundle.putLong(ProjectActivity.PROJECT_ID, mListing.projectId);
+            mCallback.requestDetailPage(SerpActivity.REQUEST_PROJECT_PAGE, bundle);
+        }
     }
 }

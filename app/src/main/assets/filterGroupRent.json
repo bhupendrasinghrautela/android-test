@@ -31,10 +31,10 @@
             "selected": false
           },
           {
-            "displayName": "4",
+            "displayName": "3+",
             "displayOrder": "4",
             "fieldName": "bedrooms",
-            "value": "4",
+            "value": "4-10",
             "selected": false
           }
         ],
@@ -49,7 +49,7 @@
         "displayOrder": "2",
         "layoutType": "2",
         "imageName":"money",
-        "type": "",
+        "type": "currency",
         "termFilterValues": [],
         "rangeFilterValues": [
           {
@@ -157,10 +157,10 @@
             "selected": false
           },
           {
-            "displayName": "4",
+            "displayName": "3+",
             "displayOrder": "4",
             "fieldName": "bathrooms",
-            "value": "4",
+            "value": "4-10",
             "selected": false
           }
         ],
@@ -182,7 +182,7 @@
             "displayName": "ready to move",
             "displayOrder": "1",
             "fieldName": "listingPossessionDate",
-            "minValue": 0,
+            "minValue": -1000000,
             "maxValue": 0,
             "selected": false
           },
@@ -206,8 +206,8 @@
             "displayName": "anytime",
             "displayOrder": "4",
             "fieldName": "listingPossessionDate",
-            "minValue": 0,
-            "maxValue": 10000,
+            "minValue": -1000000,
+            "maxValue": -1000000,
             "selected": false
           }
         ],
@@ -223,7 +223,7 @@
         "type": "",
         "termFilterValues": [
           {
-            "displayName": "agent",
+            "displayName": "seller",
             "displayOrder": "1",
             "fieldName": "listingSellerCompanyType",
             "value": "Broker",

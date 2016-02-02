@@ -12,6 +12,7 @@ public class BlogItem {
     public String postContent, username;
     public String postDate, epochPostDate;
     public String primaryImageUrl;
+    public String guid;
 
     public HashMap<String, ContentImage> imageSizeMap;
 }

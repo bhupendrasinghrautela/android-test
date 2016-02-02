@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
+import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.constants.RequestConstants;
 import com.makaan.event.agents.callback.TopAgentsCallback;
@@ -379,7 +380,7 @@ public class LocalityFragment extends MakaanBaseFragment{
 
     protected void initFragment(int fragmentHolderId, Fragment fragment, boolean shouldAddToBackStack) {
         // reference fragment transaction
-        FragmentTransaction fragmentTransaction =((LocalityActivity) mContext).getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(fragmentHolderId, fragment, fragment.getClass().getName());
         // if need to be added to the backstack, then do so
         if (shouldAddToBackStack) {

@@ -22,12 +22,15 @@ public class ResponseConstants {
     public static final String CITY = "city";
     public static final String COMPANY_SELLER = "companySeller";
     public static final String COMPANY = "company";
+    public static final String USER = "user";
     public static final String IMAGES = "images";
     public static final String POSTED_DATE = "postedDate";
     public static final String ID = "id";
+    public static final String PROJECT_ID = "projectId";
     public static final String BEDROOMS = "bedrooms";
     public static final String BATHROOMS = "bathrooms";
     public static final String BALCONY = "balcony";
+    public static final String PROFILE_PICTURE_URL = "profilePictureURL";
 
     public static final String DESCRIPTION = "description";
     public static final String SIZE = "size";

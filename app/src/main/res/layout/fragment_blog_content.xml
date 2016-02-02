@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragment_blog_content_frame_layout">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fragment_blog_content_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:drawSelectorOnTop="false"
+        android:fastScrollEnabled="true"
+        android:overScrollMode="never"
+        android:scrollbarStyle="insideInset"
+        android:visibility="gone"/>
+    <ProgressBar
+        android:id="@+id/fragment_blog_content_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+</FrameLayout>
