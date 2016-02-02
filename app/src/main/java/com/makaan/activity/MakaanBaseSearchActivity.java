@@ -14,6 +14,9 @@ import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,7 +40,6 @@ import com.makaan.service.SearchService;
 
 import com.makaan.ui.listing.CustomFlowLayout;
 import com.makaan.util.RecentSearchManager;
-import com.makaan.util.StringUtil;
 
 
 import java.io.UnsupportedEncodingException;
@@ -56,6 +58,11 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
     public static final int SERP_CONTEXT_BUY = 1;
     public static final int SERP_CONTEXT_RENT = 2;
+
+    protected static final int HIDE_THRESHOLD = 50;
+
+    protected int scrolledDistance;
+    protected boolean controlsVisible = true;
 
     // current context of serp, SERP_CONTEXT_BUY or SERP_CONTEXT_RENT
     protected int mSerpContext = SERP_CONTEXT_BUY;
@@ -165,7 +172,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
      * @param showSearchBar boolean to control whether search bar should show or not
      */
     protected void initUi(boolean showSearchBar) {
-        setShowSearchBar(showSearchBar);
+        setShowSearchBar(showSearchBar, false);
 
         // TODO need to check about text style for the search view
         /*int id = mSearchView.getContext().getResources()
@@ -186,12 +193,66 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         initializeViewData();
     }
 
-    protected void setShowSearchBar(boolean showSearchBar) {
-        if (showSearchBar) {
-            mSearchLayoutFrameLayout.setVisibility(View.VISIBLE);
+    protected void setShowSearchBar(boolean showSearchBar, boolean animate) {
+        if(!animate) {
+            if (showSearchBar) {
+                mSearchLayoutFrameLayout.setVisibility(View.VISIBLE);
+            } else {
+                mSearchLayoutFrameLayout.setVisibility(View.GONE);
+                setSearchResultFrameLayoutVisibility(false);
+            }
         } else {
-            mSearchLayoutFrameLayout.setVisibility(View.GONE);
-            setSearchResultFrameLayoutVisibility(false);
+            if(showSearchBar) {
+                ((ViewGroup)mSearchLayoutFrameLayout.getParent()).setTranslationY(-mSearchLayoutFrameLayout.getHeight());
+                mSearchLayoutFrameLayout.setVisibility(View.VISIBLE);
+                ((ViewGroup)mSearchLayoutFrameLayout.getParent()).animate()
+                        .translationY(0).setInterpolator(new DecelerateInterpolator(2))
+                        .setListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                            }
+
+                            @Override
+                            public void onAnimationCancel(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator animation) {
+
+                            }
+                });
+            } else {
+                ((ViewGroup)mSearchLayoutFrameLayout.getParent()).animate()
+                        .translationY(-mSearchLayoutFrameLayout.getHeight()).setInterpolator(new AccelerateInterpolator(2))
+                        .setListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                mSearchLayoutFrameLayout.setVisibility(View.GONE);
+                                ((ViewGroup)mSearchLayoutFrameLayout.getParent()).setTranslationY(0);
+                            }
+
+                            @Override
+                            public void onAnimationCancel(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator animation) {
+
+                            }
+                        });
+            }
         }
     }
 
@@ -322,6 +383,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             mSearchRelativeView.setVisibility(View.VISIBLE);
             mSearchEditText.requestFocus();
             if(TextUtils.isEmpty(mSearchEditText.getText().toString())) {
+                final CharSequence hintText = mSearchEditText.getHint();
+                mSearchEditText.setHint("");
                 mDeleteButton.setBackgroundResource(R.drawable.search_white);
                 mDeleteButton.setVisibility(View.GONE);
 
@@ -347,6 +410,9 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                             public void onAnimationEnd(Animator animation) {
                                 mDeleteButton.setVisibility(View.VISIBLE);
                                 mSearchImageView.setVisibility(View.GONE);
+                                if(hintText != null) {
+                                    mSearchEditText.setHint(hintText);
+                                }
                             }
 
                             @Override
@@ -360,7 +426,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                             }
                         });
                     }
-                }, 200);
+                }, 400);
             } else {
                 mDeleteButton.setBackgroundResource(R.drawable.close_white);
                 mSearchImageView.setVisibility(View.GONE);
@@ -400,7 +466,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                             }
                         });
                     }
-                }, 200);
+                }, 400);
             } else {
                 mSearchDescriptionRelativeView.setVisibility(View.VISIBLE);
                 mSearchRelativeView.setVisibility(View.GONE);
@@ -534,6 +600,11 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         ArrayList<SearchResponseItem> list = new ArrayList<>();
         list.addAll(mSelectedSearches);
         return list;
+    }
+
+
+    protected int getSearchBarHeight() {
+        return mSearchLayoutFrameLayout.getHeight();
     }
 
     /**

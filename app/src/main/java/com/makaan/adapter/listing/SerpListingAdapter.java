@@ -29,6 +29,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
     private final SerpRequestCallback mCallback;
     private int mRequestType = SerpActivity.TYPE_UNKNOWN;
     protected ArrayList<GroupCluster> mGroupClusterListings;
+    private String mCount;
 
     public SerpListingAdapter(Context context, SerpRequestCallback callbacks) {
         mContext = context;
@@ -65,11 +66,16 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
                     superItemViewType = RecycleViewMode.DATA_TYPE_LISTING.getValue();
                 }
             } else {
-                if((position % 10) == GroupCluster.CLUSTER_POS_IN_SERP_PER_TEN && mGroupClusterListings != null
-                        && mGroupClusterListings.size() > (position / 10)) {
-                    superItemViewType =  RecycleViewMode.DATA_TYPE_CLUSTER.getValue();
+                if(position == 0) {
+                    superItemViewType = RecycleViewMode.DATA_TYPE_COUNT.getValue();
                 } else {
-                    superItemViewType = RecycleViewMode.DATA_TYPE_LISTING.getValue();
+                    position--;
+                    if ((position % 10) == GroupCluster.CLUSTER_POS_IN_SERP_PER_TEN && mGroupClusterListings != null
+                            && mGroupClusterListings.size() > (position / 10)) {
+                        superItemViewType = RecycleViewMode.DATA_TYPE_CLUSTER.getValue();
+                    } else {
+                        superItemViewType = RecycleViewMode.DATA_TYPE_LISTING.getValue();
+                    }
                 }
             }
         }
@@ -92,11 +98,11 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
             if (mItems == null && mGroupClusterListings == null) {
                 return 0;
             } else if (mGroupClusterListings == null || mGroupClusterListings.size() == 0) {
-                return mItems.size();
+                return (mItems.size() + 1);
             } else if (mItems == null || mItems.size() == 0) {
                 return 0;
             } else {
-                return (mItems.size() + mGroupClusterListings.size());
+                return ((mItems.size() + 1) + mGroupClusterListings.size());
             }
         }
     }
@@ -127,14 +133,14 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
                 || type == RecycleViewMode.DATA_TYPE_SELLER.getValue()) {
             viewHolder.populateData(null, mCallback);
         } else {
-            int extraCount = 0;
-            if(mRequestType == SerpActivity.TYPE_BUILDER
-                    || mRequestType == SerpActivity.TYPE_SELLER) {
-                extraCount = 1;
-            } else if(mRequestType != SerpActivity.TYPE_CLUSTER) {
+            if(position == 0) {
+                viewHolder.populateData(mCount, mCallback);
+            } else {
+                position--;
+                int extraCount = 0;
                 int tens = position / 10;
                 int digit = position % 10;
-                if(tens > mGroupClusterListings.size()) {
+                if (tens > mGroupClusterListings.size()) {
                     extraCount = mGroupClusterListings.size();
                 } else {
                     if (digit > GroupCluster.CLUSTER_POS_IN_SERP_PER_TEN) {
@@ -145,7 +151,6 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
                 }
                 viewHolder.populateData(mItems.get(position - extraCount), mCallback);
             }
-            viewHolder.populateData(mItems.get(position - extraCount), mCallback);
         }
     }
 
@@ -159,7 +164,8 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
 
     }
 
-    public void setData(List<Listing> listings, @Nullable List<GroupListing> groupListings, int requestType) {
+    public void setData(String count, List<Listing> listings, @Nullable List<GroupListing> groupListings, int requestType) {
+        mCount = count;
 
         if (mGroupClusterListings == null) {
             mGroupClusterListings = new ArrayList<>();

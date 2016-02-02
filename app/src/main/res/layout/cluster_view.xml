@@ -34,6 +34,8 @@
                 android:layout_marginStart="@dimen/serp_listing_cluster_card_group_text_view_margin_left"
                 android:layout_marginRight="@dimen/serp_listing_cluster_card_group_text_view_margin_right"
                 android:layout_marginEnd="@dimen/serp_listing_cluster_card_group_text_view_margin_right"
+                android:layout_marginTop="@dimen/serp_listing_cluster_card_group_text_view_margin_top"
+                android:layout_marginBottom="@dimen/serp_listing_cluster_card_group_text_view_margin_bottom"
                 android:text="@string/cluster_item_group_text"
                 android:textColor="@color/white"
                 android:textSize="@dimen/serp_listing_cluster_card_group_text_view_text_size" />

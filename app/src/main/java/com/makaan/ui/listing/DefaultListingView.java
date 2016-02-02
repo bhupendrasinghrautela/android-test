@@ -318,12 +318,12 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
                 showTextAsImage();
             }
 
-            // show or hide assist button
             if(mListing.lisitingPostedBy == null || !mListing.lisitingPostedBy.assist) {
                 mAssistButton.setVisibility(View.GONE);
             } else {
                 mAssistButton.setVisibility(View.VISIBLE);
             }
+            //mAssistButton.setVisibility(View.VISIBLE);
         } else {
             mSellerInfoRelativeLayout.setVisibility(View.GONE);
         }
@@ -339,7 +339,7 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
                     bundle.putLong(KeyUtil.LISTING_ID, mListing.id);
                     bundle.putDouble(KeyUtil.LISTING_LAT, mListing.latitude);
                     bundle.putDouble(KeyUtil.LISTING_LON, mListing.longitude);
-                    bundle.putString(KeyUtil.LISTING_Image,mListing.mainImageUrl);
+                    bundle.putString(KeyUtil.LISTING_Image, mListing.mainImageUrl);
 
                     mCallback.requestDetailPage(SerpActivity.REQUEST_PROPERTY_PAGE, bundle);
                 }
@@ -353,10 +353,13 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         mSellerLogoTextView.setVisibility(View.VISIBLE);
         mSellerImageView.setVisibility(View.GONE);
         // show seller first character as logo
+
+        int[] bgColorArray = getResources().getIntArray(R.array.bg_colors);
+
         Random random = new Random();
         ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
-        int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
-        drawable.getPaint().setColor(color);
+//        int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
+        drawable.getPaint().setColor(bgColorArray[random.nextInt(bgColorArray.length)]);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             mSellerLogoTextView.setBackground(drawable);
         } else {

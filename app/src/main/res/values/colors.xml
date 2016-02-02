@@ -134,10 +134,28 @@
     <color name="Gray">#808080</color>
     <color name="buyer_dashboard_background">#FFFBFBFB</color>
 
+    <color name="white_hint_color">#7FFFFFFF</color>
+
+    <color name="bg_color_1">#FD434C</color>
+    <color name="bg_color_2">#FD5B48</color>
+    <color name="bg_color_3">#FD7043</color>
+    <color name="bg_color_4">#FD8140</color>
+    <color name="bg_color_5">#FD903D</color>
+    <color name="bg_color_6">#FDA73D</color>
+    <color name="bg_color_7">#FDBC34</color>
+    <array name="bg_colors">
+        <item>@color/bg_color_1</item>
+        <item>@color/bg_color_2</item>
+        <item>@color/bg_color_3</item>
+        <item>@color/bg_color_4</item>
+        <item>@color/bg_color_5</item>
+        <item>@color/bg_color_6</item>
+        <item>@color/bg_color_7</item>
+    </array>
+
     <!--my account colors-->
     <color name="my_account_grey">#444444</color>
     <color name="button_grey">#a2a2a2</color>
     <color name="submit_button_grey">#a2a2a2</color>
-
 
 </resources>

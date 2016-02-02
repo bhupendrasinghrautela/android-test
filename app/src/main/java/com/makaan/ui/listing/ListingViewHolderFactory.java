@@ -23,6 +23,8 @@ public class ListingViewHolderFactory {
             view = LayoutInflater.from(context).inflate(R.layout.serp_listing_item_builder, parent, false);
         } else if (viewType == RecycleViewMode.DATA_TYPE_SELLER.getValue()) {
             view = LayoutInflater.from(context).inflate(R.layout.serp_listing_item_seller, parent, false);
+        } else if(viewType == RecycleViewMode.DATA_TYPE_COUNT.getValue()) {
+            view = LayoutInflater.from(context).inflate(R.layout.serp_listing_item_count, parent, false);
         }
         return new DefaultListingViewHolder(view);
     }
