@@ -2,6 +2,10 @@ package com.makaan.activity.listing;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +14,8 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -18,26 +24,34 @@ import com.makaan.activity.city.CityActivity;
 import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.event.amenity.AmenityGetEvent;
-import com.makaan.event.listing.ListingByIdGetEvent;
 import com.makaan.event.image.ImagesGetEvent;
+import com.makaan.event.listing.ListingByIdGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.locality.LocalityPropertiesFragment;
 import com.makaan.pojo.TaxonomyCard;
+import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Project;
 import com.makaan.response.property.Property;
+import com.makaan.response.user.Company;
 import com.makaan.service.ImageService;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.ui.CompressedTextView;
 import com.makaan.ui.amenity.AmenityViewPager;
+import com.makaan.ui.project.ProjectSpecificationView;
 import com.makaan.ui.property.AboutBuilderExpandedLayout;
 import com.makaan.ui.property.AmenitiesViewScroll;
 import com.makaan.ui.property.ListingDataOverViewScroll;
 import com.makaan.ui.property.PropertyImageViewPager;
+import com.makaan.ui.view.CustomRatingBar;
 import com.makaan.util.KeyUtil;
+import com.pkmmte.view.CircularImageView;
+import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
 
 import java.util.List;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -50,17 +64,42 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
     @Bind(R.id.amenity_viewpager)
     AmenityViewPager mAmenityViewPager;
 
+    @Bind(R.id.project_specification_view)
+    ProjectSpecificationView projectSpecificationView;
+
+
     @Bind(R.id.property_image_viewpager)
     PropertyImageViewPager mPropertyImageViewPager;
 
     @Bind(R.id.unit_name)
     TextView mUnitName;
 
+    @Bind(R.id.unit_area)
+    TextView mUnitArea;
+
+    @Bind(R.id.seller_assist_button)
+    Button mSellerAssistButton;
+
+    @Bind(R.id.seller_rating)
+    CustomRatingBar mSellerRating;
+
+    @Bind(R.id.seller_image_view)
+    CircularImageView mSellerImageView;
+
+    @Bind(R.id.seller_logo_text_view)
+    TextView mSellerLogoTextView;
+
+    @Bind(R.id.seller_name_text_view)
+    TextView mSellerName;
+
     @Bind(R.id.about_builder_layout)
     AboutBuilderExpandedLayout mABoutBuilderLayout;
 
     @Bind(R.id.about_locality)
     TextView mAboutLocality;
+
+    @Bind(R.id.compressed_text_layout)
+    CompressedTextView mCompressedDescriptionLayout;
 
     @Bind(R.id.listing_over_view_scroll_layout)
     ListingDataOverViewScroll mListingDataOverViewScroll;
@@ -74,8 +113,15 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
     @Bind(R.id.locality_score_progress)
     ProgressBar mLocalityScoreProgress;
 
+    @Bind(R.id.all_seller_layout)
+    LinearLayout mAllSellerLayout;
+
     @Bind(R.id.locality_score_text)
     TextView mLocalityScoreText;
+
+
+    @Bind(R.id.content_text)
+    TextView mListingBrief;
 
     @OnClick(R.id.more_about_locality)
     public void openLocality(){
@@ -84,11 +130,16 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
         startActivity(intent);
     }
 
-    @Bind(R.id.content_text)
-    TextView mListingBrief;
+    @OnClick(R.id.amenity_see_on_map)
+    public void showMap(){
+        mShowMapCallback.showMapFragment();
+    }
 
     private ListingDetail mListingDetail;
+    private List<AmenityCluster> mAmenityClusters;
+    private ShowMapCallBack mShowMapCallback;
     private Long listingId;
+    private String listingMainUrl;
     private Context mContext;
 
 
@@ -109,17 +160,29 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
         mContext = getActivity();
         Bundle args = getArguments();
         listingId = args.getLong(KeyUtil.LISTING_ID);
+        listingMainUrl = args.getString(KeyUtil.LISTING_Image);
+    }
 
+    @Produce
+    public ListingByIdGetEvent produceListing(){
+        return new ListingByIdGetEvent(mListingDetail);
     }
 
     @Subscribe
     public void onResults(AmenityGetEvent amenityGetEvent) {
+        if(amenityGetEvent.amenityClusters == null){
+            return;
+        }
         mAmenityViewPager.bindView();
+        mAmenityClusters = amenityGetEvent.amenityClusters;
         mAmenityViewPager.setData(amenityGetEvent.amenityClusters);
     }
 
     @Subscribe
     public void onResults(ListingByIdGetEvent listingByIdGetEvent) {
+        if(listingByIdGetEvent.listingDetail == null){
+            return;
+        }
         mListingDetail = listingByIdGetEvent.listingDetail;
         TestUi(mListingDetail);
         ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId);
@@ -127,23 +190,51 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(ImagesGetEvent imagesGetEvent){
+        if(imagesGetEvent.images.size()>0){
+            mPropertyImageViewPager.setVisibility(View.VISIBLE);
+        }
         mPropertyImageViewPager.bindView();
-        mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price);
+        mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.property.size);
     }
 
     private void TestUi(ListingDetail listingDetail){
         mListingDataOverViewScroll.bindView(listingDetail);
-        mAmenitiesViewScroll.bindView(listingDetail.listingCategory, listingDetail.unitType, listingDetail.listingAmenities);
+        // todo need to show seller logo image if available
+        Company company = listingDetail.companySeller!=null?listingDetail.companySeller.company:null;
+        if(company!=null) {
+            mAllSellerLayout.setVisibility(View.VISIBLE);
+            mSellerLogoTextView.setText(String.valueOf(company.name.charAt(0)));
+            mSellerName.setText(String.format("%s(%s)",company.name,company.type));
+            mSellerLogoTextView.setVisibility(View.VISIBLE);
+            mSellerImageView.setVisibility(View.GONE);
+            // show seller first character as logo
+            Random random = new Random();
+            ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+            int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
+            drawable.getPaint().setColor(color);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                mSellerLogoTextView.setBackground(drawable);
+            } else {
+                mSellerLogoTextView.setBackgroundDrawable(drawable);
+            }
+            if(!company.assist){
+                mSellerAssistButton.setVisibility(View.GONE);
+            }
+        }
         if(listingDetail.property != null) {
             Property property = listingDetail.property;
 
+            if(listingDetail.listingAmenities !=null && !listingDetail.listingAmenities.isEmpty()) {
+                mAmenitiesViewScroll.bindView(listingDetail.listingCategory,property.unitType, listingDetail.listingAmenities);
+            }
             mUnitName.setText(listingDetail.property.bedrooms + "bhk " +
-                    (property.unitType != null ? property.unitType : "") + " - " +
+                    (property.unitType != null ? property.unitType : "") + " - ");
+            mUnitArea.setText(
                     (property.size != null ? property.size : "") + " " +
                     (property.measure != null ? property.measure : ""));
             if(property.project != null) {
                 Project project = property.project;
-
+                projectSpecificationView.bindView(project.getFormattedSpecifications(), getActivity());
                 mABoutBuilderLayout.bindView(listingDetail.property.project.builder);
 
                 if(project.locality != null) {
@@ -158,6 +249,9 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
                         mLocalityScoreText.setText("NA");
                     }
                 }
+            }
+            if(listingDetail.description!=null){
+                mCompressedDescriptionLayout.setVisibility(View.VISIBLE);
             }
             mListingBrief.setText((listingDetail.description != null ? Html.fromHtml(listingDetail.description) : ""));
         }
@@ -184,5 +278,9 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
             fragmentTransaction.addToBackStack(fragment.getClass().getName());
         }
         fragmentTransaction.commitAllowingStateLoss();
+    }
+
+    public void bindView(ShowMapCallBack showMapCallBack) {
+        mShowMapCallback = showMapCallBack;
     }
 }

@@ -4,7 +4,6 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/price_trend_view"
     android:visibility="gone"
     android:orientation="vertical"
@@ -56,9 +55,6 @@
             android:layout_height="wrap_content"/>
     </RelativeLayout>
     <include
-        android:padding="20dp"
         layout="@layout/line_chart_view_layout"/>
-
-
 
 </LinearLayout>

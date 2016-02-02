@@ -280,10 +280,12 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                     holder.primarySaleLabelTv.setText("properties for sale");
                     break;
                 case TOPAGENTS:
+                    holder.localityIv.setImageResource(R.drawable.agent_image_placeholder);
                     holder.primarySaleLabelTv.setText("properties for sale");
                     holder.rentLl.setVisibility(View.GONE);
                     break;
                 case TOPBUILDERS:
+                    holder.localityIv.setImageResource(R.drawable.builder_logo_placeholder);
                     holder.rentLl.setVisibility(View.VISIBLE);
                     holder.rentLl.setVisibility(View.GONE);
                     holder.primarySaleLabelTv.setText("total projects");

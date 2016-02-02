@@ -23,6 +23,7 @@ import com.makaan.service.OtpVerificationService;
 import com.makaan.service.PriceTrendService;
 import com.makaan.service.ProjectService;
 import com.makaan.service.PyrService;
+import com.makaan.service.SaveSearchService;
 import com.makaan.service.SearchService;
 import com.makaan.service.SellerService;
 import com.makaan.service.TaxonomyService;
@@ -30,6 +31,7 @@ import com.makaan.service.UserService;
 import com.makaan.service.WishListService;
 import com.makaan.service.user.UserLoginService;
 import com.makaan.util.RandomString;
+import com.segment.analytics.Analytics;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
@@ -61,6 +63,7 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(SearchService.class, new SearchService());
         MakaanServiceFactory.getInstance().registerService(CityService.class, new CityService());
         MakaanServiceFactory.getInstance().registerService(PyrService.class, new PyrService());
+        MakaanServiceFactory.getInstance().registerService(SaveSearchService.class,new SaveSearchService());
 
         MakaanServiceFactory.getInstance().registerService(LocalityService.class, new LocalityService());
         MakaanServiceFactory.getInstance().registerService(PriceTrendService.class, new PriceTrendService());
@@ -108,6 +111,9 @@ public class MakaanBuyerApplication extends Application {
         CookieStore cookieStore = new MakaanCookieStore(getApplicationContext());
         CookieManager cookieManager = new CookieManager(cookieStore, CookiePolicy.ACCEPT_ALL);
         CookieHandler.setDefault(cookieManager);
+
+        Analytics analytics = new Analytics.Builder(this, "421fc86dfc325acc836597f1f0157cae").build();
+        Analytics.setSingletonInstance(analytics);
 
     }
 

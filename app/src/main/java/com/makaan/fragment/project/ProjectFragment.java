@@ -62,10 +62,6 @@ public class ProjectFragment extends MakaanBaseFragment{
     @Bind(R.id.project_score_text) TextView projectScoreTv;
     @Bind(R.id.tv_project_name) TextView projectNameTv;
     @Bind(R.id.tv_project_location) TextView projectLocationTv;
-    @Bind(R.id.tv_project_experience) TextView projectExperienceTv;
-    @Bind(R.id.tv_project_average_delay) TextView projectAverageDelayTv;
-    @Bind(R.id.tv_project_ongoing_delay) TextView projectOngoingTv;
-    @Bind(R.id.tv_project_past) TextView projectPastTv;
     @Bind(R.id.content_text) TextView descriptionTv;
     @Bind(R.id.amenities_scroll_layout) AmenitiesViewScroll mAmenitiesViewScroll;
     @Bind(R.id.ll_project_container) LinearLayout projectContainer;
@@ -110,7 +106,9 @@ public class ProjectFragment extends MakaanBaseFragment{
             bundle.putString(KeyUtil.LISTING_CATEGORY, "buy");
             i.putExtra(SerpActivity.REQUEST_DATA, bundle);
         }
+        i.putExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_PROJECT);
         startActivity(i);
+        getActivity().finish();
     }
 
     @Subscribe
@@ -130,8 +128,8 @@ public class ProjectFragment extends MakaanBaseFragment{
         bundle.putLong(KeyUtil.PROJECT_ID,project.projectId);
         bundle.putLong(KeyUtil.LOCALITY_ID,project.localityId);
         bundle.putLong(KeyUtil.CITY_ID, project.locality.cityId);
-        bundle.putDouble(KeyUtil.MIN_BUDGET, configItemClickListener.projectConfigItem.maxPrice);
-        bundle.putDouble(KeyUtil.MAX_BUDGET, configItemClickListener.projectConfigItem.minPrice);
+        bundle.putDouble(KeyUtil.MIN_BUDGET, configItemClickListener.projectConfigItem.minPrice);
+        bundle.putDouble(KeyUtil.MAX_BUDGET, configItemClickListener.projectConfigItem.maxPrice);
         Intent i = new Intent(getActivity(), SerpActivity.class);
         if(configItemClickListener.isRent) {
             bundle.putString(KeyUtil.LISTING_CATEGORY, "rent");
@@ -140,7 +138,9 @@ public class ProjectFragment extends MakaanBaseFragment{
             bundle.putString(KeyUtil.LISTING_CATEGORY, "buy");
             i.putExtra(SerpActivity.REQUEST_DATA, bundle);
         }
+        i.putExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_PROJECT);
         startActivity(i);
+        getActivity().finish();
     }
 
     @Subscribe
@@ -148,7 +148,7 @@ public class ProjectFragment extends MakaanBaseFragment{
         if(imagesGetEvent.images.size()>0) {
             mPropertyImageViewPager.setVisibility(View.VISIBLE);
             mPropertyImageViewPager.bindView();
-            mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice);
+            mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice,null);
         }
     }
 
@@ -173,12 +173,6 @@ public class ProjectFragment extends MakaanBaseFragment{
         projectScoreTv.setText(""+project.livabilityScore);
         projectNameTv.setText(project.name);
         projectLocationTv.setText(project.address);
-        Date date = new Date(Long.parseLong(project.builder.establishedDate));
-        int experience = DateUtil.getDiffYears(date, new Date());
-        projectExperienceTv.setText("" + experience);
-        projectAverageDelayTv.setText("" + project.delayInMonths.intValue());
-        projectOngoingTv.setText("" + project.builder.projectStatusCount.underConstruction);
-        projectPastTv.setText("" + project.builder.projectStatusCount.launch);
     }
 
     @Subscribe

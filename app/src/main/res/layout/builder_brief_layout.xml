@@ -4,26 +4,100 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:visibility="gone"
     android:layout_width="match_parent"
-    android:padding="@dimen/property_page_internal_padding"
     android:layout_height="match_parent">
+    <include layout="@layout/property_empty_view"/>
     <com.makaan.ui.ExpandableLinearLayout
         android:id="@+id/builder_expandable"
         android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/property_page_internal_padding"
         android:layout_height="wrap_content"
         app:ael_expanded="false"
         android:orientation="vertical"
         >
     <com.android.volley.toolbox.FadeInNetworkImageView
+        android:layout_marginTop="@dimen/property_page_builder_margin_top"
         android:layout_width="@dimen/property_page_builder_logo_width"
+        android:visibility="gone"
         android:id="@+id/builder_logo"
+        android:layout_marginBottom="@dimen/property_page_builder_margin_bottom"
         android:layout_height="@dimen/property_page_builder_logo_height"/>
     <TextView
         android:id="@+id/builder_description"
         android:layout_width="match_parent"
+        android:layout_marginBottom="@dimen/property_page_builder_margin_bottom"
+        android:maxLines="5"
         android:layout_height="wrap_content"/>
+        <RelativeLayout
+            android:layout_marginBottom="@dimen/property_page_builder_margin_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/builder_experience"
+                android:orientation="vertical"
+                android:paddingRight="@dimen/property_page_builder_items_padding_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/experience"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/serp_listing_card_default_text_color"
+                    android:textSize="16sp" />
+                <TextView
+                    android:text="experience"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/serp_listing_card_property_detail_info_text_color"
+                    android:textSize="14sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/builder_ongoing"
+                android:layout_toRightOf="@+id/builder_experience"
+                android:orientation="vertical"
+                android:paddingRight="@dimen/property_page_builder_items_padding_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/ongoing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/serp_listing_card_default_text_color"
+                    android:textSize="16sp" />
+                <TextView
+                    android:text="ongoing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/serp_listing_card_property_detail_info_text_color"
+                    android:textSize="14sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/builder_completed"
+                android:layout_toRightOf="@id/builder_ongoing"
+                android:orientation="vertical"
+                android:paddingRight="@dimen/property_page_builder_items_padding_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/completed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/serp_listing_card_default_text_color"
+                    android:textSize="16sp" />
+                <TextView
+                    android:text="completed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/serp_listing_card_property_detail_info_text_color"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </RelativeLayout>
     </com.makaan.ui.ExpandableLinearLayout>
     <TextView
+        android:layout_marginLeft="@dimen/property_page_internal_padding"
+        android:layout_marginTop="@dimen/property_page_builder_margin_top"
+        android:layout_marginBottom="@dimen/property_page_builder_margin_bottom"
         android:id="@+id/about_builder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

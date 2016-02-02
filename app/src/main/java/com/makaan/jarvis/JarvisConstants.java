@@ -10,7 +10,7 @@ public class JarvisConstants {
     public static final String FILTERED = "filtered";
     public static final String CHAT_OBJECT = "chatObj";
 
-    public static final String CHAT_SERVER_URL = "http://52.76.67.48:8100";
+    public static final String CHAT_SERVER_URL = "http://52.74.104.92:8100";
     public static final String DELIVERY_ID = "12965289-3f28-474a-a37b-fb270fd90711";
     public static final int CHAT_CARD_DEFAULT_LEFT_MARGIN=20;
     public static final int CHAT_CARD_DEFAULT_TOP_BOTTOM_MARGIN=10;

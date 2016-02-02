@@ -2,22 +2,43 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:padding="12dp"
     android:gravity="center"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="@dimen/neighbor_category_view_width"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/neighbor_category_view_margin"
+    android:background="@drawable/neighbor_category_drawable"
+    android:clipToPadding="false">
 
     <ImageView
         android:id="@+id/neighborhood_category_icon"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_margin="6dp"/>
+        android:layout_width="@dimen/neighbor_category_icon_width_height"
+        android:layout_height="@dimen/neighbor_category_icon_width_height"/>
+        <!--android:src="@drawable/bed_icon"/>-->
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/neighborhood_category_name"/>
+        android:layout_marginTop="@dimen/neighborhood_category_name_top_margin"
+        android:layout_marginBottom="@dimen/neighborhood_category_name_margin_bottom"
+        android:paddingLeft="@dimen/neighborhood_category_name_padding_left_right"
+        android:paddingRight="@dimen/neighborhood_category_name_padding_left_right"
+        android:singleLine="true"
+        android:id="@+id/neighborhood_category_name"
+        android:text="school"/>
 
+    <!--<LinearLayout
+        android:layout_width="58dp"
+        android:background="@color/app_yellow"
+        android:layout_height="8dp"
+        android:layout_marginBottom="0dp" />-->
 
+    <CheckBox
+        android:id="@+id/amenity_selector"
+        android:layout_width="@dimen/amenity_selector_width"
+        android:background="@drawable/neighbor_category_text_view_drawable"
+        android:button="@android:color/transparent"
+        android:checked="false"
+        android:layout_height="@dimen/amenity_selector_layout_height"
+        android:visibility="visible"/>
 
 </LinearLayout>

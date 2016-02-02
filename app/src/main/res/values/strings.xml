@@ -74,6 +74,7 @@
     <string name="contact_top_advisors">contact 4 advisors</string>
     <string name="contact_string">contact </string>
     <string name="advisors_string">advisors</string>
+    <string name="view_all_sellers">view all sellers</string>
     <string name="add_user_name_toast">add user name</string>
     <string name="invalid_email_toast">invalid email id</string>
     <string name="invalid_phone_no_toast">invalid phone no</string>
@@ -114,6 +115,10 @@
     <string name="intrested_in">interested in</string>
     <string name="know_more">know more about</string>
     <string name="name">name</string>
+    <string name="projects">projects</string>
+    <string name="project">project</string>
+    <string name="years">years</string>
+    <string name="months">months</string>
     <string name="buy">buy</string>
     <string name="rent">rent</string>
     <string name="email">email</string>
@@ -198,5 +203,21 @@
     <!--Shortlist strings -->
     <string name="request_site_visit">request site visit</string>
     <string name="project_amenities_title">amenities</string>
+
+    <!--login strings-->
+    <string name="generic_error">an unknown error occurred. please try again later.</string>
+    <string name="enter_valid_email">enter valid email id</string>
+    <string name="enter_password">enter password</string>
+    <string name="personal_info">personal information</string>
+    <string name="Password">password</string>
+    <string name="remember_me">remember me</string>
+    <string name="forgot_pwd">forgot password ?</string>
+    <string name="signup">new to makaan? sign up!</string>
+    <string name="no_network_connection">your network connection seems to be lost. please enable internet connection and try again.</string>
+    <string name="weak_network_connection">your network connection seems to be weak, please check and try again.</string>
+    <string name= "connect_with" >connect with </string>
+    <string name="forgot_paswrd_heading">forgot password</string>
+    <string name="send_reset">send reset link</string>
+    <string name="user_name">user name</string>
 
 </resources>

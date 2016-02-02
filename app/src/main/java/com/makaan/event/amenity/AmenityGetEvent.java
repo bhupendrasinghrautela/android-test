@@ -10,4 +10,11 @@ import java.util.List;
 public class AmenityGetEvent {
     public String message;
     public List<AmenityCluster> amenityClusters;
+
+    public AmenityGetEvent(List<AmenityCluster> amenityClusters) {
+        this.amenityClusters = amenityClusters;
+    }
+
+    public AmenityGetEvent() {
+    }
 }

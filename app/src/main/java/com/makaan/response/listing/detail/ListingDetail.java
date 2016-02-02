@@ -1,7 +1,6 @@
 package com.makaan.response.listing.detail;
 
 import com.makaan.pojo.SpecificaitonsUI;
-import com.makaan.response.project.ProjectAmenity;
 import com.makaan.response.property.Property;
 import com.makaan.response.user.CompanySeller;
 
@@ -20,7 +19,7 @@ public class ListingDetail {
     public CurrentListingPrice currentListingPrice;
     public String description, listingCategory;
     public String expiryAt, possessionDate;
-    public int facingId;
+    public Integer facingId,noOfOpenSides;
     public boolean status;
     public int noOfCarParks;
     public int propertyId, projectId;
@@ -30,9 +29,9 @@ public class ListingDetail {
 
     public Double size, budget, minResaleOrPrimaryPrice, maxResaleOrPrimaryPrice;
     public Double avgPriceRisePercentage, bookingAmount, mainEntryRoadWidth, pricePerUnitArea;
-    public int bookingStatusId, ownershipTypeId;
+    public Integer bookingStatusId, ownershipTypeId;
     public String furnished;
-    public int sellerId, totalFloors, floor;
+    public Integer sellerId, totalFloors, floor;
     public ArrayList<Furnishing> furnishings = new ArrayList<>();
     public ArrayList<ListingAmenity> listingAmenities;
 

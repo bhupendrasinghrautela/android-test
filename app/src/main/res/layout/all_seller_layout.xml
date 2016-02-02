@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:id="@+id/all_seller_layout"
+              android:visibility="gone"
+              android:layout_width="match_parent"
+              android:background="@color/white"
+              android:layout_height="match_parent">
+    <include layout="@layout/property_empty_view"/>
+    <RelativeLayout
+        android:layout_marginTop="@dimen/property_page_internal_padding"
+        android:layout_marginLeft="@dimen/property_page_internal_padding"
+        android:layout_marginRight="@dimen/property_page_internal_padding"
+        android:layout_marginBottom="@dimen/property_page_contact_seller_margin_bottom"
+        android:id="@+id/serp_default_listing_property_seller_info_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/seller_assist_button"
+            android:layout_width="@dimen/serp_listing_card_assist_button_width"
+            android:layout_height="@dimen/serp_listing_card_assist_button_height"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/serp_listing_card_assist_button_top_margin"
+            android:background="@drawable/assist"
+            android:paddingLeft="@dimen/serp_listing_card_assist_button_left_padding"
+            android:paddingStart="@dimen/serp_listing_card_assist_button_left_padding"
+            android:text="@string/assist"
+            android:textAllCaps="false"
+            android:textColor="@color/serp_listing_card_default_text_color"
+            android:textSize="@dimen/serp_listing_card_assist_button_text_size"  />
+
+        <FrameLayout
+            android:id="@+id/seller_image_frame_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="@dimen/serp_listing_card_seller_image_view_top_margin">
+
+            <com.pkmmte.view.CircularImageView
+                android:id="@+id/seller_image_view"
+                android:layout_width="@dimen/serp_listing_card_seller_image_view_width"
+                android:layout_height="@dimen/serp_listing_card_seller_image_view_height"
+                android:visibility="gone"
+                app:border="true"
+                app:border_color="@color/serp_listing_card_seller_mask_color"
+                app:border_width="@dimen/border_width" />
+
+            <TextView
+                android:id="@+id/seller_logo_text_view"
+                android:layout_width="@dimen/serp_listing_card_seller_image_view_width"
+                android:layout_height="@dimen/serp_listing_card_seller_image_view_height"
+                android:gravity="center"
+                android:text="R"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+        </FrameLayout>
+        <!--android:src="@color/app_grey"-->
+
+        <TextView
+            android:id="@+id/seller_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/seller_image_frame_layout"
+            android:layout_marginLeft="@dimen/serp_listing_card_seller_name_text_view_left_margin"
+            android:layout_marginStart="@dimen/serp_listing_card_seller_name_text_view_left_margin"
+            android:layout_marginTop="@dimen/serp_listing_card_seller_name_text_view_top_margin"
+            android:layout_toEndOf="@id/seller_image_frame_layout"
+            android:layout_toRightOf="@id/seller_image_frame_layout"
+            android:text="d bhatia (agent)"
+            android:textColor="@color/serp_listing_card_default_text_color"
+            android:textSize="@dimen/serp_listing_card_seller_name_text_view_text_size"
+            android:layout_toLeftOf="@id/seller_assist_button"
+            android:layout_toStartOf="@id/seller_assist_button"/>
+
+        <com.makaan.ui.view.CustomRatingBar
+            android:id="@+id/seller_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/seller_name_text_view"
+            android:layout_alignStart="@id/seller_name_text_view"
+            android:layout_below="@id/seller_name_text_view"
+            android:layout_marginTop="@dimen/serp_listing_card_seller_rating_margin_top"
+            android:numStars="5"
+            android:rating="3.5"
+            android:stepSize="0.1"
+            android:isIndicator="true"
+            app:itemHeight="@dimen/serp_listing_card_seller_rating_item_height"
+            app:itemWidth="@dimen/serp_listing_card_seller_rating_item_width"
+            app:itemMarginLeft="@dimen/serp_listing_card_seller_rating_item_margin_left"
+            app:itemMarginRight="@dimen/serp_listing_card_seller_rating_item_margin_right"
+            app:itemProgressIcon="@drawable/star_selected"
+            app:itemSecondaryProgressIcon="@drawable/star_unselected"
+            style="?android:attr/ratingBarStyleSmall"/>
+        <!--style="?android:attr/ratingBarStyleSmall" />-->
+        <!--style="@style/customRatingBar"/>-->
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/all_seller_text"
+        android:layout_marginBottom="@dimen/property_page_contact_seller_margin_bottom"
+        android:layout_width="match_parent"
+        android:text="@string/view_all_sellers"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@color/app_red"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

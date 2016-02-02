@@ -16,7 +16,7 @@
         android:layout_marginRight="@dimen/project_kyn_margin_right"
         android:layout_marginTop="@dimen/locality_kyn_margin_top"
         android:layout_marginBottom="@dimen/locality_kyn_margin_bottom"
-        android:textColor="@color/project_similar_projects_default_color"
+        android:textColor="@color/amenity_title_color"
         android:textSize="@dimen/locality_text_big"
         android:gravity="center_horizontal"
         android:text="@string/project_specification_title"

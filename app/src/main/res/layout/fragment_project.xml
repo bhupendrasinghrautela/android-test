@@ -23,7 +23,7 @@
 
    <include layout="@layout/project_builder_basic_details"/>
     <include layout="@layout/project_seperator"/>
-    <include layout="@layout/project_builder_brief_layout"/>
+    <include layout="@layout/builder_brief_layout"/>
     <include layout="@layout/project_configuration"/>
     <include layout="@layout/project_description" />
     <include layout="@layout/project_seperator"/>
