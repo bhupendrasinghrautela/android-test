@@ -46,7 +46,7 @@ public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
         super.onActivityCreated(savedInstanceState);
         initView();
         new LocalityService().getTrendingSearchesInLocality(localityId);
-        fetchData(60);
+        fetchData(12);
     }
 
     private void fetchData(int months) {

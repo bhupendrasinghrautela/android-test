@@ -25,76 +25,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabMode="fixed"
-        app:tabGravity="fill" />
+        app:tabBackground="@drawable/tab_color_selector"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextAppearance="@style/tab_text_appearance"
+        app:tabIndicatorHeight="0dp"
+        app:tabTextColor="@color/project_specification_default_color"
+        />
     <include
         android:padding="20dp"
         layout="@layout/line_chart_view_layout"/>
 
-    <RelativeLayout
-        android:padding="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:id="@+id/iv_price_trends_median"
-            android:src="@drawable/icon_yellow_heart"
-            />
-        <TextView
-            android:id="@+id/tv_price_trends_median_desc"
-            android:layout_marginLeft="15dp"
-            android:layout_alignTop="@+id/iv_price_trends_median"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#444"
-            android:textSize="16sp"
-            android:layout_toRightOf="@id/iv_price_trends_median"
-            />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:layout_below="@id/iv_price_trends_median"
-            android:id="@+id/iv_price_trends_growth"
-            android:src="@drawable/icon_yellow_heart"
-            />
-
-        <TextView
-            android:id="@+id/tv_price_trends_growth_desc"
-            android:layout_marginLeft="15dp"
-            android:layout_width="wrap_content"
-            android:layout_alignTop="@+id/iv_price_trends_growth"
-            android:layout_height="wrap_content"
-            android:textColor="#444"
-            android:textSize="16sp"
-            android:layout_toRightOf="@id/iv_price_trends_growth"
-            />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:layout_below="@id/iv_price_trends_growth"
-            android:id="@+id/iv_price_trends_rent_growth"
-            android:src="@drawable/icon_yellow_heart"
-            />
-
-        <TextView
-            android:id="@+id/tv_price_trends_rent_growth_desc"
-            android:layout_marginLeft="15dp"
-            android:layout_width="wrap_content"
-            android:layout_alignTop="@id/iv_price_trends_rent_growth"
-            android:layout_height="wrap_content"
-            android:textColor="#444"
-            android:textSize="16sp"
-            android:layout_toRightOf="@id/iv_price_trends_growth"
-            />
-
-
-    </RelativeLayout>
+   <include layout="@layout/locality_trends_description"/>
 
     <TextView
         android:id="@+id/header_text_popular_searches"

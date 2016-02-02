@@ -55,6 +55,8 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
     public RecyclerView mRecyclerView ;
     @Bind(R.id.tv_nearby_localities_title)
     public TextView titleTv ;
+    @Bind(R.id.seperator_view)
+    View seperatorView;
     Long citId,localitId;
     CardType cardType;
     private List<NearByLocalities> nearByLocalities;
@@ -76,14 +78,14 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
     private void initView() {
         title = getArguments().getString("title");
         placeholderResource = getArguments().getInt("placeholder");
-
         switchLl.setVisibility(R.drawable.placeholder_agent == placeholderResource ? View.VISIBLE : View.GONE);
         titleTv.setText(title);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-
+        if(this.cardType == CardType.TOPAGENTS)
+            seperatorView.setVisibility(View.GONE);
         initSwitch();
     }
 
@@ -118,7 +120,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         for(Locality locality:nearbyLocalities){
             int[] counts = getCountOfNumberOfListingsBasedOnType(locality.listingAggregations);
             int[] medians = calculateMedianForListings(locality.listingAggregations);
-            nearByLocalities.add(new NearByLocalitiesFragment.NearByLocalities(""+locality.localityHeroshotImageUrl,""+(counts[1] == 0?"0":counts[1]+" +"),""+(counts[0] == 0?"0":counts[0]+" +"),"median price: "+medians[0]+"/ sq ft",locality.label, locality.localityId));
+                nearByLocalities.add(new NearByLocalitiesFragment.NearByLocalities(""+locality.localityHeroshotImageUrl,""+(counts[1] == 0?"0":counts[1]+" +"),""+(counts[0] == 0?"0":counts[0]+" +"),medians[0] == 0?"":"median price: "+medians[0]+"/ sq ft",locality.label, locality.localityId));
         }
         return nearByLocalities;
     }
@@ -143,15 +145,16 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         double rentalMedian = 0, saleMedian = 0;
         int countsRental = 0, countsSales = 0;
         int[] counts = new int[2];
-        for (ListingAggregation ListingAggregation:listingAggregations){
-            if(ListingAggregation.listingCategory.equalsIgnoreCase("primary") ||
-                    ListingAggregation.listingCategory.equalsIgnoreCase("resale")){
+        for (ListingAggregation ListingAggregation:listingAggregations) {
+            if (ListingAggregation.listingCategory.equalsIgnoreCase("primary") ||
+                    ListingAggregation.listingCategory.equalsIgnoreCase("resale")) {
                 saleMedian = saleMedian + ListingAggregation.avgPricePerUnitArea;
                 countsSales++;
-            }else{
+            } else {
                 rentalMedian = rentalMedian + ListingAggregation.avgPricePerUnitArea;
                 countsRental++;
             }
+        }
             if(countsSales!=0)
                 saleMedian = saleMedian / countsSales;
             if(countsRental!=0)
@@ -159,7 +162,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
 
             counts[0] = (int) saleMedian;
             counts[1] = (int) rentalMedian;
-        }
+
         return counts;
     }
 

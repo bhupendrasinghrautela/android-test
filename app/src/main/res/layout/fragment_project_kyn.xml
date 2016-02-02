@@ -89,6 +89,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_localities_kyn"
         android:layout_width="wrap_content"
+        android:visibility="gone"
         android:overScrollMode="never"
         android:layout_height="@dimen/locality_kyn_recycler_height"/>
 

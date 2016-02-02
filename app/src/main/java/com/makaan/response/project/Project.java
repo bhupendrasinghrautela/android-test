@@ -98,7 +98,7 @@ public class Project {
         if(minPrice == null)
             return "";
         else
-            return "\u20B9 "+(minPrice/100000)+" L onwards";
+            return "\u20B9 "+(String.format("%.1f", minPrice/100000))+" L onwards";
     }
 
 }

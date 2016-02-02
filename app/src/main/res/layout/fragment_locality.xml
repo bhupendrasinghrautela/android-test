@@ -14,6 +14,7 @@
         android:id="@+id/blurred_city_image"
         android:layout_width="match_parent"
         android:scaleType="centerCrop"
+        android:src="#FFF"
         android:layout_height="match_parent"/>
 
     <ImageView
@@ -45,7 +46,7 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-    <com.makaan.ui.view.VerticalNestedScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:id="@+id/city_scrollview"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -58,18 +59,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <include layout="@layout/locality_about"/>
-            <include layout="@layout/locality_seperator_view"/>
             <include layout="@layout/locality_kyn"/>
-            <include layout="@layout/locality_seperator_view"/>
             <include layout="@layout/locality_lifestyle"/>
             <include layout="@layout/locality_price_trends"/>
             <include layout="@layout/locality_available_property_status"/>
             <include layout="@layout/locality_properties"/>
-            <include layout="@layout/locality_seperator_view"/>
             <include layout="@layout/locality_top_builders"/>
             <include layout="@layout/locality_interested_to_buy"/>
             <include layout="@layout/locality_top_agents"/>
             <include layout="@layout/locality_nearby_localities"/>
         </LinearLayout>
-    </com.makaan.ui.view.VerticalNestedScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

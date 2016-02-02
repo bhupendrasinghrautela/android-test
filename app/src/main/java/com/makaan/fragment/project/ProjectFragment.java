@@ -28,14 +28,12 @@ import com.makaan.event.project.ProjectConfigItemClickListener;
 import com.makaan.event.project.SimilarProjectGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.amenity.AmenityCluster;
-import com.makaan.response.listing.detail.ListingAmenity;
 import com.makaan.response.project.Project;
-import com.makaan.response.project.ProjectAmenity;
 import com.makaan.service.AmenityService;
 import com.makaan.service.ImageService;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.service.ProjectService;
 import com.makaan.ui.locality.ProjectConfigView;
-import com.makaan.ui.project.ProjectConfigItemView;
 import com.makaan.ui.project.ProjectSpecificationView;
 import com.makaan.ui.property.AboutBuilderExpandedLayout;
 import com.makaan.ui.property.AmenitiesViewScroll;
@@ -73,6 +71,7 @@ public class ProjectFragment extends MakaanBaseFragment{
     @Bind(R.id.ll_project_container) LinearLayout projectContainer;
     private Context mContext;
     private Project project;
+    private long projectId;
 
     @Override
     protected int getContentViewId() {
@@ -84,7 +83,17 @@ public class ProjectFragment extends MakaanBaseFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         mContext = getActivity();
+        Bundle args = getArguments();
+        if(args!=null)
+            this.projectId = args.getLong(ProjectActivity.PROJECT_ID);
+        fetchData();
         return view;
+    }
+
+    private void fetchData() {
+        ((ProjectService) MakaanServiceFactory.getInstance().getService(ProjectService.class)).getProjectById(projectId);
+        ((ProjectService) MakaanServiceFactory.getInstance().getService(ProjectService.class)).getProjectConfiguration(projectId);
+        ((ProjectService) MakaanServiceFactory.getInstance().getService(ProjectService.class)).getSimilarProjects(projectId, 10);
     }
 
     @Subscribe
@@ -152,7 +161,7 @@ public class ProjectFragment extends MakaanBaseFragment{
         addPriceTrendsFragment();
         addConstructionTimelineFragment();
         ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(project.locality.latitude, project.locality.longitude, 10);
-        ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(594531L);
+        ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getProjectTimelineImages(project.projectId);
     }
 
     private void initUi() {
@@ -160,8 +169,8 @@ public class ProjectFragment extends MakaanBaseFragment{
         descriptionTv.setText(Html.fromHtml(project.description));
         aboutBuilderExpandedLayout.bindView(project.builder);
         builderDescriptionTv.setText(Html.fromHtml(project.builder.description));
-        projectScoreProgreessBar.setProgress(project.projectSocietyScore.intValue() * 10);
-        projectScoreTv.setText(""+project.projectSocietyScore);
+        projectScoreProgreessBar.setProgress(project.livabilityScore.intValue() * 10);
+        projectScoreTv.setText(""+project.livabilityScore);
         projectNameTv.setText(project.name);
         projectLocationTv.setText(project.address);
         Date date = new Date(Long.parseLong(project.builder.establishedDate));

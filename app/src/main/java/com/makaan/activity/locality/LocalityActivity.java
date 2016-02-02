@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
+import com.makaan.event.project.OnSeeOnMapClicked;
 import com.makaan.fragment.locality.LocalityFragment;
+import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
 import com.makaan.util.KeyUtil;
+import com.squareup.otto.Subscribe;
 
 /**
  * Created by tusharchaudhary on 1/18/16.
@@ -14,6 +17,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
     public static final String LOCALITY_ID = "localityId";
     private Long localityId;
     private LocalityFragment localityFragment;
+    private NeighborhoodMapFragment mNeighborhoodMapFragment;
 
     @Override
     protected int getContentViewId() {
@@ -25,6 +29,12 @@ public class LocalityActivity extends MakaanFragmentActivity {
         super.onCreate(savedInstanceState);
         setLocalityId();
         addLocalityFragment();
+    }
+
+    @Subscribe
+    public void onResult(OnSeeOnMapClicked onSeeOnMapClicked){
+        mNeighborhoodMapFragment = new NeighborhoodMapFragment();
+        initFragment(R.id.container, mNeighborhoodMapFragment, true);
     }
 
     private void addLocalityFragment() {

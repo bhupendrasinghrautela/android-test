@@ -38,13 +38,6 @@ public class ProjectActivity extends MakaanBaseSearchActivity {
         setProjectId();
         addProjectFragment();
         initUi(true);
-        fetchData();
-    }
-
-    private void fetchData() {
-        ((ProjectService) MakaanServiceFactory.getInstance().getService(ProjectService.class)).getProjectById(projectId);
-        ((ProjectService) MakaanServiceFactory.getInstance().getService(ProjectService.class)).getProjectConfiguration(projectId);
-        ((ProjectService) MakaanServiceFactory.getInstance().getService(ProjectService.class)).getSimilarProjects(projectId, 10);
     }
 
     private void addProjectFragment() {
@@ -58,7 +51,7 @@ public class ProjectActivity extends MakaanBaseSearchActivity {
     private void setProjectId() {
         Intent intent = getIntent();
         if(intent != null) {
-            projectId = intent.getLongExtra(PROJECT_ID, 506147);//the kove 506147
+            projectId = intent.getLongExtra(PROJECT_ID, 506147);//the kove 506147 : rangoli 643539
         }else{
             projectId = Long.valueOf(506147);
         }

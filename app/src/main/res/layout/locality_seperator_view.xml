@@ -3,6 +3,7 @@
 
 <View
     android:layout_width="match_parent"
+    android:id="@+id/seperator_view"
     android:layout_height="@dimen/locality_seperator_height"
     android:layout_marginTop="@dimen/locality_seperator_top_margin"
     android:layout_marginLeft="@dimen/locality_seperator_left_margin"
