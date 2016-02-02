@@ -21,13 +21,15 @@ public class ChatObject {
     public String propertyType;
     public int budget;
     public String locality;
-    public String sellerName;
-    public int age;
+    public String name;
+    public String age;
     public int id;
     public int localitiesCount;
     public String cityCountText;
     public String areaOfService;
     public int listingCount;
     public int score;
+
+    //{"id":130604,"name":"Universal Realty world","score":0,"age":"15 years","localitiesCount":4,"cityCountText":"in Gurgaon","areaOfService":"Primary","listingCount":22,"url":"seller-property?listingType=buy&pageType=SELLER_PROPERTY_URLS&cityName=Gurgaon&cityId=11&sellerId=130604&sellerName=Universal%20Realty%20world"}
 
 }

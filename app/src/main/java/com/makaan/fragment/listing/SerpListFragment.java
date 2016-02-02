@@ -26,6 +26,7 @@ import com.makaan.response.search.SearchSuggestionType;
 import com.makaan.ui.PaginatedListView;
 import com.segment.analytics.Analytics;
 import com.segment.analytics.Properties;
+import com.segment.analytics.Traits;
 
 import java.util.ArrayList;
 
@@ -205,12 +206,20 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         mSerpRequestCallback.loadMoreItems();
 
         //TODO temp for testing
-        Analytics.with(getActivity()).track(JarvisConstants.DELIVERY_ID, new Properties()
+/*        Analytics.with(getActivity()).track(JarvisConstants.DELIVERY_ID, new Properties()
                 .putValue("listing_id", mListings.get(9).id)
                 .putValue("serp_visible_item", 9)
                 .putValue("serp_filter_budget", null)
                 .putValue("serp_filter_property_type", null)
-                .putValue("serp_filter_bhk", null));
+
+                .putValue("serp_filter_bhk", null));*/
+
+        Traits traits = new Traits();
+        traits.put("serp_visible_item", mListings.size());
+        Analytics.with(getActivity()).identify(traits);
+        Analytics.with(getActivity()).flush();
+
+
     }
 
     @Override

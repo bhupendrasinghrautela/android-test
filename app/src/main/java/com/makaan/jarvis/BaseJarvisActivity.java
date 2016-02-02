@@ -159,8 +159,6 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
                 mPopupDismissHandler.postDelayed(mPopupDismissRunnable,
                         JarvisConstants.JARVIS_ACTION_DISMISS_TIMEOUT);
-
-
             }
         });
     }
