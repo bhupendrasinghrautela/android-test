@@ -1,5 +1,6 @@
 package com.makaan.activity.buyerJourney;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.makaan.R;
+import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.ui.view.BadgeView;
 import com.pkmmte.view.CircularImageView;
 
@@ -130,6 +132,9 @@ public class BuyerJourneyActivity extends AppCompatActivity {
                 break;
             case R.id.item_logout:
                 //TODO
+                break;
+            case android.R.id.home:
+                onBackPressed();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
