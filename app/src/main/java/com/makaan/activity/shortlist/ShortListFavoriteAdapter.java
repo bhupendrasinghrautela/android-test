@@ -1,6 +1,7 @@
 package com.makaan.activity.shortlist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.makaan.R;
+import com.makaan.activity.lead.LeadFormActivity;
+import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.wishlist.WishList;
+import com.makaan.util.StringUtil;
 
 import java.util.List;
 
@@ -37,11 +41,28 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         ShortListFavoriteViewHolder shortListFavoriteViewHolder = (ShortListFavoriteViewHolder)holder;
-        shortListFavoriteViewHolder.mTextViewRupees.setText(mContext.getString(R.string.rupee));
-        shortListFavoriteViewHolder.mTextViewPriceValue.setText(String.valueOf(wishList.get(position).project.maxPrice));
-       // shortListFavoriteViewHolder.mTextViewPriceUnit.setText();
+        if(wishList.get(position).project.maxPrice!=null) {
+            shortListFavoriteViewHolder.mLinearLayoutDetails.setVisibility(View.VISIBLE);
+            String price = StringUtil.getDisplayPrice(wishList.get(position).project.maxPrice);
+            shortListFavoriteViewHolder.mTextViewPriceValue.setText(price);
+        }else{
+            shortListFavoriteViewHolder.mLinearLayoutDetails.setVisibility(View.GONE);
+        }
+        String imageUrl=null;
+        if(wishList.get(position).project.imageURL.contains("http")){
+            imageUrl=wishList.get(position).project.imageURL.replace("http","https");//TODO : handle it in volley
+        }
+        shortListFavoriteViewHolder.mImageViewBackground.setImageUrl(imageUrl, MakaanNetworkClient.getInstance().getImageLoader());
+
         shortListFavoriteViewHolder.mTextViewLocality.setText(wishList.get(position).project.address);
-       // shortListFavoriteViewHolder.mTextViewArea.setText();
+        shortListFavoriteViewHolder.mTextViewGetCallBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, LeadFormActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
+       // shortListFavoriteViewHolder.mTextViewArea.setText();//todo
 
     }
 

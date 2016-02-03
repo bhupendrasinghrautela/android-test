@@ -23,7 +23,7 @@ public class BlogService implements MakaanService {
      */
     public void getBlogs(final String tag) {
 
-        String blogUrl = ApiConstants.BLOG_URL.concat("?tag=").concat(tag);
+        String blogUrl = ApiConstants.BLOG_URL.concat(tag);
         Type type = new TypeToken<ArrayList<BlogItem>>() {
         }.getType();
         MakaanNetworkClient.getInstance().get(blogUrl, type, new ObjectGetCallback() {

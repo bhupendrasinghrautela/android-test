@@ -9,7 +9,7 @@
         android:layout_height="wrap_content">
 
         <View
-            android:layout_width="1px"
+            android:layout_width="@dimen/view_width"
             android:layout_height="@dimen/view_height"
             android:layout_marginLeft="@dimen/view_left_margin"
             android:layout_marginTop="@dimen/view_top_margin"
@@ -24,10 +24,10 @@
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_makaan" />
 
             <TextView
@@ -35,11 +35,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="9"
                 android:text="@string/effective_home_search"
+                android:textColor="@color/black"
                 android:textSize="@dimen/text_size_small" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_first"
+            android:background="?android:selectableItemBackground"
+            android:id="@+id/ll_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_home_search"
@@ -49,10 +51,10 @@
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_search" />
 
             <LinearLayout
@@ -73,32 +75,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:textSize="@dimen/text_size_small" />
+                    android:text="@string/search_sub_title"
+                    android:textColor="@color/buyer_journey_light_grey_color"
+                    android:textSize="@dimen/medium_text" />
             </LinearLayout>
 
             <ImageView
-                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/arrow_right_small" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_second"
+            android:background="?android:selectableItemBackground"
+            android:id="@+id/ll_shortlist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_first"
+            android:layout_below="@+id/ll_search"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/padding_layout"
             android:paddingLeft="@dimen/view_left_padding_layout"
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_tick" />
 
             <LinearLayout
@@ -118,32 +123,36 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:text="@string/shortlist_sub_title"
+                    android:textColor="@color/buyer_journey_light_grey_color"
+                    android:textSize="@dimen/medium_text" />
             </LinearLayout>
 
             <ImageView
-                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/arrow_right_small" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_third"
+            android:background="?android:selectableItemBackground"
+            android:id="@+id/ll_site_visit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_second"
+            android:layout_below="@+id/ll_shortlist"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/padding_layout"
             android:paddingLeft="@dimen/view_left_padding_layout"
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_recent_view" />
 
             <LinearLayout
@@ -163,14 +172,17 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:text="@string/site_visit_sub_title"
+                    android:textColor="@color/buyer_journey_light_grey_color"
+                    android:textSize="@dimen/medium_text" />
             </LinearLayout>
 
             <ImageView
-                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/arrow_right_small" />
         </LinearLayout>
 
@@ -179,43 +191,46 @@
             android:id="@+id/ll_find_joy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_third"
+            android:layout_below="@+id/ll_site_visit"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/padding_layout"
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_makaan_outline" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="9"
-                android:text="find joy"
-                android:textSize="12sp" />
+                android:text="@string/find_joy"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_small" />
         </LinearLayout>
 
 
         <RelativeLayout
             android:id="@+id/rl_couple"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="@dimen/joy_image_height"
             android:layout_below="@+id/ll_find_joy"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/happy_buyers_image_margin"
             android:background="@drawable/couple">
 
             <TextView
                 android:id="@+id/tv_buyers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="12000+\nbuyers"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/happy_buyers_text_margin_top"
+                android:gravity="center_horizontal"
+                android:text="@string/happy_buyers"
                 android:textColor="@color/white"
-                android:textSize="40sp" />
+                android:textSize="@dimen/happy_buyers_text_size" />
 
             <TextView
                 android:id="@+id/tv_found_home"
@@ -223,22 +238,26 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_buyers"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/found_one_margin_top"
                 android:gravity="center"
-                android:text="found your dream home"
+                android:text="@string/found_your_dream_home"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_size_large" />
 
             <Button
+                android:id="@+id/button_get_rewards"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_found_home"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/reward_text_margin_top"
                 android:background="@drawable/white_stroke_button"
-                android:padding="5dp"
-                android:text="get rs 15000"
+                android:paddingLeft="@dimen/reward_button_padding"
+                android:paddingRight="@dimen/reward_button_padding"
+                android:text="@string/get_reward"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_size_large" />
 
         </RelativeLayout>
 
@@ -252,22 +271,23 @@
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_makaan_outline" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="9"
-                android:text="booking, possession \amp registry"
-                android:textSize="12sp" />
+                android:text="booking, possession &amp; registry"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_small" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_fifth"
+            android:id="@+id/ll_home_loan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_booking"
@@ -277,10 +297,10 @@
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_loan" />
 
             <LinearLayout
@@ -301,33 +321,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="@string/best_advise" />
+                    android:text="@string/best_advise"
+                    android:textColor="@color/buyer_journey_light_grey_color"
+                    android:textSize="@dimen/medium_text" />
             </LinearLayout>
 
             <ImageView
-                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/arrow_right_small" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_sixth"
+            android:id="@+id/ll_unit_booking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_fifth"
+            android:layout_below="@+id/ll_home_loan"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/padding_layout"
             android:paddingLeft="@dimen/view_left_padding_layout"
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:layout_marginLeft="1dp"
-                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/small_image_padding"
                 android:layout_weight="1"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_unit_booking" />
 
             <LinearLayout
@@ -348,33 +370,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="@string/best_legal" />
+                    android:text="@string/best_legal"
+                    android:textColor="@color/buyer_journey_light_grey_color"
+                    android:textSize="@dimen/medium_text" />
             </LinearLayout>
 
             <ImageView
-                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/arrow_right_small" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_seventh"
+            android:id="@+id/ll_possession"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_sixth"
+            android:layout_below="@+id/ll_unit_booking"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/padding_layout"
             android:paddingLeft="@dimen/view_left_padding_layout"
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:layout_marginLeft="2dp"
-                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/view_left_padding_layout"
                 android:layout_weight="1"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_lock" />
 
             <LinearLayout
@@ -395,33 +419,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="@string/moving_in" />
+                    android:text="@string/moving_in"
+                    android:textColor="@color/buyer_journey_light_grey_color"
+                    android:textSize="@dimen/medium_text" />
             </LinearLayout>
 
             <ImageView
-                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/arrow_right_small" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_eighth"
+            android:id="@+id/ll_registration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_seventh"
+            android:layout_below="@+id/ll_possession"
+            android:layout_marginLeft="@dimen/view_left_padding_layout"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/padding_layout"
-            android:layout_marginLeft="@dimen/view_left_padding_layout"
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:layout_marginLeft="@dimen/view_left_padding_layout"
-                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/view_left_padding_layout"
                 android:layout_weight="1"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_registration" />
 
             <LinearLayout
@@ -442,14 +468,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="@string/expert_help" />
+                    android:text="@string/expert_help"
+                    android:textColor="@color/buyer_journey_light_grey_color"
+                    android:textSize="@dimen/medium_text" />
             </LinearLayout>
 
             <ImageView
-                android:contentDescription="@string/app_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/arrow_right_small" />
         </LinearLayout>
     </RelativeLayout>
