@@ -35,13 +35,13 @@
         android:textColor="@color/listingBlack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-        <com.makaan.ui.view.FontTextView
+        <TextView
         android:textSize="@dimen/project_super_big"
         android:text="years"
             android:layout_toRightOf="@+id/tv_price_trend_years"
             android:layout_alignBottom="@+id/tv_price_trend_years"
         android:id="@+id/tv_price_trend_years_text"
-            font:fontName="proxima.otf"
+        android:typeface="monospace"
         android:textColor="@color/project_text_default"
             android:layout_marginLeft="5dp"
         android:layout_width="wrap_content"
