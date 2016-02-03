@@ -21,6 +21,7 @@ import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.jarvis.ui.cards.BaseCtaView;
 import com.makaan.jarvis.ui.cards.CtaCardFactory;
 import com.makaan.jarvis.ui.cards.SerpFilterCard;
+import com.makaan.pojo.SerpObjects;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -49,6 +50,17 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SerpObjects.putSerpObject(this, getSerpObjects());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SerpObjects.removeSerpObject(this);
+    }
+
+    protected SerpObjects getSerpObjects() {
+        return null;
     }
 
     @Override

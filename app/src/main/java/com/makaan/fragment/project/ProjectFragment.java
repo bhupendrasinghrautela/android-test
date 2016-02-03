@@ -40,7 +40,6 @@ import com.makaan.ui.project.ProjectSpecificationView;
 import com.makaan.ui.property.AboutBuilderExpandedLayout;
 import com.makaan.ui.property.AmenitiesViewScroll;
 import com.makaan.ui.property.PropertyImageViewPager;
-import com.makaan.util.KeyUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -100,9 +99,9 @@ public class ProjectFragment extends MakaanBaseFragment{
         request.setLocalityId(project.localityId);
         request.setProjectId(project.projectId);
         if(onViewAllPropertiesClicked.isRent) {
-            request.setContext(SerpRequest.CONTEXT_RENT);
+            request.setSerpContext(SerpRequest.CONTEXT_RENT);
         } else {
-            request.setContext(SerpRequest.CONTEXT_BUY);
+            request.setSerpContext(SerpRequest.CONTEXT_BUY);
         }
 
         request.launchSerp(getActivity(), SerpActivity.TYPE_PROJECT);
@@ -129,9 +128,9 @@ public class ProjectFragment extends MakaanBaseFragment{
         request.setMinBudget(((Double) configItemClickListener.projectConfigItem.minPrice).longValue());
         request.setMaxBudget(((Double) configItemClickListener.projectConfigItem.maxPrice).longValue());
         if(configItemClickListener.isRent) {
-            request.setContext(SerpRequest.CONTEXT_RENT);
+            request.setSerpContext(SerpRequest.CONTEXT_RENT);
         }else {
-            request.setContext(SerpRequest.CONTEXT_BUY);
+            request.setSerpContext(SerpRequest.CONTEXT_BUY);
         }
 
         request.launchSerp(getActivity(), SerpActivity.TYPE_PROJECT);

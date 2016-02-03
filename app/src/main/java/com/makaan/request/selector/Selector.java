@@ -286,21 +286,6 @@ public class Selector implements Cloneable {
         return null;
     }
 
-    public boolean isBuyContext() {
-        if (!this.termSelectorHashMap.containsKey("listingCategory")) {
-            return true;
-        } else {
-            HashSet<String> values = this.termSelectorHashMap.get("listingCategory").values;
-            if (values == null || values.size() == 0 || values.size() > 1) {
-                return true;
-            } else if (values.contains("Rental")) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-    }
-
     public Selector removeTerm(String fieldName) {
         if (this.termSelectorHashMap.containsKey(fieldName)) {
             this.termSelectorHashMap.remove(fieldName);

@@ -13,9 +13,14 @@ public class KeyUtil {
 
     public static final String CITY_ID = "cityId";
     public static final String LISTING_CATEGORY = "listingCategory";
+    public static final String PRICE = "price";
     public static final String MIN_BUDGET = "minBudget";
     public static final String MAX_BUDGET = "maxBudget";
 
+    public static final String SUBURB_ID = "suburbId";
+    public static final String LOCALITY_OR_SUBURB_ID = "localityOrSuburbId";
+    public static final String BUILDER_ID = "builderId";
+    public static final String SELLER_ID = "listingCompanyId";
 
     public static final String KEY_REQUEST_URL = "request_url";
 

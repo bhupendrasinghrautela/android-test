@@ -1,6 +1,7 @@
 package com.makaan;
 
 import android.app.Application;
+import android.util.SparseArray;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -8,6 +9,7 @@ import com.makaan.cookie.MakaanCookieStore;
 import com.makaan.jarvis.JarvisConstants;
 import com.makaan.jarvis.JarvisServiceCreator;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.pojo.SerpObjects;
 import com.makaan.request.selector.Selector;
 import com.makaan.service.AgentService;
 import com.makaan.service.AmenityService;
@@ -48,7 +50,8 @@ public class MakaanBuyerApplication extends Application {
 
 
     public static RandomString randomString = new RandomString(6);
-    public static Selector serpSelector = new Selector();
+//    public static Selector mSerpSelector = new Selector();
+    public static SparseArray<SerpObjects> serpObjects = new SparseArray<>();
 
     public static Gson gson;
 
