@@ -16,6 +16,7 @@ import com.makaan.fragment.pyr.PyrReplaceFragment;
  * Created by proptiger on 6/1/16.
  */
 public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplaceFragment{
+    public static final String IS_BUY = "isBuy";
 
     private FragmentTransaction mFragmentTransaction;
     private PyrPagePresenter mPagePresenter;
@@ -28,9 +29,11 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mPagePresenter=PyrPagePresenter.getPyrPagePresenter();
         mPagePresenter.setReplaceFragment(this);
         mPagePresenter.showPyrMainPageFragment();
+        //mPagePresenter.setBuySelected(getIntent().getBooleanExtra(IS_BUY, false));
     }
 
     @Override

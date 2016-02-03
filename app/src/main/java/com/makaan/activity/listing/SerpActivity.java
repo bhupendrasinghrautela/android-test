@@ -84,6 +84,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public static final int TYPE_PROJECT = 0x09;
 
     public static final int TYPE_SUGGESTION = 0x0a;
+    public static final int TYPE_TAXONOMY = 0x0c;
 
     public static final int MASK_LISTING_TYPE = 0x0f;
     public static final int MASK_LISTING_UPDATE_TYPE = 0xf0;

@@ -51,7 +51,6 @@ public class PyrPagePresenter {
     private ArrayList<SearchResponseItem> locaityIds=new ArrayList<SearchResponseItem>();
     private HashMap<Long ,Boolean> mSellerIdMap=new HashMap<Long, Boolean>();
     private PyrBudgetCardView pyrBudgetCardView;
-    private PyrPageFragment pyrPageFragment;
     private List<Integer>bedroomList=new ArrayList<Integer>();
     private String userName=null, userEmail=null, phoneNumber=null, countryName="India";
     private int countryId=1;
@@ -314,7 +313,7 @@ public class PyrPagePresenter {
     public void setBuySelected(boolean selected){
         RENT_SELECTED=!selected;
         BUY_SELECTED=selected;
-        pyrPageFragment.setBuySelected(selected);
+        mPyrFragment.setBuySelected(selected);
     }
 
     public void setBudgetCardViewInstance(PyrBudgetCardView pyrBudgetCardView){
@@ -322,15 +321,15 @@ public class PyrPagePresenter {
     }
 
     public void setLocalitiesOnPyrMainPage(){
-        pyrPageFragment.setLocaityInfo();
+        mPyrFragment.setLocaityInfo();
     }
 
     public void setPropertyTypeCount(){
-        pyrPageFragment.setPropertyCount();
+        mPyrFragment.setPropertyCount();
     }
 
     public void setPyrPageFragmentInstance(PyrPageFragment pyrPageFragment){
-        this.pyrPageFragment=pyrPageFragment;
+        this.mPyrFragment=pyrPageFragment;
     }
 
     public void setName(String name){

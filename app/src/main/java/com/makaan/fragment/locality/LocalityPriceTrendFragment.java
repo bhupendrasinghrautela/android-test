@@ -7,14 +7,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.listing.SerpActivity;
 import com.makaan.event.locality.TrendingSearchLocalityEvent;
 import com.makaan.event.trend.callback.LocalityTrendCallback;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.pojo.SerpRequest;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.trend.LocalityPriceTrendDto;
 import com.makaan.service.LocalityService;
@@ -26,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by tusharchaudhary on 1/20/16.
@@ -160,13 +164,21 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
     private class PopularSearchesAdapter extends RecyclerView.Adapter<PopularSearchesAdapter.ViewHolder> {
         private List<SearchResponseItem> list;
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        public class ViewHolder extends RecyclerView.ViewHolder{
             // each data item is just a string in this case
             public TextView descriptionTv;
 
-            public ViewHolder(View v) {
-                super(v);
-                descriptionTv = (TextView) v.findViewById(R.id.tv_localities_recent_searches_desc);
+            public ViewHolder(View view) {
+                super(view);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        SerpRequest request = new SerpRequest();
+                        //TODO set serp request suggestion type
+                        request.launchSerp(getActivity(), SerpActivity.TYPE_SUGGESTION);
+                    }
+                });
+                descriptionTv = (TextView) view.findViewById(R.id.tv_localities_recent_searches_desc);
             }
         }
 
@@ -195,5 +207,14 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
             return list.size();
         }
 
+    }
+
+
+    @OnClick(R.id.button_show_properties)
+    public void showAllPropertiesClick(){
+        SerpRequest request = new SerpRequest();
+        request.setCityId(localityId);
+        request.setContext(SerpRequest.CONTEXT_RENT);
+        request.launchSerp(getActivity(), SerpActivity.TYPE_CITY);
     }
 }

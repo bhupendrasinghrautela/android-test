@@ -5,11 +5,16 @@ import android.support.design.widget.TabLayout;
 import android.support.design.widget.TabLayout.OnTabSelectedListener;
 import android.support.design.widget.TabLayout.Tab;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.Button;
 
 import com.makaan.R;
+import com.makaan.activity.listing.SerpActivity;
+import com.makaan.pojo.SerpRequest;
 import com.makaan.response.trend.LocalityPriceTrendDto;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by aishwarya on 18/01/16.
@@ -19,6 +24,9 @@ public class PriceTrendView extends BaseLinearLayout<LocalityPriceTrendDto> {
     TabLayout mPriceRangeTabs;
     @Bind(R.id.line_chart_layout)
     MakaanLineChartView mTrendsChart;
+
+
+
     private enum TRENDS_MONTH{
         SIX("6 \n months",6),
         TWELVE("12 \n months",12),

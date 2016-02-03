@@ -307,8 +307,10 @@ public class MakaanNetworkClient {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        String errorString = new String(error.networkResponse.data);
-                        Log.e("Error : ", errorString);
+                        if(null!=error && null!=error.networkResponse) {
+                            String errorString = new String(error.networkResponse.data);
+                            Log.e("Error : ", errorString);
+                        }
                         completeRequestInQueue(url);
                         stringRequestCallback.onError();
                     }
