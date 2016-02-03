@@ -3,4 +3,4 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/property_empty_view_height"
     android:layout_marginLeft="@dimen/property_empty_view_margin_left"
-    android:background="@color/city_empty_view_color"/>
+    android:background="@color/property_empty_view_color"/>

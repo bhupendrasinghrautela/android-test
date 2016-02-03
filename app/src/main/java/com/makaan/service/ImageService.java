@@ -24,7 +24,9 @@ public class ImageService implements MakaanService {
         getImages(listingId, ENTITY_MAP.get(ImageConstants.LISTING));
 
     }
-
+    public void getListingImages(final Long listingId,String imageType){
+        getImages(listingId, ENTITY_MAP.get(ImageConstants.LISTING),imageType);
+    }
     public void getImages(final Long objectId, final Integer objectType) {
         if (null != objectId) {
             Type listingDetailImageList = new TypeToken<ArrayList<Image>>() {
@@ -42,6 +44,33 @@ public class ImageService implements MakaanService {
                     ImagesGetEvent imagesGetEvent = new ImagesGetEvent();
                     imagesGetEvent.objectId = objectId;
                     imagesGetEvent.objectType = objectType;
+
+                    imagesGetEvent.images = images;
+                    AppBus.getInstance().post(imagesGetEvent);
+                }
+            }, true);
+        }
+    }
+
+    public void getImages(final Long objectId, final Integer objectType, final String imageType) {
+        if (null != objectId) {
+            Type listingDetailImageList = new TypeToken<ArrayList<Image>>() {
+            }.getType();
+            String detailImageListUrl = ApiConstants.IMAGE;
+            detailImageListUrl = detailImageListUrl.concat("?filters=(objectId==OBJ_ID;imageTypeObj.objectTypeId==OBJ_TYPE_ID;imageTypeObj.type==IMG_TYPE)&sourceDomain=Makaan");
+            detailImageListUrl = detailImageListUrl.replaceAll("OBJ_ID", objectId.toString());
+            detailImageListUrl = detailImageListUrl.replaceAll("OBJ_TYPE_ID", objectType.toString());
+            detailImageListUrl = detailImageListUrl.replaceAll("IMG_TYPE", imageType);
+
+
+            MakaanNetworkClient.getInstance().get(detailImageListUrl, listingDetailImageList, new ObjectGetCallback() {
+                @Override
+                public void onSuccess(Object responseObject) {
+                    ArrayList<Image> images = (ArrayList<Image>) responseObject;
+                    ImagesGetEvent imagesGetEvent = new ImagesGetEvent();
+                    imagesGetEvent.objectId = objectId;
+                    imagesGetEvent.objectType = objectType;
+                    imagesGetEvent.imageType = imageType;
 
                     imagesGetEvent.images = images;
                     AppBus.getInstance().post(imagesGetEvent);

@@ -23,6 +23,7 @@
           android:singleLine="true"
           android:drawableRight="@drawable/ic_bottom_arrow"
           android:layout_width="match_parent"
+          android:typeface="serif"
           android:layout_height="wrap_content"
           android:textColor="@color/white"
           android:textAlignment="inherit"/>

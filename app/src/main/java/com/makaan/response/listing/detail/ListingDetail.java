@@ -22,16 +22,16 @@ public class ListingDetail {
     public Integer facingId,noOfOpenSides;
     public boolean status;
     public int noOfCarParks;
-    public int propertyId, projectId;
+    public Long propertyId, projectId;
     public String unitType, unitName, measure;
     public Integer bedrooms, bathrooms, balcony, storeRoom, halls, studyRoom, servantRoom, poojaRoom;
-
 
     public Double size, budget, minResaleOrPrimaryPrice, maxResaleOrPrimaryPrice;
     public Double avgPriceRisePercentage, bookingAmount, mainEntryRoadWidth, pricePerUnitArea;
     public Integer bookingStatusId, ownershipTypeId;
     public String furnished;
-    public Integer sellerId, totalFloors, floor;
+    public Integer  totalFloors, floor;
+    public Long sellerId;
     public ArrayList<Furnishing> furnishings = new ArrayList<>();
     public ArrayList<ListingAmenity> listingAmenities;
 

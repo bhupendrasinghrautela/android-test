@@ -3,7 +3,7 @@
     android:id="@+id/compressed_text_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:visibility="gone"
+    android:visibility="invisible"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <include layout="@layout/property_empty_view"/>
@@ -13,6 +13,7 @@
         android:layout_marginLeft="@dimen/property_page_description_margin_left"
         android:layout_marginRight="@dimen/property_page_description_margin_right"
         android:layout_marginTop="@dimen/property_page_description_margin_top"
+        android:typeface="serif"
         android:textColor="@color/listingBlack"
         android:layout_height="wrap_content"
         android:maxLines="3"
@@ -23,6 +24,7 @@
         android:layout_marginLeft="@dimen/property_page_description_margin_left"
         android:layout_marginRight="@dimen/property_page_description_margin_right"
         android:layout_marginBottom="@dimen/property_page_description_margin_bottom"
+        android:typeface="serif"
         android:layout_height="wrap_content"
         android:textColor="@color/red"
         android:textStyle="bold"
