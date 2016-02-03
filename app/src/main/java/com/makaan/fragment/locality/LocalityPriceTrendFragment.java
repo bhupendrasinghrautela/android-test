@@ -214,7 +214,7 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
     public void showAllPropertiesClick(){
         SerpRequest request = new SerpRequest();
         request.setCityId(localityId);
-        request.setContext(SerpRequest.CONTEXT_RENT);
+        request.setSerpContext(SerpRequest.CONTEXT_RENT);
         request.launchSerp(getActivity(), SerpActivity.TYPE_CITY);
     }
 }

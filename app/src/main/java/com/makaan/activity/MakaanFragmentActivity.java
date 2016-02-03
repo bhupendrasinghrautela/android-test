@@ -32,7 +32,6 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewId());
         ButterKnife.bind(this);
-        AppBus.getInstance().register(this);
 
         if (!AppUtils.haveNetworkConnection(this)) {
             showNoNetworkFound();
@@ -103,10 +102,21 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        AppBus.getInstance().unregister(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        AppBus.getInstance().register(this);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
-        AppBus.getInstance().unregister(this);
 
     }
 

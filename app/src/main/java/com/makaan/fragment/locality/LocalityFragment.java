@@ -408,6 +408,7 @@ public class LocalityFragment extends MakaanBaseFragment{
     public void onResult(OnTopAgentClickEvent onTopAgentClickEvent){
         SerpRequest serpRequest = new SerpRequest();
         //TODO add seller id
+        serpRequest.setSellerId(onTopAgentClickEvent.agentId);
         serpRequest.launchSerp(getActivity(), SerpActivity.TYPE_SELLER);
     }
 
@@ -415,7 +416,8 @@ public class LocalityFragment extends MakaanBaseFragment{
     public void onResult(OnTopBuilderClickEvent onTopBuilderClickEvent){
         SerpRequest serpRequest = new SerpRequest();
         //TODO add builder id
-        serpRequest.launchSerp(getActivity(), SerpActivity.TYPE_SELLER);
+        serpRequest.setSellerId(onTopBuilderClickEvent.builderId);
+        serpRequest.launchSerp(getActivity(), SerpActivity.TYPE_BUILDER);
     }
 
     @OnClick(R.id.pyr_button_bottom)

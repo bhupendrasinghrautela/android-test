@@ -12,6 +12,7 @@ import com.makaan.event.project.ProjectConfigEvent;
 import com.makaan.event.project.SimilarProjectGetEvent;
 import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
 import com.makaan.fragment.project.ProjectFragment;
+import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.service.ListingService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.ProjectService;
@@ -67,5 +68,10 @@ public class ProjectActivity extends MakaanBaseSearchActivity {
     @Override
     public boolean isJarvisSupported() {
         return true;
+    }
+
+    @Subscribe
+    public void onResults(SearchResultEvent searchResultEvent) {
+        super.onResults(searchResultEvent);
     }
 }

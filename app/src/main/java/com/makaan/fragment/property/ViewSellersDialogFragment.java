@@ -47,7 +47,7 @@ public class ViewSellersDialogFragment extends DialogFragment {
         ButterKnife.bind(this, view);
 
 
-        try {
+        /*try {
             if (MakaanBuyerApplication.serpSelector.isBuyContext()) {
                 ArrayList<FilterGroup> filterGroups = MasterDataCache.getInstance().getAllBuyFilterGroups();
                 populateFilters(getClonedFilterGroups(filterGroups));
@@ -57,7 +57,7 @@ public class ViewSellersDialogFragment extends DialogFragment {
             }
         } catch (CloneNotSupportedException ex) {
             ex.printStackTrace();
-        }
+        }*/
 
 
         return view;
@@ -145,7 +145,7 @@ public class ViewSellersDialogFragment extends DialogFragment {
     @OnClick(R.id.fragment_dialog_filters_submit_button)
     public void onSubmitClick(View v) {
         ArrayList<FilterGroup> filterGroups;
-        if (MakaanBuyerApplication.serpSelector.isBuyContext()) {
+        /*if (MakaanBuyerApplication.serpSelector.isBuyContext()) {
             filterGroups = MasterDataCache.getInstance().getAllBuyFilterGroups();
         } else {
             filterGroups = MasterDataCache.getInstance().getAllRentFilterGroups();
@@ -157,7 +157,7 @@ public class ViewSellersDialogFragment extends DialogFragment {
         }
         if (getActivity() instanceof SerpRequestCallback) {
             ((SerpRequestCallback) getActivity()).serpRequest(SerpActivity.TYPE_FILTER, MakaanBuyerApplication.serpSelector);
-        }
+        }*/
         dismiss();
     }
 

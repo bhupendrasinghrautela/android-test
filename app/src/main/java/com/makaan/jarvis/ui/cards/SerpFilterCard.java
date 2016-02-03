@@ -14,6 +14,9 @@ import com.makaan.adapter.listing.FiltersViewAdapter;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.jarvis.message.Message;
+import com.makaan.pojo.SerpObjects;
+import com.makaan.pojo.SerpRequest;
+import com.makaan.request.selector.Selector;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.ui.view.BaseView;
 import com.makaan.ui.view.ExpandableHeightGridView;
@@ -58,13 +61,8 @@ public class SerpFilterCard extends BaseCtaView<ExposeMessage>{
                 return;
             }
 
-            if (MakaanBuyerApplication.serpSelector.isBuyContext()) {
-                ArrayList<FilterGroup> filterGroups = MasterDataCache.getInstance().getAllBuyFilterGroups();
-                populateFilters(getClonedFilterGroups(filterGroups), filter );
-            } else {
-                ArrayList<FilterGroup> filterGroups = MasterDataCache.getInstance().getAllRentFilterGroups();
-                populateFilters(getClonedFilterGroups(filterGroups), filter);
-            }
+            ArrayList<FilterGroup> filterGroups = SerpObjects.getFilterGroups(getContext());
+            populateFilters(getClonedFilterGroups(filterGroups), filter);
         } catch (CloneNotSupportedException ex) {
             ex.printStackTrace();
         }
@@ -102,22 +100,14 @@ public class SerpFilterCard extends BaseCtaView<ExposeMessage>{
 
     @OnClick(R.id.btn_apply)
     public void onFilterApply(){
-        ArrayList<FilterGroup> filterGroups;
-        if (MakaanBuyerApplication.serpSelector.isBuyContext()) {
-            filterGroups = MasterDataCache.getInstance().getAllBuyFilterGroups();
-        } else {
-            filterGroups = MasterDataCache.getInstance().getAllRentFilterGroups();
-        }
+        ArrayList<FilterGroup> filterGroups = SerpObjects.getFilterGroups(getContext());
+        Selector selector = SerpObjects.getSerpSelector(getContext());
 
         FiltersViewAdapter adapter = (FiltersViewAdapter) (mFilterGridView.getAdapter());
-        adapter.applyFilters(MakaanBuyerApplication.serpSelector, filterGroups);
+        adapter.applyFilters(selector, filterGroups);
 
-        if(MasterDataCache.getAppliedFilterCount() > 0) {
-            MakaanBuyerApplication.serpSelector.sort("price", "desc");
-        }
-        if (mContext instanceof SerpRequestCallback) {
-            ((SerpRequestCallback) mContext).serpRequest(SerpActivity.TYPE_FILTER, MakaanBuyerApplication.serpSelector);
-        }
+        SerpRequest request = new SerpRequest();
+        request.launchSerp(getContext(), SerpActivity.TYPE_FILTER);
 
 
         Intent intent = new Intent(mContext, SerpActivity.class);

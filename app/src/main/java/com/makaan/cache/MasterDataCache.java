@@ -380,22 +380,6 @@ public class MasterDataCache {
         }
     }
 
-    public static int getAppliedFilterCount() {
-        int count = 0;
-        ArrayList<FilterGroup> filterGroups;
-        if (MakaanBuyerApplication.serpSelector.isBuyContext()) {
-            filterGroups = MasterDataCache.getInstance().getAllBuyFilterGroups();
-        } else {
-            filterGroups = MasterDataCache.getInstance().getAllRentFilterGroups();
-        }
-        for (FilterGroup grp : filterGroups) {
-            if (grp.isSelected) {
-                count++;
-            }
-        }
-        return count;
-    }
-
     public void addDefaultAmenities(List<Long> defaultAmenityList) {
         this.defaultAmenityList = defaultAmenityList;
     }

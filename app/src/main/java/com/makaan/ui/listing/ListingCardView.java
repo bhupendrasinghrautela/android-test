@@ -16,6 +16,7 @@ import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.PreferenceConstants;
 
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.pojo.SerpObjects;
 import com.makaan.response.listing.Listing;
 import com.makaan.util.StringUtil;
 
@@ -67,7 +68,7 @@ public class ListingCardView extends BaseCardView<Listing> implements CompoundBu
         mPreferences = context.getSharedPreferences(
                 PreferenceConstants.PREF_SHORTLISTED_PROPERTIES, Context.MODE_PRIVATE);
         mShortlistPropertyCheckbox.setOnCheckedChangeListener(null);
-        if(MakaanBuyerApplication.serpSelector.isBuyContext()) {
+        if(SerpObjects.isBuyContext(getContext())) {
             boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(
                     mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_BUY, item.lisitingId, true);
             mShortlistPropertyCheckbox.setChecked(isShortlisted);
@@ -107,13 +108,13 @@ public class ListingCardView extends BaseCardView<Listing> implements CompoundBu
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if(isChecked) {
-            if(MakaanBuyerApplication.serpSelector.isBuyContext()) {
+            if(SerpObjects.isBuyContext(getContext())) {
                 MasterDataCache.getInstance().addShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_BUY, mListing.lisitingId, true);
             } else {
                 MasterDataCache.getInstance().addShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_RENT, mListing.lisitingId, false);
             }
         } else {
-            if(MakaanBuyerApplication.serpSelector.isBuyContext()) {
+            if(SerpObjects.isBuyContext(getContext())) {
                 MasterDataCache.getInstance().removeShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_BUY, mListing.lisitingId, true);
             } else {
                 MasterDataCache.getInstance().removeShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_RENT, mListing.lisitingId, false);
