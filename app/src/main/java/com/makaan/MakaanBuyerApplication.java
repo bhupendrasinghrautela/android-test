@@ -120,7 +120,8 @@ public class MakaanBuyerApplication extends Application {
 
         Analytics analytics = new Analytics.Builder(this, "xMHqomsTMdGwOiJByBsKUbH78Akhbaku").build();
         Analytics.setSingletonInstance(analytics);
-        Analytics.with(this).identify("Moto-x-test1234");
+        Analytics.with(this).identify(JarvisConstants.DELIVERY_ID);
+        Analytics.with(this).flush();
 
     }
 
