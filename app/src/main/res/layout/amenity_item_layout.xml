@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginRight="12dp"
+        android:typeface="serif"
         android:maxLength="22"
         font:fontName="proxima.otf"
         android:textColor="@color/project_text_default"

@@ -9,6 +9,7 @@
     <TextView
     android:paddingLeft="@dimen/city_internal_padding"
     android:layout_width="match_parent"
+    android:typeface="monospace"
     android:layout_height="wrap_content"
     android:text="@string/top_localities"
     android:textSize="@dimen/city_normal_text"/>
@@ -25,6 +26,7 @@
         android:layout_gravity="center"
         android:paddingLeft="@dimen/city_show_property_left_right_padding"
         android:paddingRight="@dimen/city_show_property_left_right_padding"
+        android:typeface="serif"
         android:paddingBottom="@dimen/city_show_property_top_bottom_padding"
         android:paddingTop="@dimen/city_show_property_top_bottom_padding"
         android:layout_marginBottom="@dimen/city_show_property_margin_bottom"

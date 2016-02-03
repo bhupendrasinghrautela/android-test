@@ -59,6 +59,8 @@ public class PropertyActivity extends MakaanBaseSearchActivity implements ShowMa
         //Intent intent = getIntent();
         //long listingId = intent.getExtras().getLong("listingId");
         ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getListingDetail(mListingId);
+        //TODO correct similar listing
+        //((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getSimilarListingDetail(mListingId);
         ((AmenityService) (MakaanServiceFactory.getInstance().getService(AmenityService.class))).getAmenitiesByLocation(mListingLat, mListingLon, 3);
     }
 

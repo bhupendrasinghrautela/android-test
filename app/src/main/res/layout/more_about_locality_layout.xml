@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/property_page_text_size"
             android:maxLines="3"
+            android:typeface="serif"
             android:layout_marginLeft="@dimen/property_page_locality_margin_left"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/property_page_locality_margin_right"
@@ -42,6 +43,7 @@
             <TextView
                 android:id="@+id/locality_score_text"
                 android:layout_gravity="center"
+                android:typeface="monospace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/listingBlack"
@@ -53,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:typeface="serif"
             android:layout_marginBottom="@dimen/property_page_locality_brief_margin_bottom"
             android:textColor="@color/red"
             android:text="@string/more_about"/>

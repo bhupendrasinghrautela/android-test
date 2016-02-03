@@ -13,7 +13,6 @@ import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.util.AppBus;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 
 import static com.makaan.constants.RequestConstants.BATHROOMS;
 import static com.makaan.constants.RequestConstants.BEDROOMS;
@@ -94,6 +93,29 @@ public class ListingService implements MakaanService {
 
         }
 
+    }
+
+
+    public void getSimilarListingDetail(Long listingId){
+        if (null != listingId) {
+            Selector listingDetailSelector = new Selector();
+            listingDetailSelector.fields(new String[]{"size","property","project","builder", "isAssist", "carpetArea", "currentListingPrice", "unitName", "url", "id", "label", "name", "unitTypeId", "bedrooms", "type", "altText", "title", "carpetArea", "priceVerified", "imageType", "absolutePath", "propertyId", "images", "pricePerUnitArea", "price", "currentListingPrice", "project", "property", "builder", "locality", "suburb", "city", "amenity", "projectAmenityId", "verified"});
+
+            String listingDetailUrl = ApiConstants.SIMILAR_LISTING.concat(listingId.toString()).concat("?").concat(listingDetailSelector.build());
+            Type listingDetailType = new TypeToken<ListingDetail>() {
+            }.getType();
+
+            MakaanNetworkClient.getInstance().get(listingDetailUrl, listingDetailType, new ObjectGetCallback() {
+                @Override
+                public void onSuccess(Object responseObject) {
+                    ListingDetail listingDetail = (ListingDetail) responseObject;
+
+                    //listingDetail.description = AppUtils.stripHtml(listingDetail.description);
+                    AppBus.getInstance().post(new ListingByIdGetEvent(listingDetail));
+                }
+            });
+
+        }
     }
 
 

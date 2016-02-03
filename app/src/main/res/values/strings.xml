@@ -133,6 +133,7 @@
     <string name="avg_price_prefix">avg. price</string>
     <string name="avg_price_postfix">/ sq ft</string>
     <string name="property_range">property range</string>
+    <string name="floor_plan">floor plan</string>
     <string name="top_localities">top localities</string>
     <string name="view_properties">view properties</string>
     <string name="locality_title" />

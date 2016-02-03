@@ -65,17 +65,17 @@
                 android:layout_width="match_parent"
                 android:layout_margin="@dimen/city_internal_padding"
                 android:layout_height="wrap_content"/>
-            <include layout="@layout/city_empty_view"/>
             <include layout="@layout/compressed_text_layout_for_black"/>
-            <include layout="@layout/city_empty_view"/>
             <include layout="@layout/property_range_layout"/>
-            <include layout="@layout/city_empty_view"/>
             <include layout="@layout/locality_lifestyle"/>
             <include layout="@layout/price_trend_layout"/>
             <include layout="@layout/top_locality_layout"/>
             <include layout="@layout/locality_properties"/>
-            <include layout="@layout/city_empty_view"/>
-            <include layout="@layout/locality_interested_to_buy"/>
+            <include
+                layout="@layout/locality_interested_to_buy"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="@dimen/city_internal_margin"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

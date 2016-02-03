@@ -39,11 +39,15 @@ public class ListingOtherSellersCallback extends JSONGetCallback {
             JSONArray sellerIdFacet = facets.optJSONArray("sellerId");
 
 
-            Type type = new TypeToken<HashMap<Long, Long>>() {
+            Type type = new TypeToken<ArrayList<HashMap<Long, Long>>>() {
             }.getType();
-            HashMap<Long, Long> sellerPropCountMap = new HashMap<>();
+            HashMap<Long,Long> sellerPropCountMap = new HashMap<>();
+            ArrayList<HashMap<Long, Long>> sellerPropCountList = new ArrayList<>();
             if(null != sellerIdFacet) {
-                sellerPropCountMap = MakaanBuyerApplication.gson.fromJson(sellerIdFacet.toString(), type);
+                sellerPropCountList = MakaanBuyerApplication.gson.fromJson(sellerIdFacet.toString(), type);
+                for(HashMap<Long,Long> map:sellerPropCountList){
+                    sellerPropCountMap.putAll(map);
+                }
             }
 
 
@@ -55,15 +59,17 @@ public class ListingOtherSellersCallback extends JSONGetCallback {
             for (ListingDetail listingDetail : listingList) {
                 Company company = listingDetail.companySeller.company;
 
-                SellerCard sellerCard = sellerMap.get(company.id);
+                SellerCard sellerCard = sellerMap.get(listingDetail.sellerId);
+                //SellerCard sellerCard = sellerMap.get(company.id);
                 if (null == sellerCard) {
                     sellerCard = new SellerCard();
-                    sellerMap.put(company.id, sellerCard);
-                    sellerCard.sellerId = company.id;
+                    sellerMap.put(listingDetail.sellerId, sellerCard);
+                    //sellerMap.put(company.id, sellerCard);
+                    sellerCard.sellerId = listingDetail.sellerId;
                     //sellerCard.assist =
                     sellerCard.name = company.name;
                     sellerCard.type = company.type;
-                    sellerCard.noOfProperties = sellerPropCountMap.get(company.id);
+                    sellerCard.noOfProperties = sellerPropCountMap.get(listingDetail.sellerId);
                 }
             }
 

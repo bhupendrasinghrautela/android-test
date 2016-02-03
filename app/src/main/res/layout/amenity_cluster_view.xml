@@ -25,6 +25,7 @@
             android:id="@+id/amenity_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:typeface="monospace"
             android:textColor="@color/amenity_title_color"
             android:textSize="@dimen/amenity_type_text_size"/>
 

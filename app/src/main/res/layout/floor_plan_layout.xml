@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.makaan.ui.property.FloorPlanLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:visibility="gone"
+    android:id="@+id/floor_plan_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/property_empty_view"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/property_page_amenities_margin_top"
+        android:text="@string/floor_plan"
+        android:textColor="@color/amenity_title_color"
+        android:textSize="@dimen/property_page_average_text_size"
+        android:layout_marginBottom="@dimen/property_page_amenities_margin_bottom"
+        android:layout_height="wrap_content"/>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/property_floor_plan_tab"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/property_page_amenities_margin_top"
+        app:tabBackground="@drawable/tab_color_selector"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextAppearance="@style/tab_text_appearance"
+        app:tabIndicatorHeight="0dp"
+        app:tabTextColor="@color/project_specification_default_color"
+        android:layout_marginLeft="@dimen/project_specification_tab_layout_margins"
+        android:layout_marginRight="@dimen/project_specification_tab_layout_margins"
+        android:layout_height="wrap_content"
+        app:tabMode="scrollable"
+        app:tabGravity="fill"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/property_floor_image_pager"
+        android:layout_width="match_parent"
+        android:layout_height="278dp"
+        android:overScrollMode="never"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
+
+</com.makaan.ui.property.FloorPlanLayout>

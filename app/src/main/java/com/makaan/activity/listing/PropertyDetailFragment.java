@@ -23,12 +23,12 @@ import com.makaan.R;
 import com.makaan.activity.city.CityActivity;
 import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.constants.ImageConstants;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.image.ImagesGetEvent;
 import com.makaan.event.listing.ListingByIdGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
-import com.makaan.fragment.locality.LocalityPropertiesFragment;
-import com.makaan.pojo.TaxonomyCard;
+import com.makaan.fragment.property.SimilarPropertyFragment;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.locality.Locality;
@@ -36,12 +36,14 @@ import com.makaan.response.project.Project;
 import com.makaan.response.property.Property;
 import com.makaan.response.user.Company;
 import com.makaan.service.ImageService;
+import com.makaan.service.ListingService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.ui.CompressedTextView;
 import com.makaan.ui.amenity.AmenityViewPager;
 import com.makaan.ui.project.ProjectSpecificationView;
 import com.makaan.ui.property.AboutBuilderExpandedLayout;
 import com.makaan.ui.property.AmenitiesViewScroll;
+import com.makaan.ui.property.FloorPlanLayout;
 import com.makaan.ui.property.ListingDataOverViewScroll;
 import com.makaan.ui.property.PropertyImageViewPager;
 import com.makaan.ui.view.CustomRatingBar;
@@ -50,6 +52,7 @@ import com.pkmmte.view.CircularImageView;
 import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -70,6 +73,9 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
 
     @Bind(R.id.property_image_viewpager)
     PropertyImageViewPager mPropertyImageViewPager;
+
+    @Bind(R.id.floor_plan_layout)
+    FloorPlanLayout mFloorPlanLayout;
 
     @Bind(R.id.unit_name)
     TextView mUnitName;
@@ -141,6 +147,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
     private Long listingId;
     private String listingMainUrl;
     private Context mContext;
+    private ArrayList<ImagesGetEvent> mImagesGetEventArrayList;
 
 
     @Override
@@ -185,16 +192,28 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
         }
         mListingDetail = listingByIdGetEvent.listingDetail;
         TestUi(mListingDetail);
+        ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getOtherSellersOnListingDetail(
+                mListingDetail.projectId,mListingDetail.bedrooms,mListingDetail.bathrooms,mListingDetail.studyRoom
+                ,mListingDetail.poojaRoom,mListingDetail.servantRoom,null
+        );
         ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId);
+        ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId, ImageConstants.THREED_FLOOR_PLAN);
+        ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId, ImageConstants.FLOOR_PLAN);
     }
 
     @Subscribe
     public void onResults(ImagesGetEvent imagesGetEvent){
-        if(imagesGetEvent.images.size()>0){
-            mPropertyImageViewPager.setVisibility(View.VISIBLE);
+        if(imagesGetEvent.imageType == null) {
+            if (imagesGetEvent.images.size() > 0) {
+                mPropertyImageViewPager.setVisibility(View.VISIBLE);
+            }
+            mPropertyImageViewPager.bindView();
+            mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.property.size);
         }
-        mPropertyImageViewPager.bindView();
-        mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.property.size);
+        else{
+            if(imagesGetEvent.images!= null && imagesGetEvent.images.size()>0)
+            mFloorPlanLayout.bindFloorPlan(imagesGetEvent);
+        }
     }
 
     private void TestUi(ListingDetail listingDetail){
@@ -260,13 +279,13 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
     }
 
     //TODO add smiliar properties instead of this
-    private void addProperties(List<TaxonomyCard> taxonomyCardList) {
-        LocalityPropertiesFragment newFragment = new LocalityPropertiesFragment();
+    private void addSimilarProperties(List<ListingDetail> listingDetailList) {
+        SimilarPropertyFragment newFragment = new SimilarPropertyFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("title", getResources().getString(R.string.properties_in));
+        bundle.putString("title", getResources().getString(R.string.similar_properties));
         newFragment.setArguments(bundle);
         initFragment(R.id.container_nearby_localities_props, newFragment, false);
-        newFragment.setData(taxonomyCardList);
+        newFragment.setData(listingDetailList);
     }
 
     protected void initFragment(int fragmentHolderId, Fragment fragment, boolean shouldAddToBackStack) {

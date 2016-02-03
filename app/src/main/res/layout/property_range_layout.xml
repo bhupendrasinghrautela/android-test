@@ -2,14 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:padding="@dimen/city_internal_padding"
+                android:layout_marginTop="@dimen/city_internal_margin"
                 android:layout_height="match_parent">
+    <include layout="@layout/city_empty_view"/>
     <TextView
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/property_range"
         android:textSize="@dimen/city_header_text"
+        android:padding="@dimen/city_internal_padding"
         android:textColor="@color/white"
         android:gravity="center"/>
     <Switch
@@ -27,6 +29,7 @@
         android:layout_marginRight="@dimen/city_property_buy_rent_right_left_margin"
         android:textColor="@color/white"
         android:text="@string/buy"
+        android:typeface="normal"
         android:textSize="16sp"
         android:layout_height="wrap_content"/>
     <TextView
@@ -38,6 +41,7 @@
         android:textColor="@color/white"
         android:text="@string/rent"
         android:textSize="@dimen/city_small_text"
+        android:typeface="normal"
         android:layout_height="wrap_content"/>
     <com.makaan.ui.MultiSelectionSpinner
         android:id="@+id/bhk_spinner"
@@ -50,8 +54,8 @@
         android:layout_height="wrap_content"/>
     <com.makaan.ui.MultiSelectionSpinner
         android:id="@+id/property_type_spinner"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:layout_below="@+id/bhk_spinner"
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
@@ -61,6 +65,8 @@
         android:layout_marginTop="20dp"
         android:layout_below="@+id/property_type_spinner"
         android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/city_internal_padding"
+        android:layout_marginRight="@dimen/city_internal_padding"
         android:layout_height="240dp"
         layout="@layout/bar_chart_view_layout"/>
 </RelativeLayout>
