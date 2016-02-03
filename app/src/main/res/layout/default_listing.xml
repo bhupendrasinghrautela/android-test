@@ -160,27 +160,33 @@
                 android:background="@color/serp_listing_view_empty_view_color" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/serp_default_listing_property_address_text_view"
+        <FrameLayout
+            android:id="@+id/serp_default_listing_property_address_frame_layout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/serp_listing_card_property_address_text_view_left_margin"
-            android:layout_marginStart="@dimen/serp_listing_card_property_address_text_view_left_margin"
-            android:layout_marginRight="@dimen/serp_listing_card_property_address_text_view_right_margin"
-            android:layout_marginEnd="@dimen/serp_listing_card_property_address_text_view_right_margin"
-            android:layout_marginTop="@dimen/serp_listing_card_property_address_text_view_top_margin"
-            android:text="sector - 2 sohna, gurgaon"
-            android:textColor="@color/serp_listing_card_default_text_color"
-            android:textSize="@dimen/serp_listing_card_property_address_text_view_text_size"
-            android:textAllCaps="false"
-            android:typeface="serif" />
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/serp_default_listing_property_address_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/serp_listing_card_property_address_text_view_left_margin"
+                android:layout_marginStart="@dimen/serp_listing_card_property_address_text_view_left_margin"
+                android:layout_marginRight="@dimen/serp_listing_card_property_address_text_view_right_margin"
+                android:layout_marginEnd="@dimen/serp_listing_card_property_address_text_view_right_margin"
+                android:layout_marginTop="@dimen/serp_listing_card_property_address_text_view_top_margin"
+                android:layout_marginBottom="@dimen/serp_listing_card_empty_view_after_address_text_view_margin_top"
+                android:text="sector - 2 sohna, gurgaon"
+                android:textColor="@color/serp_listing_card_default_text_color"
+                android:textSize="@dimen/serp_listing_card_property_address_text_view_text_size"
+                android:textAllCaps="false"
+                android:typeface="serif" />
+        </FrameLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/serp_listing_card_empty_view_height"
             android:layout_marginLeft="@dimen/serp_listing_card_empty_view_after_address_text_view_margin_left"
             android:layout_marginStart="@dimen/serp_listing_card_empty_view_after_address_text_view_margin_left"
-            android:layout_marginTop="@dimen/serp_listing_card_empty_view_after_address_text_view_margin_top"
             android:background="@color/serp_listing_view_empty_view_color" />
 
         <RelativeLayout

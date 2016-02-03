@@ -15,6 +15,7 @@ import com.makaan.R;
 import com.makaan.event.project.ProjectConfigItemClickListener;
 import com.makaan.pojo.ProjectConfigItem;
 import com.makaan.util.AppBus;
+import com.makaan.util.StringUtil;
 
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class ProjectConfigItemView extends LinearLayout implements View.OnClickL
         final View configView =
                 mLayoutInflater.inflate(R.layout.row_project_config_item, null);
         if(item.minPrice!= 0d && item.maxPrice != 0d)
-        ((TextView) configView.findViewById(R.id.tv_project_config_item_labe_one)).setText("\u20B9 " + (item.minPrice / 100000) + " L - " + "\u20B9 " + (item.minPrice / 100000) + " L");
+        ((TextView) configView.findViewById(R.id.tv_project_config_item_labe_one)).setText(String.format("%s - %s", StringUtil.getDisplayPrice(item.minPrice), StringUtil.getDisplayPrice(item.maxPrice)));
         ((TextView) configView.findViewById(R.id.tv_project_config_item_labe_two)).setText(getBedroomString(item));
         configView.setTag(i);
         configView.setOnClickListener(this);

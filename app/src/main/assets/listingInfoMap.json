@@ -57,7 +57,7 @@
         {
           "displayName":"bookamt",
           "fieldName":"bookamt",
-          "imageName":"bookamt"
+          "imageName":"booking_amount"
         },
         {
           "displayName":"facing",
@@ -67,7 +67,7 @@
         {
           "displayName":"ownership",
           "fieldName":"ownershipType",
-          "imageName":"shower"
+          "imageName":"ownership"
         }
       ],
       "rentProperties": [
@@ -105,7 +105,7 @@
           /* TODO */
           "displayName":"tenant allowed",
           "fieldName":"tenantTypes",
-          "imageName":"shower"
+          "imageName":"tenant_allowed"
         }
       ]
     }

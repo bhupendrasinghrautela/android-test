@@ -614,4 +614,12 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     public void click(){
         startActivity(new Intent(MakaanBaseSearchActivity.this, BuyerJourneyActivity.class));
     }
+
+    /**
+     * set title of the activity
+     * @param title title to display in the toolbar*
+     */
+    protected void setTitle(String title) {
+        mSearchPropertiesTextView.setText(title);
+    }
 }

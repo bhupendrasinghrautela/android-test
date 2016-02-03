@@ -111,6 +111,8 @@ public class ListingParser {
                     String possessionDateStr = listingJson.optString(POSSESSION_DATE);
                     listing.propertyAge = !StringUtil.isBlank(possessionDateStr) ? getElapsedDaysFromNow(possessionDateStr).toString().concat(DAYS) : null;
                     listing.possessionDate = !StringUtil.isBlank(possessionDateStr) ? getMMMYYYYDateStringFromEpoch(possessionDateStr) : null;
+                    listing.minConstructionCompletionDate =  listingJson.optLong(MIN_CONST_COMPLETION_DATE);
+                    listing.maxConstructionCompletionDate =  listingJson.optLong(MAX_CONST_COMPLETION_DATE);
                     listing.noOfOpenSides = listingJson.optInt(NO_OPEN_SIDES);
                     listing.securityDeposit = listingJson.optInt(NO_OPEN_SIDES);
 
