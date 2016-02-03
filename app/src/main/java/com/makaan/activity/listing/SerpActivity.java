@@ -256,7 +256,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             } else if (type == SerpActivity.TYPE_UNKNOWN) {
                 // TODO check whether it should be used or not
                 fetchData();
-            } else {
+            } else if (type == SerpActivity.TYPE_SELLER) {
+                serpRequest(SerpActivity.TYPE_PROJECT, serpSelector);
+            }else {
                 serpRequest(type, serpSelector);
             }
         } else {

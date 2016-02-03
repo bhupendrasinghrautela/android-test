@@ -967,7 +967,7 @@
     <dimen name="seller_overview_card_padding">10dp</dimen>
     <dimen name="seller_overview_card_width">250dp</dimen>
     <dimen name="seller_overview_card_margin">18dp</dimen>
-    <dimen name="seller_pic_rating_margin_right">8dp</dimen>
+    <dimen name="seller_pic_rating_margin_right">12dp</dimen>
     <dimen name="send_req_card_margin">20dp</dimen>
     <dimen name="send_req_card_padding">20dp</dimen>
     <dimen name="til_type_padding_right">10dp</dimen>

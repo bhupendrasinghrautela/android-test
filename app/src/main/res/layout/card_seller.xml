@@ -15,22 +15,40 @@
         android:orientation="vertical"
         android:layout_marginRight="@dimen/seller_pic_rating_margin_right">
 
-        <com.pkmmte.view.CircularImageView
-            android:layout_width="@dimen/jarvis_seller_card_profile_pic_dimen"
-            android:layout_height="@dimen/jarvis_seller_card_profile_pic_dimen"
-            android:layout_margin="@dimen/thumbnail_margin"
-            android:tint="@color/white"
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_gravity="center"
-            android:src="@drawable/star"
-            app:border="true"
-            app:border_color="@color/light_gray"
-            app:border_width="@dimen/border_width"
-            app:shadow="true"/>
+            android:layout_marginTop="@dimen/serp_listing_card_seller_image_view_top_margin">
+
+            <com.pkmmte.view.CircularImageView
+                android:id="@+id/seller_image_view"
+                android:layout_width="@dimen/serp_listing_card_seller_image_view_width"
+                android:layout_height="@dimen/serp_listing_card_seller_image_view_height"
+                android:visibility="gone"
+                app:border="true"
+                app:border_color="@color/serp_listing_card_seller_mask_color"
+                app:border_width="@dimen/border_width" />
+
+            <TextView
+                android:id="@+id/seller_logo_text_view"
+                android:layout_width="@dimen/serp_listing_card_seller_image_view_width"
+                android:layout_height="@dimen/serp_listing_card_seller_image_view_height"
+                android:gravity="center"
+
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+        </FrameLayout>
 
         <RatingBar
             android:id="@+id/ratingbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
             android:numStars="5"
             android:stepSize="1.0"
             android:isIndicator="true"
