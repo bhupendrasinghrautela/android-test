@@ -2,12 +2,13 @@
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:font="http://schemas.android.com/tools"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <include layout="@layout/locality_seperator_view"/>
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/locality_kyn_margin_right"
@@ -15,7 +16,8 @@
         android:layout_marginTop="@dimen/locality_kyn_margin_top"
         android:layout_marginBottom="@dimen/locality_kyn_margin_bottom"
         android:textColor="@color/white"
-        android:textSize="@dimen/locality_text_big"
+        android:textSize="@dimen/locality_text_bigger"
+        font:fontName="comforta.ttf"
         android:layout_gravity="center_horizontal"
         android:id="@+id/tv_nearby_localities_title"
         />
@@ -28,11 +30,12 @@
         android:gravity="center_horizontal"
         android:layout_marginBottom="@dimen/locality_kyn_margin_bottom"
         >
-        <TextView
+         <com.makaan.ui.view.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/locality_text_v_v_small"
             android:textColor="@color/white"
+             font:fontName="proxima.otf"
             android:id="@+id/tv_localities_props_buy"
             android:text="@string/locality_switch_buy"
             />
@@ -44,10 +47,11 @@
             android:thumb="@drawable/icon_switch_thumb"
             android:track="@drawable/icon_switch_track"
             android:id="@+id/switch_top_agents" />
-        <TextView
+        <com.makaan.ui.view.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/locality_text_v_v_small"
+            font:fontName="proxima.otf"
             android:textColor="@color/white"
             android:id="@+id/tv_localities_props_rent"
             android:text="@string/locality_switch_rent"
@@ -58,5 +62,6 @@
     android:id="@+id/rv_nearby_localities"
     android:layout_width="wrap_content"
     android:layout_height="@dimen/locality_nearby_localities_recycler_height"
+    android:overScrollMode="never"
     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </LinearLayout>

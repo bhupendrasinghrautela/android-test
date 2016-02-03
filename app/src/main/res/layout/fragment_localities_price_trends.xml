@@ -7,14 +7,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/price_trend_view"
     android:orientation="vertical"
+    xmlns:font="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:id="@+id/header_text"
         android:gravity="center"
         android:textSize="@dimen/city_header_text"
         android:padding="20dp"
+        font:fontName="comforta.ttf"
         android:text="@string/price_trends"
         android:textColor="@color/listingBlack"
         android:layout_width="match_parent"
@@ -37,7 +39,7 @@
 
    <include layout="@layout/locality_trends_description"/>
 
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:id="@+id/header_text_popular_searches"
         android:gravity="left"
         android:layout_marginLeft="48dp"
@@ -45,6 +47,7 @@
         android:layout_marginTop="18dp"
         android:textSize="16sp"
         android:visibility="gone"
+        font:fontName="proxima-light.otf"
         android:text="popular searches in this area"
         android:textColor="@color/listingBlack"
         android:layout_width="match_parent"
