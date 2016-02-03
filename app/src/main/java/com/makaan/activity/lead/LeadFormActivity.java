@@ -1,14 +1,11 @@
-package com.makaan.activity.Lead;
+package com.makaan.activity.lead;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
-import com.makaan.fragment.pyr.PyrReplaceFragment;
-import com.makaan.ui.pyr.FilterableMultichoiceDialogFragment;
 
 /**
  * Created by makaanuser on 23/1/16.

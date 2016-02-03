@@ -1,8 +1,6 @@
-package com.makaan.activity.Lead;
+package com.makaan.activity.lead;
 
 import android.support.v4.app.Fragment;
-
-import com.makaan.ui.pyr.FilterableMultichoiceDialogFragment;
 
 /**
  * Created by proptiger on 8/1/16.

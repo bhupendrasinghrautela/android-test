@@ -1,4 +1,4 @@
-package com.makaan.activity.Lead;
+package com.makaan.activity.lead;
 
 /**
  * Created by proptiger on 7/1/16.
