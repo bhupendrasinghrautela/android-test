@@ -28,6 +28,7 @@ import com.makaan.event.project.ProjectConfigEvent;
 import com.makaan.event.project.ProjectConfigItemClickListener;
 import com.makaan.event.project.SimilarProjectGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.pojo.SerpRequest;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.project.Project;
 import com.makaan.service.AmenityService;
@@ -93,22 +94,19 @@ public class ProjectFragment extends MakaanBaseFragment{
     }
 
     @Subscribe
-    public void onResults(OnViewAllPropertiesClicked onViewAllPropertiesClicked){
-        Intent i = new Intent(getActivity(), SerpActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putLong(KeyUtil.PROJECT_ID, project.projectId);
-        bundle.putLong(KeyUtil.LOCALITY_ID, project.localityId);
-        bundle.putLong(KeyUtil.CITY_ID, project.locality.cityId);
+    public void onResults(OnViewAllPropertiesClicked onViewAllPropertiesClicked) {
+        SerpRequest request = new SerpRequest();
+        request.setCityId(project.locality.cityId);
+        request.setLocalityId(project.localityId);
+        request.setProjectId(project.projectId);
         if(onViewAllPropertiesClicked.isRent) {
-            bundle.putString(KeyUtil.LISTING_CATEGORY, "rent");
-            i.putExtra(SerpActivity.REQUEST_DATA, bundle);
-        }else {
-            bundle.putString(KeyUtil.LISTING_CATEGORY, "buy");
-            i.putExtra(SerpActivity.REQUEST_DATA, bundle);
+            request.setContext(SerpRequest.CONTEXT_RENT);
+        } else {
+            request.setContext(SerpRequest.CONTEXT_BUY);
         }
-        i.putExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_PROJECT);
-        startActivity(i);
-        getActivity().finish();
+
+        request.launchSerp(getActivity(), SerpActivity.TYPE_PROJECT);
+        //getActivity().finish();
     }
 
     @Subscribe
@@ -124,23 +122,20 @@ public class ProjectFragment extends MakaanBaseFragment{
     }
 
     private void startSerpActivity(ProjectConfigItemClickListener configItemClickListener) {
-        Bundle bundle = new Bundle();
-        bundle.putLong(KeyUtil.PROJECT_ID,project.projectId);
-        bundle.putLong(KeyUtil.LOCALITY_ID,project.localityId);
-        bundle.putLong(KeyUtil.CITY_ID, project.locality.cityId);
-        bundle.putDouble(KeyUtil.MIN_BUDGET, configItemClickListener.projectConfigItem.minPrice);
-        bundle.putDouble(KeyUtil.MAX_BUDGET, configItemClickListener.projectConfigItem.maxPrice);
-        Intent i = new Intent(getActivity(), SerpActivity.class);
+        SerpRequest request = new SerpRequest();
+        request.setCityId(project.locality.cityId);
+        request.setLocalityId(project.localityId);
+        request.setProjectId(project.projectId);
+        request.setMinBudget(((Double) configItemClickListener.projectConfigItem.minPrice).longValue());
+        request.setMaxBudget(((Double) configItemClickListener.projectConfigItem.maxPrice).longValue());
         if(configItemClickListener.isRent) {
-            bundle.putString(KeyUtil.LISTING_CATEGORY, "rent");
-            i.putExtra(SerpActivity.REQUEST_DATA, bundle);
+            request.setContext(SerpRequest.CONTEXT_RENT);
         }else {
-            bundle.putString(KeyUtil.LISTING_CATEGORY, "buy");
-            i.putExtra(SerpActivity.REQUEST_DATA, bundle);
+            request.setContext(SerpRequest.CONTEXT_BUY);
         }
-        i.putExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_PROJECT);
-        startActivity(i);
-        getActivity().finish();
+
+        request.launchSerp(getActivity(), SerpActivity.TYPE_PROJECT);
+        //getActivity().finish();
     }
 
     @Subscribe
@@ -160,7 +155,9 @@ public class ProjectFragment extends MakaanBaseFragment{
         initUi();
         addPriceTrendsFragment();
         addConstructionTimelineFragment();
-        ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(project.locality.latitude, project.locality.longitude, 10);
+        if(project.locality.latitude != null && project.locality.longitude != null) {
+            ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(project.locality.latitude, project.locality.longitude, 10);
+        }
         ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getProjectTimelineImages(project.projectId);
     }
 
@@ -169,10 +166,11 @@ public class ProjectFragment extends MakaanBaseFragment{
         descriptionTv.setText(Html.fromHtml(project.description));
         aboutBuilderExpandedLayout.bindView(project.builder);
         builderDescriptionTv.setText(Html.fromHtml(project.builder.description));
+
         if(project.livabilityScore !=null) {
             projectScoreProgreessBar.setProgress(project.livabilityScore.intValue() * 10);
             projectScoreTv.setText("" + project.livabilityScore);
-        }else{
+        } else {
             scoreFrameLayout.setVisibility(View.GONE);
         }
         projectNameTv.setText(project.name);

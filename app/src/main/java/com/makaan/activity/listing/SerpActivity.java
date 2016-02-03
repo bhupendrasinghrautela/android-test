@@ -31,6 +31,7 @@ import com.makaan.fragment.listing.SerpMapFragment;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.OnExposeEvent;
 import com.makaan.pojo.GroupCluster;
+import com.makaan.pojo.SerpRequest;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
@@ -193,74 +194,33 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                     serpRequest(SerpActivity.TYPE_GPID, serpSelector, gpId);
                 }
             } else if (type == SerpActivity.TYPE_PROJECT) {
-                serpSelector.reset();
-                Bundle bundle = intent.getExtras();
-
-                Long l = bundle.getLong(KeyUtil.PROJECT_ID);
-                if(l > 0) {
-                    serpSelector.term(KeyUtil.PROJECT_ID, String.valueOf(l));
-                }
-                l = bundle.getLong(KeyUtil.LOCALITY_ID);
-                if(l > 0) {
-                    serpSelector.term(KeyUtil.LOCALITY_ID, String.valueOf(l));
-                }
-                l = bundle.getLong(KeyUtil.CITY_ID);
-                if(l > 0) {
-                    serpSelector.term(KeyUtil.CITY_ID, String.valueOf(l));
-                }
-
-                Double minBudget = bundle.getDouble(KeyUtil.MIN_BUDGET);
-                Double maxBudget = bundle.getDouble(KeyUtil.MAX_BUDGET);
-
-                String string = bundle.getString(KeyUtil.LISTING_CATEGORY);
-                if(!TextUtils.isEmpty(string)) {
-                    ArrayList<FilterGroup> grps = null;
-                    if("buy".equalsIgnoreCase(string)) {
-                        serpSelector.term("listingCategory", new String[]{"Primary", "Resale"});
-                        grps = MasterDataCache.getInstance().getAllBuyFilterGroups();
-                    } else if("rent".equalsIgnoreCase(string)) {
-                        grps = MasterDataCache.getInstance().getAllRentFilterGroups();
-                        serpSelector.term("listingCategory", new String[]{"Rental"});
-                    }
-
-                    if(minBudget > 0 && !Double.isNaN(minBudget)
-                            && maxBudget > 0 && !Double.isNaN(maxBudget)) {
-                        serpSelector.range("budget", minBudget, maxBudget);
-
-                        for(FilterGroup grp : grps) {
-                            if(grp.rangeFilterValues.size() > 0 && "budget".equalsIgnoreCase(grp.rangeFilterValues.get(0).fieldName)) {
-                                grp.rangeFilterValues.get(0).selectedMinValue = minBudget;
-                                grp.rangeFilterValues.get(0).selectedMaxValue = maxBudget;
-                            }
-                        }
-                    } else if(minBudget > 0 && !Double.isNaN(minBudget)) {
-                        serpSelector.range("budget", minBudget, null);
-
-                        for(FilterGroup grp : grps) {
-                            if(grp.rangeFilterValues.size() > 0 && "budget".equalsIgnoreCase(grp.rangeFilterValues.get(0).fieldName)) {
-                                grp.rangeFilterValues.get(0).selectedMinValue = minBudget;
-                            }
-                        }
-                    } else if(maxBudget > 0 && !Double.isNaN(maxBudget)) {
-                        serpSelector.range("budget", null, maxBudget);
-
-                        for(FilterGroup grp : grps) {
-                            if(grp.rangeFilterValues.size() > 0 && "budget".equalsIgnoreCase(grp.rangeFilterValues.get(0).fieldName)) {
-                                grp.rangeFilterValues.get(0).selectedMaxValue = maxBudget;
-                            }
-                        }
-                    }
-                }
-                serpRequest(SerpActivity.TYPE_PROJECT, serpSelector);
+                parseSerpRequest(intent);
 
             } else if (type == SerpActivity.TYPE_UNKNOWN) {
                 // TODO check whether it should be used or not
                 fetchData();
-            } else {
+            } else if (type == SerpActivity.TYPE_SELLER) {
+                serpRequest(SerpActivity.TYPE_PROJECT, serpSelector);
+            }else {
                 serpRequest(type, serpSelector);
             }
         } else {
             fetchData();
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        parseSerpRequest(intent);
+    }
+
+    private void parseSerpRequest(Intent intent) {
+        serpSelector.reset();
+        if(intent.hasExtra(REQUEST_DATA)) {
+            SerpRequest request = intent.getParcelableExtra(REQUEST_DATA);
+            request.applySelector(serpSelector, MasterDataCache.getInstance().getAllBuyFilterGroups());
+            serpRequest(SerpActivity.TYPE_PROJECT, serpSelector);
         }
     }
 
@@ -289,11 +249,13 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             setShowSearchBar(true, false);
             mFiltersFrameLayout.setVisibility(View.VISIBLE);
             mSimilarPropertiesFrameLayout.setVisibility(View.GONE);
-            mMapImageView.setImageResource(R.drawable.map);
+            mMapImageView.setImageResource(R.drawable.map_icon);
 
             serpSelector.removePaging();
         } else if(mIsMapFragment) {
             mIsMapFragment = false;
+            mMapImageView.setImageResource(R.drawable.map_icon);
+            mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE), mListingCount);
         }
     }
 
@@ -507,10 +469,16 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     @OnClick(R.id.fragment_filters_map_image_view)
     public void onMapViewPressed(View view) {
         if(mIsMapFragment) {
-            mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE), mListingCount);
+            if(getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                getSupportFragmentManager().popBackStack();
+                mMapImageView.setImageResource(R.drawable.map_icon);
+                mIsMapFragment = false;
+                mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE), mListingCount);
+            }
+            /*mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE), mListingCount);
             initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, true);
             mIsMapFragment = false;
-            mMapImageView.setImageResource(R.drawable.map);
+            mMapImageView.setImageResource(R.drawable.map_icon);*/
         } else {
             if (mListingGetEvent != null) {
                 mMapFragment = new SerpMapFragment();

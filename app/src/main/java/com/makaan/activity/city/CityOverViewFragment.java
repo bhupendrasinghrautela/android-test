@@ -2,6 +2,7 @@ package com.makaan.activity.city;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
@@ -48,6 +49,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnCheckedChanged;
 
 /**
  * Created by aishwarya on 01/01/16.
@@ -78,19 +80,32 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     PriceTrendView mPriceTrendView;
     @Bind(R.id.bar_chart_layout)
     MakaanBarChartView mBarChartView;
-    @Bind(R.id.city_property_buy_rent_switch)
-    Switch mPropertyRangeBuyRentSwitch;
     @Bind(R.id.bhk_spinner)
     MultiSelectionSpinner mBhkSpinner;
     @Bind(R.id.property_type_spinner)
     MultiSelectionSpinner mPropertyTypeSpinner;
     ArrayList<Integer> mSelectedPropertyTypes;
     ArrayList<Integer> mSelectedBedroomTypes;
+    @Bind(R.id.tv_locality_interested_in)
+    TextView interestedInTv;
+    @Bind(R.id.city_property_buy_rent_switch)
+    Switch mBuyRentSwitch;
+
+    @OnCheckedChanged(R.id.city_property_buy_rent_switch)
+    public void onBuyRentSwitched(){
+        if(mBuyRentSwitch.isChecked()){
+            isRent = true;
+        }
+        else{
+            isRent = false;
+        }
+    }
 
     private static final int BLUR_EFFECT_HEIGHT = 300;
     private float alpha;
     private Context mContext;
     private City mCity;
+    private Boolean isRent;
     private String PREFIX_PROPERTY_SPINNER = "property type :";
     private String POSTFIX_BHK_SPINNER = "bhk";
     private ArrayList<Locality> mCityTopLocalities;
@@ -111,25 +126,33 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     private void initUiUsingCityDetails() {
         mMainCityImage.setImageUrl(mCity.cityHeroshotImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
         mCityCollapseToolbar.setTitle(mCity.label);
+        interestedInTv.setText("interested in " + mCity.label + "?");
         addLocalitiesLifestyleFragment(mCity.entityDescriptions);
         addProperties(new TaxonomyService().getTaxonomyCardForCity(mCity.id, mCity.minAffordablePrice, mCity.maxAffordablePrice, mCity.minLuxuryPrice, mCity.maxBudgetPrice));
         //mCityConnectHeader.setText(getString(R.string.city_connect_header_text) + " " + mCity.label);
-        MakaanNetworkClient.getInstance().getImageLoader().get(mCity.cityHeroshotImageUrl, new ImageListener() {
-            @Override
-            public void onResponse(final ImageContainer imageContainer, boolean b) {
-                if (b && imageContainer.getBitmap() == null) {
-                    return;
+        if(mCity.cityHeroshotImageUrl != null) {
+            MakaanNetworkClient.getInstance().getImageLoader().get(mCity.cityHeroshotImageUrl, new ImageListener() {
+                @Override
+                public void onResponse(final ImageContainer imageContainer, boolean b) {
+                    if (b && imageContainer.getBitmap() == null) {
+                        return;
+                    }
+                    final Bitmap image = imageContainer.getBitmap();
+                    final Bitmap newImg = Blur.fastblur(mContext, image, 25);
+                    mBlurredCityImage.setImageBitmap(newImg);
                 }
-                final Bitmap image = imageContainer.getBitmap();
-                final Bitmap newImg = Blur.fastblur(mContext, image, 25);
-                mBlurredCityImage.setImageBitmap(newImg);
-            }
 
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
 
-            }
-        });
+                }
+            });
+        }
+        else{
+            Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.locality_hero);
+            final Bitmap newImg = Blur.fastblur(mContext, image, 25);
+            mBlurredCityImage.setImageBitmap(newImg);
+        }
         mCityTagLine.setText(mCity.cityTagLine);
         mAnnualGrowth.setText(StringUtil.getTwoDecimalPlaces(mCity.annualGrowth) + "%");
         mRentalGrowth.setText(StringUtil.getTwoDecimalPlaces(mCity.rentalYield) + "%");
@@ -169,15 +192,16 @@ public class CityOverViewFragment extends MakaanBaseFragment{
 
     private void makeBarGraphRequest() {
         if(mCity!=null) {
-            new CityService().getPropertyRangeInCity(mCity.id, mSelectedBedroomTypes,mSelectedPropertyTypes, false, 10000, 500000, 50000);
+            new CityService().getPropertyRangeInCity(mCity.id, mSelectedBedroomTypes,mSelectedPropertyTypes, isRent, 10000, 500000, 50000);
         }
     }
 
     private void initView() {
-        mPropertyTypeSpinner.setMessage(PREFIX_PROPERTY_SPINNER,null);
+        mPropertyTypeSpinner.setMessage(PREFIX_PROPERTY_SPINNER, null);
         mPropertyTypeSpinner.setItems(MasterDataCache.getInstance().getBuyPropertyTypes());
         mBhkSpinner.setMessage(null, POSTFIX_BHK_SPINNER);
         mBhkSpinner.setItems(MasterDataCache.getInstance().getBhkList());
+        mMainCityImage.setDefaultImageResId(R.drawable.locality_hero);
     }
 
     @Subscribe

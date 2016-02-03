@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <com.makaan.ui.property.PropertyImageViewPager
-            android:visibility="gone"
+            android:visibility="invisible"
             android:id="@+id/property_image_viewpager"
             android:layout_width="match_parent"
             android:layout_margin="@dimen/property_page_stack_like_pager_margin"
@@ -27,6 +27,7 @@
             <TextView
                 android:id="@+id/unit_name"
                 android:textSize="@dimen/property_page_text_size"
+                android:typeface="monospace"
                 android:textColor="@color/listingBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -34,15 +35,17 @@
                 android:id="@+id/unit_area"
                 android:layout_toRightOf="@+id/unit_name"
                 android:textSize="@dimen/property_page_text_size"
+                android:typeface="monospace"
                 android:textColor="@color/app_grey"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         </RelativeLayout>
         <include layout="@layout/builder_brief_layout"/>
         <include layout="@layout/listing_over_view_scroll_layout"/>
         <include layout="@layout/compressed_text_layout_for_white"/>
         <include layout="@layout/all_seller_layout"/>
         <include layout="@layout/amenties_view_scroll_layout"/>
+        <include layout="@layout/floor_plan_layout"/>
         <include layout="@layout/project_specification"/>
         <include layout="@layout/more_about_locality_layout"/>
         <include layout="@layout/amenity_holder"/>

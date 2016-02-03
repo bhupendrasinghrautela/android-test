@@ -29,32 +29,33 @@
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
                 <TextView
-                    android:text="Rs "
+                    android:id="@+id/tv_rs"
                     android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:textSize="@dimen/shortlist_text_size_medium"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:text="1.5"
+                    android:id="@+id/tv_price_value"
                     android:textColor="@color/white"
                     android:textSize="@dimen/shortlist_text_size_extra_large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:text=" L"
+                    android:id="@+id/tv_price_unit"
                     android:textColor="@color/white"
                     android:textSize="@dimen/shortlist_text_size_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:text=" onwards"
+                    android:id="@+id/tv_onwards"
                     android:textColor="@color/white"
                     android:textSize="@dimen/shortlist_text_size_medium"
+                    android:text="onwards"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <TextView
-                android:id="@+id/center_text"
+                android:id="@+id/tv_area"
                 android:text=" dlf phase V"
                 android:textColor="@color/white"
                 android:layout_gravity="center_horizontal"
@@ -63,7 +64,7 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/bottom_text"
+                android:id="@+id/tv_locality"
                 android:text=" sector 24 , new gurgaon"
                 android:textColor="@color/white"
                 android:layout_gravity="center_horizontal"
@@ -75,7 +76,7 @@
 
         <TextView
             android:layout_below="@id/iv_content"
-            android:id="@+id/txt_content"
+            android:id="@+id/txt_get_call_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/appThemeRed"

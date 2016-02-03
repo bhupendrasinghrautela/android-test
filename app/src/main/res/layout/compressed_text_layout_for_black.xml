@@ -3,7 +3,6 @@
     xmlns:font="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:id="@+id/compressed_text_view"
-    android:padding="@dimen/city_internal_padding"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <com.makaan.ui.view.FontTextView
@@ -23,7 +22,10 @@
         android:textSize="@dimen/locality_text_medium"
         android:textColor="@color/white"
         android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/city_internal_padding"
+        android:paddingRight="@dimen/city_internal_padding"
         android:maxLines="5"
+        android:typeface="serif"
         android:ellipsize="end"/>
     <com.makaan.ui.view.FontTextView
         android:id="@+id/read_more"
@@ -31,6 +33,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
+        android:paddingLeft="@dimen/city_internal_padding"
+        android:paddingRight="@dimen/city_internal_padding"
+        android:typeface="serif"
         android:textStyle="bold"
         font:fontName="proxima.otf"
         android:textSize="@dimen/locality_text_medium"

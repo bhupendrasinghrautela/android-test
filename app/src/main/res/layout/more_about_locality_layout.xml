@@ -44,6 +44,7 @@
             <com.makaan.ui.view.FontTextView
                 android:id="@+id/locality_score_text"
                 android:layout_gravity="center"
+                android:typeface="monospace"
                 android:layout_width="wrap_content"
                 font:fontName="proxima.otf"
                 android:layout_height="wrap_content"
@@ -56,6 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:typeface="serif"
             android:layout_marginBottom="@dimen/property_page_locality_brief_margin_bottom"
             android:textColor="@color/red"
             android:text="@string/more_about"/>

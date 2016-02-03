@@ -9,5 +9,5 @@ public class Company {
     public String name, primaryEmail;
     public String type;
     public Long id;
-    public Long score;
+    public Double score;
 }
