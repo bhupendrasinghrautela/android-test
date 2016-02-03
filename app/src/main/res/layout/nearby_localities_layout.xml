@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.makaan.ui.locality.NearbyLocalitiesView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:font="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nearby_locality_card_height"
@@ -19,7 +20,7 @@
         android:src="@drawable/temp_bulding"
         android:scaleType="fitXY"/>
 
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:id="@+id/locality_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,17 +28,19 @@
         android:layout_marginTop="@dimen/locality_name_margin_top"
         android:gravity="center_vertical"
         android:text="kormangla"
+        font:fontName="proxima.otf"
         android:textSize="@dimen/locality_name_text_size"
-        android:textColor="@color/listingBlack"/>
+        android:textColor="@color/project_text_default"/>
 
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:id="@+id/median_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/nearby_locality_left_margin"
+        font:fontName="proxima-light.otf"
         android:text="median price: 4,300 / sq ft"
         android:textSize="@dimen/median_price_text_size"
-        android:textColor="@color/listingLightGray"/>
+        android:textColor="@color/project_text_default"/>
 
 
     <LinearLayout
@@ -47,7 +50,7 @@
         android:layout_marginLeft="@dimen/nearby_locality_left_margin"
         android:orientation="horizontal">
 
-        <TextView
+        <com.makaan.ui.view.FontTextView
             android:id="@+id/sale_count"
             android:layout_width="0dp"
             android:layout_weight="0.5"
@@ -55,17 +58,19 @@
             android:gravity="center_vertical"
             android:textSize="@dimen/sale_rent_count_text_size"
             android:text="190+"
-            android:textColor="@color/listingBlack"/>
+            font:fontName="proxima.otf"
+            android:textColor="@color/project_text_default"/>
 
-        <TextView
+        <com.makaan.ui.view.FontTextView
             android:id="@+id/rent_count"
             android:layout_width="0dp"
             android:layout_weight="0.5"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:textSize="@dimen/sale_rent_count_text_size"
+            font:fontName="proxima.otf"
             android:text="1,498+"
-            android:textColor="@color/listingBlack"/>
+            android:textColor="@color/project_text_default"/>
 
     </LinearLayout>
 
@@ -76,20 +81,22 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <TextView
+        <com.makaan.ui.view.FontTextView
             android:layout_width="0dp"
             android:layout_weight="0.5"
             android:layout_height="match_parent"
             android:textSize="@dimen/median_price_text_size"
             android:text="@string/property_for_sale_string"
+            font:fontName="proxima-light.otf"
             android:textColor="@color/listingLightGray"
             android:gravity="center_vertical"/>
 
-        <TextView
+        <com.makaan.ui.view.FontTextView
             android:layout_width="0dp"
             android:layout_weight="0.5"
             android:layout_height="match_parent"
             android:textSize="@dimen/median_price_text_size"
+            font:fontName="proxima-light.otf"
             android:text="@string/property_for_rent_string"
             android:textColor="@color/listingLightGray"
             android:gravity="center_vertical"/>
@@ -97,14 +104,15 @@
     </LinearLayout>
 
 
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:id="@+id/view_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/view_details_text_margin_top"
         android:layout_marginBottom="@dimen/view_details_text_margin_bottom"
         android:gravity="center_horizontal"
-        android:textColor="@color/appThemeRed"
+        font:fontName="proxima.otf"
+        android:textColor="@color/project_text_red"
         android:textSize="@dimen/median_price_text_size"
         android:text="@string/view_deatils_string"/>
 

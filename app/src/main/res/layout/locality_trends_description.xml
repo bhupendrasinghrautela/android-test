@@ -5,7 +5,8 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:font="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,12 +22,13 @@
             android:id="@+id/iv_price_trends_median"
             android:src="@drawable/icon_yellow_heart"
             />
-        <TextView
+        <com.makaan.ui.view.FontTextView
             android:id="@+id/tv_price_trends_median_desc"
             android:layout_marginLeft="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#444"
+            font:fontName="proxima.otf"
             android:textSize="16sp"
             android:layout_toRightOf="@id/iv_price_trends_median"
             />
@@ -47,13 +49,14 @@
             android:src="@drawable/icon_yellow_heart"
             />
 
-        <TextView
+        <com.makaan.ui.view.FontTextView
             android:id="@+id/tv_price_trends_growth_desc"
             android:layout_marginLeft="15dp"
             android:layout_width="wrap_content"
             android:layout_alignTop="@+id/iv_price_trends_growth"
             android:layout_height="wrap_content"
             android:textColor="#444"
+            font:fontName="proxima.otf"
             android:textSize="16sp"
             android:layout_toRightOf="@id/iv_price_trends_growth"
             />
@@ -74,13 +77,14 @@
             android:src="@drawable/icon_yellow_heart"
             />
 
-        <TextView
+        <com.makaan.ui.view.FontTextView
             android:id="@+id/tv_price_trends_rent_growth_desc"
             android:layout_marginLeft="15dp"
             android:layout_width="wrap_content"
             android:layout_alignTop="@id/iv_price_trends_rent_growth"
             android:layout_height="wrap_content"
             android:textColor="#444"
+            font:fontName="proxima.otf"
             android:textSize="16sp"
             android:layout_toRightOf="@id/iv_price_trends_growth"
             />

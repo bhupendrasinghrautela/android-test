@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="110dp"
+    xmlns:font="http://schemas.android.com/tools"
     android:layout_marginLeft="10dp"
     android:layout_height="110dp"
-    app:cardCornerRadius="10dp"
-    >
+    app:cardCornerRadius="10dp">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -18,17 +17,18 @@
            android:src="@drawable/icon_recent_searches"
            />
 
-       <TextView
+       <com.makaan.ui.view.FontTextView
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_centerInParent="true"
            android:text="Ready to move in"
            android:id="@+id/tv_localities_recent_searches_desc"
-           android:textSize="14sp"
+           android:textSize="@dimen/locality_text_v_small"
+           font:fontName="proxima.otf"
            android:layout_marginLeft="10dp"
            android:layout_marginRight="10dp"
            android:gravity="center_horizontal"
-           android:textColor="#444"
+           android:textColor="@color/project_text_default"
            android:layout_gravity="center_horizontal"
            />
 

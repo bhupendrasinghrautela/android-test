@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    xmlns:font="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <include layout="@layout/project_seperator"/>
     <TextView
         android:id="@+id/about_locality"
@@ -14,13 +15,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
+        <com.makaan.ui.view.FontTextView
             android:id="@+id/locality_brief"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/property_page_text_size"
             android:maxLines="3"
-            android:typeface="serif"
+            font:fontName="proxima.otf"
             android:layout_marginLeft="@dimen/property_page_locality_margin_left"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/property_page_locality_margin_right"
@@ -40,11 +41,12 @@
                 android:indeterminate="false"
                 android:progressDrawable="@drawable/circular_progress_drawable"
                 android:layout_gravity="center_vertical" />
-            <TextView
+            <com.makaan.ui.view.FontTextView
                 android:id="@+id/locality_score_text"
                 android:layout_gravity="center"
                 android:typeface="monospace"
                 android:layout_width="wrap_content"
+                font:fontName="proxima.otf"
                 android:layout_height="wrap_content"
                 android:textColor="@color/listingBlack"
                 android:textSize="@dimen/city_very_small_text"/>

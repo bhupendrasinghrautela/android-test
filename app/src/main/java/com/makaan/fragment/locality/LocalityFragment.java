@@ -3,6 +3,7 @@ package com.makaan.fragment.locality;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
@@ -169,6 +170,9 @@ public class LocalityFragment extends MakaanBaseFragment{
     }
 
     private void populateLocalityData() {
+        final Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/comforta.ttf");
+        mCityCollapseToolbar.setCollapsedTitleTypeface(tf);
+        mCityCollapseToolbar.setExpandedTitleTypeface(tf);
         if(locality.description !=null && !locality.description.isEmpty())
             overviewContentTV.setText(Html.fromHtml(locality.description));
         else {

@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.makaan.ui.CompressedTextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.makaan.ui.CompressedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:font="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:id="@+id/compressed_text_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include layout="@layout/city_empty_view"/>
-    <TextView
+    <com.makaan.ui.view.FontTextView
     android:id="@+id/header_text"
     android:gravity="center"
-    android:textSize="@dimen/city_header_text"
-    android:padding="@dimen/city_internal_padding"
+    android:textSize="@dimen/locality_text_big"
+        font:fontName="comforta.ttf"
     android:text="@string/overview"
     android:textColor="@color/white"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"/>
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:id="@+id/content_text"
         android:layout_marginTop="@dimen/city_internal_margin"
         android:layout_width="match_parent"
+        font:fontName="proxima-light.otf"
+        android:textSize="@dimen/locality_text_medium"
         android:textColor="@color/white"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/city_internal_padding"
@@ -26,7 +27,7 @@
         android:maxLines="5"
         android:typeface="serif"
         android:ellipsize="end"/>
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:id="@+id/read_more"
         android:layout_marginTop="@dimen/city_internal_margin"
         android:layout_width="match_parent"
@@ -36,5 +37,7 @@
         android:paddingRight="@dimen/city_internal_padding"
         android:typeface="serif"
         android:textStyle="bold"
+        font:fontName="proxima.otf"
+        android:textSize="@dimen/locality_text_medium"
         android:text="@string/read_more"/>
 </com.makaan.ui.CompressedTextView>

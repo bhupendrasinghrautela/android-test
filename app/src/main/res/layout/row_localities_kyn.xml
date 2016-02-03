@@ -4,6 +4,7 @@
 
 <com.makaan.ui.amenity.AmenityCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:font="http://schemas.android.com/tools"
     android:id="@+id/amenity_card_view"
     android:background="@drawable/amenity_card_bg"
     android:layout_width="280dp"
@@ -26,8 +27,9 @@
             android:layout_marginTop="@dimen/amenity_margin_top"
             android:src="@drawable/placeholder_amenity"/>
 
-        <TextView
+        <com.makaan.ui.view.FontTextView
             android:id="@+id/amenity_title"
+            font:fontName="proxima.otf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/amenity_title_color"
