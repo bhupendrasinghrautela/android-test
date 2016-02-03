@@ -23,7 +23,9 @@ import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
+import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.locality.LocalityActivity;
+import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.constants.RequestConstants;
 import com.makaan.event.agents.callback.TopAgentsCallback;
 import com.makaan.event.amenity.AmenityGetEvent;
@@ -35,6 +37,7 @@ import com.makaan.event.locality.OnTopBuilderClickEvent;
 import com.makaan.event.locality.TopBuilderInLocalityEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.pojo.SerpRequest;
 import com.makaan.pojo.TaxonomyCard;
 import com.makaan.response.agents.TopAgent;
 import com.makaan.response.amenity.AmenityCluster;
@@ -332,7 +335,7 @@ public class LocalityFragment extends MakaanBaseFragment{
         if (taxonomyCardList != null && taxonomyCardList.size() > 0) {
             LocalityPropertiesFragment newFragment = new LocalityPropertiesFragment();
             Bundle bundle = new Bundle();
-            bundle.putString("title", getResources().getString(R.string.locality_properties_label)+" "+locality.label);
+            bundle.putString("title", getResources().getString(R.string.locality_properties_label) + " " + locality.label);
             newFragment.setArguments(bundle);
             initFragment(R.id.container_nearby_localities_props, newFragment, false);
             newFragment.setData(taxonomyCardList);
@@ -403,12 +406,22 @@ public class LocalityFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResult(OnTopAgentClickEvent onTopAgentClickEvent){
-        Toast.makeText(getActivity(), "Agent clicked, agent id :" + onTopAgentClickEvent.agentId, Toast.LENGTH_SHORT);
+        SerpRequest serpRequest = new SerpRequest();
+        //TODO add seller id
+        serpRequest.launchSerp(getActivity(), SerpActivity.TYPE_SELLER);
     }
 
     @Subscribe
     public void onResult(OnTopBuilderClickEvent onTopBuilderClickEvent){
-        Toast.makeText(getActivity(), "Builder clicked, builder id :" + onTopBuilderClickEvent.builderId, Toast.LENGTH_SHORT);
+        SerpRequest serpRequest = new SerpRequest();
+        //TODO add builder id
+        serpRequest.launchSerp(getActivity(), SerpActivity.TYPE_SELLER);
+    }
+
+    @OnClick(R.id.pyr_button_bottom)
+    public void onBottomPyrClick(){
+        Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
+        getActivity().startActivity(pyrIntent);
     }
 
 }

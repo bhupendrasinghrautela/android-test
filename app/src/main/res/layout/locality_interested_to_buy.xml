@@ -32,6 +32,7 @@
     android:text=""
     />
 <Button
+    android:id="@+id/pyr_button_bottom"
     android:layout_width="150dp"
     android:layout_height="wrap_content"
     android:background="#e71c28"

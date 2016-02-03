@@ -10,7 +10,7 @@ public class TaxonomyCard {
 
     public String label1;
     public String label2;
-    public Selector selector;
+    public SerpRequest serpRequest;
 
 
 }

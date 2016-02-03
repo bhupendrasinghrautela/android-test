@@ -1,5 +1,6 @@
 package com.makaan.response.wishlist;
 
+import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.project.Project;
 
 /**
@@ -9,4 +10,5 @@ public class WishList {
     public int listingId, projectId, wishListId;
     public String cityLabel, unitName, builderName, projectName;
     public Project project;
+    public ListingDetail listing;
 }

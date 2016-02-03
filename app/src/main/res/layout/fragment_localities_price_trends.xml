@@ -62,6 +62,7 @@
         />
 
     <Button
+        android:id="@+id/button_show_properties"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:background="#e71c28"
