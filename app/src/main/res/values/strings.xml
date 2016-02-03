@@ -190,6 +190,13 @@
     <string name="moving_in">moving in or renting? get help</string>
     <string name="best_legal">best legal advice on your side</string>
     <string name="best_advise">best advise for your requirements </string>
+    <string name="search_sub_title">fast &amp; easy search from 431k options</string>
+    <string name="shortlist_sub_title">meet best brokers for your shortlist</string>
+    <string name="site_visit_sub_title">easily validate broker claims</string>
+    <string name="find_joy">find joy</string>
+    <string name="happy_buyers">12,000+\nHAPPY BUYER\'S</string>
+    <string name="found_your_dream_home">found your dream home?</string>
+    <string name="get_reward">get rs 15,000</string>
 
     <string name="project_specification_view_all_props">view all properties</string>
     <string name="project_description_title">description</string>
@@ -242,8 +249,13 @@
     <string name="rupee">\u20B9</string>
     <string name="no_shortlisting">no shortlisted available</string>
 
-
-
+    <!-- get rewards strings -->
+    <string name="get_upto">get upto</string>
+    <string name="get_15000">\u20B9 15000 off</string>
+    <string name="on_brokerage">on your brokerage</string>
+    <string name="how_it_works_heading">how it works</string>
+    <string name="how_it_works">1. contact makaan agent\n2. do site visit &amp; provide reviews\n3. book a property\n4. upload proof of ownership</string>
+    <string name="redeem_now">redeem now</string>
 
 </resources>
 

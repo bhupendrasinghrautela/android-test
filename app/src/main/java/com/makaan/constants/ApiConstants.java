@@ -57,7 +57,7 @@ public class ApiConstants {
     public static final String SIMILAR_PROJECT = BASE_URL.concat("/data/v2/recommendation");
     public static final String PROJECT_CONFIG = BASE_URL.concat("/app/v1/project-configuration");
 
-    public static final String BLOG_URL = BASE_URL.concat("/data/v2/entity/blog");
+    public static final String BLOG_URL = "http://beta-makaaniq.proptiger-ws.com/blog?tag="; //BASE_URL.concat("/data/v2/entity/blog");
 
 
     public static final String LISTING_OTHER_SELLERS = BASE_URL.concat("/data/v2/entity/domain");

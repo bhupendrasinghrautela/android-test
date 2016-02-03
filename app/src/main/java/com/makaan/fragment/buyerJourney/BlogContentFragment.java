@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.webkit.WebViewFragment;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
@@ -57,12 +59,17 @@ public class BlogContentFragment extends MakaanBaseFragment {
         return R.layout.fragment_blog_content;
     }
 
+    public static String TYPE="type";
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        ((BlogService)MakaanServiceFactory.getInstance().getService(BlogService.class)).getBlogs("home-loan");
-
+        Bundle bundle = getArguments();
+        if(bundle!=null && !TextUtils.isEmpty(bundle.getString(TYPE)))
+        ((BlogService)MakaanServiceFactory.getInstance().getService(BlogService.class)).getBlogs(bundle.getString(TYPE));
+        else
+            Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
 

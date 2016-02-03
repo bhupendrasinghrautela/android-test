@@ -125,6 +125,7 @@
     <color name="project_config_item_seperator">#dedede</color>
     <color name="project_config_item_selected_stroke_color">#e71c28</color>
     <color name="buyer_journey_view_grey_color">#b7b7b7</color>
+    <color name="buyer_journey_light_grey_color">#8a8a8a</color>
 
 
     <!-- Lead form Colors-->
@@ -164,4 +165,7 @@
     <color name="button_grey">#a2a2a2</color>
     <color name="submit_button_grey">#a2a2a2</color>
 
+
+    <!--get rewards colors-->
+    <color name="text_color">#444444</color>
 </resources>

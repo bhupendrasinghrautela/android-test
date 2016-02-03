@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/gift_height"
+            android:src="@drawable/gift" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/get_upto"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/get_upto_text_size" />
+
+        <TextView
+            android:typeface="serif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/get_15000"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/get_15000_text_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="@dimen/padding_brokerage_text"
+            android:text="@string/on_brokerage"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/get_upto_text_size" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/app_grey" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/padding_left_right"
+            android:paddingRight="@dimen/padding_left_right"
+            android:paddingTop="@dimen/padding_top_bottom"
+            android:text="@string/how_it_works_heading"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/how_it_works_text_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/padding_top_bottom"
+            android:paddingLeft="@dimen/padding_left_right"
+            android:paddingRight="@dimen/padding_left_right"
+            android:text="@string/how_it_works"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/get_upto_text_size" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/filled_red"
+            android:paddingLeft="@dimen/redeem_button_padding"
+            android:paddingRight="@dimen/redeem_button_padding"
+            android:text="@string/redeem_now"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/redeem_button_text_size" />
+    </LinearLayout>
+</LinearLayout>
+
