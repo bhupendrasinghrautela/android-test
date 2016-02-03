@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.makaan.ui.CompressedTextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.makaan.ui.CompressedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:font="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="@dimen/city_internal_padding"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:id="@+id/content_text"
         android:layout_width="match_parent"
-        android:textColor="@color/listingBlack"
+        android:textColor="@color/project_text_default"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/project_text_medium"
         android:maxLines="3"
+        font:fontName="proxima.otf"
         android:ellipsize="end"/>
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:id="@+id/read_more"
+        font:fontName="proxima.otf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/project_similar_projects_red"
+        android:textSize="@dimen/project_text_medium"
+        android:textColor="@color/project_text_red"
         android:text="@string/read_more"/>
 </com.makaan.ui.CompressedTextView>

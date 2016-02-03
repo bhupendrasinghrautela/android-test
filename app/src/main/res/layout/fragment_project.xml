@@ -21,7 +21,7 @@
         android:layout_margin="@dimen/property_page_stack_like_pager_margin"
         android:layout_height="@dimen/property_page_stack_like_pager_height" />
 
-   <include layout="@layout/project_builder_basic_details"/>
+    <include layout="@layout/project_builder_basic_details"/>
     <include layout="@layout/project_seperator"/>
     <include layout="@layout/builder_brief_layout"/>
     <include layout="@layout/project_configuration"/>

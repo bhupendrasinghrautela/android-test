@@ -2,25 +2,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:font="http://schemas.android.com/apk/res-auto"
     android:background="@color/amenity_item_bg"
     android:padding="@dimen/amenity_item_padding">
 
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:id="@+id/amenity_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginRight="12dp"
         android:maxLength="22"
-        android:textColor="@color/amenity_name_color"
+        font:fontName="proxima.otf"
+        android:textColor="@color/project_text_default"
         android:textSize="@dimen/amenity_name_text_size"/>
 
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:id="@+id/amenity_distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:textColor="@color/amenity_distance_color"
+        font:fontName="proxima.otf"
+        android:textColor="@color/project_text_red"
         android:textSize="@dimen/amenity_name_text_size"/>
 
 </RelativeLayout>

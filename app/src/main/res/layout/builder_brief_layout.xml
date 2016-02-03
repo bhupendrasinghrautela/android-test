@@ -6,7 +6,8 @@
     android:orientation="vertical"
     android:visibility="gone"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:font="http://schemas.android.com/tools">
     <include layout="@layout/property_empty_view"/>
     <com.makaan.ui.ExpandableLinearLayout
         android:id="@+id/builder_expandable"
@@ -23,11 +24,14 @@
         android:id="@+id/builder_logo"
         android:layout_marginBottom="@dimen/property_page_builder_margin_bottom"
         android:layout_height="@dimen/property_page_builder_logo_height"/>
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:id="@+id/builder_description"
         android:layout_width="match_parent"
         android:layout_marginBottom="@dimen/property_page_builder_margin_bottom"
         android:maxLines="5"
+        android:textSize="@dimen/project_text_small"
+        android:textColor="@color/project_text_default"
+        font:fontName="proxima.otf"
         android:layout_height="wrap_content"/>
         <RelativeLayout
             android:layout_marginBottom="@dimen/property_page_builder_margin_bottom"
@@ -39,18 +43,20 @@
                 android:paddingRight="@dimen/property_page_builder_items_padding_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-                <TextView
+                <com.makaan.ui.view.FontTextView
                     android:id="@+id/experience"
                     android:layout_width="wrap_content"
+                    font:fontName="proxima.otf"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/serp_listing_card_default_text_color"
-                    android:textSize="16sp" />
-                <TextView
+                    android:textColor="@color/project_text_default"
+                    android:textSize="@dimen/project_text_small" />
+                <com.makaan.ui.view.FontTextView
                     android:text="experience"
                     android:layout_width="wrap_content"
+                    font:fontName="proxima.otf"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/serp_listing_card_property_detail_info_text_color"
-                    android:textSize="14sp" />
+                    android:textColor="@color/project_text_light"
+                    android:textSize="@dimen/project_text_v_small" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/builder_ongoing"
@@ -59,18 +65,20 @@
                 android:paddingRight="@dimen/property_page_builder_items_padding_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-                <TextView
+                <com.makaan.ui.view.FontTextView
                     android:id="@+id/ongoing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/serp_listing_card_default_text_color"
-                    android:textSize="16sp" />
-                <TextView
+                    font:fontName="proxima.otf"
+                    android:textColor="@color/project_text_default"
+                    android:textSize="@dimen/project_text_small" />
+                <com.makaan.ui.view.FontTextView
                     android:text="ongoing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/serp_listing_card_property_detail_info_text_color"
-                    android:textSize="14sp" />
+                    font:fontName="proxima.otf"
+                    android:textColor="@color/project_text_light"
+                    android:textSize="@dimen/project_text_v_small" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/builder_completed"
@@ -79,30 +87,34 @@
                 android:paddingRight="@dimen/property_page_builder_items_padding_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-                <TextView
+                <com.makaan.ui.view.FontTextView
                     android:id="@+id/completed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/serp_listing_card_default_text_color"
-                    android:textSize="16sp" />
-                <TextView
+                    font:fontName="proxima.otf"
+                    android:textColor="@color/project_text_default"
+                    android:textSize="@dimen/project_text_small"  />
+                <com.makaan.ui.view.FontTextView
                     android:text="completed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/serp_listing_card_property_detail_info_text_color"
-                    android:textSize="14sp" />
+                    font:fontName="proxima.otf"
+                    android:textColor="@color/project_text_light"
+                    android:textSize="@dimen/project_text_v_small"  />
             </LinearLayout>
         </RelativeLayout>
     </com.makaan.ui.ExpandableLinearLayout>
-    <TextView
+    <com.makaan.ui.view.FontTextView
         android:layout_marginLeft="@dimen/property_page_internal_padding"
         android:layout_marginTop="@dimen/property_page_builder_margin_top"
         android:layout_marginBottom="@dimen/property_page_builder_margin_bottom"
         android:id="@+id/about_builder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/appThemeRed"
+        android:textColor="@color/project_text_red"
         android:clickable="true"
+        android:textSize="@dimen/project_text_small"
         android:text="@string/more_about_builder"
+        font:fontName="proxima.otf"
         android:layout_gravity="start" />
 </com.makaan.ui.property.AboutBuilderExpandedLayout>

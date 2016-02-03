@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.makaan.ui.locality.SimilarProjectCard
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.makaan.ui.locality.SimilarProjectCard xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="310dp"
+    xmlns:font="http://schemas.android.com/tools"
     android:layout_marginLeft="@dimen/project_similar_project_card_left_margin"
     android:layout_gravity="center"
     android:layout_marginRight="@dimen/project_similar_project_card_left_margin"
     android:layout_height="240dp"
     android:id="@+id/card_similar_projects"
-    app:cardCornerRadius="@dimen/project_similar_project_card_radius"
-    >
+    app:cardCornerRadius="@dimen/project_similar_project_card_radius">
     <RelativeLayout
         android:id="@+id/rl_similar_project_container"
         android:layout_width="match_parent"
@@ -34,30 +33,33 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_height="wrap_content">
-            <TextView
+            <com.makaan.ui.view.FontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="@dimen/project_text_medium"
                 android:singleLine="true"
                 android:id="@+id/tv_similar_project_price"
                 android:text=""
+                font:fontName="proxima.otf"
                 android:textColor="@color/white"
                 />
-            <TextView
+            <com.makaan.ui.view.FontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
+                android:textSize="@dimen/project_text_big"
+                font:fontName="proxima.otf"
                 android:layout_marginTop="10dp"
                 android:singleLine="true"
                 android:id="@+id/tv_similar_project_name"
                 android:text=""
                 android:textColor="@color/white"
                 />
-            <TextView
+            <com.makaan.ui.view.FontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="@dimen/project_text_small"
                 android:singleLine="true"
+                font:fontName="proxima.otf"
                 android:id="@+id/tv_similar_project_address"
                 android:text=""
                 android:textColor="@color/white"
