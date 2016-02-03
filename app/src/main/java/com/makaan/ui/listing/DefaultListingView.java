@@ -593,7 +593,7 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
 //        MakaanBuyerApplication.serpSelector.term("sellerId", String.valueOf(mListing.sellerId));
     }
 
-    @OnClick(R.id.serp_default_listing_property_address_text_view)
+    @OnClick(R.id.serp_default_listing_property_address_frame_layout)
     public void onProjectClicked(View view) {
         if(mListing.projectId != null && mListing.projectId != 0) {
             Bundle bundle = new Bundle();

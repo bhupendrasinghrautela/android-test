@@ -922,6 +922,13 @@
     <dimen name="activity_home_empty_view_margin_top">19dp</dimen>
     <dimen name="activity_home_empty_view_margin_start">4dp</dimen>
 
+    <dimen name="activity_home_find_joy_image_view_width">299dp</dimen>
+    <dimen name="activity_home_find_joy_image_view_height">117dp</dimen>
+    <dimen name="activity_home_find_joy_image_view_top_margin">192dp</dimen>
+
+    <dimen name="activity_home_search_relative_view_left_margin">52dp</dimen>
+    <dimen name="activity_home_search_relative_view_bottom_margin">64dp</dimen>
+
     <!-- selected search item values -->
     <dimen name="selected_search_item_view_padding_top">4dp</dimen>
     <dimen name="selected_search_item_view_padding_bottom">4dp</dimen>

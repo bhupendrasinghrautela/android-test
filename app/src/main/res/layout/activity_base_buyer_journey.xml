@@ -51,7 +51,7 @@
                 android:layout_marginLeft="@dimen/activity_base_buyer_journey_layout_down_arrow_image_view_margin_left"
                 android:layout_marginStart="@dimen/activity_base_buyer_journey_layout_down_arrow_image_view_margin_left"
                 android:layout_marginTop="@dimen/activity_base_buyer_journey_layout_down_arrow_image_view_margin_top"
-                android:src="@drawable/arrow_bottom"
+                android:src="@drawable/arrow_bottom_white"
                 android:scaleType="centerCrop"/>
         </LinearLayout>
     </RelativeLayout>
