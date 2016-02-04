@@ -1,5 +1,6 @@
 package com.makaan.activity.lead;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -21,7 +22,15 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String name=this.getIntent().getExtras().getString("name");
+        String id=this.getIntent().getExtras().getString("id");
+        String score=this.getIntent().getExtras().getString("score");
+        String phone=this.getIntent().getExtras().getString("phone");
         mLeadFormPresenter = LeadFormPresenter.getLeadFormPresenter();
+        mLeadFormPresenter.setId(id);
+        mLeadFormPresenter.setName(name);
+        mLeadFormPresenter.setPhone(phone);
+        mLeadFormPresenter.setScore(score);
         mLeadFormPresenter.setReplaceFragment(this);
         mLeadFormPresenter.showLeadCallNowFragment();
 

@@ -28,8 +28,6 @@ public class ShortListFavoriteViewHolder extends RecyclerView.ViewHolder {
     TextView mTextViewPriceValue;
     @Bind(R.id.tv_price_unit)
     TextView mTextViewPriceUnit;
-    @Bind(R.id.tv_onwards)
-    TextView mTextViewOnwards;
     @Bind(R.id.ll_details)
     LinearLayout mLinearLayoutDetails;
 

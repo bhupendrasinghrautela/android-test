@@ -7,7 +7,7 @@
     android:layout_width="299dp"
     xmlns:font="http://schemas.android.com/tools"
     android:layout_marginLeft="20dp"
-    android:layout_height="500dp"
+    android:layout_height="wrap_content"
     app:cardCornerRadius="10dp">
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,11 +45,11 @@
             android:id="@+id/tv_localities_lifestyle_description"
             android:layout_margin="@dimen/locality_text_medium"
             font:fontName="proxima.otf"
-            android:gravity="center_horizontal"
+            android:gravity="left"
             android:layout_centerInParent="true"
             android:text="Luxury properties Rs. 1.2 Cr onwards"
             android:ellipsize="marquee"
-            android:lines="12"
+            android:maxLines="12"
             android:textColor="@color/project_text_default"
             />
     </LinearLayout>
