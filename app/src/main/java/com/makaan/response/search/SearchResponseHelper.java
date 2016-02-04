@@ -69,16 +69,16 @@ public class SearchResponseHelper {
             context.startActivity(cityIntent);
             return;
         } else if(SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchItem.type)) {
-            Intent cityIntent = new Intent(context, LocalityActivity.class);
+            Intent localityIntent = new Intent(context, LocalityActivity.class);
 
             // check from id if entity id is not present
             if(TextUtils.isEmpty(searchItem.entityId)) {
-                cityIntent.putExtra(LocalityActivity.LOCALITY_ID, Long.valueOf(searchItem.id.replace("TYPEAHEAD-LOCALITY-OVERVIEW-", "")));
+                localityIntent.putExtra(LocalityActivity.LOCALITY_ID, Long.valueOf(searchItem.id.replace("TYPEAHEAD-LOCALITY-OVERVIEW-", "")));
             } else {
-                cityIntent.putExtra(LocalityActivity.LOCALITY_ID, Long.valueOf(searchItem.entityId));
+                localityIntent.putExtra(LocalityActivity.LOCALITY_ID, Long.valueOf(searchItem.entityId));
             }
 
-            context.startActivity(cityIntent);
+            context.startActivity(localityIntent);
             return;
         } else if(SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searchItem.type)) {
             Intent projectIntent = new Intent(context, ProjectActivity.class);

@@ -11,12 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
-import com.makaan.activity.listing.SerpActivity;
-import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.listing.FiltersViewAdapter;
-import com.makaan.cache.MasterDataCache;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.ui.view.ExpandableHeightGridView;
@@ -180,7 +176,7 @@ public class ViewSellersDialogFragment extends DialogFragment {
         }
     }
 
-    @OnClick(R.id.fragment_dialog_filters_back_buttom)
+    @OnClick(R.id.fragment_dialog_filters_back_button)
     public void onBackClicked(View view) {
         dismiss();
     }

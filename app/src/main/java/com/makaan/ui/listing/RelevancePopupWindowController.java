@@ -18,6 +18,7 @@ import butterknife.OnClick;
 /**
  * Created by rohitgarg on 1/14/16.
  */
+// TODO remove hardcoding
 public class RelevancePopupWindowController implements PopupWindow.OnDismissListener {
     RelevancePopupWindowCallback callback;
     PopupWindow mPopupWindow;

@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white">
         <Button
-            android:id="@+id/fragment_dialog_filters_back_buttom"
+            android:id="@+id/fragment_dialog_filters_back_button"
             android:layout_width="@dimen/fragment_dialog_filters_back_button_width"
             android:layout_height="@dimen/fragment_dialog_filters_back_button_height"
             android:layout_marginLeft="@dimen/fragment_dialog_filters_back_button_margin_left"
@@ -46,8 +46,8 @@
             android:layout_marginLeft="@dimen/fragment_dialog_filters_filter_text_margin_left"
             android:layout_marginStart="@dimen/fragment_dialog_filters_filter_text_margin_left"
             android:layout_marginTop="@dimen/fragment_dialog_filters_filter_text_margin_top"
-            android:layout_toRightOf="@id/fragment_dialog_filters_back_buttom"
-            android:layout_toEndOf="@id/fragment_dialog_filters_back_buttom"
+            android:layout_toRightOf="@id/fragment_dialog_filters_back_button"
+            android:layout_toEndOf="@id/fragment_dialog_filters_back_button"
             android:text="@string/filter"
             android:textColor="@color/listingBlack"
             android:textSize="@dimen/fragment_dialog_filters_filter_text_text_size"
@@ -66,7 +66,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/fragment_dialog_filters_back_buttom"
+            android:layout_below="@id/fragment_dialog_filters_back_button"
             android:background="#cccccc" />
     </RelativeLayout>
 
