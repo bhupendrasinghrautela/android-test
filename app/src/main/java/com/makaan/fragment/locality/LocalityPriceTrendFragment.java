@@ -114,7 +114,7 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
 
         titleTv.setText(title);
         if(primaryMedian != 0) {
-            trendsMedianTv.setText("the median home value in " + localityName + " is " + primaryMedian + " / sq ft.");
+            trendsMedianTv.setText("the average home value in " + localityName + " is " + primaryMedian + " / sq ft.");
         }else{
             priceTrendsFirstLl.setVisibility(View.GONE);
         }
@@ -124,7 +124,7 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
             priceTrendsSecondLl.setVisibility(View.GONE);
         }
         if(secondaryAverage !=0 && secondaryMedian!=0)
-            trendsRentGrowthTv.setText("the average rent price in "+localityName+" is " + secondaryAverage + " which is higher than city median of " + secondaryMedian);
+            trendsRentGrowthTv.setText("the average rent price in "+localityName+" is " + secondaryAverage + " which is higher than city average of " + secondaryMedian);
         else{
             priceTrendsThirdLl.setVisibility(View.GONE);
         }

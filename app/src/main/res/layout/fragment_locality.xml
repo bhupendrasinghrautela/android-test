@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/city_collapse_bar_height"
             android:fitsSystemWindows="true"
-            app:contentScrim="@android:color/transparent"
+            app:contentScrim="@color/locality_collapsed_toolbar_red"
             app:title=""
             app:expandedTitleTextAppearance="@style/WhiteExpandedToolbarText"
             app:collapsedTitleTextAppearance="@style/WhiteCollapsedToolbarText"

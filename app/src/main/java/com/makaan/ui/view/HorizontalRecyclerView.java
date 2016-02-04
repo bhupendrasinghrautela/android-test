@@ -16,6 +16,7 @@ public class HorizontalRecyclerView extends RecyclerView implements View.OnTouch
     public HorizontalRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.setOnTouchListener(this);
+        setOverScrollMode(View.OVER_SCROLL_NEVER);
     }
 
     @Override

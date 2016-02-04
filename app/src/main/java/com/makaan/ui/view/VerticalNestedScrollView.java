@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
 
 /**
  * Created by tusharchaudhary on 1/22/16.
@@ -15,6 +16,8 @@ public class VerticalNestedScrollView extends NestedScrollView {
 
     public VerticalNestedScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        setOverScrollMode(View.OVER_SCROLL_NEVER);
     }
 
     @Override
