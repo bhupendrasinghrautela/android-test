@@ -19,7 +19,7 @@ public class ShortlistPagerAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
     Context mContext;
     String [] label = {"enquired","favorite","recent"};
-    String [] count = {"08","05","02"};
+    String [] count = {"00","08","00"};
 
     public ShortlistPagerAdapter(Context context , FragmentManager fm, int numOfTabs) {
         super(fm);

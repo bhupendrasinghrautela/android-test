@@ -10,6 +10,43 @@ public class LeadFormPresenter {
     private LeadInstantCallBackFragment mLeadInstantCallBackFragment;
     private LeadLaterCallBackFragment mLeadLaterCallBackFragment;
 
+    String name;
+    String id;
+    String phone;
+    String score;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
+
     public LeadFormPresenter() {
 
     }

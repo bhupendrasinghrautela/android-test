@@ -36,7 +36,8 @@
                 android:layout_weight="9"
                 android:text="@string/effective_home_search"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_small" />
+                android:textSize="@dimen/text_size_small"
+                android:typeface="serif" />
         </LinearLayout>
 
         <LinearLayout
@@ -69,15 +70,18 @@
                     android:layout_weight="1"
                     android:text="@string/search"
                     android:textColor="@color/dark_grey_text"
-                    android:textSize="@dimen/text_size_medium" />
+                    android:textSize="@dimen/text_size_medium"
+                    android:typeface="monospace" />
 
                 <TextView
+                    android:id="@+id/tv_search_subtitle"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:text="@string/search_sub_title"
                     android:textColor="@color/buyer_journey_light_grey_color"
-                    android:textSize="@dimen/medium_text" />
+                    android:textSize="@dimen/medium_text"
+                    android:typeface="serif" />
             </LinearLayout>
 
             <ImageView
@@ -118,15 +122,18 @@
                     android:layout_weight="1"
                     android:text="@string/shortlist"
                     android:textColor="@color/dark_grey_text"
-                    android:textSize="@dimen/text_size_medium" />
+                    android:textSize="@dimen/text_size_medium"
+                    android:typeface="monospace" />
 
                 <TextView
+                    android:id="@+id/tv_shortlist_subtitle"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:text="@string/shortlist_sub_title"
                     android:textColor="@color/buyer_journey_light_grey_color"
-                    android:textSize="@dimen/medium_text" />
+                    android:textSize="@dimen/medium_text"
+                    android:typeface="serif" />
             </LinearLayout>
 
             <ImageView
@@ -167,15 +174,18 @@
                     android:layout_weight="1"
                     android:text="@string/site_visit"
                     android:textColor="@color/dark_grey_text"
-                    android:textSize="@dimen/text_size_medium" />
+                    android:textSize="@dimen/text_size_medium"
+                    android:typeface="monospace" />
 
                 <TextView
+                    android:id="@+id/tv_site_visit_subtitle"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:text="@string/site_visit_sub_title"
                     android:textColor="@color/buyer_journey_light_grey_color"
-                    android:textSize="@dimen/medium_text" />
+                    android:textSize="@dimen/medium_text"
+                    android:typeface="serif" />
             </LinearLayout>
 
             <ImageView
@@ -209,7 +219,8 @@
                 android:layout_weight="9"
                 android:text="@string/find_joy"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_small" />
+                android:textSize="@dimen/text_size_small"
+                android:typeface="serif" />
         </LinearLayout>
 
 
@@ -230,7 +241,8 @@
                 android:gravity="center_horizontal"
                 android:text="@string/happy_buyers"
                 android:textColor="@color/white"
-                android:textSize="@dimen/happy_buyers_text_size" />
+                android:textSize="@dimen/happy_buyers_text_size"
+                android:typeface="monospace" />
 
             <TextView
                 android:id="@+id/tv_found_home"
@@ -242,7 +254,8 @@
                 android:gravity="center"
                 android:text="@string/found_your_dream_home"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_large" />
+                android:textSize="@dimen/text_size_large"
+                android:typeface="serif" />
 
             <Button
                 android:id="@+id/button_get_rewards"
@@ -257,7 +270,8 @@
                 android:text="@string/get_reward"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_large" />
+                android:textSize="@dimen/text_size_large"
+                android:typeface="monospace" />
 
         </RelativeLayout>
 
@@ -283,7 +297,8 @@
                 android:layout_weight="9"
                 android:text="booking, possession &amp; registry"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_small" />
+                android:textSize="@dimen/text_size_small"
+                android:typeface="serif" />
         </LinearLayout>
 
         <LinearLayout
@@ -315,7 +330,8 @@
                     android:layout_weight="1"
                     android:text="@string/home_loan"
                     android:textColor="@color/dark_grey_text"
-                    android:textSize="@dimen/text_size_medium" />
+                    android:textSize="@dimen/text_size_medium"
+                    android:typeface="monospace" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -323,7 +339,8 @@
                     android:layout_weight="1"
                     android:text="@string/best_advise"
                     android:textColor="@color/buyer_journey_light_grey_color"
-                    android:textSize="@dimen/medium_text" />
+                    android:textSize="@dimen/medium_text"
+                    android:typeface="serif" />
             </LinearLayout>
 
             <ImageView
@@ -364,7 +381,8 @@
                     android:layout_weight="1"
                     android:text="@string/unit_booking"
                     android:textColor="@color/dark_grey_text"
-                    android:textSize="@dimen/text_size_medium" />
+                    android:textSize="@dimen/text_size_medium"
+                    android:typeface="monospace" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -372,7 +390,8 @@
                     android:layout_weight="1"
                     android:text="@string/best_legal"
                     android:textColor="@color/buyer_journey_light_grey_color"
-                    android:textSize="@dimen/medium_text" />
+                    android:textSize="@dimen/medium_text"
+                    android:typeface="serif" />
             </LinearLayout>
 
             <ImageView
@@ -413,7 +432,8 @@
                     android:layout_weight="1"
                     android:text="@string/possession"
                     android:textColor="@color/dark_grey_text"
-                    android:textSize="@dimen/text_size_medium" />
+                    android:textSize="@dimen/text_size_medium"
+                    android:typeface="monospace" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -421,7 +441,8 @@
                     android:layout_weight="1"
                     android:text="@string/moving_in"
                     android:textColor="@color/buyer_journey_light_grey_color"
-                    android:textSize="@dimen/medium_text" />
+                    android:textSize="@dimen/medium_text"
+                    android:typeface="serif"/>
             </LinearLayout>
 
             <ImageView
@@ -462,7 +483,8 @@
                     android:layout_weight="1"
                     android:text="@string/registration"
                     android:textColor="@color/dark_grey_text"
-                    android:textSize="@dimen/text_size_medium" />
+                    android:textSize="@dimen/text_size_medium"
+                    android:typeface="monospace" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -470,7 +492,8 @@
                     android:layout_weight="1"
                     android:text="@string/expert_help"
                     android:textColor="@color/buyer_journey_light_grey_color"
-                    android:textSize="@dimen/medium_text" />
+                    android:textSize="@dimen/medium_text"
+                    android:typeface="serif" />
             </LinearLayout>
 
             <ImageView

@@ -55,7 +55,6 @@
             android:layout_marginTop="@dimen/button_padding"
             android:paddingLeft="@dimen/button_padding"
             android:paddingRight="@dimen/button_padding"
-            android:text="call +9898928838"
             android:textSize="@dimen/button_text_size"
             android:textAllCaps="false"
             android:textColor="@android:color/white" />

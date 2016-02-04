@@ -12,6 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.ui.view.BadgeView;
@@ -19,9 +22,12 @@ import com.pkmmte.view.CircularImageView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class BuyerJourneyActivity extends AppCompatActivity {
+    @Bind(R.id.button_login)
+    Button mLoginButton;
 
     @Bind(R.id.tab_layout)
     TabLayout mTabLayout;
@@ -35,17 +41,21 @@ public class BuyerJourneyActivity extends AppCompatActivity {
     @Bind(R.id.iv_profile_image)
     CircularImageView mProfileImage;
 
+    @Bind(R.id.tv_username)
+    TextView mUserName;
+
     private AlertDialog mAlertDialog;
+
+    public static boolean IS_LOGGED = true; //TODO: get it from prefs for login status
 
     @Bind(R.id.toolbar_layout)
     CollapsingToolbarLayout mCollapsingToolbar;
-@Bind(R.id.app_bar)
-AppBarLayout mAppBarLayout;
+    @Bind(R.id.app_bar)
+    AppBarLayout mAppBarLayout;
 
     enum TabType {
-        Journey("journey"),
+        Journey("my journey"),
         Notifications("notifications");
-
         String value;
 
         TabType(String value) {
@@ -54,7 +64,6 @@ AppBarLayout mAppBarLayout;
     }
 
     public final String TAG = BuyerJourneyActivity.class.getSimpleName();
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,18 +78,34 @@ AppBarLayout mAppBarLayout;
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (verticalOffset != 0) {
-                    mCollapsingToolbar.setTitle("Guest");
+                int toolbarOffset = -238;
+                if (verticalOffset == toolbarOffset) {
+                    mCollapsingToolbar.setCollapsedTitleTextColor(0xFFFFFFFF);
+                    if(IS_LOGGED)
+                        mCollapsingToolbar.setTitle("john parker");
+                    else
+                        mCollapsingToolbar.setTitle("guest");
+
                 } else {
                     mCollapsingToolbar.setTitle("");
                 }
 
             }
         });
+    }
 
+    @OnClick(R.id.button_login)
+    public void onLoginClick() {
+        //TODO intent to login activity
     }
 
     private void setUserData() {
+        if (IS_LOGGED) {
+            mLoginButton.setVisibility(View.GONE);
+            mUserName.setText("john parker");
+        }else{
+            mLoginButton.setVisibility(View.VISIBLE);
+        }
         //UserInfo userInfo = Preferences.getUserInfo(this);
         //mProfileImage.setImageURI(Uri.parse(userInfo.getData().getProfileImageUrl()));
         //mCollapsingToolbar.setTitle("User");
@@ -107,8 +132,8 @@ AppBarLayout mAppBarLayout;
 
         mViewPager.setAdapter(adapter);
 
-        BadgeView badge=new BadgeView(this,mTabLayout);
-        badge.setText("22");
+        BadgeView badge = new BadgeView(this, mTabLayout);
+        badge.setText("5");
         badge.show();
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -132,8 +157,12 @@ AppBarLayout mAppBarLayout;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);//Menu Resource, Menu
-        return true;
+        if (IS_LOGGED) {
+            getMenuInflater().inflate(R.menu.menu, menu);//Menu Resource, Menu
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

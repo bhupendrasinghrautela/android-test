@@ -231,6 +231,8 @@
     <string name="send_reset">send reset link</string>
     <string name="user_name">user name</string>
     <string name="guest_text">hi guest,\nlog into makaan for benefits</string>
+    <string name="log_in">log in</string>
+
 
 
     <!--notifications strings -->

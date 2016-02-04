@@ -14,7 +14,8 @@
             android:id="@+id/iv_content"
             android:layout_width="match_parent"
             android:layout_height="@dimen/fav_card_height"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:tint="@color/app_grey"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -43,13 +44,6 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/shortlist_text_size_medium" />
 
-                <TextView
-                    android:id="@+id/tv_onwards"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="onwards"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/shortlist_text_size_medium" />
             </LinearLayout>
 
             <TextView

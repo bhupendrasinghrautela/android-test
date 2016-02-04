@@ -39,18 +39,16 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         ShortListFavoriteViewHolder shortListFavoriteViewHolder = (ShortListFavoriteViewHolder)holder;
         if(null!=wishList.get(position).listingId){
             shortListFavoriteViewHolder.mLinearLayoutDetails.setVisibility(View.VISIBLE);
-            shortListFavoriteViewHolder.mTextViewOnwards.setVisibility(View.GONE);
             String price = StringUtil.getDisplayPrice(wishList.get(position).listing.currentListingPrice.price);
             shortListFavoriteViewHolder.mTextViewPriceValue.setText(price);
 
         }else if(null!=wishList.get(position).project.minResaleOrPrimaryPrice) {
             shortListFavoriteViewHolder.mLinearLayoutDetails.setVisibility(View.VISIBLE);
-            shortListFavoriteViewHolder.mTextViewOnwards.setVisibility(View.VISIBLE);
             String price = StringUtil.getDisplayPrice(wishList.get(position).project.minResaleOrPrimaryPrice);
             shortListFavoriteViewHolder.mTextViewPriceValue.setText(price);
 
@@ -74,11 +72,14 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, LeadFormActivity.class);
+                intent.putExtra("name",wishList.get(position).listing.companySeller.company.name);
+                intent.putExtra("score",wishList.get(position).listing.companySeller.company.score.toString());
+                intent.putExtra("phone","9090909090");//todo: not available in pojo
+                intent.putExtra("id",wishList.get(position).listing.companySeller.company.id.toString());
                 mContext.startActivity(intent);
             }
         });
        // shortListFavoriteViewHolder.mTextViewArea.setText();//todo
-
     }
 
     @Override
