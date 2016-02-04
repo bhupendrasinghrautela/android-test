@@ -8,9 +8,10 @@
     <com.makaan.ui.view.FontTextView
     android:id="@+id/header_text"
     android:gravity="center"
-    android:textSize="@dimen/locality_text_big"
+    android:textSize="@dimen/locality_text_bigger"
         font:fontName="comforta.ttf"
     android:text="@string/overview"
+        android:layout_marginTop="@dimen/locality_overview_margin_top"
     android:textColor="@color/white"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"/>

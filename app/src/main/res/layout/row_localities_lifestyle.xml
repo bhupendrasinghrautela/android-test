@@ -45,11 +45,11 @@
             android:id="@+id/tv_localities_lifestyle_description"
             android:layout_margin="@dimen/locality_text_medium"
             font:fontName="proxima.otf"
-            android:gravity="center_horizontal"
             android:layout_centerInParent="true"
             android:text="Luxury properties Rs. 1.2 Cr onwards"
             android:ellipsize="marquee"
             android:lines="12"
+            android:lineSpacingMultiplier="1.5"
             android:textColor="@color/project_text_default"
             />
     </LinearLayout>

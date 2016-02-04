@@ -4,7 +4,7 @@
     android:layout_width="110dp"
     xmlns:font="http://schemas.android.com/tools"
     android:layout_marginLeft="10dp"
-    android:layout_height="110dp"
+    android:layout_height="100dp"
     app:cardCornerRadius="10dp">
     <RelativeLayout
         android:layout_width="match_parent"

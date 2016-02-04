@@ -144,6 +144,8 @@ public class ProjectFragment extends MakaanBaseFragment{
             mPropertyImageViewPager.setVisibility(View.VISIBLE);
             mPropertyImageViewPager.bindView();
             mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice,null);
+        }else{
+            mPropertyImageViewPager.setVisibility(View.GONE);
         }
     }
 

@@ -85,7 +85,7 @@
         android:layout_below="@id/tv_locality_annual_growth_label"
         android:layout_marginLeft="@dimen/locality_seperator_left_margin"
         android:id="@+id/view_locality_seperator"
-        android:background="@color/locality_light_grey"/>
+        android:background="@color/locality_seprator"/>
 
     <com.makaan.ui.view.FontTextView
         android:layout_width="wrap_content"
@@ -148,7 +148,7 @@
         android:layout_below="@id/tv_locality_annual_growth_label_rent"
         android:layout_marginLeft="@dimen/locality_seperator_left_margin"
         android:id="@+id/view_locality_seperator_2"
-        android:background="@color/locality_light_grey"/>
+        android:background="@color/locality_seprator"/>
 
 </RelativeLayout>
 

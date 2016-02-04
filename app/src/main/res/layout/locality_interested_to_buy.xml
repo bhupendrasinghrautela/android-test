@@ -4,6 +4,7 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:font="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <FrameLayout
@@ -18,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:orientation="vertical">
-<TextView
+<com.makaan.ui.view.FontTextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="41dp"
@@ -27,6 +28,7 @@
     android:layout_marginLeft="80dp"
     android:layout_marginRight="80dp"
     android:textColor="@color/white"
+    font:fontName="comforta.ttf"
     android:id="@+id/tv_locality_interested_in"
     android:textSize="24sp"
     android:text=""
@@ -34,7 +36,7 @@
 <Button
     android:layout_width="150dp"
     android:layout_height="wrap_content"
-    android:background="#e71c28"
+    android:background="@drawable/btn_find_your_home"
     android:layout_gravity="center_horizontal"
     android:layout_marginBottom="50dp"
     android:textSize="12sp"
