@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -47,6 +50,8 @@ public class HomeActivity extends AppCompatActivity {
         tvSearch =(TextView) findViewById(R.id.activity_home_search_text_view);
         tvSearch.setFocusable(false);
         rgType=(RadioGroup) findViewById(R.id.activity_home_property_type_radio_group);
+        /*final RadioButton buyRadioButton = (RadioButton) findViewById(R.id.activity_home_property_buy_radio_button);
+        final RadioButton rentRadioButton = (RadioButton) findViewById(R.id.activity_home_property_buy_radio_button);*/
 
 
         View searchView = findViewById(R.id.activity_home_search_relative_view);
@@ -73,6 +78,35 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         testWishList();
+
+        // TODO
+        /*rgType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.activity_home_property_buy_radio_button: {
+                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) buyRadioButton.getLayoutParams();
+                        params.setMargins(0, 10, 0, 0);
+                        buyRadioButton.setLayoutParams(params);
+
+                        params = (LinearLayout.LayoutParams) rentRadioButton.getLayoutParams();
+                        params.setMargins(0, 0, 0, 0);
+                        rentRadioButton.setLayoutParams(params);
+                        break;
+                    }
+                    case R.id.activity_home_property_rent_radio_button: {
+                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) rentRadioButton.getLayoutParams();
+                        params.setMargins(0, 10, 0, 0);
+                        rentRadioButton.setLayoutParams(params);
+
+                        params = (LinearLayout.LayoutParams) buyRadioButton.getLayoutParams();
+                        params.setMargins(0, 0, 0, 0);
+                        buyRadioButton.setLayoutParams(params);
+                        break;
+                    }
+                }
+            }
+        });*/
 
         /*rlSearch = (RelativeLayout) findViewById(R.id.rl_footer);
         rlSearch.setOnClickListener(new View.OnClickListener() {

@@ -265,9 +265,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     private void parseSerpRequest(Intent intent, int type) {
         if(intent.hasExtra(REQUEST_DATA)) {
             SerpRequest request = intent.getParcelableExtra(REQUEST_DATA);
-            request.applySelector(mSerpSelector, MasterDataCache.getInstance().getAllBuyFilterGroups());
+            request.applySelector(mSerpSelector, mFilterGroups);
         }
-        serpRequest(type, mSerpSelector);
+        if(type != TYPE_HOME) {
+            serpRequest(type, mSerpSelector);
+        }
     }
 
     private void generateGroupSelector() {
