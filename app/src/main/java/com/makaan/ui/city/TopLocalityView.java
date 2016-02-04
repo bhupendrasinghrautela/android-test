@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.response.locality.Locality;
 import com.makaan.ui.BaseLinearLayout;
@@ -58,7 +59,7 @@ public class TopLocalityView extends BaseLinearLayout<List<Locality>> {
     @Override
     public void bindView(List<Locality> item) {
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
-        for(Locality locality:item){
+        for(final Locality locality:item){
             View localityItem = inflater.inflate(R.layout.top_locality_item, null);
             TextView localityLabel = (TextView) localityItem.findViewById(R.id.city_locality_label);
             TextView localityAvgPrice = (TextView) localityItem.findViewById(R.id.city_avg_price);
@@ -66,10 +67,23 @@ public class TopLocalityView extends BaseLinearLayout<List<Locality>> {
             TextView localityScore = (TextView) localityItem.findViewById(R.id.locality_score_text);
             ProgressBar localityScoreProgress = (ProgressBar) localityItem.findViewById(R.id.locality_score_progress);
             localityLabel.setText(locality.label);
-            localityAvgPrice.setText(mContext.getString(R.string.avg_price_prefix)+" "+String.valueOf(locality.avgPricePerUnitArea)+mContext.getString(R.string.avg_price_postfix));
-            localityAvgPriceRise.setText(String.valueOf(locality.avgPriceRisePercentage) +"%");
+            localityAvgPrice.setText(mContext.getString(R.string.avg_price_prefix)+" "+String.valueOf(locality.avgPricePerUnitArea)+
+                    mContext.getString(R.string.avg_price_postfix));
+
+            if(null!=locality.avgPriceRisePercentage && locality.avgPriceRisePercentage>0) {
+                localityAvgPriceRise.setText(String.valueOf(locality.avgPriceRisePercentage) + "%");
+            }else{
+                localityAvgPriceRise.setVisibility(View.GONE);
+            }
             localityScore.setText(String.valueOf(locality.livabilityScore));
             localityScoreProgress.setProgress((int) (locality.livabilityScore * 10));
+            localityItem.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    launchLocalityScreen(locality.localityId);
+                }
+            });
+
             mLocalityContainer.addView(localityItem);
             if(locality != item.get(item.size()-1)){
                 View view = new View(mContext);
@@ -79,6 +93,7 @@ public class TopLocalityView extends BaseLinearLayout<List<Locality>> {
                 LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
                 lp.leftMargin = internalMargin;
                 lp.rightMargin = internalMargin;
+
                 mLocalityContainer.addView(view, lp);
             }
         }
@@ -96,5 +111,11 @@ public class TopLocalityView extends BaseLinearLayout<List<Locality>> {
             }
         });
 
+    }
+
+    private void launchLocalityScreen(final long localityId){
+        Intent intent = new Intent(mContext, LocalityActivity.class);
+        intent.putExtra(LocalityActivity.LOCALITY_ID, localityId);
+        mContext.startActivity(intent);
     }
 }
