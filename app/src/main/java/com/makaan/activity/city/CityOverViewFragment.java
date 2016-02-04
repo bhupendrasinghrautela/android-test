@@ -276,7 +276,6 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     @OnClick(R.id.pyr_button_bottom)
     public void onBottomPyrClick(){
         Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
-        pyrIntent.putExtra(PyrPageActivity.IS_BUY, isRent);
         getActivity().startActivity(pyrIntent);
     }
 }
