@@ -26,7 +26,7 @@ public class SerpRequest implements Parcelable {
     public static final int CONTEXT_RESALE = 0x04;
     public static final int CONTEXT_BUY = CONTEXT_PRIMARY | CONTEXT_RESALE;
 
-    enum Sort {
+    public enum Sort {
         RELEVANCE, PRICE_HIGH_TO_LOW, PRICE_LOW_TO_HIGH, SELLER_RATING, DATE_POSTED, LIVABILITY_SCORE, DISTANCE
     }
 
