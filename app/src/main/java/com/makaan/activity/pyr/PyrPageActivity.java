@@ -16,7 +16,11 @@ import com.makaan.fragment.pyr.PyrReplaceFragment;
  * Created by proptiger on 6/1/16.
  */
 public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplaceFragment{
-    public static final String IS_BUY = "isBuy";
+
+    public static final String KEY_IS_BUY = "isBuy";
+    public static final String KEY_CITY_NAME = "cityName";
+    public static final String KEY_LOCALITY_ID = "localityId";
+    public static final String KEY_LOCALITY_NAME = "localityName";
 
     private FragmentTransaction mFragmentTransaction;
     private PyrPagePresenter mPagePresenter;
@@ -32,8 +36,22 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
 
         mPagePresenter=PyrPagePresenter.getPyrPagePresenter();
         mPagePresenter.setReplaceFragment(this);
+
+        if(null!=getIntent()) {
+            long localityId = getIntent().getLongExtra(KEY_LOCALITY_ID, 0);
+            String localityName = getIntent().getStringExtra(KEY_LOCALITY_NAME);
+            String cityName = getIntent().getStringExtra(KEY_CITY_NAME);
+            mPagePresenter.prefillLocality(localityName, localityId, cityName);
+        }
+
         mPagePresenter.showPyrMainPageFragment();
         //mPagePresenter.setBuySelected(getIntent().getBooleanExtra(IS_BUY, false));
+    }
+
+    @Override
+    protected void onDestroy() {
+        mPagePresenter.clear();
+        super.onDestroy();
     }
 
     @Override

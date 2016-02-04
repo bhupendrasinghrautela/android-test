@@ -23,6 +23,7 @@ import com.makaan.event.agents.TopBuyAgentsPyrEvent;
 import com.makaan.event.agents.TopRentAgentsPyrEvent;
 import com.makaan.event.agents.callback.TopBuyAgentsPyrCallback;
 import com.makaan.event.agents.callback.TopRentAgentsPyrCallback;
+import com.makaan.pojo.SerpObjects;
 import com.makaan.request.pyr.PyrRequest;
 import com.makaan.response.agents.TopAgent;
 import com.makaan.response.country.CountryCodeResponse;
@@ -66,17 +67,25 @@ import butterknife.OnTextChanged;
 public class PyrPageFragment extends Fragment {
     @Bind(R.id.post_requirements)
     TextView mPostRequirements;
+
     @Bind(R.id.select_country_spinner)
     Spinner mCountrySpinner;
+
     @Bind(R.id.leadform_country_code_textview)
     TextView mCodeTextView;
+
     @Bind(R.id.pyr_selected_locality_count)
     TextView mLocalityCount;
+
     @Bind(R.id.pyr_selected_propertyt_type_count)
     TextView mPropertyTypeCount;
+
     @Bind(R.id.pyr_page_name)EditText mUserName;
+
     @Bind(R.id.pyr_page_email)EditText mUserEmail;
+
     @Bind(R.id.leadform_mobileno_edittext)EditText mUserMobile;
+
     private Integer mCountryId;
     private ArrayAdapter<String> mCountryAdapter;
     private List<String> mCountryNames;
@@ -102,6 +111,8 @@ public class PyrPageFragment extends Fragment {
         mBudgetCardView = (PyrBudgetCardView) view.findViewById(R.id.pyr_budget_card_view);
         mPropertyCardView = (PyrPropertyCardView) view.findViewById(R.id.select_property_layout);
 
+        pyrPagePresenter=PyrPagePresenter.getPyrPagePresenter();
+
         // access group
         ArrayList<FilterGroup> grpsBuy = MasterDataCache.getInstance().getAllBuyPyrGroups();
         ArrayList<FilterGroup> grpsRent = MasterDataCache.getInstance().getAllRentPyrGroups();
@@ -112,7 +123,11 @@ public class PyrPageFragment extends Fragment {
                 mGroupsBuy = getClonedFilterGroups(grpsBuy);
                 mGroupsRent = getClonedFilterGroups(grpsRent);
             }
-            for(FilterGroup group : mGroupsBuy) {
+
+            pyrPagePresenter.setBuySelected(SerpObjects.isBuyContext(getActivity()));//pre-fill buy context
+            setLocaityInfo();//Pre-fill localities
+
+/*            for(FilterGroup group : mGroupsBuy) {
                 String name = group.internalName;
                 if("i_beds".equals(name)) {
                     if(newGroups) {
@@ -132,14 +147,13 @@ public class PyrPageFragment extends Fragment {
                     }
                     mPropertyCardView.setValues(group.termFilterValues);
                 }
-            }
+            }*/
         } catch (CloneNotSupportedException ex) {
             ex.printStackTrace();
         }
 
         initializeCountrySpinner();
-        pyrPagePresenter=PyrPagePresenter.getPyrPagePresenter();
-        //pyrPagePresenter.setBuySelected();
+
         return view;
     }
 
