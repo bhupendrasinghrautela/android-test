@@ -73,6 +73,7 @@ public class TaxonomyService implements MakaanService {
         affordableCard.serpRequest = new SerpRequest();
         affordableCard.serpRequest.setCityId(cityId);
         affordableCard.serpRequest.setMinBudget(minAffordablePrice == null ? 0 : minAffordablePrice.longValue());
+        affordableCard.serpRequest.setMaxBudget(maxAffordablePrice == null ? 0 : maxAffordablePrice.longValue());
 
 
         TaxonomyCard budgetCard = new TaxonomyCard();
@@ -90,8 +91,7 @@ public class TaxonomyService implements MakaanService {
         bestCard.label2 = BEST_PROPERTIES_MSG;
         bestCard.serpRequest = new SerpRequest();
         bestCard.serpRequest.setCityId(cityId);
-        //TODO set sorting order
-        //bestSelector.term(CITY_ID, cityId.toString()).sort(LISTING_QUALITY_SCORE, SORT_DESC);
+        bestCard.serpRequest.setSort(SerpRequest.Sort.QUALITY_SCORE_DESC);
 
 
         TaxonomyCard rentalCard = new TaxonomyCard();
@@ -131,7 +131,7 @@ public class TaxonomyService implements MakaanService {
         luxuryCard.label2 = LUXURY_PROPERTIES_MSG;
         luxuryCard.serpRequest = new SerpRequest();
         luxuryCard.serpRequest.setLocalityId(localityId);
-        luxuryCard.serpRequest.setMinBudget(minLuxuryPrice==null?0:minLuxuryPrice.longValue());
+        luxuryCard.serpRequest.setMinBudget(minLuxuryPrice == null ? 0 : minLuxuryPrice.longValue());
 
 
         TaxonomyCard affordableCard = new TaxonomyCard();
@@ -140,7 +140,8 @@ public class TaxonomyService implements MakaanService {
         affordableCard.label2 = AFFORDABLE_PROPERTIES_MSG;
         affordableCard.serpRequest = new SerpRequest();
         affordableCard.serpRequest.setLocalityId(localityId);
-        affordableCard.serpRequest.setMinBudget(minAffordablePrice==null?0:minAffordablePrice.longValue());
+        affordableCard.serpRequest.setMinBudget(minAffordablePrice == null ? 0 : minAffordablePrice.longValue());
+        affordableCard.serpRequest.setMaxBudget(maxAffordablePrice == null ? 0 : maxAffordablePrice.longValue());
 
 
         TaxonomyCard budgetCard = new TaxonomyCard();
@@ -149,7 +150,7 @@ public class TaxonomyService implements MakaanService {
         budgetCard.label2 = BUDGET_HOMES_MSG;
         budgetCard.serpRequest = new SerpRequest();
         budgetCard.serpRequest.setLocalityId(localityId);
-        budgetCard.serpRequest.setMaxBudget(maxBudgetPrice==null?0:maxBudgetPrice.longValue());
+        budgetCard.serpRequest.setMaxBudget(maxBudgetPrice == null ? 0 : maxBudgetPrice.longValue());
 
 
         TaxonomyCard bestCard = new TaxonomyCard();
@@ -158,8 +159,7 @@ public class TaxonomyService implements MakaanService {
         bestCard.label2 = BEST_PROPERTIES_MSG;
         bestCard.serpRequest = new SerpRequest();
         bestCard.serpRequest.setLocalityId(localityId);
-        //TODO set sorting order
-        //bestSelector.term(CITY_ID, cityId.toString()).sort(LISTING_QUALITY_SCORE, SORT_DESC);
+        bestCard.serpRequest.setSort(SerpRequest.Sort.QUALITY_SCORE_DESC);
 
 
         TaxonomyCard rentalCard = new TaxonomyCard();
