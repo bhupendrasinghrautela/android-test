@@ -35,7 +35,8 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:textColor="@color/text_msg_input"
-            android:imeOptions="actionDone"
+            android:imeOptions="actionSend"
+            android:inputType="text"
             android:paddingLeft="@dimen/jarvis_chat_compose_padding"
             android:paddingRight="@dimen/jarvis_chat_compose_padding"/>
 

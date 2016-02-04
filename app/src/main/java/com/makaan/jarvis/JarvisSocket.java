@@ -108,7 +108,7 @@ public class JarvisSocket {
                 public void call(Object... args) {
                 }
             });
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

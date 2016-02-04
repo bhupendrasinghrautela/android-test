@@ -20,6 +20,7 @@ import com.makaan.jarvis.message.Message;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.ui.view.BaseView;
+import com.makaan.ui.view.CustomRatingBar;
 import com.pkmmte.view.CircularImageView;
 
 import java.util.Random;
@@ -45,6 +46,9 @@ public class SellerOverviewCard extends BaseView<Message> {
     @Bind(R.id.seller_logo_text_view)
     TextView mSellerLogoTextView;
 
+    @Bind(R.id.seller_rating)
+    CustomRatingBar sellerRatingBar;
+
     public SellerOverviewCard(Context context) {
         super(context);
     }
@@ -56,12 +60,16 @@ public class SellerOverviewCard extends BaseView<Message> {
     @Override
     public void bindView(final Context context, final Message item) {
 
+        sellerRatingBar.setRating(item.chatObj.score);
+
         if(!TextUtils.isEmpty(item.chatObj.name)) {
             name.setText(item.chatObj.name);
         }
+
         if(item.chatObj.listingCount>0) {
             properties.setText(item.chatObj.listingCount + (item.chatObj.listingCount > 1 ? " properties" : " property"));
         }
+
         if(!TextUtils.isEmpty(item.chatObj.localityName + item.chatObj.cityName)) {
             StringBuilder builder = new StringBuilder();
             if(item.chatObj.localitiesCount>0){

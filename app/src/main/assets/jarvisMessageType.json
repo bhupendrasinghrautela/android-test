@@ -1,15 +1,15 @@
 {
   "data": {
 
-    "MAKAAN_LOCALITY_OVERVIEW": 7,
-    "MAKAAN_LOCALITY_RESIDENTIAL_BUY": 8,
-    "MAKAAN_LOCALITY_LISTING_RENT": 9,
-    "MAKAAN_PROPERTY_BUY": 6,
-    "MAKAAN_PROPERTY_RENT": 6,
+    "MAKAAN_LOCALITY_OVERVIEW": 8,
+    "MAKAAN_LOCALITY_RESIDENTIAL_BUY": 9,
+    "MAKAAN_LOCALITY_LISTING_RENT": 10,
+    "MAKAAN_PROPERTY_BUY": 7,
+    "MAKAAN_PROPERTY_RENT": 7,
     "SELLER_PROPERTY_URLS": 12,
     "signup":6,
     "details":4,
-    "plainLink":10,
+    "plainLink":11,
     "rating":14
   }
 
