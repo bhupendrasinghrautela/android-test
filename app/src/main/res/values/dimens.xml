@@ -1099,6 +1099,7 @@
     <dimen name="prject_amenities_margin_left">12dp</dimen>
     <dimen name="prject_amenities_margin_top">12dp</dimen>
 
+    <!--login dimens-->
     <dimen name="zero_weight">0dp</dimen>
     <dimen name="drawable_top_padding">10dp</dimen>
     <dimen name="enquiry_medium_text">18sp</dimen>

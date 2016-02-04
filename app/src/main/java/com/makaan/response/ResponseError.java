@@ -8,14 +8,7 @@ import com.android.volley.VolleyError;
 public class ResponseError {
     private VolleyError error;
     private String msg;
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
+    private String statusCode;
 
     public VolleyError getError() {
         return error;
@@ -23,5 +16,21 @@ public class ResponseError {
 
     public void setError(VolleyError volleyError) {
         this.error = volleyError;
+    }
+
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

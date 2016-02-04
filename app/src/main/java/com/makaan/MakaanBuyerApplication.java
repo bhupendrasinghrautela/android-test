@@ -10,7 +10,8 @@ import com.makaan.jarvis.JarvisConstants;
 import com.makaan.jarvis.JarvisServiceCreator;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpObjects;
-import com.makaan.request.selector.Selector;
+import com.makaan.service.user.ForgotPasswordService;
+import com.makaan.service.user.UserRegistrationService;
 import com.makaan.service.AgentService;
 import com.makaan.service.AmenityService;
 import com.makaan.service.BlogService;
@@ -95,6 +96,8 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(OtpVerificationService.class, new OtpVerificationService());
         MakaanServiceFactory.getInstance().registerService(AmenityService.class, new AmenityService());
         MakaanServiceFactory.getInstance().registerService(LeadInstantCallbackService.class, new LeadInstantCallbackService());
+        MakaanServiceFactory.getInstance().registerService(ForgotPasswordService.class, new ForgotPasswordService());
+        MakaanServiceFactory.getInstance().registerService(UserRegistrationService.class, new UserRegistrationService());
 
                 ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();

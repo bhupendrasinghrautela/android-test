@@ -1,6 +1,7 @@
 package com.makaan.service.user;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.facebook.AccessToken;
@@ -16,6 +17,7 @@ import com.facebook.LoggingBehavior;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.makaan.R;
 
 import org.json.JSONObject;
 
@@ -28,16 +30,18 @@ public class FacebookTokenInteractor {
     private Context mContext;
     private CallbackManager mCallbackManager;
     private AccessTokenTracker mAccessTokenTracker;
+    private OnFacebookTokenListener mOnFacebookTokenListener;
 
-    public FacebookTokenInteractor(Context context){
+    public FacebookTokenInteractor(Context context, OnFacebookTokenListener onFacebookTokenListener){
         mContext = context;
+        mOnFacebookTokenListener=onFacebookTokenListener;
     }
 
-    private void initFacbookSdk(Bundle savedInstanceState){
+    public void initFacebookSdk(Bundle savedInstanceState){
         try {
             if (mContext != null) {
                 //TODO use a valid fb id
-                AppEventsLogger.activateApp(mContext, "");
+                AppEventsLogger.activateApp(mContext, mContext.getResources().getString(R.string.app_FB_id));
             }
         } catch (Exception e) {}
 
@@ -58,22 +62,23 @@ public class FacebookTokenInteractor {
 
         LoginManager.getInstance().registerCallback(mCallbackManager,
                 new FacebookCallback<LoginResult>() {
+
                     @Override
                     public void onSuccess(final LoginResult loginResult) {
-
+                        mOnFacebookTokenListener.onFacebookLoginManagerCallback();
                             GraphRequestAsyncTask request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
                                     new GraphRequest.GraphJSONObjectCallback() {
                                         @Override
                                         public void onCompleted(JSONObject object, GraphResponse response) {
                                             if (object != null) {
                                                 try {
-                                                    //TODO
+                                                    mOnFacebookTokenListener.onFacebookTokenSuccess(loginResult.getAccessToken().getToken());
                                                     AccessToken.setCurrentAccessToken(loginResult.getAccessToken());
                                                 } catch (Exception e) {
-                                                    //TODO
+                                                    mOnFacebookTokenListener.onFacebookTokenFail();
                                                 }
                                             } else {
-                                                //TODO
+                                                mOnFacebookTokenListener.onFacebookTokenFail();
                                             }
                                         }
                                     }).executeAsync();
@@ -81,14 +86,24 @@ public class FacebookTokenInteractor {
 
                     @Override
                     public void onCancel() {
-                        //TODO
+                        mOnFacebookTokenListener.onFacebookTokenFail();
 
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
-                        //TODO
+                        mOnFacebookTokenListener.onFacebookTokenFail();
                     }
                 });
+    }
+
+    public void stopTracking(){
+        if(null!=mAccessTokenTracker){
+            mAccessTokenTracker.stopTracking();
+        }
+    }
+
+    public void onFacebookActivityResult(int requestCode, int resultCode, Intent data){
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }
