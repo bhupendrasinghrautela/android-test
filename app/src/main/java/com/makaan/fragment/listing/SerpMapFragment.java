@@ -255,7 +255,7 @@ public class SerpMapFragment extends MakaanBaseFragment {
         IconGenerator iconGenerator = new IconGenerator(getActivity());
         iconGenerator.setStyle(IconGenerator.STYLE_RED);
         Bitmap markerBitmap =
-                iconGenerator.makeIcon(StringUtil.getDisplayPrice(listing.price));
+                iconGenerator.makeIcon(String.valueOf(listing.bedrooms));
 
         MarkerOptions markerOptions = new MarkerOptions()
                 .position(new LatLng(lat, lng))
@@ -320,8 +320,8 @@ public class SerpMapFragment extends MakaanBaseFragment {
 
     private Bitmap getMarkerBitmap(boolean isSelected, Listing listing){
         IconGenerator iconGenerator = new IconGenerator(getActivity());
-        iconGenerator.setStyle(isSelected?IconGenerator.STYLE_ORANGE:IconGenerator.STYLE_RED);
-        Bitmap markerBitmap = iconGenerator.makeIcon(StringUtil.getDisplayPrice(listing.price));
+        iconGenerator.setStyle(isSelected ? IconGenerator.STYLE_ORANGE : IconGenerator.STYLE_RED);
+        Bitmap markerBitmap = iconGenerator.makeIcon(String.valueOf(listing.bedrooms));
         return markerBitmap;
     }
 

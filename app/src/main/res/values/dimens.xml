@@ -610,23 +610,24 @@
 
     <dimen name="listing_brief_view_layout_rupee_image_width">16dp</dimen>
     <dimen name="listing_brief_view_layout_rupee_image_height">16dp</dimen>
-    <dimen name="listing_brief_view_layout_rupee_image_top_margin">26dp</dimen>
+    <dimen name="listing_brief_view_layout_rupee_image_top_margin">28dp</dimen>
+    <dimen name="listing_brief_view_layout_rupee_image_left_margin">7dp</dimen>
 
     <dimen name="listing_brief_view_layout_property_price_left_margin">5dp</dimen>
-    <dimen name="listing_brief_view_layout_property_price_top_margin">11dp</dimen>
+    <dimen name="listing_brief_view_layout_property_price_top_margin">15dp</dimen>
     <dimen name="listing_brief_view_layout_property_price_text_size">32sp</dimen>
 
     <dimen name="listing_brief_view_layout_property_price_unit_left_margin">5dp</dimen>
-    <dimen name="listing_brief_view_layout_property_price_unit_top_margin">22dp</dimen>
+    <dimen name="listing_brief_view_layout_property_price_unit_top_margin">24dp</dimen>
     <dimen name="listing_brief_view_layout_property_price_unit_text_size">18sp</dimen>
 
-    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_width">24dp</dimen>
-    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_height">24dp</dimen>
-    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_right_margin">12dp</dimen>
-    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_top_margin">11dp</dimen>
+    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_width">20dp</dimen>
+    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_height">20dp</dimen>
+    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_right_margin">14dp</dimen>
+    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_top_margin">12dp</dimen>
 
-    <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_left_margin">30dp</dimen>
-    <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_top_margin">1dp</dimen>
+    <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_left_margin">0dp</dimen>
+    <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_top_margin">0dp</dimen>
     <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_text_size">16sp</dimen>
 
     <dimen name="listing_brief_view_layout_property_price_difference_image_view_width">16dp</dimen>
@@ -635,21 +636,22 @@
     <dimen name="listing_brief_view_layout_property_price_difference_image_view_top_margin">3dp</dimen>
 
     <!-- following value must be 28dp as per Zeplin UI -->
-    <dimen name="listing_brief_view_layout_property_info_text_view_left_margin">20dp</dimen>
-    <dimen name="listing_brief_view_layout_property_info_text_view_top_margin">6dp</dimen>
+    <dimen name="listing_brief_view_layout_property_info_text_view_left_margin">0dp</dimen>
+    <dimen name="listing_brief_view_layout_property_info_text_view_top_margin">10dp</dimen>
     <dimen name="listing_brief_view_layout_property_info_text_view_text_size">16sp</dimen>
 
     <dimen name="listing_brief_view_layout_empty_view_height">1dp</dimen>
     <dimen name="listing_brief_view_layout_empty_view_after_property_info_view_margin_top">0dp</dimen>
     <dimen name="listing_brief_view_layout_empty_view_after_property_info_view_margin_left">20dp</dimen>
 
-    <dimen name="listing_brief_view_layout_map_image_width">32dp</dimen>
-    <dimen name="listing_brief_view_layout_map_image_height">32dp</dimen>
-    <dimen name="listing_brief_view_layout_map_image_top_margin">7dp</dimen>
-    <dimen name="listing_brief_view_layout_map_image_left_margin">54dp</dimen>
-    <dimen name="listing_brief_view_layout_map_image_bottom_margin">8dp</dimen>
+    <dimen name="listing_brief_view_layout_map_image_width">20dp</dimen>
+    <dimen name="listing_brief_view_layout_map_image_height">20dp</dimen>
+    <dimen name="listing_brief_view_layout_map_image_top_margin">11dp</dimen>
+    <dimen name="listing_brief_view_layout_map_image_left_margin">60dp</dimen>
+    <dimen name="listing_brief_view_layout_map_image_bottom_margin">10dp</dimen>
 
-    <dimen name="listing_brief_view_layout_property_address_text_view_left_margin">1dp</dimen>
+    <dimen name="listing_brief_view_layout_property_address_text_view_left_margin">7dp</dimen>
+    <dimen name="listing_brief_view_layout_property_address_text_view_right_margin">20dp</dimen>
     <dimen name="listing_brief_view_layout_property_address_text_view_top_margin">12dp</dimen>
     <dimen name="listing_brief_view_layout_property_address_text_view_text_size">16sp</dimen>
 

@@ -66,6 +66,5 @@ public class Listing {
     public Long landMarkDistance;
 
 
-    public long minConstructionCompletionDate;
-    public long maxConstructionCompletionDate;
+    public int age;
 }

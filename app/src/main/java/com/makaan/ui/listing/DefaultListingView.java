@@ -450,9 +450,13 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
                 }
                 break;
             case "propertyAge":
-                if(mListing.isReadyToMove && !TextUtils.isEmpty(mListing.propertyAge)) {
+                if(mListing.isReadyToMove && mListing.age >= 0) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
-                    mPropertyInfoTextViews.get(j).setText(mListing.propertyAge.toLowerCase());
+                    if(mListing.age <= 1) {
+                        mPropertyInfoTextViews.get(j).setText(String.format("%d yr", mListing.age));
+                    } else {
+                        mPropertyInfoTextViews.get(j).setText(String.format("%d yrs", mListing.age));
+                    }
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
                 }

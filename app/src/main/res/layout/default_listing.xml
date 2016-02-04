@@ -14,8 +14,8 @@
     android:layout_marginTop="@dimen/serp_listing_card_margin_top"
     app:cardBackgroundColor="@color/serp_listing_card_background"
     app:cardCornerRadius="@dimen/serp_listing_card_radius"
-    app:cardElevation="0dp"
-    app:cardMaxElevation="0dp">
+    app:cardElevation="3dp"
+    app:cardMaxElevation="3dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -178,6 +178,8 @@
                 android:text="sector - 2 sohna, gurgaon"
                 android:textColor="@color/serp_listing_card_default_text_color"
                 android:textSize="@dimen/serp_listing_card_property_address_text_view_text_size"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:textAllCaps="false"
                 android:typeface="serif" />
         </FrameLayout>

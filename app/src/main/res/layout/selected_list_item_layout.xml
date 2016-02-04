@@ -9,7 +9,8 @@
         android:drawablePadding="@dimen/selected_list_item_drawable_padding"
         android:gravity="center_vertical"
         android:padding="@dimen/selected_list_item_padding"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:typeface="serif"/>
     
     <ImageView
         android:layout_width="@dimen/selected_list_cancel_icon_width_height"
