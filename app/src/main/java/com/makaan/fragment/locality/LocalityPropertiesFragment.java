@@ -105,11 +105,31 @@ public class LocalityPropertiesFragment extends MakaanBaseFragment {
             final TaxonomyCard taxonomyCard = taxonomyCardList.get(position);
             holder.descriptionTv.setText(taxonomyCard.label2);
             holder.typeTv.setText(taxonomyCard.label1);
-            holder.localityIv.setImageResource(R.drawable.placeholder_localities_props);
-            //TODO: Picasso load imgurl
+            holder.localityIv.setImageResource(getImage(position));
+        }
+        private int getImage(int position) {
+            int id = R.drawable.placeholder_localities_props;
+            switch (position) {
+                case 0:
+                    id = R.drawable.taxonomy_placeholder_one;
+                    break;
+                case 1:
+                    id = R.drawable.taxonomy_placeholder_two;
+                    break;
+                case 2:
+                    id = R.drawable.taxonomy_placeholder_three;
+                    break;
+                case 3:
+                    id = R.drawable.taxonomy_placeholder_four;
+                    break;
+                case 4:
+                    id = R.drawable.taxonomy_placeholder_five;
+                    break;
+            }
+            return id;
         }
 
-        @Override
+            @Override
         public int getItemCount() {
             return taxonomyCardList.size();
         }

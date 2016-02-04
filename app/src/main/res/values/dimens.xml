@@ -799,7 +799,7 @@
     <dimen name="property_page_locality_brief_margin_bottom">20dp</dimen>
     <dimen name="property_empty_view_height">1dp</dimen>
 
-    <dimen name="locality_circular_progress_dimen">45dp</dimen>
+    <dimen name="locality_circular_progress_dimen">56dp</dimen>
 
     <!-- Serp Builder Item Dimens -->
     <dimen name="serp_listing_item_builder_image_card_view_width">70dp</dimen>
@@ -1168,6 +1168,8 @@
     <dimen name="tab_margin_left_right">60dp</dimen>
 
 
+    <dimen name="locality_overview_margin_top">20dp</dimen>
+    <dimen name="btn_corner_radius">6dp</dimen>
 
     <!--get rewards-->
     <dimen name="gift_height">180dp</dimen>
