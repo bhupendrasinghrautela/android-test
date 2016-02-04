@@ -48,7 +48,8 @@
             android:layout_height="32dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:src="@drawable/arrow_left"/>
+            android:src="@drawable/arrow_left"
+            android:layout_centerVertical="true"/>
         <ImageView
             android:id="@+id/fragment_child_serp_cluster_right_arrow_image_view"
             android:layout_width="32dp"
@@ -61,6 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
             android:layout_toRightOf="@id/fragment_child_serp_cluster_left_arrow_image_view"
             android:layout_toEndOf="@id/fragment_child_serp_cluster_left_arrow_image_view"
             android:layout_toLeftOf="@id/fragment_child_serp_cluster_right_arrow_image_view"

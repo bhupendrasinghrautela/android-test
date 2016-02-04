@@ -26,6 +26,10 @@ public class SerpRequest implements Parcelable {
     public static final int CONTEXT_RESALE = 0x04;
     public static final int CONTEXT_BUY = CONTEXT_PRIMARY | CONTEXT_RESALE;
 
+    enum Sort {
+        RELEVANCE, PRICE_HIGH_TO_LOW, PRICE_LOW_TO_HIGH, SELLER_RATING, DATE_POSTED, LIVABILITY_SCORE, DISTANCE
+    }
+
     ArrayList<Long> cityIds = new ArrayList<Long>();
     ArrayList<Long> localityIds = new ArrayList<Long>();
     ArrayList<Long> suburbIds = new ArrayList<Long>();
@@ -37,6 +41,11 @@ public class SerpRequest implements Parcelable {
     long minBudget = UNEXPECTED_VALUE;
     long maxBudget = UNEXPECTED_VALUE;
     int serpContext = UNEXPECTED_VALUE;
+    Sort sort;
+
+    public void setSort(Sort sort) {
+        this.sort = sort;
+    }
 
     public void setCityId(long cityId) {
         if(!this.cityIds.contains(cityId)) {
@@ -277,6 +286,25 @@ public class SerpRequest implements Parcelable {
                     grp.rangeFilterValues.get(0).selectedMaxValue = maxBudget;
                     grp.isSelected = true;
                 }
+            }
+        }
+
+        // sorting
+        if(this.sort != null) {
+            if (this.sort == Sort.RELEVANCE) {
+                selector.sort(null, null);
+            } else if(this.sort == Sort.PRICE_HIGH_TO_LOW) {
+                selector.sort("price", "DESC");
+            } else if(this.sort == Sort.PRICE_LOW_TO_HIGH) {
+                selector.sort("price", "ASC");
+            } else if(this.sort == Sort.SELLER_RATING) {
+                selector.sort("listingSellerCompanyScore", "DESC");
+            } else if(this.sort == Sort.DATE_POSTED) {
+                selector.sort("listingPostedDate", "DESC");
+            } else if(this.sort == Sort.LIVABILITY_SCORE) {
+                selector.sort("listingLivabilityScore", "DESC");
+            } else if(this.sort == Sort.DISTANCE) {
+//                selector.sort("price", "DESC");
             }
         }
     }

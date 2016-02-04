@@ -11,14 +11,14 @@
     android:layout_marginStart="@dimen/serp_listing_cluster_card_margin_left"
     android:layout_marginTop="@dimen/serp_listing_cluster_card_margin_top"
     app:cardCornerRadius="25dp"
-    app:cardElevation="0dp"
-    android:padding="0dp"
-    app:cardBackgroundColor="@color/serp_listing_cluster_card_background" >
+    app:cardElevation="2dp"
+    android:padding="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="0dp">
+        android:layout_margin="0dp"
+        android:background="@drawable/cluster_texture_bg">
 
         <FrameLayout
             android:id="@+id/serp_listing_cluster_group_frame_layout"

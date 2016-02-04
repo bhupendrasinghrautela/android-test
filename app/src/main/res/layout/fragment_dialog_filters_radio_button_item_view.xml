@@ -9,4 +9,5 @@
     android:button="@null"
     android:drawableLeft="@drawable/fragment_dialog_filters_radio_button_selector"
     android:drawableStart="@drawable/fragment_dialog_filters_radio_button_selector"
-    android:drawablePadding="10dp"/>
+    android:drawablePadding="10dp"
+    android:typeface="monospace"/>

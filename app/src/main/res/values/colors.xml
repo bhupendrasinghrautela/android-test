@@ -45,7 +45,7 @@
     <color name="serp_listing_call_seller_button_background_left_color">#FBA511</color>
     <color name="activity_search_base_layout_search_bar_background_color">#E71C28</color>
     <color name="serp_listing_total_properties_text_color">#E3444444</color>
-    <color name="filters_fragment_filter_count_background_color">#FBA511</color>
+    <color name="filters_fragment_filter_count_background_color">@color/app_red</color>
     <color name = "appThemeYellow">#FBA511 </color>
 
     <color name="fragment_dialog_filters_toggle_button_normal_text_color">#444444</color>

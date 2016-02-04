@@ -7,6 +7,7 @@ import android.provider.Settings;
 import android.text.TextUtils;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -79,6 +80,15 @@ public class AppUtils {
 
         long diff = Math.abs(new Date().getTime() - date1.getTime());
         return diff / (24 * 60 * 60 * 100);
+    }
+
+    public static int getElapsedYearsFromNow(Long epochTime) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(epochTime);
+
+        Calendar calendar1 = Calendar.getInstance();
+
+        return calendar1.get(Calendar.YEAR) - calendar.get(Calendar.YEAR);
     }
 
 
