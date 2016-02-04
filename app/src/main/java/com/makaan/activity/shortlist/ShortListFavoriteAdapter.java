@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,12 +42,26 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         ShortListFavoriteViewHolder shortListFavoriteViewHolder = (ShortListFavoriteViewHolder)holder;
-        if(wishList.get(position).project.maxPrice!=null) {
+        if(null!=wishList.get(position).listingId){
             shortListFavoriteViewHolder.mLinearLayoutDetails.setVisibility(View.VISIBLE);
-            String price = StringUtil.getDisplayPrice(wishList.get(position).project.maxPrice);
+            shortListFavoriteViewHolder.mTextViewOnwards.setVisibility(View.GONE);
+            String price = StringUtil.getDisplayPrice(wishList.get(position).listing.currentListingPrice.price);
             shortListFavoriteViewHolder.mTextViewPriceValue.setText(price);
+
+        }else if(null!=wishList.get(position).project.minResaleOrPrimaryPrice) {
+            shortListFavoriteViewHolder.mLinearLayoutDetails.setVisibility(View.VISIBLE);
+            shortListFavoriteViewHolder.mTextViewOnwards.setVisibility(View.VISIBLE);
+            String price = StringUtil.getDisplayPrice(wishList.get(position).project.minResaleOrPrimaryPrice);
+            shortListFavoriteViewHolder.mTextViewPriceValue.setText(price);
+
         }else{
             shortListFavoriteViewHolder.mLinearLayoutDetails.setVisibility(View.GONE);
+        }
+        if(!TextUtils.isEmpty(wishList.get(position).projectName)){
+            shortListFavoriteViewHolder.mTextViewArea.setVisibility(View.VISIBLE);
+            shortListFavoriteViewHolder.mTextViewArea.setText(wishList.get(position).builderName + " " + wishList.get(position).projectName);
+        }else{
+            shortListFavoriteViewHolder.mTextViewArea.setVisibility(View.GONE);
         }
         String imageUrl=null;
         if(wishList.get(position).project.imageURL.contains("http")){
