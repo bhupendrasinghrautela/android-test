@@ -5,5 +5,6 @@ package com.makaan.service.user;
  */
 public interface OnFacebookTokenListener {
     void onFacebookTokenSuccess(String token);
+    void onFacebookLoginManagerCallback();
     void onFacebookTokenFail();
 }

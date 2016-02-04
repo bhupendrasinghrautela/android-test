@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="160dp"
+        android:layout_gravity="center"
+        android:src="@drawable/makaan_banner" />
+    <!--<include layout="@layout/login_makaan_common"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/makaan_common_margin_top"
+        android:layout_marginLeft="@dimen/makaan_common_margin_left"
+        />-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/zero_weight"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/connect" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/connect_with"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/login_view_height"
+        android:background="@color/view_line_grey" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/zero_weight"
+        android:layout_marginBottom="@dimen/button_padding"
+        android:layout_marginTop="@dimen/button_padding"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero_weight"
+            android:layout_weight="1"
+            android:gravity="center">
+
+
+            <ImageView
+                android:id="@+id/fb_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/facebook" />
+
+            <ImageView
+                android:id="@+id/gmail_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/google_plus" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/makaan_login"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/zero_weight"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/no_social_account"
+            android:textColor="@color/appThemeRed"
+            android:textSize="@dimen/name_text_size" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

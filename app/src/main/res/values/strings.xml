@@ -257,5 +257,8 @@
     <string name="how_it_works">1. contact makaan agent\n2. do site visit &amp; provide reviews\n3. book a property\n4. upload proof of ownership</string>
     <string name="redeem_now">redeem now</string>
 
+    <string name="password_recovery">please check your mail for password recovery details</string>
+    <string name="app_FB_id">111204692324347</string>
+
 </resources>
 

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="160dp"
+        android:layout_gravity="center"
+        android:src="@drawable/makaan_banner" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:gravity="top"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/drawable_top_padding">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/information" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/personal_info"
+            android:textSize="@dimen/enquiry_medium_text" />
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/login_view_height"
+        android:background="@color/view_line_grey" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.4"
+        android:orientation="vertical"
+        android:padding="@dimen/input_top_margin">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/sign_up_username"
+            android:textSize="@dimen/medium_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/input_top_margin"
+            android:background="@drawable/edittext_bg_bottom_border"
+            android:hint="@string/user_name"
+            android:paddingBottom="@dimen/edit_internal_padding"
+            android:paddingTop="@dimen/edit_internal_padding"
+            android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/drawable_top_padding">
+
+            <EditText
+                android:id="@+id/sign_up_email"
+                android:textSize="@dimen/medium_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/input_top_margin"
+                android:text="admin123-3500013@proptiger.com"
+                android:background="@drawable/edittext_bg_bottom_border"
+                android:hint="@string/email"
+                android:paddingBottom="@dimen/edit_internal_padding"
+                android:paddingTop="@dimen/edit_internal_padding"
+                android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/drawable_top_padding">
+
+                <EditText
+                    android:id="@+id/sign_up_password"
+                    android:inputType="textPassword"
+                    android:textSize="@dimen/medium_text"
+                    android:text="123456"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/input_top_margin"
+                    android:background="@drawable/edittext_bg_bottom_border"
+                    android:hint="@string/Password"
+                    android:paddingBottom="@dimen/edit_internal_padding"
+                    android:paddingTop="@dimen/edit_internal_padding"
+                    android:singleLine="true"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <CheckBox
+                android:id="@+id/sign_up_password_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:button="@drawable/checkbox_show_hide_pwd"/>
+        </RelativeLayout>
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/input_top_margin"
+            android:paddingTop="@dimen/drawable_top_padding">
+
+            <CheckBox
+                android:id="@+id/cb_remember_me"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/remember_me"
+                android:textSize="@dimen/medium_text"
+                android:paddingLeft="10dp"
+                android:button="@drawable/checkbox_remember_me_selector"/>
+
+            <TextView
+                android:id="@+id/tv_forgot_pwd"
+                android:layout_width="@dimen/zero_weight"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/forgot_pwd"
+                android:textColor="@color/appThemeRed"
+                android:textSize="@dimen/medium_text" />
+
+        </LinearLayout>-->
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/button_background_selector">
+
+            <Button
+                android:id="@+id/sign_up_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="?android:selectableItemBackground"
+                android:paddingLeft="@dimen/button_padding_left_right"
+                android:paddingRight="@dimen/button_padding_left_right"
+                android:text="@string/sign_up"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/average_text" />
+        </FrameLayout>
+
+        <!--<TextView
+            android:id="@+id/tv_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signup"
+            android:layout_gravity="center_horizontal"
+            android:padding="@dimen/signup_text_padding"
+            android:clickable="true"/>-->
+
+    </LinearLayout>
+
+</LinearLayout>
