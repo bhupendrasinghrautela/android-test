@@ -88,9 +88,10 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         new PriceTrendService().getPriceTrendForLocalities(localityIds, months, new LocalityTrendCallback() {
             @Override
             public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
-                if (localityPriceTrendDto.data != null && localityPriceTrendDto.data.size() != 0)
+                if (localityPriceTrendDto.data != null && localityPriceTrendDto.data.size() != 0) {
+                    priceTrendView.setVisibility(View.VISIBLE);
                     priceTrendView.bindView(localityPriceTrendDto);
-                else
+                } else
                     priceTrendView.setVisibility(View.GONE);
             }
         });

@@ -40,15 +40,23 @@
             android:layout_below="@id/tv_nearby_localities_name"
             android:layout_alignLeft="@id/tv_nearby_localities_name"
             />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/nearby_locality_seperator"
+            android:layout_below="@id/tv_nearby_localities_median"
+            android:background="@color/project_item_seperator"
+            android:layout_marginLeft="25dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:id="@+id/ll_locality_counts"
             android:weightSum="2"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_alignLeft="@id/tv_nearby_localities_name"
-            android:layout_below="@id/tv_nearby_localities_median"
+            android:layout_below="@id/nearby_locality_seperator"
             android:layout_marginBottom="30dp"
             >
             <LinearLayout

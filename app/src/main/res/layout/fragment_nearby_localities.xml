@@ -8,7 +8,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <include layout="@layout/locality_seperator_view"/>
-    <com.makaan.ui.view.FontTextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/locality_kyn_margin_right"

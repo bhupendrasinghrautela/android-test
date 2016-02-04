@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
 import android.text.Html;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -239,7 +240,11 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         new PriceTrendService().getPriceTrendForLocalities(localityIds, 60, new LocalityTrendCallback() {
             @Override
             public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
-                mPriceTrendView.bindView(localityPriceTrendDto);
+                if (localityPriceTrendDto.data != null && localityPriceTrendDto.data.size() != 0) {
+                    mPriceTrendView.setVisibility(View.VISIBLE);
+                    mPriceTrendView.bindView(localityPriceTrendDto);
+                } else
+                    mPriceTrendView.setVisibility(View.GONE);
             }
         });
     }

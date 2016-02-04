@@ -13,12 +13,12 @@
     <ImageView
         android:id="@+id/blurred_city_image"
         android:layout_width="match_parent"
+        android:alpha="0"
         android:scaleType="centerCrop"
-        android:src="#FFF"
         android:layout_height="match_parent"/>
 
     <ImageView
-        android:src="#80000000"
+        android:background="#80000000"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"/>
@@ -46,7 +46,7 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-    <android.support.v4.widget.NestedScrollView
+    <com.makaan.ui.view.VerticalNestedScrollView
         android:layout_width="match_parent"
         android:id="@+id/city_scrollview"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -69,5 +69,5 @@
             <include layout="@layout/locality_top_agents"/>
             <include layout="@layout/locality_nearby_localities"/>
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </com.makaan.ui.view.VerticalNestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

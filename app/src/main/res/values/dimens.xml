@@ -878,7 +878,7 @@
     <dimen name="locality_kyn_margin_bottom">25dp</dimen>
     <dimen name="locality_kyn_margin_top">32dp</dimen>
     <dimen name="locality_kyn_margin_right">20dp</dimen>
-    <dimen name="locality_lifestyle_recycler_height">530dp</dimen>
+    <dimen name="locality_lifestyle_recycler_height">400dp</dimen>
     <dimen name="locality_properties_recycler_height">234dp</dimen>
     <dimen name="locality_text_v_v_small">12sp</dimen>
     <dimen name="locality_switch_margin_left">15dp</dimen>

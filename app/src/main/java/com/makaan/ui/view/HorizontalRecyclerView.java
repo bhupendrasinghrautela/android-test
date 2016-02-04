@@ -3,31 +3,39 @@ package com.makaan.ui.view;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
 
 /**
  * Created by tusharchaudhary on 1/22/16.
  */
-public class HorizontalRecyclerView extends RecyclerView{
-    private GestureDetector mGestureDetector;
+public class HorizontalRecyclerView extends RecyclerView implements View.OnTouchListener {
 
     public HorizontalRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mGestureDetector = new GestureDetector(context, new XScrollDetector());
-        setFadingEdgeLength(0);
+        this.setOnTouchListener(this);
     }
 
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return super.onInterceptTouchEvent(ev) && mGestureDetector.onTouchEvent(ev);
+    public boolean onTouch(View v, MotionEvent event) {
+        int action = event.getAction();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                Log.e("Event","down");
+                break;
+
+            case MotionEvent.ACTION_CANCEL:
+                Log.e("Event","cancel");
+                break;
+
+            case MotionEvent.ACTION_UP:
+                Log.e("Event","up");
+                break;
+        }
+        v.onTouchEvent(event);
+        return true;
     }
 
-    // Return false if we're scrolling in the y direction
-    class XScrollDetector extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            return Math.abs(distanceY) < Math.abs(distanceX);
-        }
-    }
 }
