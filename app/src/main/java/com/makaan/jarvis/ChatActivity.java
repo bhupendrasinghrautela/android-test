@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -123,15 +124,18 @@ public class ChatActivity extends AppCompatActivity {
 
         mCompose.setOnEditorActionListener(
                 new EditText.OnEditorActionListener() {
-                   @Override
-                   public boolean onEditorAction(TextView tv, int actionId, KeyEvent event) {
-                       if (actionId == EditorInfo.IME_ACTION_DONE) {
-                           sendMessage(mCompose.getText().toString());
-                           return true;
-                       }
-                       return false;
-                   }
-               });
+                    @Override
+                    public boolean onEditorAction(TextView tv, int actionId, KeyEvent event) {
+                        if (actionId == EditorInfo.IME_ACTION_SEND) {
+                            sendMessage(mCompose.getText().toString());
+                            mCompose.setText("");
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+
+
 
         bootUpChat();
     }

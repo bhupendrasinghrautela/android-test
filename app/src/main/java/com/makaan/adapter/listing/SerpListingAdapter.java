@@ -30,6 +30,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
     private int mRequestType = SerpActivity.TYPE_UNKNOWN;
     protected ArrayList<GroupCluster> mGroupClusterListings;
     private String mCount;
+    private boolean mBuilderSellerPopulated = false;
 
     public SerpListingAdapter(Context context, SerpRequestCallback callbacks) {
         mContext = context;
@@ -131,7 +132,10 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
             viewHolder.populateData(mGroupClusterListings.get(position / 10), mCallback);
         } else if(type == RecycleViewMode.DATA_TYPE_BUILDER.getValue()
                 || type == RecycleViewMode.DATA_TYPE_SELLER.getValue()) {
-            viewHolder.populateData(null, mCallback);
+            if(!mBuilderSellerPopulated) {
+                viewHolder.populateData(null, mCallback);
+                mBuilderSellerPopulated = true;
+            }
         } else {
             if(position == 0) {
                 viewHolder.populateData(mCount, mCallback);
@@ -192,6 +196,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
         }
 
         this.mItems.addAll(listings);
+        mBuilderSellerPopulated = false;
         notifyDataSetChanged();
     }
 }

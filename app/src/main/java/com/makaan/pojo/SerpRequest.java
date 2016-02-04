@@ -10,6 +10,7 @@ import com.makaan.activity.listing.SerpActivity;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.serp.FilterGroup;
+import com.makaan.response.serp.TermFilter;
 import com.makaan.util.KeyUtil;
 
 import java.util.ArrayList;
@@ -26,8 +27,10 @@ public class SerpRequest implements Parcelable {
     public static final int CONTEXT_RESALE = 0x04;
     public static final int CONTEXT_BUY = CONTEXT_PRIMARY | CONTEXT_RESALE;
 
-    enum Sort {
-        RELEVANCE, PRICE_HIGH_TO_LOW, PRICE_LOW_TO_HIGH, SELLER_RATING, DATE_POSTED, LIVABILITY_SCORE, DISTANCE
+    public enum Sort {
+        RELEVANCE, PRICE_HIGH_TO_LOW, PRICE_LOW_TO_HIGH, SELLER_RATING_ASC, SELLER_RATING_DESC,
+        DATE_POSTED_ASC, DATE_POSTED_DESC, LIVABILITY_SCORE_ASC, LIVABILITY_SCORE_DESC,
+        QUALITY_SCORE_ASC, QUALITY_SCORE_DESC, DISTANCE_ASC, DISTANCE_DESC
     }
 
     ArrayList<Long> cityIds = new ArrayList<Long>();
@@ -36,14 +39,23 @@ public class SerpRequest implements Parcelable {
     ArrayList<Long> projectIds = new ArrayList<Long>();
     ArrayList<Long> builderIds = new ArrayList<Long>();
     ArrayList<Long> sellerIds = new ArrayList<Long>();
+    ArrayList<Integer> bedrooms = new ArrayList<Integer>();
+    ArrayList<Integer> bathrooms = new ArrayList<Integer>();
+    ArrayList<Integer> propertyTypes = new ArrayList<Integer>();
     ArrayList<String> gpIds = new ArrayList<String>();
 
     long minBudget = UNEXPECTED_VALUE;
     long maxBudget = UNEXPECTED_VALUE;
+    long minArea = UNEXPECTED_VALUE;
+    long maxArea = UNEXPECTED_VALUE;
     int serpContext = UNEXPECTED_VALUE;
-    Sort sort;
+    int sort = UNEXPECTED_VALUE;
 
     public void setSort(Sort sort) {
+        this.sort = sort.ordinal();
+    }
+
+    private void setSort(int sort) {
         this.sort = sort;
     }
 
@@ -83,6 +95,24 @@ public class SerpRequest implements Parcelable {
         }
     }
 
+    public void setBedrooms(int bedroom) {
+        if(!this.bedrooms.contains(bedroom)) {
+            this.bedrooms.add(bedroom);
+        }
+    }
+
+    public void setBathroom(int bathroom) {
+        if(!this.bathrooms.contains(bathroom)) {
+            this.bathrooms.add(bathroom);
+        }
+    }
+
+    public void setPropertyType(int propertyType) {
+        if(!this.propertyTypes.contains(propertyType)) {
+            this.propertyTypes.add(propertyType);
+        }
+    }
+
     public void setGpId(String gpId) {
         if(!this.gpIds.contains(gpId)) {
             this.gpIds.add(gpId);
@@ -95,6 +125,14 @@ public class SerpRequest implements Parcelable {
 
     public void setMaxBudget(long maxBudget) {
         this.maxBudget = maxBudget;
+    }
+
+    public void setMinArea(long minBudget) {
+        this.minArea = minBudget;
+    }
+
+    public void setMaxArea(long maxBudget) {
+        this.maxArea = maxBudget;
     }
 
     public void setSerpContext(int context) {
@@ -110,11 +148,19 @@ public class SerpRequest implements Parcelable {
         readLongList(source, this.projectIds);
         readLongList(source, this.builderIds);
         readLongList(source, this.sellerIds);
+        readIntList(source, this.bedrooms);
+        readIntList(source, this.bathrooms);
+        readIntList(source, this.propertyTypes);
         readStringList(source, this.gpIds);
 
         setMinBudget(source.readLong());
         setMaxBudget(source.readLong());
+
+        setMinArea(source.readLong());
+        setMaxArea(source.readLong());
+
         setSerpContext(source.readInt());
+        setSort(source.readInt());
     }
 
     @Override
@@ -130,11 +176,19 @@ public class SerpRequest implements Parcelable {
         writeLongList(dest, this.projectIds);
         writeLongList(dest, this.builderIds);
         writeLongList(dest, this.sellerIds);
+        writeIntList(dest, this.bedrooms);
+        writeIntList(dest, this.bathrooms);
+        writeIntList(dest, this.propertyTypes);
         writeStringList(dest, this.gpIds);
 
         dest.writeLong(this.minBudget);
         dest.writeLong(this.maxBudget);
+
+        dest.writeLong(this.minArea);
+        dest.writeLong(this.maxArea);
+
         dest.writeInt(this.serpContext);
+        dest.writeInt(this.sort);
     }
 
     private void writeStringList(Parcel dest, ArrayList<String> list) {
@@ -151,6 +205,13 @@ public class SerpRequest implements Parcelable {
         }
     }
 
+    private void writeIntList(Parcel dest, ArrayList<Integer> list) {
+        dest.writeInt(list.size());
+        for(int i = 0; i < list.size(); i++) {
+            dest.writeInt(list.get(i));
+        }
+    }
+
     private void readStringList(Parcel source, ArrayList<String> list) {
         int size = source.readInt();
         for(int i = 0; i < size; i++) {
@@ -162,6 +223,13 @@ public class SerpRequest implements Parcelable {
         int size = source.readInt();
         for(int i = 0; i < size; i++) {
             list.add(source.readLong());
+        }
+    }
+
+    private void readIntList(Parcel source, ArrayList<Integer> list) {
+        int size = source.readInt();
+        for(int i = 0; i < size; i++) {
+            list.add(source.readInt());
         }
     }
 
@@ -242,6 +310,33 @@ public class SerpRequest implements Parcelable {
             // TODO
         }
 
+        // bedrooms
+        if(this.bedrooms.size() > 0) {
+
+            selector.removeTerm(KeyUtil.BEDROOM);
+            for (Integer bedroom : this.bedrooms) {
+                selector.term(KeyUtil.BEDROOM, String.valueOf(bedroom));
+            }
+        }
+
+        // bathrooms
+        if(this.bathrooms.size() > 0) {
+
+            selector.removeTerm(KeyUtil.BATHROOM);
+            for (Integer bathroom : this.bathrooms) {
+                selector.term(KeyUtil.BATHROOM, String.valueOf(bathroom));
+            }
+        }
+
+        // property types
+        if(this.propertyTypes.size() > 0) {
+
+            selector.removeTerm(KeyUtil.PROPERTY_TYPES);
+            for (Integer propertyType : this.propertyTypes) {
+                selector.term(KeyUtil.PROPERTY_TYPES, String.valueOf(propertyType));
+            }
+        }
+
         if(serpContext != UNEXPECTED_VALUE) {
             selector.removeTerm(KeyUtil.LISTING_CATEGORY);
             if((serpContext & CONTEXT_PRIMARY) > 0) {
@@ -255,56 +350,124 @@ public class SerpRequest implements Parcelable {
             }
         }
 
+        // budget
         if (minBudget != UNEXPECTED_VALUE
                 && maxBudget != UNEXPECTED_VALUE) {
             selector.removeRange(KeyUtil.PRICE);
             selector.range(KeyUtil.PRICE, minBudget, maxBudget);
-
-            for (FilterGroup grp : filterGroup) {
-                if (grp.rangeFilterValues.size() > 0 && KeyUtil.PRICE.equalsIgnoreCase(grp.rangeFilterValues.get(0).fieldName)) {
-                    grp.rangeFilterValues.get(0).selectedMinValue = minBudget;
-                    grp.rangeFilterValues.get(0).selectedMaxValue = maxBudget;
-                    grp.isSelected = true;
-                }
-            }
         } else if (minBudget != UNEXPECTED_VALUE) {
             selector.removeRange(KeyUtil.PRICE);
             selector.range(KeyUtil.PRICE, minBudget, null);
-
-            for (FilterGroup grp : filterGroup) {
-                if (grp.rangeFilterValues.size() > 0 && KeyUtil.PRICE.equalsIgnoreCase(grp.rangeFilterValues.get(0).fieldName)) {
-                    grp.rangeFilterValues.get(0).selectedMinValue = minBudget;
-                    grp.isSelected = true;
-                }
-            }
         } else if (maxBudget != UNEXPECTED_VALUE) {
             selector.removeRange(KeyUtil.PRICE);
             selector.range(KeyUtil.PRICE, null, maxBudget);
+        }
 
-            for (FilterGroup grp : filterGroup) {
-                if (grp.rangeFilterValues.size() > 0 && KeyUtil.PRICE.equalsIgnoreCase(grp.rangeFilterValues.get(0).fieldName)) {
-                    grp.rangeFilterValues.get(0).selectedMaxValue = maxBudget;
-                    grp.isSelected = true;
-                }
-            }
+        // area
+        if (minArea != UNEXPECTED_VALUE
+                && maxArea != UNEXPECTED_VALUE) {
+            selector.removeRange(KeyUtil.PRICE);
+            selector.range(KeyUtil.PRICE, minArea, maxArea);
+        } else if (minArea != UNEXPECTED_VALUE) {
+            selector.removeRange(KeyUtil.PRICE);
+            selector.range(KeyUtil.PRICE, minArea, null);
+        } else if (maxArea != UNEXPECTED_VALUE) {
+            selector.removeRange(KeyUtil.PRICE);
+            selector.range(KeyUtil.PRICE, null, maxArea);
         }
 
         // sorting
-        if(this.sort != null) {
-            if (this.sort == Sort.RELEVANCE) {
+        if(this.sort != UNEXPECTED_VALUE) {
+            if (this.sort == Sort.RELEVANCE.ordinal()) {
                 selector.sort(null, null);
-            } else if(this.sort == Sort.PRICE_HIGH_TO_LOW) {
+            } else if(this.sort == Sort.PRICE_HIGH_TO_LOW.ordinal()) {
                 selector.sort("price", "DESC");
-            } else if(this.sort == Sort.PRICE_LOW_TO_HIGH) {
+            } else if(this.sort == Sort.PRICE_LOW_TO_HIGH.ordinal()) {
                 selector.sort("price", "ASC");
-            } else if(this.sort == Sort.SELLER_RATING) {
+            } else if(this.sort == Sort.SELLER_RATING_ASC.ordinal()) {
+                selector.sort("listingSellerCompanyScore", "ASC");
+            } else if(this.sort == Sort.SELLER_RATING_DESC.ordinal()) {
                 selector.sort("listingSellerCompanyScore", "DESC");
-            } else if(this.sort == Sort.DATE_POSTED) {
+            } else if(this.sort == Sort.DATE_POSTED_ASC.ordinal()) {
+                selector.sort("listingPostedDate", "ASC");
+            } else if(this.sort == Sort.DATE_POSTED_DESC.ordinal()) {
                 selector.sort("listingPostedDate", "DESC");
-            } else if(this.sort == Sort.LIVABILITY_SCORE) {
+            } else if(this.sort == Sort.LIVABILITY_SCORE_ASC.ordinal()) {
+                selector.sort("listingLivabilityScore", "ASC");
+            } else if(this.sort == Sort.LIVABILITY_SCORE_DESC.ordinal()) {
                 selector.sort("listingLivabilityScore", "DESC");
-            } else if(this.sort == Sort.DISTANCE) {
+            } else if(this.sort == Sort.QUALITY_SCORE_ASC.ordinal()) {
+                selector.sort("listingQualityScore", "ASC");
+            } else if(this.sort == Sort.QUALITY_SCORE_DESC.ordinal()) {
+                selector.sort("listingQualityScore", "DESC");
+            } else if(this.sort == Sort.DISTANCE_ASC.ordinal()) {
 //                selector.sort("price", "DESC");
+            } else if(this.sort == Sort.DISTANCE_DESC.ordinal()) {
+//                selector.sort("price", "DESC");
+            }
+        }
+
+        // apply filters
+        for (FilterGroup grp : filterGroup) {
+            if (grp.rangeFilterValues.size() > 0 && KeyUtil.PRICE.equalsIgnoreCase(grp.rangeFilterValues.get(0).fieldName)) {
+                if(minBudget != UNEXPECTED_VALUE) {
+                    grp.rangeFilterValues.get(0).selectedMinValue = minBudget;
+                    grp.isSelected = true;
+                }
+                if(maxBudget != UNEXPECTED_VALUE) {
+                    grp.rangeFilterValues.get(0).selectedMaxValue = maxBudget;
+                    grp.isSelected = true;
+                }
+            } else if(grp.rangeFilterValues.size() > 0 && KeyUtil.AREA.equalsIgnoreCase(grp.rangeFilterValues.get(0).fieldName)) {
+                if(minArea != UNEXPECTED_VALUE) {
+                    grp.rangeFilterValues.get(0).selectedMinValue = minArea;
+                    grp.isSelected = true;
+                }
+                if(maxArea != UNEXPECTED_VALUE) {
+                    grp.rangeFilterValues.get(0).selectedMaxValue = maxArea;
+                    grp.isSelected = true;
+                }
+            } else if(grp.termFilterValues.size() > 0 && KeyUtil.BATHROOM.equalsIgnoreCase(grp.termFilterValues.get(0).fieldName)) {
+                if(this.bathrooms.size() > 0) {
+                    applyIntTermFilter(grp, bathrooms);
+                }
+            } else if(grp.termFilterValues.size() > 0 && KeyUtil.BEDROOM.equalsIgnoreCase(grp.termFilterValues.get(0).fieldName)) {
+                if(this.bedrooms.size() > 0) {
+                    applyIntTermFilter(grp, bedrooms);
+                }
+            } else if(grp.termFilterValues.size() > 0 && KeyUtil.PROPERTY_TYPES.equalsIgnoreCase(grp.termFilterValues.get(0).fieldName)) {
+                if(this.propertyTypes.size() > 0) {
+                    applyIntTermFilter(grp, propertyTypes);
+                }
+            }
+        }
+    }
+
+    private void applyIntTermFilter(FilterGroup grp, ArrayList<Integer> list) {
+        for(int item : list) {
+            for(TermFilter filter : grp.termFilterValues) {
+                try {
+                    int val = Integer.parseInt(filter.value);
+                    if(val == item) {
+                        filter.selected = true;
+                        grp.isSelected = true;
+                    }
+                } catch (NumberFormatException ex) {
+                    if(filter.value.contains("-")) {
+                        String[] val = filter.value.split("-");
+                        if(val.length == 2) {
+                            if ((Integer.parseInt(val[0]) <= item) && (Integer.parseInt(val[1]) >= item)) {
+                                filter.selected = true;
+                                grp.isSelected = true;
+                            }
+                        } else if(val.length == 1) {
+                            if (Integer.parseInt(val[0]) <= item) {
+                                filter.selected = true;
+                                grp.isSelected = true;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

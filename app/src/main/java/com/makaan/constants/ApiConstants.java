@@ -6,7 +6,7 @@ package com.makaan.constants;
 public class ApiConstants {
 
 
-    //public static final String BASE_URL = "https://marketplace-qa.proptiger-ws.com";
+    //public static final String BASE_URL = "https://beta.makaan-ws.com";
     public static final String BASE_URL = "http://marketplace-qa.makaan-ws.com";
     //public static final String BASE_URL = "http://mp-qa1.makaan-ws.com";
     //public static final String BASE_URL = "http://mp-qa1.makaan-ws.com/";

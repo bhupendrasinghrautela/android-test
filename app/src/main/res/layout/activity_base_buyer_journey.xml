@@ -27,7 +27,21 @@
             android:layout_marginEnd="@dimen/activity_base_buyer_journey_layout_user_image_view_margin_right"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
-        <LinearLayout
+
+        <TextView
+            android:id="@+id/activity_base_buyer_journey_layout_type_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/activity_base_buyer_journey_layout_back_button"
+            android:layout_toEndOf="@id/activity_base_buyer_journey_layout_back_button"
+            android:layout_toLeftOf="@id/activity_base_buyer_journey_layout_user_image_view"
+            android:layout_toStartOf="@id/activity_base_buyer_journey_layout_user_image_view"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="unit booking"
+            android:textSize="@dimen/activity_base_buyer_journey_layout_user_type_text_view_text_size"/>
+        <!--<LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/activity_base_buyer_journey_layout_back_button"
@@ -53,7 +67,7 @@
                 android:layout_marginTop="@dimen/activity_base_buyer_journey_layout_down_arrow_image_view_margin_top"
                 android:src="@drawable/arrow_bottom_white"
                 android:scaleType="centerCrop"/>
-        </LinearLayout>
+        </LinearLayout>-->
     </RelativeLayout>
     <FrameLayout
         android:id="@+id/activity_base_buyer_journey_content_frame_layout"

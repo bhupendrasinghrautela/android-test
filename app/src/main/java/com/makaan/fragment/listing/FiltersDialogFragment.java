@@ -2,7 +2,6 @@ package com.makaan.fragment.listing;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +11,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
-import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.listing.FiltersViewAdapter;
-import com.makaan.cache.MasterDataCache;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.request.selector.Selector;
@@ -180,7 +176,7 @@ public class FiltersDialogFragment extends DialogFragment {
         }
     }
 
-    @OnClick(R.id.fragment_dialog_filters_back_buttom)
+    @OnClick(R.id.fragment_dialog_filters_back_button)
     public void onBackClicked(View view) {
         dismiss();
     }
