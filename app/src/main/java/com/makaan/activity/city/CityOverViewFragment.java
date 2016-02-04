@@ -136,7 +136,8 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         mCityCollapseToolbar.setTitle(mCity.label);
         interestedInTv.setText("interested in " + mCity.label + "?");
         addLocalitiesLifestyleFragment(mCity.entityDescriptions);
-        addProperties(new TaxonomyService().getTaxonomyCardForCity(mCity.id, mCity.minAffordablePrice, mCity.maxAffordablePrice, mCity.minLuxuryPrice, mCity.maxBudgetPrice));
+        addProperties(new TaxonomyService().getTaxonomyCardForCity(mCity.id, mCity.minAffordablePrice, mCity.maxAffordablePrice,
+                mCity.minLuxuryPrice, mCity.maxBudgetPrice));
         //mCityConnectHeader.setText(getString(R.string.city_connect_header_text) + " " + mCity.label);
         if(mCity.cityHeroshotImageUrl != null) {
             MakaanNetworkClient.getInstance().getImageLoader().get(mCity.cityHeroshotImageUrl, new ImageListener() {
