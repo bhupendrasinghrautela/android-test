@@ -1,6 +1,7 @@
 package com.makaan.activity.city;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
 import android.text.Html;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -19,6 +21,7 @@ import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader.ImageContainer;
 import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.makaan.R;
+import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.event.city.CityByIdEvent;
 import com.makaan.event.city.CityTopLocalityEvent;
@@ -50,6 +53,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnCheckedChanged;
+import butterknife.OnClick;
 
 /**
  * Created by aishwarya on 01/01/16.
@@ -84,6 +88,10 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     MultiSelectionSpinner mBhkSpinner;
     @Bind(R.id.property_type_spinner)
     MultiSelectionSpinner mPropertyTypeSpinner;
+
+    @Bind(R.id.pyr_button_bottom)
+    Button mPyrButtonBottom;
+
     ArrayList<Integer> mSelectedPropertyTypes;
     ArrayList<Integer> mSelectedBedroomTypes;
     @Bind(R.id.tv_locality_interested_in)
@@ -105,7 +113,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     private float alpha;
     private Context mContext;
     private City mCity;
-    private Boolean isRent;
+    private Boolean isRent = false;
     private String PREFIX_PROPERTY_SPINNER = "property type :";
     private String POSTFIX_BHK_SPINNER = "bhk";
     private ArrayList<Locality> mCityTopLocalities;
@@ -214,6 +222,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     public void onTopLocalityResults(CityTopLocalityEvent cityTopLocalityEvent){
         mCityTopLocalities = cityTopLocalityEvent.topLocalitiesInCity;
         mTopLocalityLayout.bindView(mCityTopLocalities);
+        mTopLocalityLayout.setShowAllPropertiesClickListener(getActivity().getIntent().getLongExtra(CityActivity.CITY_ID, 1l), isRent);
         fetchPriceTrendData(mCityTopLocalities);
     }
 
@@ -262,5 +271,11 @@ public class CityOverViewFragment extends MakaanBaseFragment{
             fragmentTransaction.addToBackStack(fragment.getClass().getName());
         }
         fragmentTransaction.commitAllowingStateLoss();
+    }
+
+    @OnClick(R.id.pyr_button_bottom)
+    public void onBottomPyrClick(){
+        Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
+        getActivity().startActivity(pyrIntent);
     }
 }

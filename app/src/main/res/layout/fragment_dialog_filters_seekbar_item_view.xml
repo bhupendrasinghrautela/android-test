@@ -17,5 +17,6 @@
         android:id="@+id/fragment_dialog_filter_seekbar_item_view_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/listingBlack"/>
+        android:textColor="@color/listingBlack"
+        android:typeface="monospace"/>
 </LinearLayout>

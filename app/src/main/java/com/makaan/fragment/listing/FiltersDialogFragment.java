@@ -2,6 +2,7 @@ package com.makaan.fragment.listing;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.listing.FiltersViewAdapter;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.pojo.SerpObjects;
+import com.makaan.pojo.SerpRequest;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.ui.view.ExpandableHeightGridView;
@@ -53,13 +56,8 @@ public class FiltersDialogFragment extends DialogFragment {
 
 
         try {
-            if (MakaanBuyerApplication.serpSelector.isBuyContext()) {
-                ArrayList<FilterGroup> filterGroups = MasterDataCache.getInstance().getAllBuyFilterGroups();
-                populateFilters(getClonedFilterGroups(filterGroups));
-            } else {
-                ArrayList<FilterGroup> filterGroups = MasterDataCache.getInstance().getAllRentFilterGroups();
-                populateFilters(getClonedFilterGroups(filterGroups));
-            }
+            ArrayList<FilterGroup> filterGroups = SerpObjects.getFilterGroups(getActivity());
+            populateFilters(getClonedFilterGroups(filterGroups));
         } catch (CloneNotSupportedException ex) {
             ex.printStackTrace();
         }
@@ -149,20 +147,17 @@ public class FiltersDialogFragment extends DialogFragment {
 
     @OnClick(R.id.fragment_dialog_filters_submit_button)
     public void onSubmitClick(View v) {
-        ArrayList<FilterGroup> filterGroups;
-        if (MakaanBuyerApplication.serpSelector.isBuyContext()) {
-            filterGroups = MasterDataCache.getInstance().getAllBuyFilterGroups();
-        } else {
-            filterGroups = MasterDataCache.getInstance().getAllRentFilterGroups();
-        }
+        ArrayList<FilterGroup> filterGroups = SerpObjects.getFilterGroups(getActivity());
+        Selector selector = SerpObjects.getSerpSelector(getActivity());
 
-        for (ExpandableHeightGridView gridView : mFilterGridViews) {
-            FiltersViewAdapter adapter = (FiltersViewAdapter) (gridView.getAdapter());
-            adapter.applyFilters(MakaanBuyerApplication.serpSelector, filterGroups);
+        if(filterGroups != null && selector != null) {
+            for (ExpandableHeightGridView gridView : mFilterGridViews) {
+                FiltersViewAdapter adapter = (FiltersViewAdapter) (gridView.getAdapter());
+                adapter.applyFilters(selector, filterGroups);
+            }
         }
-        if (getActivity() instanceof SerpRequestCallback) {
-            ((SerpRequestCallback) getActivity()).serpRequest(SerpActivity.TYPE_FILTER, MakaanBuyerApplication.serpSelector);
-        }
+        SerpRequest request = new SerpRequest();
+        request.launchSerp(getActivity(), SerpActivity.TYPE_FILTER);
         dismiss();
     }
 

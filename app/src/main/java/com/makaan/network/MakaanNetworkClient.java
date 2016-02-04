@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -236,6 +237,33 @@ public class MakaanNetworkClient {
         addToRequestQueue(stringRequest, tag);
     }
 
+    public void loginRegisterPost(final String url, JSONObject jsonObject,
+                                  final StringRequestCallback stringRequestCallback, String tag){
+        StringRequest stringRequest = new StringRequest
+                (Request.Method.POST, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onSuccess(response);
+
+                    }
+                }, jsonObject, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onError();
+                    }
+                }){
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("applicationType", "MAKAAN");
+                return params;
+            }
+        };
+        addToRequestQueue(stringRequest, tag);
+    }
 
     public void post(final String url, JSONObject jsonObject,
                      final StringRequestCallback stringRequestCallback, String tag) {
@@ -307,8 +335,10 @@ public class MakaanNetworkClient {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        String errorString = new String(error.networkResponse.data);
-                        Log.e("Error : ", errorString);
+                        if(null!=error && null!=error.networkResponse) {
+                            String errorString = new String(error.networkResponse.data);
+                            Log.e("Error : ", errorString);
+                        }
                         completeRequestInQueue(url);
                         stringRequestCallback.onError();
                     }
@@ -320,6 +350,27 @@ public class MakaanNetworkClient {
                 }
 
         };
+        addToRequestQueue(stringRequest, tag);
+    }
+
+    public void socialLoginPost(final String url, final StringRequestCallback stringRequestCallback,
+                                String tag){
+
+        StringRequest stringRequest = new StringRequest
+                (Request.Method.POST, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onSuccess(response);
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        completeRequestInQueue(url);
+                        stringRequestCallback.onError();
+                    }
+                });
         addToRequestQueue(stringRequest, tag);
     }
 

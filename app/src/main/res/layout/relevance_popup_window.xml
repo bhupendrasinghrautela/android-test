@@ -27,7 +27,8 @@
             android:textSize="@dimen/relevance_popup_window_text_size"
             android:textAllCaps="false"
             android:gravity="start|center_vertical"
-            style="?android:attr/borderlessButtonStyle"/>
+            style="?android:attr/borderlessButtonStyle"
+            android:typeface="serif"/>
 
         <Button
             android:id="@+id/relevance_popup_window_price_high_to_low_button"
@@ -43,7 +44,8 @@
             android:textSize="@dimen/relevance_popup_window_text_size"
             android:textAllCaps="false"
             android:gravity="start|center_vertical"
-            style="?android:attr/borderlessButtonStyle" />
+            style="?android:attr/borderlessButtonStyle"
+            android:typeface="serif" />
 
         <Button
             android:id="@+id/relevance_popup_window_price_low_to_high_button"
@@ -59,7 +61,8 @@
             android:textSize="@dimen/relevance_popup_window_text_size"
             android:textAllCaps="false"
             android:gravity="start|center_vertical"
-            style="?android:attr/borderlessButtonStyle" />
+            style="?android:attr/borderlessButtonStyle"
+            android:typeface="serif" />
 
         <Button
             android:id="@+id/relevance_popup_window_seller_rating_button"
@@ -75,7 +78,8 @@
             android:textSize="@dimen/relevance_popup_window_text_size"
             android:textAllCaps="false"
             android:gravity="start|center_vertical"
-            style="?android:attr/borderlessButtonStyle" />
+            style="?android:attr/borderlessButtonStyle"
+            android:typeface="serif" />
 
         <Button
             android:id="@+id/relevance_popup_window_date_posted_button"
@@ -91,7 +95,8 @@
             android:textSize="@dimen/relevance_popup_window_text_size"
             android:textAllCaps="false"
             android:gravity="start|center_vertical"
-            style="?android:attr/borderlessButtonStyle" />
+            style="?android:attr/borderlessButtonStyle"
+            android:typeface="serif" />
 
         <Button
             android:id="@+id/relevance_popup_window_livability_score_button"
@@ -107,7 +112,8 @@
             android:textSize="@dimen/relevance_popup_window_text_size"
             android:textAllCaps="false"
             android:gravity="start|center_vertical"
-            style="?android:attr/borderlessButtonStyle" />
+            style="?android:attr/borderlessButtonStyle"
+            android:typeface="serif" />
 
         <Button
             android:id="@+id/relevance_popup_window_distance_button"
@@ -124,6 +130,7 @@
             android:textAllCaps="false"
             android:gravity="start|center_vertical"
             style="?android:attr/borderlessButtonStyle"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:typeface="serif"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>

@@ -1,6 +1,7 @@
 package com.makaan.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,14 +14,17 @@ import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
+import com.makaan.constants.PreferenceConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.user.UserLoginEvent;
 import com.makaan.event.wishlist.WishListResultEvent;
+import com.makaan.pojo.SerpRequest;
 import com.makaan.response.wishlist.WishListResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.WishListService;
 import com.makaan.service.user.UserLoginService;
 import com.makaan.util.JsonBuilder;
+import com.makaan.util.Preference;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
@@ -52,15 +56,19 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, SerpActivity.class);
                 intent.putExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_HOME);
+                SharedPreferences.Editor editor = getSharedPreferences(PreferenceConstants.PREF, MODE_PRIVATE).edit();
+
+                SerpRequest request = new SerpRequest();
                 switch (rgType.getCheckedRadioButtonId()) {
                     case R.id.activity_home_property_buy_radio_button:
-                        intent.putExtra(SerpActivity.REQUEST_DATA, SerpActivity.REQUEST_DATA_HOME_BUY);
+                        Preference.putInt(editor, PreferenceConstants.PREF_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_BUY);
+                        request.setSerpContext(SerpRequest.CONTEXT_BUY);
                         break;
                     case R.id.activity_home_property_rent_radio_button:
-                        intent.putExtra(SerpActivity.REQUEST_DATA, SerpActivity.REQUEST_DATA_HOME_RENT);
+                        request.setSerpContext(SerpRequest.CONTEXT_RENT);
                         break;
                 }
-                startActivity(intent);
+                request.launchSerp(HomeActivity.this, SerpActivity.TYPE_HOME);
             }
         });
 

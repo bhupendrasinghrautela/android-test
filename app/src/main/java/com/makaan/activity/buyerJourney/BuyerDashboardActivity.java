@@ -1,13 +1,18 @@
 package com.makaan.activity.buyerJourney;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
+import com.makaan.activity.shortlist.ShortListFragment;
 import com.makaan.fragment.WebViewFragment;
 import com.makaan.fragment.buyerJourney.BlogContentFragment;
+import com.makaan.fragment.buyerJourney.SaveSearchFragment;
+import com.makaan.service.MakaanServiceFactory;
+import com.makaan.service.SaveSearchService;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -19,7 +24,14 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
     @Bind(R.id.activity_base_buyer_journey_layout_type_text_view)
     TextView mTitleTextView;
 
-    public static final int LOAD_FRAGMENT_WEB_VIEW = 0x01;
+    public static final String TYPE = "type";
+    public static final String DATA = "data";
+    public static final int LOAD_FRAGMENT_WEB_VIEW = 1;
+    public static final int LOAD_FRAGMENT_CONTENT = 2;
+    public static final int LOAD_FRAGMENT_SHORTLIST = 3;
+    public static final int LOAD_FRAGMENT_REWARDS = 4;
+    public static final int LOAD_FRAGMENT_SAVE_SEARCH = 5;
+
 
     @Override
     protected int getContentViewId() {
@@ -35,8 +47,32 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        if(intent.hasExtra(TYPE)) {
+            int type = intent.getIntExtra(TYPE, LOAD_FRAGMENT_CONTENT);
+            switch (type) {
+                case LOAD_FRAGMENT_CONTENT:
+                    BlogContentFragment fragment = new BlogContentFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(BlogContentFragment.TYPE, intent.getStringExtra(DATA));
+                    fragment.setArguments(bundle);
+                    initFragment(R.id.activity_base_buyer_journey_content_frame_layout, fragment, false);
+                    break;
+                case LOAD_FRAGMENT_SHORTLIST:
+                    initFragment(R.id.activity_base_buyer_journey_content_frame_layout, new ShortListFragment(), false);
+                    break;
+                case LOAD_FRAGMENT_SAVE_SEARCH:
+                    ((SaveSearchService) (MakaanServiceFactory.getInstance().getService(SaveSearchService.class))).getSavedSearches();
+                    initFragment(R.id.activity_base_buyer_journey_content_frame_layout, new SaveSearchFragment(), false);
+                    break;
+                case LOAD_FRAGMENT_REWARDS:
+                    initFragment(R.id.activity_base_buyer_journey_content_frame_layout, new RewardsFragment(), false);
+                    break;
+                default:
+                    break;
+            }
+        }
 
-        initFragment(R.id.activity_base_buyer_journey_content_frame_layout, new BlogContentFragment(), false);
     }
 
     @Override

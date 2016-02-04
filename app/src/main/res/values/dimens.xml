@@ -610,23 +610,24 @@
 
     <dimen name="listing_brief_view_layout_rupee_image_width">16dp</dimen>
     <dimen name="listing_brief_view_layout_rupee_image_height">16dp</dimen>
-    <dimen name="listing_brief_view_layout_rupee_image_top_margin">26dp</dimen>
+    <dimen name="listing_brief_view_layout_rupee_image_top_margin">28dp</dimen>
+    <dimen name="listing_brief_view_layout_rupee_image_left_margin">7dp</dimen>
 
     <dimen name="listing_brief_view_layout_property_price_left_margin">5dp</dimen>
-    <dimen name="listing_brief_view_layout_property_price_top_margin">11dp</dimen>
+    <dimen name="listing_brief_view_layout_property_price_top_margin">15dp</dimen>
     <dimen name="listing_brief_view_layout_property_price_text_size">32sp</dimen>
 
     <dimen name="listing_brief_view_layout_property_price_unit_left_margin">5dp</dimen>
-    <dimen name="listing_brief_view_layout_property_price_unit_top_margin">22dp</dimen>
+    <dimen name="listing_brief_view_layout_property_price_unit_top_margin">24dp</dimen>
     <dimen name="listing_brief_view_layout_property_price_unit_text_size">18sp</dimen>
 
-    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_width">24dp</dimen>
-    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_height">24dp</dimen>
-    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_right_margin">12dp</dimen>
-    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_top_margin">11dp</dimen>
+    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_width">20dp</dimen>
+    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_height">20dp</dimen>
+    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_right_margin">14dp</dimen>
+    <dimen name="listing_brief_view_layout_property_shortlist_checkbox_top_margin">12dp</dimen>
 
-    <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_left_margin">30dp</dimen>
-    <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_top_margin">1dp</dimen>
+    <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_left_margin">0dp</dimen>
+    <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_top_margin">0dp</dimen>
     <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_text_size">16sp</dimen>
 
     <dimen name="listing_brief_view_layout_property_price_difference_image_view_width">16dp</dimen>
@@ -635,21 +636,22 @@
     <dimen name="listing_brief_view_layout_property_price_difference_image_view_top_margin">3dp</dimen>
 
     <!-- following value must be 28dp as per Zeplin UI -->
-    <dimen name="listing_brief_view_layout_property_info_text_view_left_margin">20dp</dimen>
-    <dimen name="listing_brief_view_layout_property_info_text_view_top_margin">6dp</dimen>
+    <dimen name="listing_brief_view_layout_property_info_text_view_left_margin">0dp</dimen>
+    <dimen name="listing_brief_view_layout_property_info_text_view_top_margin">10dp</dimen>
     <dimen name="listing_brief_view_layout_property_info_text_view_text_size">16sp</dimen>
 
     <dimen name="listing_brief_view_layout_empty_view_height">1dp</dimen>
     <dimen name="listing_brief_view_layout_empty_view_after_property_info_view_margin_top">0dp</dimen>
     <dimen name="listing_brief_view_layout_empty_view_after_property_info_view_margin_left">20dp</dimen>
 
-    <dimen name="listing_brief_view_layout_map_image_width">32dp</dimen>
-    <dimen name="listing_brief_view_layout_map_image_height">32dp</dimen>
-    <dimen name="listing_brief_view_layout_map_image_top_margin">7dp</dimen>
-    <dimen name="listing_brief_view_layout_map_image_left_margin">54dp</dimen>
-    <dimen name="listing_brief_view_layout_map_image_bottom_margin">8dp</dimen>
+    <dimen name="listing_brief_view_layout_map_image_width">20dp</dimen>
+    <dimen name="listing_brief_view_layout_map_image_height">20dp</dimen>
+    <dimen name="listing_brief_view_layout_map_image_top_margin">11dp</dimen>
+    <dimen name="listing_brief_view_layout_map_image_left_margin">60dp</dimen>
+    <dimen name="listing_brief_view_layout_map_image_bottom_margin">10dp</dimen>
 
-    <dimen name="listing_brief_view_layout_property_address_text_view_left_margin">1dp</dimen>
+    <dimen name="listing_brief_view_layout_property_address_text_view_left_margin">7dp</dimen>
+    <dimen name="listing_brief_view_layout_property_address_text_view_right_margin">20dp</dimen>
     <dimen name="listing_brief_view_layout_property_address_text_view_top_margin">12dp</dimen>
     <dimen name="listing_brief_view_layout_property_address_text_view_text_size">16sp</dimen>
 
@@ -1055,13 +1057,18 @@
     <dimen name="text_size_medium">16sp</dimen>
     <dimen name="text_size_small">13sp</dimen>
     <dimen name="text_size_large">18sp</dimen>
-
     <dimen name="padding_layout">10dp</dimen>
     <dimen name="view_left_padding_layout">2dp</dimen>
-
-    <dimen name="view_height">920dp</dimen>
-    <dimen name="view_left_margin">18dp</dimen>
+    <dimen name="view_height">940dp</dimen>
+    <dimen name="view_left_margin">17dp</dimen>
     <dimen name="view_top_margin">40dp</dimen>
+    <dimen name="view_width">2dp</dimen>
+    <dimen name="joy_image_height">330dp</dimen>
+    <dimen name="happy_buyers_image_margin">5dp</dimen>
+    <dimen name="happy_buyers_text_size">40sp</dimen>
+    <dimen name="happy_buyers_text_margin_top">97dp</dimen>
+    <dimen name="found_one_margin_top">20dp</dimen>
+    <dimen name="reward_text_margin_top">20dp</dimen>
     <dimen name="project_specification_view_all_margin_top">10dp</dimen>
     <dimen name="project_text_v_small">14sp</dimen>
     <dimen name="tab_padding_left">20dp</dimen>
@@ -1069,7 +1076,11 @@
     <dimen name="tab_padding_top">20dp</dimen>
     <dimen name="tab_padding_right">20dp</dimen>
     <dimen name="tab_selected_padding_right">30dp</dimen>
+    <dimen name="small_image_padding">1dp</dimen>
+    <dimen name="reward_button_padding">20dp</dimen>
     <dimen name="tab_selected_padding_left">30dp</dimen>
+
+
 
     <!--Lead Form UI dimensions-->
     <dimen name="lead_form_seller_image_width">64dp</dimen>
@@ -1090,6 +1101,7 @@
     <dimen name="prject_amenities_margin_left">12dp</dimen>
     <dimen name="prject_amenities_margin_top">12dp</dimen>
 
+    <!--login dimens-->
     <dimen name="zero_weight">0dp</dimen>
     <dimen name="drawable_top_padding">10dp</dimen>
     <dimen name="enquiry_medium_text">18sp</dimen>
@@ -1153,5 +1165,16 @@
     <dimen name="locality_text_bigger">24sp</dimen>
     <dimen name="locality_overview_margin_top">20dp</dimen>
     <dimen name="btn_corner_radius">6dp</dimen>
+
+    <!--get rewards-->
+    <dimen name="gift_height">180dp</dimen>
+    <dimen name="get_upto_text_size">16sp</dimen>
+    <dimen name="get_15000_text_size">26sp</dimen>
+    <dimen name="padding_left_right">20dp</dimen>
+    <dimen name="padding_top_bottom">30dp</dimen>
+    <dimen name="redeem_button_padding">35dp</dimen>
+    <dimen name="redeem_button_text_size">20sp</dimen>
+    <dimen name="how_it_works_text_size">18sp</dimen>
+    <dimen name="padding_brokerage_text">10dp</dimen>
 
 </resources>

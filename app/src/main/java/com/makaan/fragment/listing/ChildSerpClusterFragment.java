@@ -71,12 +71,12 @@ public class ChildSerpClusterFragment extends MakaanBaseFragment {
 
                 private void invalidateArrowButtons() {
                     if (!mViewPager.canScrollHorizontally(1)) {
-                        mRightArrowImageView.setVisibility(View.GONE);
+                        mRightArrowImageView.setVisibility(View.INVISIBLE);
                     } else {
                         mRightArrowImageView.setVisibility(View.VISIBLE);
                     }
                     if (!mViewPager.canScrollHorizontally(-1)) {
-                        mLeftArrowImageView.setVisibility(View.GONE);
+                        mLeftArrowImageView.setVisibility(View.INVISIBLE);
                     } else {
                         mLeftArrowImageView.setVisibility(View.VISIBLE);
                     }

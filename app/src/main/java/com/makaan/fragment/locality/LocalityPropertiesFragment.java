@@ -11,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.listing.SerpActivity;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.pojo.SerpRequest;
 import com.makaan.pojo.TaxonomyCard;
 
 import java.util.List;
@@ -68,11 +70,20 @@ public class LocalityPropertiesFragment extends MakaanBaseFragment {
             public TextView typeTv;
             public ImageView localityIv;
 
-            public ViewHolder(View v) {
-                super(v);
-                descriptionTv = (TextView) v.findViewById(R.id.tv_localities_props_label);
-                typeTv = (TextView) v.findViewById(R.id.tv_localities_props_label_type);
-                localityIv = (ImageView) v.findViewById(R.id.iv_localitites_props);
+            public ViewHolder(View view) {
+                super(view);
+                descriptionTv = (TextView) view.findViewById(R.id.tv_localities_props_label);
+                typeTv = (TextView) view.findViewById(R.id.tv_localities_props_label_type);
+                localityIv = (ImageView) view.findViewById(R.id.iv_localitites_props);
+
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        TaxonomyCard taxonomyCard = taxonomyCardList.get(getAdapterPosition());
+                        taxonomyCard.serpRequest.launchSerp(getActivity(), SerpActivity.TYPE_TAXONOMY);
+
+                    }
+                });
             }
         }
 

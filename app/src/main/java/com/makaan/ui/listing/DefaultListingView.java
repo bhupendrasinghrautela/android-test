@@ -31,6 +31,8 @@ import com.makaan.activity.project.ProjectActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.PreferenceConstants;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.pojo.SerpObjects;
+import com.makaan.pojo.SerpRequest;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.serp.ListingInfoMap;
 import com.makaan.util.Blur;
@@ -161,7 +163,7 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
 
         mCallback = callback;
 
-        boolean isBuy = MakaanBuyerApplication.serpSelector.isBuyContext();
+        boolean isBuy = SerpObjects.isBuyContext(getContext());
 
         mListing = (Listing)data;
         mPropertyShortlistCheckbox.setOnCheckedChangeListener(null);
@@ -448,9 +450,13 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
                 }
                 break;
             case "propertyAge":
-                if(mListing.isReadyToMove && !TextUtils.isEmpty(mListing.propertyAge)) {
+                if(mListing.isReadyToMove && mListing.age >= 0) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
-                    mPropertyInfoTextViews.get(j).setText(mListing.propertyAge.toLowerCase());
+                    if(mListing.age <= 1) {
+                        mPropertyInfoTextViews.get(j).setText(String.format("%d yr", mListing.age));
+                    } else {
+                        mPropertyInfoTextViews.get(j).setText(String.format("%d yrs", mListing.age));
+                    }
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
                 }
@@ -563,13 +569,13 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if(isChecked) {
-            if(MakaanBuyerApplication.serpSelector.isBuyContext()) {
+            if(SerpObjects.isBuyContext(getContext())) {
                 MasterDataCache.getInstance().addShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_BUY, mListing.lisitingId, true);
             } else {
                 MasterDataCache.getInstance().addShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_RENT, mListing.lisitingId, false);
             }
         } else {
-            if(MakaanBuyerApplication.serpSelector.isBuyContext()) {
+            if(SerpObjects.isBuyContext(getContext())) {
                 MasterDataCache.getInstance().removeShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_BUY, mListing.lisitingId, true);
             } else {
                 MasterDataCache.getInstance().removeShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_RENT, mListing.lisitingId, false);
@@ -580,17 +586,11 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
     @OnClick({R.id.serp_default_listing_seller_image_view, R.id.serp_default_listing_seller_name_text_view})
     public void onSellerPressed(View view) {
         // TODO discuss what should be done if listing posted by is not present
+        SerpRequest request = new SerpRequest();
+        request.setSellerId(mListing.lisitingPostedBy.id);
+        request.launchSerp(getContext(), SerpActivity.TYPE_SELLER);
 
-        MakaanBuyerApplication.serpSelector.removeTerm("builderId");
-        MakaanBuyerApplication.serpSelector.removeTerm("localityId");
-        MakaanBuyerApplication.serpSelector.removeTerm("cityId");
-        MakaanBuyerApplication.serpSelector.removeTerm("suburbId");
-
-        MakaanBuyerApplication.serpSelector.term("listingCompanyId", String.valueOf(mListing.lisitingPostedBy.id), true);
-
-        mCallback.serpRequest(SerpActivity.TYPE_SELLER, MakaanBuyerApplication.serpSelector);
-
-//        MakaanBuyerApplication.serpSelector.term("sellerId", String.valueOf(mListing.sellerId));
+//        MakaanBuyerApplication.mSerpSelector.term("sellerId", String.valueOf(mListing.sellerId));
     }
 
     @OnClick(R.id.serp_default_listing_property_address_frame_layout)

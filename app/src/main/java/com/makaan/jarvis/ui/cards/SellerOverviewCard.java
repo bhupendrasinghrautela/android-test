@@ -18,6 +18,7 @@ import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.jarvis.message.Message;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.pojo.SerpRequest;
 import com.makaan.ui.view.BaseView;
 import com.pkmmte.view.CircularImageView;
 
@@ -101,15 +102,9 @@ public class SellerOverviewCard extends BaseView<Message> {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                MakaanBuyerApplication.serpSelector.removeTerm("builderId");
-                MakaanBuyerApplication.serpSelector.removeTerm("localityId");
-                MakaanBuyerApplication.serpSelector.removeTerm("cityId");
-                MakaanBuyerApplication.serpSelector.removeTerm("suburbId");
-
-                MakaanBuyerApplication.serpSelector.term("listingCompanyId", String.valueOf(item.chatObj.id), true);
-                Intent intent = new Intent(context, SerpActivity.class);
-                intent.putExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_SELLER);
-                context.startActivity(intent);
+                SerpRequest request = new SerpRequest();
+                request.setSellerId(item.chatObj.id);
+                request.launchSerp(getContext(), SerpActivity.TYPE_SELLER);
             }
         });
 

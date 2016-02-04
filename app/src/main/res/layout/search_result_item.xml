@@ -29,7 +29,8 @@
             android:textSize="@dimen/search_result_item_type_text_view_text_size"
             android:textColor="@color/search_result_item_type_text_color"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:typeface="serif" />
         <TextView
             android:id="@+id/search_result_item_name_text_view"
             android:layout_width="wrap_content"
@@ -44,7 +45,8 @@
             android:layout_toRightOf="@id/search_result_item_image_view"
             android:layout_toEndOf="@id/search_result_item_image_view"
             android:layout_toLeftOf="@id/search_result_item_type_text_view"
-            android:layout_toStartOf="@id/search_result_item_type_text_view" />
+            android:layout_toStartOf="@id/search_result_item_type_text_view"
+            android:typeface="monospace" />
         <TextView
             android:id="@+id/search_result_item_address_text_view"
             android:layout_width="wrap_content"
@@ -57,7 +59,8 @@
             android:layout_below="@id/search_result_item_name_text_view"
             android:layout_toRightOf="@id/search_result_item_image_view"
             android:layout_toEndOf="@id/search_result_item_image_view"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:typeface="monospace"/>
     </RelativeLayout>
 
     <View

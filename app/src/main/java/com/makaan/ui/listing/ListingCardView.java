@@ -1,8 +1,12 @@
 package com.makaan.ui.listing;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -12,17 +16,23 @@ import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 
+import com.makaan.activity.listing.PropertyActivity;
+import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.project.ProjectActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.PreferenceConstants;
 
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.pojo.SerpObjects;
 import com.makaan.response.listing.Listing;
+import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
 
 import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
@@ -62,12 +72,12 @@ public class ListingCardView extends BaseCardView<Listing> implements CompoundBu
     }
 
     @Override
-    public void bindView(Context context, Listing item) {
+    public void bindView(final Context context, Listing item) {
         mListing = (Listing)item;
         mPreferences = context.getSharedPreferences(
                 PreferenceConstants.PREF_SHORTLISTED_PROPERTIES, Context.MODE_PRIVATE);
         mShortlistPropertyCheckbox.setOnCheckedChangeListener(null);
-        if(MakaanBuyerApplication.serpSelector.isBuyContext()) {
+        if(SerpObjects.isBuyContext(getContext())) {
             boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(
                     mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_BUY, item.lisitingId, true);
             mShortlistPropertyCheckbox.setChecked(isShortlisted);
@@ -99,25 +109,60 @@ public class ListingCardView extends BaseCardView<Listing> implements CompoundBu
         mPropertySizeInfoTextView.setText(item.sizeInfo);
         mPropertyAddressTextView.setText(String.format("%s, %s", item.localityName, item.cityName));
 
-        //TODO this is just a dummy image
-        String url = "https://im.proptiger-ws.com/1/644953/6/imperial-project-image-460007.jpeg";
-        mPropertyImageView.setImageUrl(url, MakaanNetworkClient.getInstance().getImageLoader());
+
+        if(mListing.mainImageUrl != null && !TextUtils.isEmpty(mListing.mainImageUrl)) {
+            mPropertyImageView.setImageUrl(mListing.mainImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
+        } else {
+            //TODO this is just a dummy image
+            String url = "https://im.proptiger-ws.com/1/644953/6/imperial-project-image-460007.jpeg";
+            mPropertyImageView.setImageUrl(url, MakaanNetworkClient.getInstance().getImageLoader());
+        }
+
+        this.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListing != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putLong(KeyUtil.LISTING_ID, mListing.id);
+                    bundle.putDouble(KeyUtil.LISTING_LAT, mListing.latitude);
+                    bundle.putDouble(KeyUtil.LISTING_LON, mListing.longitude);
+                    bundle.putString(KeyUtil.LISTING_Image, mListing.mainImageUrl);
+
+                    Intent intent = new Intent(context, PropertyActivity.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                    //mCallback.requestDetailPage(SerpActivity.REQUEST_PROPERTY_PAGE, bundle);
+                }
+            }
+        });
     }
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if(isChecked) {
-            if(MakaanBuyerApplication.serpSelector.isBuyContext()) {
+            if(SerpObjects.isBuyContext(getContext())) {
                 MasterDataCache.getInstance().addShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_BUY, mListing.lisitingId, true);
             } else {
                 MasterDataCache.getInstance().addShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_RENT, mListing.lisitingId, false);
             }
         } else {
-            if(MakaanBuyerApplication.serpSelector.isBuyContext()) {
+            if(SerpObjects.isBuyContext(getContext())) {
                 MasterDataCache.getInstance().removeShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_BUY, mListing.lisitingId, true);
             } else {
                 MasterDataCache.getInstance().removeShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_RENT, mListing.lisitingId, false);
             }
+        }
+    }
+
+    @OnClick(R.id.listing_brief_view_layout_address_relative_view)
+    public void onProjectClicked(View view) {
+        if(mListing.projectId != null && mListing.projectId != 0) {
+            Bundle bundle = new Bundle();
+            bundle.putLong(ProjectActivity.PROJECT_ID, mListing.projectId);
+
+            Intent intent = new Intent(getContext(), ProjectActivity.class);
+            intent.putExtras(bundle);
+            getContext().startActivity(intent);
         }
     }
 }

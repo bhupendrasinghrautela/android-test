@@ -6,9 +6,9 @@ package com.makaan.constants;
 public class ApiConstants {
 
 
-//    public static final String BASE_URL = "https://marketplace-qa.proptiger-ws.com";
+    //public static final String BASE_URL = "https://marketplace-qa.proptiger-ws.com";
     public static final String BASE_URL = "http://marketplace-qa.makaan-ws.com";
-//    public static final String BASE_URL = "http://mp-qa1.makaan-ws.com";
+    //public static final String BASE_URL = "http://mp-qa1.makaan-ws.com";
     //public static final String BASE_URL = "http://mp-qa1.makaan-ws.com/";
     public static final String FILTER_GROUP = BASE_URL.concat("/data/v1/entity/filter-group");           //TODO: need to implement this on server side
     public static final String LISTING_INFO_MAP = BASE_URL.concat("/data/v1/entity/listing-info-map");           //TODO: need to implement this on server side
@@ -57,12 +57,17 @@ public class ApiConstants {
     public static final String SIMILAR_PROJECT = BASE_URL.concat("/data/v2/recommendation");
     public static final String PROJECT_CONFIG = BASE_URL.concat("/app/v1/project-configuration");
 
-    public static final String BLOG_URL = BASE_URL.concat("/data/v2/entity/blog");
+    public static final String BLOG_URL = "http://beta-makaaniq.proptiger-ws.com/blog?tag="; //BASE_URL.concat("/data/v2/entity/blog");
 
 
     public static final String LISTING_OTHER_SELLERS = BASE_URL.concat("/data/v2/entity/domain");
     public static final String LEAD_INSTANT_CALLBACK_URL= BASE_URL.concat("/app/v1/callNow");
     public static final String COLUMBUS_SUGGESTIONS = BASE_URL.concat("/columbus/app/v1/popular/suggestions");
+    public static final String APP_V1 = "/app/v1";
+    public final static int CONNECTION_TIMEOUT = 30000;
+    public static final String FORGOT_PASSWORD = "/app/v1/reset-password?email=";
+
+
 
     //public static final String SIMILAR_LISTING = BASE_URL.concat("/app/v1/similar/listing/");
 

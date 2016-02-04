@@ -9,6 +9,7 @@ import com.makaan.R;
 import com.makaan.activity.pyr.PyrOtpVerification;
 
 import com.makaan.response.agents.TopAgent;
+import com.makaan.response.search.SearchResponse;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.request.pyr.PyrRequest;
 import com.makaan.response.serp.FilterGroup;
@@ -51,10 +52,10 @@ public class PyrPagePresenter {
     private ArrayList<SearchResponseItem> locaityIds=new ArrayList<SearchResponseItem>();
     private HashMap<Long ,Boolean> mSellerIdMap=new HashMap<Long, Boolean>();
     private PyrBudgetCardView pyrBudgetCardView;
-    private PyrPageFragment pyrPageFragment;
     private List<Integer>bedroomList=new ArrayList<Integer>();
     private String userName=null, userEmail=null, phoneNumber=null, countryName="India";
     private int countryId=1;
+    private String mCityContext;
     ArrayList<TopAgent> mTopAgentsDatas;
 
     public ArrayList<TopAgent> getmTopAgentsDatas() {
@@ -314,7 +315,7 @@ public class PyrPagePresenter {
     public void setBuySelected(boolean selected){
         RENT_SELECTED=!selected;
         BUY_SELECTED=selected;
-        pyrPageFragment.setBuySelected(selected);
+        mPyrFragment.setBuySelected(selected);
     }
 
     public void setBudgetCardViewInstance(PyrBudgetCardView pyrBudgetCardView){
@@ -322,15 +323,15 @@ public class PyrPagePresenter {
     }
 
     public void setLocalitiesOnPyrMainPage(){
-        pyrPageFragment.setLocaityInfo();
+        mPyrFragment.setLocaityInfo();
     }
 
     public void setPropertyTypeCount(){
-        pyrPageFragment.setPropertyCount();
+        mPyrFragment.setPropertyCount();
     }
 
     public void setPyrPageFragmentInstance(PyrPageFragment pyrPageFragment){
-        this.pyrPageFragment=pyrPageFragment;
+        this.mPyrFragment=pyrPageFragment;
     }
 
     public void setName(String name){
@@ -543,6 +544,31 @@ public class PyrPagePresenter {
             }
         }
         return sellerName;
+    }
+
+    public String getCityContext(){
+        return mCityContext;
+    }
+
+    public void prefillLocality(String localityName, long localityId, String cityName){
+        if(localityId>0) {
+            SearchResponseItem searchResponseItem = new SearchResponseItem();
+            searchResponseItem.entityId = String.valueOf(localityId);
+            searchResponseItem.entityName = localityName;
+
+            locaityIds.add(searchResponseItem);
+        }
+
+        if(!TextUtils.isEmpty(mCityContext)) {
+            mCityContext = cityName;
+        }
+    }
+
+    public void clear(){
+        list.clear();
+        locaityIds.clear();
+        mSellerIdMap.clear();
+        mCityContext = "";
     }
 
 }

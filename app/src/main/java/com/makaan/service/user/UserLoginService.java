@@ -24,10 +24,7 @@ public class UserLoginService implements MakaanService{
             throw new IllegalArgumentException("Invalid arguments");
         }
 
-
         String url = buildMakaanSignInRequest();
-
-
         Map<String, String> pars = new HashMap<String, String>();
         pars.put("username", uName);
         pars.put("password", pwd);

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.makaan">
 
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -12,6 +13,8 @@
     <permission
         android:name="com.makaan.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
+
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="com.makaan.permission.MAPS_RECEIVE" />
 
     <application
@@ -68,19 +71,13 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <activity
-            android:name=".activity.shortlist.ShortListActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
         <!--<activity android:name=".activity.locality.LocalityActivity">-->
 
         <activity
             android:name=".activity.listing.SerpActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop">
 
         </activity>
 
@@ -88,16 +85,12 @@
             android:name=".activity.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-           <intent-filter>
-               <action android:name="android.intent.action.MAIN" />
-               <category android:name="android.intent.category.LAUNCHER" />
-           </intent-filter>
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.buyerJourney.SaveSearchActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity
             android:name=".activity.pyr.PyrPageActivity"
             android:label="@string/app_name"

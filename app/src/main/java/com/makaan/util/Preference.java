@@ -67,4 +67,21 @@ public class Preference {
         }
         return preferences.getString(key, null);
     }
+
+
+    public static void putInt(final SharedPreferences.Editor editor, final String key,
+                                 final Integer value) {
+        if(editor == null || value == null){
+            return;
+        }
+        editor.putInt(key, value);
+    }
+
+
+    public static Integer getInt(final SharedPreferences preferences, final String key, final Integer defaultValue) {
+        if(preferences == null || key == null){
+            return null;
+        }
+        return preferences.getInt(key, defaultValue);
+    }
 }

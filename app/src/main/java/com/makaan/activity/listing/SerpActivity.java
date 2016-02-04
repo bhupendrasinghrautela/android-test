@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -21,6 +20,7 @@ import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.constants.PreferenceConstants;
 import com.makaan.event.locality.GpByIdEvent;
 import com.makaan.event.serp.GroupSerpGetEvent;
 import com.makaan.event.serp.SerpGetEvent;
@@ -31,6 +31,7 @@ import com.makaan.fragment.listing.SerpMapFragment;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.OnExposeEvent;
 import com.makaan.pojo.GroupCluster;
+import com.makaan.pojo.SerpObjects;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.listing.GroupListing;
@@ -44,6 +45,7 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SellerService;
 import com.makaan.ui.listing.RelevancePopupWindowController;
 import com.makaan.util.KeyUtil;
+import com.makaan.util.Preference;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -65,9 +67,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     // except for TYPE_SUGGESTION, where data itself should be selector string
     public static final String REQUEST_DATA = "data";
 
-
-    public static final int REQUEST_DATA_HOME_BUY = 0x00;
-    public static final int REQUEST_DATA_HOME_RENT = 0x01;
+    public static final String REQUEST_CONTEXT = "context";
 
     public static final int TYPE_UNKNOWN = 0x00;
     public static final int TYPE_GPID = 0x01;
@@ -77,13 +77,14 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public static final int TYPE_SEARCH = 0x03;
     public static final int TYPE_SELLER = 0x04;
     public static final int TYPE_BUILDER = 0x05;
-    public static final int TYPE_HOME = 0x05;
     public static final int TYPE_LOCALITY = 0x06;
     public static final int TYPE_SUBURB = 0x07;
     public static final int TYPE_CITY = 0x08;
     public static final int TYPE_PROJECT = 0x09;
-
     public static final int TYPE_SUGGESTION = 0x0a;
+    public static final int TYPE_BUILDER_CITY = 0x0b;
+    public static final int TYPE_TAXONOMY = 0x0c;
+    public static final int TYPE_HOME = 0x0d;
 
     public static final int MASK_LISTING_TYPE = 0x0f;
     public static final int MASK_LISTING_UPDATE_TYPE = 0xf0;
@@ -154,78 +155,123 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     private int mChildListingCount;
     private int mChildListingPage;
 
-    public Selector serpSelector = MakaanBuyerApplication.serpSelector;
+    public Selector mSerpSelector = new Selector();
+    private ArrayList<FilterGroup> mFilterGroups;
 
     @Override
     protected int getContentViewId() {
         return R.layout.activity_serp;
     }
 
+    private ArrayList<FilterGroup> getClonedFilterGroups(ArrayList<FilterGroup> filterGroups) throws CloneNotSupportedException {
+        ArrayList<FilterGroup> group = new ArrayList<>(filterGroups.size());
+        for (FilterGroup filter : filterGroups) {
+            group.add(filter.clone());
+        }
+        return group;
+    }
+
+    @Override
+    protected SerpObjects getSerpObjects() {
+        SerpObjects obj = new SerpObjects();
+        obj.selector = mSerpSelector;
+        obj.filterGroups = mFilterGroups;
+        obj.isBuy = mSerpContext == SERP_CONTEXT_BUY;
+        return obj;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Intent intent = getIntent();
+        if(intent != null) {
+            mSerpContext = intent.getIntExtra(REQUEST_CONTEXT, SERP_CONTEXT_BUY) == SERP_CONTEXT_RENT ? SERP_CONTEXT_RENT : SERP_CONTEXT_BUY;
+        } else {
+            mSerpContext = Preference.getInt(getSharedPreferences(PreferenceConstants.PREF, MODE_PRIVATE), PreferenceConstants.PREF_CONTEXT, SERP_CONTEXT_BUY);
+        }
+
+        try {
+            if (mSerpContext == SERP_CONTEXT_BUY) {
+                mSerpSelector.term(KeyUtil.LISTING_CATEGORY, new String[] {"Primary", "Resale"});
+                mFilterGroups = getClonedFilterGroups(MasterDataCache.getInstance().getAllBuyFilterGroups());
+            } else {
+                mSerpSelector.term(KeyUtil.LISTING_CATEGORY, new String[] {"Rental"});
+                mFilterGroups = getClonedFilterGroups(MasterDataCache.getInstance().getAllRentFilterGroups());
+            }
+        } catch (CloneNotSupportedException ex) { }
+
         super.onCreate(savedInstanceState);
 
         // init fragments we need to use
         initUi(true);
 
-        Intent intent = getIntent();
         int type = SerpActivity.TYPE_UNKNOWN;
         generateGroupSelector();
 
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        int type;
         if(intent != null) {
             type = intent.getIntExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_UNKNOWN);
             if(type == SerpActivity.TYPE_HOME){
-                serpSelector.reset();
-                int data = intent.getIntExtra(REQUEST_DATA, REQUEST_DATA_HOME_BUY);
-                serpSelector.removeTerm("listingCategory");
-                if(data == REQUEST_DATA_HOME_BUY) {
-                    serpSelector.term("listingCategory", new String[]{"Primary","Resale"});
-                } else {
-                    serpSelector.term("listingCategory", new String[]{"Rental"});
-                }
-
-                mSerpContext = MakaanBaseSearchActivity.SERP_CONTEXT_BUY;
+                mSerpSelector.reset();
+                parseSerpRequest(intent, SerpActivity.TYPE_HOME);
 
                 openSearch(true);
 
             } else if (type == SerpActivity.TYPE_GPID) {
                 String gpId = intent.getStringExtra(REQUEST_DATA);
                 if(!TextUtils.isEmpty(gpId)) {
-                    serpRequest(SerpActivity.TYPE_GPID, serpSelector, gpId);
+                    serpRequest(SerpActivity.TYPE_GPID, mSerpSelector, gpId);
                 }
             } else if (type == SerpActivity.TYPE_PROJECT) {
-                parseSerpRequest(intent);
+                parseSerpRequest(intent, SerpActivity.TYPE_PROJECT);
+
+            } else if (type == SerpActivity.TYPE_SEARCH) {
+                mSerpSelector.removeTerm("builderId");
+                mSerpSelector.removeTerm("localityId");
+                mSerpSelector.removeTerm("cityId");
+                mSerpSelector.removeTerm("suburbId");
+                mSerpSelector.removeTerm("localityOrSuburbId");
+
+                parseSerpRequest(intent, SerpActivity.TYPE_PROJECT);
 
             } else if (type == SerpActivity.TYPE_UNKNOWN) {
                 // TODO check whether it should be used or not
                 fetchData();
             } else if (type == SerpActivity.TYPE_SELLER) {
-                serpRequest(SerpActivity.TYPE_PROJECT, serpSelector);
-            }else {
-                serpRequest(type, serpSelector);
+                mSerpSelector.removeTerm("builderId");
+                mSerpSelector.removeTerm("localityId");
+                mSerpSelector.removeTerm("cityId");
+                mSerpSelector.removeTerm("suburbId");
+                mSerpSelector.removeTerm("listingCompanyId");
+                parseSerpRequest(intent, type);
+            } else {
+                parseSerpRequest(intent, type);
             }
         } else {
-            fetchData();
+            parseSerpRequest(intent, SerpActivity.TYPE_UNKNOWN);
         }
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        parseSerpRequest(intent);
+        handleIntent(intent);
     }
 
-    private void parseSerpRequest(Intent intent) {
-        serpSelector.reset();
+    private void parseSerpRequest(Intent intent, int type) {
         if(intent.hasExtra(REQUEST_DATA)) {
             SerpRequest request = intent.getParcelableExtra(REQUEST_DATA);
-            request.applySelector(serpSelector, MasterDataCache.getInstance().getAllBuyFilterGroups());
-            serpRequest(SerpActivity.TYPE_PROJECT, serpSelector);
+            request.applySelector(mSerpSelector, MasterDataCache.getInstance().getAllBuyFilterGroups());
         }
+        serpRequest(type, mSerpSelector);
     }
 
     private void generateGroupSelector() {
-        mGroupSelector = serpSelector.clone();
+        mGroupSelector = mSerpSelector.clone();
         mGroupSelector.field("groupingAttributes").field("groupedListings").field("listing").field("id");
         mGroupSelector.page(0, (2 * GroupCluster.MAX_CLUSTERS_IN_GROUP));
     }
@@ -233,9 +279,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     @Override
     protected void onResume() {
         super.onResume();
-        if(MasterDataCache.getAppliedFilterCount() != 0) {
+        if(SerpObjects.getAppliedFilterCount(mFilterGroups) != 0) {
             mAppliedFiltersCountTextView.setVisibility(View.VISIBLE);
-            mAppliedFiltersCountTextView.setText(String.valueOf(MasterDataCache.getAppliedFilterCount()));
+            mAppliedFiltersCountTextView.setText(String.valueOf(SerpObjects.getAppliedFilterCount(mFilterGroups)));
         } else {
             mAppliedFiltersCountTextView.setVisibility(View.INVISIBLE);
         }
@@ -251,7 +297,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             mSimilarPropertiesFrameLayout.setVisibility(View.GONE);
             mMapImageView.setImageResource(R.drawable.map_icon);
 
-            serpSelector.removePaging();
+            mSerpSelector.removePaging();
         } else if(mIsMapFragment) {
             mIsMapFragment = false;
             mMapImageView.setImageResource(R.drawable.map_icon);
@@ -264,8 +310,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     }
 
     private void fetchData() {
-        serpSelector.term("cityId", "11").term("listingCategory", new String[]{"Primary"});
-        serpRequest(SerpActivity.TYPE_UNKNOWN, serpSelector);
+        mSerpSelector.term("cityId", "11").term("listingCategory", new String[]{"Primary"});
+        serpRequest(SerpActivity.TYPE_UNKNOWN, mSerpSelector);
     }
 
     @Subscribe
@@ -442,9 +488,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                     @Override
                     public void sortSelected(String sort, String fieldName, String value, int i) {
                         mSortTextView.setText(sort);
-                        serpSelector.sort(fieldName, value);
+                        mSerpSelector.sort(fieldName, value);
                         mSelectedSortIndex = i;
-                        SerpActivity.this.serpRequest(SerpActivity.TYPE_SORT, serpSelector);
+                        SerpActivity.this.serpRequest(SerpActivity.TYPE_SORT, mSerpSelector);
                     }
                 }, mSelectedSortIndex);
         mMainFrameLayout.getForeground().setAlpha(128);
@@ -460,9 +506,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         if(gpIdResultEvent == null || gpIdResultEvent.gpDetail == null) {
             return;
         }
-        serpSelector.term("cityId", String.valueOf(gpIdResultEvent.gpDetail.cityid));
+        mSerpSelector.term("cityId", String.valueOf(gpIdResultEvent.gpDetail.cityid));
         ((ListingService) MakaanServiceFactory.getInstance().getService(ListingService.class))
-                .handleSerpRequest(serpSelector, gpIdResultEvent.gpDetail.placeId, true, mGroupSelector);
+                .handleSerpRequest(mSerpSelector, gpIdResultEvent.gpDetail.placeId, true, mGroupSelector);
         showProgress();
     }
 
@@ -492,9 +538,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Override
     public void dialogDismissed() {
-        if(MasterDataCache.getAppliedFilterCount() != 0) {
+        if(SerpObjects.getAppliedFilterCount(mFilterGroups) != 0) {
             mAppliedFiltersCountTextView.setVisibility(View.VISIBLE);
-            mAppliedFiltersCountTextView.setText(String.valueOf(MasterDataCache.getAppliedFilterCount()));
+            mAppliedFiltersCountTextView.setText(String.valueOf(SerpObjects.getAppliedFilterCount(mFilterGroups)));
         } else {
             mAppliedFiltersCountTextView.setVisibility(View.INVISIBLE);
         }
@@ -543,7 +589,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
         if((mSerpRequestType & MASK_LISTING_TYPE) == TYPE_CLUSTER) {
             ((ListingService) MakaanServiceFactory.getInstance().getService(ListingService.class))
-                    .handleChildSerpRequest(serpSelector, mChildListingId);
+                    .handleChildSerpRequest(mSerpSelector, mChildListingId);
             mGroupsRequested = false;
             mGroupReceived = true;
             mSerpReceived = false;
@@ -567,14 +613,14 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         mChildListingId = id;
         if((type & MASK_LISTING_TYPE) > 0) {
             mSerpRequestType = type;
-            serpSelector.removePaging();
-            serpSelector.page(0, MAX_ITEMS_TO_REQUEST);
+            mSerpSelector.removePaging();
+            mSerpSelector.page(0, MAX_ITEMS_TO_REQUEST);
         } else {
             mSerpRequestType = (mSerpRequestType & MASK_LISTING_TYPE) | type;
         }
         if((mSerpRequestType & MASK_LISTING_TYPE) == TYPE_CLUSTER) {
             ((ListingService) MakaanServiceFactory.getInstance().getService(ListingService.class))
-                    .handleChildSerpRequest(serpSelector, id);
+                    .handleChildSerpRequest(mSerpSelector, id);
             mChildSerpId = id;
             mGroupsRequested = false;
             mGroupReceived = true;
@@ -603,13 +649,13 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     @Override
     public void requestApi(int request, String key) {
         if(request == REQUEST_BUILDER_API) {
-            HashSet<String> ids = serpSelector.getTerm(key);
+            HashSet<String> ids = mSerpSelector.getTerm(key);
             if(ids.size() == 1) {
                 ((BuilderService)MakaanServiceFactory.getInstance().getService(BuilderService.class))
                         .getBuilderById(Long.valueOf((String)(ids.toArray()[0])));
             }
         } else if(request == REQUEST_SELLER_API) {
-            HashSet<String> ids = serpSelector.getTerm(key);
+            HashSet<String> ids = mSerpSelector.getTerm(key);
             if(ids.size() == 1) {
                 ((SellerService)MakaanServiceFactory.getInstance().getService(SellerService.class))
                         .getSellerById(Long.valueOf((String)(ids.toArray()[0])));
@@ -649,21 +695,21 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             if((mSerpRequestType & MASK_LISTING_TYPE) == TYPE_CLUSTER) {
                 if ((mChildListings.size() / MAX_ITEMS_TO_REQUEST) == (mChildListingPage + 1) && mChildListings.size() < mChildListingCount) {
                     mChildListingPage++;
-                    serpSelector.page(mChildListings.size(), MAX_ITEMS_TO_REQUEST);
+                    mSerpSelector.page(mChildListings.size(), MAX_ITEMS_TO_REQUEST);
 
                     serpRequest(SerpActivity.TYPE_LOAD_MORE, mChildListingId);
                 }
             } else {
                 if ((mListings.size() / MAX_ITEMS_TO_REQUEST) == (mListingPage + 1) && mListings.size() < mListingCount) {
                     mListingPage++;
-                    serpSelector.page(mListings.size(), MAX_ITEMS_TO_REQUEST);
+                    mSerpSelector.page(mListings.size(), MAX_ITEMS_TO_REQUEST);
 
                     if (mGroupListingCount > mGroupListings.size()) {
                         Selector groupSelector = getGroupSelector();
                         groupSelector.page(mGroupListings.size(), MAX_GROUP_ITEMS_TO_REQUEST);
-                        serpRequest(SerpActivity.TYPE_LOAD_MORE, serpSelector, true);
+                        serpRequest(SerpActivity.TYPE_LOAD_MORE, mSerpSelector, true);
                     } else {
-                        serpRequest(SerpActivity.TYPE_LOAD_MORE, serpSelector, false);
+                        serpRequest(SerpActivity.TYPE_LOAD_MORE, mSerpSelector, false);
                     }
 
                 }
@@ -717,7 +763,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     }
 
     private void parseAndApplyFilter(String json) {
-        serpSelector.reset();
+        mSerpSelector.reset();
         GsonBuilder builder = new GsonBuilder();
         Object o = builder.create().fromJson(json, Object.class);
         parseObject(o);
@@ -735,7 +781,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                             || obj2 instanceof Double
                             || obj2 instanceof Integer) {
                         if("localityId".equals(key)) {
-                            serpSelector.term((String)key, String.valueOf(obj2));
+                            mSerpSelector.term((String) key, String.valueOf(obj2));
                         }
                     }
                 }

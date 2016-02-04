@@ -1,8 +1,8 @@
 package com.makaan.activity.buyerJourney;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.makaan.R;
-import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.ui.view.BadgeView;
 import com.pkmmte.view.CircularImageView;
 
@@ -40,6 +39,8 @@ public class BuyerJourneyActivity extends AppCompatActivity {
 
     @Bind(R.id.toolbar_layout)
     CollapsingToolbarLayout mCollapsingToolbar;
+@Bind(R.id.app_bar)
+AppBarLayout mAppBarLayout;
 
     enum TabType {
         Journey("journey"),
@@ -65,6 +66,17 @@ public class BuyerJourneyActivity extends AppCompatActivity {
 
         setupAppBar();
         setUserData();
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (verticalOffset != 0) {
+                    mCollapsingToolbar.setTitle("Guest");
+                } else {
+                    mCollapsingToolbar.setTitle("");
+                }
+
+            }
+        });
 
     }
 

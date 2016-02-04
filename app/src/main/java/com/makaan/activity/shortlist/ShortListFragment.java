@@ -1,25 +1,33 @@
 package com.makaan.activity.shortlist;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.buyerJourney.BuyerJourneyPagerAdapter;
 import com.makaan.event.wishlist.WishListResultEvent;
+import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.wishlist.WishListResultCallback;
 import com.makaan.service.LeadInstantCallbackService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.WishListService;
+import com.makaan.util.AppBus;
+import com.makaan.util.AppUtils;
 import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by makaanuser on 2/2/16.
  */
-public class ShortListActivity extends MakaanFragmentActivity {
+public class ShortListFragment extends MakaanBaseFragment {
 
     @Bind(R.id.tab_layout)
     TabLayout mTabLayout;
@@ -42,16 +50,13 @@ public class ShortListActivity extends MakaanFragmentActivity {
         return R.layout.layout_shortlist_activity;
     }
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+
         initViews();
-
-    }
-
-    @Override
-    public boolean isJarvisSupported() {
-        return false;
+        return view;
     }
 
     private void initViews() {
@@ -61,7 +66,7 @@ public class ShortListActivity extends MakaanFragmentActivity {
         mTabLayout.addTab(mTabLayout.newTab().setText(TabType.Recent.value));
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final ShortlistPagerAdapter adapter = new ShortlistPagerAdapter(this,getSupportFragmentManager(), mTabLayout.getTabCount());
+        final ShortlistPagerAdapter adapter = new ShortlistPagerAdapter(getActivity(), getChildFragmentManager(), mTabLayout.getTabCount());
 
         mViewPager.setAdapter(adapter);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));

@@ -32,7 +32,8 @@
                 android:layout_height="wrap_content"
                 android:text="bedrooms"
                 android:textColor="@color/listingBlack"
-                android:textSize="@dimen/fragment_dialog_filters_item_layout_display_text_text_size" />
+                android:textSize="@dimen/fragment_dialog_filters_item_layout_display_text_text_size"
+                android:typeface="monospace" />
         </LinearLayout>
 
         <com.makaan.ui.view.ExpandableHeightGridView

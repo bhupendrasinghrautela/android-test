@@ -17,6 +17,7 @@ import com.makaan.cache.MasterDataCache;
 import com.makaan.jarvis.event.SendRequirementEvent;
 import com.makaan.jarvis.message.ChatObject;
 import com.makaan.jarvis.message.Message;
+import com.makaan.pojo.SerpObjects;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.ui.view.BaseView;
 import com.makaan.ui.view.ExpandableHeightGridView;
@@ -52,7 +53,7 @@ public class AskReqCard extends BaseView<Message> {
     public void bindView(Context context, Message item) {
 
         try {
-            if (MakaanBuyerApplication.serpSelector.isBuyContext()) {
+            if (SerpObjects.isBuyContext(getContext())) {
                 ArrayList<FilterGroup> filterGroups = MasterDataCache.getInstance().getAllBuyFilterGroups();
                 populateFilters(getClonedFilterGroups(filterGroups));
             } else {

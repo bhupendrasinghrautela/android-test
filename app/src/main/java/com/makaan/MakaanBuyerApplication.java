@@ -1,6 +1,7 @@
 package com.makaan;
 
 import android.app.Application;
+import android.util.SparseArray;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -8,7 +9,9 @@ import com.makaan.cookie.MakaanCookieStore;
 import com.makaan.jarvis.JarvisConstants;
 import com.makaan.jarvis.JarvisServiceCreator;
 import com.makaan.network.MakaanNetworkClient;
-import com.makaan.request.selector.Selector;
+import com.makaan.pojo.SerpObjects;
+import com.makaan.service.user.ForgotPasswordService;
+import com.makaan.service.user.UserRegistrationService;
 import com.makaan.service.AgentService;
 import com.makaan.service.AmenityService;
 import com.makaan.service.BlogService;
@@ -48,7 +51,8 @@ public class MakaanBuyerApplication extends Application {
 
 
     public static RandomString randomString = new RandomString(6);
-    public static Selector serpSelector = new Selector();
+//    public static Selector mSerpSelector = new Selector();
+    public static SparseArray<SerpObjects> serpObjects = new SparseArray<>();
 
     public static Gson gson;
 
@@ -92,6 +96,8 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(OtpVerificationService.class, new OtpVerificationService());
         MakaanServiceFactory.getInstance().registerService(AmenityService.class, new AmenityService());
         MakaanServiceFactory.getInstance().registerService(LeadInstantCallbackService.class, new LeadInstantCallbackService());
+        MakaanServiceFactory.getInstance().registerService(ForgotPasswordService.class, new ForgotPasswordService());
+        MakaanServiceFactory.getInstance().registerService(UserRegistrationService.class, new UserRegistrationService());
 
                 ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();
