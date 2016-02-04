@@ -15,7 +15,7 @@
     android:layout_height="match_parent">
 
     <com.makaan.ui.property.PropertyImageViewPager
-        android:visibility="gone"
+        android:visibility="invisible"
         android:id="@+id/property_image_viewpager"
         android:layout_width="match_parent"
         android:layout_margin="@dimen/property_page_stack_like_pager_margin"

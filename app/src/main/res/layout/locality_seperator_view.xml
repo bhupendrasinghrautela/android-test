@@ -7,5 +7,5 @@
     android:layout_height="@dimen/locality_seperator_height"
     android:layout_marginTop="@dimen/locality_seperator_top_margin"
     android:layout_marginLeft="@dimen/locality_seperator_left_margin"
-    android:background="@color/locality_light_grey"/>
+    android:background="@color/locality_seprator"/>
 </merge>

@@ -63,7 +63,7 @@ import butterknife.OnClick;
 /**
  * Created by tusharchaudhary on 1/21/16.
  */
-public class LocalityFragment extends MakaanBaseFragment{
+public class LocalityFragment extends MakaanBaseFragment {
     @Bind(R.id.main_city_image)
     FadeInNetworkImageView mMainCityImage;
     @Bind(R.id.blurred_city_image)

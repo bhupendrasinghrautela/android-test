@@ -94,7 +94,6 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
                     priceTrendView.setVisibility(View.GONE);
             }
         });
-
     }
 
     @Subscribe
@@ -199,7 +198,6 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         public void onBindViewHolder(ViewHolder holder, int position) {
             final SearchResponseItem responseItem = list.get(position);
             holder.descriptionTv.setText(responseItem.displayText);
-            //TODO: Picasso load imgurl
         }
 
         @Override
@@ -208,7 +206,6 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         }
 
     }
-
 
     @OnClick(R.id.button_show_properties)
     public void showAllPropertiesClick(){

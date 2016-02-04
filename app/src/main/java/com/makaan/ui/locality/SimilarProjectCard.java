@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.animation.ScaleAnimation;
 
@@ -12,27 +13,14 @@ import android.view.animation.ScaleAnimation;
  */
 public class SimilarProjectCard extends CardView{
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        int action = MotionEventCompat.getActionMasked(event);
-        switch(action) {
-            case (MotionEvent.ACTION_DOWN):
-               scaleDownAnimate();
-                return super.onTouchEvent(event);
-            case (MotionEvent.ACTION_UP) :
-                scaleUpAnimate();
-                return super.onTouchEvent(event);
-            default:
-                return super.onTouchEvent(event);
-        }
-    }
-
     public SimilarProjectCard(Context context) {
         super(context);
+        mGestureDetector = new GestureDetector(context, new ClickDetector());
     }
 
     public SimilarProjectCard(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mGestureDetector = new GestureDetector(context, new ClickDetector());
     }
 
     private void scaleDownAnimate() {
@@ -42,10 +30,19 @@ public class SimilarProjectCard extends CardView{
         this.startAnimation(scale);
     }
 
-    private void scaleUpAnimate() {
-        ScaleAnimation scale = new ScaleAnimation((float)1.0, (float)1.0, (float)1.0, (float)1.0);
-        scale.setFillAfter(true);
-        scale.setDuration(300);
-        this.startAnimation(scale);
+    private GestureDetector mGestureDetector;
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return super.onInterceptTouchEvent(ev) && mGestureDetector.onTouchEvent(ev);
+    }
+
+    // Return false if we're scrolling in the x direction
+    class ClickDetector extends GestureDetector.SimpleOnGestureListener {
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            scaleDownAnimate();
+            return super.onSingleTapUp(e);
+        }
     }
 }
