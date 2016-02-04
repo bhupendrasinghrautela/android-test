@@ -101,7 +101,7 @@ public class TaxonomyService implements MakaanService {
         rentalCard.serpRequest = new SerpRequest();
         rentalCard.serpRequest.setCityId(cityId);
         rentalCard.serpRequest.setSerpContext(SerpRequest.CONTEXT_RENT);
-        rentalCard.serpRequest.setSort(SerpRequest.Sort.DATE_POSTED);
+        rentalCard.serpRequest.setSort(SerpRequest.Sort.DATE_POSTED_DESC);
 
         return taxonomyCardList;
     }
@@ -169,7 +169,7 @@ public class TaxonomyService implements MakaanService {
         rentalCard.serpRequest = new SerpRequest();
         rentalCard.serpRequest.setLocalityId(localityId);
         rentalCard.serpRequest.setSerpContext(SerpRequest.CONTEXT_RENT);
-        rentalCard.serpRequest.setSort(SerpRequest.Sort.DATE_POSTED);
+        rentalCard.serpRequest.setSort(SerpRequest.Sort.DATE_POSTED_DESC);
 
 
         return taxonomyCardList;

@@ -16,6 +16,10 @@ public class KeyUtil {
     public static final String PRICE = "price";
     public static final String MIN_BUDGET = "minBudget";
     public static final String MAX_BUDGET = "maxBudget";
+    public static final String AREA = "size";
+    public static final String BEDROOM = "bedrooms";
+    public static final String BATHROOM = "bathrooms";
+    public static final String PROPERTY_TYPES = "unitTypeId";
 
     public static final String SUBURB_ID = "suburbId";
     public static final String LOCALITY_OR_SUBURB_ID = "localityOrSuburbId";

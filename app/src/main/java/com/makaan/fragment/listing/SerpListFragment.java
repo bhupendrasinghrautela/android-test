@@ -133,7 +133,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         if(selectedSearches.size() > 0 && SearchSuggestionType.GOOGLE_PLACE.getValue()
                 .equalsIgnoreCase(selectedSearches.get(0).type)) {
             builder.append("near ");
-        } else {
+        } else if(selectedSearches.size() > 0) {
             builder.append("in ");
         }
 
