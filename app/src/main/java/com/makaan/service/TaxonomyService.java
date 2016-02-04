@@ -17,18 +17,18 @@ import static com.makaan.constants.RequestConstants.*;
 public class TaxonomyService implements MakaanService {
 
     private Double
-            defaultMinAffodablePrice = 4000000D,
-            defaultMaxAffodablePrice = 8000000D,
+            defaultMinAffordablePrice = 4000000D,
+            defaultMaxAffordablePrice = 8000000D,
             defaultMinLuxuryPrice = 15000000D,
             defaultMaxBudgetPrice = 5000000D;
 
 
     private void applyPricingDefaults(Double minAffordablePrice, Double maxAffordablePrice, Double minLuxuryPrice, Double maxBudgetPrice) {
         if (null == minAffordablePrice) {
-            minAffordablePrice = defaultMinAffodablePrice;
+            minAffordablePrice = defaultMinAffordablePrice;
         }
         if (null == maxAffordablePrice) {
-            maxAffordablePrice = defaultMaxAffodablePrice;
+            maxAffordablePrice = defaultMaxAffordablePrice;
         }
         if (null == minLuxuryPrice) {
             minLuxuryPrice = defaultMinLuxuryPrice;
@@ -39,7 +39,21 @@ public class TaxonomyService implements MakaanService {
     }
 
     public List<TaxonomyCard> getTaxonomyCardForCity(Long cityId, Double minAffordablePrice, Double maxAffordablePrice, Double minLuxuryPrice, Double maxBudgetPrice) {
-        applyPricingDefaults(minAffordablePrice, maxAffordablePrice, minLuxuryPrice, maxBudgetPrice);
+        //applyPricingDefaults(minAffordablePrice, maxAffordablePrice, minLuxuryPrice, maxBudgetPrice);
+
+        if (null == minAffordablePrice) {
+            minAffordablePrice = defaultMinAffordablePrice;
+        }
+        if (null == maxAffordablePrice) {
+            maxAffordablePrice = defaultMaxAffordablePrice;
+        }
+        if (null == minLuxuryPrice) {
+            minLuxuryPrice = defaultMinLuxuryPrice;
+        }
+        if (null == maxBudgetPrice) {
+            maxBudgetPrice = defaultMaxBudgetPrice;
+        }
+
         List<TaxonomyCard> taxonomyCardList = new ArrayList<>();
 
 
@@ -97,7 +111,20 @@ public class TaxonomyService implements MakaanService {
 
 
     public List<TaxonomyCard> getTaxonomyCardForLocality(Long localityId, Double minAffordablePrice, Double maxAffordablePrice, Double minLuxuryPrice, Double maxBudgetPrice) {
-        applyPricingDefaults(minAffordablePrice, maxAffordablePrice, minLuxuryPrice, maxBudgetPrice);
+        //applyPricingDefaults(minAffordablePrice, maxAffordablePrice, minLuxuryPrice, maxBudgetPrice);
+        if (null == minAffordablePrice) {
+            minAffordablePrice = defaultMinAffordablePrice;
+        }
+        if (null == maxAffordablePrice) {
+            maxAffordablePrice = defaultMaxAffordablePrice;
+        }
+        if (null == minLuxuryPrice) {
+            minLuxuryPrice = defaultMinLuxuryPrice;
+        }
+        if (null == maxBudgetPrice) {
+            maxBudgetPrice = defaultMaxBudgetPrice;
+        }
+
         List<TaxonomyCard> taxonomyCardList = new ArrayList<>();
 
 
