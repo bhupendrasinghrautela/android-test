@@ -414,7 +414,7 @@ public class LocalityFragment extends MakaanBaseFragment{
     @Subscribe
     public void onResult(OnTopBuilderClickEvent onTopBuilderClickEvent){
         SerpRequest serpRequest = new SerpRequest();
-        serpRequest.setSellerId(onTopBuilderClickEvent.builderId);
+        serpRequest.setBuilderId(onTopBuilderClickEvent.builderId);
         serpRequest.launchSerp(getActivity(), SerpActivity.TYPE_BUILDER);
     }
 
