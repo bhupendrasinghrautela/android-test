@@ -111,8 +111,9 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 				mMultiChoiceCardView.setVisibility(View.INVISIBLE);
 			}
 			mSelectedItemsAdapter = new SelectedListViewAdapter(getActivity(),
-					mSelectedItemsList, R.layout.selected_list_item_layout);
+			mSelectedItemsList, R.layout.selected_list_item_layout);
 			mSelectedListview.setAdapter(mSelectedItemsAdapter);
+
 			if(mSelectedItemsList.size()>0){
 				mSelectedItemsAdapter.updateDataItems(mSelectedItemsList);
 				mLocalityCount.setVisibility(View.VISIBLE);
@@ -148,10 +149,11 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 
 	@OnTextChanged(R.id.multichoice_dialog_search_tv)
 	public void onSearchTextChange(CharSequence cs, int arg1, int arg2, int arg3){
+		String city = mPyrPresenter.getCityContext();
 		SearchService searchService = (SearchService) MakaanServiceFactory.getInstance().getService(SearchService.class);
 		try {
 			if(!cs.toString().isEmpty()) {
-				searchService.getSearchResults(cs.toString(), null, "noida", SearchType.LOCALITY, false);
+				searchService.getSearchResults(cs.toString(), null, city, SearchType.LOCALITY, false);
 			}
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();

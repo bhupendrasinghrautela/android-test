@@ -15,6 +15,8 @@ public class SearchResponseItem implements Cloneable{
 	private double latitude, longitude;
 	public long cityId;
 
+	public SearchResponseItem(){}
+
 	public SearchResponseItem(SearchResponseItem search) {
 		this.id = search.id;
 		this.cityId = search.cityId;
