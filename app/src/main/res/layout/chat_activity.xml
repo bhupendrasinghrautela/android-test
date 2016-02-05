@@ -42,6 +42,7 @@
 
         <ImageView
             android:id="@+id/jarvis_head"
+            android:layout_margin="6dp"
             android:layout_width="@dimen/jarvis_send_dimen"
             android:layout_height="@dimen/jarvis_send_dimen"
             android:src="@drawable/jarvis"
