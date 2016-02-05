@@ -10,6 +10,7 @@ import com.makaan.response.search.SearchType;
 import com.makaan.util.StringUtil;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * Created by sunil on 07/01/16.
@@ -76,6 +77,12 @@ public class SearchService implements MakaanService {
     private String buildSearchUrl(String key, String category, String city, SearchType[] type, boolean supportGooglePlace){
         StringBuilder urlBuilder = new StringBuilder();
         urlBuilder.append(TYPEAHEAD_BASE_URL);
+
+        try {
+            key = URLEncoder.encode(key, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         if(type.length == 1 && type[0] == SearchType.ALL) {
             urlBuilder.append(TYPEAHEAD_QUERY);

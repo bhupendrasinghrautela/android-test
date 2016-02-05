@@ -49,8 +49,8 @@ public class PlainLinkCard extends BaseView<Message> {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.message));
-                mContext.startActivity(browserIntent);
+                //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.chatObj.plainLink));
+                //mContext.startActivity(browserIntent);
             }
         });
     }
