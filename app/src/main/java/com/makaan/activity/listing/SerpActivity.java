@@ -18,6 +18,7 @@ import com.google.gson.internal.LinkedTreeMap;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
+import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.PreferenceConstants;
@@ -99,6 +100,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     public static final int REQUEST_PROPERTY_PAGE = 1;
     public static final int REQUEST_PROJECT_PAGE = 2;
+    public static final int REQUEST_LEAD_FORM = 3;
 
 
     private static final int MAX_ITEMS_TO_REQUEST = 20;
@@ -231,6 +233,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
             } else if (type == SerpActivity.TYPE_SEARCH) {
                 mSerpSelector.removeTerm("builderId");
+                mSerpSelector.removeTerm("projectId");
                 mSerpSelector.removeTerm("localityId");
                 mSerpSelector.removeTerm("cityId");
                 mSerpSelector.removeTerm("suburbId");
@@ -243,6 +246,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 fetchData();
             } else if (type == SerpActivity.TYPE_SELLER) {
                 mSerpSelector.removeTerm("builderId");
+//                mSerpSelector.removeTerm("projectId");
                 mSerpSelector.removeTerm("localityId");
                 mSerpSelector.removeTerm("cityId");
                 mSerpSelector.removeTerm("suburbId");
@@ -688,6 +692,10 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             Intent intent = new Intent(this, ProjectActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
+        } else if(type == REQUEST_LEAD_FORM) {
+            Intent intent = new Intent(this, LeadFormActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
     }
 
@@ -795,5 +803,13 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 }
             }
         }
+    }
+
+    @Override
+    protected boolean areListingsAvailable() {
+        if(mListings == null) {
+            return false;
+        }
+        return true;
     }
 }

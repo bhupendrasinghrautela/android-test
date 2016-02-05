@@ -118,5 +118,10 @@
                 android:scaleType="centerCrop"/>
         </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/fragment_filters_filter_relative_layout"
+            android:background="@color/serp_listing_view_empty_view_color"  />
     </RelativeLayout>
 </merge>

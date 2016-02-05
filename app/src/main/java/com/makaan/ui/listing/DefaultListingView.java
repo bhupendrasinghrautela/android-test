@@ -283,10 +283,18 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         }
 
         // set property tagline or detailed info
-        String text = Html.fromHtml(mListing.description.toLowerCase()).toString();
-        text = text.replace("\t", "").replace("\n", "");
+        if(mListing.description != null) {
+            String text = Html.fromHtml(mListing.description.toLowerCase()).toString();
+            text = text.replace("\t", "").replace("\n", "");
 
-        mPropertyDescriptionTextView.setText(text);
+            if("null".equalsIgnoreCase(text)) {
+                mPropertyDescriptionTextView.setText("not available");
+            } else {
+                mPropertyDescriptionTextView.setText(text);
+            }
+        } else {
+            mPropertyDescriptionTextView.setText("not available");
+        }
 
         if(callback.needSellerInfoInSerp()) {
             mSellerInfoRelativeLayout.setVisibility(View.VISIBLE);
@@ -600,5 +608,18 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
             bundle.putLong(ProjectActivity.PROJECT_ID, mListing.projectId);
             mCallback.requestDetailPage(SerpActivity.REQUEST_PROJECT_PAGE, bundle);
         }
+    }
+
+    @OnClick(R.id.serp_default_listing_call_button)
+    public void onCallClicked(View view) {
+
+        Bundle bundle = new Bundle();
+
+        bundle.putString("name", mListing.lisitingPostedBy.name);
+        bundle.putString("score", String.valueOf(mListing.lisitingPostedBy.rating));
+        bundle.putString("phone", "9090909090");//todo: not available in pojo
+        bundle.putString("id", String.valueOf(mListing.lisitingPostedBy.id));
+
+        mCallback.requestDetailPage(SerpActivity.REQUEST_LEAD_FORM, bundle);
     }
 }
