@@ -132,6 +132,10 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
     @Bind(R.id.content_text)
     TextView mListingBrief;
 
+    @Bind(R.id.view_on_map)
+    View mViewOnMap;
+
+
     @OnClick(R.id.more_about_locality)
     public void openLocality(){
         Intent intent = new Intent(getActivity(), LocalityActivity.class);
@@ -155,7 +159,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
     }
 
     private ListingDetail mListingDetail;
-    private List<AmenityCluster> mAmenityClusters;
+    private List<AmenityCluster> mAmenityClusters = new ArrayList<>();
     private ShowMapCallBack mShowMapCallback;
     private Long listingId;
     private String listingMainUrl;
@@ -195,8 +199,18 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
             return;
         }
         mAmenityViewPager.bindView();
-        mAmenityClusters = amenityGetEvent.amenityClusters;
-        mAmenityViewPager.setData(amenityGetEvent.amenityClusters);
+        mAmenityClusters.clear();
+        for(AmenityCluster cluster : amenityGetEvent.amenityClusters){
+            if(null!=cluster && null!=cluster.cluster && cluster.cluster.size()>0){
+                mAmenityClusters.add(cluster);
+            }
+        }
+
+        if(!mAmenityClusters.isEmpty()){
+            mAmenityViewPager.setVisibility(View.VISIBLE);
+            mViewOnMap.setVisibility(View.VISIBLE);
+            mAmenityViewPager.setData(mAmenityClusters);
+        }
     }
 
     @Subscribe
@@ -207,8 +221,8 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
         mListingDetail = listingByIdGetEvent.listingDetail;
         TestUi(mListingDetail);
         ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getOtherSellersOnListingDetail(
-                mListingDetail.projectId,mListingDetail.bedrooms,mListingDetail.bathrooms,mListingDetail.studyRoom
-                ,mListingDetail.poojaRoom,mListingDetail.servantRoom,null
+                mListingDetail.projectId, mListingDetail.bedrooms, mListingDetail.bathrooms, mListingDetail.studyRoom
+                , mListingDetail.poojaRoom, mListingDetail.servantRoom, null
         );
         ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId);
         ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId, ImageConstants.THREED_FLOOR_PLAN);

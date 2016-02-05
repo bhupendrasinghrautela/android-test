@@ -3,13 +3,16 @@
     <com.makaan.ui.amenity.AmenityViewPager
         android:id="@+id/amenity_viewpager"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_marginLeft="@dimen/property_page_amenity_view_pager_margin_left"
         android:layout_marginBottom="@dimen/property_page_amenity_view_pager_margin_bottom"
         android:layout_height="@dimen/property_page_amenity_view_pager_height" />
     <LinearLayout
+        android:id="@+id/view_on_map"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:gravity="center"
+        android:visibility="gone"
         android:layout_marginBottom="10dp"
         android:layout_width="match_parent">
     <ImageView

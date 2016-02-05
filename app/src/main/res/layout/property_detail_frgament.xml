@@ -52,7 +52,10 @@
         <include layout="@layout/floor_plan_layout"/>
         <include layout="@layout/project_specification"/>
         <include layout="@layout/more_about_locality_layout"/>
-        <include layout="@layout/amenity_holder"/>
+        <include layout="@layout/amenity_holder"
+                    android:id="@+id/amenity_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
         <FrameLayout
             android:id="@+id/container_similar_projects"
             android:layout_width="match_parent"

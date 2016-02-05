@@ -49,6 +49,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
     private String mSearchedEntities = "";
 
     private boolean mIsChildSerp;
+    private boolean mIsScrollEventSent;
 
     int page;
     private SerpRequestCallback mSerpRequestCallback;
@@ -214,6 +215,11 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
 
                 .putValue("serp_filter_bhk", null));*/
 
+        if(mIsScrollEventSent){
+            return;
+        }
+
+        mIsScrollEventSent = true;
         Traits traits = new Traits();
         traits.put("serp_visible_item", mListings.size());
         Analytics.with(getActivity()).identify(traits);

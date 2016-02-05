@@ -85,19 +85,10 @@ public class ProjectKynFragment extends MakaanBaseFragment{
     }
 
     public void setData(List<AmenityCluster> amenityClusters) {
-        this.amenityClusters = filterDataWithLessThan3Amenities(amenityClusters);
+        this.amenityClusters = amenityClusters;
         mAdapter = new KnowYourNeighbourhoodAdapter(this.amenityClusters);
         if (mRecyclerView != null)
             mRecyclerView.setAdapter(mAdapter);
-    }
-
-    private List<AmenityCluster> filterDataWithLessThan3Amenities(List<AmenityCluster> amenityClusters) {
-        List<AmenityCluster> clusters = new ArrayList<>();
-        for(AmenityCluster amenityCluster:amenityClusters){
-            if(amenityCluster.cluster.size() > 0 && amenityCluster.cluster.size()<=3)
-                clusters.add(amenityCluster);
-        }
-        return clusters;
     }
 
 
@@ -142,7 +133,9 @@ public class ProjectKynFragment extends MakaanBaseFragment{
 
     @OnClick(R.id.amenity_see_on_map)
     public void showMap(){
-        AppBus.getInstance().post(new OnSeeOnMapClicked());
+        OnSeeOnMapClicked onSeeOnMapClicked = new OnSeeOnMapClicked();
+        onSeeOnMapClicked.amenityClusters = amenityClusters;
+        AppBus.getInstance().post(onSeeOnMapClicked);
     }
 
 
