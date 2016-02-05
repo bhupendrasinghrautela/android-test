@@ -10,6 +10,7 @@ public class SellerCard implements Serializable {
     public Long sellerId;
     public Double rating;
     public boolean assist;
+    public boolean isChecked;
     public String contactNo;
     public Long noOfProperties;
     public String name;

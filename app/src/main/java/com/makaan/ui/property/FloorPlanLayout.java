@@ -59,6 +59,9 @@ public class FloorPlanLayout extends LinearLayout {
     private void initView() {
         mFloorPlanPagerAdapter = new FloorPlanPagerAdapter();
         viewPager.setAdapter(mFloorPlanPagerAdapter);
+        viewPager.setClipToPadding(false);
+        viewPager.setPageMargin(20);
+        viewPager.setPadding(10, 10,10, 10);
         tabLayout.setupWithViewPager(viewPager);
     }
 
@@ -94,7 +97,7 @@ public class FloorPlanLayout extends LinearLayout {
 
         @Override
         public boolean isViewFromObject(View view, Object object) {
-            return false;
+            return view == ((View) object);
         }
 
         @Override

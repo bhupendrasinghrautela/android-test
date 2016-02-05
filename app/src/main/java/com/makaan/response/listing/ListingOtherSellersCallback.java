@@ -69,6 +69,7 @@ public class ListingOtherSellersCallback extends JSONGetCallback {
                     //sellerCard.assist =
                     sellerCard.name = company.name;
                     sellerCard.type = company.type;
+                    sellerCard.rating = company.score;
                     sellerCard.noOfProperties = sellerPropCountMap.get(listingDetail.sellerId);
                 }
             }
