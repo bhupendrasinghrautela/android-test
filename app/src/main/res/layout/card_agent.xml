@@ -13,12 +13,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/seller_overview_card_padding"
+        android:paddingTop="@dimen/seller_overview_card_padding"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:text="please rate your experience with"
         android:layout_gravity="center"
         android:textSize="16sp"/>
 
     <com.pkmmte.view.CircularImageView
+        android:id="@+id/agent_image"
         android:layout_width="@dimen/jarvis_seller_card_profile_pic_dimen"
         android:layout_height="@dimen/jarvis_seller_card_profile_pic_dimen"
         android:layout_margin="@dimen/thumbnail_margin"
@@ -31,45 +34,23 @@
         app:shadow="true"/>
 
     <RatingBar
-        android:id="@+id/ratingbar"
+        android:id="@+id/rating_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/jarvis_card_brief_layout_margin"
         android:numStars="5"
-        android:stepSize="1.0"
-        android:isIndicator="true"
+        android:stepSize="0.5"
         style="?android:attr/ratingBarStyleSmall"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btn_yes"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
-
-
-        <Button
-            android:id="@+id/btn_no"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/round_red"
-            android:text="Cancel"
-            android:textColor="@color/app_red"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/btn_yes"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/filled_red"
-            android:text="Submit"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
-    </LinearLayout>
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/filled_red"
+        android:text="Submit"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 
 </com.makaan.jarvis.ui.cards.AgentRatingCard>

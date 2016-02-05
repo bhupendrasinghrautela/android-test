@@ -140,7 +140,7 @@ public class ProjectFragment extends MakaanBaseFragment{
         if(imagesGetEvent.images.size()>0) {
             mPropertyImageViewPager.setVisibility(View.VISIBLE);
             mPropertyImageViewPager.bindView();
-            mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice,null);
+            mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice, null);
         }else{
             mPropertyImageViewPager.setVisibility(View.GONE);
         }
@@ -218,7 +218,7 @@ public class ProjectFragment extends MakaanBaseFragment{
         ConstructionTimelineFragment fragment = new ConstructionTimelineFragment();
         Bundle bundle = new Bundle();
         bundle.putString("title", getString(R.string.project_construction_title));
-        bundle.putLong("projectId",project.projectId);
+        bundle.putLong("projectId", project.projectId);
         fragment.setArguments(bundle);
         initFragment(R.id.container_construction_photos, fragment, false);
     }
@@ -233,6 +233,18 @@ public class ProjectFragment extends MakaanBaseFragment{
     }
 
     private void addProjectAboutLocalityFragment(List<AmenityCluster> amenityClusterList) {
+
+        List<AmenityCluster> mAmenityClusters = new ArrayList<>();
+        for(AmenityCluster cluster : amenityClusterList){
+            if(null!=cluster && null!=cluster.cluster && cluster.cluster.size()>0){
+                mAmenityClusters.add(cluster);
+            }
+        }
+
+        if(mAmenityClusters.isEmpty()){
+            return;
+        }
+
         ProjectKynFragment fragment = new ProjectKynFragment();
         Bundle bundle = new Bundle();
         bundle.putString("title", "about " + project.locality.label);
@@ -253,4 +265,5 @@ public class ProjectFragment extends MakaanBaseFragment{
         }
         fragmentTransaction.commitAllowingStateLoss();
     }
+
 }

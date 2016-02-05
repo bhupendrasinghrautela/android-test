@@ -1,8 +1,11 @@
 package com.makaan.jarvis.ui.cards;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.text.Html;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.TextView;
 
 import com.makaan.R;
@@ -38,14 +41,18 @@ public class PlainLinkCard extends BaseView<Message> {
     }
 
     @Override
-    public void bindView(Context context, Message item) {
+    public void bindView(Context context, final Message item) {
         if(null!=item || null!=item.message){
             mPlainLink.setText(Html.fromHtml(item.message));
         }
+
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.message));
+                mContext.startActivity(browserIntent);
+            }
+        });
     }
 
-    @OnClick(R.id.plain_link)
-    public void onLinkClick(){
-        //TODO open in browser or webview
-    }
 }

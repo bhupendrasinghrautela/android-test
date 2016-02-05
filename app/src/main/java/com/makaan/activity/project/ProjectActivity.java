@@ -62,6 +62,7 @@ public class ProjectActivity extends MakaanBaseSearchActivity {
     @Subscribe
     public void onResult(OnSeeOnMapClicked seeOnMapClicked){
         mNeighborhoodMapFragment = new NeighborhoodMapFragment();
+        mNeighborhoodMapFragment.setData(seeOnMapClicked.amenityClusters);
         initFragment(R.id.container, mNeighborhoodMapFragment, true);
     }
 

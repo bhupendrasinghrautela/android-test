@@ -53,6 +53,7 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.TaxonomyService;
 import com.makaan.ui.CompressedTextView;
 import com.makaan.util.Blur;
+import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -112,6 +113,7 @@ public class LocalityFragment extends MakaanBaseFragment {
     private Locality locality;
     private Context mContext ;
     private Integer meadianRental, meadianSale;
+    private List<AmenityCluster> mAmenityClusters = new ArrayList<>();
 
     @Override
     protected int getContentViewId() {
@@ -170,7 +172,16 @@ public class LocalityFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(AmenityGetEvent amenityGetEvent) {
-        addKyn(amenityGetEvent.amenityClusters);
+        mAmenityClusters.clear();
+        for(AmenityCluster cluster : amenityGetEvent.amenityClusters){
+            if(null!=cluster && null!=cluster.cluster && cluster.cluster.size()>0){
+                mAmenityClusters.add(cluster);
+            }
+        }
+
+        if(!mAmenityClusters.isEmpty()) {
+            addKyn(mAmenityClusters);
+        }
     }
 
     private void populateLocalityData() {
@@ -301,7 +312,7 @@ public class LocalityFragment extends MakaanBaseFragment {
         if(entityDescriptions != null && entityDescriptions.size()>0) {
             LocalityLifestyleFragment newFragment = new LocalityLifestyleFragment();
             Bundle bundle = new Bundle();
-            bundle.putString("title", getResources().getString(R.string.localities_lifestyle_title)+" "+locality.label);
+            bundle.putString("title", getResources().getString(R.string.localities_lifestyle_title) + " " + locality.label);
             newFragment.setArguments(bundle);
             initFragment(R.id.container_nearby_localities_lifestyle, newFragment, false);
             newFragment.setData(entityDescriptions);
