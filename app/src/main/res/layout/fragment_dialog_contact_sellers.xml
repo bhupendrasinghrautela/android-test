@@ -2,6 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+                android:paddingLeft="@dimen/fragment_dialog_contact_sellers_sellect_all_checbox_margin_left"
+                android:paddingStart="@dimen/fragment_dialog_contact_sellers_sellect_all_checbox_margin_left"
     android:background="@color/white">
 
     <Button
@@ -13,7 +15,7 @@
         android:layout_marginStart="@dimen/fragment_dialog_contact_sellers_submit_button_margin_left"
         android:layout_marginRight="@dimen/fragment_dialog_contact_sellers_submit_button_margin_right"
         android:layout_marginEnd="@dimen/fragment_dialog_contact_sellers_submit_button_margin_right"
-        android:background="@drawable/filled_red"
+        android:background="@drawable/contact_seller_selector"
         android:text="@string/contact_all_sellers"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
@@ -34,12 +36,14 @@
         android:layout_alignParentStart="true"/>
 
     <CheckBox
-        android:id="@+id/fragment_dialog_contact_sellers_sellect_all_checkbox"
+        android:id="@+id/fragment_dialog_contact_sellers_select_all_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fragment_dialog_contact_sellers_sellect_all_checbox_margin_top"
+        android:paddingLeft="@dimen/fragment_dialog_contact_sellers_sellect_all_checbox_margin_left"
         android:layout_marginLeft="@dimen/fragment_dialog_contact_sellers_sellect_all_checbox_margin_left"
         android:layout_marginStart="@dimen/fragment_dialog_contact_sellers_sellect_all_checbox_margin_left"
+        android:buttonTint="@color/app_red"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:text="all"
@@ -59,7 +63,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/fragment_dialog_contact_sellers_contact_textview_text_size"
         android:layout_below="@id/fragment_dialog_contact_sellers_back_button"
-        android:layout_alignBaseline="@id/fragment_dialog_contact_sellers_sellect_all_checkbox" />
+        android:layout_alignBaseline="@id/fragment_dialog_contact_sellers_select_all_checkbox" />
 
     <TextView
         android:id="@+id/fragment_dialog_contact_sellers_name_text_view"
@@ -69,9 +73,9 @@
         android:textColor="@color/black"
         android:textSize="@dimen/fragment_dialog_contact_sellers_name_textview_text_size"
         android:layout_below="@id/fragment_dialog_contact_sellers_back_button"
-        android:layout_alignBaseline="@id/fragment_dialog_contact_sellers_sellect_all_checkbox"
-        android:layout_toRightOf="@id/fragment_dialog_contact_sellers_sellect_all_checkbox"
-        android:layout_toEndOf="@id/fragment_dialog_contact_sellers_sellect_all_checkbox"
+        android:layout_alignBaseline="@id/fragment_dialog_contact_sellers_select_all_checkbox"
+        android:layout_toRightOf="@id/fragment_dialog_contact_sellers_select_all_checkbox"
+        android:layout_toEndOf="@id/fragment_dialog_contact_sellers_select_all_checkbox"
         android:layout_toLeftOf="@id/fragment_dialog_contact_sellers_contact_text_view"
         android:layout_toStartOf="@id/fragment_dialog_contact_sellers_contact_text_view"
         android:gravity="center"/>
@@ -80,6 +84,8 @@
         android:id="@+id/fragment_dialog_contact_sellers_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/fragment_dialog_contact_sellers_sellect_all_checbox_margin_left"
+        android:layout_marginStart="@dimen/fragment_dialog_contact_sellers_sellect_all_checbox_margin_left"
         android:layout_marginTop="@dimen/fragment_dialog_contact_sellers_recycler_view_margin_top"
         android:layout_marginBottom="@dimen/fragment_dialog_contact_sellers_recycler_view_margin_bottom"
         android:clipToPadding="false"
@@ -88,6 +94,6 @@
         android:overScrollMode="never"
         android:scrollbarStyle="insideInset"
         android:layout_above="@id/fragment_dialog_contact_sellers_submit_button"
-        android:layout_below="@id/fragment_dialog_contact_sellers_sellect_all_checkbox"/>
+        android:layout_below="@id/fragment_dialog_contact_sellers_select_all_checkbox"/>
 
 </RelativeLayout>
