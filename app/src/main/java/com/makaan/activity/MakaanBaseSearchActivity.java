@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Intent;
 import android.graphics.Point;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -28,6 +29,9 @@ import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
+import com.makaan.activity.city.CityActivity;
+import com.makaan.activity.locality.LocalityActivity;
+import com.makaan.activity.project.ProjectActivity;
 import com.makaan.adapter.listing.SearchAdapter;
 import com.makaan.adapter.listing.SelectedSearchAdapter;
 import com.makaan.response.search.SearchResponseHelper;
@@ -296,6 +300,12 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
         // add selected search to recent searches
         RecentSearchManager.getInstance(this).addEntryToRecentSearch(searchResponseItem, this);
+
+        if(!areListingsAvailable() && (SearchSuggestionType.CITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)
+                || SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)
+                || SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searchResponseItem.type))) {
+            finish();
+        }
     }
 
     private void handleSearch() {
@@ -483,6 +493,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 mSearchRelativeView.setVisibility(View.GONE);
             }
         }
+
+        setIsJarvisVisibile(!searchViewVisible);
     }
 
     private void showEmptySearchResults() {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:weightSum="2"
     android:background="@color/white"
@@ -27,15 +28,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <RatingBar
+        <com.makaan.ui.view.CustomRatingBar
             android:id="@+id/seller_ratingbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< Updated upstream
             android:numStars="5"
             android:stepSize="0.1"
+=======
+            android:layout_marginTop="@dimen/serp_listing_card_seller_rating_margin_top"
+>>>>>>> Stashed changes
             android:isIndicator="true"
-            style="?android:attr/ratingBarStyleSmall"
-            />
+            app:itemHeight="@dimen/serp_listing_card_seller_rating_item_height"
+            app:itemWidth="@dimen/serp_listing_card_seller_rating_item_width"
+            app:itemMarginLeft="@dimen/serp_listing_card_seller_rating_item_margin_left"
+            app:itemMarginRight="@dimen/serp_listing_card_seller_rating_item_margin_right"
+            app:itemProgressIcon="@drawable/star_selected"
+            app:itemSecondaryProgressIcon="@drawable/star_unselected"
+            style="?android:attr/ratingBarStyleSmall"/>
 
     </LinearLayout>
     <LinearLayout

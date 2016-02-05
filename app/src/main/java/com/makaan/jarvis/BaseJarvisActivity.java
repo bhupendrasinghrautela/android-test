@@ -200,4 +200,8 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         Animation zoomout = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoom_out);
         mCardCta.setAnimation(zoomout);
     }
+
+    protected void setIsJarvisVisibile(boolean visible) {
+        mJarvisHead.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
 }
