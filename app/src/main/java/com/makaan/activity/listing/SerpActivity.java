@@ -211,6 +211,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         generateGroupSelector();
 
         handleIntent(intent);
+
+        setTitle(this.getResources().getString(R.string.search_default_hint));
     }
 
     private void handleIntent(Intent intent) {

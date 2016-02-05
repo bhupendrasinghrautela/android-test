@@ -89,7 +89,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         if(activity != null) {
             initializeRecyclerViewData();
             mListingRecyclerView.setPaginableListener(this);
-            mListingRecyclerView.setScrollListener(this);
+//            mListingRecyclerView.setScrollListener(this);
             if(mListings != null) {
                 /*if(mTotalPropertiesTextView != null) {
                     mTotalPropertiesTextView.setText(String.format("%d %s", mTotalCount, mSearchedEntities));
