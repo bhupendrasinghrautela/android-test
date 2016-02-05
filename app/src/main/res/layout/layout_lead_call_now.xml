@@ -32,12 +32,7 @@
             android:id="@+id/seller_ratingbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-            android:numStars="5"
-            android:stepSize="0.1"
-=======
             android:layout_marginTop="@dimen/serp_listing_card_seller_rating_margin_top"
->>>>>>> Stashed changes
             android:isIndicator="true"
             app:itemHeight="@dimen/serp_listing_card_seller_rating_item_height"
             app:itemWidth="@dimen/serp_listing_card_seller_rating_item_width"
