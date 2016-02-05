@@ -1,6 +1,10 @@
 package com.makaan.adapter;
 
 import android.content.Context;
+import android.graphics.CornerPathEffect;
+import android.graphics.Paint.Style;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
@@ -44,15 +48,28 @@ public class LegendAdapter extends AbstractBaseAdapter<PriceTrendKey> {
         final ViewHolder h = (ViewHolder) view.getTag();
         h.mLegendsLabel.setText(item.label);
         h.mLegendsView.setBackgroundColor(item.colorId);
+        final ShapeDrawable coloredDrawable = new ShapeDrawable(new RectShape());
+        coloredDrawable.getPaint().setColor(item.colorId);
+        coloredDrawable.getPaint().setStyle(Style.FILL_AND_STROKE);
+        coloredDrawable.setPadding(1, 1, 1, 1);
+        coloredDrawable.getPaint().setPathEffect(
+                new CornerPathEffect(30));
+        h.mLegendsView.setBackgroundDrawable(coloredDrawable);
+        final ShapeDrawable greyedDrawable = new ShapeDrawable(new RectShape());
+        greyedDrawable.getPaint().setColor(mContext.getResources().getColor(R.color.grayDivider));
+        greyedDrawable.getPaint().setStyle(Style.FILL_AND_STROKE);
+        greyedDrawable.setPadding(1, 1, 1, 1);
+        greyedDrawable.getPaint().setPathEffect(
+                new CornerPathEffect(30));
         h.mLegendsHolder.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 item.isActive = !item.isActive;
                 if(item.isActive) {
-                    h.mLegendsView.setBackgroundColor(item.colorId);
+                    h.mLegendsView.setBackgroundDrawable(coloredDrawable);
                 }
                 else{
-                    h.mLegendsView.setBackgroundColor(mContext.getResources().getColor(R.color.grayDivider));
+                    h.mLegendsView.setBackgroundDrawable(greyedDrawable);
                 }
                 if(mListener!=null){
                     mListener.legendTouched(v);

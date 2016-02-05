@@ -53,6 +53,9 @@ public class Project {
 
 
     public HashMap<String, ArrayList<SpecificaitonsUI>> getFormattedSpecifications() {
+        if(specifications == null){
+            return null;
+        }
         HashMap<String, ArrayList<SpecificaitonsUI>> result = new HashMap<>();
 
         for (Map.Entry<String, Object> specificationEntry : specifications.entrySet()) {

@@ -14,8 +14,9 @@
     <TextView
         android:id="@+id/legend_text"
         android:layout_width="match_parent"
-        android:gravity="center"
+        android:gravity="left|center_vertical"
+        android:layout_marginLeft="5dp"
         android:textSize="@dimen/city_very_small_text"
         android:layout_height="match_parent"
-        android:text="@string/action_settings"/>
+        android:maxLines="1"/>
 </LinearLayout>

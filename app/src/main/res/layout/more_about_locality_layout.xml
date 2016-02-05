@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:font="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <include layout="@layout/project_seperator"/>
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+    <include layout="@layout/property_empty_view"/>
     <TextView
         android:id="@+id/about_locality"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/property_page_average_text_size"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/property_page_external_margin"
-        android:textColor="@color/listingBlack"/>
+        android:layout_marginLeft="@dimen/property_page_external_margin"
+        android:layout_marginRight="@dimen/property_page_external_margin"
+        android:layout_marginTop="@dimen/property_page_about_locality_margin_top"
+        android:layout_marginBottom="@dimen/property_page_about_locality_margin_bottom"
+        android:typeface="sans"
+        android:textColor="@color/amenity_title_color"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.makaan.ui.view.FontTextView
+        <TextView
             android:id="@+id/locality_brief"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/property_page_text_size"
             android:maxLines="3"
-            font:fontName="proxima.otf"
+            android:typeface="serif"
             android:layout_marginLeft="@dimen/property_page_locality_margin_left"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/property_page_locality_margin_right"
@@ -41,12 +44,11 @@
                 android:indeterminate="false"
                 android:progressDrawable="@drawable/circular_progress_drawable"
                 android:layout_gravity="center_vertical" />
-            <com.makaan.ui.view.FontTextView
+            <TextView
                 android:id="@+id/locality_score_text"
                 android:layout_gravity="center"
                 android:typeface="monospace"
                 android:layout_width="wrap_content"
-                font:fontName="proxima.otf"
                 android:layout_height="wrap_content"
                 android:textColor="@color/listingBlack"
                 android:textSize="@dimen/city_very_small_text"/>

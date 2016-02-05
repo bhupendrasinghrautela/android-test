@@ -128,6 +128,93 @@ public class StringUtil {
         return "Price on request";
     }
 
+    public static String getDisplayPriceForChart(double price) {
+        try {
+            if(Double.isNaN(price)) {
+                // TODO check for fail safe value
+                return String.valueOf(price);
+            }
+            if (price == 0) {
+                return "0";
+            }
+            StringBuilder priceStringBuilder = new StringBuilder();
+            if(price<1000){
+                return String.valueOf(String.format("%.2f",price));
+            }
+            double displayPrice = (double) price / 100000.00;
+
+            if(displayPrice < 1) {
+                displayPrice = (double) price / 1000.00;
+                DecimalFormat df = new DecimalFormat("#.#");
+                try {
+                    priceStringBuilder.append(String.format("%.1f",
+                            Double.parseDouble(df.format(displayPrice))));
+                } catch (NumberFormatException nfe) {
+                    return "0";
+                }
+                priceStringBuilder.append("K");
+            } else if (displayPrice < 100.0) {
+                DecimalFormat df = new DecimalFormat("#.#");
+                try {
+                    priceStringBuilder.append(String.format("%.1f",
+                            Double.parseDouble(df.format(displayPrice))));
+                } catch (NumberFormatException nfe) {
+                    return "0";
+                }
+                priceStringBuilder.append("L");
+            } else {
+                DecimalFormat df = new DecimalFormat("#.##");
+                displayPrice = displayPrice / 100;
+                try {
+                    priceStringBuilder.append(String.format("%.2f",
+                            Double.parseDouble(df.format(displayPrice))));
+                } catch (NumberFormatException nfe) {
+                    return "0";
+                }
+                priceStringBuilder.append("Cr");
+            }
+
+            return priceStringBuilder.toString();
+        } catch (Exception e) {
+            //TODO: log atleast
+        }
+        return "0";
+    }
+
+    public static float getPriceForChart(double price) {
+        try {
+            StringBuilder priceStringBuilder = new StringBuilder();
+            double displayPrice = (double) price / 100000.00;
+
+            if(displayPrice < 1) {
+                displayPrice = (double) price / 1000.00;
+                DecimalFormat df = new DecimalFormat("#.#");
+                try {
+                    return Float.parseFloat(df.format(displayPrice));
+                } catch (NumberFormatException nfe) {
+                    return 0;
+                }
+            } else if (displayPrice < 100.0) {
+                DecimalFormat df = new DecimalFormat("#.#");
+                try {
+                    return Float.parseFloat(df.format(displayPrice));
+                } catch (NumberFormatException nfe) {
+                    return 0;
+                }
+            } else {
+                DecimalFormat df = new DecimalFormat("#.##");
+                displayPrice = displayPrice / 100;
+                try {
+                    return Float.parseFloat(df.format(displayPrice));
+                } catch (NumberFormatException nfe) {
+                    return 0;
+                }
+            }
+        } catch (Exception e) {
+            //TODO: log atleast
+        }
+        return 0;
+    }
 
     public static SpannableString getSpannedPrice(double price) {
         try {

@@ -11,6 +11,7 @@ import com.makaan.adapter.LegendAdapter.OnLegendsTouchListener;
 import com.makaan.response.trend.PriceTrendData;
 import com.makaan.response.trend.PriceTrendKey;
 import com.makaan.util.DateUtil;
+import com.makaan.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,6 +24,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
@@ -44,11 +46,15 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
 
     private List<Line> mLines = new ArrayList<Line>();
     private HashMap<PriceTrendKey, List<PriceTrendData>> mTrendsChartDataList;
-    private LinkedHashSet<Float> mAxisXValues, mAxisYValues;
-    private LinkedHashSet<String> mAxisXLabels, mAxisYLabels;
+    private LinkedHashSet<Float> mAxisXValues;
+    private LinkedHashSet<String> mAxisXLabels;
+    private ArrayList<AxisValue>mAxisYValues;
     private boolean setAxesForFirstTime = true;
     private Viewport mViewPort;
     private Long timeFrom = 6l;
+    private Integer mMonths;
+    private ArrayList<Long> mAllMonthsTime;
+    private Long mMaxPrice;
 
     public MakaanLineChartView(Context context) {
         this(context, null);
@@ -77,43 +83,80 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
         mViewPort = new Viewport(mLineChartView.getCurrentViewport());
     }
 
+    private void generateDataForAllMonths() {
+        mAllMonthsTime = new ArrayList<>();
+        Date referenceDate = new Date();
+        Calendar c = Calendar.getInstance();
+        for(int i =59;i>=0;i--){
+            c.setTime(referenceDate);
+            c.add(Calendar.MONTH, -i);
+            mAllMonthsTime.add(c.getTimeInMillis());
+        }
+    }
+
     private void init() {
         mAxisXLabels = new LinkedHashSet<>();
-        mAxisYLabels = new LinkedHashSet<>();
         mAxisXValues = new LinkedHashSet<>();
-        mAxisYValues = new LinkedHashSet<>();
+        mAxisYValues = new ArrayList<>();
         Date referenceDate = new Date();
         Calendar c = Calendar.getInstance();
         c.setTime(referenceDate);
         c.add(Calendar.MONTH, -6);
         timeFrom =c.getTimeInMillis();
+        generateDataForAllMonths();
     }
 
     private void generateDataForChart() {
         if(mLines == null || mAxisXValues == null || mAxisXLabels == null){
             return;
         }
+        mMaxPrice = 0l;
         mLines.clear();
         mAxisXLabels.clear();
         mAxisXValues.clear();
+        mAxisYValues.clear();
         for (Map.Entry<PriceTrendKey, List<PriceTrendData>> entry : mTrendsChartDataList.entrySet())
         {
             if (entry.getKey().isActive) {
                 List<PointValue> pointValueList = new ArrayList<PointValue>();
                 Collections.sort(entry.getValue());
+                int current = 0;
                 for (PriceTrendData trendsData : entry.getValue()) {
-                    if(timeFrom<trendsData.date) {
-                        pointValueList.add(new PointValue(trendsData.date, trendsData.minPricePerUnitArea));
-                        // if(setAxesForFirstTime) {
-                        mAxisXLabels.add(DateUtil.getMonthYearDisplayDate(trendsData.date));
-                        mAxisXValues.add((float) trendsData.date);
+                    for(int i=current;i<mAllMonthsTime.size();i++){
+                        if(mAllMonthsTime.get(i)>timeFrom){
+                            if(timeFrom<trendsData.date
+                                    &&  DateUtil.getMonthYearDisplayDate(mAllMonthsTime.get(i)).equals(
+                                    DateUtil.getMonthYearDisplayDate(trendsData.date))) {
+                                pointValueList.add(new PointValue(mAllMonthsTime.get(i), trendsData.minPricePerUnitArea));
+                                if(trendsData.minPricePerUnitArea > mMaxPrice){
+                                    mMaxPrice = trendsData.minPricePerUnitArea;
+                                }
+                                // if(setAxesForFirstTime) {
+                                mAxisXLabels.add(DateUtil.getMonthYearDisplayDate(mAllMonthsTime.get(i)));
+                                mAxisXValues.add((float) mAllMonthsTime.get(i));
+                                current = i+1;
+                                break;
+                            }
+                            else if(trendsData.date<mAllMonthsTime.get(i)){
+                                break;
+                            }
+                            pointValueList.add(new PointValue(mAllMonthsTime.get(i),-0.1f));
+                            // if(setAxesForFirstTime) {
+                            mAxisXLabels.add(DateUtil.getMonthYearDisplayDate(mAllMonthsTime.get(i)));
+                            mAxisXValues.add((float)mAllMonthsTime.get(i));
+                        }
                     }
                     //}
+                }
+                for(int i=current;i<mAllMonthsTime.size();i++){
+                    pointValueList.add(new PointValue(mAllMonthsTime.get(i),-0.1f));
+                    // if(setAxesForFirstTime) {
+                    mAxisXLabels.add(DateUtil.getMonthYearDisplayDate(mAllMonthsTime.get(i)));
+                    mAxisXValues.add((float)mAllMonthsTime.get(i));
                 }
                 Line line = new Line(pointValueList);
                 line.setColor(entry.getKey().colorId);
                 line.setFilled(true);
-                line.setCubic(true);
                 line.setShape(ValueShape.CIRCLE);
                 mLines.add(line);
         }
@@ -124,12 +167,28 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
             x.addAll(mAxisXValues);
             List<String> y = new ArrayList<>();
             y.addAll(mAxisXLabels);
-            mLineChartData.setAxisXBottom(
-                    Axis.generateAxisFromCollection(x, y));
-            Axis axisY = new Axis().setHasLines(true);
+            Axis axisX = Axis.generateAxisFromCollection(x, y);
+            axisX.setHasTiltedLabels(true);
+            axisX.setMaxLabelChars(5);
+            mLineChartData.setAxisXBottom(axisX);
+            Float gap = (float)mMaxPrice/5;
+            Float value;
+            for(value = 0f;value<mMaxPrice+gap;value=value+gap){
+                AxisValue axisValue = new AxisValue(value);
+                axisValue.setLabel(StringUtil.getDisplayPriceForChart(value));
+                mAxisYValues.add(axisValue);
+            }
+            Axis axisY = new Axis(mAxisYValues);
+            axisY.setHasLines(true);
+            axisY.setHasTiltedLabels(true);
+            axisY.setMaxLabelChars(5);
             mLineChartData.setAxisYLeft(axisY);
             mLineChartData.setBaseValue(Float.NEGATIVE_INFINITY);
             mLineChartView.setLineChartData(mLineChartData);
+            Viewport v = mLineChartView.getMaximumViewport();
+            v.top = v.top+gap;
+            mLineChartView.setMaximumViewport(v);
+            mLineChartView.setCurrentViewport(v);
             //if(!setAxesForFirstTime){
 /*                mLineChartView.setMaximumViewport(mViewPort);
                 mLineChartView.setCurrentViewport(mViewPort);*/
@@ -161,6 +220,7 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
     }
 
     public void changeDataBasedOnTime(int months){
+        mMonths = months;
         Date referenceDate = new Date();
         Calendar c = Calendar.getInstance();
         c.setTime(referenceDate);

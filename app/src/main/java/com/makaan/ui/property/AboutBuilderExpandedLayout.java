@@ -93,7 +93,9 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
                 setProject(mBuilderOngoing,projectStatusCount.underConstruction);
 
             }
-            mBuilderDescription.setText(Html.fromHtml(item.description));
+            if(item.description!=null) {
+                mBuilderDescription.setText(Html.fromHtml(item.description));
+            }
         }
     }
 
