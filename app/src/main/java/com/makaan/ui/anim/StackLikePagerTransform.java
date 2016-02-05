@@ -22,7 +22,7 @@ public class StackLikePagerTransform implements PageTransformer {
         } else */
         if(position <-1 && position>-2){
             view.setRotation(-90);
-            view.setAlpha(1);
+            view.setAlpha(0);
         }
         else if(position<=-2){
             view.setRotation(0);

@@ -34,7 +34,8 @@
         app:collapsedTitleTextAppearance="@style/WhiteCollapsedToolbarText"
         app:expandedTitleGravity="bottom|center_horizontal"
         app:expandedTitleMarginBottom="@dimen/city_collapse_bar_margin_bottom"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+        app:contentScrim="@color/appThemeRed" >
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"

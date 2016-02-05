@@ -3,6 +3,7 @@ package com.makaan;
 import android.app.Application;
 import android.util.SparseArray;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.makaan.cookie.MakaanCookieStore;
@@ -38,6 +39,7 @@ import com.makaan.util.FontTypeface;
 import com.makaan.util.RandomString;
 import com.segment.analytics.Analytics;
 
+import io.fabric.sdk.android.Fabric;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
@@ -59,6 +61,7 @@ public class MakaanBuyerApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
 
         FontTypeface.setDefaultFont(this, "DEFAULT", "fonts/ProximaNova-Bold.otf");
         FontTypeface.setDefaultFont(this, "MONOSPACE", "fonts/proxima.otf");

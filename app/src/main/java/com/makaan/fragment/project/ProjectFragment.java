@@ -137,12 +137,16 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResults(ImagesGetEvent imagesGetEvent){
-        if(imagesGetEvent.images.size()>0) {
-            mPropertyImageViewPager.setVisibility(View.VISIBLE);
-            mPropertyImageViewPager.bindView();
-            mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice, null);
-        }else{
-            mPropertyImageViewPager.setVisibility(View.GONE);
+        try {
+            if (imagesGetEvent.images.size() > 0) {
+                mPropertyImageViewPager.setVisibility(View.VISIBLE);
+                mPropertyImageViewPager.bindView();
+                mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice, null);
+            } else {
+                mPropertyImageViewPager.setVisibility(View.GONE);
+            }
+        }catch (Exception e){
+
         }
     }
 

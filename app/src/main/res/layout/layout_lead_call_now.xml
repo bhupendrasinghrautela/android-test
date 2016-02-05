@@ -21,7 +21,6 @@
 
         <TextView
             android:id="@+id/tv_seller_name"
-            android:text="John Doe"
             android:textColor="@color/seller_name_text_color"
             android:textSize="@dimen/seller_name_text_size"
             android:layout_marginBottom="@dimen/lead_form_seller_image_margin_bottom"
@@ -34,7 +33,6 @@
             android:layout_height="wrap_content"
             android:numStars="5"
             android:stepSize="0.1"
-            android:rating="3"
             android:isIndicator="true"
             style="?android:attr/ratingBarStyleSmall"
             />
