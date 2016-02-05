@@ -263,5 +263,9 @@
     <string name="app_FB_id">111204692324347</string>
     <string name="contact_all_sellers">contact all sellers</string>
 
+
+    <!--chart strings-->
+    <string name="no_data">data not available</string>
+
 </resources>
 

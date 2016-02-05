@@ -732,6 +732,7 @@
     <dimen name="city_header_text">24sp</dimen>
     <dimen name="line_chart_height">300dp</dimen>
     <dimen name="city_circular_progress_dimen">36dp</dimen>
+    <dimen name="city_know_more_pager_bottom_padding">50dp</dimen>
 
     <dimen name="city_empty_view_margin_left">20dp</dimen>
     <dimen name="city_empty_view_height">1dp</dimen>

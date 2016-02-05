@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 
 import com.makaan.R;
 import com.makaan.response.city.CityTrendData;
+import com.makaan.ui.view.FontTextView;
 import com.makaan.util.StringUtil;
 
 import java.util.ArrayList;
@@ -28,6 +29,9 @@ public class MakaanBarChartView extends BaseLinearLayout<List<CityTrendData>>{
 
     @Bind(R.id.bar_chart)
     ColumnChartView mColumnChartView;
+    @Bind(R.id.header_text_no_data_bar_graph)
+    FontTextView mNoDataText;
+
     private List<CityTrendData> mChartData;
     private List<Float> mAxisXValues;
     private List<AxisValue> mAxisYValues;
@@ -73,8 +77,11 @@ public class MakaanBarChartView extends BaseLinearLayout<List<CityTrendData>>{
 
     private void generateDataForChart() {
         if(mColumns == null || mAxisXValues == null || mAxisXLabels == null){
+            mNoDataText.setVisibility(VISIBLE);
             return;
         }
+        mNoDataText.setVisibility(GONE);
+
         mColumns.clear();
         mAxisXLabels.clear();
         mAxisXValues.clear();
@@ -93,30 +100,35 @@ public class MakaanBarChartView extends BaseLinearLayout<List<CityTrendData>>{
             mColumns.add(column);
         }
         mColumnChartView.setValueSelectionEnabled(false);
-        mColumnChartData = new ColumnChartData(mColumns);
-        Axis axisX = Axis.generateAxisFromCollection(mAxisXValues,mAxisXLabels);
-        axisX.setHasTiltedLabels(true);
-        axisX.setInside(false);
-        axisX.setMaxLabelChars(6);
-        Float gap = (float)mMaxListings/5;
-        Float value;
-        for(value = 0f;value<mMaxListings+gap;value=value+gap){
-            AxisValue axisValue = new AxisValue(value);
-            axisValue.setLabel(StringUtil.getDisplayPriceForChart(value));
-            mAxisYValues.add(axisValue);
+            mColumnChartData = new ColumnChartData(mColumns);
+            Axis axisX = Axis.generateAxisFromCollection(mAxisXValues, mAxisXLabels);
+            axisX.setHasTiltedLabels(true);
+            axisX.setInside(false);
+            axisX.setMaxLabelChars(6);
+            Float gap = (float) mMaxListings / 5;
+            Float value;
+            for (value = 0f; value < mMaxListings + gap; value = value + gap) {
+                AxisValue axisValue = new AxisValue(value);
+                axisValue.setLabel(StringUtil.getDisplayPriceForChart(value));
+                mAxisYValues.add(axisValue);
+            }
+            Axis axisY = new Axis(mAxisYValues);
+            axisY.setHasLines(true);
+            axisY.setHasTiltedLabels(true);
+            axisY.setMaxLabelChars(5);
+            axisY.setName("No. of Properties");
+            mColumnChartData.setAxisYLeft(axisY);
+            mColumnChartData.setAxisXBottom(axisX);
+            mColumnChartView.setColumnChartData(mColumnChartData);
+            Viewport v = mColumnChartView.getMaximumViewport();
+            v.top = v.top + gap;
+            mColumnChartView.setMaximumViewport(v);
+            mColumnChartView.setCurrentViewport(v);
+        if(mColumns == null || mColumns.size() == 0){
+            mNoDataText.setVisibility(VISIBLE);
+        }else{
+            mNoDataText.setVisibility(GONE);
         }
-        Axis axisY = new Axis(mAxisYValues);
-        axisY.setHasLines(true);
-        axisY.setHasTiltedLabels(true);
-        axisY.setMaxLabelChars(5);
-        axisY.setName("No. of Properties");
-        mColumnChartData.setAxisYLeft(axisY);
-        mColumnChartData.setAxisXBottom(axisX);
-        mColumnChartView.setColumnChartData(mColumnChartData);
-        Viewport v = mColumnChartView.getMaximumViewport();
-        v.top = v.top+gap;
-        mColumnChartView.setMaximumViewport(v);
-        mColumnChartView.setCurrentViewport(v);
     }
 
     private class ValueTouchListener implements ColumnChartOnValueSelectListener {

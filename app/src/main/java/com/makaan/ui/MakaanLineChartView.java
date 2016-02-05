@@ -4,12 +4,14 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.adapter.LegendAdapter;
 import com.makaan.adapter.LegendAdapter.OnLegendsTouchListener;
 import com.makaan.response.trend.PriceTrendData;
 import com.makaan.response.trend.PriceTrendKey;
+import com.makaan.ui.view.FontTextView;
 import com.makaan.util.DateUtil;
 import com.makaan.util.StringUtil;
 
@@ -43,6 +45,9 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
     @Bind(R.id.legends_grid)
     GridView mLegendsGrid;
     LineChartData mLineChartData;
+
+    @Bind(R.id.header_text_no_data_graph)
+    FontTextView mNoDataGraph;
 
     private List<Line> mLines = new ArrayList<Line>();
     private HashMap<PriceTrendKey, List<PriceTrendData>> mTrendsChartDataList;
@@ -108,8 +113,11 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
 
     private void generateDataForChart() {
         if(mLines == null || mAxisXValues == null || mAxisXLabels == null){
+            mNoDataGraph.setVisibility(VISIBLE);
             return;
         }
+        mNoDataGraph.setVisibility(GONE);
+
         mMaxPrice = 0l;
         mLines.clear();
         mAxisXLabels.clear();
@@ -162,6 +170,7 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
         }
         }
         if(mLines.size()>0) {
+
             mLineChartData = new LineChartData(mLines);
             List<Float> x = new ArrayList<>();
             x.addAll(mAxisXValues);
@@ -193,6 +202,11 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
 /*                mLineChartView.setMaximumViewport(mViewPort);
                 mLineChartView.setCurrentViewport(mViewPort);*/
             //}
+        }
+        if(mLines == null || mLines.size() == 0){
+            mNoDataGraph.setVisibility(VISIBLE);
+        }else{
+            mNoDataGraph.setVisibility(GONE);
         }
     }
 

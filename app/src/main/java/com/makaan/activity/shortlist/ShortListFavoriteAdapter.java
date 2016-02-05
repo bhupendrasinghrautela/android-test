@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.lead.LeadFormActivity;
@@ -72,11 +73,17 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, LeadFormActivity.class);
-                intent.putExtra("name",wishList.get(position).listing.companySeller.company.name);
-                intent.putExtra("score",wishList.get(position).listing.companySeller.company.score.toString());
-                intent.putExtra("phone","9090909090");//todo: not available in pojo
-                intent.putExtra("id",wishList.get(position).listing.companySeller.company.id.toString());
-                mContext.startActivity(intent);
+                try {
+                    intent.putExtra("name", wishList.get(position).listing.companySeller.company.name);
+                    intent.putExtra("score", wishList.get(position).listing.companySeller.company.score.toString());
+                    intent.putExtra("phone", "9090909090");//todo: not available in pojo
+                    intent.putExtra("id", wishList.get(position).listing.companySeller.company.id.toString());
+                    mContext.startActivity(intent);
+                }catch (NullPointerException npe){
+                    Toast.makeText(mContext, "Seller data not available", Toast.LENGTH_SHORT).show();
+                }catch(Exception e){
+                    Toast.makeText(mContext, "Seller data not available", Toast.LENGTH_SHORT).show();
+                }
             }
         });
        // shortListFavoriteViewHolder.mTextViewArea.setText();//todo

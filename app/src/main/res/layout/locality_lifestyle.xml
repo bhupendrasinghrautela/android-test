@@ -5,4 +5,5 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:layout_width="match_parent"
     android:id="@+id/container_nearby_localities_lifestyle"
+    android:paddingBottom="@dimen/city_know_more_pager_bottom_padding"
     android:layout_height="wrap_content" />
