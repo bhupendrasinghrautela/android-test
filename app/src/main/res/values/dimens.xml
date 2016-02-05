@@ -304,8 +304,8 @@
     <dimen name="serp_listing_card_property_price_unit_top_margin">24dp</dimen>
     <dimen name="serp_listing_card_property_price_unit_text_size">18sp</dimen>
 
-    <dimen name="serp_listing_card_property_shortlist_checkbox_right_margin">14dp</dimen>
-    <dimen name="serp_listing_card_property_shortlist_checkbox_top_margin">12dp</dimen>
+    <dimen name="serp_listing_card_property_shortlist_checkbox_right_margin">16dp</dimen>
+    <dimen name="serp_listing_card_property_shortlist_checkbox_top_margin">14dp</dimen>
     <dimen name="serp_listing_card_property_shortlist_checkbox_width">20dp</dimen>
     <dimen name="serp_listing_card_property_shortlist_checkbox_height">20dp</dimen>
 
@@ -463,11 +463,11 @@
     <dimen name="activity_search_base_layout_search_bar_search_image_button_margin_top">14dp</dimen>
 
     <!-- filter fragment bar dimen values -->
-    <dimen name="fragment_filters_filter_image_view_width">28dp</dimen>
-    <dimen name="fragment_filters_filter_image_view_height">28dp</dimen>
+    <dimen name="fragment_filters_filter_image_view_width">24dp</dimen>
+    <dimen name="fragment_filters_filter_image_view_height">25dp</dimen>
     <dimen name="fragment_filters_filter_image_view_margin_left">12dp</dimen>
-    <dimen name="fragment_filters_filter_image_view_margin_top">11dp</dimen>
-    <dimen name="fragment_filters_filter_image_view_margin_bottom">11dp</dimen>
+    <dimen name="fragment_filters_filter_image_view_margin_top">13dp</dimen>
+    <dimen name="fragment_filters_filter_image_view_margin_bottom">13dp</dimen>
 
     <dimen name="fragment_filters_filter_text_view_margin_left">5dp</dimen>
     <dimen name="fragment_filters_filter_text_view_margin_top">17dp</dimen>
@@ -480,21 +480,21 @@
     <dimen name="filters_fragment_applied_filter_count_text_view_width">20dp</dimen>
     <dimen name="filters_fragment_applied_filter_count_text_view_height">20dp</dimen>
 
-    <dimen name="fragment_filters_relevance_image_view_width">28dp</dimen>
-    <dimen name="fragment_filters_relevance_image_view_height">28dp</dimen>
+    <dimen name="fragment_filters_relevance_image_view_width">24dp</dimen>
+    <dimen name="fragment_filters_relevance_image_view_height">24dp</dimen>
     <dimen name="fragment_filters_relevance_image_view_margin_left">28dp</dimen>
-    <dimen name="fragment_filters_relevance_image_view_margin_top">11dp</dimen>
-    <dimen name="fragment_filters_relevance_image_view_margin_bottom">11dp</dimen>
+    <dimen name="fragment_filters_relevance_image_view_margin_top">13dp</dimen>
+    <dimen name="fragment_filters_relevance_image_view_margin_bottom">13dp</dimen>
 
     <dimen name="fragment_filters_relevance_text_view_margin_left">2dp</dimen>
     <dimen name="fragment_filters_relevance_text_view_margin_top">15dp</dimen>
     <dimen name="fragment_filters_relevance_text_view_margin_right">27dp</dimen>
     <dimen name="fragment_filters_relevance_text_view_text_size">16sp</dimen>
 
-    <dimen name="fragment_filters_map_image_view_width">32dp</dimen>
-    <dimen name="fragment_filters_map_image_view_height">32dp</dimen>
+    <dimen name="fragment_filters_map_image_view_width">24dp</dimen>
+    <dimen name="fragment_filters_map_image_view_height">24dp</dimen>
     <dimen name="fragment_filters_map_image_view_margin_right">13dp</dimen>
-    <dimen name="fragment_filters_map_image_view_margin_top">9dp</dimen>
+    <dimen name="fragment_filters_map_image_view_margin_top">13dp</dimen>
 
     <dimen name="fragment_dialog_filters_submit_button_height">50dp</dimen>
     <dimen name="fragment_dialog_filters_submit_button_text_size">18sp</dimen>
@@ -585,7 +585,7 @@
     <dimen name="search_result_item_type_text_view_text_size">14sp</dimen>
 
     <dimen name="search_result_item_empty_view_height">0.5dp</dimen>
-    <dimen name="search_result_item_empty_view_margin_left">64dp</dimen>
+    <dimen name="search_result_item_empty_view_margin_left">20dp</dimen>
     <dimen name="search_result_item_empty_view_margin_right">2dp</dimen>
 
     <dimen name="search_result_item_view_padding_bottom">15dp</dimen>
@@ -1238,4 +1238,6 @@
     <dimen name="fragment_dialog_contact_sellers_submit_button_margin_left">20dp</dimen>
     <dimen name="fragment_dialog_contact_sellers_submit_button_margin_right">20dp</dimen>
 
+    <dimen name="activity_home_buy_rent_button_width">50dp</dimen>
+    <dimen name="activity_home_buy_rent_button_height">35dp</dimen>
 </resources>

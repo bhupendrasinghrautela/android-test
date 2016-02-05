@@ -111,4 +111,14 @@
         <item name="android:typeface">monospace</item>
     </style>
 
+    <style name="abc">
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:background">@drawable/buy_radio_button_background_selector</item>
+    </style>
+
+    <style name="def">
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:background">@drawable/rent_radio_button_background_selector</item>
+    </style>
+
 </resources>

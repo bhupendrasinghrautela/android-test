@@ -345,9 +345,16 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             setSearchViewVisibility(false);
             // hide keypad
             showKeypad(mSearchEditText, false);
+            if(!areListingsAvailable()) {
+                super.onBackPressed();
+            }
         } else {
             super.onBackPressed();
         }
+    }
+
+    protected boolean areListingsAvailable() {
+        return false;
     }
 
     @OnClick({R.id.activity_search_base_layout_search_bar_search_image_button, R.id.activity_search_base_layout_search_bar_search_text_view})
@@ -426,7 +433,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                             }
                         });
                     }
-                }, 400);
+                }, 800);
             } else {
                 mDeleteButton.setBackgroundResource(R.drawable.close_white);
                 mSearchImageView.setVisibility(View.GONE);
@@ -441,7 +448,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                         PropertyValuesHolder propx = PropertyValuesHolder.ofFloat("translationX", -mSearchImageButtonX);
 
                         ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(mSearchImageView, propx);
-                        animator.setDuration(200);
+                        animator.setDuration(400);
                         animator.start();
                         animator.addListener(new Animator.AnimatorListener() {
                             @Override
@@ -451,8 +458,12 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
                             @Override
                             public void onAnimationEnd(Animator animation) {
-                                mSearchDescriptionRelativeView.setVisibility(View.VISIBLE);
-                                mSearchRelativeView.setVisibility(View.GONE);
+                                if(mSearchDescriptionRelativeView != null) {
+                                    mSearchDescriptionRelativeView.setVisibility(View.VISIBLE);
+                                }
+                                if(mSearchRelativeView != null) {
+                                    mSearchRelativeView.setVisibility(View.GONE);
+                                }
                             }
 
                             @Override
@@ -466,7 +477,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                             }
                         });
                     }
-                }, 400);
+                }, 800);
             } else {
                 mSearchDescriptionRelativeView.setVisibility(View.VISIBLE);
                 mSearchRelativeView.setVisibility(View.GONE);
