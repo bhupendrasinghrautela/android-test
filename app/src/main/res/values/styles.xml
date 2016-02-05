@@ -36,10 +36,12 @@
     <style name="WhiteExpandedToolbarText" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">38sp</item>
+        <item name="android:typeface">sans</item>
     </style>
     <style name="WhiteCollapsedToolbarText" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">24sp</item>
+        <item name="android:typeface">sans</item>
     </style>
 
 

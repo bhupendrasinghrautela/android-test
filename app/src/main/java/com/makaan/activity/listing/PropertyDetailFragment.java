@@ -27,8 +27,11 @@ import com.makaan.constants.ImageConstants;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.image.ImagesGetEvent;
 import com.makaan.event.listing.ListingByIdGetEvent;
+import com.makaan.event.listing.OtherSellersGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.property.SimilarPropertyFragment;
+import com.makaan.fragment.property.ViewSellersDialogFragment;
+import com.makaan.pojo.SellerCard;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.locality.Locality;
@@ -136,6 +139,16 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
         startActivity(intent);
     }
 
+    @OnClick(R.id.all_seller_text)
+    public void openAllSellerDialog(){
+        if(mSellerCards!=null) {
+            FragmentTransaction ft = this.getFragmentManager().beginTransaction();
+            ViewSellersDialogFragment viewSellersDialogFragment = new ViewSellersDialogFragment();
+            viewSellersDialogFragment.bindView(mSellerCards);
+            viewSellersDialogFragment.show(ft, "allSellers");
+        }
+    }
+
     @OnClick(R.id.amenity_see_on_map)
     public void showMap(){
         mShowMapCallback.showMapFragment();
@@ -148,6 +161,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
     private String listingMainUrl;
     private Context mContext;
     private ArrayList<ImagesGetEvent> mImagesGetEventArrayList;
+    private ArrayList<SellerCard> mSellerCards;
 
 
     @Override
@@ -214,6 +228,11 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
             if(imagesGetEvent.images!= null && imagesGetEvent.images.size()>0)
             mFloorPlanLayout.bindFloorPlan(imagesGetEvent);
         }
+    }
+
+    @Subscribe
+    public void onOtherSellers(OtherSellersGetEvent otherSellersGetEvent){
+        mSellerCards = otherSellersGetEvent.sellerCards;
     }
 
     private void TestUi(ListingDetail listingDetail){

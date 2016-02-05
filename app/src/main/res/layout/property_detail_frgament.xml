@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:background="@color/white"
+             android:layout_height="match_parent">
+<ScrollView
             android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/property_page_scroll_margin_bottom"
             android:layout_height="match_parent">
 
     <!--Work in progress, a lot of dimens are hard coded-->
@@ -9,7 +14,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         android:orientation="vertical">
 
         <com.makaan.ui.property.PropertyImageViewPager
@@ -53,21 +57,24 @@
             android:id="@+id/container_similar_projects"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <View
-            android:layout_gravity="bottom"
-            android:layout_marginTop="@dimen/project_contact_seller_top_margin"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/project_yellow_strip_above_contact_seller_button_height"
-            android:background="@color/app_yellow"
-            />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/project_button_contact_seller_height"
-            android:textColor="@color/white"
-            android:textSize="@dimen/project_button_contact_seller_text_height"
-            android:background="@color/project_similar_projects_red"
-            android:textAllCaps="false"
-            android:text="@string/project_button_contact_seller_text"
-            />
     </LinearLayout>
 </ScrollView>
+    <View
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/project_contact_seller_bottom_margin"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/project_yellow_strip_above_contact_seller_button_height"
+        android:background="@color/app_yellow"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_height="@dimen/project_button_contact_seller_height"
+        android:textColor="@color/white"
+        android:textSize="@dimen/project_button_contact_seller_text_height"
+        android:background="@color/project_similar_projects_red"
+        android:textAllCaps="false"
+        android:typeface="monospace"
+        android:text="@string/project_button_contact_seller_text"
+        />
+</FrameLayout>

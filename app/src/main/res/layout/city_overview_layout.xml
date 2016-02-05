@@ -47,6 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
+            android:typeface="serif"
             android:textSize="@dimen/city_big_text"
             app:layout_collapseMode="parallax"/>
     </android.support.design.widget.CollapsingToolbarLayout>

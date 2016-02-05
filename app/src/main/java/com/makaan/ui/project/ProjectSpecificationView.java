@@ -59,6 +59,9 @@ public class ProjectSpecificationView extends LinearLayout{
 
     public void bindView(HashMap<String, ArrayList<SpecificaitonsUI>> map, FragmentActivity compatActivity) {
         this.map = map;
+        if(map == null){
+            return;
+        }
         initView(compatActivity);
     }
 

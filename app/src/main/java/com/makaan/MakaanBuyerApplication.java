@@ -63,7 +63,7 @@ public class MakaanBuyerApplication extends Application {
         FontTypeface.setDefaultFont(this, "DEFAULT", "fonts/ProximaNova-Bold.otf");
         FontTypeface.setDefaultFont(this, "MONOSPACE", "fonts/proxima.otf");
         FontTypeface.setDefaultFont(this, "SERIF", "fonts/proxima-light.otf");
-        FontTypeface.setDefaultFont(this, "SANS_SERIF", "fonts/ProximaNova-Semibold.otf");
+        FontTypeface.setDefaultFont(this, "SANS_SERIF", "fonts/comforta.ttf");
 
         MakaanNetworkClient.init(this);
         JarvisServiceCreator.create(this);

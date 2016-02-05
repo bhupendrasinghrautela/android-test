@@ -3,13 +3,13 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:id="@+id/all_seller_layout"
-              android:visibility="invisible"
+              android:visibility="visible"
               android:layout_width="match_parent"
               android:background="@color/white"
               android:layout_height="match_parent">
     <include layout="@layout/property_empty_view"/>
     <RelativeLayout
-        android:layout_marginTop="@dimen/property_page_internal_padding"
+        android:layout_marginTop="@dimen/property_page_contact_seller_margin_top"
         android:layout_marginLeft="@dimen/property_page_internal_padding"
         android:layout_marginRight="@dimen/property_page_internal_padding"
         android:layout_marginBottom="@dimen/property_page_contact_seller_margin_bottom"
@@ -22,7 +22,6 @@
             android:layout_height="@dimen/serp_listing_card_assist_button_height"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/serp_listing_card_assist_button_top_margin"
             android:background="@drawable/assist"
             android:paddingLeft="@dimen/serp_listing_card_assist_button_left_padding"
             android:paddingStart="@dimen/serp_listing_card_assist_button_left_padding"
@@ -37,8 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="@dimen/serp_listing_card_seller_image_view_top_margin">
+            android:layout_alignParentStart="true">
 
             <com.pkmmte.view.CircularImageView
                 android:id="@+id/seller_image_view"
@@ -104,7 +102,7 @@
     </RelativeLayout>
     <TextView
         android:id="@+id/all_seller_text"
-        android:layout_marginBottom="@dimen/property_page_contact_seller_margin_bottom"
+        android:layout_marginBottom="@dimen/property_page_contact_seller_section_margin_bottom"
         android:layout_width="match_parent"
         android:text="@string/view_all_sellers"
         android:gravity="center"
