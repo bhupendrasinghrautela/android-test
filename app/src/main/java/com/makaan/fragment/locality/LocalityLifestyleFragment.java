@@ -98,7 +98,6 @@ public class LocalityLifestyleFragment extends MakaanBaseFragment{
             holder.descriptionTv.setText(nearByLocalitu.name);
             holder.descriptionFullTv.setText(nearByLocalitu.description);
             holder.localityIv.setImageResource(R.drawable.placeholder_localities_props);
-            //TODO: Picasso load imgurl
         }
 
         @Override

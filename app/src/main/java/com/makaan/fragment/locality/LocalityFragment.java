@@ -3,6 +3,7 @@ package com.makaan.fragment.locality;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -121,6 +122,7 @@ public class LocalityFragment extends MakaanBaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = getActivity();
+        mMainCityImage.setDefaultImageResId(R.drawable.locality_hero);
         setLocalityId();
         fetchData();
         initListeners();
@@ -141,7 +143,6 @@ public class LocalityFragment extends MakaanBaseFragment {
         populateLocalityData();
         frame.setVisibility(View.VISIBLE);
         fetchHero();
-        mMainCityImage.setDefaultImageResId(R.drawable.locality_hero);
         addLocalitiesLifestyleFragment(locality.entityDescriptions);
         addProperties(new TaxonomyService().getTaxonomyCardForLocality(locality.localityId, locality.minAffordablePrice, locality.maxAffordablePrice, locality.maxAffordablePrice, locality.maxBudgetPrice));
         ((LocalityService)MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(locality.latitude, locality.longitude, 10);
@@ -363,6 +364,10 @@ public class LocalityFragment extends MakaanBaseFragment {
                 }
             });
             mMainCityImage.setImageUrl(locality.localityHeroshotImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
+        }else{
+            Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.locality_hero);
+            final Bitmap newImg = Blur.fastblur(mContext, image, 25);
+            mBlurredCityImage.setImageBitmap(newImg);
         }
     }
 

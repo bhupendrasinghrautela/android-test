@@ -4,6 +4,7 @@
     android:id="@+id/price_trend_view"
     android:orientation="vertical"
     android:background="@color/white"
+    android:visibility="gone"
     android:layout_width="match_parent"
     android:padding="@dimen/city_internal_padding"
     android:layout_height="match_parent">

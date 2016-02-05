@@ -88,9 +88,10 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         new PriceTrendService().getPriceTrendForLocalities(localityIds, months, new LocalityTrendCallback() {
             @Override
             public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
-                if (localityPriceTrendDto.data != null && localityPriceTrendDto.data.size() != 0)
+                if (localityPriceTrendDto.data != null && localityPriceTrendDto.data.size() != 0) {
+                    priceTrendView.setVisibility(View.VISIBLE);
                     priceTrendView.bindView(localityPriceTrendDto);
-                else
+                } else
                     priceTrendView.setVisibility(View.GONE);
             }
         });
@@ -113,7 +114,7 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
 
         titleTv.setText(title);
         if(primaryMedian != 0) {
-            trendsMedianTv.setText("the median home value in " + localityName + " is " + primaryMedian + " / sq ft.");
+            trendsMedianTv.setText("the average home value in " + localityName + " is " + primaryMedian + " / sq ft.");
         }else{
             priceTrendsFirstLl.setVisibility(View.GONE);
         }
@@ -123,7 +124,7 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
             priceTrendsSecondLl.setVisibility(View.GONE);
         }
         if(secondaryAverage !=0 && secondaryMedian!=0)
-            trendsRentGrowthTv.setText("the average rent price in "+localityName+" is " + secondaryAverage + " which is higher than city median of " + secondaryMedian);
+            trendsRentGrowthTv.setText("the average rent price in "+localityName+" is " + secondaryAverage + " which is higher than city average of " + secondaryMedian);
         else{
             priceTrendsThirdLl.setVisibility(View.GONE);
         }

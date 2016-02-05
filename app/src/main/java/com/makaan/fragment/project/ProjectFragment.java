@@ -105,7 +105,6 @@ public class ProjectFragment extends MakaanBaseFragment{
         }
 
         request.launchSerp(getActivity(), SerpActivity.TYPE_PROJECT);
-        //getActivity().finish();
     }
 
     @Subscribe
@@ -134,7 +133,6 @@ public class ProjectFragment extends MakaanBaseFragment{
         }
 
         request.launchSerp(getActivity(), SerpActivity.TYPE_PROJECT);
-        //getActivity().finish();
     }
 
     @Subscribe
@@ -199,7 +197,6 @@ public class ProjectFragment extends MakaanBaseFragment{
         Intent i = new Intent(getActivity(),ProjectActivity.class);
         i.putExtra(ProjectActivity.PROJECT_ID, onSimilarProjectClickedEvent.id);
         startActivity(i);
-        getActivity().finish();
     }
 
     @Subscribe
