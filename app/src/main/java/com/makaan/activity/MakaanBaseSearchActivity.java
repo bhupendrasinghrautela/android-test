@@ -6,6 +6,7 @@ import android.animation.PropertyValuesHolder;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -118,6 +119,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     private ArrayList<SearchResponseItem> mSelectedSearches = new ArrayList<>();
     private SelectedSearchAdapter mSelectedSearchAdapter;
     private int mMaxSearchClubCount;
+    private ArrayList<SearchResponseItem> mAvailableSearches = new ArrayList<>();
+    private boolean mSearchResultReceived;
 
     @Override
     protected abstract int getContentViewId();
@@ -154,6 +157,13 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 - this.getResources().getDimensionPixelSize(R.dimen.activity_search_base_layout_search_bar_search_image_button_margin_right);
 
         mMaxSearchClubCount = this.getResources().getInteger(R.integer.max_search_count);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setSearchBarCollapsible(needScrollableSearchBar());
     }
 
     private void initializeViewData() {
@@ -264,8 +274,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     public void onSearchItemClick(SearchResponseItem searchResponseItem) {
         setSearchResultFrameLayoutVisibility(false);
 
-        if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)
-                || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+        if(supportsListing()  && (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)
+                || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchResponseItem.type))) {
             // if adapter doesn't have any item, then it means previous search was either project, city, builder etc
             // or there is no earlier search present, so just clear selected search array
             if(mSelectedSearchAdapter.getItemCount() == 0) {
@@ -302,14 +312,18 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
         handleSearch();
 
+        if(!supportsListing()) {
+            mSelectedSearches.clear();
+        }
+
         // add selected search to recent searches
         RecentSearchManager.getInstance(this).addEntryToRecentSearch(searchResponseItem, this);
 
-        if(!areListingsAvailable() && (SearchSuggestionType.CITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)
+        /*if(!areListingsAvailable() && (SearchSuggestionType.CITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)
                 || SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)
                 || SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searchResponseItem.type))) {
             finish();
-        }
+        }*/
     }
 
     private void handleSearch() {
@@ -359,9 +373,9 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             setSearchViewVisibility(false);
             // hide keypad
             showKeypad(mSearchEditText, false);
-            if(!areListingsAvailable()) {
+            /*if(!areListingsAvailable()) {
                 super.onBackPressed();
-            }
+            }*/
         } else {
             super.onBackPressed();
         }
@@ -397,6 +411,9 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         if(searchViewVisible) {
             showKeypad(mSearchEditText, true);
         }
+
+        // make sure search bar is not  collapsing on scrolling when search results are available
+        setSearchBarCollapsible(searchViewVisible ? false : needScrollableSearchBar());
 
         // show animation for the glass icon according to visibility sent
         if(searchViewVisible) {
@@ -504,12 +521,14 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     private void showEmptySearchResults() {
         ArrayList<SearchResponseItem> searches = RecentSearchManager.getInstance(this).getRecentSearches(this);
         if(searches != null && searches.size() > 0) {
+            mSearchResultReceived = false;
             setSearchResultFrameLayoutVisibility(true);
             mSearches = searches;
             clearSelectedSearches();
-            mSearchAdapter.setData(searches, true);
+            mSearchAdapter.setData(mAvailableSearches, true);
         } else {
-            setSearchResultFrameLayoutVisibility(false);
+            // we need empty layout even when no search results are present
+            setSearchResultFrameLayoutVisibility(true);
         }
     }
 
@@ -525,13 +544,16 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     public void onResults(SearchResultEvent searchResultEvent) {
+        mSearchResultReceived = true;
         setSearchResultFrameLayoutVisibility(true);
         this.mSearches = searchResultEvent.searchResponse.getData();
         clearSelectedSearches();
-        mSearchAdapter.setData(mSearches, false);
+        mSearchAdapter.setData(mAvailableSearches, false);
     }
 
     private void clearSelectedSearches() {
+        mAvailableSearches.clear();
+        mAvailableSearches.addAll(mSearches);
         if(mSelectedSearches.size() > 0) {
             if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(mSelectedSearches.get(0).type)
                     || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(mSelectedSearches.get(0).type)) {
@@ -540,7 +562,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                     searches.add(search.id);
                 }
 
-                for (Iterator<SearchResponseItem> iterator = mSearches.iterator(); iterator.hasNext();) {
+                for (Iterator<SearchResponseItem> iterator = mAvailableSearches.iterator(); iterator.hasNext();) {
                     SearchResponseItem search = iterator.next();
                     if (!searches.add(search.id)) {
                         iterator.remove();
@@ -624,6 +646,9 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                     mSearchEditText.setHint(this.getResources().getString(R.string.search_default_rent_hint));
                 }
             }
+
+            clearSelectedSearches();
+            mSearchAdapter.setData(mAvailableSearches, !mSearchResultReceived);
         }
     }
 
@@ -653,4 +678,18 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     protected void setTitle(String title) {
         mSearchPropertiesTextView.setText(title);
     }
+
+    protected void setSearchBarCollapsible(boolean isCollapsible) {
+        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) mSearchLayoutFrameLayout.getLayoutParams();
+        if(isCollapsible) {
+            params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
+                | AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+        } else {
+            params.setScrollFlags(0);
+        }
+        mSearchLayoutFrameLayout.setLayoutParams(params);
+    }
+
+    protected abstract boolean needScrollableSearchBar();
+    protected abstract boolean supportsListing();
 }

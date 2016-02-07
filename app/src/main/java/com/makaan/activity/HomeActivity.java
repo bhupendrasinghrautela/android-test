@@ -23,6 +23,7 @@ import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.user.UserLoginEvent;
 import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.pojo.SerpRequest;
+import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.response.wishlist.WishListResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.WishListService;
@@ -72,7 +73,7 @@ public class HomeActivity extends MakaanBaseSearchActivity {
                         break;
                 }
 
-                setShowSearchBar(true, true);
+                setShowSearchBar(true, false);
                 setSearchViewVisibility(true);
 
                 /*Intent intent = new Intent(HomeActivity.this, SerpActivity.class);
@@ -286,4 +287,27 @@ public class HomeActivity extends MakaanBaseSearchActivity {
         // then we need to make use of commitAllowingStateLoss()
         fragmentTransaction.commit();
     }*/
+
+    @Override
+    protected void setSearchViewVisibility(boolean visible) {
+        super.setSearchViewVisibility(visible);
+        if(!visible) {
+            setShowSearchBar(false, false);
+        }
+    }
+
+    @Subscribe
+    public void onResults(SearchResultEvent searchResultEvent) {
+        super.onResults(searchResultEvent);
+    }
+
+    @Override
+    protected boolean needScrollableSearchBar() {
+        return false;
+    }
+
+    @Override
+    protected boolean supportsListing() {
+        return false;
+    }
 }
