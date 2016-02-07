@@ -133,6 +133,13 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText(SearchResponseHelper.getType(searchResponseItem));
             }
 
+            if(SearchSuggestionType.CITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)
+                    || SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                view.findViewById(R.id.search_result_item_image_view).setVisibility(View.GONE);
+            } else {
+                view.findViewById(R.id.search_result_item_image_view).setVisibility(View.VISIBLE);
+            }
+
             if (mIsRecent) {
                 ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_history);
             } else {

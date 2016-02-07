@@ -180,6 +180,7 @@
     <string name="makaan">makaan</string>
     <string name="search_by_location">search by location</string>
     <string name="search_default_hint">pick a location, builder or project</string>
+    <string name="search_default_rent_hint">pick location or project</string>
     <string name="search_locality_hint">add more localities...</string>
 
     <!--buyer journey-->

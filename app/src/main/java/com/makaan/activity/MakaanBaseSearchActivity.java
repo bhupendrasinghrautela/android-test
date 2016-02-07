@@ -292,7 +292,11 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             mSelectedSearchAdapter.setData(null);
 
             // set hint of edit text accordingly and add current item in selected search
-            mSearchEditText.setHint(this.getResources().getString(R.string.search_default_hint));
+            if(mSerpContext == SERP_CONTEXT_BUY) {
+                mSearchEditText.setHint(this.getResources().getString(R.string.search_default_hint));
+            } else {
+                mSearchEditText.setHint(this.getResources().getString(R.string.search_default_rent_hint));
+            }
             mSelectedSearches.add(searchResponseItem);
         }
 
@@ -372,7 +376,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         setSearchViewVisibility(true);
     }
 
-    private void setSearchViewVisibility(boolean searchViewVisible) {
+    protected void setSearchViewVisibility(boolean searchViewVisible) {
 
         /*if (!searchViewVisible && searchPropertiesText != null && !TextUtils.isEmpty(searchPropertiesText)) {
             mSearchPropertiesTextView.setText(searchPropertiesText);
@@ -614,7 +618,11 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 mSearchEditText.setHint(this.getResources().getString(R.string.search_locality_hint));
             } else {
                 mSelectedSearchAdapter.setData(null);
-                mSearchEditText.setHint(this.getResources().getString(R.string.search_default_hint));
+                if(mSerpContext == SERP_CONTEXT_BUY) {
+                    mSearchEditText.setHint(this.getResources().getString(R.string.search_default_hint));
+                } else {
+                    mSearchEditText.setHint(this.getResources().getString(R.string.search_default_rent_hint));
+                }
             }
         }
     }
