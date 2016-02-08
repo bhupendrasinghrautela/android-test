@@ -73,7 +73,7 @@ public class CountListingView extends AbstractListingView {
     @Override
     public void populateData(Object data, SerpRequestCallback callback) {
         super.populateData(data, callback);
-        if(!(data instanceof Listing)) {
+        if(!(data instanceof String)) {
             return;
         }
         mCallback = callback;

@@ -532,8 +532,8 @@
 
     <dimen name="fragment_dialog_filters_toggle_button_grid_item_horizontal_padding">17dp</dimen>
     <dimen name="fragment_dialog_filters_checkbox_grid_item_vertical_padding">20dp</dimen>
-    <dimen name="fragment_dialog_filters_toggle_button_grid_item_width">44dp</dimen>
-    <dimen name="fragment_dialog_filters_toggle_button_grid_item_height">44dp</dimen>
+    <dimen name="fragment_dialog_filters_toggle_button_grid_item_width">40dp</dimen>
+    <dimen name="fragment_dialog_filters_toggle_button_grid_item_height">40dp</dimen>
     <dimen name="fragment_dialog_filters_toggle_button_grid_item_text_size">18sp</dimen>
 
     <dimen name="fragment_dialog_filters_checkbox_grid_item_text_size">16sp</dimen>
