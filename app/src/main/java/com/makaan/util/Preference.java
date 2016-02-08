@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 
 import com.makaan.constants.StringConstants;
-import com.makaan.pojo.UserInfo;
+import com.makaan.response.user.UserResponse;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -100,9 +100,9 @@ public class Preference {
         edit.commit();
     }
 
-    public static UserInfo getUserInfo(Context context) {
-        return (UserInfo) JsonParser.parseJson(
-                getSharedPref(context).getString(PREF_USER_INFO, null),UserInfo.class);
+    public static UserResponse getUserInfo(Context context) {
+        return (UserResponse) JsonParser.parseJson(
+                getSharedPref(context).getString(PREF_USER_INFO, null),UserResponse.class);
     }
 
     public static void setUserLoggedIn(Context context) {

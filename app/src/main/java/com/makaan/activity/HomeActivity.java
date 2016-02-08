@@ -30,8 +30,8 @@ import com.makaan.event.location.LocationGetEvent;
 import com.makaan.event.user.UserLoginEvent;
 import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.pojo.SerpRequest;
-import com.makaan.pojo.UserInfo;
 import com.makaan.response.search.event.SearchResultEvent;
+import com.makaan.response.user.UserResponse;
 import com.makaan.response.wishlist.WishListResponse;
 import com.makaan.service.LocationService;
 import com.makaan.service.MakaanServiceFactory;
@@ -189,7 +189,7 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     }
 
     private void setUserData() {
-        UserInfo info=Preference.getUserInfo(this);
+        UserResponse info=Preference.getUserInfo(this);
         tvUserName.setText(info.getData().getFirstName());
         mTextViewBuyerInitials.setText(info.getData().getFirstName());
     }

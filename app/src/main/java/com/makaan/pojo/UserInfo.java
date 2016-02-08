@@ -1,13 +1,15 @@
 package com.makaan.pojo;
 
 
+import com.makaan.response.BaseResponse;
+
 import java.util.List;
 
 /**
  * A model for user info data
  */
 
-public class UserInfo extends BaseJsonModel {
+public class UserInfo extends BaseResponse {
 
     private UserData data;
 
