@@ -62,9 +62,7 @@ public class WishListService implements MakaanService {
     }
 
     private String buildWishListUrl(){
-        if(null==MasterDataCache.getInstance().getUserData()){
-            throw new RuntimeException("User not logged in");
-        }
+        
         StringBuilder requestBuilder = new StringBuilder();
         requestBuilder.append(ApiConstants.BASE_URL);
         requestBuilder.append("/data/v1/entity/user/wish-list");
