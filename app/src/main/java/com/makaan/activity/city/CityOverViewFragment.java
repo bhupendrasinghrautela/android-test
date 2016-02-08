@@ -11,9 +11,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -77,12 +80,20 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     TextView mCityTagLine;
     @Bind(R.id.rental_growth_text)
     TextView mRentalGrowth;
+    @Bind(R.id.rental_growth_text_refer)
+    TextView mRentalGrowthRefer;
     @Bind(R.id.annual_growth_text)
     TextView mAnnualGrowth;
+    @Bind(R.id.annual_growth_text_refer)
+    TextView mAnnualGrowthRefer;
     @Bind(R.id.content_text)
     TextView mCityDescription;
+    @Bind(R.id.compressed_text_view)
+    LinearLayout mCompressedTextViewLayout;
     @Bind(R.id.top_locality_layout)
     TopLocalityView mTopLocalityLayout;
+    @Bind(R.id.property_range_layout)
+    RelativeLayout mPropertyRangeLayout;
 /*    @Bind(R.id.city_connect_header)
     TextView mCityConnectHeader;*/
     @Bind(R.id.price_trend_view)
@@ -143,10 +154,12 @@ public class CityOverViewFragment extends MakaanBaseFragment{
 
     private void initUiUsingCityDetails() {
         mMainCityImage.setImageUrl(mCity.cityHeroshotImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
-        mCityCollapseToolbar.setTitle(mCity.label.toLowerCase());
-        mCityCollapseToolbar.setCollapsedTitleTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/comforta.ttf"));
-        mCityCollapseToolbar.setExpandedTitleTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/comforta.ttf"));
-        interestedInTv.setText("interested in " + mCity.label.toLowerCase() + "?");
+        if(mCity.label!=null) {
+            mCityCollapseToolbar.setTitle(mCity.label.toLowerCase());
+            mCityCollapseToolbar.setCollapsedTitleTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/comforta.ttf"));
+            mCityCollapseToolbar.setExpandedTitleTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/comforta.ttf"));
+            interestedInTv.setText("interested in " + mCity.label.toLowerCase() + "?");
+        }
         addLocalitiesLifestyleFragment(mCity.entityDescriptions);
         addProperties(new TaxonomyService().getTaxonomyCardForCity(mCity.id, mCity.minAffordablePrice, mCity.maxAffordablePrice,
                 mCity.minLuxuryPrice, mCity.maxBudgetPrice));
@@ -174,10 +187,32 @@ public class CityOverViewFragment extends MakaanBaseFragment{
             final Bitmap newImg = Blur.fastblur(mContext, image, 25);
             mBlurredCityImage.setImageBitmap(newImg);
         }
-        mCityTagLine.setText(mCity.cityTagLine.toLowerCase());
-        mAnnualGrowth.setText(StringUtil.getTwoDecimalPlaces(mCity.annualGrowth) + "%");
-        mRentalGrowth.setText(StringUtil.getTwoDecimalPlaces(mCity.rentalYield) + "%");
-        mCityDescription.setText(Html.fromHtml(mCity.description));
+        if(mCity.cityTagLine!=null) {
+            mCityTagLine.setText(mCity.cityTagLine.toLowerCase());
+        }
+        if(mCity.annualGrowth!=null) {
+            mAnnualGrowthRefer.setVisibility(View.VISIBLE);
+            mAnnualGrowth.setText(StringUtil.getTwoDecimalPlaces(mCity.annualGrowth) + "%");
+        }
+        else{
+            mAnnualGrowth.setVisibility(View.GONE);
+            mAnnualGrowthRefer.setVisibility(View.GONE);
+        }
+        if(mCity.rentalYield!=null) {
+            mRentalGrowthRefer.setVisibility(View.VISIBLE);
+            mRentalGrowth.setText(StringUtil.getTwoDecimalPlaces(mCity.rentalYield) + "%");
+        }
+        else{
+            mRentalGrowthRefer.setVisibility(View.VISIBLE);
+            mRentalGrowth.setVisibility(View.VISIBLE);
+        }
+        if(!TextUtils.isEmpty(mCity.description)) {
+            mCompressedTextViewLayout.setVisibility(View.VISIBLE);
+            mCityDescription.setText(Html.fromHtml(mCity.description));
+        }
+        else{
+            mCompressedTextViewLayout.setVisibility(View.GONE);
+        }
 
     //lineChartLayout.bindView(getResources().getString(R.string.response));
     }
@@ -218,6 +253,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
 
     private void initView() {
         isRent = false;
+        mCompressedTextViewLayout.setVisibility(View.INVISIBLE);
         mPropertyTypeSpinner.setMessage(PREFIX_PROPERTY_SPINNER, null);
         mPropertyTypeSpinner.setItems(MasterDataCache.getInstance().getBuyPropertyTypes());
         mBhkSpinner.setMessage(null, POSTFIX_BHK_SPINNER);
@@ -234,39 +270,42 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     @Subscribe
     public void onTopLocalityResults(CityTopLocalityEvent cityTopLocalityEvent){
         mCityTopLocalities = cityTopLocalityEvent.topLocalitiesInCity;
-        mTopLocalityLayout.bindView(mCityTopLocalities);
-        mTopLocalityLayout.setShowAllPropertiesClickListener(getActivity().getIntent().getLongExtra(CityActivity.CITY_ID, 1l), isRent);
-        fetchPriceTrendData(mCityTopLocalities);
+        if(mCityTopLocalities != null && mCityTopLocalities.size()>0) {
+            mTopLocalityLayout.setVisibility(View.VISIBLE);
+            mTopLocalityLayout.bindView(mCityTopLocalities);
+            mTopLocalityLayout.setShowAllPropertiesClickListener(getActivity().getIntent().getLongExtra(CityActivity.CITY_ID, 1l), isRent);
+            fetchPriceTrendData(mCityTopLocalities);
+        }
     }
 
     @Subscribe
     public void onPriceTrendResults(CityTrendEvent cityTrendEvent){
+        mPropertyRangeLayout.setVisibility(View.VISIBLE);
         mBarChartView.bindView(cityTrendEvent.cityTrendData);
         mBarChartView.setListener(new OnBarTouchListener() {
             @Override
             public void onBarTouched(CityTrendData cityTrendData) {
                 SerpRequest serpRequest = new SerpRequest();
-                if(cityTrendData.minPrice!=null) {
+                if (cityTrendData.minPrice != null) {
                     serpRequest.setMinBudget(cityTrendData.minPrice.longValue());
                 }
-                if(cityTrendData.maxPrice!=null){
+                if (cityTrendData.maxPrice != null) {
                     serpRequest.setMaxBudget(cityTrendData.maxPrice.longValue());
                 }
-                for(int propertyType:mPropertyTypeSpinner.getSelectedIds()) {
+                for (int propertyType : mPropertyTypeSpinner.getSelectedIds()) {
                     serpRequest.setPropertyType(propertyType);
                 }
-                for(int bedroom:mBhkSpinner.getSelectedIds()){
+                for (int bedroom : mBhkSpinner.getSelectedIds()) {
                     serpRequest.setBedrooms(bedroom);
-                    if(bedroom==4){
-                        for(int i=5;i<=10;i++){
+                    if (bedroom == 4) {
+                        for (int i = 5; i <= 10; i++) {
                             serpRequest.setBedrooms(i);
                         }
                     }
                 }
-                if(isRent){
+                if (isRent) {
                     serpRequest.setSerpContext(SerpRequest.CONTEXT_RENT);
-                }
-                else{
+                } else {
                     serpRequest.setSerpContext(SerpRequest.CONTEXT_BUY);
                 }
                 serpRequest.setCityId(mCity.id);
@@ -293,21 +332,25 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     }
 
     private void addLocalitiesLifestyleFragment(ArrayList<EntityDesc> entityDescriptions) {
-        LocalityLifestyleFragment newFragment = new LocalityLifestyleFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("title", getResources().getString(R.string.know_more)+" "+mCity.label);
-        newFragment.setArguments(bundle);
-        initFragment(R.id.container_nearby_localities_lifestyle, newFragment, false);
-        newFragment.setData(entityDescriptions);
+        if(entityDescriptions != null && entityDescriptions.size()>0) {
+            LocalityLifestyleFragment newFragment = new LocalityLifestyleFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("title", getResources().getString(R.string.know_more) + " " + mCity.label);
+            newFragment.setArguments(bundle);
+            initFragment(R.id.container_nearby_localities_lifestyle, newFragment, false);
+            newFragment.setData(entityDescriptions);
+        }
     }
 
     private void addProperties(List<TaxonomyCard> taxonomyCardList) {
-        LocalityPropertiesFragment newFragment = new LocalityPropertiesFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("title", getResources().getString(R.string.properties_in)+" "+mCity.label);
-        newFragment.setArguments(bundle);
-        initFragment(R.id.container_nearby_localities_props, newFragment, false);
-        newFragment.setData(taxonomyCardList);
+        if(taxonomyCardList != null && taxonomyCardList.size()>0) {
+            LocalityPropertiesFragment newFragment = new LocalityPropertiesFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("title", getResources().getString(R.string.properties_in) + " " + mCity.label);
+            newFragment.setArguments(bundle);
+            initFragment(R.id.container_nearby_localities_props, newFragment, false);
+            newFragment.setData(taxonomyCardList);
+        }
     }
 
     protected void initFragment(int fragmentHolderId, Fragment fragment, boolean shouldAddToBackStack) {
