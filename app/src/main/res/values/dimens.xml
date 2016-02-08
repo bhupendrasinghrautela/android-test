@@ -829,6 +829,8 @@
     <dimen name="serp_listing_item_builder_text_text_size">16sp</dimen>
 
     <!-- Serp Builder Item Dimens -->
+    <dimen name="serp_listing_item_seller_max_height">472dp</dimen>
+
     <dimen name="serp_listing_item_seller_image_view_width">86dp</dimen>
     <dimen name="serp_listing_item_seller_image_view_height">86dp</dimen>
     <dimen name="serp_listing_item_seller_image_view_margin_top">37dp</dimen>

@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.util.AppBus;
 import com.makaan.util.AppUtils;
+import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.ButterKnife;
 
@@ -44,5 +46,14 @@ public abstract class MakaanBaseFragment extends Fragment {
 
     private void showNoNetworkFound() {
         //TODO: implement
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RefWatcher refWatcher = MakaanBuyerApplication.getRefWatcher(getActivity());
+        if(refWatcher != null) {
+            refWatcher.watch(this);
+        }
     }
 }

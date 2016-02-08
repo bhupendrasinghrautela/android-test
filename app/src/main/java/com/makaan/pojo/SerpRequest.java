@@ -516,4 +516,8 @@ public class SerpRequest implements Parcelable {
     public void setSearch(SearchResponseItem item) {
         searchItems.add(item);
     }
+
+    public ArrayList<SearchResponseItem> getSearches() {
+        return searchItems;
+    }
 }
