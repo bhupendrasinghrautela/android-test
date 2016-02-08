@@ -35,11 +35,13 @@ import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.adapter.listing.SearchAdapter;
 import com.makaan.adapter.listing.SelectedSearchAdapter;
+import com.makaan.cookie.Session;
 import com.makaan.response.search.SearchResponseHelper;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.SearchSuggestionType;
 import com.makaan.response.search.SearchType;
 import com.makaan.response.search.event.SearchResultEvent;
+import com.makaan.service.LocationService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SearchService;
 
@@ -530,16 +532,31 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     private void showEmptySearchResults() {
-        ArrayList<SearchResponseItem> searches = RecentSearchManager.getInstance(this).getRecentSearches(this);
-        if(searches != null && searches.size() > 0) {
-            mSearchResultReceived = false;
+        if(mSelectedSearches.size() > 0) {
+            LocationService service = (LocationService) MakaanServiceFactory.getInstance().getService(LocationService.class);
+            service.getTopNearbyLocalitiesAsSearchResult(mSelectedSearches.get(mSelectedSearches.size() - 1));
             setSearchResultFrameLayoutVisibility(true);
-            mSearches = searches;
-            clearSelectedSearches();
-            mSearchAdapter.setData(mAvailableSearches, true);
         } else {
-            // we need empty layout even when no search results are present
-            setSearchResultFrameLayoutVisibility(true);
+            ArrayList<SearchResponseItem> searches = RecentSearchManager.getInstance(this).getRecentSearches(this);
+            if (searches != null && searches.size() > 0) {
+                mSearchResultReceived = false;
+                setSearchResultFrameLayoutVisibility(true);
+                mSearches = searches;
+                clearSelectedSearches();
+                mSearchAdapter.setData(mAvailableSearches, true);
+            } else {
+                if(this instanceof HomeActivity) {
+                    // check if we have user's location
+                    if(Session.myLocation != null) {
+                        LocationService service = (LocationService) MakaanServiceFactory.getInstance().getService(LocationService.class);
+                        service.getTopLocalitiesAsSearchResult(Session.myLocation);
+                    }
+                    setSearchResultFrameLayoutVisibility(true);
+                } else {
+                    // we need empty layout even when no search results are present
+                    setSearchResultFrameLayoutVisibility(true);
+                }
+            }
         }
     }
 
@@ -555,15 +572,17 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     public void onResults(SearchResultEvent searchResultEvent) {
-        if(null!=searchResultEvent.error){
+        if(null!=searchResultEvent.error) {
             //TODO handle error
             return;
         }
-        mSearchResultReceived = true;
-        setSearchResultFrameLayoutVisibility(true);
-        this.mSearches = searchResultEvent.searchResponse.getData();
-        clearSelectedSearches();
-        mSearchAdapter.setData(mAvailableSearches, false);
+        if(mSearchResultFrameLayout.getVisibility() == View.VISIBLE) {
+            mSearchResultReceived = true;
+            setSearchResultFrameLayoutVisibility(true);
+            this.mSearches = searchResultEvent.searchResponse.getData();
+            clearSelectedSearches();
+            mSearchAdapter.setData(mAvailableSearches, false);
+        }
     }
 
     private void clearSelectedSearches() {

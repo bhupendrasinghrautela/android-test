@@ -24,6 +24,7 @@ import com.makaan.adapter.listing.SerpListingAdapter;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.SearchSuggestionType;
 import com.makaan.ui.PaginatedListView;
+import com.makaan.util.StringUtil;
 import com.segment.analytics.Analytics;
 import com.segment.analytics.Properties;
 import com.segment.analytics.Traits;
@@ -94,7 +95,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
                 /*if(mTotalPropertiesTextView != null) {
                     mTotalPropertiesTextView.setText(String.format("%d %s", mTotalCount, mSearchedEntities));
                 }*/
-                mListingAdapter.setData(String.format("%d %s", mTotalCount, mSearchedEntities), mListings, mGroupListings, mRequestType);
+                mListingAdapter.setData(String.format("%s %s", StringUtil.getFormattedNumber(mTotalCount), mSearchedEntities), mListings, mGroupListings, mRequestType);
                 if(mTotalCount > mListings.size()) {
                     mListingRecyclerView.setHasMoreItems(true);
                 } else {
@@ -181,9 +182,9 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
 
             if(groupListings != null) {
                 mGroupListings.addAll(groupListings);
-                mListingAdapter.setData(String.format("%d %s", listingTotalCount, mSearchedEntities), mListings, mGroupListings, mRequestType);
+                mListingAdapter.setData(String.format("%s %s", StringUtil.getFormattedNumber(listingTotalCount), mSearchedEntities), mListings, mGroupListings, mRequestType);
             } else {
-                mListingAdapter.setData(String.format("%d %s", listingTotalCount, mSearchedEntities), mListings, null, mRequestType);
+                mListingAdapter.setData(String.format("%s %s", StringUtil.getFormattedNumber(listingTotalCount), mSearchedEntities), mListings, null, mRequestType);
             }
 
             if(listingTotalCount > mListings.size()) {

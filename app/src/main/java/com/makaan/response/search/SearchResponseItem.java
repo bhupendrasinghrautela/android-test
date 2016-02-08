@@ -15,7 +15,7 @@ public class SearchResponseItem implements Cloneable, Parcelable{
 			googlePlaceId,  city, redirectUrlFilters;
 
 	public boolean isSuggestion, isGooglePlace;
-	private double latitude, longitude;
+	public double latitude, longitude;
 	public long cityId;
 
 	public SearchResponseItem(){}
