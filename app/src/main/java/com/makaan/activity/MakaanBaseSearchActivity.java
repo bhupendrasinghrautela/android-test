@@ -555,6 +555,10 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     public void onResults(SearchResultEvent searchResultEvent) {
+        if(null!=searchResultEvent.error){
+            //TODO handle error
+            return;
+        }
         mSearchResultReceived = true;
         setSearchResultFrameLayoutVisibility(true);
         this.mSearches = searchResultEvent.searchResponse.getData();

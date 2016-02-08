@@ -137,6 +137,10 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResults(ImagesGetEvent imagesGetEvent){
+        if(null== imagesGetEvent || null!=imagesGetEvent.error){
+            //TODO handle error
+            return;
+        }
         try {
             if (imagesGetEvent.images.size() > 0) {
                 mPropertyImageViewPager.setVisibility(View.VISIBLE);
@@ -152,6 +156,10 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResult(ProjectByIdEvent projectByIdEvent){
+        if(null== projectByIdEvent || null!=projectByIdEvent.error){
+            //TODO handle error
+            return;
+        }
         project = projectByIdEvent.project;
         mAmenitiesViewScroll.bindView(project.projectAmenities);
         projectSpecificationView.bindView(project.getFormattedSpecifications(), getActivity());
@@ -182,16 +190,28 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResults(AmenityGetEvent amenityGetEvent) {
+        if(null== amenityGetEvent || null!=amenityGetEvent.error){
+            //TODO handle error
+            return;
+        }
         addProjectAboutLocalityFragment(amenityGetEvent.amenityClusters);
     }
 
     @Subscribe
     public void onResult(ProjectConfigEvent projectConfigEvent){
+        if(null== projectConfigEvent || null!=projectConfigEvent.error){
+            //TODO handle error
+            return;
+        }
         projectConfigView.bindView(projectConfigEvent, getActivity());
     }
 
     @Subscribe
     public void onResult(SimilarProjectGetEvent similarProjectGetEvent){
+        if(null== similarProjectGetEvent || null!=similarProjectGetEvent.error){
+            //TODO handle error
+            return;
+        }
         if(similarProjectGetEvent.similarProjects !=null && similarProjectGetEvent.similarProjects.size()>0)
             addSimilarProjectsFragment(similarProjectGetEvent.similarProjects);
     }
