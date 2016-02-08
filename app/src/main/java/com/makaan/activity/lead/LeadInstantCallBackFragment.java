@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +43,11 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
     TextView mCodeTextView;
     @Bind(R.id.leadform_mobileno_edittext)
     EditText mNumber;
+    LeadFormPresenter mLeadFormPresenter;
+    @Bind(R.id.tv_seller_name)
+    TextView mTextViewSellerName;
+    @Bind(R.id.seller_ratingbar)
+    RatingBar mRatingBarSeller;
     private Integer mCountryId;
     private ArrayAdapter<String> mCountryAdapter;
     private List<String> mCountryNames;
@@ -57,6 +63,9 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         initializeCountrySpinner();
         super.onActivityCreated(savedInstanceState);
+        mLeadFormPresenter= LeadFormPresenter.getLeadFormPresenter();
+        mTextViewSellerName.setText(mLeadFormPresenter.getName());
+        mRatingBarSeller.setRating(Float.valueOf(mLeadFormPresenter.getScore()));
 
     }
 

@@ -14,17 +14,20 @@
         android:id="@+id/city_locality_label"
         android:layout_width="match_parent"
         android:textSize="@dimen/city_small_text"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:typeface="monospace"/>
     <TextView
         android:id="@+id/city_avg_price"
         android:layout_width="match_parent"
         android:textSize="@dimen/city_small_text"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:typeface="monospace"/>
     <TextView
         android:id="@+id/city_avg_percent_rise"
         android:layout_width="match_parent"
         android:textSize="@dimen/city_small_text"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:typeface="monospace"/>
     </LinearLayout>
     <FrameLayout
         android:layout_width="wrap_content"
@@ -45,6 +48,7 @@
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/city_very_small_text"/>
+            android:textSize="@dimen/city_very_small_text"
+            android:typeface="monospace"/>
     </FrameLayout>
 </LinearLayout>

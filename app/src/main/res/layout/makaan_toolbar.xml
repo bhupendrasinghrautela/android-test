@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize">
 
-    <TextView
+    <!--<TextView
         android:id="@+id/makaan_toolbar_logo_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,58 +14,66 @@
         android:textSize="@dimen/makaan_toolbar_logo_text_view_text_size"
         android:textColor="@color/listingBlack"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true" />-->
 
     <ImageView
         android:id="@+id/makaan_toolbar_logo_image_view"
-        android:layout_width="@dimen/makaan_toolbar_logo_image_view_width"
-        android:layout_height="@dimen/makaan_toolbar_logo_image_view_height"
-        android:layout_marginTop="@dimen/makaan_toolbar_logo_image_view_margin_top"
-        android:layout_marginLeft="@dimen/makaan_toolbar_logo_image_view_margin_left"
-        android:layout_marginStart="@dimen/makaan_toolbar_logo_image_view_margin_left"
-        android:layout_toRightOf="@id/makaan_toolbar_logo_text_view"
-        android:layout_toEndOf="@id/makaan_toolbar_logo_text_view"
-        android:background="@drawable/makaan_logo"
-        android:scaleType="centerCrop"/>
-
-    <FrameLayout
-        android:id="@+id/makaan_toolbar_profile_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="18dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/makaan_logo" />
+
+    <LinearLayout
+        android:id="@+id/linear_layout_makaan_toolbar_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
-
-        <ImageView
-            android:id="@+id/makaan_toolbar_profile_icon_image_view"
-            android:layout_width="@dimen/makaan_toolbar_profile_image_view_width"
-            android:layout_height="@dimen/makaan_toolbar_profile_image_view_width"
-            android:layout_marginTop="@dimen/makaan_toolbar_profile_image_view_margin_top"
-            android:layout_marginRight="@dimen/makaan_toolbar_profile_image_view_margin_right"
-            android:layout_marginEnd="@dimen/makaan_toolbar_profile_image_view_margin_right"
-            android:visibility="gone" />
-
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:gravity="center">
 
         <TextView
-            android:id="@+id/makaan_toolbar_profile_icon_text_view"
+            android:id="@+id/makaan_toolbar_login_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="@string/login"
+            android:textColor="@color/login_text_color"
+            android:textSize="@dimen/makaan_toolbar_login_text_view_text_size" />
+
+        <FrameLayout
+            android:id="@+id/makaan_toolbar_profile_icon"
             android:layout_width="@dimen/makaan_toolbar_profile_image_view_width"
             android:layout_height="@dimen/makaan_toolbar_profile_image_view_width"
-            android:layout_marginTop="@dimen/makaan_toolbar_profile_image_view_margin_top"
-            android:layout_marginRight="@dimen/makaan_toolbar_profile_image_view_margin_right"
-            android:layout_marginEnd="@dimen/makaan_toolbar_profile_image_view_margin_right"
-            android:background="@color/white" />
-    </FrameLayout>
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:clickable="false">
 
-    <TextView
-        android:id="@+id/makaan_toolbar_login_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/makaan_toolbar_login_text_view_margin_top"
-        android:layout_marginRight="@dimen/makaan_toolbar_login_text_view_margin_right"
-        android:layout_marginEnd="@dimen/makaan_toolbar_login_text_view_margin_right"
-        android:layout_toLeftOf="@+id/makaan_toolbar_profile_icon"
-        android:layout_toStartOf="@+id/makaan_toolbar_profile_icon"
-        android:gravity="center"
-        android:text="@string/login"
-        android:textSize="@dimen/makaan_toolbar_login_text_view_text_size" />
+            <ImageView
+                android:id="@+id/makaan_toolbar_profile_icon_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:src="@drawable/edit_avatar"
+                android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/makaan_toolbar_profile_icon_text_view"
+                android:layout_width="@dimen/makaan_toolbar_profile_image_view_width"
+                android:layout_height="@dimen/makaan_toolbar_profile_image_view_width"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/profile_image_drawable"
+                android:clickable="false"
+                android:gravity="center"
+                android:maxLength="1"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+        </FrameLayout>
+
+
+    </LinearLayout>
 </RelativeLayout>

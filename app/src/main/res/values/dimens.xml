@@ -912,7 +912,7 @@
 
     <dimen name="makaan_toolbar_login_text_view_margin_top">34dp</dimen>
     <dimen name="makaan_toolbar_login_text_view_margin_right">9dp</dimen>
-    <dimen name="makaan_toolbar_login_text_view_text_size">14sp</dimen>
+    <dimen name="makaan_toolbar_login_text_view_text_size">16sp</dimen>
 
     <dimen name="makaan_toolbar_profile_image_view_width">36dp</dimen>
     <dimen name="makaan_toolbar_profile_image_view_height">36dp</dimen>
@@ -935,8 +935,9 @@
     <dimen name="activity_home_find_joy_image_view_width">299dp</dimen>
     <dimen name="activity_home_find_joy_image_view_height">117dp</dimen>
     <dimen name="activity_home_find_joy_image_view_top_margin">192dp</dimen>
+    <dimen name="activity_home_search_toggle_left_margin">20dp</dimen>
 
-    <dimen name="activity_home_search_relative_view_left_margin">52dp</dimen>
+    <dimen name="activity_home_search_relative_view_left_margin">30dp</dimen>
     <dimen name="activity_home_search_relative_view_bottom_margin">64dp</dimen>
 
     <!-- selected search item values -->

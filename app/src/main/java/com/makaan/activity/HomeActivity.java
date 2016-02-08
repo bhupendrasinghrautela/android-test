@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -18,7 +19,10 @@ import android.widget.Toast;
 
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
+import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
+import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
 import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.constants.PreferenceConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.Session;
@@ -27,6 +31,7 @@ import com.makaan.event.user.UserLoginEvent;
 import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.response.search.event.SearchResultEvent;
+import com.makaan.response.user.UserResponse;
 import com.makaan.response.wishlist.WishListResponse;
 import com.makaan.service.LocationService;
 import com.makaan.service.MakaanServiceFactory;
@@ -38,6 +43,10 @@ import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class HomeActivity extends MakaanBaseSearchActivity {
     boolean isBottom = true;
     private Toolbar mToolbar;
@@ -47,6 +56,14 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     TextView tvSearch;
     FrameLayout topBar;
 
+    @Bind(R.id.makaan_toolbar_login_text_view)
+    TextView tvUserName;
+    @Bind(R.id.makaan_toolbar_profile_icon_image_view)
+    ImageView mImageViewBuyer;
+    @Bind(R.id.makaan_toolbar_profile_icon_text_view)
+    TextView  mTextViewBuyerInitials;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,10 +72,12 @@ public class HomeActivity extends MakaanBaseSearchActivity {
         service.getUserLocation();
 
         topBar=(FrameLayout) findViewById(R.id.top_bar);
+
+        topBar = (FrameLayout) findViewById(R.id.top_bar);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        tvSearch =(TextView) findViewById(R.id.activity_home_search_text_view);
+        tvSearch = (TextView) findViewById(R.id.activity_home_search_text_view);
         tvSearch.setFocusable(false);
-        rgType=(RadioGroup) findViewById(R.id.activity_home_property_type_radio_group);
+        rgType = (RadioGroup) findViewById(R.id.activity_home_property_type_radio_group);
         final RadioButton buyRadioButton = (RadioButton) findViewById(R.id.activity_home_property_buy_radio_button);
         final RadioButton rentRadioButton = (RadioButton) findViewById(R.id.activity_home_property_rent_radio_button);
 
@@ -102,7 +121,16 @@ public class HomeActivity extends MakaanBaseSearchActivity {
             }
         });
 
-        testWishList();
+        try{
+            if(Preference.isUserLoggedIn(this)){
+                    setUserData();
+            }else{
+
+            }
+        }catch (Exception e){
+
+        }
+        //testWishList();
 
         rgType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -160,22 +188,28 @@ public class HomeActivity extends MakaanBaseSearchActivity {
         */
     }
 
-    private void testWishList(){
-        if(!CookiePreferences.isUserLoggedIn(this)) {
+    private void setUserData() {
+        UserResponse info=Preference.getUserInfo(this);
+        tvUserName.setText(info.getData().getFirstName());
+        mTextViewBuyerInitials.setText(info.getData().getFirstName());
+    }
+
+   /* private void testWishList() {
+        if (!CookiePreferences.isUserLoggedIn(this)) {
             UserLoginService userLoginService =
                     (UserLoginService) MakaanServiceFactory.getInstance().getService(UserLoginService.class);
             userLoginService.loginWithMakaanAccount("harvi@proptiger.com", "123456");
-        }else{
+        } else {
             WishListService wishListService =
                     (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
             wishListService.get();
         }
-    }
+    }*/
 
     @Subscribe
     public void onResults(UserLoginEvent userLoginEvent) {
 
-        if(null!=userLoginEvent.error){
+        if (null != userLoginEvent.error) {
             return;
         }
 
@@ -198,6 +232,7 @@ public class HomeActivity extends MakaanBaseSearchActivity {
         }
         WishListResponse response = wishListResultEvent.wishListResponse;
 //        Toast.makeText(this,"Wish list  - " + response.totalCount, Toast.LENGTH_SHORT).show(); causing null pointer
+
 
     }
 
@@ -311,7 +346,7 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     @Override
     protected void setSearchViewVisibility(boolean visible) {
         super.setSearchViewVisibility(visible);
-        if(!visible) {
+        if (!visible) {
             setShowSearchBar(false, false);
         }
     }
@@ -329,5 +364,17 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     @Override
     protected boolean supportsListing() {
         return false;
+    }
+
+    @OnClick(R.id.linear_layout_makaan_toolbar_login)
+    public void onLoginCLick() {
+        //TODO for logged and non logged users
+        if(Preference.isUserLoggedIn(this)){
+            Intent intent = new Intent(HomeActivity.this, BuyerJourneyActivity.class);
+            startActivity(intent);
+        }else{
+            Intent intent = new Intent(HomeActivity.this, UserLoginActivity.class);
+            startActivity(intent);
+        }
     }
 }

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.ui.view.BadgeView;
+import com.makaan.util.Preference;
 import com.pkmmte.view.CircularImageView;
 
 import butterknife.Bind;
@@ -46,7 +47,7 @@ public class BuyerJourneyActivity extends AppCompatActivity {
 
     private AlertDialog mAlertDialog;
 
-    public static boolean IS_LOGGED = true; //TODO: get it from prefs for login status
+    public static boolean IS_LOGGED = false; //TODO: get it from prefs for login status
 
     @Bind(R.id.toolbar_layout)
     CollapsingToolbarLayout mCollapsingToolbar;
@@ -71,6 +72,7 @@ public class BuyerJourneyActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.do_not_move, R.anim.do_not_move);
         setContentView(R.layout.fragment_buyer_profile);
         ButterKnife.bind(BuyerJourneyActivity.this);
+        IS_LOGGED=Preference.isUserLoggedIn(BuyerJourneyActivity.this);
         initViews();
 
         setupAppBar();
@@ -106,9 +108,6 @@ public class BuyerJourneyActivity extends AppCompatActivity {
         }else{
             mLoginButton.setVisibility(View.VISIBLE);
         }
-        //UserInfo userInfo = Preferences.getUserInfo(this);
-        //mProfileImage.setImageURI(Uri.parse(userInfo.getData().getProfileImageUrl()));
-        //mCollapsingToolbar.setTitle("User");
     }
 
     private void setupAppBar() {
@@ -159,6 +158,7 @@ public class BuyerJourneyActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         if (IS_LOGGED) {
             getMenuInflater().inflate(R.menu.menu, menu);//Menu Resource, Menu
+            mUserName.setText(Preference.getUserInfo(this).getData().getFirstName());
             return true;
         } else {
             return false;

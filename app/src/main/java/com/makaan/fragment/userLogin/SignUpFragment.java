@@ -71,7 +71,7 @@ public class SignUpFragment extends Fragment {
         }else if(TextUtils.isEmpty(pwd)) {
             Toast.makeText(getActivity(),getString(R.string.enter_password),Toast.LENGTH_SHORT).show();
         }else if(TextUtils.isEmpty(name)){
-            Toast.makeText(getActivity(),"enter name",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),getString(R.string.enter_username),Toast.LENGTH_SHORT).show();
         }
         else {
             userRegistrationDto=new UserRegistrationDto();

@@ -1,12 +1,15 @@
 package com.makaan.activity.userLogin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.makaan.R;
+import com.makaan.activity.HomeActivity;
 import com.makaan.fragment.userLogin.ReplaceFragment;
 import com.makaan.network.VolleyErrorParser;
 import com.makaan.response.ResponseError;
@@ -17,6 +20,9 @@ import com.makaan.response.login.UserLoginPresenter;
 import com.makaan.response.user.UserResponse;
 import com.makaan.ui.CommonProgressDialog;
 import com.makaan.util.LoginPreferences;
+import com.makaan.util.Preference;
+
+import java.util.prefs.Preferences;
 
 /**
  * Created by sunil on 29/12/15.
@@ -85,8 +91,11 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
     public void onUserRegistrationSuccess(UserResponse userResponse, String response) {
         if(mProgressDialog !=null)
             mProgressDialog.dismissDialog();
+        Preference.setUserInfo(this, response);
+        Preference.setUserLoggedIn(this);
         Toast.makeText(this, "Registration Successful ", Toast.LENGTH_SHORT).show();
-        finish();
+        Intent intent = new Intent(UserLoginActivity.this, HomeActivity.class);
+        startActivity(intent);
     }
 
     @Override

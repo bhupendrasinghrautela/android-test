@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/input_top_margin"
-                android:text="admin123-3500013@proptiger.com"
+                android:text="harvi@proptiger.com"
                 android:background="@drawable/edittext_bg_bottom_border"
                 android:hint="@string/email"
                 android:paddingBottom="@dimen/edit_internal_padding"
