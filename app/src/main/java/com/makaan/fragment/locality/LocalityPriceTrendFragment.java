@@ -1,14 +1,12 @@
 package com.makaan.fragment.locality;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -41,6 +39,7 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
     private Double primaryRise;
     private Double secondaryAverage;
     private int secondaryMedian;
+    private ArrayList<Long> locality;
 
     @Bind(R.id.price_trend_view)
     public PriceTrendView priceTrendView;
@@ -83,9 +82,13 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
     }
 
     private void fetchData(int months) {
-        ArrayList<Long> localityIds = new ArrayList<>();
-        localityIds.add(localityId);
-        new PriceTrendService().getPriceTrendForLocalities(localityIds, months, new LocalityTrendCallback() {
+        if(locality!=null)
+            locality.add(localityId);
+        else{
+            locality = new ArrayList<>();
+            locality.add(localityId);
+        }
+        new PriceTrendService().getPriceTrendForLocalities(locality, months, new LocalityTrendCallback() {
             @Override
             public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
                 if (localityPriceTrendDto.data != null && localityPriceTrendDto.data.size() != 0) {
@@ -105,7 +108,8 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
     private void initView() {
         localityId = getArguments().getLong("localityId");
         title = getArguments().getString("title");
-        localityId = getArguments().getLong("localityId");
+        locality = (ArrayList<Long>) getArguments().getSerializable("locality");
+        Log.e("localitys",""+locality+" "+locality.size());
         primaryMedian = getArguments().getInt("primaryMedian");
         primaryRise = getArguments().getDouble("primaryRise");
         secondaryAverage = getArguments().getDouble("secondaryAverage");

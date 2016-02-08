@@ -154,7 +154,6 @@ public class LocalityFragment extends MakaanBaseFragment {
             }
         });
         ((LocalityService)MakaanServiceFactory.getInstance().getService(LocalityService.class)).getTopBuildersInLocality(locality.localityId, 10);
-        addPriceTrendFragment();
         addLocalitiesApartmentsFragment(locality.listingAggregations);
     }
 
@@ -166,6 +165,7 @@ public class LocalityFragment extends MakaanBaseFragment {
     @Subscribe
     public void onResults(NearByLocalitiesEvent localitiesEvent){
         addNearByLocalitiesFragment(localitiesEvent.nearbyLocalities);
+        addPriceTrendFragment(localitiesEvent.nearbyLocalities);
     }
 
     @Subscribe
@@ -282,11 +282,15 @@ public class LocalityFragment extends MakaanBaseFragment {
         }
     }
 
-    private void addPriceTrendFragment() {
+    private void addPriceTrendFragment(ArrayList<Locality> nearbyLocalities) {
+        ArrayList<Long> localities = new ArrayList<>();
+        for(int i = 0;i< nearbyLocalities.size() && i<6;i++){
+            localities.add(locality.localityId);
+        }
         LocalityPriceTrendFragment newFragment = new LocalityPriceTrendFragment();
         Bundle bundle = new Bundle();
         bundle.putString("title", getResources().getString(R.string.locality_price_trends_label));
-        bundle.putLong("localityId", locality.localityId);
+        bundle.putSerializable("locality", localities);
         bundle.putInt("primaryMedian", meadianSale == null ? 0 : meadianSale);
         bundle.putDouble("primaryRise", locality.avgPriceRisePercentage == null ? 0 : locality.avgPriceRisePercentage);
         bundle.putDouble("secondaryAverage", locality.averageRentPerMonth == null ? 0 : locality.averageRentPerMonth);
