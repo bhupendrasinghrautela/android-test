@@ -17,7 +17,7 @@
         android:layout_marginBottom="@dimen/locality_kyn_margin_bottom"
         android:textColor="@color/white"
         android:textSize="@dimen/locality_text_bigger"
-        android:typeface="mono"
+        android:typeface="monospace"
         font:fontName="comforta.ttf"
         android:layout_gravity="center_horizontal"
         android:id="@+id/tv_nearby_localities_title"

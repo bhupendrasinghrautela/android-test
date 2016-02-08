@@ -3,7 +3,6 @@ package com.makaan.fragment.locality;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,7 +108,6 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         localityId = getArguments().getLong("localityId");
         title = getArguments().getString("title");
         locality = (ArrayList<Long>) getArguments().getSerializable("locality");
-        Log.e("localitys",""+locality+" "+locality.size());
         primaryMedian = getArguments().getInt("primaryMedian");
         primaryRise = getArguments().getDouble("primaryRise");
         secondaryAverage = getArguments().getDouble("secondaryAverage");

@@ -14,13 +14,16 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.image.ImagesGetEvent;
 import com.makaan.event.listing.ListingByIdGetEvent;
+import com.makaan.event.locality.NearByLocalitiesEvent;
 import com.makaan.event.project.OnSimilarProjectClickedEvent;
 import com.makaan.event.project.OnViewAllPropertiesClicked;
 import com.makaan.event.project.ProjectByIdEvent;
@@ -30,9 +33,11 @@ import com.makaan.event.project.SimilarProjectGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.response.amenity.AmenityCluster;
+import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Project;
 import com.makaan.service.AmenityService;
 import com.makaan.service.ImageService;
+import com.makaan.service.LocalityService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.ProjectService;
 import com.makaan.ui.locality.ProjectConfigView;
@@ -40,12 +45,14 @@ import com.makaan.ui.project.ProjectSpecificationView;
 import com.makaan.ui.property.AboutBuilderExpandedLayout;
 import com.makaan.ui.property.AmenitiesViewScroll;
 import com.makaan.ui.property.PropertyImageViewPager;
+import com.makaan.util.KeyUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by tusharchaudhary on 1/26/16.
@@ -151,18 +158,28 @@ public class ProjectFragment extends MakaanBaseFragment{
     }
 
     @Subscribe
-    public void onResult(ProjectByIdEvent projectByIdEvent){
-        project = projectByIdEvent.project;
-        mAmenitiesViewScroll.bindView(project.projectAmenities);
-        projectSpecificationView.bindView(project.getFormattedSpecifications(), getActivity());
-        initUi();
-        addPriceTrendsFragment();
-        addConstructionTimelineFragment();
-        if(project.locality.latitude != null && project.locality.longitude != null) {
-            ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(project.locality.latitude, project.locality.longitude, 10);
+    public void onResult(ProjectByIdEvent projectByIdEvent) {
+        if (projectByIdEvent.error != null) {
+            getActivity().finish();
+            Toast.makeText(getActivity(), "project details could not be loaded at this time. please try later.", Toast.LENGTH_LONG).show();
+        } else {
+            project = projectByIdEvent.project;
+            mAmenitiesViewScroll.bindView(project.projectAmenities);
+            projectSpecificationView.bindView(project.getFormattedSpecifications(), getActivity());
+            initUi();
+            ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(project.locality.latitude, project.locality.longitude, 10);
+            addConstructionTimelineFragment();
+            if (project.locality.latitude != null && project.locality.longitude != null) {
+                ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(project.locality.latitude, project.locality.longitude, 10);
+            }
+            ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getProjectTimelineImages(project.projectId);
         }
-        ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getProjectTimelineImages(project.projectId);
     }
+    @Subscribe
+    public void onResults(NearByLocalitiesEvent localitiesEvent){
+        addPriceTrendsFragment(localitiesEvent.nearbyLocalities);
+    }
+
 
     private void initUi() {
         projectContainer.setVisibility(View.VISIBLE);
@@ -179,6 +196,7 @@ public class ProjectFragment extends MakaanBaseFragment{
         projectNameTv.setText(project.name);
         projectLocationTv.setText(project.address);
     }
+
 
     @Subscribe
     public void onResults(AmenityGetEvent amenityGetEvent) {
@@ -207,11 +225,17 @@ public class ProjectFragment extends MakaanBaseFragment{
     public void onResults(ListingByIdGetEvent listingByIdGetEvent) {
     }
 
-    private void addPriceTrendsFragment() {
+    private void addPriceTrendsFragment(ArrayList<Locality> nearbyLocalities) {
+        ArrayList<Long> localities = new ArrayList<>();
+        for(int i = 0;i< nearbyLocalities.size() && i<6;i++){
+            localities.add(nearbyLocalities.get(i).localityId);
+        }
         ProjectPriceTrendsFragment fragment = new ProjectPriceTrendsFragment();
         Bundle bundle = new Bundle();
         bundle.putString("title", getString(R.string.project_price_trends_title));
         bundle.putLong("localityId", project.localityId);
+        bundle.putLong("projectId", project.projectId);
+        bundle.putSerializable("localities", localities);
         if(project.locality.avgPricePerUnitArea != null)
         bundle.putInt("price", project.locality.avgPricePerUnitArea.intValue());
         fragment.setArguments(bundle);
@@ -252,6 +276,7 @@ public class ProjectFragment extends MakaanBaseFragment{
         ProjectKynFragment fragment = new ProjectKynFragment();
         Bundle bundle = new Bundle();
         bundle.putString("title", "about " + project.locality.label);
+        bundle.putLong("localityId", project.localityId);
         bundle.putDouble("score", project.locality.livabilityScore);
         bundle.putString("description", project.locality.description);
         fragment.setArguments(bundle);

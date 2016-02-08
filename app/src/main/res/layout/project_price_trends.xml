@@ -29,7 +29,7 @@
         android:layout_height="wrap_content">
         <com.makaan.ui.view.FontTextView
         android:textSize="32sp"
-        android:text="5"
+        android:text="12"
         android:layout_marginLeft="40dp"
         android:id="@+id/tv_price_trend_years"
         android:textColor="@color/listingBlack"
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"/>
         <TextView
         android:textSize="@dimen/project_super_big"
-        android:text="years"
+        android:text="months"
             android:layout_toRightOf="@+id/tv_price_trend_years"
             android:layout_alignBottom="@+id/tv_price_trend_years"
         android:id="@+id/tv_price_trend_years_text"

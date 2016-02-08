@@ -238,6 +238,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
             public LinearLayout rentLl;
             public CardView cardView;
             public TextView primarySaleLabelTv;
+            public TextView secondarySaleLabelTv;
             public ViewHolder(View v) {
                 super(v);
                 nameTv = (TextView) v.findViewById(R.id.tv_nearby_localities_name);
@@ -247,6 +248,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                 localityIv = (ImageView) v.findViewById(R.id.iv_nearby_locality);
                 rentLl = (LinearLayout) v.findViewById(R.id.ll_nearby_locality_rent);
                 primarySaleLabelTv = (TextView) v.findViewById(R.id.tv_nearby_localities_sale_label);
+                secondarySaleLabelTv = (TextView) v.findViewById(R.id.tv_nearby_localities_secondary_sale_label);
                 cardView = (CardView) v.findViewById(R.id.card_view_nearby_locality);
                 cardView.setOnClickListener(onClickListener);
             }
@@ -277,7 +279,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
             switch (cardType){
                 case LOCALITY:
                     holder.rentLl.setVisibility(View.VISIBLE);
-                    holder.primarySaleLabelTv.setText("properties for sale");
+                    removeZeroData(holder, nearByLocality);
                     break;
                 case TOPAGENTS:
                     holder.localityIv.setImageResource(R.drawable.agent_image_placeholder);
@@ -308,6 +310,22 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
 
                 }
             });
+        }
+
+        private void removeZeroData(ViewHolder holder, NearByLocalities nearByLocality) {
+            if(!nearByLocality.numberOfPropsForSale.equalsIgnoreCase("0"))
+                holder.primarySaleLabelTv.setText("properties for sale");
+            else {
+                holder.primarySaleLabelTv.setText("");
+                holder.numberOfPropsForSaleTv.setText("");
+                 }
+
+            if(!nearByLocality.numberOfPropsForRent.equalsIgnoreCase("0"))
+                holder.secondarySaleLabelTv.setText("properties for rent");
+            else {
+                holder.secondarySaleLabelTv.setText("");
+                holder.numberOfPropsForRentTv.setText("");
+            }
         }
 
         @Override

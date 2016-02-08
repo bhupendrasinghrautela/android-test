@@ -1,6 +1,7 @@
 package com.makaan.fragment.project;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,16 +10,19 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.event.project.OnSeeOnMapClicked;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.ui.amenity.AmenityCardView;
 import com.makaan.util.AppBus;
+import com.makaan.util.KeyUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +46,8 @@ public class ProjectKynFragment extends MakaanBaseFragment{
     ProgressBar scoreProgress;
     @Bind(R.id.rl_locality_score_container)
     RelativeLayout scoreRl;
+    @Bind(R.id.kyn_see_on_map_container)
+    LinearLayout seeOnMapLl;
 
     private LinearLayoutManager mLayoutManager;
     private KnowYourNeighbourhoodAdapter mAdapter;
@@ -50,6 +56,7 @@ public class ProjectKynFragment extends MakaanBaseFragment{
     private Double score;
     private Context context;
     private List<AmenityCluster> amenityClusters;
+    private long localityId;
 
     @Override
     protected int getContentViewId() {
@@ -63,8 +70,16 @@ public class ProjectKynFragment extends MakaanBaseFragment{
         initView();
     }
 
+    @OnClick(R.id.more_about_locality)
+    public void openLocality(){
+        Intent intent = new Intent(getActivity(), LocalityActivity.class);
+        intent.putExtra(KeyUtil.LOCALITY_ID, localityId);
+        startActivity(intent);
+    }
+
     private void initView() {
         title = getArguments().getString("title");
+        localityId = getArguments().getLong("localityId");
         description = getArguments().getString("description");
         score = getArguments().getDouble("score");
         if(score==null)
@@ -86,6 +101,8 @@ public class ProjectKynFragment extends MakaanBaseFragment{
 
     public void setData(List<AmenityCluster> amenityClusters) {
         this.amenityClusters = amenityClusters;
+        if(amenityClusters.size()==0)
+            seeOnMapLl.setVisibility(View.GONE);
         mAdapter = new KnowYourNeighbourhoodAdapter(this.amenityClusters);
         if (mRecyclerView != null)
             mRecyclerView.setAdapter(mAdapter);

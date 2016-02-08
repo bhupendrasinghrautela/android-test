@@ -139,24 +139,28 @@ public class LocalityFragment extends MakaanBaseFragment {
     }
 
     @Subscribe
-    public void onResults(LocalityByIdEvent localityByIdEvent){
-        locality = localityByIdEvent.locality;
-        Log.i(this.getClass().getSimpleName(), locality.toString());
-        populateLocalityData();
-        frame.setVisibility(View.VISIBLE);
-        fetchHero();
-        addLocalitiesLifestyleFragment(locality.entityDescriptions);
-        addProperties(new TaxonomyService().getTaxonomyCardForLocality(locality.localityId, locality.minAffordablePrice, locality.maxAffordablePrice, locality.maxAffordablePrice, locality.maxBudgetPrice));
-        ((LocalityService)MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(locality.latitude, locality.longitude, 10);
-        ((AmenityService)MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(locality.latitude, locality.longitude, 10);
-        ((AgentService)MakaanServiceFactory.getInstance().getService(AgentService.class)).getTopAgentsForLocality(locality.cityId, locality.localityId, 10, false, new TopAgentsCallback() {
-            @Override
-            public void onTopAgentsRcvd(ArrayList<TopAgent> topAgents) {
-                addTopAgentsFragment(topAgents);
-            }
-        });
-        ((LocalityService)MakaanServiceFactory.getInstance().getService(LocalityService.class)).getTopBuildersInLocality(locality.localityId, 10);
-        addLocalitiesApartmentsFragment(locality.listingAggregations);
+    public void onResults(LocalityByIdEvent localityByIdEvent) {
+        if (localityByIdEvent.error != null) {
+            getActivity().finish();
+            Toast.makeText(getActivity(),"locality details could not be loaded at this time. please try later.",Toast.LENGTH_LONG).show();
+        }else {
+            locality = localityByIdEvent.locality;
+            populateLocalityData();
+            frame.setVisibility(View.VISIBLE);
+            fetchHero();
+            addLocalitiesLifestyleFragment(locality.entityDescriptions);
+            addProperties(new TaxonomyService().getTaxonomyCardForLocality(locality.localityId, locality.minAffordablePrice, locality.maxAffordablePrice, locality.maxAffordablePrice, locality.maxBudgetPrice));
+            ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(locality.latitude, locality.longitude, 10);
+            ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(locality.latitude, locality.longitude, 10);
+            ((AgentService) MakaanServiceFactory.getInstance().getService(AgentService.class)).getTopAgentsForLocality(locality.cityId, locality.localityId, 10, false, new TopAgentsCallback() {
+                @Override
+                public void onTopAgentsRcvd(ArrayList<TopAgent> topAgents) {
+                    addTopAgentsFragment(topAgents);
+                }
+            });
+            ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getTopBuildersInLocality(locality.localityId, 10);
+            addLocalitiesApartmentsFragment(locality.listingAggregations);
+        }
     }
 
     @Subscribe
@@ -299,7 +303,7 @@ public class LocalityFragment extends MakaanBaseFragment {
     private void addPriceTrendFragment(ArrayList<Locality> nearbyLocalities) {
         ArrayList<Long> localities = new ArrayList<>();
         for(int i = 0;i< nearbyLocalities.size() && i<6;i++){
-            localities.add(locality.localityId);
+            localities.add(nearbyLocalities.get(i).localityId);
         }
         LocalityPriceTrendFragment newFragment = new LocalityPriceTrendFragment();
         Bundle bundle = new Bundle();
