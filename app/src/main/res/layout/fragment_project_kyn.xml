@@ -26,7 +26,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         >
         <com.makaan.ui.view.FontTextView
             android:layout_width="wrap_content"
@@ -76,6 +75,8 @@
                     android:textColor="@color/project_text_default"
                     android:textSize="@dimen/project_text_medium"/>
             </FrameLayout>
+
+
             <com.makaan.ui.view.FontTextView
                 android:id="@+id/locality_score_label"
                 android:layout_gravity="center"
@@ -91,6 +92,16 @@
 
         </RelativeLayout>
     </RelativeLayout>
+    <TextView
+        android:layout_below="@+id/locality_brief"
+        android:id="@+id/more_about_locality"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:typeface="serif"
+        android:layout_marginBottom="@dimen/property_page_locality_brief_margin_bottom"
+        android:textColor="@color/red"
+        android:text="@string/more_about"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_localities_kyn"
@@ -105,6 +116,7 @@
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
+        android:id="@+id/kyn_see_on_map_container"
         android:layout_margin="10dp"
         >
 

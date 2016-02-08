@@ -24,16 +24,10 @@
         android:layout_height="wrap_content"/>
     <android.support.design.widget.TabLayout
         android:id="@+id/price_range_tabs"
-        android:padding="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabMode="fixed"
-        app:tabBackground="@drawable/tab_color_selector"
-        app:tabSelectedTextColor="@color/white"
-        app:tabTextAppearance="@style/tab_text_appearance"
-        app:tabIndicatorHeight="0dp"
-        app:tabTextColor="@color/project_specification_default_color"
-        />
+        app:tabGravity="fill" />
     <include
         android:padding="20dp"
         layout="@layout/line_chart_view_layout"/>

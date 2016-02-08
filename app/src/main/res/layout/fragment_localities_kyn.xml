@@ -34,6 +34,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
+        android:id="@+id/kyn_see_on_map_container"
         android:gravity="center_horizontal"
         android:layout_margin="10dp"
         >

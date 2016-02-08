@@ -17,8 +17,8 @@ import com.squareup.otto.Subscribe;
 public class WrapContentViewPager extends ViewPager {
 
     private int mCurrentPagePosition = 0;
-    private int minHeight = 1400;
-    private int initalMinHeight = 1400;
+    private int minHeight = 1250;
+    private int initalMinHeight = 1250;
     private int lastMinHeightAdded = 0;
 
     public WrapContentViewPager(Context context) {

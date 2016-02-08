@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,6 +34,8 @@ public class KynFragment extends MakaanBaseFragment {
     RecyclerView mRecyclerView;
     @Bind(R.id.tv_localities_kyn_title)
     TextView titleTv;
+    @Bind(R.id.kyn_see_on_map_container)
+    LinearLayout seeOnMapLl;
     private LinearLayoutManager mLayoutManager;
     private KnowYourNeighbourhoodAdapter mAdapter;
     private String title;
@@ -69,6 +72,8 @@ public class KynFragment extends MakaanBaseFragment {
 
     public void setData(List<AmenityCluster> amenityClusters) {
         this.amenityClusters = amenityClusters;
+        if(amenityClusters.size()==0)
+            seeOnMapLl.setVisibility(View.GONE);
         mAdapter = new KnowYourNeighbourhoodAdapter(amenityClusters);
         if (mRecyclerView != null)
             mRecyclerView.setAdapter(mAdapter);

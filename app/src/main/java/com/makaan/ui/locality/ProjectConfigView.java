@@ -83,23 +83,27 @@ public class ProjectConfigView extends LinearLayout implements ViewPager.OnPageC
     private void setupViewPager(final ViewPager viewPager, FragmentActivity compatActivity) {
             ViewPagerAdapter adapter = new ViewPagerAdapter(compatActivity.getSupportFragmentManager());
             viewPager.addOnPageChangeListener(this);
-            //buy
-            ArrayList<ProjectConfigItem> projectConfigItems = projectConfigEvent.buyProjectConfigItems;
-            ProjectConfigFragment fragment = new ProjectConfigFragment();
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("configs", projectConfigItems);
-            bundle.putBoolean("isRent", false);
-            fragment.setArguments(bundle);
-            adapter.addFrag(fragment, "buy");
+            if(projectConfigEvent.buyProjectConfigItems !=null && projectConfigEvent.buyProjectConfigItems.size()>0) {
+                //buy
+                ArrayList<ProjectConfigItem> projectConfigItems = projectConfigEvent.buyProjectConfigItems;
+                ProjectConfigFragment fragment = new ProjectConfigFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("configs", projectConfigItems);
+                bundle.putBoolean("isRent", false);
+                fragment.setArguments(bundle);
+                adapter.addFrag(fragment, "buy");
+            }
 
-            //rent
-            ArrayList<ProjectConfigItem> projectConfigItemsrent = projectConfigEvent.rentProjectConfigItems;
-            ProjectConfigFragment fragmentrent = new ProjectConfigFragment();
-            Bundle bundlerent = new Bundle();
-            bundlerent.putParcelableArrayList("configs", projectConfigItemsrent);
-            bundlerent.putBoolean("isRent",true);
-            fragmentrent.setArguments(bundlerent);
-            adapter.addFrag(fragmentrent, "rent");
+            if(projectConfigEvent.rentProjectConfigItems !=null && projectConfigEvent.rentProjectConfigItems.size()>0) {
+                //rent
+                ArrayList<ProjectConfigItem> projectConfigItemsrent = projectConfigEvent.rentProjectConfigItems;
+                ProjectConfigFragment fragmentrent = new ProjectConfigFragment();
+                Bundle bundlerent = new Bundle();
+                bundlerent.putParcelableArrayList("configs", projectConfigItemsrent);
+                bundlerent.putBoolean("isRent", true);
+                fragmentrent.setArguments(bundlerent);
+                adapter.addFrag(fragmentrent, "rent");
+            }
 
             viewPager.setAdapter(adapter);
     }
