@@ -301,12 +301,14 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
         handleSearch();
 
-        if(!supportsListing()) {
+        if(!supportsListing() || SearchSuggestionType.NEARBY_PROPERTIES.getValue().equals(searchResponseItem.type)) {
             mSelectedSearches.clear();
         }
 
-        // add selected search to recent searches
-        RecentSearchManager.getInstance(this).addEntryToRecentSearch(searchResponseItem, this);
+        if(!SearchSuggestionType.NEARBY_PROPERTIES.getValue().equals(searchResponseItem.type)) {
+            // add selected search to recent searches
+            RecentSearchManager.getInstance(this).addEntryToRecentSearch(searchResponseItem, this);
+        }
 
         /*if(!areListingsAvailable() && (SearchSuggestionType.CITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)
                 || SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)
@@ -314,7 +316,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             finish();
         }*/
 
-        if(supportsListing()) {
+        if(supportsListing() && !SearchSuggestionType.NEARBY_PROPERTIES.getValue().equals(searchResponseItem.type)) {
             setTitle(searchResponseItem.displayText);
         }
     }
@@ -567,14 +569,14 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     private void addNearbyPropertiesSearchItem() {
-        /*if(Session.myLocation != null) {
+        if(Session.myLocation != null) {
             SearchResponseItem item = new SearchResponseItem();
             item.type = SearchSuggestionType.NEARBY_PROPERTIES.getValue();
             item.displayText = "properties near my location";
             item.latitude = Session.myLocation.centerLatitude;
             item.longitude = Session.myLocation.centerLongitude;
             mAvailableSearches.add(0, item);
-        }*/
+        }
     }
 
     private void setSearchResultFrameLayoutVisibility(boolean visible) {

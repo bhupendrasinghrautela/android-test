@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/fragment_dialog_filters_single_checkbox_item_view_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/square_checkbox_selector"
+        android:drawableLeft="@null"
+        android:paddingLeft="10dp"
+        android:text="asdasd"
+        android:textColor="@color/listingBlack"
+        android:textSize="@dimen/fragment_dialog_filters_checkbox_grid_item_text_size"
+        android:typeface="monospace" />
+    <!--android:background="@android:color/transparent"
+    android:button="@drawable/check_tick_fill_red"
+    android:drawableLeft="@drawable/check_tick_fill_red"
+    android:paddingLeft="10dp"
+    />-->
+    <ImageView
+        android:id="@+id/fragment_dialog_filters_single_checkbox_item_view_image_view"
+        android:layout_width="60dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="10dp"
+        android:scaleType="centerCrop"/>
+</LinearLayout>

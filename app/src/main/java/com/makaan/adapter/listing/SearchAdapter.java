@@ -141,7 +141,9 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
 
             // TODO implement lru cache
-            if (mIsRecent) {
+            if(SearchSuggestionType.NEARBY_PROPERTIES.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.near_by_locality);
+            } else if (mIsRecent) {
                 ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_history);
             } else {
                 ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.map_marker);

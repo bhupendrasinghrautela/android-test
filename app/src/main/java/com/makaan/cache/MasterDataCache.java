@@ -15,6 +15,8 @@ import com.makaan.response.serp.RangeFilter;
 import com.makaan.response.user.UserResponse.UserData;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -234,6 +236,12 @@ public class MasterDataCache {
         while (filterGroupIterator.hasNext()) {
             buyFilterGroups.add(filterGroupIterator.next());
         }
+        Collections.sort(buyFilterGroups, new Comparator<FilterGroup>() {
+            @Override
+            public int compare(FilterGroup lhs, FilterGroup rhs) {
+                return lhs.displayOrder - rhs.displayOrder;
+            }
+        });
         return buyFilterGroups;
     }
 
@@ -243,6 +251,12 @@ public class MasterDataCache {
         while (filterGroupIterator.hasNext()) {
             rentFilterGroups.add(filterGroupIterator.next());
         }
+        Collections.sort(rentFilterGroups, new Comparator<FilterGroup>() {
+            @Override
+            public int compare(FilterGroup lhs, FilterGroup rhs) {
+                return lhs.displayOrder - rhs.displayOrder;
+            }
+        });
         return rentFilterGroups;
     }
 

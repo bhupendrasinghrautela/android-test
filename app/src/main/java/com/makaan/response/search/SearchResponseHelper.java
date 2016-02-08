@@ -12,6 +12,7 @@ import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.cookie.Session;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.response.master.ApiLabel;
 import com.makaan.service.ListingService;
@@ -50,10 +51,6 @@ public class SearchResponseHelper {
             return;
 
         } else if(searchItem.type.contains(SearchSuggestionType.TEMPLATE.getValue())){
-            //TODO
-            return;
-
-        } else if(searchItem.type.contains(SearchSuggestionType.NEARBY_PROPERTIES.getValue())){
             //TODO
             return;
 
@@ -100,7 +97,6 @@ public class SearchResponseHelper {
         }
 
         Map<String,ApiLabel> searchResultType = MasterDataCache.getInstance().getSearchTypeMap();
-        String searchField = searchResultType.get(searchItem.type).key;
 
         SerpRequest request = new SerpRequest();
         if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchItem.type)
@@ -138,6 +134,13 @@ public class SearchResponseHelper {
         } else if (SearchSuggestionType.GOOGLE_PLACE.getValue().equalsIgnoreCase(searchItem.type)) {
             request.setGpId(searchItem.googlePlaceId);
             request.launchSerp(context, SerpActivity.TYPE_GPID);
+            return;
+
+        } else if(SearchSuggestionType.NEARBY_PROPERTIES.getValue().equalsIgnoreCase(searchItem.type)){
+            request.setLatitude(Session.myLocation.centerLatitude);
+            request.setLongitude(Session.myLocation.centerLongitude);
+            request.setSort(SerpRequest.Sort.GEO_ASC);
+            request.launchSerp(context, SerpActivity.TYPE_NEARBY);
             return;
 
         }

@@ -426,6 +426,27 @@
         ],
         "rangeMinMaxFilterValues": [
         ]
+      },
+      {
+        "displayName": "show properties with",
+        "internalName": "i_m_plus",
+        "displayOrder": "10",
+        "layoutType": "7",
+        "imageName":"m_badge",
+        "type": "",
+        "termFilterValues": [
+          {
+            "displayName": "show properties with",
+            "displayOrder": "1",
+            "fieldName": "listingSellerCompanyAssist",
+            "value": "true",
+            "selected": false
+          }
+        ],
+        "rangeFilterValues": [
+        ],
+        "rangeMinMaxFilterValues": [
+        ]
       }
     ]
   }

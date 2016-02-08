@@ -128,9 +128,13 @@ public class FiltersDialogFragment extends DialogFragment {
                     gridView.setNumColumns(filterGroup.termFilterValues.size());
                 }*/
 
-                int id = this.getResources().getIdentifier(filterGroup.imageName, "drawable", "com.makaan");
-                if (id != 0) {
-                    ((ImageView) view.findViewById(R.id.fragment_dialog_filters_item_layout_image_view)).setImageResource(id);
+                if(filterGroup.layoutType != FiltersViewAdapter.SINGLE_CHECKBOX) {
+                    int id = this.getResources().getIdentifier(filterGroup.imageName, "drawable", "com.makaan");
+                    if (id != 0) {
+                        ((ImageView) view.findViewById(R.id.fragment_dialog_filters_item_layout_image_view)).setImageResource(id);
+                    }
+                } else {
+                    view.findViewById(R.id.fragment_dialog_filters_item_layout_left_linear_layout).setVisibility(View.GONE);
                 }
                 if (gridView != null) {
                     ((ExpandableHeightGridView) gridView).setExpanded(true);

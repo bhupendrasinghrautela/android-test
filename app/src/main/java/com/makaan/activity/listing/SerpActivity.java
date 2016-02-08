@@ -84,6 +84,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public static final int TYPE_BUILDER_CITY = 0x0b;
     public static final int TYPE_TAXONOMY = 0x0c;
     public static final int TYPE_HOME = 0x0d;
+    public static final int TYPE_NEARBY = 0x0e;
 
     public static final int MASK_LISTING_TYPE = 0x0f;
     public static final int MASK_LISTING_UPDATE_TYPE = 0xf0;
@@ -232,6 +233,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 mSerpSelector.removeTerm("cityId");
                 mSerpSelector.removeTerm("suburbId");
                 mSerpSelector.removeTerm("listingCompanyId");
+                mSerpSelector.removeTerm("localityOrSuburbId");
                 parseSerpRequest(intent, SerpActivity.TYPE_CITY);
             } else if (type == SerpActivity.TYPE_GPID) {
                 mSerpSelector.removeTerm("builderId");
@@ -240,6 +242,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 mSerpSelector.removeTerm("cityId");
                 mSerpSelector.removeTerm("suburbId");
                 mSerpSelector.removeTerm("listingCompanyId");
+                mSerpSelector.removeTerm("localityOrSuburbId");
                 parseSerpRequest(intent, SerpActivity.TYPE_GPID);
             } else if (type == SerpActivity.TYPE_PROJECT) {
                 parseSerpRequest(intent, SerpActivity.TYPE_PROJECT);
@@ -258,11 +261,20 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 // TODO check whether it should be used or not
                 fetchData();
             } else if (type == SerpActivity.TYPE_SELLER) {
-                mSerpSelector.removeTerm("builderId");
+//                mSerpSelector.removeTerm("builderId");
 //                mSerpSelector.removeTerm("projectId");
+//                mSerpSelector.removeTerm("localityId");
+//                mSerpSelector.removeTerm("cityId");
+//                mSerpSelector.removeTerm("suburbId");
+                mSerpSelector.removeTerm("listingCompanyId");
+                parseSerpRequest(intent, type);
+            } else if (type == SerpActivity.TYPE_NEARBY) {
+                mSerpSelector.removeTerm("builderId");
+                mSerpSelector.removeTerm("projectId");
                 mSerpSelector.removeTerm("localityId");
                 mSerpSelector.removeTerm("cityId");
                 mSerpSelector.removeTerm("suburbId");
+                mSerpSelector.removeTerm("localityOrSuburbId");
                 mSerpSelector.removeTerm("listingCompanyId");
                 parseSerpRequest(intent, type);
             } else {
