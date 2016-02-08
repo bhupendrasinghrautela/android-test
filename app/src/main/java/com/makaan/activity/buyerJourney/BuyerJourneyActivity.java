@@ -108,9 +108,6 @@ public class BuyerJourneyActivity extends AppCompatActivity {
         }else{
             mLoginButton.setVisibility(View.VISIBLE);
         }
-        //UserInfo userInfo = Preferences.getUserInfo(this);
-        //mProfileImage.setImageURI(Uri.parse(userInfo.getData().getProfileImageUrl()));
-        //mCollapsingToolbar.setTitle("User");
     }
 
     private void setupAppBar() {
