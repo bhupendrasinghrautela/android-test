@@ -16,15 +16,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.constants.PreferenceConstants;
 import com.makaan.cookie.CookiePreferences;
+import com.makaan.cookie.Session;
+import com.makaan.event.location.LocationGetEvent;
 import com.makaan.event.user.UserLoginEvent;
 import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.response.wishlist.WishListResponse;
+import com.makaan.service.LocationService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.WishListService;
 import com.makaan.service.user.UserLoginService;
@@ -46,6 +50,10 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        LocationService service = (LocationService) MakaanServiceFactory.getInstance().getService(LocationService.class);
+        service.getUserLocation();
+
         topBar=(FrameLayout) findViewById(R.id.top_bar);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         tvSearch =(TextView) findViewById(R.id.activity_home_search_text_view);
@@ -188,6 +196,11 @@ public class HomeActivity extends MakaanBaseSearchActivity {
         WishListResponse response = wishListResultEvent.wishListResponse;
         Toast.makeText(this,"Wish list  - " + response.totalCount, Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Subscribe
+    public void onResults(LocationGetEvent locationGetEvent) {
+        Session.myLocation = locationGetEvent.myLocation;
     }
 
     @Override

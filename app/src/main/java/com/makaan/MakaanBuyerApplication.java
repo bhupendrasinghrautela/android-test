@@ -12,6 +12,7 @@ import com.makaan.jarvis.JarvisConstants;
 import com.makaan.jarvis.JarvisServiceCreator;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpObjects;
+import com.makaan.service.LocationService;
 import com.makaan.service.user.ForgotPasswordService;
 import com.makaan.service.user.UserRegistrationService;
 import com.makaan.service.AgentService;
@@ -97,6 +98,7 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(TaxonomyService.class, new TaxonomyService());
         MakaanServiceFactory.getInstance().registerService(UserService.class, new UserService());
         MakaanServiceFactory.getInstance().registerService(ImageService.class, new ImageService());
+        MakaanServiceFactory.getInstance().registerService(LocationService.class, new LocationService());
         //MakaanServiceFactory.getInstance().registerService(TopAgentsByLocalityService.class , new TopAgentsByLocalityService());
 
         MakaanServiceFactory.getInstance().registerService(BuilderService.class, new BuilderService());

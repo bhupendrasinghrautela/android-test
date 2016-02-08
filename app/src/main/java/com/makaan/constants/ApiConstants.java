@@ -35,6 +35,7 @@ public class ApiConstants {
 
 
     public static final String LISTING = BASE_URL.concat("/app/v1/listing/");
+    public static final String MY_LOCATION = BASE_URL.concat("/app/v1/mylocation");
     public static final String SIMILAR_LISTING = BASE_URL.concat("/app/v1/similar/listing/");
 
     public static final String CITY_DATA = BASE_URL.concat("/data/v1/entity/city");
