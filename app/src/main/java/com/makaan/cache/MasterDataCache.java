@@ -1,10 +1,8 @@
 package com.makaan.cache;
 
 
-import android.content.SharedPreferences;
 import android.util.SparseArray;
 
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.master.ApiLabel;
@@ -14,7 +12,7 @@ import com.makaan.response.master.PropertyAmenity;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.response.serp.ListingInfoMap;
 import com.makaan.response.serp.RangeFilter;
-import com.makaan.util.Preference;
+import com.makaan.response.user.UserResponse.UserData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,11 +52,11 @@ public class MasterDataCache {
     private Map<String, Integer> jarvisMessageTypeMap = new HashMap<>();
     private Map<String, Integer> jarvisCtaMessageTypeMap = new HashMap<>();
 
-    private HashSet<String> shortlistedPropertiesBuy;
-    private HashSet<String> shortlistedPropertiesRent;
+    private HashSet<Integer> userWishList;
     private ListingInfoMap listingInfoMap;
     private SparseArray<String> directionApiList = new SparseArray<>();
     private SparseArray<String> ownershipTypeApiList = new SparseArray<>();
+    private UserData userData;
 
     private MasterDataCache() {
 
@@ -300,38 +298,36 @@ public class MasterDataCache {
         return idToPropertyStatus.get(status);
     }
 
-    public void addShortlistedProperty(SharedPreferences preferences, String key, int id, boolean isBuy) {
-        HashSet<String> shortlistedProperties;
-        if (isBuy) {
-            if (shortlistedPropertiesBuy == null) {
-                getShortlistedPropertiesFromPreferences(preferences, key, isBuy);
-            }
-            shortlistedProperties = shortlistedPropertiesBuy;
-        } else {
-            if (shortlistedPropertiesRent == null) {
-                getShortlistedPropertiesFromPreferences(preferences, key, isBuy);
-            }
-            shortlistedProperties = shortlistedPropertiesRent;
+    public void addShortlistedProperty(Integer id) {
+
+        if(null==userWishList) {
+            userWishList = new HashSet<>();
         }
-        shortlistedProperties.add(String.valueOf(id));
-        addShortlistedPropertiesToPreferences(preferences.edit(), key, isBuy);
+
+        userWishList.add(id);
+
     }
 
-    public void removeShortlistedProperty(SharedPreferences preferences, String key, int id, boolean isBuy) {
-        HashSet<String> shortlistedProperties;
-        if (isBuy) {
-            if (shortlistedPropertiesBuy == null) {
-                getShortlistedPropertiesFromPreferences(preferences, key, isBuy);
-            }
-            shortlistedProperties = shortlistedPropertiesBuy;
-        } else {
-            if (shortlistedPropertiesRent == null) {
-                getShortlistedPropertiesFromPreferences(preferences, key, isBuy);
-            }
-            shortlistedProperties = shortlistedPropertiesRent;
+    public void removeShortlistedProperty(Integer id) {
+        if(null!=userWishList) {
+            userWishList.remove(id);
         }
-        shortlistedProperties.remove(String.valueOf(id));
-        addShortlistedPropertiesToPreferences(preferences.edit(), key, isBuy);
+    }
+
+    public void clearWishList(){
+        if(null!=userWishList) {
+            userWishList.clear();
+        }
+    }
+
+    public boolean isShortlistedProperty(Integer id) {
+
+        if(null!=userWishList) {
+            if (userWishList.contains(id)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<String> getDisplayOrder(String category, String type, String card) {
@@ -342,42 +338,6 @@ public class MasterDataCache {
             return propertyDisplayOrder.get("Primary").get("Apartment").get(card);
         }
         return propertyDisplayOrder.get(category).get(type).get(card);
-    }
-
-    public boolean isShortlistedProperty(SharedPreferences preferences, String key, int id, boolean isBuy) {
-        HashSet<String> shortlistedProperties;
-        if (isBuy) {
-            if (shortlistedPropertiesBuy == null) {
-                getShortlistedPropertiesFromPreferences(preferences, key, isBuy);
-            }
-            shortlistedProperties = shortlistedPropertiesBuy;
-        } else {
-            if (shortlistedPropertiesRent == null) {
-                getShortlistedPropertiesFromPreferences(preferences, key, isBuy);
-            }
-            shortlistedProperties = shortlistedPropertiesRent;
-        }
-        if (shortlistedProperties.contains(String.valueOf(id))) {
-            return true;
-        }
-        return false;
-    }
-
-    private void addShortlistedPropertiesToPreferences(SharedPreferences.Editor editor, String key, boolean isBuy) {
-        if (isBuy) {
-            Preference.putStringSet(editor, key, shortlistedPropertiesBuy);
-        } else {
-            Preference.putStringSet(editor, key, shortlistedPropertiesRent);
-        }
-        editor.commit();
-    }
-
-    private void getShortlistedPropertiesFromPreferences(SharedPreferences preferences, String key, boolean isBuy) {
-        if (isBuy) {
-            shortlistedPropertiesBuy = Preference.getStringSet(preferences, key);
-        } else {
-            shortlistedPropertiesRent = Preference.getStringSet(preferences, key);
-        }
     }
 
     public void addDefaultAmenities(List<Long> defaultAmenityList) {
@@ -415,5 +375,13 @@ public class MasterDataCache {
 
     public String getOwnershipType(int id) {
         return ownershipTypeApiList.get(id);
+    }
+
+    public UserData getUserData(){
+        return userData;
+    }
+
+    public void setUserData(UserData userData){
+        this.userData = userData;
     }
 }
