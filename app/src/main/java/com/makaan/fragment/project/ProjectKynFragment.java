@@ -101,8 +101,9 @@ public class ProjectKynFragment extends MakaanBaseFragment{
 
     public void setData(List<AmenityCluster> amenityClusters) {
         this.amenityClusters = amenityClusters;
-        if(amenityClusters.size()==0)
+        if(amenityClusters.size()==0) {
             seeOnMapLl.setVisibility(View.GONE);
+        }
         mAdapter = new KnowYourNeighbourhoodAdapter(this.amenityClusters);
         if (mRecyclerView != null)
             mRecyclerView.setAdapter(mAdapter);
