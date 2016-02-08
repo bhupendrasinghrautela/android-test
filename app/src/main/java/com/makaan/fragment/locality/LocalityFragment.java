@@ -316,7 +316,7 @@ public class LocalityFragment extends MakaanBaseFragment {
 
     private void addPriceTrendFragment(ArrayList<Locality> nearbyLocalities) {
         ArrayList<Long> localities = new ArrayList<>();
-        for(int i = 0;i< nearbyLocalities.size() && i<6;i++){
+        for(int i = 0;i< nearbyLocalities.size() && i<4;i++){
             localities.add(nearbyLocalities.get(i).localityId);
         }
         LocalityPriceTrendFragment newFragment = new LocalityPriceTrendFragment();

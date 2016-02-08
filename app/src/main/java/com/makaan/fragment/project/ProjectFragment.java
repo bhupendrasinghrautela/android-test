@@ -244,7 +244,7 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     private void addPriceTrendsFragment(ArrayList<Locality> nearbyLocalities) {
         ArrayList<Long> localities = new ArrayList<>();
-        for(int i = 0;i< nearbyLocalities.size() && i<6;i++){
+        for(int i = 0;i< nearbyLocalities.size() && i<3;i++){
             localities.add(nearbyLocalities.get(i).localityId);
         }
         ProjectPriceTrendsFragment fragment = new ProjectPriceTrendsFragment();
