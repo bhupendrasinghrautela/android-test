@@ -140,6 +140,11 @@ public class LocalityFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(LocalityByIdEvent localityByIdEvent){
+        if(null== localityByIdEvent || null!=localityByIdEvent.error){
+            //TODO handle error
+            return;
+        }
+
         locality = localityByIdEvent.locality;
         Log.i(this.getClass().getSimpleName(), locality.toString());
         populateLocalityData();
@@ -162,17 +167,30 @@ public class LocalityFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(TopBuilderInLocalityEvent topBuilderInLocalityEvent){
+        if(null== topBuilderInLocalityEvent || null!=topBuilderInLocalityEvent.error){
+            //TODO handle error
+            return;
+        }
         addTopBuilders(topBuilderInLocalityEvent.builders);
     }
 
     @Subscribe
     public void onResults(NearByLocalitiesEvent localitiesEvent){
+        if(null== localitiesEvent || null!=localitiesEvent.error){
+            //TODO handle error
+            return;
+        }
         addNearByLocalitiesFragment(localitiesEvent.nearbyLocalities);
     }
 
     @Subscribe
     public void onResults(AmenityGetEvent amenityGetEvent) {
-        if(null==amenityGetEvent || null==amenityGetEvent.amenityClusters){
+        if(null==amenityGetEvent|| null!=amenityGetEvent.error){
+            //TODO handle error
+            return;
+        }
+
+        if(null==amenityGetEvent.amenityClusters){
             return;
         }
         mAmenityClusters.clear();

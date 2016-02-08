@@ -50,6 +50,10 @@ public class ConstructionTimelineFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResult(ImagesGetEvent imagesGetEvent){
+        if(null== imagesGetEvent || null!=imagesGetEvent.error){
+            //TODO handle error
+            return;
+        }
         List<TimelineView.TimelineDataItem> list = new ArrayList<>();
         for(Image image : imagesGetEvent.images)
             list.add(new TimelineView.TimelineDataItem(image.createdAt, image.absolutePath));//TODO: replace createdAt with imageTakenAt when ever it is available

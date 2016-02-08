@@ -99,6 +99,10 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResults(TrendingSearchLocalityEvent searchResultEvent){
+        if(null== searchResultEvent || null!=searchResultEvent.error){
+            //TODO handle error
+            return;
+        }
         initPopularSearches(searchResultEvent.trendingSearches);
     }
 

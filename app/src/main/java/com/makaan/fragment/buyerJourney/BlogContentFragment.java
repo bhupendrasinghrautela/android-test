@@ -81,6 +81,11 @@ public class BlogContentFragment extends MakaanBaseFragment {
 
     @Subscribe
     public synchronized void onResults(BlogByTagEvent blogByTagGetEvent) {
+        if(null== blogByTagGetEvent || null!=blogByTagGetEvent.error){
+            //TODO handle error
+            return;
+        }
+
         if(blogByTagGetEvent.blogItems != null && blogByTagGetEvent.blogItems.size() > 0) {
             mProgressBar.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);

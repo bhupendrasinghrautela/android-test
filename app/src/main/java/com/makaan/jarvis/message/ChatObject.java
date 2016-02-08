@@ -7,6 +7,7 @@ public class ChatObject {
 
     public String image;
     public String imageURL;
+    public String imageUrl;
     public long minPrice;
     public long price;
     public String builderName;

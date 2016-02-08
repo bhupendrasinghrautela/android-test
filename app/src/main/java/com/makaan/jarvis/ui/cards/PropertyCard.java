@@ -53,7 +53,7 @@ public class PropertyCard extends BaseView<Message> {
         textViewTitle.setText(StringUtil.getSpannedPrice(item.chatObj.price));
         textViewSubTitle.setText(item.chatObj.locality);
         textViewSubTitle2.setText(item.chatObj.area);
-        imageView.setImageUrl(item.chatObj.imageURL, MakaanNetworkClient.getInstance().getImageLoader());
+        imageView.setImageUrl(item.chatObj.imageUrl, MakaanNetworkClient.getInstance().getImageLoader());
 
         setOnClickListener(new OnClickListener() {
             @Override

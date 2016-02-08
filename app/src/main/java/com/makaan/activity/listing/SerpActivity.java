@@ -333,6 +333,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Subscribe
     public synchronized void onResults(SerpGetEvent listingGetEvent) {
+        if(null==listingGetEvent|| null!=listingGetEvent.error){
+            //TODO handle error
+            return;
+        }
+
         if(mIsMapFragment && mMapFragment != null) {
             mListingGetEvent = listingGetEvent;
             updateListings(listingGetEvent, null);
@@ -410,6 +415,10 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Subscribe
     public synchronized void onResults(GroupSerpGetEvent groupListingGetEvent) {
+        if(null==groupListingGetEvent|| null!=groupListingGetEvent.error){
+            //TODO handle error
+            return;
+        }
         mGroupListingGetEvent = groupListingGetEvent;
         mGroupReceived = true;
 
@@ -530,9 +539,15 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Subscribe
     public void onResults(GpByIdEvent gpIdResultEvent) {
-        if(gpIdResultEvent == null || gpIdResultEvent.gpDetail == null) {
+        if(null==gpIdResultEvent|| null!=gpIdResultEvent.error){
+            //TODO handle error
             return;
         }
+
+        if(gpIdResultEvent.gpDetail == null) {
+            return;
+        }
+
         mSerpSelector.term("cityId", String.valueOf(gpIdResultEvent.gpDetail.cityid));
         ((ListingService) MakaanServiceFactory.getInstance().getService(ListingService.class))
                 .handleSerpRequest(mSerpSelector, gpIdResultEvent.gpDetail.placeId, true, mGroupSelector);
