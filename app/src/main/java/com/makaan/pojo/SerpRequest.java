@@ -31,7 +31,7 @@ public class SerpRequest implements Parcelable {
     public enum Sort {
         RELEVANCE, PRICE_HIGH_TO_LOW, PRICE_LOW_TO_HIGH, SELLER_RATING_ASC, SELLER_RATING_DESC,
         DATE_POSTED_ASC, DATE_POSTED_DESC, LIVABILITY_SCORE_ASC, LIVABILITY_SCORE_DESC,
-        QUALITY_SCORE_ASC, QUALITY_SCORE_DESC, DISTANCE_ASC, DISTANCE_DESC
+        QUALITY_SCORE_ASC, QUALITY_SCORE_DESC, DISTANCE_ASC, DISTANCE_DESC, GEO_ASC, GEO_DESC
     }
 
     ArrayList<Long> cityIds = new ArrayList<Long>();
@@ -52,6 +52,9 @@ public class SerpRequest implements Parcelable {
     long maxArea = UNEXPECTED_VALUE;
     int serpContext = UNEXPECTED_VALUE;
     int sort = UNEXPECTED_VALUE;
+
+    double latitude = Double.MIN_VALUE;
+    double longitude = Double.MIN_VALUE;
 
     public void setSort(Sort sort) {
         this.sort = sort.ordinal();
@@ -141,6 +144,22 @@ public class SerpRequest implements Parcelable {
         this.serpContext = context;
     }
 
+    public void setSearch(SearchResponseItem item) {
+        searchItems.add(item);
+    }
+
+    public ArrayList<SearchResponseItem> getSearches() {
+        return searchItems;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
     public SerpRequest() { }
 
     public SerpRequest(Parcel source) {
@@ -164,6 +183,9 @@ public class SerpRequest implements Parcelable {
 
         setSerpContext(source.readInt());
         setSort(source.readInt());
+
+        setLatitude(source.readDouble());
+        setLongitude(source.readDouble());
     }
 
     @Override
@@ -193,6 +215,9 @@ public class SerpRequest implements Parcelable {
 
         dest.writeInt(this.serpContext);
         dest.writeInt(this.sort);
+
+        dest.writeDouble(this.latitude);
+        dest.writeDouble(this.longitude);
     }
 
     private void writeParceableList(Parcel dest, ArrayList<SearchResponseItem> list, int flags) {
@@ -394,6 +419,10 @@ public class SerpRequest implements Parcelable {
             selector.range(KeyUtil.PRICE, null, maxArea);
         }
 
+        if(Double.compare(latitude, Double.MIN_VALUE) != 0 && Double.compare(longitude, Double.MIN_VALUE) != 0) {
+            selector.nearby(10, latitude, longitude);
+        }
+
         // sorting
         if(this.sort != UNEXPECTED_VALUE) {
             if (this.sort == Sort.RELEVANCE.ordinal()) {
@@ -422,6 +451,10 @@ public class SerpRequest implements Parcelable {
 //                selector.sort("price", "DESC");
             } else if(this.sort == Sort.DISTANCE_DESC.ordinal()) {
 //                selector.sort("price", "DESC");
+            } else if(this.sort == Sort.GEO_ASC.ordinal()) {
+                selector.sort("geoDistance", "ASC");
+            } else if(this.sort == Sort.GEO_DESC.ordinal()) {
+                selector.sort("geoDistance", "DESC");
             }
         }
 
@@ -511,13 +544,5 @@ public class SerpRequest implements Parcelable {
         }
         context.startActivity(intent);
 
-    }
-
-    public void setSearch(SearchResponseItem item) {
-        searchItems.add(item);
-    }
-
-    public ArrayList<SearchResponseItem> getSearches() {
-        return searchItems;
     }
 }

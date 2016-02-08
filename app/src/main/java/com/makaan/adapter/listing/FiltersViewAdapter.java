@@ -7,12 +7,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.makaan.R;
 import com.makaan.request.selector.Selector;
+import com.makaan.response.image.Image;
 import com.makaan.response.serp.AbstractFilterValue;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.response.serp.RangeMinMaxFilter;
@@ -35,6 +37,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
     public static final int RADIO_BUTTON = 4;
     public static final int RADIO_BUTTON_MIN_MAX = 5;
     public static final int RADIO_BUTTON_RANGE = 6;
+    public static final int SINGLE_CHECKBOX = 7;
 
     private static final int UNEXPECTED_VALUE = -1000000;
 
@@ -107,6 +110,12 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                 holder = new ViewHolder();
                 holder.view = convertView;
                 ((RadioButton) holder.view).setOnCheckedChangeListener(this);
+            } else if(type == SINGLE_CHECKBOX) {
+                convertView = LayoutInflater.from(context).inflate(R.layout.fragment_dialog_filters_single_checkbox_item_view, parent, false);
+                holder = new ViewHolder();
+                holder.view = convertView;
+                ((CheckBox)holder.view.findViewById(R.id.fragment_dialog_filters_single_checkbox_item_view_checkbox)).setOnCheckedChangeListener(this);
+                ((CheckBox)holder.view.findViewById(R.id.fragment_dialog_filters_single_checkbox_item_view_checkbox)).setTag(holder);
             } else {
                 convertView = LayoutInflater.from(context).inflate(R.layout.fragment_dialog_filters_seekbar_item_view, parent, false);
                 holder = new ViewHolder();
@@ -151,6 +160,13 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
             seekBar.setSelectedMinValue(((RangeFilter) this.getItem(holder.pos)).selectedMinValue);
             seekBar.setSelectedMaxValue(((RangeFilter) this.getItem(holder.pos)).selectedMaxValue);
             seekBar.setOnRangeSeekBarChangeListener(this);
+        } else if(type == SINGLE_CHECKBOX) {
+            int id = context.getResources().getIdentifier(filterGroup.imageName, "drawable", "com.makaan");
+            if (id != 0) {
+                ((ImageView)holder.view.findViewById(R.id.fragment_dialog_filters_single_checkbox_item_view_image_view)).setImageResource(id);
+            }
+            ((CheckBox)holder.view.findViewById(R.id.fragment_dialog_filters_single_checkbox_item_view_checkbox)).setText(this.getItem(position).displayName);
+            ((CheckBox)holder.view.findViewById(R.id.fragment_dialog_filters_single_checkbox_item_view_checkbox)).setChecked(this.getItem(position).selected);
         }
 
         return convertView;
