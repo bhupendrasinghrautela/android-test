@@ -1,6 +1,7 @@
 package com.makaan;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.SparseArray;
 
 import com.crashlytics.android.Crashlytics;
@@ -38,6 +39,8 @@ import com.makaan.service.user.UserLoginService;
 import com.makaan.util.FontTypeface;
 import com.makaan.util.RandomString;
 import com.segment.analytics.Analytics;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import io.fabric.sdk.android.Fabric;
 import java.net.CookieHandler;
@@ -57,11 +60,21 @@ public class MakaanBuyerApplication extends Application {
     public static SparseArray<SerpObjects> serpObjects = new SparseArray<>();
 
     public static Gson gson;
+    private RefWatcher refWatcher;
+
+    public static RefWatcher getRefWatcher(Context context) {
+        MakaanBuyerApplication application = (MakaanBuyerApplication) context.getApplicationContext();
+        return application.refWatcher;
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
+
+        // leak canary to detect memory leaks
+        // comment below line to disable leak canary
+        refWatcher = LeakCanary.install(this);
 
         FontTypeface.setDefaultFont(this, "DEFAULT", "fonts/ProximaNova-Bold.otf");
         FontTypeface.setDefaultFont(this, "MONOSPACE", "fonts/proxima.otf");

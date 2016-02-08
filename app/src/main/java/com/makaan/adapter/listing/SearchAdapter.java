@@ -140,6 +140,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 view.findViewById(R.id.search_result_item_image_view).setVisibility(View.VISIBLE);
             }
 
+            // TODO implement lru cache
             if (mIsRecent) {
                 ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_history);
             } else {

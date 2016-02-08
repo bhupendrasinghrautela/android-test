@@ -447,6 +447,7 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         }
     }
 
+    // TODO use lru cache for image mapping
     private boolean mapPropertyInfo(ListingInfoMap.InfoMap infoMap, int j) {
         switch (infoMap.fieldName) {
             case "propertyStatus":
@@ -542,7 +543,7 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
                 }
                 break;
             case "isReadyToMove":
-                if(!mListing.isReadyToMove && TextUtils.isEmpty(mListing.possessionDate)) {
+                if(!mListing.isReadyToMove && !TextUtils.isEmpty(mListing.possessionDate)) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText(mListing.possessionDate.toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
