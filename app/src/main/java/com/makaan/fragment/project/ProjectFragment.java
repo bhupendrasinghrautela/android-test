@@ -144,6 +144,10 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResults(ImagesGetEvent imagesGetEvent){
+        if(null== imagesGetEvent || null!=imagesGetEvent.error){
+            //TODO handle error
+            return;
+        }
         try {
             if (imagesGetEvent.images.size() > 0) {
                 mPropertyImageViewPager.setVisibility(View.VISIBLE);
@@ -159,7 +163,7 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResult(ProjectByIdEvent projectByIdEvent) {
-        if (projectByIdEvent.error != null) {
+        if (null == projectByIdEvent || null != projectByIdEvent.error) {
             getActivity().finish();
             Toast.makeText(getActivity(), "project details could not be loaded at this time. please try later.", Toast.LENGTH_LONG).show();
         } else {
@@ -167,14 +171,15 @@ public class ProjectFragment extends MakaanBaseFragment{
             mAmenitiesViewScroll.bindView(project.projectAmenities);
             projectSpecificationView.bindView(project.getFormattedSpecifications(), getActivity());
             initUi();
-            ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(project.locality.latitude, project.locality.longitude, 10);
-            addConstructionTimelineFragment();
             if (project.locality.latitude != null && project.locality.longitude != null) {
                 ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(project.locality.latitude, project.locality.longitude, 10);
+                ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(project.locality.latitude, project.locality.longitude, 10);
             }
+            addConstructionTimelineFragment();
             ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getProjectTimelineImages(project.projectId);
         }
     }
+
     @Subscribe
     public void onResults(NearByLocalitiesEvent localitiesEvent){
         addPriceTrendsFragment(localitiesEvent.nearbyLocalities);
@@ -200,16 +205,28 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResults(AmenityGetEvent amenityGetEvent) {
+        if(null== amenityGetEvent || null!=amenityGetEvent.error){
+            //TODO handle error
+            return;
+        }
         addProjectAboutLocalityFragment(amenityGetEvent.amenityClusters);
     }
 
     @Subscribe
     public void onResult(ProjectConfigEvent projectConfigEvent){
+        if(null== projectConfigEvent || null!=projectConfigEvent.error){
+            //TODO handle error
+            return;
+        }
         projectConfigView.bindView(projectConfigEvent, getActivity());
     }
 
     @Subscribe
     public void onResult(SimilarProjectGetEvent similarProjectGetEvent){
+        if(null== similarProjectGetEvent || null!=similarProjectGetEvent.error){
+            //TODO handle error
+            return;
+        }
         if(similarProjectGetEvent.similarProjects !=null && similarProjectGetEvent.similarProjects.size()>0)
             addSimilarProjectsFragment(similarProjectGetEvent.similarProjects);
     }

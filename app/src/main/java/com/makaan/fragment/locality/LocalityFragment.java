@@ -140,10 +140,10 @@ public class LocalityFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(LocalityByIdEvent localityByIdEvent) {
-        if (localityByIdEvent.error != null) {
+        if (null == localityByIdEvent || null != localityByIdEvent.error) {
             getActivity().finish();
-            Toast.makeText(getActivity(),"locality details could not be loaded at this time. please try later.",Toast.LENGTH_LONG).show();
-        }else {
+            Toast.makeText(getActivity(), "locality details could not be loaded at this time. please try later.", Toast.LENGTH_LONG).show();
+        } else {
             locality = localityByIdEvent.locality;
             populateLocalityData();
             frame.setVisibility(View.VISIBLE);
@@ -163,20 +163,34 @@ public class LocalityFragment extends MakaanBaseFragment {
         }
     }
 
+
     @Subscribe
     public void onResults(TopBuilderInLocalityEvent topBuilderInLocalityEvent){
+        if(null== topBuilderInLocalityEvent || null!=topBuilderInLocalityEvent.error){
+            //TODO handle error
+            return;
+        }
         addTopBuilders(topBuilderInLocalityEvent.builders);
     }
 
     @Subscribe
     public void onResults(NearByLocalitiesEvent localitiesEvent){
+        if(null== localitiesEvent || null!=localitiesEvent.error){
+            //TODO handle error
+            return;
+        }
         addNearByLocalitiesFragment(localitiesEvent.nearbyLocalities);
         addPriceTrendFragment(localitiesEvent.nearbyLocalities);
     }
 
     @Subscribe
     public void onResults(AmenityGetEvent amenityGetEvent) {
-        if(null==amenityGetEvent || null==amenityGetEvent.amenityClusters){
+        if(null==amenityGetEvent|| null!=amenityGetEvent.error){
+            //TODO handle error
+            return;
+        }
+
+        if(null==amenityGetEvent.amenityClusters){
             return;
         }
         mAmenityClusters.clear();

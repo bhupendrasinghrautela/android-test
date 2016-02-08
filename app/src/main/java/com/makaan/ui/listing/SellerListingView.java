@@ -112,6 +112,10 @@ public class SellerListingView extends AbstractListingView {
 
     @Subscribe
     public void onResults(SellerByIdEvent sellerByIdEvent) {
+        if(null== sellerByIdEvent || null!=sellerByIdEvent.error){
+            //TODO handle error
+            return;
+        }
         CompanySeller seller = sellerByIdEvent.seller;
         if(seller.sellers != null && seller.sellers.size() > 0) {
             mSellerNameTextView.setText(seller.sellers.get(0).companyUser.user.fullName);
