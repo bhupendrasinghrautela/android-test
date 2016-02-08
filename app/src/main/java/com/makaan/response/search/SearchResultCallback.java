@@ -28,7 +28,7 @@ public class SearchResultCallback extends StringRequestCallback {
         if(searchResponse == null || searchResponse.getData() == null ) {
 
             ResponseError error = new ResponseError();
-            error.setMsg("Data null");
+            error.msg = "No data";
             searchResultEvent.error = error;
 
         }else {
@@ -37,6 +37,13 @@ public class SearchResultCallback extends StringRequestCallback {
             searchResultEvent.searchResponse = searchResponse;
         }
 
+        AppBus.getInstance().post(searchResultEvent);
+    }
+
+    @Override
+    public void onError(ResponseError error) {
+        SearchResultEvent searchResultEvent = new SearchResultEvent();
+        searchResultEvent.error = error;
         AppBus.getInstance().post(searchResultEvent);
     }
 }

@@ -20,7 +20,7 @@ public class UserRegistrationCallback extends StringRequestCallback{
         if(userResponse == null || userResponse.getData() == null ) {
 
             ResponseError error = new ResponseError();
-            error.setMsg("Data null");
+            error.msg = "There seems to be some error, please try later.";
             userRegistrationEvent.error = error;
 
         }else {
@@ -32,12 +32,10 @@ public class UserRegistrationCallback extends StringRequestCallback{
         AppBus.getInstance().post(userRegistrationEvent);
     }
 
+
     @Override
-    protected void onError() {
-        super.onError();
+    public void onError(ResponseError error) {
         UserRegistrationEvent userRegistrationEvent = new UserRegistrationEvent();
-        ResponseError error = new ResponseError();
-        error.setMsg("volley error");
         userRegistrationEvent.error = error;
         AppBus.getInstance().post(userRegistrationEvent);
     }

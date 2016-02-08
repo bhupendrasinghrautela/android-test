@@ -8,6 +8,7 @@ import com.makaan.event.city.CityTrendCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
+import com.makaan.response.ResponseError;
 import com.makaan.response.city.City;
 import com.makaan.response.locality.Locality;
 import com.makaan.util.AppBus;
@@ -70,6 +71,13 @@ public class CityService implements MakaanService {
 
             MakaanNetworkClient.getInstance().get(cityUrl, cityType, new ObjectGetCallback() {
                 @Override
+                public void onError(ResponseError error) {
+                    CityByIdEvent cityByIdEvent = new CityByIdEvent();
+                    cityByIdEvent.error = error;
+                    AppBus.getInstance().post(cityByIdEvent);
+                }
+
+                @Override
                 public void onSuccess(Object responseObject) {
                     City city = (City) responseObject;
                     //city.description = AppUtils.stripHtml(city.description);
@@ -98,6 +106,13 @@ public class CityService implements MakaanService {
             String topLocalitiesUrl = ApiConstants.LOCALITY_DATA.concat("?").concat(topLocaliltySelector.build());
 
             MakaanNetworkClient.getInstance().get(topLocalitiesUrl, topLocalitiesListType, new ObjectGetCallback() {
+                @Override
+                public void onError(ResponseError error) {
+                    CityTopLocalityEvent cityTopLocalityEvent = new CityTopLocalityEvent();
+                    cityTopLocalityEvent.error = error;
+                    AppBus.getInstance().post(cityTopLocalityEvent);
+                }
+
                 @Override
                 @SuppressWarnings("unchecked")
                 public void onSuccess(Object responseObject) {

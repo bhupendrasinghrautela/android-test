@@ -25,7 +25,7 @@ public class WishListResultCallback extends StringRequestCallback {
         if(wishListResponse == null || wishListResponse.data == null ) {
 
             ResponseError error = new ResponseError();
-            error.setMsg("Data null");
+            error.msg = "No data";
             wishListResultEvent.error = error;
 
         }else {
@@ -35,5 +35,12 @@ public class WishListResultCallback extends StringRequestCallback {
 
         AppBus.getInstance().post(wishListResultEvent);
 
+    }
+
+    @Override
+    public void onError(ResponseError error) {
+        WishListResultEvent wishListResultEvent = new WishListResultEvent();
+        wishListResultEvent.error = error;
+        AppBus.getInstance().post(wishListResultEvent);
     }
 }

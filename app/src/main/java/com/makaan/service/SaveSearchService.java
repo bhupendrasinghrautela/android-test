@@ -7,6 +7,7 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.saveSearch.SaveNewSearch;
 import com.makaan.request.selector.Selector;
+import com.makaan.response.ResponseError;
 import com.makaan.response.saveSearch.SaveSearch;
 import com.makaan.util.AppBus;
 import com.makaan.util.JsonBuilder;
@@ -34,6 +35,13 @@ public class SaveSearchService implements MakaanService {
 
         MakaanNetworkClient.getInstance().get(getSavedSearchUrl, saveSearchType, new ObjectGetCallback() {
             @Override
+            public void onError(ResponseError error) {
+                SaveSearchGetEvent saveSearchGetEvent = new SaveSearchGetEvent();
+                saveSearchGetEvent.error = error;
+                AppBus.getInstance().post(saveSearchGetEvent);
+            }
+
+            @Override
             public void onSuccess(Object responseObject) {
                 ArrayList<SaveSearch> saveSearchList = (ArrayList<SaveSearch>) responseObject;
                 AppBus.getInstance().post(new SaveSearchGetEvent(saveSearchList));
@@ -53,15 +61,18 @@ public class SaveSearchService implements MakaanService {
         MakaanNetworkClient.getInstance().delete(getSavedSearchUrl, saveSearchType, new ObjectGetCallback() {
 
             @Override
+            public void onError(ResponseError error) {
+                SaveSearchGetEvent saveSearchGetEvent = new SaveSearchGetEvent();
+                saveSearchGetEvent.error = error;
+                AppBus.getInstance().post(saveSearchGetEvent);
+            }
+
+            @Override
             public void onSuccess(Object responseObject) {
                 ArrayList<SaveSearch> saveSearch = (ArrayList<SaveSearch>) responseObject;
                 AppBus.getInstance().post(new SaveSearchGetEvent(saveSearch));
             }
 
-            @Override
-            protected void onError() {
-                super.onError();
-            }
         }, TAG,true);
     }
 
@@ -84,8 +95,8 @@ public class SaveSearchService implements MakaanService {
                 }
 
                 @Override
-                protected void onError() {
-                    super.onError();
+                public void onError(ResponseError error) {
+                    //TODO handle error
                 }
             }, TAG, false);
         } catch (JSONException e) {

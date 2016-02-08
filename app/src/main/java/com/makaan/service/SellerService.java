@@ -6,6 +6,7 @@ import com.makaan.event.seller.SellerByIdEvent;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
+import com.makaan.response.ResponseError;
 import com.makaan.response.project.CompanySeller;
 import com.makaan.util.AppBus;
 
@@ -34,6 +35,13 @@ public class SellerService implements  MakaanService {
             Type sellerType = new TypeToken<CompanySeller>() {}.getType();
 
             MakaanNetworkClient.getInstance().get(sellerUrl, sellerType, new ObjectGetCallback() {
+                @Override
+                public void onError(ResponseError error) {
+                    SellerByIdEvent sellerByIdEvent = new SellerByIdEvent();
+                    sellerByIdEvent.error = error;
+                    AppBus.getInstance().post(sellerByIdEvent);
+                }
+
                 @Override
                 public void onSuccess(Object responseObject) {
                     CompanySeller seller = (CompanySeller) responseObject;

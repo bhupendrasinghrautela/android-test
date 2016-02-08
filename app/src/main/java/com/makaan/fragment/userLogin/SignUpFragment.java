@@ -103,8 +103,7 @@ public class SignUpFragment extends Fragment {
 
     @Subscribe
     public void registrationResults(UserRegistrationEvent userRegistrationEvent){
-        if(userRegistrationEvent.error!=null && (userRegistrationEvent.error.getMsg().equals("Data null")||
-                userRegistrationEvent.error.getMsg().equalsIgnoreCase("volley error"))){
+        if(userRegistrationEvent.error!=null ){
             mOnUserRegistrationListener.onUserRegistrationError(userRegistrationEvent.error);
         }
         else {

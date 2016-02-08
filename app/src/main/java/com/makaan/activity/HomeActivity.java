@@ -167,6 +167,10 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     @Subscribe
     public void onResults(UserLoginEvent userLoginEvent) {
 
+        if(null!=userLoginEvent.error){
+            return;
+        }
+
         Toast.makeText(this, userLoginEvent.userResponse.getData().firstName, Toast.LENGTH_SHORT).show();
         try {
             CookiePreferences.setUserInfo(this,

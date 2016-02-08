@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ResponseConstants;
 import com.makaan.network.JSONGetCallback;
+import com.makaan.response.ResponseError;
 import com.makaan.response.trend.ApiPriceTrendData;
 import com.makaan.response.trend.LocalityPriceTrendDto;
 
@@ -72,6 +73,10 @@ public abstract class LocalityTrendCallback extends JSONGetCallback {
 
     }
 
+    @Override
+    public void onError(ResponseError error) {
+        //TODO handle error here
+    }
 
     public abstract void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto);
 

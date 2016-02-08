@@ -5,6 +5,7 @@ import android.util.Log;
 import com.makaan.fragment.pyr.PyrPagePresenter;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.network.StringRequestCallback;
+import com.makaan.response.ResponseError;
 import com.makaan.response.pyr.PyrPostResponse;
 import com.makaan.util.AppBus;
 import com.makaan.util.JsonParser;
@@ -23,5 +24,10 @@ public class PyrPostCallBack extends StringRequestCallback {
                 JsonParser.parseJson(response, PyrPostResponse.class);
         AppBus.getInstance().post(pyrPostResponse);
 
+    }
+
+    @Override
+    public void onError(ResponseError error) {
+        //TODO handle error
     }
 }

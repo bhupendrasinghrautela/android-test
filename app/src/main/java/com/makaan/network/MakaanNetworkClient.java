@@ -19,6 +19,7 @@ import com.makaan.cache.LruBitmapCache;
 import com.makaan.constants.RequestConstants;
 import com.makaan.constants.ResponseConstants;
 import com.makaan.request.CustomRequest;
+import com.makaan.response.ResponseError;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -118,7 +119,7 @@ public class MakaanNetworkClient {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             completeRequestInQueue(urlToHit);
-                            jsonGetCallback.onError();
+                            jsonGetCallback.onError(getResponseError(error));
                             Log.e(TAG, "Network error", error);
                         }
                     });
@@ -178,7 +179,7 @@ public class MakaanNetworkClient {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             completeRequestInQueue(urlToHit);
-                            objectGetCallback.onError();
+                            objectGetCallback.onError(getResponseError(error));
                             Log.e(TAG, "Network error", error);
                         }
                     });
@@ -208,7 +209,7 @@ public class MakaanNetworkClient {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         completeRequestInQueue(urlToHit);
-                        stringRequestCallback.onError();
+                        stringRequestCallback.onError(getResponseError(error));
                         Log.e(TAG, "Network error", error);
                     }
                 });
@@ -230,7 +231,7 @@ public class MakaanNetworkClient {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         completeRequestInQueue(urlToHit);
-                        stringRequestCallback.onError();
+                        stringRequestCallback.onError(getResponseError(error));
                         Log.e(TAG, "Network error", error);
                     }
                 });
@@ -251,7 +252,7 @@ public class MakaanNetworkClient {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         completeRequestInQueue(url);
-                        stringRequestCallback.onError();
+                        stringRequestCallback.onError(getResponseError(error));
                     }
                 }){
 
@@ -280,7 +281,7 @@ public class MakaanNetworkClient {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         completeRequestInQueue(url);
-                        stringRequestCallback.onError();
+                        stringRequestCallback.onError(getResponseError(error));
                     }
                 });
         addToRequestQueue(stringRequest, tag);
@@ -315,7 +316,7 @@ public class MakaanNetworkClient {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         completeRequestInQueue(url);
-                        objectGetCallback.onError();
+                        objectGetCallback.onError(getResponseError(error));
                     }
                 });
         addToRequestQueue(stringRequest, tag);
@@ -340,7 +341,7 @@ public class MakaanNetworkClient {
                             Log.e("Error : ", errorString);
                         }
                         completeRequestInQueue(url);
-                        stringRequestCallback.onError();
+                        stringRequestCallback.onError(getResponseError(error));
                     }
                 }){
 
@@ -368,7 +369,7 @@ public class MakaanNetworkClient {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         completeRequestInQueue(url);
-                        stringRequestCallback.onError();
+                        stringRequestCallback.onError(getResponseError(error));
                     }
                 });
         addToRequestQueue(stringRequest, tag);
@@ -389,7 +390,7 @@ public class MakaanNetworkClient {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         completeRequestInQueue(url);
-                        stringRequestCallback.onError();
+                        stringRequestCallback.onError(getResponseError(error));
                     }
                 });
         addToRequestQueue(stringRequest, tag);
@@ -424,7 +425,7 @@ public class MakaanNetworkClient {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         completeRequestInQueue(url);
-                        objectGetCallback.onError();
+                        objectGetCallback.onError(getResponseError(error));
                     }
                 });
         addToRequestQueue(stringRequest, tag);
@@ -445,7 +446,7 @@ public class MakaanNetworkClient {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         completeRequestInQueue(url);
-                        stringRequestCallback.onError();
+                        stringRequestCallback.onError(getResponseError(error));
                     }
                 });
         addToRequestQueue(stringRequest, tag);
@@ -523,6 +524,13 @@ public class MakaanNetworkClient {
         }
         return new JSONObject(json.toString());
 
+    }
+
+    private ResponseError getResponseError(VolleyError error){
+        ResponseError responseError = new ResponseError();
+        responseError.error = error;
+        responseError.msg = VolleyErrorParser.getMessage(error);
+        return responseError;
     }
 
 }

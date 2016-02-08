@@ -19,28 +19,30 @@ import com.makaan.util.JsonParser;
  * Created by sunil on 03/12/15.
  */
 public class VolleyErrorParser {
+    private static final String GENERIC_ERROR = "an unknown error occurred. please try again later.";
+    private static final String NETWORK_ERROR = "your network connection seems to be lost. please enable internet connection and try again.";
+    private static final String WEAK_NETWORK_ERROR = "your network connection seems to be weak, please check and try again.";
 
     /**
      * Returns appropriate message which is to be displayed to the user
      * against the specified error object.
      *
      * @param error
-     * @param context
      * @return
      */
-    public static String getMessage(Object error, Context context) {
+    public static String getMessage(Object error) {
         if (error instanceof TimeoutError) {
-            return context.getResources().getString(R.string.generic_error);
+            return GENERIC_ERROR;
         } else if(isNoInternetConnection(error)) {
-            return context.getResources().getString(R.string.no_network_connection);
+            return NETWORK_ERROR;
         } else if (isNetworkProblem(error)) {
-            return context.getResources().getString(R.string.weak_network_connection);
+            return WEAK_NETWORK_ERROR;
         }
 
         try {
-            return getErrorMessage(error, context);
+            return getErrorMessage(error);
         }catch(Exception e){
-            return context.getResources().getString(R.string.generic_error);
+            return GENERIC_ERROR;
         }
     }
 
@@ -81,25 +83,23 @@ public class VolleyErrorParser {
      * show a message retrieved from the server.
      *
      * @param err
-     * @param context
      * @return
      */
-    private static String getErrorMessage(Object err, Context context) {
+    private static String getErrorMessage(Object err) {
         VolleyError error = (VolleyError) err;
         NetworkResponse response = error.networkResponse;
 
         if (response != null && response.data!=null && response.data.length>0) {
-            BaseResponse baseModel = (BaseResponse) JsonParser.parseJson(new String(response.data), BaseResponse.class);
-            if(baseModel!=null && baseModel.getError()!=null &&
-                    !TextUtils.isEmpty(baseModel.getError().getMsg())){
+            BaseResponse baseResponse = (BaseResponse) JsonParser.parseJson(new String(response.data), BaseResponse.class);
+            if(baseResponse!=null && baseResponse.getError()!=null &&
+                    !TextUtils.isEmpty(baseResponse.getError().msg)){
 
-                baseModel.getError().setStatusCode(baseModel.getStatusCode());
-                return baseModel.getError().getMsg();
+                return baseResponse.getError().msg;
             }else{
-                return context.getResources().getString(R.string.generic_error);
+                return GENERIC_ERROR;
             }
         }else{
-            return context.getResources().getString(R.string.generic_error);
+            return GENERIC_ERROR;
         }
     }
 

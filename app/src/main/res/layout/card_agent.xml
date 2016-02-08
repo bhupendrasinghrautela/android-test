@@ -33,13 +33,21 @@
         app:border_width="@dimen/border_width"
         app:shadow="true"/>
 
-    <RatingBar
+
+    <com.makaan.ui.view.CustomRatingBar
         android:id="@+id/rating_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/jarvis_card_brief_layout_margin"
+        android:layout_marginTop="6dp"
+        android:layout_gravity="center"
         android:numStars="5"
-        android:stepSize="0.5"
+        android:stepSize="0.1"
+        app:itemHeight="@dimen/card_agent_rating_item_height"
+        app:itemWidth="@dimen/card_agent_rating_item_height"
+        app:itemMarginLeft="@dimen/serp_listing_card_seller_rating_item_margin_left"
+        app:itemMarginRight="@dimen/serp_listing_card_seller_rating_item_margin_right"
+        app:itemProgressIcon="@drawable/star_selected"
+        app:itemSecondaryProgressIcon="@drawable/star_unselected"
         style="?android:attr/ratingBarStyleSmall"/>
 
     <Button

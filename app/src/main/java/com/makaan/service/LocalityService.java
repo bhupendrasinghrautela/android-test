@@ -10,6 +10,7 @@ import com.makaan.event.locality.TrendingSearchLocalityEvent;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
+import com.makaan.response.ResponseError;
 import com.makaan.response.locality.GpDetail;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Builder;
@@ -51,6 +52,13 @@ public class LocalityService implements MakaanService {
 
             MakaanNetworkClient.getInstance().get(localityUrl, localityType, new ObjectGetCallback() {
                 @Override
+                public void onError(ResponseError error) {
+                    LocalityByIdEvent localityByIdEvent = new LocalityByIdEvent();
+                    localityByIdEvent.error = error;
+                    AppBus.getInstance().post(localityByIdEvent);
+                }
+
+                @Override
                 public void onSuccess(Object responseObject) {
                     Locality locality = (Locality) responseObject;
                     //locality.description = AppUtils.stripHtml(locality.description);
@@ -77,6 +85,13 @@ public class LocalityService implements MakaanService {
 
         MakaanNetworkClient.getInstance().get(nearbyLocalityUrl, localityListType, new ObjectGetCallback() {
             @Override
+            public void onError(ResponseError error) {
+                NearByLocalitiesEvent nearByLocalitiesEvent = new NearByLocalitiesEvent();
+                nearByLocalitiesEvent.error = error;
+                AppBus.getInstance().post(nearByLocalitiesEvent);
+            }
+
+            @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
                 ArrayList<Locality> nearByLocalities = (ArrayList<Locality>) responseObject;
@@ -99,6 +114,13 @@ public class LocalityService implements MakaanService {
             }.getType();
 
             MakaanNetworkClient.getInstance().get(localityTrendingSearch, searchListType, new ObjectGetCallback() {
+                @Override
+                public void onError(ResponseError error) {
+                    TrendingSearchLocalityEvent trendingSearchLocalityEvent = new TrendingSearchLocalityEvent();
+                    trendingSearchLocalityEvent.error = error;
+                    AppBus.getInstance().post(trendingSearchLocalityEvent);
+                }
+
                 @Override
                 @SuppressWarnings("unchecked")
                 public void onSuccess(Object responseObject) {
@@ -130,6 +152,13 @@ public class LocalityService implements MakaanService {
 
             MakaanNetworkClient.getInstance().get(localityTopBuilder, builderListType, new ObjectGetCallback() {
                 @Override
+                public void onError(ResponseError error) {
+                    TopBuilderInLocalityEvent topBuilderInLocalityEvent = new TopBuilderInLocalityEvent();
+                    topBuilderInLocalityEvent.error = error;
+                    AppBus.getInstance().post(topBuilderInLocalityEvent);
+                }
+
+                @Override
                 @SuppressWarnings("unchecked")
                 public void onSuccess(Object responseObject) {
                     ArrayList<Builder> topBuildersInLocality = (ArrayList<Builder>) responseObject;
@@ -150,6 +179,13 @@ public class LocalityService implements MakaanService {
             Type gpDetailType = new TypeToken<GpDetail>() {
             }.getType();
             MakaanNetworkClient.getInstance().get(gpDetailUrl, gpDetailType, new ObjectGetCallback() {
+                @Override
+                public void onError(ResponseError error) {
+                    GpByIdEvent gpByIdEvent = new GpByIdEvent();
+                    gpByIdEvent.error = error;
+                    AppBus.getInstance().post(gpByIdEvent);
+                }
+
                 @Override
                 public void onSuccess(Object responseObject) {
                     GpDetail gpDetail = (GpDetail) responseObject;

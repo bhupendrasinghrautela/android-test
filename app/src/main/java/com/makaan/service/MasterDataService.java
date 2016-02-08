@@ -10,6 +10,7 @@ import com.makaan.constants.ResponseConstants;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
+import com.makaan.response.ResponseError;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.master.ApiLabel;
@@ -43,6 +44,9 @@ public class MasterDataService implements MakaanService {
         }.getType();
         MakaanNetworkClient.getInstance().get(ApiConstants.MASTER_FURNISHINGS, listType, new ObjectGetCallback() {
             @Override
+            public void onError(ResponseError error) {}
+
+            @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
                 ArrayList<MasterSpecification> masterSpecifications = (ArrayList<MasterSpecification>) responseObject;
@@ -61,6 +65,9 @@ public class MasterDataService implements MakaanService {
         }.getType();
         MakaanNetworkClient.getInstance().get(ApiConstants.MASTER_FURNISHINGS, listType, new ObjectGetCallback() {
             @Override
+            public void onError(ResponseError error) {}
+
+            @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
                 ArrayList<MasterFurnishing> masterFurnishings = (ArrayList<MasterFurnishing>) responseObject;
@@ -78,6 +85,9 @@ public class MasterDataService implements MakaanService {
         }.getType();
         MakaanNetworkClient.getInstance().get(ApiConstants.PROPERTY_AMENITY, listType, new ObjectGetCallback() {
             @Override
+            public void onError(ResponseError error) {}
+
+            @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
                 ArrayList<PropertyAmenity> propertyAmenities = (ArrayList<PropertyAmenity>) responseObject;
@@ -94,6 +104,9 @@ public class MasterDataService implements MakaanService {
         }.getType();
 
         MakaanNetworkClient.getInstance().get(ApiConstants.UNIT_TYPE, listType, new ObjectGetCallback() {
+            @Override
+            public void onError(ResponseError error) {}
+
             @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
@@ -114,6 +127,9 @@ public class MasterDataService implements MakaanService {
 
         MakaanNetworkClient.getInstance().get(ApiConstants.UNIT_TYPE, listType, new ObjectGetCallback() {
             @Override
+            public void onError(ResponseError error) {}
+
+            @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
                 HashMap<String, String> propertyTypes = (HashMap<String, String>) responseObject;
@@ -131,6 +147,9 @@ public class MasterDataService implements MakaanService {
         }.getType();
 
         MakaanNetworkClient.getInstance().get(ApiConstants.UNIT_TYPE, listType, new ObjectGetCallback() {
+            @Override
+            public void onError(ResponseError error) {}
+
             @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
@@ -150,6 +169,9 @@ public class MasterDataService implements MakaanService {
 
         MakaanNetworkClient.getInstance().get(ApiConstants.PROPERTY_STATUS, listType, new ObjectGetCallback() {
             @Override
+            public void onError(ResponseError error) {}
+
+            @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
                 HashMap<String, String> propertyTypes = (HashMap<String, String>) responseObject;
@@ -168,6 +190,9 @@ public class MasterDataService implements MakaanService {
 
         MakaanNetworkClient.getInstance().get(ApiConstants.PROPERTY_DISPLAY_ORDER, propertyDisplay, new ObjectGetCallback() {
             @Override
+            public void onError(ResponseError error) {}
+
+            @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
                 MasterDataCache.getInstance().addPropertyDisplayOrder((Map<String, Map<String, Map<String, List<String>>>>) responseObject);
@@ -182,6 +207,9 @@ public class MasterDataService implements MakaanService {
 
         MakaanNetworkClient.getInstance().get(ApiConstants.DEFAULT_AMENITY, amenityDefault, new ObjectGetCallback() {
             @Override
+            public void onError(ResponseError error) {}
+
+            @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
                 MasterDataCache.getInstance().addDefaultAmenities((List<Long>) responseObject);
@@ -195,6 +223,9 @@ public class MasterDataService implements MakaanService {
         }.getType();
 
         MakaanNetworkClient.getInstance().get(ApiConstants.API_LABEL, listType, new ObjectGetCallback() {
+            @Override
+            public void onError(ResponseError error) {}
+
             @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
@@ -217,6 +248,9 @@ public class MasterDataService implements MakaanService {
 
 
         MakaanNetworkClient.getInstance().get(ApiConstants.FILTER_GROUP, new JSONGetCallback() {
+
+            @Override
+            public void onError(ResponseError error) {}
 
             @Override
             public void onSuccess(JSONObject responseObject) {
@@ -249,6 +283,9 @@ public class MasterDataService implements MakaanService {
         MakaanNetworkClient.getInstance().get(ApiConstants.FILTER_GROUP, new JSONGetCallback() {
 
             @Override
+            public void onError(ResponseError error) {}
+
+            @Override
             public void onSuccess(JSONObject responseObject) {
                 try {
                     JSONObject object = responseObject.getJSONObject(ResponseConstants.DATA);
@@ -274,6 +311,9 @@ public class MasterDataService implements MakaanService {
 
 
         MakaanNetworkClient.getInstance().get(ApiConstants.FILTER_GROUP, new JSONGetCallback() {
+
+            @Override
+            public void onError(ResponseError error) {}
 
             @Override
             public void onSuccess(JSONObject responseObject) {
@@ -306,6 +346,9 @@ public class MasterDataService implements MakaanService {
         MakaanNetworkClient.getInstance().get(ApiConstants.FILTER_GROUP, new JSONGetCallback() {
 
             @Override
+            public void onError(ResponseError error) {}
+
+            @Override
             public void onSuccess(JSONObject responseObject) {
                 try {
                     JSONObject object = responseObject.getJSONObject(ResponseConstants.DATA);
@@ -331,6 +374,9 @@ public class MasterDataService implements MakaanService {
         }.getType();
 
         MakaanNetworkClient.getInstance().get(ApiConstants.AMENITY, new JSONGetCallback() {
+
+            @Override
+            public void onError(ResponseError error) {}
 
             @Override
             public void onSuccess(JSONObject responseObject) {
@@ -359,6 +405,9 @@ public class MasterDataService implements MakaanService {
         }.getType();
 
         MakaanNetworkClient.getInstance().get(ApiConstants.SEARCH_TYPE, searchType, new ObjectGetCallback() {
+            @Override
+            public void onError(ResponseError error) {}
+
             @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
@@ -397,6 +446,9 @@ public class MasterDataService implements MakaanService {
 
         MakaanNetworkClient.getInstance().get(ApiConstants.JARVIS_MESSAGE_TYPE, jarvisMessageType, new ObjectGetCallback() {
             @Override
+            public void onError(ResponseError error) {}
+
+            @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
                 HashMap<String, Integer> jarvisMessageTypes = (HashMap<String, Integer>) responseObject;
@@ -414,6 +466,9 @@ public class MasterDataService implements MakaanService {
 
         MakaanNetworkClient.getInstance().get(ApiConstants.JARVIS_CTA_MESSAGE_TYPE, jarvisMessageType, new ObjectGetCallback() {
             @Override
+            public void onError(ResponseError error) {}
+
+            @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
                 HashMap<String, Integer> jarvisMessageTypes = (HashMap<String, Integer>) responseObject;
@@ -430,6 +485,9 @@ public class MasterDataService implements MakaanService {
         }.getType();
 
         MakaanNetworkClient.getInstance().get(ApiConstants.LISTING_INFO_MAP, new JSONGetCallback() {
+
+            @Override
+            public void onError(ResponseError error) {}
 
             @Override
             public void onSuccess(JSONObject responseObject) {
@@ -454,6 +512,9 @@ public class MasterDataService implements MakaanService {
         MakaanNetworkClient.getInstance().get(ApiConstants.DIRECTIONS, new JSONGetCallback() {
 
             @Override
+            public void onError(ResponseError error) {}
+
+            @Override
             public void onSuccess(JSONObject responseObject) {
                 try {
                     JSONArray jsonArray = responseObject.getJSONArray(ResponseConstants.DATA);
@@ -470,6 +531,9 @@ public class MasterDataService implements MakaanService {
 
     public void populateOwnershipTypeList() {
         MakaanNetworkClient.getInstance().get(ApiConstants.OWNERSHIP_TYPE, new JSONGetCallback() {
+
+            @Override
+            public void onError(ResponseError error) {}
 
             @Override
             public void onSuccess(JSONObject responseObject) {

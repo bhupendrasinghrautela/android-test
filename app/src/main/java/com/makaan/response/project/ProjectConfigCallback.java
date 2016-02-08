@@ -6,9 +6,11 @@ import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ResponseConstants;
 import com.makaan.event.project.ProjectConfigEvent;
+import com.makaan.event.project.SimilarProjectGetEvent;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.pojo.ProjectConfigItem;
 import com.makaan.pojo.SellerCard;
+import com.makaan.response.ResponseError;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.user.Company;
 import com.makaan.util.AppBus;
@@ -118,5 +120,12 @@ public class ProjectConfigCallback extends JSONGetCallback {
         }
 
         return projectConfigItems;
+    }
+
+    @Override
+    public void onError(ResponseError error) {
+        ProjectConfigEvent projectConfigEvent = new ProjectConfigEvent();
+        projectConfigEvent.error = error;
+        AppBus.getInstance().post(projectConfigEvent);
     }
 }

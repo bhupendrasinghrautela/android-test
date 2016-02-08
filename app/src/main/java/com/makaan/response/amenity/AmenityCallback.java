@@ -7,6 +7,7 @@ import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ResponseConstants;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.network.JSONGetCallback;
+import com.makaan.response.ResponseError;
 import com.makaan.util.AppBus;
 
 import org.json.JSONArray;
@@ -99,6 +100,13 @@ public class AmenityCallback extends JSONGetCallback {
 
         }
 
+        AppBus.getInstance().post(amenityGetEvent);
+    }
+
+    @Override
+    public void onError(ResponseError error) {
+        AmenityGetEvent amenityGetEvent = new AmenityGetEvent();
+        amenityGetEvent.error = error;
         AppBus.getInstance().post(amenityGetEvent);
     }
 }

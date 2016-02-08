@@ -133,7 +133,7 @@ public class LoginFragment extends Fragment {
 
     @Subscribe
     public void loginResults(UserLoginEvent userLoginEvent){
-        if(userLoginEvent.error!=null && userLoginEvent.error.getMsg().equals("Data null")){
+        if(userLoginEvent.error!=null){
             mOnUserLoginListener.onUserLoginError(userLoginEvent.error);
         }
         else {
