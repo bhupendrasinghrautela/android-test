@@ -329,7 +329,6 @@ public class LocalityFragment extends MakaanBaseFragment {
         bundle.putDouble("secondaryAverage", locality.averageRentPerMonth == null ? 0 : locality.averageRentPerMonth);
         bundle.putInt("secondaryMedian", meadianRental == null ? 0 : meadianRental);
         bundle.putString("localityName", locality.label);
-        bundle.putSerializable("locality",nearbyLocalities);
         newFragment.setArguments(bundle);
         initFragment(R.id.container_nearby_localities_price_trends, newFragment, false);
     }

@@ -118,7 +118,6 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         secondaryAverage = getArguments().getDouble("secondaryAverage");
         secondaryMedian = getArguments().getInt("secondaryMedian");
         localityName = getArguments().getString("localityName");
-        ArrayList<Long> localities = (ArrayList<Long>) getArguments().getSerializable("locality");
 
         titleTv.setText(title);
         if(primaryMedian != 0) {
