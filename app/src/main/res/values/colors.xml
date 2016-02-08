@@ -172,4 +172,6 @@
     <color name="text_color">#444444</color>
 
     <color name="locality_collapsed_toolbar_red">#e71c28</color>
+
+    <color name="grey_unselected">#D0D0D0</color>
 </resources>

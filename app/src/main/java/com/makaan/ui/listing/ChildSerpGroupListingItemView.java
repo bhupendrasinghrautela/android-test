@@ -31,7 +31,7 @@ public class ChildSerpGroupListingItemView extends RelativeLayout implements Vie
     private Integer mUnitId;
 
     private static final String PRICE_RANGE_STRING = "%s | %s";
-    private static final String PROPERTY_ADDRESS_STRING = "%s, %s";
+    private static final String PROPERTY_ADDRESS_STRING = "%s %s";
     private SerpRequestCallback mCallback;
     private GroupListing mItem;
 

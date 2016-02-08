@@ -53,6 +53,10 @@ public class SearchResponseHelper {
             //TODO
             return;
 
+        } else if(searchItem.type.contains(SearchSuggestionType.NEARBY_PROPERTIES.getValue())){
+            //TODO
+            return;
+
         }
 
         // handle overview cases
@@ -158,6 +162,9 @@ public class SearchResponseHelper {
 
         } else if (SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searchResponseItem.type)) {
             return "project";
+
+        } else if (SearchSuggestionType.NEARBY_PROPERTIES.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+            return "";
 
         }
 

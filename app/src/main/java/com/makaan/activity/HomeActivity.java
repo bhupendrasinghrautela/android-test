@@ -95,10 +95,11 @@ public class HomeActivity extends MakaanBaseSearchActivity {
                         Preference.putInt(editor, PreferenceConstants.PREF_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_BUY);
                         break;
                     case R.id.activity_home_property_rent_radio_button:
-                        Preference.putInt(editor, PreferenceConstants.PREF_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_BUY);
+                        Preference.putInt(editor, PreferenceConstants.PREF_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_RENT);
                         mSerpContext = SERP_CONTEXT_RENT;
                         break;
                 }
+                editor.commit();
 
                 setShowSearchBar(true, false);
                 setSearchViewVisibility(true);
