@@ -23,6 +23,7 @@ import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.user.UserLoginEvent;
 import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.pojo.SerpRequest;
+import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.response.wishlist.WishListResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.WishListService;
@@ -33,7 +34,7 @@ import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends MakaanBaseSearchActivity {
     boolean isBottom = true;
     private Toolbar mToolbar;
 
@@ -45,7 +46,6 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
         topBar=(FrameLayout) findViewById(R.id.top_bar);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         tvSearch =(TextView) findViewById(R.id.activity_home_search_text_view);
@@ -60,7 +60,23 @@ public class HomeActivity extends AppCompatActivity {
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, SerpActivity.class);
+
+                SharedPreferences.Editor editor = getSharedPreferences(PreferenceConstants.PREF, MODE_PRIVATE).edit();
+                switch (rgType.getCheckedRadioButtonId()) {
+                    case R.id.activity_home_property_buy_radio_button:
+                        mSerpContext = SERP_CONTEXT_BUY;
+                        Preference.putInt(editor, PreferenceConstants.PREF_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_BUY);
+                        break;
+                    case R.id.activity_home_property_rent_radio_button:
+                        Preference.putInt(editor, PreferenceConstants.PREF_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_BUY);
+                        mSerpContext = SERP_CONTEXT_RENT;
+                        break;
+                }
+
+                setShowSearchBar(true, false);
+                setSearchViewVisibility(true);
+
+                /*Intent intent = new Intent(HomeActivity.this, SerpActivity.class);
                 intent.putExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_HOME);
                 SharedPreferences.Editor editor = getSharedPreferences(PreferenceConstants.PREF, MODE_PRIVATE).edit();
 
@@ -74,7 +90,7 @@ public class HomeActivity extends AppCompatActivity {
                         request.setSerpContext(SerpRequest.CONTEXT_RENT);
                         break;
                 }
-                request.launchSerp(HomeActivity.this, SerpActivity.TYPE_HOME);
+                request.launchSerp(HomeActivity.this, SerpActivity.TYPE_HOME);*/
             }
         });
 
@@ -107,6 +123,8 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         });
+
+        initUi(false);
 
         /*rlSearch = (RelativeLayout) findViewById(R.id.rl_footer);
         rlSearch.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +184,16 @@ public class HomeActivity extends AppCompatActivity {
         WishListResponse response = wishListResultEvent.wishListResponse;
         Toast.makeText(this,"Wish list  - " + response.totalCount, Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    protected int getContentViewId() {
+        return R.layout.activity_home;
+    }
+
+    @Override
+    public boolean isJarvisSupported() {
+        return false;
     }
 
     /*public void slideToTop() {
@@ -259,4 +287,27 @@ public class HomeActivity extends AppCompatActivity {
         // then we need to make use of commitAllowingStateLoss()
         fragmentTransaction.commit();
     }*/
+
+    @Override
+    protected void setSearchViewVisibility(boolean visible) {
+        super.setSearchViewVisibility(visible);
+        if(!visible) {
+            setShowSearchBar(false, false);
+        }
+    }
+
+    @Subscribe
+    public void onResults(SearchResultEvent searchResultEvent) {
+        super.onResults(searchResultEvent);
+    }
+
+    @Override
+    protected boolean needScrollableSearchBar() {
+        return false;
+    }
+
+    @Override
+    protected boolean supportsListing() {
+        return false;
+    }
 }

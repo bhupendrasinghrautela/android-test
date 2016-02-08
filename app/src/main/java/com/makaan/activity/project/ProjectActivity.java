@@ -75,4 +75,14 @@ public class ProjectActivity extends MakaanBaseSearchActivity {
     public void onResults(SearchResultEvent searchResultEvent) {
         super.onResults(searchResultEvent);
     }
+
+    @Override
+    protected boolean needScrollableSearchBar() {
+        return false;
+    }
+
+    @Override
+    protected boolean supportsListing() {
+        return false;
+    }
 }

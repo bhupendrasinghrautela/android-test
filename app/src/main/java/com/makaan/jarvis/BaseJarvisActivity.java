@@ -202,6 +202,8 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     }
 
     protected void setIsJarvisVisibile(boolean visible) {
-        mJarvisHead.setVisibility(visible ? View.VISIBLE : View.GONE);
+        if(mJarvisHead != null) {
+            mJarvisHead.setVisibility(visible ? View.VISIBLE : View.GONE);
+        }
     }
 }

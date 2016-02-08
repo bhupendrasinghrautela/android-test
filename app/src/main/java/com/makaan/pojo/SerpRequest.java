@@ -9,6 +9,7 @@ import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
+import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.response.serp.TermFilter;
 import com.makaan.util.KeyUtil;
@@ -43,6 +44,7 @@ public class SerpRequest implements Parcelable {
     ArrayList<Integer> bathrooms = new ArrayList<Integer>();
     ArrayList<Integer> propertyTypes = new ArrayList<Integer>();
     ArrayList<String> gpIds = new ArrayList<String>();
+    ArrayList<SearchResponseItem> searchItems = new ArrayList<>();
 
     long minBudget = UNEXPECTED_VALUE;
     long maxBudget = UNEXPECTED_VALUE;
@@ -152,6 +154,7 @@ public class SerpRequest implements Parcelable {
         readIntList(source, this.bathrooms);
         readIntList(source, this.propertyTypes);
         readStringList(source, this.gpIds);
+        readParceableList(source, this.searchItems);
 
         setMinBudget(source.readLong());
         setMaxBudget(source.readLong());
@@ -180,6 +183,7 @@ public class SerpRequest implements Parcelable {
         writeIntList(dest, this.bathrooms);
         writeIntList(dest, this.propertyTypes);
         writeStringList(dest, this.gpIds);
+        writeParceableList(dest, this.searchItems, flags);
 
         dest.writeLong(this.minBudget);
         dest.writeLong(this.maxBudget);
@@ -189,6 +193,13 @@ public class SerpRequest implements Parcelable {
 
         dest.writeInt(this.serpContext);
         dest.writeInt(this.sort);
+    }
+
+    private void writeParceableList(Parcel dest, ArrayList<SearchResponseItem> list, int flags) {
+        dest.writeInt(list.size());
+        for(int i = 0; i < list.size(); i++) {
+            dest.writeParcelable(list.get(i), flags);
+        }
     }
 
     private void writeStringList(Parcel dest, ArrayList<String> list) {
@@ -209,6 +220,13 @@ public class SerpRequest implements Parcelable {
         dest.writeInt(list.size());
         for(int i = 0; i < list.size(); i++) {
             dest.writeInt(list.get(i));
+        }
+    }
+
+    private void readParceableList(Parcel source, ArrayList<SearchResponseItem> list) {
+        int size = source.readInt();
+        for(int i = 0; i < size; i++) {
+            list.add(source.<SearchResponseItem>readParcelable(SearchResponseItem.class.getClassLoader()));
         }
     }
 
@@ -472,6 +490,13 @@ public class SerpRequest implements Parcelable {
         }
     }
 
+    public String getGpId() {
+        if(gpIds != null && gpIds.size() == 1) {
+            return gpIds.get(0);
+        }
+        return null;
+    }
+
     public void launchSerp(Context context, int type) {
         Intent intent = new Intent(context, SerpActivity.class);
         intent.putExtra(SerpActivity.REQUEST_TYPE, type);
@@ -486,5 +511,9 @@ public class SerpRequest implements Parcelable {
         }
         context.startActivity(intent);
 
+    }
+
+    public void setSearch(SearchResponseItem item) {
+        searchItems.add(item);
     }
 }

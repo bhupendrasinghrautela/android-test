@@ -36,7 +36,7 @@ import butterknife.Bind;
  * Created by rohitgarg on 1/6/16.
  * Listing Fragment which will house a recycler view to show all the listing as per user's search criteria
  */
-public class SerpListFragment extends MakaanBaseFragment implements PaginatedListView.PaginationListener, PaginatedListView.ScrollListener {
+public class SerpListFragment extends MakaanBaseFragment implements PaginatedListView.PaginationListener{
     private static final String KEY_IS_CHILD_SERP = "is_child_serp";
 
     @Bind(R.id.fragment_listing_recycler_view)
@@ -226,10 +226,5 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         Analytics.with(getActivity()).flush();
 
 
-    }
-
-    @Override
-    public void onScrolled(int dx, int dy, int state) {
-        mSerpRequestCallback.onListScrolled(dx, dy, state);
     }
 }

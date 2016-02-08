@@ -226,10 +226,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 openSearch(true);
 
             } else if (type == SerpActivity.TYPE_GPID) {
-                String gpId = intent.getStringExtra(REQUEST_DATA);
-                if(!TextUtils.isEmpty(gpId)) {
-                    serpRequest(SerpActivity.TYPE_GPID, mSerpSelector, gpId);
-                }
+                parseSerpRequest(intent, SerpActivity.TYPE_GPID);
             } else if (type == SerpActivity.TYPE_PROJECT) {
                 parseSerpRequest(intent, SerpActivity.TYPE_PROJECT);
 
@@ -272,8 +269,12 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         if(intent.hasExtra(REQUEST_DATA)) {
             SerpRequest request = intent.getParcelableExtra(REQUEST_DATA);
             request.applySelector(mSerpSelector, mFilterGroups);
+
+            if(type == TYPE_GPID) {
+                serpRequest(TYPE_GPID, mSerpSelector, request.getGpId());
+            }
         }
-        if(type != TYPE_HOME) {
+        if(type != TYPE_HOME && type != TYPE_GPID) {
             serpRequest(type, mSerpSelector);
         }
     }
@@ -509,6 +510,16 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         super.onResults(searchResultEvent);
     }
 
+    @Override
+    protected boolean needScrollableSearchBar() {
+        return true;
+    }
+
+    @Override
+    protected boolean supportsListing() {
+        return true;
+    }
+
     @Subscribe
     public void onResults(GpByIdEvent gpIdResultEvent) {
         if(gpIdResultEvent == null || gpIdResultEvent.gpDetail == null) {
@@ -726,29 +737,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
                 }
             }
-        }
-    }
-
-    @Override
-    public void onListScrolled(int dx, int dy, int state) {
-        int searchBarHeight = getSearchBarHeight();
-        if(dy > (searchBarHeight / 2) || dy < -(searchBarHeight / 2)) {
-            return;
-        }
-        if(state != RecyclerView.SCROLL_STATE_DRAGGING) {
-            return;
-        }
-        if (scrolledDistance > searchBarHeight && controlsVisible) {
-            setShowSearchBar(false, true);
-            controlsVisible = false;
-            scrolledDistance = 0;
-        } else if (scrolledDistance < -searchBarHeight && !controlsVisible) {
-            setShowSearchBar(true, true);
-            controlsVisible = true;
-            scrolledDistance = 0;
-        }
-        if((controlsVisible && dy>0) || (!controlsVisible && dy<0)) {
-            scrolledDistance += dy;
         }
     }
 
