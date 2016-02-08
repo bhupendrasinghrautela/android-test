@@ -230,6 +230,8 @@
     <string name="remember_me">remember me</string>
     <string name="forgot_pwd">forgot password ?</string>
     <string name="signup">new to makaan? sign up!</string>
+    <string name="enter_username">enter username</string>
+
     <string name="no_network_connection">your network connection seems to be lost. please enable internet connection and try again.</string>
     <string name="weak_network_connection">your network connection seems to be weak, please check and try again.</string>
     <string name= "connect_with" >connect with </string>

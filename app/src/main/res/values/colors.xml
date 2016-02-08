@@ -115,6 +115,7 @@
 
     <!-- Home Activity colors -->
     <color name="activity_home_search_background">#abffffff</color>
+    <color name="login_text_color">#444444</color>
 
     <!-- selected search item values -->
     <color name="selected_search_item_view_background_color">#f7f7f7</color>

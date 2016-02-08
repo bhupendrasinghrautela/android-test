@@ -286,7 +286,11 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
                     (property.measure != null ? property.measure : ""));
             if(property.project != null) {
                 Project project = property.project;
+                if(project.getFormattedSpecifications() !=null && project.getFormattedSpecifications().size()>0)
                 projectSpecificationView.bindView(project.getFormattedSpecifications(), getActivity());
+                else
+                    projectSpecificationView.setVisibility(View.GONE);
+
                 mABoutBuilderLayout.bindView(listingDetail.property.project.builder);
 
                 if(project.locality != null) {

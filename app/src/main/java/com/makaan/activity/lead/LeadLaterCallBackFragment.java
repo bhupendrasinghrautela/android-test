@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +55,11 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
     EditText mEmail;
     @Bind(R.id.leadform_mobileno_edittext)
     EditText mNumber;
+    LeadFormPresenter mLeadFormPresenter;
+    @Bind(R.id.tv_seller_name)
+    TextView mTextViewSellerName;
+    @Bind(R.id.seller_ratingbar)
+    RatingBar mRatingBarSeller;
     private Integer mCountryId;
     private ArrayAdapter<String> mCountryAdapter;
     private List<String> mCountryNames;
@@ -69,6 +75,9 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         initializeCountrySpinner();
         super.onActivityCreated(savedInstanceState);
+        mLeadFormPresenter= LeadFormPresenter.getLeadFormPresenter();
+        mTextViewSellerName.setText(mLeadFormPresenter.getName());
+        mRatingBarSeller.setRating(Float.valueOf(mLeadFormPresenter.getScore()));
     }
 
     @OnClick(R.id.tv_do_call_now)
@@ -100,7 +109,7 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
             mPyrRequest.setName(mName.getText().toString().trim());
             mPyrRequest.setEmail(mEmail.getText().toString().trim());
             mPyrRequest.setPhone(mNumber.getText().toString().trim());
-            mPyrRequest.setMultipleSellerIds(new Long[]{(long) 4353, (long) 64364});
+            mPyrRequest.setMultipleSellerIds(new Long[]{Long.valueOf( mLeadFormPresenter.getId())});
             mPyrRequest.setDomainId(1);
             mPyrRequest.setCountryId(mCountryId);
 

@@ -19,10 +19,12 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.makaan.R;
+import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.user.UserLoginEvent;
 import com.makaan.response.login.OnSignUpSelectedListener;
 import com.makaan.response.login.OnUserLoginListener;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.service.WishListService;
 import com.makaan.service.user.UserLoginService;
 import com.makaan.util.AppBus;
 import com.makaan.util.CommonUtil;
@@ -97,9 +99,18 @@ public class LoginFragment extends Fragment {
         }else if(TextUtils.isEmpty(pwd)) {
             Toast.makeText(getActivity(),getString(R.string.enter_password),Toast.LENGTH_SHORT).show();
         } else {
-           ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
+           /*((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
             ))).loginWithMakaanAccount(email,pwd);
-            mOnUserLoginListener.onUserLoginBegin();
+            mOnUserLoginListener.onUserLoginBegin();*/
+            if (!CookiePreferences.isUserLoggedIn(getActivity())) {
+                UserLoginService userLoginService =
+                        (UserLoginService) MakaanServiceFactory.getInstance().getService(UserLoginService.class);
+                userLoginService.loginWithMakaanAccount(email, pwd);
+            } else {
+                WishListService wishListService =
+                        (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
+                wishListService.get();
+            }
         }
     }
 
