@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/serp_listing_item_seller_background_image_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/serp_listing_item_seller_max_height"
         android:scaleType="centerCrop"/>
     <View
         android:layout_width="match_parent"

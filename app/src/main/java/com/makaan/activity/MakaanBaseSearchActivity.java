@@ -252,8 +252,10 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
                             @Override
                             public void onAnimationEnd(Animator animation) {
-                                mSearchLayoutFrameLayout.setVisibility(View.GONE);
-                                ((ViewGroup)mSearchLayoutFrameLayout.getParent()).setTranslationY(0);
+                                if(mSearchLayoutFrameLayout != null) {
+                                    mSearchLayoutFrameLayout.setVisibility(View.GONE);
+                                    ((ViewGroup) mSearchLayoutFrameLayout.getParent()).setTranslationY(0);
+                                }
                             }
 
                             @Override
@@ -276,24 +278,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
         if(supportsListing()  && (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)
                 || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchResponseItem.type))) {
-            // if adapter doesn't have any item, then it means previous search was either project, city, builder etc
-            // or there is no earlier search present, so just clear selected search array
-            if(mSelectedSearchAdapter.getItemCount() == 0) {
-                mSelectedSearches.clear();
-            }
-            // add selected search result to arraylist
-            mSelectedSearches.add(searchResponseItem);
-            // as it is locality, show it in the selected search wrap view
-            mSelectedSearchAdapter.setData(mSelectedSearches);
+            addSearchInWrapLayout(searchResponseItem);
 
-            // if there is still room for more localities to be added, then show hint accordingly
-            // or disable the edit text
-            if(mSelectedSearches.size() < mMaxSearchClubCount) {
-                mSearchEditText.setHint(this.getResources().getString(R.string.search_locality_hint));
-            } else {
-                mSearchEditText.setHint("");
-                mSearchEditText.setEnabled(false);
-            }
         } else {
             // if selected search is not locality, then clear the selected search array list
             mSelectedSearches.clear();
@@ -326,13 +312,34 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         }*/
     }
 
+    private void addSearchInWrapLayout(SearchResponseItem searchResponseItem) {
+        // if adapter doesn't have any item, then it means previous search was either project, city, builder etc
+        // or there is no earlier search present, so just clear selected search array
+        if(mSelectedSearchAdapter.getItemCount() == 0) {
+            mSelectedSearches.clear();
+        }
+        // add selected search result to arraylist
+        mSelectedSearches.add(searchResponseItem);
+        // as it is locality, show it in the selected search wrap view
+        mSelectedSearchAdapter.setData(mSelectedSearches);
+
+        // if there is still room for more localities to be added, then show hint accordingly
+        // or disable the edit text
+        if(mSelectedSearches.size() < mMaxSearchClubCount) {
+            mSearchEditText.setHint(this.getResources().getString(R.string.search_locality_hint));
+        } else {
+            mSearchEditText.setHint("");
+            mSearchEditText.setEnabled(false);
+        }
+    }
+
     private void handleSearch() {
 
         // hide the keypad
         showKeypad(mSearchEditText, false);
 
         // TODO need to handle all cases
-        SearchResponseHelper.resolveSearch(mSelectedSearches, this);
+        SearchResponseHelper.resolveSearch(mSelectedSearches, this, supportsListing());
 
         // clear the search adapter to show empty results
         mSearchAdapter.clear();
@@ -446,8 +453,12 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
                             @Override
                             public void onAnimationEnd(Animator animation) {
-                                mDeleteButton.setVisibility(View.VISIBLE);
-                                mSearchImageView.setVisibility(View.GONE);
+                                if(mDeleteButton != null) {
+                                    mDeleteButton.setVisibility(View.VISIBLE);
+                                }
+                                if(mSearchImageView != null) {
+                                    mSearchImageView.setVisibility(View.GONE);
+                                }
                                 if(hintText != null) {
                                     mSearchEditText.setHint(hintText);
                                 }
@@ -688,6 +699,15 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             params.setScrollFlags(0);
         }
         mSearchLayoutFrameLayout.setLayoutParams(params);
+    }
+
+    protected void applySearch(ArrayList<SearchResponseItem> searches) {
+        if((mSelectedSearches == null || mSelectedSearches.size() == 0)
+                && (searches != null && searches.size() > 0)) {
+            for(SearchResponseItem item : searches) {
+                addSearchInWrapLayout(item);
+            }
+        }
     }
 
     protected abstract boolean needScrollableSearchBar();

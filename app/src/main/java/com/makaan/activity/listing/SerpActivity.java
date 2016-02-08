@@ -5,8 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -15,7 +13,6 @@ import android.widget.TextView;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.activity.lead.LeadFormActivity;
@@ -37,6 +34,7 @@ import com.makaan.pojo.SerpRequest;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
+import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.service.BuilderService;
@@ -225,7 +223,15 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
                 openSearch(true);
 
+            } else if (type == SerpActivity.TYPE_CITY) {
+                parseSerpRequest(intent, SerpActivity.TYPE_CITY);
             } else if (type == SerpActivity.TYPE_GPID) {
+                mSerpSelector.removeTerm("builderId");
+                mSerpSelector.removeTerm("projectId");
+                mSerpSelector.removeTerm("localityId");
+                mSerpSelector.removeTerm("cityId");
+                mSerpSelector.removeTerm("suburbId");
+                mSerpSelector.removeTerm("listingCompanyId");
                 parseSerpRequest(intent, SerpActivity.TYPE_GPID);
             } else if (type == SerpActivity.TYPE_PROJECT) {
                 parseSerpRequest(intent, SerpActivity.TYPE_PROJECT);
@@ -238,7 +244,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 mSerpSelector.removeTerm("suburbId");
                 mSerpSelector.removeTerm("localityOrSuburbId");
 
-                parseSerpRequest(intent, SerpActivity.TYPE_PROJECT);
+                parseSerpRequest(intent, SerpActivity.TYPE_SEARCH);
 
             } else if (type == SerpActivity.TYPE_UNKNOWN) {
                 // TODO check whether it should be used or not
@@ -272,6 +278,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
             if(type == TYPE_GPID) {
                 serpRequest(TYPE_GPID, mSerpSelector, request.getGpId());
+            } else if(type == TYPE_SEARCH) {
+                applySearch(request.getSearches());
             }
         }
         if(type != TYPE_HOME && type != TYPE_GPID) {

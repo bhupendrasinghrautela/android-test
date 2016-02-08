@@ -29,7 +29,7 @@ public class SearchResponseHelper {
 
     //WIP
 
-    public static void resolveSearch(ArrayList<SearchResponseItem> searchResponseArrayList, Context context){
+    public static void resolveSearch(ArrayList<SearchResponseItem> searchResponseArrayList, Context context, boolean supportsListing){
 
         if (searchResponseArrayList == null || searchResponseArrayList.size() == 0) {
             return;
@@ -109,7 +109,9 @@ public class SearchResponseHelper {
                 } else if(KeyUtil.SUBURB_ID.equalsIgnoreCase(searchResultType.get(item.type).key)) {
                     request.setSuburbId(Long.valueOf(item.entityId));
                 }
-                request.setSearch(item);
+                if(!supportsListing) {
+                    request.setSearch(item);
+                }
             }
             // TODO cityId is not coming in search results
 //            MakaanBuyerApplication.mSerpSelector.term("cityId", String.valueOf(searchItem.cityId));
