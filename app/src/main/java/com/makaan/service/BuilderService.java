@@ -6,6 +6,7 @@ import com.makaan.event.builder.BuilderByIdEvent;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
+import com.makaan.response.ResponseError;
 import com.makaan.response.project.Builder;
 import com.makaan.util.AppBus;
 
@@ -32,6 +33,13 @@ public class BuilderService implements  MakaanService {
             Type builderType = new TypeToken<Builder>() {}.getType();
 
             MakaanNetworkClient.getInstance().get(builderUrl, builderType, new ObjectGetCallback() {
+                @Override
+                public void onError(ResponseError error) {
+                    BuilderByIdEvent builderByIdEvent = new BuilderByIdEvent();
+                    builderByIdEvent.error = error;
+                    AppBus.getInstance().post(builderByIdEvent);
+                }
+
                 @Override
                 public void onSuccess(Object responseObject) {
                     Builder builder = (Builder) responseObject;

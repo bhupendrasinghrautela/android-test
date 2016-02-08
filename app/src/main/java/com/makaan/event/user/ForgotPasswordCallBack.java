@@ -17,25 +17,12 @@ public class ForgotPasswordCallBack extends StringRequestCallback {
     public void onSuccess(String response) {
         //Log.e(TAG, response);
         BaseResponse baseResponse= (BaseResponse) JsonParser.parseJson(response, BaseResponse.class);
-        if(baseResponse.getStatusCode().equals("2XX")){
-            ResponseError error = new ResponseError();
-            error.setMsg("successful");
-            baseResponse.setError(error);
-        }
-        else{
-            ResponseError error = new ResponseError();
-            error.setMsg("error");
-            baseResponse.setError(error);
-        }
         AppBus.getInstance().post(baseResponse);
     }
 
     @Override
-    protected void onError() {
-        super.onError();
+    public void onError(ResponseError error) {
         BaseResponse baseResponse= new BaseResponse();
-        ResponseError error = new ResponseError();
-        error.setMsg("error");
         baseResponse.setError(error);
         AppBus.getInstance().post(baseResponse);
     }

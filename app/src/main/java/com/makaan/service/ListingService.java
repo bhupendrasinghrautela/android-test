@@ -8,6 +8,7 @@ import com.makaan.event.serp.GroupSerpCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
+import com.makaan.response.ResponseError;
 import com.makaan.response.listing.ListingOtherSellersCallback;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.util.AppBus;
@@ -83,6 +84,13 @@ public class ListingService implements MakaanService {
 
             MakaanNetworkClient.getInstance().get(listingDetailUrl, listingDetailType, new ObjectGetCallback() {
                 @Override
+                public void onError(ResponseError error) {
+                    ListingByIdGetEvent listingByIdGetEvent = new ListingByIdGetEvent();
+                    listingByIdGetEvent.error = error;
+                    AppBus.getInstance().post(listingByIdGetEvent);
+                }
+
+                @Override
                 public void onSuccess(Object responseObject) {
                     ListingDetail listingDetail = (ListingDetail) responseObject;
 
@@ -106,6 +114,13 @@ public class ListingService implements MakaanService {
             }.getType();
 
             MakaanNetworkClient.getInstance().get(listingDetailUrl, listingDetailType, new ObjectGetCallback() {
+                @Override
+                public void onError(ResponseError error) {
+                    ListingByIdGetEvent listingByIdGetEvent = new ListingByIdGetEvent();
+                    listingByIdGetEvent.error = error;
+                    AppBus.getInstance().post(listingByIdGetEvent);
+                }
+
                 @Override
                 public void onSuccess(Object responseObject) {
                     ListingDetail listingDetail = (ListingDetail) responseObject;

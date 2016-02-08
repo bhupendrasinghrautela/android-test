@@ -7,6 +7,7 @@ import com.makaan.event.project.SimilarProjectGetEvent;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
+import com.makaan.response.ResponseError;
 import com.makaan.response.project.Project;
 import com.makaan.response.project.ProjectConfigCallback;
 import com.makaan.util.AppBus;
@@ -34,7 +35,14 @@ public class ProjectService implements MakaanService {
             }.getType();
 
             MakaanNetworkClient.getInstance().get(projectUrl, projectType, new ObjectGetCallback() {
-                @Override
+                        @Override
+                        public void onError(ResponseError error) {
+                            ProjectByIdEvent projectByIdEvent = new ProjectByIdEvent();
+                            projectByIdEvent.error = error;
+                            AppBus.getInstance().post(projectByIdEvent);
+                        }
+
+                        @Override
                 public void onSuccess(Object responseObject) {
                     Project project = (Project) responseObject;
                     project.getFormattedSpecifications();
@@ -65,6 +73,13 @@ public class ProjectService implements MakaanService {
 
 
             MakaanNetworkClient.getInstance().get(similarProjectUrl.toString(), projectListType, new ObjectGetCallback() {
+                @Override
+                public void onError(ResponseError error) {
+                    SimilarProjectGetEvent similarProjectGetEvent = new SimilarProjectGetEvent();
+                    similarProjectGetEvent.error = error;
+                    AppBus.getInstance().post(similarProjectGetEvent);
+                }
+
                 @Override
                 @SuppressWarnings("unchecked")
                 public void onSuccess(Object responseObject) {

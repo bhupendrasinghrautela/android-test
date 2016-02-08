@@ -172,6 +172,9 @@ public class LocalityFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(AmenityGetEvent amenityGetEvent) {
+        if(null==amenityGetEvent || null==amenityGetEvent.amenityClusters){
+            return;
+        }
         mAmenityClusters.clear();
         for(AmenityCluster cluster : amenityGetEvent.amenityClusters){
             if(null!=cluster && null!=cluster.cluster && cluster.cluster.size()>0){

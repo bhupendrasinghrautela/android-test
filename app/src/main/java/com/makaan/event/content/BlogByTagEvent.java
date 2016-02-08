@@ -1,5 +1,6 @@
 package com.makaan.event.content;
 
+import com.makaan.response.BaseEvent;
 import com.makaan.response.content.BlogItem;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by vaibhav on 25/01/16.
  */
-public class BlogByTagEvent {
+public class BlogByTagEvent extends BaseEvent {
 
     public String  tag;
     public ArrayList<BlogItem> blogItems;

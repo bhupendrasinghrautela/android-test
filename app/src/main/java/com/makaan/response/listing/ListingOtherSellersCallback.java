@@ -8,6 +8,7 @@ import com.makaan.constants.ResponseConstants;
 import com.makaan.event.listing.OtherSellersGetEvent;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.pojo.SellerCard;
+import com.makaan.response.ResponseError;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.user.Company;
 import com.makaan.util.AppBus;
@@ -78,5 +79,12 @@ public class ListingOtherSellersCallback extends JSONGetCallback {
         } catch (JSONException e) {
             Log.e(TAG, "Error parsing project config", e);
         }
+    }
+
+    @Override
+    public void onError(ResponseError error) {
+        OtherSellersGetEvent otherSellersGetEvent = new OtherSellersGetEvent();
+        otherSellersGetEvent.error = error;
+        AppBus.getInstance().post(otherSellersGetEvent);
     }
 }

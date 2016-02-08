@@ -5,6 +5,7 @@ import com.makaan.constants.ApiConstants;
 import com.makaan.event.content.BlogByTagEvent;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
+import com.makaan.response.ResponseError;
 import com.makaan.response.content.BlogItem;
 import com.makaan.util.AppBus;
 
@@ -27,6 +28,13 @@ public class BlogService implements MakaanService {
         Type type = new TypeToken<ArrayList<BlogItem>>() {
         }.getType();
         MakaanNetworkClient.getInstance().get(blogUrl, type, new ObjectGetCallback() {
+            @Override
+            public void onError(ResponseError error) {
+                BlogByTagEvent blogByTagEvent = new BlogByTagEvent();
+                blogByTagEvent.error = error;
+                AppBus.getInstance().post(blogByTagEvent);
+            }
+
             @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {

@@ -22,7 +22,7 @@ public class UserLoginCallback extends StringRequestCallback {
         if(userResponse == null || userResponse.getData() == null ) {
 
             ResponseError error = new ResponseError();
-            error.setMsg("Data null");
+            error.msg = "There seems to be some error, please try later.";
             userLoginEvent.error = error;
 
         }else {
@@ -31,6 +31,13 @@ public class UserLoginCallback extends StringRequestCallback {
             userLoginEvent.userResponse = userResponse;
         }
 
+        AppBus.getInstance().post(userLoginEvent);
+    }
+
+    @Override
+    public void onError(ResponseError error) {
+        UserLoginEvent userLoginEvent = new UserLoginEvent();
+        userLoginEvent.error = error;
         AppBus.getInstance().post(userLoginEvent);
     }
 }

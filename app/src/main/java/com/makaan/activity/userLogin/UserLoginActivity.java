@@ -63,8 +63,7 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
     public void onUserLoginError(ResponseError error) {
         if(mProgressDialog !=null)
         mProgressDialog.dismissDialog();
-        String msg = VolleyErrorParser.getMessage(error.getError(), this);
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,error.msg,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -94,8 +93,7 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
     public void onUserRegistrationError(ResponseError error) {
         if(mProgressDialog !=null)
             mProgressDialog.dismissDialog();
-        String msg = VolleyErrorParser.getMessage(error.getError(), this);
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,error.msg,Toast.LENGTH_SHORT).show();
     }
 
     @Override
