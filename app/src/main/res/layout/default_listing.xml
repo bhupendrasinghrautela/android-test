@@ -149,7 +149,7 @@
                 android:textColor="@color/serp_listing_card_default_text_color"
                 android:textSize="@dimen/serp_listing_card_property_info_text_view_text_size"
                 android:textAllCaps="false"
-                android:typeface="monospace" />
+                android:typeface="serif" />
 
             <View
                 android:layout_width="match_parent"
@@ -395,10 +395,9 @@
                 android:layout_marginEnd="@dimen/serp_listing_card_assist_button_right_margin"
                 android:layout_marginRight="@dimen/serp_listing_card_assist_button_right_margin"
                 android:layout_marginTop="@dimen/serp_listing_card_assist_button_top_margin"
-                android:background="@drawable/assist"
+                android:background="@drawable/m_badge"
                 android:paddingLeft="@dimen/serp_listing_card_assist_button_left_padding"
                 android:paddingStart="@dimen/serp_listing_card_assist_button_left_padding"
-                android:text="@string/assist"
                 android:textAllCaps="false"
                 android:textColor="@color/serp_listing_card_default_text_color"
                 android:textSize="@dimen/serp_listing_card_assist_button_text_size"

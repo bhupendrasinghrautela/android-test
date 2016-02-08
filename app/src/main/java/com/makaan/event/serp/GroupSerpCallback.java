@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ResponseConstants;
 import com.makaan.network.JSONGetCallback;
+import com.makaan.response.ResponseError;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.GroupListingData;
 import com.makaan.response.listing.Listing;
@@ -67,4 +68,10 @@ public class GroupSerpCallback extends JSONGetCallback {
     }
 
 
+    @Override
+    public void onError(ResponseError error) {
+        GroupSerpGetEvent groupSerpGetEvent = new GroupSerpGetEvent();
+        groupSerpGetEvent.error = error;
+        AppBus.getInstance().post(groupSerpGetEvent);
+    }
 }

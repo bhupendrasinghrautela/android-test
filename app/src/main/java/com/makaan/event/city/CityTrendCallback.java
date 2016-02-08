@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ResponseConstants;
 import com.makaan.network.JSONGetCallback;
+import com.makaan.response.ResponseError;
 import com.makaan.response.city.CityTrendData;
 import com.makaan.util.AppBus;
 
@@ -59,5 +60,14 @@ public class CityTrendCallback extends JSONGetCallback {
         } catch (Exception e) {
             Log.e(TAG, "Error parsing city Trend Data", e);
         }
+    }
+
+    @Override
+    public void onError(ResponseError error) {
+
+        CityTrendEvent cityTrendDataList = new CityTrendEvent();
+        cityTrendDataList.error = error;
+        AppBus.getInstance().post(cityTrendDataList);
+
     }
 }

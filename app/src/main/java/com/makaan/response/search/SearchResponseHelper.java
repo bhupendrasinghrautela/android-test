@@ -29,7 +29,7 @@ public class SearchResponseHelper {
 
     //WIP
 
-    public static void resolveSearch(ArrayList<SearchResponseItem> searchResponseArrayList, Context context){
+    public static void resolveSearch(ArrayList<SearchResponseItem> searchResponseArrayList, Context context, boolean supportsListing){
 
         if (searchResponseArrayList == null || searchResponseArrayList.size() == 0) {
             return;
@@ -42,7 +42,7 @@ public class SearchResponseHelper {
         }
 
         if(searchItem.type.contains(SearchSuggestionType.SUGGESTION.getValue())){
-            ((SerpRequestCallback)context).serpRequest(SerpActivity.TYPE_SUGGESTION, searchItem.redirectUrlFilters);
+            //((SerpRequestCallback)context).serpRequest(SerpActivity.TYPE_SUGGESTION, searchItem.redirectUrlFilters);
             //TODO
             return;
         } else if(searchItem.type.contains(SearchSuggestionType.PROJECT_SUGGESTION.getValue())){
@@ -108,6 +108,9 @@ public class SearchResponseHelper {
                     request.setLocalityId(Long.valueOf(item.entityId));
                 } else if(KeyUtil.SUBURB_ID.equalsIgnoreCase(searchResultType.get(item.type).key)) {
                     request.setSuburbId(Long.valueOf(item.entityId));
+                }
+                if(!supportsListing) {
+                    request.setSearch(item);
                 }
             }
             // TODO cityId is not coming in search results

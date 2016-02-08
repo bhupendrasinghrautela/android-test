@@ -10,8 +10,12 @@
     <ImageView
         android:id="@+id/serp_listing_item_seller_background_image_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/serp_listing_item_seller_max_height"
         android:scaleType="centerCrop"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +32,7 @@
             android:src="@drawable/builder"
             app:border="true"
             app:border_color="@color/white"
-            app:border_width="1dp"
+            app:border_width="1px"
             />
 
         <TextView

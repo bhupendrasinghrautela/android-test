@@ -76,6 +76,16 @@ public class PropertyActivity extends MakaanBaseSearchActivity implements ShowMa
         super.onResults(searchResultEvent);
     }
 
+    @Override
+    protected boolean needScrollableSearchBar() {
+        return false;
+    }
+
+    @Override
+    protected boolean supportsListing() {
+        return false;
+    }
+
     @Subscribe
     public void onResults(AmenityGetEvent amenityGetEvent) {
         if(amenityGetEvent.amenityClusters == null){
@@ -92,7 +102,8 @@ public class PropertyActivity extends MakaanBaseSearchActivity implements ShowMa
     @Override
     public void showMapFragment() {
         mNeighborhoodMapFragment = new NeighborhoodMapFragment();
+        mNeighborhoodMapFragment.setData(mAmenityGetEvent.amenityClusters);
         initFragment(R.id.container, mNeighborhoodMapFragment, true);
-        produceAmenityEvent();
+        //produceAmenityEvent();
     }
 }

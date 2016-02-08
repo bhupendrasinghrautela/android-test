@@ -25,7 +25,6 @@
             android:id="@+id/activity_serp_similar_properties_frame_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#f00"
             android:visibility="gone" />
     </FrameLayout>
 

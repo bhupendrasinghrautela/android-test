@@ -2,7 +2,7 @@
   "data": {
     "filters": [
       {
-        "displayName": "Beds",
+        "displayName": "bedroom",
         "internalName": "i_beds",
         "displayOrder": "1",
         "layoutType": "1",
@@ -44,7 +44,7 @@
         ]
       },
       {
-        "displayName": "Budget",
+        "displayName": "budget",
         "internalName": "i_budget",
         "displayOrder": "2",
         "layoutType": "2",
@@ -65,7 +65,7 @@
         ]
       },
       {
-        "displayName": "Property Type",
+        "displayName": "property type",
         "internalName": "i_property_type",
         "displayOrder": "3",
         "layoutType": "3",
@@ -135,7 +135,7 @@
         ]
       },
       {
-        "displayName": "Bathroom",
+        "displayName": "bathroom",
         "internalName": "i_bathroom",
         "displayOrder": "4",
         "layoutType": "1",

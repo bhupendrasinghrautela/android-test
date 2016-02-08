@@ -12,6 +12,7 @@
         android:gravity="center"
         android:layout_marginTop="@dimen/property_page_amenities_margin_top"
         android:text="amenities"
+        android:typeface="sans"
         android:textColor="@color/amenity_title_color"
         android:textSize="@dimen/property_page_average_text_size"
         android:layout_marginBottom="@dimen/property_page_amenities_margin_bottom"

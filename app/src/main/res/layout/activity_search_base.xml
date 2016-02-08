@@ -7,38 +7,56 @@
     android:layout_height="match_parent"
     android:foreground="@color/black">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/serp_listing_background"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="com.makaan.MainActivity">
+        android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/activity_search_base_search_frame_layout"
+        <android.support.design.widget.CoordinatorLayout
+
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <include layout="@layout/activity_search_base_layout_search_bar" />
-        </FrameLayout>
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/main.appbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <FrameLayout
-            android:id="@+id/activity_search_base_content_frame_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/activity_search_base_search_frame_layout" />
 
-        <FrameLayout
-            android:id="@+id/activity_search_base_search_results_frame_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/activity_search_base_search_frame_layout"
-            android:background="@color/serp_listing_background"
-            android:visibility="gone">
+                <FrameLayout
+                    android:id="@+id/activity_search_base_search_frame_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_collapseMode="pin"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlways">
 
-            <include layout="@layout/activity_search_base_layout_search_results" />
-        </FrameLayout>
-    </RelativeLayout>
+                    <include layout="@layout/activity_search_base_layout_search_bar" />
+                </FrameLayout>
+
+            </android.support.design.widget.AppBarLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <FrameLayout
+                    android:id="@+id/activity_search_base_content_frame_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <FrameLayout
+                    android:id="@+id/activity_search_base_search_results_frame_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/serp_listing_background"
+                    android:visibility="gone">
+
+                    <include layout="@layout/activity_search_base_layout_search_results" />
+                </FrameLayout>
+            </FrameLayout>
+
+        </android.support.design.widget.CoordinatorLayout>
+
+    </LinearLayout>
 </FrameLayout>

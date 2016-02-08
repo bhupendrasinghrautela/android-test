@@ -76,10 +76,29 @@ public class MultiSelectionSpinner extends Spinner implements  OnMultiChoiceClic
     @Override
     public boolean performClick() {
         builder = new AlertDialog.Builder(getContext());
+        builder.setCancelable(false);
         builder.setMultiChoiceItems(_items, mSelection, this);
+        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(displayString == null || !displayString.equals(buildSelectedItemString())){
+                    if(listener !=null){
+                        listener.onSelectionChanged();
+                    }
+                }
+            }
+        });
+        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                simple_adapter.clear();
+                int [] clear = new int[0];
+                setSelection(clear);
+            }
+        });
         AlertDialog d = builder.create();
         d.show();
-        d.setOnDismissListener(new OnDismissListener() {
+        /*d.setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
                 if(displayString == null || !displayString.equals(buildSelectedItemString())){
@@ -88,7 +107,7 @@ public class MultiSelectionSpinner extends Spinner implements  OnMultiChoiceClic
                     }
                 }
             }
-        });
+        });*/
         return true;
     }
 

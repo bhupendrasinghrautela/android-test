@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken;
 import com.makaan.constants.ApiConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
+import com.makaan.response.ResponseError;
 import com.makaan.response.user.CompanyUser;
 
 import java.lang.reflect.Type;
@@ -34,6 +35,11 @@ public class UserService implements  MakaanService{
         Type companyUserListType = new TypeToken<ArrayList<CompanyUser>>() {
         }.getType();
         MakaanNetworkClient.getInstance().get(url.toString(), companyUserListType, new ObjectGetCallback() {
+            @Override
+            public void onError(ResponseError error) {
+                //TODO Handle error
+            }
+
             @Override
             public void onSuccess(Object responseObject) {
                 ArrayList<CompanyUser> companyUsers = (ArrayList<CompanyUser>) responseObject;

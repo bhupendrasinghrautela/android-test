@@ -23,6 +23,8 @@ import com.makaan.ui.view.BaseView;
 import com.makaan.ui.view.CustomRatingBar;
 import com.pkmmte.view.CircularImageView;
 
+import org.w3c.dom.Text;
+
 import java.util.Random;
 
 import butterknife.Bind;
@@ -119,6 +121,9 @@ public class SellerOverviewCard extends BaseView<Message> {
     }
 
     private void showTextAsImage(String sellerName) {
+        if(TextUtils.isEmpty(sellerName)){
+            return;
+        }
         mSellerLogoTextView.setText(String.valueOf(sellerName.charAt(0)));
         mSellerLogoTextView.setVisibility(View.VISIBLE);
         mSellerImageView.setVisibility(View.GONE);

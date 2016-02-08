@@ -34,6 +34,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
     @Subscribe
     public void onResult(OnSeeOnMapClicked onSeeOnMapClicked){
         mNeighborhoodMapFragment = new NeighborhoodMapFragment();
+        mNeighborhoodMapFragment.setData(onSeeOnMapClicked.amenityClusters);
         initFragment(R.id.container, mNeighborhoodMapFragment, true);
     }
 

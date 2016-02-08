@@ -35,7 +35,7 @@
                 android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_top"
                 android:layout_marginRight="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_right"
                 android:layout_marginEnd="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_right"
-                android:src="@drawable/profile_pic"
+                android:src="@drawable/edit_avatar"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
                 <!--android:src="@color/app_grey" />-->
@@ -63,7 +63,10 @@
                 android:layout_toLeftOf="@id/activity_search_base_layout_search_bar_search_image_button"
                 android:layout_toStartOf="@id/activity_search_base_layout_search_bar_search_image_button"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"/>
+                android:layout_alignParentStart="true"
+                android:singleLine="true"
+                android:textAllCaps="false"
+                android:typeface="serif"/>
 
         </RelativeLayout>
         <!-- TODO search view style not present on zeplin -->

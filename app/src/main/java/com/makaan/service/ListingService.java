@@ -8,6 +8,7 @@ import com.makaan.event.serp.GroupSerpCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
+import com.makaan.response.ResponseError;
 import com.makaan.response.listing.ListingOtherSellersCallback;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.util.AppBus;
@@ -75,13 +76,20 @@ public class ListingService implements MakaanService {
 
         if (null != listingId) {
             Selector listingDetailSelector = new Selector();
-            listingDetailSelector.fields(new String[]{"companySeller", "avgPriceRisePercentage", "neighbourhoodAmenitiesIds", "contactNumber", "registered", "contactNumbers", "seller", "company", "user", "imageURL", "cityId", "latitude", "longitude", "percentageCompletionOnTime", "priceAllInclusive", "type", "altText", "title", "imageType", "absolutePath", "imageTypeId", "URL", "percentageCompletionOnTime", "projectStatusCount", "tenantType", "noOfOpenSides", "studyRoom", "poojaRoom", "servantRoom", "balcony", "bedrooms", "bathrooms", "possessionDate", "facingId", "maxConstructionCompletionDate", "minConstructionCompletionDate", "unitName", "unitType", "livabilityScore", "url", "availability", "size", "unitTypeId", "percentageCompletionOnTime", "establishedDate", "description", "poojaRoom", "servantRoom", "mainEntryRoadWidth", "tenantTypes", "derivedAvailability", "projectStatus", "listingCategory", "id", "label", "name", "floor", "securityDeposit", "propertyId", "images", "furnished", "ownershipTypeId", "viewDirections", "viewType", "bookingAmount", "pricePerUnitArea", "price", "currentListingPrice", "totalFloors", "project", "property", "builder", "locality", "suburb", "city", "specifications", "furnishings", "amenity", "projectAmenityId", "projectId", "amenityDisplayName", "listingAmenities", "amenityMaster", "verified", "amenityId", "amenityName", "abbreviation", "masterSpecification", "masterSpecificationCategory", "masterSpecClassName", "masterSpecId", "masterSpecCatId", "masterSpecCatDisplayName", "masterSpecParentCat", "masterSpecParentCatId", "masterSpecParentDisplayName", "masterFurnishingId", "masterFurnishing", "statusId", "sellerId", "ownerId", "seller", "rating", "assist", "fullName", "carParkingType", "noOfCarParks", "negotiable"});
+            listingDetailSelector.fields(new String[]{"companySeller", "avgPriceRisePercentage","localityId", "neighbourhoodAmenitiesIds", "contactNumber", "registered", "contactNumbers", "seller", "company", "user", "imageURL", "cityId", "latitude", "longitude", "percentageCompletionOnTime", "priceAllInclusive", "type", "altText", "title", "imageType", "absolutePath", "imageTypeId", "URL", "percentageCompletionOnTime", "projectStatusCount", "tenantType", "noOfOpenSides", "studyRoom", "poojaRoom", "servantRoom", "balcony", "bedrooms", "bathrooms", "possessionDate", "facingId", "maxConstructionCompletionDate", "minConstructionCompletionDate", "unitName", "unitType", "livabilityScore", "url", "availability", "size", "unitTypeId", "percentageCompletionOnTime", "establishedDate", "description", "poojaRoom", "servantRoom", "mainEntryRoadWidth", "tenantTypes", "derivedAvailability", "projectStatus", "listingCategory", "id", "label", "name", "floor", "securityDeposit", "propertyId", "images", "furnished", "ownershipTypeId", "viewDirections", "viewType", "bookingAmount", "pricePerUnitArea", "price", "currentListingPrice", "totalFloors", "project", "property", "builder", "locality", "suburb", "city", "specifications", "furnishings", "amenity", "projectAmenityId", "projectId", "amenityDisplayName", "listingAmenities", "amenityMaster", "verified", "amenityId", "amenityName", "abbreviation", "masterSpecification", "masterSpecificationCategory", "masterSpecClassName", "masterSpecId", "masterSpecCatId", "masterSpecCatDisplayName", "masterSpecParentCat", "masterSpecParentCatId", "masterSpecParentDisplayName", "masterFurnishingId", "masterFurnishing", "statusId", "sellerId", "ownerId", "seller", "rating", "assist", "fullName", "carParkingType", "noOfCarParks", "negotiable"});
 
             String listingDetailUrl = ApiConstants.LISTING.concat(listingId.toString()).concat("?").concat(listingDetailSelector.build());
             Type listingDetailType = new TypeToken<ListingDetail>() {
             }.getType();
 
             MakaanNetworkClient.getInstance().get(listingDetailUrl, listingDetailType, new ObjectGetCallback() {
+                @Override
+                public void onError(ResponseError error) {
+                    ListingByIdGetEvent listingByIdGetEvent = new ListingByIdGetEvent();
+                    listingByIdGetEvent.error = error;
+                    AppBus.getInstance().post(listingByIdGetEvent);
+                }
+
                 @Override
                 public void onSuccess(Object responseObject) {
                     ListingDetail listingDetail = (ListingDetail) responseObject;
@@ -106,6 +114,13 @@ public class ListingService implements MakaanService {
             }.getType();
 
             MakaanNetworkClient.getInstance().get(listingDetailUrl, listingDetailType, new ObjectGetCallback() {
+                @Override
+                public void onError(ResponseError error) {
+                    ListingByIdGetEvent listingByIdGetEvent = new ListingByIdGetEvent();
+                    listingByIdGetEvent.error = error;
+                    AppBus.getInstance().post(listingByIdGetEvent);
+                }
+
                 @Override
                 public void onSuccess(Object responseObject) {
                     ListingDetail listingDetail = (ListingDetail) responseObject;

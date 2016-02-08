@@ -113,18 +113,25 @@ public class SellerListingView extends AbstractListingView {
     @Subscribe
     public void onResults(SellerByIdEvent sellerByIdEvent) {
         CompanySeller seller = sellerByIdEvent.seller;
-        mSellerNameTextView.setText(seller.sellers.get(0).companyUser.user.fullName);
+        if(seller.sellers != null && seller.sellers.size() > 0) {
+            mSellerNameTextView.setText(seller.sellers.get(0).companyUser.user.fullName);
+            mSellerOperatesInTextView.setText(String.format("operates in - %d localities", seller.sellers.get(0).companyUser.sellerListingData.localityCount));
+
+            mSellerPropertiesCountTextView.setText(String.format("%d properties",
+                    seller.sellers.get(0).companyUser.sellerListingData.categoryWiseCount.get(0).listingCount));
+
+            mSellerProjectCountTextView.setText(String.format("%d projects", seller.sellers.get(0).companyUser.sellerListingData.projectCount));
+        }
         mSellerCompanyNameTextView.setText(seller.name);
 
-        mSellerOperatesInTextView.setText(String.format("operates in - %d localities", seller.sellers.get(0).companyUser.sellerListingData.localityCount));
-        mSellerExperienceTextView.setText(StringUtil.getAgeFromTimeStamp(seller.activeSince, Calendar.YEAR));
+        if(seller.activeSince != null) {
+            mSellerExperienceTextView.setVisibility(View.VISIBLE);
+            mSellerExperienceTextView.setText(StringUtil.getAgeFromTimeStamp(seller.activeSince, Calendar.YEAR));
+        } else {
+            mSellerExperienceTextView.setVisibility(View.INVISIBLE);
+        }
 
         mSellerRatingBar.setRating(seller.score / 2.0f);
-
-        mSellerPropertiesCountTextView.setText(String.format("%d properties",
-                seller.sellers.get(0).companyUser.sellerListingData.categoryWiseCount.get(0).listingCount));
-
-        mSellerProjectCountTextView.setText(String.format("%d projects", seller.sellers.get(0).companyUser.sellerListingData.projectCount));
 
         if(seller.logo != null) {
             // get seller image

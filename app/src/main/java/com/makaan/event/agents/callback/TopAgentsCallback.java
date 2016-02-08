@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.network.JSONGetCallback;
+import com.makaan.response.ResponseError;
 import com.makaan.response.agents.TopAgent;
 
 import org.json.JSONObject;
@@ -35,6 +36,11 @@ public abstract class TopAgentsCallback extends JSONGetCallback {
             Log.e(TAG, "Error parsing top agents data", e);
         }
 
+    }
+
+    @Override
+    public void onError(ResponseError error) {
+        //TODO handle error here
     }
 
     public abstract void onTopAgentsRcvd(ArrayList<TopAgent> topAgents);

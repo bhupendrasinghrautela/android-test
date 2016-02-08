@@ -5,6 +5,8 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Intent;
 import android.graphics.Point;
+import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -28,6 +30,9 @@ import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
+import com.makaan.activity.city.CityActivity;
+import com.makaan.activity.locality.LocalityActivity;
+import com.makaan.activity.project.ProjectActivity;
 import com.makaan.adapter.listing.SearchAdapter;
 import com.makaan.adapter.listing.SelectedSearchAdapter;
 import com.makaan.response.search.SearchResponseHelper;
@@ -114,6 +119,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     private ArrayList<SearchResponseItem> mSelectedSearches = new ArrayList<>();
     private SelectedSearchAdapter mSelectedSearchAdapter;
     private int mMaxSearchClubCount;
+    private ArrayList<SearchResponseItem> mAvailableSearches = new ArrayList<>();
+    private boolean mSearchResultReceived;
 
     @Override
     protected abstract int getContentViewId();
@@ -150,6 +157,13 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 - this.getResources().getDimensionPixelSize(R.dimen.activity_search_base_layout_search_bar_search_image_button_margin_right);
 
         mMaxSearchClubCount = this.getResources().getInteger(R.integer.max_search_count);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setSearchBarCollapsible(needScrollableSearchBar());
     }
 
     private void initializeViewData() {
@@ -238,8 +252,10 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
                             @Override
                             public void onAnimationEnd(Animator animation) {
-                                mSearchLayoutFrameLayout.setVisibility(View.GONE);
-                                ((ViewGroup)mSearchLayoutFrameLayout.getParent()).setTranslationY(0);
+                                if(mSearchLayoutFrameLayout != null) {
+                                    mSearchLayoutFrameLayout.setVisibility(View.GONE);
+                                    ((ViewGroup) mSearchLayoutFrameLayout.getParent()).setTranslationY(0);
+                                }
                             }
 
                             @Override
@@ -260,26 +276,10 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     public void onSearchItemClick(SearchResponseItem searchResponseItem) {
         setSearchResultFrameLayoutVisibility(false);
 
-        if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)
-                || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchResponseItem.type)) {
-            // if adapter doesn't have any item, then it means previous search was either project, city, builder etc
-            // or there is no earlier search present, so just clear selected search array
-            if(mSelectedSearchAdapter.getItemCount() == 0) {
-                mSelectedSearches.clear();
-            }
-            // add selected search result to arraylist
-            mSelectedSearches.add(searchResponseItem);
-            // as it is locality, show it in the selected search wrap view
-            mSelectedSearchAdapter.setData(mSelectedSearches);
+        if(supportsListing()  && (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)
+                || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchResponseItem.type))) {
+            addSearchInWrapLayout(searchResponseItem);
 
-            // if there is still room for more localities to be added, then show hint accordingly
-            // or disable the edit text
-            if(mSelectedSearches.size() < mMaxSearchClubCount) {
-                mSearchEditText.setHint(this.getResources().getString(R.string.search_locality_hint));
-            } else {
-                mSearchEditText.setHint("");
-                mSearchEditText.setEnabled(false);
-            }
         } else {
             // if selected search is not locality, then clear the selected search array list
             mSelectedSearches.clear();
@@ -288,14 +288,49 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             mSelectedSearchAdapter.setData(null);
 
             // set hint of edit text accordingly and add current item in selected search
-            mSearchEditText.setHint(this.getResources().getString(R.string.search_default_hint));
+            if(mSerpContext == SERP_CONTEXT_BUY) {
+                mSearchEditText.setHint(this.getResources().getString(R.string.search_default_hint));
+            } else {
+                mSearchEditText.setHint(this.getResources().getString(R.string.search_default_rent_hint));
+            }
             mSelectedSearches.add(searchResponseItem);
         }
 
         handleSearch();
 
+        if(!supportsListing()) {
+            mSelectedSearches.clear();
+        }
+
         // add selected search to recent searches
         RecentSearchManager.getInstance(this).addEntryToRecentSearch(searchResponseItem, this);
+
+        /*if(!areListingsAvailable() && (SearchSuggestionType.CITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)
+                || SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)
+                || SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searchResponseItem.type))) {
+            finish();
+        }*/
+    }
+
+    private void addSearchInWrapLayout(SearchResponseItem searchResponseItem) {
+        // if adapter doesn't have any item, then it means previous search was either project, city, builder etc
+        // or there is no earlier search present, so just clear selected search array
+        if(mSelectedSearchAdapter.getItemCount() == 0) {
+            mSelectedSearches.clear();
+        }
+        // add selected search result to arraylist
+        mSelectedSearches.add(searchResponseItem);
+        // as it is locality, show it in the selected search wrap view
+        mSelectedSearchAdapter.setData(mSelectedSearches);
+
+        // if there is still room for more localities to be added, then show hint accordingly
+        // or disable the edit text
+        if(mSelectedSearches.size() < mMaxSearchClubCount) {
+            mSearchEditText.setHint(this.getResources().getString(R.string.search_locality_hint));
+        } else {
+            mSearchEditText.setHint("");
+            mSearchEditText.setEnabled(false);
+        }
     }
 
     private void handleSearch() {
@@ -304,7 +339,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         showKeypad(mSearchEditText, false);
 
         // TODO need to handle all cases
-        SearchResponseHelper.resolveSearch(mSelectedSearches, this);
+        SearchResponseHelper.resolveSearch(mSelectedSearches, this, supportsListing());
 
         // clear the search adapter to show empty results
         mSearchAdapter.clear();
@@ -345,9 +380,16 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             setSearchViewVisibility(false);
             // hide keypad
             showKeypad(mSearchEditText, false);
+            /*if(!areListingsAvailable()) {
+                super.onBackPressed();
+            }*/
         } else {
             super.onBackPressed();
         }
+    }
+
+    protected boolean areListingsAvailable() {
+        return false;
     }
 
     @OnClick({R.id.activity_search_base_layout_search_bar_search_image_button, R.id.activity_search_base_layout_search_bar_search_text_view})
@@ -355,7 +397,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         setSearchViewVisibility(true);
     }
 
-    private void setSearchViewVisibility(boolean searchViewVisible) {
+    protected void setSearchViewVisibility(boolean searchViewVisible) {
 
         /*if (!searchViewVisible && searchPropertiesText != null && !TextUtils.isEmpty(searchPropertiesText)) {
             mSearchPropertiesTextView.setText(searchPropertiesText);
@@ -376,6 +418,9 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         if(searchViewVisible) {
             showKeypad(mSearchEditText, true);
         }
+
+        // make sure search bar is not  collapsing on scrolling when search results are available
+        setSearchBarCollapsible(searchViewVisible ? false : needScrollableSearchBar());
 
         // show animation for the glass icon according to visibility sent
         if(searchViewVisible) {
@@ -408,8 +453,12 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
                             @Override
                             public void onAnimationEnd(Animator animation) {
-                                mDeleteButton.setVisibility(View.VISIBLE);
-                                mSearchImageView.setVisibility(View.GONE);
+                                if(mDeleteButton != null) {
+                                    mDeleteButton.setVisibility(View.VISIBLE);
+                                }
+                                if(mSearchImageView != null) {
+                                    mSearchImageView.setVisibility(View.GONE);
+                                }
                                 if(hintText != null) {
                                     mSearchEditText.setHint(hintText);
                                 }
@@ -426,7 +475,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                             }
                         });
                     }
-                }, 400);
+                }, 800);
             } else {
                 mDeleteButton.setBackgroundResource(R.drawable.close_white);
                 mSearchImageView.setVisibility(View.GONE);
@@ -441,7 +490,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                         PropertyValuesHolder propx = PropertyValuesHolder.ofFloat("translationX", -mSearchImageButtonX);
 
                         ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(mSearchImageView, propx);
-                        animator.setDuration(200);
+                        animator.setDuration(400);
                         animator.start();
                         animator.addListener(new Animator.AnimatorListener() {
                             @Override
@@ -451,8 +500,12 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
                             @Override
                             public void onAnimationEnd(Animator animation) {
-                                mSearchDescriptionRelativeView.setVisibility(View.VISIBLE);
-                                mSearchRelativeView.setVisibility(View.GONE);
+                                if(mSearchDescriptionRelativeView != null) {
+                                    mSearchDescriptionRelativeView.setVisibility(View.VISIBLE);
+                                }
+                                if(mSearchRelativeView != null) {
+                                    mSearchRelativeView.setVisibility(View.GONE);
+                                }
                             }
 
                             @Override
@@ -466,23 +519,27 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                             }
                         });
                     }
-                }, 400);
+                }, 800);
             } else {
                 mSearchDescriptionRelativeView.setVisibility(View.VISIBLE);
                 mSearchRelativeView.setVisibility(View.GONE);
             }
         }
+
+        setIsJarvisVisibile(!searchViewVisible);
     }
 
     private void showEmptySearchResults() {
         ArrayList<SearchResponseItem> searches = RecentSearchManager.getInstance(this).getRecentSearches(this);
         if(searches != null && searches.size() > 0) {
+            mSearchResultReceived = false;
             setSearchResultFrameLayoutVisibility(true);
             mSearches = searches;
             clearSelectedSearches();
-            mSearchAdapter.setData(searches, true);
+            mSearchAdapter.setData(mAvailableSearches, true);
         } else {
-            setSearchResultFrameLayoutVisibility(false);
+            // we need empty layout even when no search results are present
+            setSearchResultFrameLayoutVisibility(true);
         }
     }
 
@@ -498,13 +555,16 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     public void onResults(SearchResultEvent searchResultEvent) {
+        mSearchResultReceived = true;
         setSearchResultFrameLayoutVisibility(true);
         this.mSearches = searchResultEvent.searchResponse.getData();
         clearSelectedSearches();
-        mSearchAdapter.setData(mSearches, false);
+        mSearchAdapter.setData(mAvailableSearches, false);
     }
 
     private void clearSelectedSearches() {
+        mAvailableSearches.clear();
+        mAvailableSearches.addAll(mSearches);
         if(mSelectedSearches.size() > 0) {
             if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(mSelectedSearches.get(0).type)
                     || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(mSelectedSearches.get(0).type)) {
@@ -513,7 +573,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                     searches.add(search.id);
                 }
 
-                for (Iterator<SearchResponseItem> iterator = mSearches.iterator(); iterator.hasNext();) {
+                for (Iterator<SearchResponseItem> iterator = mAvailableSearches.iterator(); iterator.hasNext();) {
                     SearchResponseItem search = iterator.next();
                     if (!searches.add(search.id)) {
                         iterator.remove();
@@ -591,8 +651,15 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 mSearchEditText.setHint(this.getResources().getString(R.string.search_locality_hint));
             } else {
                 mSelectedSearchAdapter.setData(null);
-                mSearchEditText.setHint(this.getResources().getString(R.string.search_default_hint));
+                if(mSerpContext == SERP_CONTEXT_BUY) {
+                    mSearchEditText.setHint(this.getResources().getString(R.string.search_default_hint));
+                } else {
+                    mSearchEditText.setHint(this.getResources().getString(R.string.search_default_rent_hint));
+                }
             }
+
+            clearSelectedSearches();
+            mSearchAdapter.setData(mAvailableSearches, !mSearchResultReceived);
         }
     }
 
@@ -622,4 +689,27 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     protected void setTitle(String title) {
         mSearchPropertiesTextView.setText(title);
     }
+
+    protected void setSearchBarCollapsible(boolean isCollapsible) {
+        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) mSearchLayoutFrameLayout.getLayoutParams();
+        if(isCollapsible) {
+            params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
+                | AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+        } else {
+            params.setScrollFlags(0);
+        }
+        mSearchLayoutFrameLayout.setLayoutParams(params);
+    }
+
+    protected void applySearch(ArrayList<SearchResponseItem> searches) {
+        if((mSelectedSearches == null || mSelectedSearches.size() == 0)
+                && (searches != null && searches.size() > 0)) {
+            for(SearchResponseItem item : searches) {
+                addSearchInWrapLayout(item);
+            }
+        }
+    }
+
+    protected abstract boolean needScrollableSearchBar();
+    protected abstract boolean supportsListing();
 }

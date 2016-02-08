@@ -62,6 +62,7 @@ public class ProjectActivity extends MakaanBaseSearchActivity {
     @Subscribe
     public void onResult(OnSeeOnMapClicked seeOnMapClicked){
         mNeighborhoodMapFragment = new NeighborhoodMapFragment();
+        mNeighborhoodMapFragment.setData(seeOnMapClicked.amenityClusters);
         initFragment(R.id.container, mNeighborhoodMapFragment, true);
     }
 
@@ -73,5 +74,15 @@ public class ProjectActivity extends MakaanBaseSearchActivity {
     @Subscribe
     public void onResults(SearchResultEvent searchResultEvent) {
         super.onResults(searchResultEvent);
+    }
+
+    @Override
+    protected boolean needScrollableSearchBar() {
+        return false;
+    }
+
+    @Override
+    protected boolean supportsListing() {
+        return false;
     }
 }

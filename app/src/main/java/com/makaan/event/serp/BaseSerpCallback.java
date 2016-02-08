@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.makaan.constants.ResponseConstants;
 import com.makaan.network.JSONGetCallback;
+import com.makaan.response.ResponseError;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.listing.ListingData;
 import com.makaan.response.parser.ListingParser;
@@ -70,4 +71,10 @@ public class BaseSerpCallback extends JSONGetCallback {
     }
 
 
+    @Override
+    public void onError(ResponseError error) {
+        SerpGetEvent serpGetEvent = new SerpGetEvent();
+        serpGetEvent.error = error;
+        AppBus.getInstance().post(serpGetEvent);
+    }
 }

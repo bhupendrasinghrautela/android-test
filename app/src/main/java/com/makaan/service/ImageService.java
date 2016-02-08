@@ -6,6 +6,7 @@ import com.makaan.constants.ImageConstants;
 import com.makaan.event.image.ImagesGetEvent;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
+import com.makaan.response.ResponseError;
 import com.makaan.response.image.Image;
 import com.makaan.util.AppBus;
 
@@ -39,6 +40,13 @@ public class ImageService implements MakaanService {
 
             MakaanNetworkClient.getInstance().get(detailImageListUrl, listingDetailImageList, new ObjectGetCallback() {
                 @Override
+                public void onError(ResponseError error) {
+                    ImagesGetEvent imagesGetEvent = new ImagesGetEvent();
+                    imagesGetEvent.error = error;
+                    AppBus.getInstance().post(imagesGetEvent);
+                }
+
+                @Override
                 public void onSuccess(Object responseObject) {
                     ArrayList<Image> images = (ArrayList<Image>) responseObject;
                     ImagesGetEvent imagesGetEvent = new ImagesGetEvent();
@@ -64,6 +72,13 @@ public class ImageService implements MakaanService {
 
 
             MakaanNetworkClient.getInstance().get(detailImageListUrl, listingDetailImageList, new ObjectGetCallback() {
+                @Override
+                public void onError(ResponseError error) {
+                    ImagesGetEvent imagesGetEvent = new ImagesGetEvent();
+                    imagesGetEvent.error = error;
+                    AppBus.getInstance().post(imagesGetEvent);
+                }
+
                 @Override
                 public void onSuccess(Object responseObject) {
                     ArrayList<Image> images = (ArrayList<Image>) responseObject;

@@ -67,10 +67,9 @@ public class ForgotPasswordDialogFragment extends DialogFragment {
 
     @Subscribe
     public void forgotPasswordResponse(BaseResponse baseResponse){
-        if(baseResponse.getError()!=null && baseResponse.getError().getMsg().equalsIgnoreCase("successful")){
+        if(baseResponse.getStatusCode()!=null && baseResponse.getStatusCode().equals("2XX")){
             Toast.makeText(getActivity(),getActivity().getString(R.string.password_recovery),Toast.LENGTH_SHORT).show();
-        }
-        else if(baseResponse.getError()!=null && baseResponse.getError().getMsg().equalsIgnoreCase("error")){
+        }else {
             Toast.makeText(getActivity(),getActivity().getString(R.string.generic_error),Toast.LENGTH_SHORT).show();
         }
     }

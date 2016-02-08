@@ -7,6 +7,7 @@ import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ResponseConstants;
 import com.makaan.event.trend.ProjectPriceTrendEvent;
 import com.makaan.network.JSONGetCallback;
+import com.makaan.response.ResponseError;
 import com.makaan.response.trend.ApiPriceTrendData;
 import com.makaan.response.trend.ProjectPriceTrendDto;
 import com.makaan.util.AppBus;
@@ -71,6 +72,13 @@ public class ProjectTrendChartCallback  extends JSONGetCallback {
             Log.e(TAG, "Error parsing locality trends", e);
         }
 
+    }
+
+    @Override
+    public void onError(ResponseError error) {
+        ProjectPriceTrendEvent projectPriceTrendEvent = new ProjectPriceTrendEvent();
+        projectPriceTrendEvent.error = error;
+        AppBus.getInstance().post(projectPriceTrendEvent);
     }
 }
 

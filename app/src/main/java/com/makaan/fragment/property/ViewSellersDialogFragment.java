@@ -1,61 +1,110 @@
 package com.makaan.fragment.property;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
+import android.content.Intent;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
-import com.makaan.adapter.listing.FiltersViewAdapter;
-import com.makaan.request.selector.Selector;
-import com.makaan.response.serp.FilterGroup;
-import com.makaan.ui.view.ExpandableHeightGridView;
+import com.makaan.activity.lead.LeadFormActivity;
+import com.makaan.pojo.SellerCard;
+import com.makaan.ui.view.CustomRatingBar;
 import com.makaan.util.AppBus;
+import com.pkmmte.view.CircularImageView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
+import lecho.lib.hellocharts.util.ChartUtils;
 
 /**
  * Created by aishwarya on 03/02/16.
  */
 public class ViewSellersDialogFragment extends DialogFragment {
-    List<ExpandableHeightGridView> mFilterGridViews = new ArrayList<>();
 
-    @Bind(R.id.fragment_dialog_filters_filter_linear_layout)
-    LinearLayout mFiltersLinearLayout;
+    @Bind(R.id.fragment_dialog_contact_sellers_recycler_view)
+    RecyclerView mRecyclerView;
+    @Bind(R.id.fragment_dialog_contact_sellers_select_all_checkbox)
+    CheckBox selectSeller;
+    @Bind(R.id.fragment_dialog_contact_sellers_submit_button)
+    Button mSubmitButton;
+
+    @OnCheckedChanged(R.id.fragment_dialog_contact_sellers_select_all_checkbox)
+    public void checkChanged(){
+        if(selectSeller.isChecked()){
+            for(SellerCard sellerCard : mSellerCards){
+                sellerCard.isChecked = true;
+            }
+        }
+        else{
+            for(SellerCard sellerCard : mSellerCards){
+                sellerCard.isChecked = false;
+            }
+        }
+        if(mAdapter!=null) {
+            mAdapter.updateData();
+        }
+    }
+
+    @OnClick(R.id.fragment_dialog_contact_sellers_back_button)
+    public void onBackClicked(View view) {
+        dismiss();
+    }
+
+    @OnClick(R.id.fragment_dialog_contact_sellers_submit_button)
+    public void openLeadForm(){
+        Intent intent = new Intent(getActivity(), LeadFormActivity.class);
+        try {
+            SellerCard sellerCard = mSellerCards.get(3);
+            intent.putExtra("name", sellerCard.name);
+            if(sellerCard.rating != null) {
+                intent.putExtra("score", sellerCard.rating.toString());
+            }
+            else{
+                intent.putExtra("score","0");
+            }
+            intent.putExtra("phone","9090909090");//todo: not available in pojo
+            intent.putExtra("id", sellerCard.sellerId.toString());
+            getActivity().startActivity(intent);
+        }
+        catch (NullPointerException e){
+        }
+    }
+
+    private ArrayList<SellerCard> mSellerCards;
+    private AllSellersAdapter mAdapter;
+    private int mChecked = 0;
+    private boolean isFirstTime = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dialog_filters, container, false);
+        View view = inflater.inflate(R.layout.fragment_dialog_contact_sellers, container, false);
 
         AppBus.getInstance().register(this); //TODO: move to base fragment
         ButterKnife.bind(this, view);
-
-
-        /*try {
-            if (MakaanBuyerApplication.serpSelector.isBuyContext()) {
-                ArrayList<FilterGroup> filterGroups = MasterDataCache.getInstance().getAllBuyFilterGroups();
-                populateFilters(getClonedFilterGroups(filterGroups));
-            } else {
-                ArrayList<FilterGroup> filterGroups = MasterDataCache.getInstance().getAllRentFilterGroups();
-                populateFilters(getClonedFilterGroups(filterGroups));
-            }
-        } catch (CloneNotSupportedException ex) {
-            ex.printStackTrace();
-        }*/
-
-
+        init();
         return view;
     }
 
@@ -63,6 +112,15 @@ public class ViewSellersDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL, R.style.fullscreen_dialog_fragment_theme);
+    }
+
+    private void init() {
+        LayoutManager layoutManager= new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mAdapter = new AllSellersAdapter(mSellerCards);
+        mRecyclerView.setAdapter(mAdapter);
+        mSubmitButton.setText(getString(R.string.contact_top_seller));
+        mSubmitButton.setEnabled(true);
     }
 
     @Override
@@ -76,15 +134,8 @@ public class ViewSellersDialogFragment extends DialogFragment {
         }
     }
 
-    private ArrayList<FilterGroup> getClonedFilterGroups(ArrayList<FilterGroup> filterGroups) throws CloneNotSupportedException {
-        ArrayList<FilterGroup> group = new ArrayList<>(filterGroups.size());
-        for (FilterGroup filter : filterGroups) {
-            group.add(filter.clone());
-        }
-        return group;
-    }
 
-    /*@Override
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final RelativeLayout root = new RelativeLayout(getActivity());
         root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -95,101 +146,130 @@ public class ViewSellersDialogFragment extends DialogFragment {
         dialog.setContentView(root);
 //        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.YELLOW));
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        dialog.getWindow().getDecorView().setPadding(0,0,0,0);
+        dialog.getWindow().getDecorView().setPadding(0, 0, 0, 0);
         return dialog;
-    }*/
-
-
-    private void populateFilters(ArrayList<FilterGroup> filterGroups) {
-        if (filterGroups != null && filterGroups.size() > 0) {
-            for (FilterGroup filterGroup : filterGroups) {
-                if (filterGroup.displayOrder < 0) {
-                    continue;
-                }
-
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_dialog_filters_item_layout, mFiltersLinearLayout, false);
-                ((TextView) view.findViewById(R.id.fragment_dialog_filters_item_layout_display_text_view)).setText(filterGroup.displayName);
-                GridView gridView = (GridView) view.findViewById(R.id.fragment_dialog_filters_item_layout_grid_view);
-
-                mFilterGridViews.add((ExpandableHeightGridView) gridView);
-
-                if (mFiltersLinearLayout.getChildCount() >= filterGroup.displayOrder) {
-                    mFiltersLinearLayout.addView(view, filterGroup.displayOrder - 1);
-                } else {
-                    mFiltersLinearLayout.addView(view, mFiltersLinearLayout.getChildCount());
-                }
-
-                if (filterGroup.layoutType != FiltersViewAdapter.TOGGLE_BUTTON) {
-                    gridView.setNumColumns(1);
-                }/* else {
-                    gridView.setNumColumns(filterGroup.termFilterValues.size());
-                }*/
-
-                int id = this.getResources().getIdentifier(filterGroup.imageName, "drawable", "com.makaan");
-                if (id != 0) {
-                    ((ImageView) view.findViewById(R.id.fragment_dialog_filters_item_layout_image_view)).setImageResource(id);
-                }
-                if (gridView != null) {
-                    ((ExpandableHeightGridView) gridView).setExpanded(true);
-                    FiltersViewAdapter adapter = new FiltersViewAdapter(getActivity(), filterGroup, filterGroup.layoutType);
-                    gridView.setAdapter(adapter);
-                }
-            }
-        }
     }
 
-    @OnClick(R.id.fragment_dialog_filters_submit_button)
-    public void onSubmitClick(View v) {
-        ArrayList<FilterGroup> filterGroups;
-        /*if (MakaanBuyerApplication.serpSelector.isBuyContext()) {
-            filterGroups = MasterDataCache.getInstance().getAllBuyFilterGroups();
-        } else {
-            filterGroups = MasterDataCache.getInstance().getAllRentFilterGroups();
-        }
-
-        for (ExpandableHeightGridView gridView : mFilterGridViews) {
-            FiltersViewAdapter adapter = (FiltersViewAdapter) (gridView.getAdapter());
-            adapter.applyFilters(MakaanBuyerApplication.serpSelector, filterGroups);
-        }
-        if (getActivity() instanceof SerpRequestCallback) {
-            ((SerpRequestCallback) getActivity()).serpRequest(SerpActivity.TYPE_FILTER, MakaanBuyerApplication.serpSelector);
-        }*/
-        dismiss();
-    }
-
-    private void addFilters(List<String> list, Selector request) {
-        if (list.size() > 1) {
-            String fieldName = list.get(0);
-            list.remove(0);
-            for (String val : list) {
-                request.term(fieldName, val);
-            }
-        }
-    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         AppBus.getInstance().unregister(this);
-        if (getActivity() instanceof FilterDialogFragmentCallback) {
-            ((FilterDialogFragmentCallback) getActivity()).dialogDismissed();
+    }
+
+    public void bindView(ArrayList<SellerCard> sellerCards) {
+        mSellerCards = sellerCards;
+        int count = 0;
+        for(SellerCard sellerCard:mSellerCards){
+            if(count <3){
+                sellerCard.isChecked = true;
+            }
+            count++;
         }
     }
 
-    @OnClick(R.id.fragment_dialog_filters_back_button)
-    public void onBackClicked(View view) {
-        dismiss();
-    }
-
-    @OnClick(R.id.fragment_dialog_filters_reset_buttom)
-    public void onResetClicked(View view) {
-        for (ExpandableHeightGridView gridView : mFilterGridViews) {
-            FiltersViewAdapter adapter = (FiltersViewAdapter) (gridView.getAdapter());
-            adapter.reset();
+    void onItemClicked(boolean isClicked){
+        if(isClicked){
+            mChecked ++;
+        }
+        else{
+            mChecked --;
+        }
+        if(mChecked == 0){
+            mSubmitButton.setEnabled(false);
+            mSubmitButton.setText(getString(R.string.contact_sellers));
+        }
+        else if(mChecked == mSellerCards.size()){
+            mSubmitButton.setText(getString(R.string.contact_all_seller));
+            mSubmitButton.setEnabled(true);
+        }
+        else{
+            if(isFirstTime && mChecked == 3){
+                mSubmitButton.setText(getString(R.string.contact_top_seller));
+                isFirstTime = false;
+            }
+            else {
+                mSubmitButton.setText(getString(R.string.contact) + " " + mChecked + " " + getString(R.string.seller));
+            }
+            mSubmitButton.setEnabled(true);
         }
     }
 
-    public interface FilterDialogFragmentCallback {
-        public void dialogDismissed();
+    public class AllSellersAdapter extends RecyclerView.Adapter<AllSellersAdapter.ViewHolder> {
+        private List<SellerCard> sellerCards;
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            // each data item is just a string in this case
+            CircularImageView mSellerImageView;
+            TextView mSellerLogoTextView;
+            TextView mSellerTotalProperty;
+            TextView mSellerName;
+            CustomRatingBar  mSellerRating;
+            CheckBox mSellerCheckBox;
+            public ViewHolder(View v) {
+                super(v);
+                mSellerImageView = (CircularImageView) v.findViewById(R.id.seller_image_view);
+                mSellerName = (TextView) v.findViewById(R.id.seller_name_text_view);
+                mSellerLogoTextView = (TextView) v.findViewById(R.id.seller_logo_text_view);
+                mSellerTotalProperty = (TextView) v.findViewById(R.id.seller_total_property_text_view);
+                mSellerRating = (CustomRatingBar)v.findViewById(R.id.seller_rating);
+                mSellerCheckBox = (CheckBox)v.findViewById(R.id.fragment_dialog_contact_sellers_select_item_checkbox);
+                mSellerCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        onItemClicked(mSellerCheckBox.isChecked());
+                    }
+                });
+            }
+        }
+
+        public AllSellersAdapter(List<SellerCard> sellerCards) {
+            this.sellerCards = sellerCards;
+        }
+
+        public void updateData(){
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public AllSellersAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                                          int viewType) {
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.fragment_dialog_contact_seller_item, parent, false);
+            ViewHolder vh = new ViewHolder(v);
+            return vh;
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            holder.mSellerImageView.setVisibility(View.GONE);
+            SellerCard sellerCard = mSellerCards.get(position);
+            Random random = new Random();
+            ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+            int color = ChartUtils.COLORS[position];
+            drawable.getPaint().setColor(color);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                holder.mSellerLogoTextView.setBackground(drawable);
+            } else {
+                holder.mSellerLogoTextView.setBackgroundDrawable(drawable);
+            }
+            if(sellerCard.name!=null) {
+                holder.mSellerName.setText(String.format("%s(%s)", sellerCard.name, mSellerCards.get(position).type));
+                holder.mSellerLogoTextView.setText(String.valueOf(sellerCard.name.charAt(0)));
+            }
+            if(sellerCard.noOfProperties!=null) {
+                holder.mSellerTotalProperty.setText(String.valueOf(sellerCard.noOfProperties) + " " + getString(R.string.property));
+            }
+            if(sellerCard.rating!=null){
+                holder.mSellerRating.setRating(sellerCard.rating.floatValue());
+            }
+            holder.mSellerCheckBox.setChecked(sellerCard.isChecked);
+        }
+
+        @Override
+        public int getItemCount() {
+            return sellerCards.size();
+        }
+
     }
 }

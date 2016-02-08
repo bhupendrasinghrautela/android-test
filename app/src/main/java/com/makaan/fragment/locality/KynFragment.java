@@ -37,6 +37,7 @@ public class KynFragment extends MakaanBaseFragment {
     private KnowYourNeighbourhoodAdapter mAdapter;
     private String title;
     private Context context ;
+    private List<AmenityCluster> amenityClusters;
 
     @Override
     protected int getContentViewId() {
@@ -52,7 +53,9 @@ public class KynFragment extends MakaanBaseFragment {
 
     @OnClick(R.id.amenity_see_on_map)
     public void onSeeMapClicked(){
-        AppBus.getInstance().post(new OnSeeOnMapClicked());
+        OnSeeOnMapClicked onSeeOnMapClicked = new OnSeeOnMapClicked();
+        onSeeOnMapClicked.amenityClusters = amenityClusters;
+        AppBus.getInstance().post(onSeeOnMapClicked);
     }
 
     private void initView() {
@@ -65,19 +68,12 @@ public class KynFragment extends MakaanBaseFragment {
     }
 
     public void setData(List<AmenityCluster> amenityClusters) {
+        this.amenityClusters = amenityClusters;
         mAdapter = new KnowYourNeighbourhoodAdapter(amenityClusters);
         if (mRecyclerView != null)
             mRecyclerView.setAdapter(mAdapter);
     }
 
-    private List<AmenityCluster> filterDataWithLessThan3Amenities(List<AmenityCluster> amenityClusters) {
-        List<AmenityCluster> clusters = new ArrayList<>();
-        for(AmenityCluster amenityCluster:amenityClusters){
-            if(amenityCluster.cluster.size() > 0 && amenityCluster.cluster.size()<=3)
-                clusters.add(amenityCluster);
-        }
-        return clusters;
-    }
 
 
     private class KnowYourNeighbourhoodAdapter extends RecyclerView.Adapter<KnowYourNeighbourhoodAdapter.ViewHolder> {

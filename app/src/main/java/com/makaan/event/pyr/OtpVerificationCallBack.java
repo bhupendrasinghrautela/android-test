@@ -3,6 +3,7 @@ package com.makaan.event.pyr;
 import android.util.Log;
 
 import com.makaan.network.StringRequestCallback;
+import com.makaan.response.ResponseError;
 import com.makaan.response.pyr.OtpVerificationResponse;
 import com.makaan.response.pyr.PyrPostResponse;
 import com.makaan.util.AppBus;
@@ -18,5 +19,10 @@ public class OtpVerificationCallBack extends StringRequestCallback {
         OtpVerificationResponse otpVerificationResponse = (OtpVerificationResponse)
                 JsonParser.parseJson(response, OtpVerificationResponse.class);
         AppBus.getInstance().post(otpVerificationResponse);
+    }
+
+    @Override
+    public void onError(ResponseError error) {
+        //TODO handle error
     }
 }

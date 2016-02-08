@@ -3,11 +3,19 @@
     <com.makaan.ui.amenity.AmenityViewPager
         android:id="@+id/amenity_viewpager"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_marginLeft="@dimen/property_page_amenity_view_pager_margin_left"
         android:layout_marginBottom="@dimen/property_page_amenity_view_pager_margin_bottom"
         android:layout_height="@dimen/property_page_amenity_view_pager_height" />
+    <LinearLayout
+        android:id="@+id/view_on_map"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent">
     <ImageView
-        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -16,13 +24,15 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:text="see on map"
-        android:layout_marginTop="10dp"
         android:layout_gravity="center"
+        android:gravity="center"
         android:typeface="serif"
+        android:textSize="16sp"
         android:id="@+id/amenity_see_on_map"
         android:textColor="#e71c28"
         android:layout_marginLeft="5dp"
         />
+    </LinearLayout>
 </merge>

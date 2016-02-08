@@ -126,7 +126,11 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
                     amenityItem.name = amenityId;
                     mAmenityItems.add(amenityItem);
                 }
-            }catch (NumberFormatException e){}
+            }catch (NumberFormatException e){
+
+            }catch (Exception e){
+
+            }
         }
     }
 

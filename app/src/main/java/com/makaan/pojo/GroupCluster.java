@@ -32,7 +32,7 @@ public class GroupCluster {
             if(groupListings.get(i).listing.id == childSerpId) {
                 start = i / MAX_CLUSTERS_IN_GROUP;
                 end = start + MAX_CLUSTERS_IN_GROUP - 1;
-                if(end > groupListings.size()) {
+                if(end >= groupListings.size()) {
                     end = groupListings.size() - 1;
                 }
                 break;

@@ -5,8 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -15,9 +13,9 @@ import android.widget.TextView;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
+import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.PreferenceConstants;
@@ -36,6 +34,7 @@ import com.makaan.pojo.SerpRequest;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
+import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.service.BuilderService;
@@ -99,6 +98,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     public static final int REQUEST_PROPERTY_PAGE = 1;
     public static final int REQUEST_PROJECT_PAGE = 2;
+    public static final int REQUEST_LEAD_FORM = 3;
 
 
     private static final int MAX_ITEMS_TO_REQUEST = 20;
@@ -209,6 +209,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         generateGroupSelector();
 
         handleIntent(intent);
+
+        setTitle(this.getResources().getString(R.string.search_default_hint));
     }
 
     private void handleIntent(Intent intent) {
@@ -221,28 +223,35 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
                 openSearch(true);
 
+            } else if (type == SerpActivity.TYPE_CITY) {
+                parseSerpRequest(intent, SerpActivity.TYPE_CITY);
             } else if (type == SerpActivity.TYPE_GPID) {
-                String gpId = intent.getStringExtra(REQUEST_DATA);
-                if(!TextUtils.isEmpty(gpId)) {
-                    serpRequest(SerpActivity.TYPE_GPID, mSerpSelector, gpId);
-                }
+                mSerpSelector.removeTerm("builderId");
+                mSerpSelector.removeTerm("projectId");
+                mSerpSelector.removeTerm("localityId");
+                mSerpSelector.removeTerm("cityId");
+                mSerpSelector.removeTerm("suburbId");
+                mSerpSelector.removeTerm("listingCompanyId");
+                parseSerpRequest(intent, SerpActivity.TYPE_GPID);
             } else if (type == SerpActivity.TYPE_PROJECT) {
                 parseSerpRequest(intent, SerpActivity.TYPE_PROJECT);
 
             } else if (type == SerpActivity.TYPE_SEARCH) {
                 mSerpSelector.removeTerm("builderId");
+                mSerpSelector.removeTerm("projectId");
                 mSerpSelector.removeTerm("localityId");
                 mSerpSelector.removeTerm("cityId");
                 mSerpSelector.removeTerm("suburbId");
                 mSerpSelector.removeTerm("localityOrSuburbId");
 
-                parseSerpRequest(intent, SerpActivity.TYPE_PROJECT);
+                parseSerpRequest(intent, SerpActivity.TYPE_SEARCH);
 
             } else if (type == SerpActivity.TYPE_UNKNOWN) {
                 // TODO check whether it should be used or not
                 fetchData();
             } else if (type == SerpActivity.TYPE_SELLER) {
                 mSerpSelector.removeTerm("builderId");
+//                mSerpSelector.removeTerm("projectId");
                 mSerpSelector.removeTerm("localityId");
                 mSerpSelector.removeTerm("cityId");
                 mSerpSelector.removeTerm("suburbId");
@@ -266,8 +275,14 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         if(intent.hasExtra(REQUEST_DATA)) {
             SerpRequest request = intent.getParcelableExtra(REQUEST_DATA);
             request.applySelector(mSerpSelector, mFilterGroups);
+
+            if(type == TYPE_GPID) {
+                serpRequest(TYPE_GPID, mSerpSelector, request.getGpId());
+            } else if(type == TYPE_SEARCH) {
+                applySearch(request.getSearches());
+            }
         }
-        if(type != TYPE_HOME) {
+        if(type != TYPE_HOME && type != TYPE_GPID) {
             serpRequest(type, mSerpSelector);
         }
     }
@@ -503,6 +518,16 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         super.onResults(searchResultEvent);
     }
 
+    @Override
+    protected boolean needScrollableSearchBar() {
+        return true;
+    }
+
+    @Override
+    protected boolean supportsListing() {
+        return true;
+    }
+
     @Subscribe
     public void onResults(GpByIdEvent gpIdResultEvent) {
         if(gpIdResultEvent == null || gpIdResultEvent.gpDetail == null) {
@@ -688,6 +713,10 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             Intent intent = new Intent(this, ProjectActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
+        } else if(type == REQUEST_LEAD_FORM) {
+            Intent intent = new Intent(this, LeadFormActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
     }
 
@@ -716,29 +745,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
                 }
             }
-        }
-    }
-
-    @Override
-    public void onListScrolled(int dx, int dy, int state) {
-        int searchBarHeight = getSearchBarHeight();
-        if(dy > (searchBarHeight / 2) || dy < -(searchBarHeight / 2)) {
-            return;
-        }
-        if(state != RecyclerView.SCROLL_STATE_DRAGGING) {
-            return;
-        }
-        if (scrolledDistance > searchBarHeight && controlsVisible) {
-            setShowSearchBar(false, true);
-            controlsVisible = false;
-            scrolledDistance = 0;
-        } else if (scrolledDistance < -searchBarHeight && !controlsVisible) {
-            setShowSearchBar(true, true);
-            controlsVisible = true;
-            scrolledDistance = 0;
-        }
-        if((controlsVisible && dy>0) || (!controlsVisible && dy<0)) {
-            scrolledDistance += dy;
         }
     }
 
@@ -795,5 +801,13 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 }
             }
         }
+    }
+
+    @Override
+    protected boolean areListingsAvailable() {
+        if(mListings == null) {
+            return false;
+        }
+        return true;
     }
 }

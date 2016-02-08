@@ -36,7 +36,7 @@ import butterknife.Bind;
  * Created by rohitgarg on 1/6/16.
  * Listing Fragment which will house a recycler view to show all the listing as per user's search criteria
  */
-public class SerpListFragment extends MakaanBaseFragment implements PaginatedListView.PaginationListener, PaginatedListView.ScrollListener {
+public class SerpListFragment extends MakaanBaseFragment implements PaginatedListView.PaginationListener{
     private static final String KEY_IS_CHILD_SERP = "is_child_serp";
 
     @Bind(R.id.fragment_listing_recycler_view)
@@ -49,6 +49,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
     private String mSearchedEntities = "";
 
     private boolean mIsChildSerp;
+    private boolean mIsScrollEventSent;
 
     int page;
     private SerpRequestCallback mSerpRequestCallback;
@@ -88,7 +89,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         if(activity != null) {
             initializeRecyclerViewData();
             mListingRecyclerView.setPaginableListener(this);
-            mListingRecyclerView.setScrollListener(this);
+//            mListingRecyclerView.setScrollListener(this);
             if(mListings != null) {
                 /*if(mTotalPropertiesTextView != null) {
                     mTotalPropertiesTextView.setText(String.format("%d %s", mTotalCount, mSearchedEntities));
@@ -214,16 +215,16 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
 
                 .putValue("serp_filter_bhk", null));*/
 
+        if(mIsScrollEventSent){
+            return;
+        }
+
+        mIsScrollEventSent = true;
         Traits traits = new Traits();
         traits.put("serp_visible_item", mListings.size());
         Analytics.with(getActivity()).identify(traits);
         Analytics.with(getActivity()).flush();
 
 
-    }
-
-    @Override
-    public void onScrolled(int dx, int dy, int state) {
-        mSerpRequestCallback.onListScrolled(dx, dy, state);
     }
 }

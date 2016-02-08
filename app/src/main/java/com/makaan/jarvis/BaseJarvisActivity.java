@@ -195,9 +195,15 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         if(this==null || isFinishing() || mCardCta==null){
             return;
         }
+        mCardCta.removeAllViews();
         mCardCta.setVisibility(View.GONE);
         Animation zoomout = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoom_out);
         mCardCta.setAnimation(zoomout);
-        mCardCta.removeAllViews();
+    }
+
+    protected void setIsJarvisVisibile(boolean visible) {
+        if(mJarvisHead != null) {
+            mJarvisHead.setVisibility(visible ? View.VISIBLE : View.GONE);
+        }
     }
 }

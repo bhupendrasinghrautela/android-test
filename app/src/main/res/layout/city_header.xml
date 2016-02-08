@@ -21,14 +21,18 @@
             android:layout_height="wrap_content"/>
         <TextView
             android:layout_below="@id/annual_growth_text"
+            android:id="@+id/annual_growth_text_refer"
             android:layout_width="wrap_content"
+            android:visibility="invisible"
             android:layout_marginLeft="@dimen/city_header_margin_left"
             android:typeface="monospace"
             android:textColor="@color/white"
             android:text="@string/annual_growth"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/rental_growth_text_refer"
             android:layout_width="wrap_content"
+            android:visibility="invisible"
             android:textColor="@color/white"
             android:layout_below="@id/rental_growth_text"
             android:layout_marginRight="@dimen/city_header_margin_right"

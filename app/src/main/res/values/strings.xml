@@ -111,6 +111,10 @@
     <string name="properties_in">properties in</string>
     <string name="price_trends">price trends</string>
     <string name="read_more">more</string>
+    <string name="contact_top_seller">contact top sellers</string>
+    <string name="contact_all_seller">contact all sellers</string>
+    <string name="contact_sellers">contact sellers</string>
+    <string name="contact">contact</string>
     <string name="more_about">more about</string>
     <string name="read_less">less</string>
     <string name="intrested_in">interested in</string>
@@ -118,6 +122,7 @@
     <string name="name">name</string>
     <string name="projects">projects</string>
     <string name="project">project</string>
+    <string name="property">property</string>
     <string name="years">years</string>
     <string name="months">months</string>
     <string name="buy">buy</string>
@@ -175,6 +180,7 @@
     <string name="makaan">makaan</string>
     <string name="search_by_location">search by location</string>
     <string name="search_default_hint">pick a location, builder or project</string>
+    <string name="search_default_rent_hint">pick location or project</string>
     <string name="search_locality_hint">add more localities...</string>
 
     <!--buyer journey-->
@@ -262,6 +268,10 @@
     <string name="password_recovery">please check your mail for password recovery details</string>
     <string name="app_FB_id">111204692324347</string>
     <string name="contact_all_sellers">contact all sellers</string>
+
+
+    <!--chart strings-->
+    <string name="no_data">data not available</string>
 
 </resources>
 

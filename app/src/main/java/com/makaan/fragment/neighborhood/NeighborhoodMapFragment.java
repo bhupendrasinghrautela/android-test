@@ -44,7 +44,7 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
     private GoogleMap mPropertyMap;
     private List<Marker> mAllMarkers = new ArrayList<Marker>();
     private LatLngBounds.Builder mLatLngBoundsBuilder;
-    private List<AmenityCluster> mAmenityClusters;
+    private List<AmenityCluster> mAmenityClusters = new ArrayList<>();
     private AmenityCluster mSelectedAmenityCluster;
     private SelectedMarker mSelectedMarker = new SelectedMarker();
     private NeighborhoodCategoryAdapter mNeighborhoodCategoryAdapter;
@@ -101,22 +101,35 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
         mMapView.onLowMemory();
     }
 
-    public void setCategoryPosition(int position){
-        if(mAmenityClusters == null || mPropertyMap == null){
+    public void setData(List<AmenityCluster> amenityClusters){
+        for(AmenityCluster cluster : amenityClusters){
+            if(null!=cluster && null!=cluster.cluster && cluster.cluster.size()>0){
+                mAmenityClusters.add(cluster);
+            }
+        }
+    }
+
+    private void setCategoryPosition(int position){
+        if(mAmenityClusters == null || mAmenityClusters.isEmpty() || mPropertyMap == null){
             return;
         }
         populateMarker(mAmenityClusters.get(position));
     }
 
-    @Subscribe
+/*    @Subscribe
     public void onResults(AmenityGetEvent amenityGetEvent) {
         if(amenityGetEvent == null || amenityGetEvent.amenityClusters == null){
             return;
         }
-        mAmenityClusters = amenityGetEvent.amenityClusters;
+        //mAmenityClusters = amenityGetEvent.amenityClusters;
+        for(AmenityCluster cluster : amenityGetEvent.amenityClusters){
+            if(null!=cluster && null!=cluster.cluster && cluster.cluster.size()>0){
+                mAmenityClusters.add(cluster);
+            }
+        }
         mNeighborhoodCategoryAdapter.setData(mAmenityClusters);
         setCategoryPosition(0);
-    }
+    }*/
 
     private void initMap(@Nullable Bundle savedInstanceState) {
 
@@ -138,6 +151,7 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
 
         mNeighborhoodCategoryView.setLayoutManager(mLayoutManager);
         mNeighborhoodCategoryView.setAdapter(mNeighborhoodCategoryAdapter);
+        mNeighborhoodCategoryAdapter.setData(mAmenityClusters);
         setCategoryPosition(0);
     }
 
