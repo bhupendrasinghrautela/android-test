@@ -436,7 +436,8 @@
     <dimen name="serp_listing_cluster_card_home_image_view_width">95dp</dimen>
     <dimen name="serp_listing_cluster_card_home_image_view_height">76dp</dimen>
 
-    <dimen name="fragment_listing_total_properties_text_view_margin_left">17dp</dimen>
+    <dimen name="fragment_listing_total_properties_text_view_margin_left">20dp</dimen>
+    <dimen name="fragment_listing_total_properties_text_view_margin_right">20dp</dimen>
     <dimen name="fragment_listing_total_properties_text_view_margin_top">10dp</dimen>
     <dimen name="fragment_listing_total_properties_text_view_margin_bottom">0dp</dimen>
     <dimen name="fragment_listing_total_properties_text_view_text_size">14sp</dimen>
@@ -531,8 +532,8 @@
 
     <dimen name="fragment_dialog_filters_toggle_button_grid_item_horizontal_padding">17dp</dimen>
     <dimen name="fragment_dialog_filters_checkbox_grid_item_vertical_padding">20dp</dimen>
-    <dimen name="fragment_dialog_filters_toggle_button_grid_item_width">40dp</dimen>
-    <dimen name="fragment_dialog_filters_toggle_button_grid_item_height">40dp</dimen>
+    <dimen name="fragment_dialog_filters_toggle_button_grid_item_width">44dp</dimen>
+    <dimen name="fragment_dialog_filters_toggle_button_grid_item_height">44dp</dimen>
     <dimen name="fragment_dialog_filters_toggle_button_grid_item_text_size">18sp</dimen>
 
     <dimen name="fragment_dialog_filters_checkbox_grid_item_text_size">16sp</dimen>
@@ -937,8 +938,10 @@
     <dimen name="activity_home_find_joy_image_view_top_margin">192dp</dimen>
     <dimen name="activity_home_search_toggle_left_margin">20dp</dimen>
 
+
     <dimen name="activity_home_search_relative_view_left_margin">30dp</dimen>
     <dimen name="activity_home_search_relative_view_bottom_margin">64dp</dimen>
+
 
     <!-- selected search item values -->
     <dimen name="selected_search_item_view_padding_top">4dp</dimen>

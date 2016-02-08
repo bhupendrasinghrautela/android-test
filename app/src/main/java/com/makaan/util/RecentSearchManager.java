@@ -52,7 +52,7 @@ public class RecentSearchManager {
     public void addEntryToRecentSearch(SearchResponseItem search, Context context) {
         for (Iterator<SearchResponseItem> iterator = recentSearchList.iterator(); iterator.hasNext();) {
             SearchResponseItem s = iterator.next();
-            if (s.id.equals(search.id)) {
+            if (s.id != null && s.id.equals(search.id)) {
                 iterator.remove();
             }
         }

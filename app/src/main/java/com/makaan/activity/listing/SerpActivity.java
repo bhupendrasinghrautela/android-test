@@ -99,6 +99,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public static final int REQUEST_PROPERTY_PAGE = 1;
     public static final int REQUEST_PROJECT_PAGE = 2;
     public static final int REQUEST_LEAD_FORM = 3;
+    public static final int REQUEST_SET_ALERT = 4;
 
 
     private static final int MAX_ITEMS_TO_REQUEST = 20;
@@ -157,6 +158,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     public Selector mSerpSelector = new Selector();
     private ArrayList<FilterGroup> mFilterGroups;
+    private boolean mFilterDialogOpened;
 
     @Override
     protected int getContentViewId() {
@@ -184,7 +186,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     protected void onCreate(Bundle savedInstanceState) {
 
         Intent intent = getIntent();
-        if(intent != null) {
+        if(intent != null && intent.hasExtra(REQUEST_CONTEXT)) {
             mSerpContext = intent.getIntExtra(REQUEST_CONTEXT, SERP_CONTEXT_BUY) == SERP_CONTEXT_RENT ? SERP_CONTEXT_RENT : SERP_CONTEXT_BUY;
         } else {
             mSerpContext = Preference.getInt(getSharedPreferences(PreferenceConstants.PREF, MODE_PRIVATE), PreferenceConstants.PREF_CONTEXT, SERP_CONTEXT_BUY);
@@ -224,6 +226,12 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 openSearch(true);
 
             } else if (type == SerpActivity.TYPE_CITY) {
+                mSerpSelector.removeTerm("builderId");
+                mSerpSelector.removeTerm("projectId");
+                mSerpSelector.removeTerm("localityId");
+                mSerpSelector.removeTerm("cityId");
+                mSerpSelector.removeTerm("suburbId");
+                mSerpSelector.removeTerm("listingCompanyId");
                 parseSerpRequest(intent, SerpActivity.TYPE_CITY);
             } else if (type == SerpActivity.TYPE_GPID) {
                 mSerpSelector.removeTerm("builderId");
@@ -497,6 +505,10 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @OnClick(R.id.fragment_filters_filter_relative_layout)
     public void onFilterPressed(View view) {
+        if(mFilterDialogOpened == true) {
+            return;
+        }
+        mFilterDialogOpened = true;
         FragmentTransaction ft = this.getFragmentManager().beginTransaction();
         FiltersDialogFragment filterFragment = FiltersDialogFragment.init();
         filterFragment.show(ft, "Filters");
@@ -580,6 +592,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Override
     public void dialogDismissed() {
+        mFilterDialogOpened = false;
         if(SerpObjects.getAppliedFilterCount(mFilterGroups) != 0) {
             mAppliedFiltersCountTextView.setVisibility(View.VISIBLE);
             mAppliedFiltersCountTextView.setText(String.valueOf(SerpObjects.getAppliedFilterCount(mFilterGroups)));
@@ -732,6 +745,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             Intent intent = new Intent(this, LeadFormActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
+        } else if(type == REQUEST_SET_ALERT) {
+            // TODO
         }
     }
 

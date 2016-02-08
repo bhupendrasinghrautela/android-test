@@ -284,7 +284,7 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
 
             // TODO check seller name
             if(mListing.lisitingPostedBy != null) {
-                mPropertySellerNameTextView.setText(String.format("%s(%s)",mListing.lisitingPostedBy.name, mListing.lisitingPostedBy.type).toLowerCase());
+                mPropertySellerNameTextView.setText(String.format("%s (%s)",mListing.lisitingPostedBy.name, mListing.lisitingPostedBy.type).toLowerCase());
             } else {
                 mPropertySellerNameTextView.setText(mListing.project.builderName.toLowerCase());
             }

@@ -6,7 +6,11 @@
     android:textColor="@color/listingBlack"
     android:textSize="@dimen/fragment_dialog_filters_checkbox_grid_item_text_size"
     android:text="asdasd"
-    android:typeface="monospace"/>
+    android:typeface="monospace"
+    android:button="@drawable/square_checkbox_selector"
+    android:drawableLeft="@null"
+    android:paddingLeft="10dp"
+    />
     <!--android:background="@android:color/transparent"
     android:button="@drawable/check_tick_fill_red"
     android:drawableLeft="@drawable/check_tick_fill_red"

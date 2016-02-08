@@ -160,8 +160,8 @@
 
             <RadioButton
                 android:id="@+id/activity_home_property_buy_radio_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="35dp"
                 android:checked="true"
                 android:textColor="@color/white"
                 android:textSize="16sp"
@@ -172,8 +172,8 @@
 
             <RadioButton
                 android:id="@+id/activity_home_property_rent_radio_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="35dp"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:layout_marginTop="3dp"

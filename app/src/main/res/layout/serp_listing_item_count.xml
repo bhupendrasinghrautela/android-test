@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment_listing_total_properties_text_view"
-    android:layout_width="wrap_content"
+
+<com.makaan.ui.listing.CountListingView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/fragment_listing_total_properties_text_view_margin_left"
-    android:layout_marginStart="@dimen/fragment_listing_total_properties_text_view_margin_left"
-    android:layout_marginTop="@dimen/fragment_listing_total_properties_text_view_margin_top"
+    android:layout_gravity="center"
     android:layout_marginBottom="@dimen/fragment_listing_total_properties_text_view_margin_bottom"
-    android:text="100 properties"
-    android:textColor="@color/serp_listing_total_properties_text_color"
-    android:textSize="@dimen/fragment_listing_total_properties_text_view_text_size"
-    android:typeface="serif"
-    />
+    android:layout_marginEnd="@dimen/fragment_listing_total_properties_text_view_margin_left"
+    android:layout_marginLeft="@dimen/fragment_listing_total_properties_text_view_margin_left"
+    android:layout_marginRight="@dimen/fragment_listing_total_properties_text_view_margin_right"
+    android:layout_marginStart="@dimen/fragment_listing_total_properties_text_view_margin_right"
+    android:layout_marginTop="@dimen/fragment_listing_total_properties_text_view_margin_top"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp"
+    app:cardMaxElevation="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/fragment_listing_total_properties_set_alert_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="set alert"
+            android:background="@null"
+            android:textColor="@color/serp_listing_total_properties_text_color"
+            android:textSize="@dimen/fragment_listing_total_properties_text_view_text_size"
+            android:typeface="serif"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:textAllCaps="false"
+            android:minHeight="0dp"/>
+
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/fragment_listing_total_properties_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100 properties"
+            android:textColor="@color/serp_listing_total_properties_text_color"
+            android:textSize="@dimen/fragment_listing_total_properties_text_view_text_size"
+            android:typeface="serif"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@id/fragment_listing_total_properties_set_alert_button"
+            android:singleLine="true"
+            />
+    </RelativeLayout>
+    </com.makaan.ui.listing.CountListingView>

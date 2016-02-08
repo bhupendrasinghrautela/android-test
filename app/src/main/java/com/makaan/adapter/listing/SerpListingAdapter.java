@@ -103,6 +103,9 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
             } else if (mItems == null || mItems.size() == 0) {
                 return 0;
             } else {
+                if(Math.ceil((mItems.size() - GroupCluster.CLUSTER_POS_IN_SERP_PER_TEN) / 10.0f) < mGroupClusterListings.size()) {
+                    return ((mItems.size() + 1) + (int)(Math.ceil(mItems.size() - GroupCluster.CLUSTER_POS_IN_SERP_PER_TEN) / 10.0f));
+                }
                 return ((mItems.size() + 1) + mGroupClusterListings.size());
             }
         }
@@ -153,6 +156,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
                         extraCount = tens;
                     }
                 }
+                // TODO handle when group clusters are more than required
                 viewHolder.populateData(mItems.get(position - extraCount), mCallback);
             }
         }

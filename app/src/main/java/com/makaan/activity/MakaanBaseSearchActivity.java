@@ -47,6 +47,7 @@ import com.makaan.service.SearchService;
 
 import com.makaan.ui.listing.CustomFlowLayout;
 import com.makaan.util.RecentSearchManager;
+import com.makaan.util.StringUtil;
 
 
 import java.io.UnsupportedEncodingException;
@@ -312,6 +313,10 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 || SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searchResponseItem.type))) {
             finish();
         }*/
+
+        if(supportsListing()) {
+            setTitle(searchResponseItem.displayText);
+        }
     }
 
     private void addSearchInWrapLayout(SearchResponseItem searchResponseItem) {
@@ -543,6 +548,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 setSearchResultFrameLayoutVisibility(true);
                 mSearches = searches;
                 clearSelectedSearches();
+                addNearbyPropertiesSearchItem();
                 mSearchAdapter.setData(mAvailableSearches, true);
             } else {
                 if(this instanceof HomeActivity) {
@@ -560,6 +566,17 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         }
     }
 
+    private void addNearbyPropertiesSearchItem() {
+        /*if(Session.myLocation != null) {
+            SearchResponseItem item = new SearchResponseItem();
+            item.type = SearchSuggestionType.NEARBY_PROPERTIES.getValue();
+            item.displayText = "properties near my location";
+            item.latitude = Session.myLocation.centerLatitude;
+            item.longitude = Session.myLocation.centerLongitude;
+            mAvailableSearches.add(0, item);
+        }*/
+    }
+
     private void setSearchResultFrameLayoutVisibility(boolean visible) {
         mSearchResultFrameLayout.setVisibility(visible ? View.VISIBLE : View.GONE);
         if(visible) {
@@ -572,6 +589,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     public void onResults(SearchResultEvent searchResultEvent) {
+        Log.d("DEBUG", searchResultEvent.searchResponse.toString());
         if(null!=searchResultEvent.error) {
             //TODO handle error
             return;
@@ -581,6 +599,9 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             setSearchResultFrameLayoutVisibility(true);
             this.mSearches = searchResultEvent.searchResponse.getData();
             clearSelectedSearches();
+            if(TextUtils.isEmpty(mSearchEditText.getText())) {
+                addNearbyPropertiesSearchItem();
+            }
             mSearchAdapter.setData(mAvailableSearches, false);
         }
     }

@@ -88,7 +88,11 @@ public class ListingParser {
 
                     listing.size = property.optDouble(SIZE);
                     listing.measure = property.optString(MEASURE);
-                    listing.sizeInfo = listing.size > 0 ? listing.size.toString().concat(" ").concat(listing.measure) : null;
+                    if ((listing.size == Math.floor(listing.size)) && !Double.isInfinite(listing.size)) {
+                        listing.sizeInfo = listing.size > 0 ? String.valueOf(listing.size.intValue()).concat(" ").concat(listing.measure) : null;
+                    } else {
+                        listing.sizeInfo = listing.size > 0 ? listing.size.toString().concat(" ").concat(listing.measure) : null;
+                    }
 
 
                     listing.studyRoom = property.optInt(STUDY_ROOM);
