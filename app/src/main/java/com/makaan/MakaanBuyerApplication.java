@@ -7,6 +7,8 @@ import android.util.SparseArray;
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.makaan.cache.MasterDataCache;
+import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.MakaanCookieStore;
 import com.makaan.jarvis.JarvisConstants;
 import com.makaan.jarvis.JarvisServiceCreator;
@@ -117,7 +119,7 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(ForgotPasswordService.class, new ForgotPasswordService());
         MakaanServiceFactory.getInstance().registerService(UserRegistrationService.class, new UserRegistrationService());
 
-                ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
+        ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateBuyPropertyTypes();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateRentPropertyTypes();
@@ -147,6 +149,10 @@ public class MakaanBuyerApplication extends Application {
         Analytics.setSingletonInstance(analytics);
         Analytics.with(this).identify(JarvisConstants.DELIVERY_ID);
         Analytics.with(this).flush();
+
+        if(null!=CookiePreferences.getUserInfo(this)) {
+            MasterDataCache.getInstance().setUserData(CookiePreferences.getUserInfo(this).getData());
+        }
 
     }
 

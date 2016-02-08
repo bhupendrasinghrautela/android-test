@@ -1,6 +1,7 @@
 package com.makaan.service;
 
 import com.android.volley.toolbox.StringRequest;
+import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ApiConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.wishlist.WishListResultCallback;
@@ -15,24 +16,43 @@ public class WishListService implements MakaanService {
 
     private static final String TAG = WishListService.class.getSimpleName();
 
-    public void add(int projectId, int typeId, int listingId){
+    public void addProject(Integer projectId){
         try {
             JSONObject wishListPayload = new JSONObject();
-            wishListPayload.put("projectId", projectId);
-            wishListPayload.put("listingId", listingId);
-
-            String requestUrl = buildWishListUrl();
-
-            MakaanNetworkClient.getInstance().post(requestUrl, wishListPayload, new WishListResultCallback(), TAG);
+            if(null!=projectId) {
+                wishListPayload.put("projectId", projectId);
+            }else {
+                throw new IllegalArgumentException("Invalid arguments");
+            }
+            add(wishListPayload);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
+    public void addListing(Integer listingId){
+        try {
+            JSONObject wishListPayload = new JSONObject();
+            if(null!=listingId){
+                wishListPayload.put("listingId", listingId);
+            }else {
+                throw new IllegalArgumentException("Invalid arguments");
+            }
+            add(wishListPayload);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void add(JSONObject wishListPayload){
+        String requestUrl = buildWishListUrl();
+        MakaanNetworkClient.getInstance().post(requestUrl, wishListPayload, new WishListResultCallback(), TAG);
+    }
+
     public void get(){
         String requestUrl = buildWishListUrl();
-
         MakaanNetworkClient.getInstance().get(requestUrl, new WishListResultCallback(), TAG);
     }
 
@@ -42,6 +62,9 @@ public class WishListService implements MakaanService {
     }
 
     private String buildWishListUrl(){
+        if(null==MasterDataCache.getInstance().getUserData()){
+            throw new RuntimeException("User not logged in");
+        }
         StringBuilder requestBuilder = new StringBuilder();
         requestBuilder.append(ApiConstants.BASE_URL);
         requestBuilder.append("/data/v1/entity/user/wish-list");

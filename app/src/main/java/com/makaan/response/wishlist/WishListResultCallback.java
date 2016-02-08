@@ -2,6 +2,7 @@ package com.makaan.response.wishlist;
 
 import android.util.Log;
 
+import com.makaan.cache.MasterDataCache;
 import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.network.StringRequestCallback;
 import com.makaan.response.ResponseError;
@@ -31,6 +32,15 @@ public class WishListResultCallback extends StringRequestCallback {
         }else {
 
             wishListResultEvent.wishListResponse = wishListResponse;
+            for (WishList wishList : wishListResponse.data){
+                if(null!=wishList){
+                    if(null!=wishList.listingId){
+                        MasterDataCache.getInstance().addShortlistedProperty(wishList.listingId);
+                    }else if(null!=wishList.projectId){
+                        MasterDataCache.getInstance().addShortlistedProperty(wishList.projectId);
+                    }
+                }
+            }
         }
 
         AppBus.getInstance().post(wishListResultEvent);

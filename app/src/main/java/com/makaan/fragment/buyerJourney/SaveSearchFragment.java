@@ -97,6 +97,10 @@ public class SaveSearchFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(SaveSearchGetEvent saveSearchGetEvent){
+        if(null== saveSearchGetEvent || null!=saveSearchGetEvent.error){
+            //TODO handle error
+            return;
+        }
         SaveSearchGetEvent saveSearchGetEvent1 = saveSearchGetEvent;
         mAdapter = new SaveSearchAdapter(saveSearchGetEvent.saveSearchArrayList);
         if (mRecyclerView != null)

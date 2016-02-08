@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.FadeInNetworkImageView;
@@ -30,15 +31,20 @@ import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.PreferenceConstants;
+import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.serp.ListingInfoMap;
+import com.makaan.response.wishlist.WishListResponse;
+import com.makaan.service.MakaanServiceFactory;
+import com.makaan.service.WishListService;
 import com.makaan.util.Blur;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
 import com.pkmmte.view.CircularImageView;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -170,31 +176,8 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         mPreferences = mContext.getSharedPreferences(
                 PreferenceConstants.PREF_SHORTLISTED_PROPERTIES, Context.MODE_PRIVATE);
 
-        if(isBuy) {
-            boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(
-                    mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_BUY, mListing.lisitingId, isBuy);
-            mPropertyShortlistCheckbox.setChecked(isShortlisted);
-            // TODO temporary code to show badges
-            /*if(isShortlisted) {
-                if (mListing.lisitingId % 2 == 0) {
-                    mBadgeImageView.setImageResource(R.drawable.badge_new);
-                    mBadgeImageView.setVisibility(VISIBLE);
-                    mBadgeTextView.setText("New");
-                } else {
-                    mBadgeImageView.setImageResource(R.drawable.badge_seen);
-                    mBadgeImageView.setVisibility(VISIBLE);
-                    mBadgeTextView.setText("Seen");
-                }
-                mBadgeTextView.setVisibility(VISIBLE);
-            } else {
-                mBadgeImageView.setVisibility(GONE);
-                mBadgeImageView.setVisibility(GONE);
-            }*/
-        } else {
-            boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(
-                    mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_RENT, mListing.lisitingId, isBuy);
-            mPropertyShortlistCheckbox.setChecked(isShortlisted);
-        }
+        boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(mListing.lisitingId);
+        mPropertyShortlistCheckbox.setChecked(isShortlisted);
 
         if(mListing.mainImageUrl != null && !TextUtils.isEmpty(mListing.mainImageUrl)) {
             mPropertyImageView.setImageUrl(mListing.mainImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
@@ -577,18 +560,13 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        //TODO need to have a small progressbar here
+        WishListService wishListService =
+                (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
         if(isChecked) {
-            if(SerpObjects.isBuyContext(getContext())) {
-                MasterDataCache.getInstance().addShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_BUY, mListing.lisitingId, true);
-            } else {
-                MasterDataCache.getInstance().addShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_RENT, mListing.lisitingId, false);
-            }
+            wishListService.addListing(mListing.lisitingId);
         } else {
-            if(SerpObjects.isBuyContext(getContext())) {
-                MasterDataCache.getInstance().removeShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_BUY, mListing.lisitingId, true);
-            } else {
-                MasterDataCache.getInstance().removeShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_RENT, mListing.lisitingId, false);
-            }
+            wishListService.delete(mListing.lisitingId);
         }
     }
 
@@ -622,5 +600,17 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         bundle.putString("id", String.valueOf(mListing.lisitingPostedBy.id));
 
         mCallback.requestDetailPage(SerpActivity.REQUEST_LEAD_FORM, bundle);
+    }
+
+    @Subscribe
+    public void onResults(WishListResultEvent wishListResultEvent) {
+        //TODO Wishlist api result has to be handled using some callback 
+        if(null!=wishListResultEvent || null!=wishListResultEvent.error){
+            //TODO show error here
+            return;
+        }else {
+            WishListResponse response = wishListResultEvent.wishListResponse;
+        }
+
     }
 }

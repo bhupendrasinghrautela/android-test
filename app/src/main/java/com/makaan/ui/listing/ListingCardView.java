@@ -25,6 +25,8 @@ import com.makaan.constants.PreferenceConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.response.listing.Listing;
+import com.makaan.service.MakaanServiceFactory;
+import com.makaan.service.WishListService;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
 
@@ -77,17 +79,7 @@ public class ListingCardView extends BaseCardView<Listing> implements CompoundBu
         mPreferences = context.getSharedPreferences(
                 PreferenceConstants.PREF_SHORTLISTED_PROPERTIES, Context.MODE_PRIVATE);
         mShortlistPropertyCheckbox.setOnCheckedChangeListener(null);
-        if(SerpObjects.isBuyContext(getContext())) {
-            boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(
-                    mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_BUY, item.lisitingId, true);
-            mShortlistPropertyCheckbox.setChecked(isShortlisted);
-            // TODO code to show badges
-
-        } else {
-            boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(
-                    mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_RENT, item.lisitingId, false);
-            mShortlistPropertyCheckbox.setChecked(isShortlisted);
-        }
+        boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(mListing.lisitingId);
         mShortlistPropertyCheckbox.setOnCheckedChangeListener(this);
 
         // TODO check for unit info
@@ -139,18 +131,12 @@ public class ListingCardView extends BaseCardView<Listing> implements CompoundBu
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        WishListService wishListService =
+                (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
         if(isChecked) {
-            if(SerpObjects.isBuyContext(getContext())) {
-                MasterDataCache.getInstance().addShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_BUY, mListing.lisitingId, true);
-            } else {
-                MasterDataCache.getInstance().addShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_RENT, mListing.lisitingId, false);
-            }
+            wishListService.addListing(mListing.lisitingId);
         } else {
-            if(SerpObjects.isBuyContext(getContext())) {
-                MasterDataCache.getInstance().removeShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_BUY, mListing.lisitingId, true);
-            } else {
-                MasterDataCache.getInstance().removeShortlistedProperty(mPreferences, PreferenceConstants.PREF_SHORTLISTED_PROPERTIES_KEY_RENT, mListing.lisitingId, false);
-            }
+            wishListService.delete(mListing.lisitingId);
         }
     }
 

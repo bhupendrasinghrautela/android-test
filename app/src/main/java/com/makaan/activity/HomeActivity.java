@@ -193,6 +193,9 @@ public class HomeActivity extends MakaanBaseSearchActivity {
 
     @Subscribe
     public void onResults(WishListResultEvent wishListResultEvent) {
+        if(null==wishListResultEvent || null!=wishListResultEvent.error){
+            return;
+        }
         WishListResponse response = wishListResultEvent.wishListResponse;
 //        Toast.makeText(this,"Wish list  - " + response.totalCount, Toast.LENGTH_SHORT).show(); causing null pointer
 
