@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.event.project.OnRentBuyClicked;
 import com.makaan.event.project.OnViewAllPropertiesClicked;
 import com.makaan.event.project.ProjectConfigEvent;
 import com.makaan.fragment.project.ProjectConfigFragment;
@@ -116,6 +117,11 @@ public class ProjectConfigView extends LinearLayout implements ViewPager.OnPageC
     @Override
     public void onPageSelected(int position) {
         currentPage = position;
+        if(currentPage == 0){//buy
+            AppBus.getInstance().post(new OnRentBuyClicked(false));
+        }else{//rent
+            AppBus.getInstance().post(new OnRentBuyClicked(true));
+        }
     }
 
     @Override

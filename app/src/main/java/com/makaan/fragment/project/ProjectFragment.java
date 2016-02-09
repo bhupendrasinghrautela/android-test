@@ -17,13 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.makaan.R;
+import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.listing.SerpActivity;
-import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.image.ImagesGetEvent;
 import com.makaan.event.listing.ListingByIdGetEvent;
 import com.makaan.event.locality.NearByLocalitiesEvent;
+import com.makaan.event.project.OnRentBuyClicked;
 import com.makaan.event.project.OnSimilarProjectClickedEvent;
 import com.makaan.event.project.OnViewAllPropertiesClicked;
 import com.makaan.event.project.ProjectByIdEvent;
@@ -31,6 +32,9 @@ import com.makaan.event.project.ProjectConfigEvent;
 import com.makaan.event.project.ProjectConfigItemClickListener;
 import com.makaan.event.project.SimilarProjectGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.fragment.property.ViewSellersDialogFragment;
+import com.makaan.pojo.ProjectConfigItem;
+import com.makaan.pojo.SellerCard;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.locality.Locality;
@@ -45,7 +49,6 @@ import com.makaan.ui.project.ProjectSpecificationView;
 import com.makaan.ui.property.AboutBuilderExpandedLayout;
 import com.makaan.ui.property.AmenitiesViewScroll;
 import com.makaan.ui.property.PropertyImageViewPager;
-import com.makaan.util.KeyUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -75,7 +78,56 @@ public class ProjectFragment extends MakaanBaseFragment{
     private Context mContext;
     private Project project;
     private long projectId;
+    private boolean isRent = false;
+    private ProjectConfigEvent mProjectConfigEvent;
 
+    @OnClick(R.id.contact_top_seller)
+    public void openTopSeller(){
+        SellerCard sellerCard = null;
+        if(isRent && mProjectConfigEvent.rentProjectConfigItems!=null){
+            for(ProjectConfigItem projectConfigItem:mProjectConfigEvent.rentProjectConfigItems){
+                if(sellerCard == null){
+                    sellerCard = projectConfigItem.topSellerCard;
+                }
+                else if(sellerCard.noOfProperties<projectConfigItem.topSellerCard.noOfProperties){
+                    sellerCard = projectConfigItem.topSellerCard;
+                }
+                else if(sellerCard.noOfProperties == projectConfigItem.topSellerCard.noOfProperties
+                        && sellerCard.rating<projectConfigItem.topSellerCard.rating){
+                    sellerCard = projectConfigItem.topSellerCard;
+                }
+            }
+        }
+        else if(!isRent && mProjectConfigEvent.buyProjectConfigItems!=null){
+            for(ProjectConfigItem projectConfigItem:mProjectConfigEvent.buyProjectConfigItems){
+                if(sellerCard == null){
+                    sellerCard = projectConfigItem.topSellerCard;
+                }
+                else if(sellerCard.noOfProperties<projectConfigItem.topSellerCard.noOfProperties){
+                    sellerCard = projectConfigItem.topSellerCard;
+                }
+                else if(sellerCard.noOfProperties == projectConfigItem.topSellerCard.noOfProperties
+                        && sellerCard.rating<projectConfigItem.topSellerCard.rating){
+                    sellerCard = projectConfigItem.topSellerCard;
+                }
+            }
+        }
+        if(sellerCard!=null) {
+            Intent intent = new Intent(getActivity(), LeadFormActivity.class);
+            try {
+                intent.putExtra("name", sellerCard.name);
+                if (sellerCard.rating != null) {
+                    intent.putExtra("score", sellerCard.rating.toString());
+                } else {
+                    intent.putExtra("score", "0");
+                }
+                intent.putExtra("phone",sellerCard.contactNo);//todo: not available in pojo
+                intent.putExtra("id", sellerCard.sellerId.toString());
+                getActivity().startActivity(intent);
+            } catch (NullPointerException e) {
+            }
+        }
+    }
     @Override
     protected int getContentViewId() {
         return R.layout.fragment_project;
@@ -118,12 +170,27 @@ public class ProjectFragment extends MakaanBaseFragment{
     public void onResults(ProjectConfigItemClickListener configItemClickListener){
         switch (configItemClickListener.configItemType){
             case SELLER:
-                //TODO: open seller screen
+                ProjectConfigItem projectConfigItem = configItemClickListener.projectConfigItem;
+                ArrayList<SellerCard> sellerCards = new ArrayList<>();
+                for(SellerCard sellerCard:projectConfigItem.companies.values()){
+                    sellerCards.add(sellerCard);
+                }
+                if(sellerCards.size()>0) {
+                    FragmentTransaction ft = this.getFragmentManager().beginTransaction();
+                    ViewSellersDialogFragment viewSellersDialogFragment = new ViewSellersDialogFragment();
+                    viewSellersDialogFragment.bindView(sellerCards);
+                    viewSellersDialogFragment.show(ft, "allSellers");
+                }
                 break;
             case PROPERTIES:
                 startSerpActivity(configItemClickListener);
                 break;
         }
+    }
+
+    @Subscribe
+    public void onRentBuySelected(OnRentBuyClicked rentBuyClicked){
+        isRent = rentBuyClicked.isRent;
     }
 
     private void startSerpActivity(ProjectConfigItemClickListener configItemClickListener) {
@@ -164,7 +231,7 @@ public class ProjectFragment extends MakaanBaseFragment{
     @Subscribe
     public void onResult(ProjectByIdEvent projectByIdEvent) {
         if (null == projectByIdEvent || null != projectByIdEvent.error) {
-            getActivity().finish();
+            //getActivity().finish();
             Toast.makeText(getActivity(), "project details could not be loaded at this time. please try later.", Toast.LENGTH_LONG).show();
         } else {
             project = projectByIdEvent.project;
@@ -214,6 +281,7 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResult(ProjectConfigEvent projectConfigEvent){
+        this.mProjectConfigEvent = projectConfigEvent;
         if(null== projectConfigEvent || null!=projectConfigEvent.error){
             //TODO handle error
             return;

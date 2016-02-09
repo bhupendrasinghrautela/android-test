@@ -3,6 +3,7 @@ package com.makaan.ui.property;
 import android.content.Context;
 import android.text.Html;
 import android.util.AttributeSet;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
@@ -36,10 +37,16 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
 
     @Bind(R.id.experience)
     TextView mBuilderExperience;
+    @Bind(R.id.builder_experience)
+    LinearLayout mBuilderExperienceLayout;
     @Bind(R.id.ongoing)
     TextView mBuilderOngoing;
+    @Bind(R.id.builder_ongoing)
+    LinearLayout mBuilderOngoingLayout;
     @Bind(R.id.completed)
     TextView mBuilderCompleted;
+    @Bind(R.id.builder_completed)
+    LinearLayout mBuilderCompletedLayout;
 
     private boolean isExpanded = false;
     private Context mContext;
@@ -85,17 +92,28 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
                 try {
                     mBuilderExperience.setText(DateUtil.getDiffUsingTimeStamp(mContext,Long.parseLong(item.establishedDate)));
                 }
-                catch (NumberFormatException e){}
+                catch (NumberFormatException e){
+                    mBuilderExperienceLayout.setVisibility(GONE);
+                }
+            }
+            else{
+                mBuilderExperienceLayout.setVisibility(GONE);
             }
             if(item.projectStatusCount !=null){
                 ProjectStatusCount projectStatusCount = item.projectStatusCount;
-                setProject(mBuilderCompleted,projectStatusCount.completed);
-                setProject(mBuilderOngoing,projectStatusCount.underConstruction);
-
+                    setProject(mBuilderCompleted, projectStatusCount.completed);
+                    setProject(mBuilderOngoing, projectStatusCount.underConstruction);
+            }
+            else{
+                mBuilderCompletedLayout.setVisibility(GONE);
+                mBuilderOngoingLayout.setVisibility(GONE);
             }
             if(item.description!=null) {
                 mBuilderDescription.setText(Html.fromHtml(item.description));
             }
+        }
+        else{
+            this.setVisibility(GONE);
         }
     }
 

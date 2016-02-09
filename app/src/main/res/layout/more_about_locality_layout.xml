@@ -62,6 +62,6 @@
             android:typeface="serif"
             android:layout_marginBottom="@dimen/property_page_locality_brief_margin_bottom"
             android:textColor="@color/red"
-            android:text="@string/more_about"/>
+            android:text="@string/more_about_locality"/>
     </RelativeLayout>
 </merge>

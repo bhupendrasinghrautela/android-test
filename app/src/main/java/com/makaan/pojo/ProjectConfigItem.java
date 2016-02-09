@@ -5,7 +5,6 @@ import android.os.Parcelable;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by vaibhav on 24/01/16.
@@ -16,6 +15,7 @@ public class ProjectConfigItem implements Parcelable {
     public HashSet<Integer> bedrooms = new HashSet<>();
     public int propertyCount;
     public int sellerCount;
+    public SellerCard topSellerCard;
 
     public HashMap<Long, SellerCard> companies = new HashMap<>();
 
