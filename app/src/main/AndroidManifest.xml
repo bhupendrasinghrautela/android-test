@@ -150,6 +150,7 @@
             android:theme="@style/Theme.NoActionBarTheme">
         </activity>
         <service android:name=".jarvis.JarvisService"></service>
+        <service android:name=".service.leakcanary.TemporaryLeakUploadService"></service>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

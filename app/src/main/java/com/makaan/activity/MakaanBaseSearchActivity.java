@@ -146,7 +146,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         Point size = new Point();
         display.getSize(size);
         mSearchImageViewX = size.x - (this.getResources().getDimensionPixelSize(R.dimen.activity_search_base_layout_search_bar_back_button_width)
-                + this.getResources().getDimensionPixelSize(R.dimen.activity_search_base_layout_search_bar_back_button_margin_left)
+                + this.getResources().getDimensionPixelSize(R.dimen.activity_search_base_layout_search_bar_back_layout_padding_left)
+                + this.getResources().getDimensionPixelSize(R.dimen.activity_search_base_layout_search_bar_back_layout_padding_right)
                 + this.getResources().getDimensionPixelSize(R.dimen.activity_search_base_layout_search_bar_search_text_view_margin_left)
                 + this.getResources().getDimensionPixelSize(R.dimen.activity_search_base_layout_search_bar_search_image_button_width)
                 + this.getResources().getDimensionPixelSize(R.dimen.activity_search_base_layout_search_bar_search_image_button_margin_right));
@@ -377,7 +378,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         }
     }
 
-    @OnClick(R.id.activity_search_base_layout_search_bar_back_button)
+    @OnClick({R.id.activity_search_base_layout_search_bar_back_layout,
+            R.id.activity_search_base_layout_search_bar_back_button})
     public void onBackPressed(View view) {
         onBackPressed();
     }
@@ -539,7 +541,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     private void showEmptySearchResults() {
-        if(mSelectedSearches.size() > 0) {
+        if(mSelectedSearches.size() > 0 && (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(mSelectedSearches.get(0).type)
+                || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(mSelectedSearches.get(0).type))) {
             LocationService service = (LocationService) MakaanServiceFactory.getInstance().getService(LocationService.class);
             service.getTopNearbyLocalitiesAsSearchResult(mSelectedSearches.get(mSelectedSearches.size() - 1));
             setSearchResultFrameLayoutVisibility(true);
@@ -591,7 +594,6 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     public void onResults(SearchResultEvent searchResultEvent) {
-        Log.d("DEBUG", searchResultEvent.searchResponse.toString());
         if(null!=searchResultEvent.error) {
             //TODO handle error
             return;

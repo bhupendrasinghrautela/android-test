@@ -24,6 +24,7 @@ import com.makaan.response.project.Builder;
 import com.makaan.response.project.CompanySeller;
 import com.makaan.util.AppBus;
 import com.makaan.util.Blur;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.StringUtil;
 import com.pkmmte.view.CircularImageView;
 import com.squareup.otto.Subscribe;
@@ -91,23 +92,6 @@ public class SellerListingView extends AbstractListingView {
 
         callback.requestApi(SerpActivity.REQUEST_SELLER_API, "listingCompanyId");
         this.setVisibility(View.GONE);
-
-        // TODO need to use original data
-        Bitmap bitmap = null;
-
-        final Drawable image = mContext.getResources().getDrawable(R.drawable.temp_bulding);
-        if(image.getIntrinsicWidth() <= 0 || image.getIntrinsicHeight() <= 0) {
-            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
-        } else {
-            bitmap = Bitmap.createBitmap(image.getIntrinsicWidth(), image.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        }
-        Canvas canvas = new Canvas(bitmap);
-        image.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        image.draw(canvas);
-
-        final Bitmap newImg = Blur.fastblur(mContext, bitmap, 25);
-
-        mSellerBackgroundImageView.setImageBitmap(newImg);
     }
 
     @Subscribe
@@ -139,7 +123,8 @@ public class SellerListingView extends AbstractListingView {
 
         if(seller.logo != null) {
             // get seller image
-            MakaanNetworkClient.getInstance().getImageLoader().get(seller.logo, new ImageLoader.ImageListener() {
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(
+                    seller.logo, mSellerImageView.getWidth(), mSellerImageView.getHeight(), false), new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {
@@ -158,7 +143,9 @@ public class SellerListingView extends AbstractListingView {
 
         if(seller.coverPicture != null) {
             // get seller cover image
-            MakaanNetworkClient.getInstance().getImageLoader().get(seller.coverPicture, new ImageLoader.ImageListener() {
+            // TODO discuss request size
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(
+                    seller.coverPicture, mSellerBackgroundImageView.getWidth() / 2, mSellerBackgroundImageView.getHeight() / 2, false), new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {
@@ -174,6 +161,23 @@ public class SellerListingView extends AbstractListingView {
 
                 }
             });
+        } else {
+            // TODO need to use original data
+            Bitmap bitmap = null;
+
+            final Drawable image = mContext.getResources().getDrawable(R.drawable.temp_bulding);
+            if(image.getIntrinsicWidth() <= 0 || image.getIntrinsicHeight() <= 0) {
+                bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_4444);
+            } else {
+                bitmap = Bitmap.createBitmap(image.getIntrinsicWidth(), image.getIntrinsicHeight(), Bitmap.Config.ARGB_4444);
+            }
+            Canvas canvas = new Canvas(bitmap);
+            image.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            image.draw(canvas);
+
+            final Bitmap newImg = Blur.fastblur(mContext, bitmap, 25);
+
+            mSellerBackgroundImageView.setImageBitmap(newImg);
         }
         this.setVisibility(View.VISIBLE);
 

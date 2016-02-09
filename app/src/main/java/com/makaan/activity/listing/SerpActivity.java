@@ -227,33 +227,16 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 openSearch(true);
 
             } else if (type == SerpActivity.TYPE_CITY) {
-                mSerpSelector.removeTerm("builderId");
-                mSerpSelector.removeTerm("projectId");
-                mSerpSelector.removeTerm("localityId");
-                mSerpSelector.removeTerm("cityId");
-                mSerpSelector.removeTerm("suburbId");
-                mSerpSelector.removeTerm("listingCompanyId");
-                mSerpSelector.removeTerm("localityOrSuburbId");
+                removeAllSelectors();
                 parseSerpRequest(intent, SerpActivity.TYPE_CITY);
             } else if (type == SerpActivity.TYPE_GPID) {
-                mSerpSelector.removeTerm("builderId");
-                mSerpSelector.removeTerm("projectId");
-                mSerpSelector.removeTerm("localityId");
-                mSerpSelector.removeTerm("cityId");
-                mSerpSelector.removeTerm("suburbId");
-                mSerpSelector.removeTerm("listingCompanyId");
-                mSerpSelector.removeTerm("localityOrSuburbId");
+                removeAllSelectors();
                 parseSerpRequest(intent, SerpActivity.TYPE_GPID);
             } else if (type == SerpActivity.TYPE_PROJECT) {
                 parseSerpRequest(intent, SerpActivity.TYPE_PROJECT);
 
             } else if (type == SerpActivity.TYPE_SEARCH) {
-                mSerpSelector.removeTerm("builderId");
-                mSerpSelector.removeTerm("projectId");
-                mSerpSelector.removeTerm("localityId");
-                mSerpSelector.removeTerm("cityId");
-                mSerpSelector.removeTerm("suburbId");
-                mSerpSelector.removeTerm("localityOrSuburbId");
+                removeAllSelectors();
 
                 parseSerpRequest(intent, SerpActivity.TYPE_SEARCH);
 
@@ -269,13 +252,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 mSerpSelector.removeTerm("listingCompanyId");
                 parseSerpRequest(intent, type);
             } else if (type == SerpActivity.TYPE_NEARBY) {
-                mSerpSelector.removeTerm("builderId");
-                mSerpSelector.removeTerm("projectId");
-                mSerpSelector.removeTerm("localityId");
-                mSerpSelector.removeTerm("cityId");
-                mSerpSelector.removeTerm("suburbId");
-                mSerpSelector.removeTerm("localityOrSuburbId");
-                mSerpSelector.removeTerm("listingCompanyId");
+                removeAllSelectors();
                 parseSerpRequest(intent, type);
             } else {
                 parseSerpRequest(intent, type);
@@ -283,6 +260,17 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         } else {
             parseSerpRequest(intent, SerpActivity.TYPE_UNKNOWN);
         }
+    }
+
+    private void removeAllSelectors() {
+        mSerpSelector.removeGeo();
+        mSerpSelector.removeTerm("builderId");
+        mSerpSelector.removeTerm("projectId");
+        mSerpSelector.removeTerm("localityId");
+        mSerpSelector.removeTerm("cityId");
+        mSerpSelector.removeTerm("suburbId");
+        mSerpSelector.removeTerm("localityOrSuburbId");
+        mSerpSelector.removeTerm("listingCompanyId");
     }
 
     @Override
@@ -339,6 +327,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             mIsMapFragment = false;
             mMapImageView.setImageResource(R.drawable.map_icon);
             mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE), mListingCount);
+            mMapFragment = null;
+            setIsJarvisVisibile(true);
         }
     }
 
@@ -583,9 +573,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         if(mIsMapFragment) {
             if(getSupportFragmentManager().getBackStackEntryCount() > 0) {
                 getSupportFragmentManager().popBackStack();
+                mMapFragment = null;
                 mMapImageView.setImageResource(R.drawable.map_icon);
                 mIsMapFragment = false;
                 mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE), mListingCount);
+                setIsJarvisVisibile(true);
             }
             /*mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE), mListingCount);
             initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, true);
@@ -598,6 +590,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 initFragment(R.id.activity_serp_content_frame_layout, mMapFragment, true);
                 mIsMapFragment = true;
                 mMapImageView.setImageResource(R.drawable.list);
+                setIsJarvisVisibile(false);
             }
         }
     }

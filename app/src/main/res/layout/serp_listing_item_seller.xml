@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="0dp"
     app:cardElevation="0dp"
-    app:cardMaxElevation="0dp">
+    app:cardMaxElevation="0dp"
+    app:cardPreventCornerOverlap="false">
     <ImageView
         android:id="@+id/serp_listing_item_seller_background_image_view"
         android:layout_width="match_parent"

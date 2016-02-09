@@ -45,12 +45,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by rohitgarg on 1/7/16.
  */
-public class CountListingView extends AbstractListingView {
+public class CountListingView extends RelativeLayout {
     @Bind(R.id.fragment_listing_total_properties_set_alert_button)
     Button mSetAlertButton;
 
@@ -70,9 +71,8 @@ public class CountListingView extends AbstractListingView {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
     public void populateData(Object data, SerpRequestCallback callback) {
-        super.populateData(data, callback);
+        ButterKnife.bind(this, this);
         if(!(data instanceof String)) {
             return;
         }

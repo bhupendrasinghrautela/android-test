@@ -76,6 +76,10 @@ public class SerpMapFragment extends MakaanBaseFragment {
             if(mListings != null) {
                 populateMarker(mListings);
                 mProjectViewPager.setData(mListings);
+                // display first property be default
+                if(mAllMarkers.size() > 0) {
+                    displayProject(mAllMarkers.get(0));
+                }
             }
 
         }else{

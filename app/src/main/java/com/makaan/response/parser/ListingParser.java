@@ -158,13 +158,18 @@ public class ListingParser {
                                 || listing.lisitingPostedBy.type.equalsIgnoreCase(POSTED_BY_BUILDER)) {
                             listing.lisitingPostedBy.name = sellerCompany.optString(NAME);
                             listing.lisitingPostedBy.id = sellerCompany.optLong(ID);
-                            //listing.lisitingPostedBy.image = sellerCompany.companyImage; //TODO: implement image
+                            listing.lisitingPostedBy.logo = sellerCompany.optString(LOGO);
                             listing.lisitingPostedBy.rating = Math.round(sellerCompany.optInt(COMPANY_SCORE) * 10) / (10 * 2); // devided by 2 to show rating out of 5
                             listing.lisitingPostedBy.assist = sellerCompany.optBoolean(ASSIST);
                         }
                     }
                     listing.lisitingPostedBy.profilePictureURL = null != user ?
                             (user.optString(PROFILE_PICTURE_URL) != null ? user.optString(PROFILE_PICTURE_URL) : null) : null;
+                    // TODO discuss with prod, that if seller company name is not there, then using user name, e.g. listing id : 538819
+                    if(listing.lisitingPostedBy.name == null) {
+                        listing.lisitingPostedBy.name = null != user ?
+                                (user.optString(FULL_NAME) != null ? user.optString(FULL_NAME) : null) : null;
+                    }
 
 
                     listing.hasOffer = listingJson.optString(IS_OFFERED) != null && listingJson.optBoolean(IS_OFFERED);

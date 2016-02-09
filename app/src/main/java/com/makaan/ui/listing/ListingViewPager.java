@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by sunil on 06/01/16.
  */
-public class ListingViewPager extends ViewPager{
+public class ListingViewPager extends ViewPager {
     private static final int MARGIN = 30;
     private static final int H_PADDING = 120;
     private Context mContext;

@@ -41,6 +41,7 @@ import com.makaan.response.wishlist.WishListResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.WishListService;
 import com.makaan.util.Blur;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
 import com.pkmmte.view.CircularImageView;
@@ -92,8 +93,8 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
     TextView mPropertySizeInfoTextView;
     @Bind(R.id.serp_default_listing_property_address_text_view)
     TextView mPropertyAddressTextView;
-    @Bind(R.id.serp_default_listing_property_tagline_text_view)
-    TextView mPropertyDescriptionTextView;
+    /*@Bind(R.id.serp_default_listing_property_tagline_text_view)
+    TextView mPropertyDescriptionTextView;*/
     @Bind(R.id.serp_default_listing_seller_name_text_view)
     TextView mPropertySellerNameTextView;
     @Bind(R.id.serp_default_listing_badge_text_view)
@@ -180,7 +181,9 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         mPropertyShortlistCheckbox.setChecked(isShortlisted);
 
         if(mListing.mainImageUrl != null && !TextUtils.isEmpty(mListing.mainImageUrl)) {
-            mPropertyImageView.setImageUrl(mListing.mainImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
+            int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_width);
+            int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_height);
+            mPropertyImageView.setImageUrl(ImageUtils.getImageRequestUrl(mListing.mainImageUrl, width, height, false), MakaanNetworkClient.getInstance().getImageLoader());
         } else {
             //TODO this is just a dummy image
             String url = "https://im.proptiger-ws.com/1/644953/6/imperial-project-image-460007.jpeg";
@@ -266,7 +269,7 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         }
 
         // set property tagline or detailed info
-        if(mListing.description != null) {
+        /*if(mListing.description != null) {
             String text = Html.fromHtml(mListing.description.toLowerCase()).toString();
             text = text.replace("\t", "").replace("\n", "");
 
@@ -277,7 +280,7 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
             }
         } else {
             mPropertyDescriptionTextView.setText("not available");
-        }
+        }*/
 
         if(callback.needSellerInfoInSerp()) {
             mSellerInfoRelativeLayout.setVisibility(View.VISIBLE);
@@ -289,11 +292,30 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
                 mPropertySellerNameTextView.setText(mListing.project.builderName.toLowerCase());
             }
 
-            // todo need to show seller logo image if available
-            if(mListing.lisitingPostedBy.profilePictureURL != null) {
+            int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_width);
+            int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_height);
+
+            if(!TextUtils.isEmpty(mListing.lisitingPostedBy.logo)) {
                 mSellerLogoTextView.setVisibility(View.GONE);
                 mSellerImageView.setVisibility(View.VISIBLE);
-                MakaanNetworkClient.getInstance().getImageLoader().get(mListing.lisitingPostedBy.profilePictureURL, new ImageLoader.ImageListener() {
+                MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(mListing.lisitingPostedBy.logo, width, height, false), new ImageLoader.ImageListener() {
+                    @Override
+                    public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
+                        if (b && imageContainer.getBitmap() == null) {
+                            return;
+                        }
+                        mSellerImageView.setImageBitmap(imageContainer.getBitmap());
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        showTextAsImage();
+                    }
+                });
+            } else if(!TextUtils.isEmpty(mListing.lisitingPostedBy.profilePictureURL)) {
+                mSellerLogoTextView.setVisibility(View.GONE);
+                mSellerImageView.setVisibility(View.VISIBLE);
+                MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(mListing.lisitingPostedBy.profilePictureURL, width, height, false), new ImageLoader.ImageListener() {
                     @Override
                     public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                         if (b && imageContainer.getBitmap() == null) {
@@ -342,6 +364,9 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
     }
 
     private void showTextAsImage() {
+        if(mListing.lisitingPostedBy.name == null) {
+            mSellerLogoTextView.setVisibility(View.INVISIBLE);
+        }
         mSellerLogoTextView.setText(String.valueOf(mListing.lisitingPostedBy.name.charAt(0)));
         mSellerLogoTextView.setVisibility(View.VISIBLE);
         mSellerImageView.setVisibility(View.GONE);
@@ -561,6 +586,7 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         //TODO need to have a small progressbar here
+        // TODO store in device if user is not logged in
         WishListService wishListService =
                 (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
         if(isChecked) {

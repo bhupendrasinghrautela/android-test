@@ -39,6 +39,9 @@ public class Selector implements Cloneable {
     public Selector(Selector selector) {
         this.termSelectorHashMap.putAll(selector.termSelectorHashMap);
         this.rangeSelectorHashMap.putAll(selector.rangeSelectorHashMap);
+        this.geoSelector.lat = selector.geoSelector.lat;
+        this.geoSelector.lon = selector.geoSelector.lon;
+        this.geoSelector.distance = selector.geoSelector.distance;
     }
 
     public Selector fields(String[] fields) {
@@ -284,6 +287,13 @@ public class Selector implements Cloneable {
 
 
         return null;
+    }
+
+    public Selector removeGeo() {
+        this.geoSelector.distance = null;
+        this.geoSelector.lat = null;
+        this.geoSelector.lon = null;
+        return this;
     }
 
     public Selector removeTerm(String fieldName) {

@@ -15,6 +15,7 @@ import com.makaan.jarvis.JarvisServiceCreator;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.service.LocationService;
+import com.makaan.service.leakcanary.TemporaryLeakUploadService;
 import com.makaan.service.user.ForgotPasswordService;
 import com.makaan.service.user.UserRegistrationService;
 import com.makaan.service.AgentService;
@@ -42,6 +43,7 @@ import com.makaan.service.user.UserLoginService;
 import com.makaan.util.FontTypeface;
 import com.makaan.util.RandomString;
 import com.segment.analytics.Analytics;
+import com.squareup.leakcanary.AndroidExcludedRefs;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -77,7 +79,7 @@ public class MakaanBuyerApplication extends Application {
 
         // leak canary to detect memory leaks
         // comment below line to disable leak canary
-        refWatcher = LeakCanary.install(this);
+        refWatcher = LeakCanary.install(this, TemporaryLeakUploadService.class, AndroidExcludedRefs.createAppDefaults().build());
 
         FontTypeface.setDefaultFont(this, "DEFAULT", "fonts/ProximaNova-Bold.otf");
         FontTypeface.setDefaultFont(this, "MONOSPACE", "fonts/proxima.otf");

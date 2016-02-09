@@ -6,4 +6,4 @@
     android:background="@drawable/fragment_dialog_filters_toggle_button_background_selector"
     android:textColor="@color/fragment_dialog_filters_toggle_button_text_color_selector"
     android:textSize="@dimen/fragment_dialog_filters_toggle_button_grid_item_text_size"
-    android:typeface="serif"/>
+    android:typeface="monospace"/>

@@ -52,9 +52,11 @@ public class ResponseConstants {
     public static final String UNIT_TYPE_ID = "unitTypeId";
     //public static final String UNIT_TYPE = "unitType";
     public static final String NAME = "name";
+    public static final String FULL_NAME = "fullName";
     public static final String BUILDER = "builder";
     public static final String LABEL = "label";
     public static final String TYPE = "type";
+    public static final String LOGO = "logo";
 //    public static final String COMPANY_SCORE = "companyScore";
     public static final String COMPANY_SCORE = "score";
     public static final String ASSIST = "assist";

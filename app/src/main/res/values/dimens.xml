@@ -443,9 +443,11 @@
     <dimen name="fragment_listing_total_properties_text_view_text_size">14sp</dimen>
 
     <!-- search bar dimen values -->
+    <dimen name="activity_search_base_layout_search_bar_back_layout_padding_left">10dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_back_layout_padding_right">10dp</dimen>
+\
     <dimen name="activity_search_base_layout_search_bar_back_button_height">24dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_back_button_width">24dp</dimen>
-    <dimen name="activity_search_base_layout_search_bar_back_button_margin_left">10dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_back_button_margin_top">14dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_back_button_margin_bottom">12dp</dimen>
 
