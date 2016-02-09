@@ -317,9 +317,9 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             finish();
         }*/
 
-        if(supportsListing() && !SearchSuggestionType.NEARBY_PROPERTIES.getValue().equals(searchResponseItem.type)) {
+        /*if(supportsListing() && !SearchSuggestionType.NEARBY_PROPERTIES.getValue().equals(searchResponseItem.type)) {
             setTitle(searchResponseItem.displayText);
-        }
+        }*/
     }
 
     private void addSearchInWrapLayout(SearchResponseItem searchResponseItem) {
@@ -397,6 +397,10 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         } else {
             super.onBackPressed();
         }
+    }
+
+    protected boolean needBackProcessing() {
+        return mSearchRelativeView.getVisibility() == View.VISIBLE;
     }
 
     protected boolean areListingsAvailable() {
@@ -598,7 +602,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             //TODO handle error
             return;
         }
-        if(mSearchResultFrameLayout.getVisibility() == View.VISIBLE) {
+        if(mSearchResultFrameLayout.getVisibility() == View.VISIBLE && !TextUtils.isEmpty(mSearchEditText.getText())) {
             mSearchResultReceived = true;
             setSearchResultFrameLayoutVisibility(true);
             this.mSearches = searchResultEvent.searchResponse.getData();
@@ -612,7 +616,9 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
     private void clearSelectedSearches() {
         mAvailableSearches.clear();
-        mAvailableSearches.addAll(mSearches);
+        if(mSearches != null) {
+            mAvailableSearches.addAll(mSearches);
+        }
         if(mSelectedSearches.size() > 0) {
             if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(mSelectedSearches.get(0).type)
                     || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(mSelectedSearches.get(0).type)) {
@@ -738,6 +744,11 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         mSearchPropertiesTextView.setText(title);
     }
 
+    @Override
+    public void setTitle(CharSequence title) {
+        setTitle(title.toString());
+    }
+
     protected void setSearchBarCollapsible(boolean isCollapsible) {
         AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) mSearchLayoutFrameLayout.getLayoutParams();
         if(isCollapsible) {
@@ -760,4 +771,13 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
     protected abstract boolean needScrollableSearchBar();
     protected abstract boolean supportsListing();
+
+    public void removeTopSearchItem() {
+        if(mSelectedSearches.size() > 0) {
+            mSelectedSearches.remove(mSelectedSearches.size() - 1);
+            if(mSelectedSearchAdapter != null) {
+                mSelectedSearchAdapter.setData(mSelectedSearches);
+            }
+        }
+    }
 }

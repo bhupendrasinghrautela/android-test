@@ -113,7 +113,8 @@
             android:textAllCaps="false"
             android:gravity="start|center_vertical"
             style="?android:attr/borderlessButtonStyle"
-            android:typeface="serif" />
+            android:typeface="serif"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/relevance_popup_window_distance_button"

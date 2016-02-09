@@ -423,7 +423,8 @@
                     android:visibility="gone"
                     app:border="true"
                     app:border_color="@color/serp_listing_card_seller_mask_color"
-                    app:border_width="@dimen/border_width" />
+                    app:border_width="@dimen/border_width"
+                    android:scaleType="centerCrop"/>
 
                 <TextView
                     android:id="@+id/serp_default_listing_seller_logo_text_view"

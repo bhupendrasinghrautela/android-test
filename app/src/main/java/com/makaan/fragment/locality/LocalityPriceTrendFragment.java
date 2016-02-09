@@ -180,9 +180,9 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        SerpRequest request = new SerpRequest();
+                        SerpRequest request = new SerpRequest(SerpActivity.TYPE_SUGGESTION);
                         //TODO set serp request suggestion type
-                        request.launchSerp(getActivity(), SerpActivity.TYPE_SUGGESTION);
+                        request.launchSerp(getActivity());
                     }
                 });
                 descriptionTv = (TextView) view.findViewById(R.id.tv_localities_recent_searches_desc);
@@ -217,8 +217,8 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
 
     @OnClick(R.id.button_show_properties)
     public void showAllPropertiesClick(){
-        SerpRequest request = new SerpRequest();
+        SerpRequest request = new SerpRequest(SerpActivity.TYPE_LOCALITY);
         request.setLocalityId(localityId);
-        request.launchSerp(getActivity(), SerpActivity.TYPE_LOCALITY);
+        request.launchSerp(getActivity());
     }
 }

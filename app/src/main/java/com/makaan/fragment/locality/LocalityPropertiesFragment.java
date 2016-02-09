@@ -80,7 +80,7 @@ public class LocalityPropertiesFragment extends MakaanBaseFragment {
                     @Override
                     public void onClick(View view) {
                         TaxonomyCard taxonomyCard = taxonomyCardList.get(getAdapterPosition());
-                        taxonomyCard.serpRequest.launchSerp(getActivity(), SerpActivity.TYPE_TAXONOMY);
+                        taxonomyCard.serpRequest.launchSerp(getActivity());
 
                     }
                 });

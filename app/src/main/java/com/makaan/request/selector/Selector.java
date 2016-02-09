@@ -293,6 +293,9 @@ public class Selector implements Cloneable {
         this.geoSelector.distance = null;
         this.geoSelector.lat = null;
         this.geoSelector.lon = null;
+        if(this.sortSelector.fieldName != null && this.sortSelector.fieldName.equalsIgnoreCase("geoDistance")) {
+            this.sortSelector = new SortSelector();
+        }
         return this;
     }
 

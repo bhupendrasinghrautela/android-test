@@ -48,6 +48,8 @@ public class SellerListingView extends AbstractListingView {
     TextView mSellerNameTextView;
     @Bind(R.id.serp_listing_item_seller_company_name_text_view)
     TextView mSellerCompanyNameTextView;
+    @Bind(R.id.serp_listing_item_seller_not_rated_text_view)
+    TextView mNotRatedTextView;
 
     @Bind(R.id.serp_listing_item_seller_operates_in_text_view)
     TextView mSellerOperatesInTextView;
@@ -101,15 +103,41 @@ public class SellerListingView extends AbstractListingView {
             return;
         }
         CompanySeller seller = sellerByIdEvent.seller;
-        if(seller.sellers != null && seller.sellers.size() > 0) {
+        if(seller.sellers != null && seller.sellers.size() > 0 && seller.sellers.get(0).companyUser != null
+                && seller.sellers.get(0).companyUser.sellerListingData != null) {
             mSellerNameTextView.setText(seller.sellers.get(0).companyUser.user.fullName);
-            mSellerOperatesInTextView.setText(String.format("operates in - %d localities", seller.sellers.get(0).companyUser.sellerListingData.localityCount));
+            if(seller.sellers.get(0).cities != null) {
+                if(seller.sellers.get(0).cities.size() > 1) {
+                    mSellerOperatesInTextView.setText(String.format("operates in - %d localities in %d cities",
+                            seller.sellers.get(0).companyUser.sellerListingData.localityCount, seller.sellers.get(0).cities.size()));
+                } else if(seller.sellers.get(0).cities.size() == 1) {
+                    mSellerOperatesInTextView.setText(String.format("operates in - %d localities in %s",
+                            seller.sellers.get(0).companyUser.sellerListingData.localityCount, seller.sellers.get(0).cities.get(0).label));
+                } else {
+                    mSellerOperatesInTextView.setText(String.format("operates in - %d localities", seller.sellers.get(0).companyUser.sellerListingData.localityCount));
+                }
+            } else {
+                mSellerOperatesInTextView.setText(String.format("operates in - %d localities", seller.sellers.get(0).companyUser.sellerListingData.localityCount));
+            }
 
-            mSellerPropertiesCountTextView.setText(String.format("%d properties",
-                    seller.sellers.get(0).companyUser.sellerListingData.categoryWiseCount.get(0).listingCount));
-
+            if(seller.sellers.get(0).companyUser.sellerListingData.categoryWiseCount != null
+                    && seller.sellers.get(0).companyUser.sellerListingData.categoryWiseCount.size() > 0) {
+                String amp = "";
+                int properties = 0;
+                StringBuilder builder = new StringBuilder("");
+                for(CompanySeller.Seller.CompanyUser.SellerListingData.CategoryWiseCount categoryWiseCount
+                        : seller.sellers.get(0).companyUser.sellerListingData.categoryWiseCount) {
+                    properties += categoryWiseCount.listingCount;
+                    builder.append(amp);
+                    builder.append(categoryWiseCount.listingCategoryType.toLowerCase());
+                    amp = " & ";
+                }
+                mSellerPropertiesCountTextView.setText(String.format("%d properties", properties));
+                mSellerTypeTextView.setText(builder.toString());
+            }
             mSellerProjectCountTextView.setText(String.format("%d projects", seller.sellers.get(0).companyUser.sellerListingData.projectCount));
         }
+
         mSellerCompanyNameTextView.setText(seller.name);
 
         if(seller.activeSince != null) {
@@ -119,7 +147,14 @@ public class SellerListingView extends AbstractListingView {
             mSellerExperienceTextView.setVisibility(View.INVISIBLE);
         }
 
-        mSellerRatingBar.setRating(seller.score / 2.0f);
+        if(seller.score > 0) {
+            mSellerRatingBar.setVisibility(View.VISIBLE);
+            mNotRatedTextView.setVisibility(View.GONE);
+            mSellerRatingBar.setRating(seller.score / 2.0f);
+        } else {
+            mSellerRatingBar.setVisibility(View.GONE);
+            mNotRatedTextView.setVisibility(View.VISIBLE);
+        }
 
         if(seller.logo != null) {
             // get seller image
@@ -145,14 +180,14 @@ public class SellerListingView extends AbstractListingView {
             // get seller cover image
             // TODO discuss request size
             MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(
-                    seller.coverPicture, mSellerBackgroundImageView.getWidth() / 2, mSellerBackgroundImageView.getHeight() / 2, false), new ImageLoader.ImageListener() {
+                    seller.coverPicture, mSellerBackgroundImageView.getWidth(), mSellerBackgroundImageView.getHeight(), false), new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }
                     final Bitmap image = imageContainer.getBitmap();
-                    final Bitmap newImg = Blur.fastblur(mContext, image, 25);
+                    final Bitmap newImg = Blur.fastblur(mContext, image, 5);
                     mSellerBackgroundImageView.setImageBitmap(newImg);
                 }
 

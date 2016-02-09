@@ -53,7 +53,10 @@
             android:layout_marginTop="@dimen/serp_listing_item_builder_name_text_view_margin_top"
             android:text="dlf builder"
             android:textColor="@color/white"
-            android:textSize="@dimen/serp_listing_item_builder_name_text_view_text_size" />
+            android:textSize="@dimen/serp_listing_item_builder_name_text_view_text_size"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:typeface="sans" />
 
         <View
             android:layout_width="match_parent"
@@ -84,7 +87,10 @@
                     android:layout_height="wrap_content"
                     android:text="12yrs"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/serp_listing_item_builder_info_text_size" />
+                    android:textSize="@dimen/serp_listing_item_builder_info_text_size"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:typeface="serif" />
             </LinearLayout>
 
             <LinearLayout
@@ -99,7 +105,10 @@
                     android:layout_height="wrap_content"
                     android:text="5"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/serp_listing_item_builder_info_text_size" />
+                    android:textSize="@dimen/serp_listing_item_builder_info_text_size"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:typeface="serif" />
             </LinearLayout>
         </LinearLayout>
 
@@ -119,7 +128,10 @@
                     android:layout_height="wrap_content"
                     android:text="experience"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/serp_listing_item_builder_text_text_size" />
+                    android:textSize="@dimen/serp_listing_item_builder_text_text_size"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:typeface="serif" />
             </LinearLayout>
 
             <LinearLayout
@@ -133,7 +145,10 @@
                     android:layout_height="wrap_content"
                     android:text="ongoing projects"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/serp_listing_item_builder_text_text_size" />
+                    android:textSize="@dimen/serp_listing_item_builder_text_text_size"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:typeface="serif" />
             </LinearLayout>
         </LinearLayout>
 
@@ -156,7 +171,10 @@
                     android:layout_height="wrap_content"
                     android:text="12"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/serp_listing_item_builder_info_text_size" />
+                    android:textSize="@dimen/serp_listing_item_builder_info_text_size"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:typeface="serif" />
             </LinearLayout>
 
             <LinearLayout
@@ -171,7 +189,10 @@
                     android:layout_height="wrap_content"
                     android:text="90%"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/serp_listing_item_builder_info_text_size" />
+                    android:textSize="@dimen/serp_listing_item_builder_info_text_size"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:typeface="serif" />
             </LinearLayout>
         </LinearLayout>
 
@@ -192,7 +213,10 @@
                     android:layout_height="wrap_content"
                     android:text="past projects"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/serp_listing_item_builder_text_text_size" />
+                    android:textSize="@dimen/serp_listing_item_builder_text_text_size"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:typeface="serif" />
             </LinearLayout>
 
             <LinearLayout
@@ -206,7 +230,10 @@
                     android:layout_height="wrap_content"
                     android:text="avg. delay"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/serp_listing_item_builder_text_text_size" />
+                    android:textSize="@dimen/serp_listing_item_builder_text_text_size"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:typeface="serif" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

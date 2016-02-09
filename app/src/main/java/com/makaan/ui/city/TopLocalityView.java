@@ -104,10 +104,10 @@ public class TopLocalityView extends BaseLinearLayout<List<Locality>> {
             @Override
             public void onClick(View view) {
 
-                SerpRequest request = new SerpRequest();
+                SerpRequest request = new SerpRequest(SerpActivity.TYPE_CITY);
                 request.setCityId(cityId);
                 request.setSerpContext(isRent ? SerpRequest.CONTEXT_RENT : SerpRequest.CONTEXT_BUY);
-                request.launchSerp(mContext, SerpActivity.TYPE_CITY);
+                request.launchSerp(mContext);
             }
         });
 

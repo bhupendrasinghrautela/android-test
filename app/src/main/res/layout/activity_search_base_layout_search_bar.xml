@@ -126,7 +126,8 @@
                 android:background="@null"
                 android:imeOptions="actionSearch"
                 android:textCursorDrawable="@drawable/search_view_white_cursor"
-                android:hint="@string/search_default_hint"/>
+                android:hint="@string/search_default_hint"
+                android:typeface="monospace"/>
 
         </RelativeLayout>
     </RelativeLayout>

@@ -244,7 +244,7 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         // set price info
         mPropertyPriceTextView.setText(priceString.toLowerCase());
         mPropertyPriceUnitTextView.setText(priceUnit);
-        mPropertyPriceSqFtTextView.setText(String.format("%s/sqft", StringUtil.getFormattedNumber(mListing.pricePerUnitArea)).toLowerCase());
+        mPropertyPriceSqFtTextView.setText(String.format("%s%s/sqft", "\u20B9", StringUtil.getFormattedNumber(mListing.pricePerUnitArea)).toLowerCase());
 
         // set property bhk and size info
         if(mListing.bhkInfo == null) {
@@ -599,9 +599,9 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
     @OnClick({R.id.serp_default_listing_seller_image_view, R.id.serp_default_listing_seller_name_text_view})
     public void onSellerPressed(View view) {
         // TODO discuss what should be done if listing posted by is not present
-        SerpRequest request = new SerpRequest();
+        SerpRequest request = new SerpRequest(SerpActivity.TYPE_SELLER);
         request.setSellerId(mListing.lisitingPostedBy.id);
-        request.launchSerp(getContext(), SerpActivity.TYPE_SELLER);
+        request.launchSerp(getContext());
 
 //        MakaanBuyerApplication.mSerpSelector.term("sellerId", String.valueOf(mListing.sellerId));
     }

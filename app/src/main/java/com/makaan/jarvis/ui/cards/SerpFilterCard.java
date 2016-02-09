@@ -106,8 +106,8 @@ public class SerpFilterCard extends BaseCtaView<ExposeMessage>{
         FiltersViewAdapter adapter = (FiltersViewAdapter) (mFilterGridView.getAdapter());
         adapter.applyFilters(selector, filterGroups);
 
-        SerpRequest request = new SerpRequest();
-        request.launchSerp(getContext(), SerpActivity.TYPE_FILTER);
+        SerpRequest request = new SerpRequest(SerpActivity.TYPE_FILTER);
+        request.launchSerp(getContext());
 
 
         Intent intent = new Intent(mContext, SerpActivity.class);

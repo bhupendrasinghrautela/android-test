@@ -156,8 +156,8 @@ public class FiltersDialogFragment extends DialogFragment {
                 adapter.applyFilters(selector, filterGroups);
             }
         }
-        SerpRequest request = new SerpRequest();
-        request.launchSerp(getActivity(), SerpActivity.TYPE_FILTER);
+        SerpRequest request = new SerpRequest(SerpActivity.TYPE_FILTER);
+        request.launchSerp(getActivity());
         dismiss();
     }
 

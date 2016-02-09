@@ -112,9 +112,9 @@ public class SellerOverviewCard extends BaseView<Message> {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                SerpRequest request = new SerpRequest();
+                SerpRequest request = new SerpRequest(SerpActivity.TYPE_SELLER);
                 request.setSellerId(item.chatObj.id);
-                request.launchSerp(getContext(), SerpActivity.TYPE_SELLER);
+                request.launchSerp(getContext());
             }
         });
 
