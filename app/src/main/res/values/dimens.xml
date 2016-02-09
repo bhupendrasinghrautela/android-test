@@ -1075,13 +1075,15 @@
     <dimen name="view_left_padding_layout">2dp</dimen>
     <dimen name="view_height">940dp</dimen>
     <dimen name="view_left_margin">17dp</dimen>
-    <dimen name="view_top_margin">40dp</dimen>
+    <dimen name="view_top_margin">30dp</dimen>
     <dimen name="view_width">2dp</dimen>
     <dimen name="joy_image_height">330dp</dimen>
     <dimen name="happy_buyers_image_margin">5dp</dimen>
     <dimen name="happy_buyers_text_size">40sp</dimen>
-    <dimen name="happy_buyers_text_margin_top">97dp</dimen>
-    <dimen name="found_one_margin_top">20dp</dimen>
+    <dimen name="below_happy_buyers_text_size">18sp</dimen>
+
+    <dimen name="happy_buyers_text_margin_top">57dp</dimen>
+    <dimen name="found_one_margin_top">77dp</dimen>
     <dimen name="reward_text_margin_top">20dp</dimen>
     <dimen name="project_specification_view_all_margin_top">10dp</dimen>
     <dimen name="project_text_v_small">14sp</dimen>
