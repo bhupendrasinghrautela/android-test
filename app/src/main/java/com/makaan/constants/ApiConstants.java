@@ -1,5 +1,7 @@
 package com.makaan.constants;
 
+import com.makaan.util.StringUtil;
+
 /**
  * Created by vaibhav on 29/12/15.
  */
@@ -68,8 +70,6 @@ public class ApiConstants {
     public static final String APP_V1 = "/app/v1";
     public final static int CONNECTION_TIMEOUT = 30000;
     public static final String FORGOT_PASSWORD = "/app/v1/reset-password?email=";
-
-
 
     //public static final String SIMILAR_LISTING = BASE_URL.concat("/app/v1/similar/listing/");
 

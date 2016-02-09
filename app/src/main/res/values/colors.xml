@@ -128,6 +128,7 @@
     <color name="project_config_item_selected_stroke_color">#e71c28</color>
     <color name="buyer_journey_view_grey_color">#b7b7b7</color>
     <color name="buyer_journey_light_grey_color">#8a8a8a</color>
+    <color name="non_logged_user_background">#C8C6C6</color>
 
 
     <!-- Lead form Colors-->
