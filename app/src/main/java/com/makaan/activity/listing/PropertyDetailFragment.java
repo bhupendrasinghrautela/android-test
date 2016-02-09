@@ -21,8 +21,8 @@ import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.activity.city.CityActivity;
+import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.locality.LocalityActivity;
-import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ImageConstants;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.image.ImagesGetEvent;
@@ -38,6 +38,7 @@ import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Project;
 import com.makaan.response.property.Property;
 import com.makaan.response.user.Company;
+import com.makaan.response.user.User;
 import com.makaan.service.ImageService;
 import com.makaan.service.ListingService;
 import com.makaan.service.MakaanServiceFactory;
@@ -52,7 +53,6 @@ import com.makaan.ui.property.PropertyImageViewPager;
 import com.makaan.ui.view.CustomRatingBar;
 import com.makaan.util.KeyUtil;
 import com.pkmmte.view.CircularImageView;
-import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -107,6 +107,9 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
     @Bind(R.id.about_locality)
     TextView mAboutLocality;
 
+    @Bind(R.id.property_container)
+    LinearLayout mPropertyContainer;
+
     @Bind(R.id.compressed_text_layout)
     CompressedTextView mCompressedDescriptionLayout;
 
@@ -127,7 +130,6 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
 
     @Bind(R.id.locality_score_text)
     TextView mLocalityScoreText;
-
 
     @Bind(R.id.content_text)
     TextView mListingBrief;
@@ -150,6 +152,31 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
             ViewSellersDialogFragment viewSellersDialogFragment = new ViewSellersDialogFragment();
             viewSellersDialogFragment.bindView(mSellerCards);
             viewSellersDialogFragment.show(ft, "allSellers");
+        }
+    }
+
+    @OnClick(R.id.contact_seller)
+    public void openContactSeller(){
+        if(mListingDetail != null &&
+                mListingDetail.companySeller != null &&
+                mListingDetail.companySeller.user !=null) {
+            Intent intent = new Intent(getActivity(), LeadFormActivity.class);
+            User user = mListingDetail.companySeller.user;
+            Company company = mListingDetail.companySeller.company;
+            try {
+                intent.putExtra("name", company.name);
+                if (company!=null && company.score != null) {
+                    intent.putExtra("score", company.score.toString());
+                } else {
+                    intent.putExtra("score", "0");
+                }
+                if(user.contactNumbers!=null && !user.contactNumbers.isEmpty()) {
+                    intent.putExtra("phone", user.contactNumbers.get(0).contactNumber);
+                }
+                intent.putExtra("id",user.id);
+                getActivity().startActivity(intent);
+            } catch (NullPointerException e) {
+            }
         }
     }
 
@@ -188,11 +215,6 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
         listingMainUrl = args.getString(KeyUtil.LISTING_Image);
     }
 
-    @Produce
-    public ListingByIdGetEvent produceListing(){
-        return new ListingByIdGetEvent(mListingDetail);
-    }
-
     @Subscribe
     public void onResults(AmenityGetEvent amenityGetEvent) {
         if(amenityGetEvent.amenityClusters == null){
@@ -215,18 +237,23 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(ListingByIdGetEvent listingByIdGetEvent) {
-        if(listingByIdGetEvent.listingDetail == null){
+        if(listingByIdGetEvent.listingDetail ==null){
             return;
         }
-        mListingDetail = listingByIdGetEvent.listingDetail;
-        TestUi(mListingDetail);
-        ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getOtherSellersOnListingDetail(
-                mListingDetail.projectId, mListingDetail.bedrooms, mListingDetail.bathrooms, mListingDetail.studyRoom
-                , mListingDetail.poojaRoom, mListingDetail.servantRoom, null
-        );
-        ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId);
-        ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId, ImageConstants.THREED_FLOOR_PLAN);
-        ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId, ImageConstants.FLOOR_PLAN);
+        else if(null != listingByIdGetEvent.error){
+            getActivity().finish();
+        }
+        else {
+            mListingDetail = listingByIdGetEvent.listingDetail;
+            TestUi(mListingDetail);
+            ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getOtherSellersOnListingDetail(
+                    mListingDetail.projectId, mListingDetail.bedrooms, mListingDetail.bathrooms, mListingDetail.studyRoom
+                    , mListingDetail.poojaRoom, mListingDetail.servantRoom, null
+            );
+            ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId);
+            ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId, ImageConstants.THREED_FLOOR_PLAN);
+            ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId, ImageConstants.FLOOR_PLAN);
+        }
     }
 
     @Subscribe
@@ -250,6 +277,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
     }
 
     private void TestUi(ListingDetail listingDetail){
+        mPropertyContainer.setVisibility(View.VISIBLE);
         mListingDataOverViewScroll.bindView(listingDetail);
         // todo need to show seller logo image if available
         Company company = listingDetail.companySeller!=null?listingDetail.companySeller.company:null;
@@ -277,7 +305,11 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
             Property property = listingDetail.property;
 
             if(listingDetail.listingAmenities !=null && !listingDetail.listingAmenities.isEmpty()) {
+                mAmenitiesViewScroll.setVisibility(View.VISIBLE);
                 mAmenitiesViewScroll.bindView(listingDetail.listingCategory,property.unitType, listingDetail.listingAmenities);
+            }
+            else{
+                mAmenitiesViewScroll.setVisibility(View.GONE);
             }
             mUnitName.setText(listingDetail.property.bedrooms + "bhk " +
                     (property.unitType != null ? property.unitType : "") + " - ");
@@ -286,10 +318,13 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
                     (property.measure != null ? property.measure : ""));
             if(property.project != null) {
                 Project project = property.project;
-                if(project.getFormattedSpecifications() !=null && project.getFormattedSpecifications().size()>0)
-                projectSpecificationView.bindView(project.getFormattedSpecifications(), getActivity());
-                else
+                if(project.getFormattedSpecifications() !=null && project.getFormattedSpecifications().size()>0) {
+                    projectSpecificationView.setVisibility(View.VISIBLE);
+                    projectSpecificationView.bindView(project.getFormattedSpecifications(), getActivity());
+                }
+                else {
                     projectSpecificationView.setVisibility(View.GONE);
+                }
 
                 mABoutBuilderLayout.bindView(listingDetail.property.project.builder);
 
@@ -305,14 +340,21 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
                         mLocalityScoreText.setText("NA");
                     }
                 }
+                else{
+                    mAboutLocality.setVisibility(View.GONE);
+                    mLocalityScoreText.setVisibility(View.GONE);
+                    mLocalityScoreProgress.setVisibility(View.GONE);
+                }
             }
-            if(listingDetail.description!=null){
+            if(listingDetail.description!=null) {
                 mCompressedDescriptionLayout.setVisibility(View.VISIBLE);
+                mListingBrief.setTextColor(getResources().getColor(R.color.listingBlack));
+                mListingBrief.setText((listingDetail.description != null ? Html.fromHtml(listingDetail.description) : ""));
             }
-            mListingBrief.setText((listingDetail.description != null ? Html.fromHtml(listingDetail.description) : ""));
+            else{
+                mCompressedDescriptionLayout.setVisibility(View.GONE);
+            }
         }
-        mListingBrief.setTextColor(getResources().getColor(R.color.listingBlack));
-        MasterDataCache.getInstance().getDisplayOrder(listingDetail.listingCategory, listingDetail.property.unitType, "overview");
     }
 
     //TODO add smiliar properties instead of this

@@ -1,5 +1,6 @@
 package com.makaan.activity.buyerJourney;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.ui.view.BadgeView;
 import com.makaan.util.Preference;
 import com.pkmmte.view.CircularImageView;
@@ -84,9 +86,9 @@ public class BuyerJourneyActivity extends AppCompatActivity {
                 if (verticalOffset == toolbarOffset) {
                     mCollapsingToolbar.setCollapsedTitleTextColor(0xFFFFFFFF);
                     if(IS_LOGGED)
-                        mCollapsingToolbar.setTitle("john parker");
+                        mCollapsingToolbar.setTitle(Preference.getUserInfo(BuyerJourneyActivity.this).getData().getFirstName());
                     else
-                        mCollapsingToolbar.setTitle("guest");
+                        mCollapsingToolbar.setTitle("guest user");
 
                 } else {
                     mCollapsingToolbar.setTitle("");
@@ -98,13 +100,14 @@ public class BuyerJourneyActivity extends AppCompatActivity {
 
     @OnClick(R.id.button_login)
     public void onLoginClick() {
-        //TODO intent to login activity
+        Intent intent = new Intent(this, UserLoginActivity.class);
+        startActivity(intent);
     }
 
     private void setUserData() {
         if (IS_LOGGED) {
             mLoginButton.setVisibility(View.GONE);
-            mUserName.setText("john parker");
+            mUserName.setText(Preference.getUserInfo(this).getData().getFirstName());
         }else{
             mLoginButton.setVisibility(View.VISIBLE);
         }

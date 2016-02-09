@@ -56,15 +56,18 @@ public class ViewSellersDialogFragment extends DialogFragment {
             for(SellerCard sellerCard : mSellerCards){
                 sellerCard.isChecked = true;
             }
+            mChecked = mSellerCards.size();
         }
         else{
             for(SellerCard sellerCard : mSellerCards){
                 sellerCard.isChecked = false;
             }
+            mChecked = 0;
         }
         if(mAdapter!=null) {
             mAdapter.updateData();
         }
+        setButtonText();
     }
 
     @OnClick(R.id.fragment_dialog_contact_sellers_back_button)
@@ -84,7 +87,7 @@ public class ViewSellersDialogFragment extends DialogFragment {
             else{
                 intent.putExtra("score","0");
             }
-            intent.putExtra("phone","9090909090");//todo: not available in pojo
+            intent.putExtra("phone",sellerCard.contactNo);//todo: not available in pojo
             intent.putExtra("id", sellerCard.sellerId.toString());
             getActivity().startActivity(intent);
         }
@@ -95,7 +98,6 @@ public class ViewSellersDialogFragment extends DialogFragment {
     private ArrayList<SellerCard> mSellerCards;
     private AllSellersAdapter mAdapter;
     private int mChecked = 0;
-    private boolean isFirstTime = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -119,7 +121,7 @@ public class ViewSellersDialogFragment extends DialogFragment {
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new AllSellersAdapter(mSellerCards);
         mRecyclerView.setAdapter(mAdapter);
-        mSubmitButton.setText(getString(R.string.contact_top_seller));
+        mSubmitButton.setText(getString(R.string.contact_top_sellers));
         mSubmitButton.setEnabled(true);
     }
 
@@ -166,6 +168,7 @@ public class ViewSellersDialogFragment extends DialogFragment {
             }
             count++;
         }
+        mChecked = 3;
     }
 
     void onItemClicked(boolean isClicked){
@@ -175,6 +178,10 @@ public class ViewSellersDialogFragment extends DialogFragment {
         else{
             mChecked --;
         }
+        setButtonText();
+    }
+
+    private void setButtonText() {
         if(mChecked == 0){
             mSubmitButton.setEnabled(false);
             mSubmitButton.setText(getString(R.string.contact_sellers));
@@ -184,13 +191,7 @@ public class ViewSellersDialogFragment extends DialogFragment {
             mSubmitButton.setEnabled(true);
         }
         else{
-            if(isFirstTime && mChecked == 3){
-                mSubmitButton.setText(getString(R.string.contact_top_seller));
-                isFirstTime = false;
-            }
-            else {
-                mSubmitButton.setText(getString(R.string.contact) + " " + mChecked + " " + getString(R.string.seller));
-            }
+            mSubmitButton.setText(getString(R.string.contact) + " " + mChecked + " " + getString(R.string.seller));
             mSubmitButton.setEnabled(true);
         }
     }
@@ -214,12 +215,6 @@ public class ViewSellersDialogFragment extends DialogFragment {
                 mSellerTotalProperty = (TextView) v.findViewById(R.id.seller_total_property_text_view);
                 mSellerRating = (CustomRatingBar)v.findViewById(R.id.seller_rating);
                 mSellerCheckBox = (CheckBox)v.findViewById(R.id.fragment_dialog_contact_sellers_select_item_checkbox);
-                mSellerCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        onItemClicked(mSellerCheckBox.isChecked());
-                    }
-                });
             }
         }
 
@@ -241,12 +236,12 @@ public class ViewSellersDialogFragment extends DialogFragment {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mSellerImageView.setVisibility(View.GONE);
-            SellerCard sellerCard = mSellerCards.get(position);
+            final SellerCard sellerCard = mSellerCards.get(position);
             Random random = new Random();
             ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
-            int color = ChartUtils.COLORS[position];
+            int color = ChartUtils.COLORS[position%5];
             drawable.getPaint().setColor(color);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 holder.mSellerLogoTextView.setBackground(drawable);
@@ -263,7 +258,15 @@ public class ViewSellersDialogFragment extends DialogFragment {
             if(sellerCard.rating!=null){
                 holder.mSellerRating.setRating(sellerCard.rating.floatValue());
             }
+            holder.mSellerCheckBox.setOnCheckedChangeListener(null);
             holder.mSellerCheckBox.setChecked(sellerCard.isChecked);
+            holder.mSellerCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    onItemClicked(isChecked);
+                    sellerCard.isChecked = isChecked;
+                }
+            });
         }
 
         @Override

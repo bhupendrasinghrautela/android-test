@@ -225,12 +225,12 @@
 
 
         <RelativeLayout
-            android:id="@+id/rl_couple"
+            android:id="@+id/rl_get_reward"
             android:layout_width="match_parent"
             android:layout_height="@dimen/joy_image_height"
             android:layout_below="@+id/ll_find_joy"
             android:layout_margin="@dimen/happy_buyers_image_margin"
-            android:background="@drawable/couple">
+            android:background="@drawable/reward">
 
             <TextView
                 android:id="@+id/tv_buyers"
@@ -242,6 +242,17 @@
                 android:text="@string/happy_buyers"
                 android:textColor="@color/white"
                 android:textSize="@dimen/happy_buyers_text_size"
+                android:typeface="monospace" />
+            <TextView
+                android:layout_below="@id/tv_buyers"
+                android:id="@+id/tv_below_buyers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:text="@string/happy_below_buyers"
+                android:textColor="@color/white"
+                android:textSize="@dimen/below_happy_buyers_text_size"
                 android:typeface="monospace" />
 
             <TextView
@@ -279,7 +290,7 @@
             android:id="@+id/ll_booking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_couple"
+            android:layout_below="@+id/rl_get_reward"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/padding_layout"
             android:paddingTop="@dimen/padding_layout">

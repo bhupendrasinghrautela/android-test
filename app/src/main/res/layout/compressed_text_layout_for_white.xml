@@ -3,7 +3,6 @@
     android:id="@+id/compressed_text_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:visibility="invisible"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <include layout="@layout/property_empty_view"/>

@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.FadeInNetworkImageView;
@@ -247,7 +248,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
 
     private void makeBarGraphRequest() {
         if(mCity!=null) {
-            new CityService().getPropertyRangeInCity(mCity.id, mSelectedBedroomTypes,mSelectedPropertyTypes, isRent, 10000, 500000, 50000);
+            new CityService().getPropertyRangeInCity(mCity.id, mSelectedBedroomTypes, mSelectedPropertyTypes, isRent, 10000, 500000, 50000);
         }
     }
 
@@ -263,8 +264,14 @@ public class CityOverViewFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResults(CityByIdEvent cityByIdEvent){
-        mCity = cityByIdEvent.city;
-        initUiUsingCityDetails();
+        if (null == cityByIdEvent || null != cityByIdEvent.error) {
+            getActivity().finish();
+            Toast.makeText(getActivity(), "city details could not be loaded at this time. please try later.", Toast.LENGTH_LONG).show();
+        }
+        else {
+            mCity = cityByIdEvent.city;
+            initUiUsingCityDetails();
+        }
     }
 
     @Subscribe

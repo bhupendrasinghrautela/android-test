@@ -12,8 +12,10 @@
     <!--Work in progress, a lot of dimens are hard coded-->
 
     <LinearLayout
+        android:id="@+id/property_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="invisible"
         android:orientation="vertical"
         android:clipToPadding="false">
 
@@ -72,6 +74,7 @@
         android:background="@color/app_yellow"
         />
     <Button
+        android:id="@+id/contact_seller"
         android:layout_width="match_parent"
         android:layout_gravity="bottom"
         android:layout_height="@dimen/project_button_contact_seller_height"

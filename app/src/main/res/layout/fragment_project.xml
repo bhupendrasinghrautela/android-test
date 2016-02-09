@@ -58,13 +58,14 @@
             android:background="@color/app_yellow"
             />
         <Button
+            android:id="@+id/contact_top_seller"
             android:layout_width="match_parent"
             android:layout_height="@dimen/project_button_contact_seller_height"
             android:textColor="@color/white"
             android:textSize="@dimen/project_button_contact_seller_text_height"
             android:background="@color/project_similar_projects_red"
             android:textAllCaps="false"
-            android:text="@string/project_button_contact_seller_text"
+            android:text="@string/contact_top_seller"
             />
 
     </LinearLayout>

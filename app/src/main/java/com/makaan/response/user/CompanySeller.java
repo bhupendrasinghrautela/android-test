@@ -7,4 +7,5 @@ public class CompanySeller {
 
     public Long id;
     public Company company;
+    public User user;
 }
