@@ -6,7 +6,6 @@ import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ResponseConstants;
 import com.makaan.event.project.ProjectConfigEvent;
-import com.makaan.event.project.SimilarProjectGetEvent;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.pojo.ProjectConfigItem;
 import com.makaan.pojo.SellerCard;
@@ -109,7 +108,20 @@ public class ProjectConfigCallback extends JSONGetCallback {
                         //sellerCard.assist =
                         sellerCard.name = company.name;
                         sellerCard.type = company.type;
+                        sellerCard.rating = company.score;
                         sellerCard.noOfProperties = sellerPropCountMap.get(company.id);
+                        if(projectConfigItem.topSellerCard == null){
+                            projectConfigItem.topSellerCard = sellerCard;
+                        }
+                        else{
+                            if(projectConfigItem.topSellerCard.noOfProperties<sellerCard.noOfProperties){
+                                projectConfigItem.topSellerCard = sellerCard;
+                            }
+                            else if(projectConfigItem.topSellerCard.noOfProperties == sellerCard.noOfProperties
+                                    && projectConfigItem.topSellerCard.rating<sellerCard.rating){
+                                projectConfigItem.topSellerCard = sellerCard;
+                            }
+                        }
                     }
 
                 }

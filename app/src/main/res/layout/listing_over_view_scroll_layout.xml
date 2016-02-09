@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.makaan.ui.property.ListingDataOverViewScroll
     android:id="@+id/listing_over_view_scroll_layout"
-    android:visibility="invisible"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"

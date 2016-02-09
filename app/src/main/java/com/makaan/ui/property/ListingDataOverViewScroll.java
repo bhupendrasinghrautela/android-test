@@ -95,11 +95,15 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
         mDetail = item;
         mOverViewOrder = MasterDataCache.getInstance().getDisplayOrder(item.listingCategory,item.property.unitType,"overview");
         createAdapterData();
-        if(mOverViewItems!=null){
-            this.setVisibility(VISIBLE);
+        if(mOverViewItems==null || mOverViewItems.isEmpty() ){
+            this.setVisibility(GONE);
+            return;
         }
-        ListingOverViewAdapter listingOverViewAdapter = new ListingOverViewAdapter(mContext,mOverViewItems);
-        mOverViewScroll.setAdapter(listingOverViewAdapter);
+        else {
+            this.setVisibility(VISIBLE);
+            ListingOverViewAdapter listingOverViewAdapter = new ListingOverViewAdapter(mContext, mOverViewItems);
+            mOverViewScroll.setAdapter(listingOverViewAdapter);
+        }
     }
 
     private void createAdapterData() {

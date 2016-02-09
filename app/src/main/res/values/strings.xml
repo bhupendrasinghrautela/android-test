@@ -111,11 +111,13 @@
     <string name="properties_in">properties in</string>
     <string name="price_trends">price trends</string>
     <string name="read_more">more</string>
-    <string name="contact_top_seller">contact top sellers</string>
+    <string name="contact_top_sellers">contact top sellers</string>
+    <string name="contact_top_seller">contact top seller</string>
     <string name="contact_all_seller">contact all sellers</string>
     <string name="contact_sellers">contact sellers</string>
     <string name="contact">contact</string>
     <string name="more_about">more about</string>
+    <string name="more_about_locality">more about locality</string>
     <string name="read_less">less</string>
     <string name="intrested_in">interested in</string>
     <string name="know_more">know more about</string>
