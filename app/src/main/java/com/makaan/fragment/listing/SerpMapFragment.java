@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,36 +25,33 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
 import com.makaan.R;
+import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.response.listing.Listing;
 import com.makaan.ui.listing.ListingViewPager;
 import com.makaan.ui.listing.OnListingPagerChangeListener;
-import com.makaan.response.listing.Listing;
-import com.makaan.response.listing.ListingData;
-import com.makaan.util.StringUtil;
-
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by sunil on 03/01/16.
  */
 public class SerpMapFragment extends MakaanBaseFragment {
-
-    private List<Marker> mAllMarkers = new ArrayList<Marker>();
-    private SelectedObject mSelectedObject = new SelectedObject();
     private LatLngBounds.Builder mLatLngBoundsBuilder;
     private List<Listing> mListings;
     private GoogleMap mPropertyMap;
+    private int mTotalCount;
+    ListingAndMarkerAdapter adapter = new ListingAndMarkerAdapter();
 
     @Bind(R.id.serp_map_listing_viewpager)
     ListingViewPager mProjectViewPager;
 
     @Bind(R.id.serp_map_view)
     MapView mMapView;
+    private SerpRequestCallback mCallback;
 
     @Override
     protected int getContentViewId() {
@@ -69,20 +66,20 @@ public class SerpMapFragment extends MakaanBaseFragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
-        if(status == ConnectionResult.SUCCESS) {
+        super.onActivityCreated(savedInstanceState);
+        int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
+        if (status == ConnectionResult.SUCCESS) {
             initMap(savedInstanceState);
             initPager();
-            if(mListings != null) {
-                populateMarker(mListings);
-                mProjectViewPager.setData(mListings);
-                // display first property be default
-                if(mAllMarkers.size() > 0) {
-                    displayProject(mAllMarkers.get(0));
-                }
-            }
+            if (mListings != null) {
+                adapter.populateMarker(mListings);
 
-        }else{
+                mProjectViewPager.setData(adapter.listings, mTotalCount > mListings.size(), mCallback);
+                adapter.displayProject();
+                // display first property be default
+//                adapter.setSelectedMarkerPosition(0, true);
+            }
+        } else {
             GooglePlayServicesUtil.getErrorDialog(status, getActivity(), status);
         }
 
@@ -97,7 +94,7 @@ public class SerpMapFragment extends MakaanBaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mMapView != null) {
+        if (mMapView != null) {
             mMapView.onDestroy();
         }
     }
@@ -108,16 +105,22 @@ public class SerpMapFragment extends MakaanBaseFragment {
         mMapView.onLowMemory();
     }
 
-    public void setData(ArrayList<Listing>listings){
-        if(mListings == null) {
+    public void setData(ArrayList<Listing> listings, int count, SerpRequestCallback callback) {
+        if (mListings == null) {
             mListings = new ArrayList<Listing>();
         } else {
             mListings.clear();
         }
+
+        mTotalCount = count;
+        mCallback = callback;
         mListings.addAll(listings);
-        if(mProjectViewPager != null) {
-            populateMarker(mListings);
-            mProjectViewPager.setData(mListings);
+
+        if (mProjectViewPager != null) {
+            adapter.populateMarker(mListings);
+
+            mProjectViewPager.setData(adapter.listings, mTotalCount > mListings.size(), callback);
+            adapter.displayProject();
         }
     }
 
@@ -127,13 +130,13 @@ public class SerpMapFragment extends MakaanBaseFragment {
         MapsInitializer.initialize(this.getActivity());
         mPropertyMap = mMapView.getMap();
 
-        if(mPropertyMap==null){
+        if (mPropertyMap == null) {
             return;
         }
         mPropertyMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                displayProject(marker);
+                adapter.displayProject(marker);
                 return false;
             }
         });
@@ -142,146 +145,192 @@ public class SerpMapFragment extends MakaanBaseFragment {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    unselectMarker();
-                }
+                /*if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    adapter.unselectMarker();
+                }*/
                 return false;
             }
         });
     }
 
-    private void initPager(){
+    private void initPager() {
 
         mProjectViewPager.bindView();
         mProjectViewPager.addOnPageChangeListener(new OnListingPagerChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                if (mSelectedObject.marker == null || mSelectedObject.listing == null) {
+                /*if (position == mMapListings.size() || mSelectedObject.marker == null || mSelectedObject.listing == null) {
                     return;
                 }
 
                 setMarkerIcon(mSelectedObject.marker,
                         getMarkerBitmap(false, mSelectedObject.listing));
 
-                Listing listing = mListings.get(position);
+                Listing listing = mMapListings.get(position);
                 LatLng projectLocation = new LatLng(listing.latitude, listing.longitude);
                 mPropertyMap.animateCamera(CameraUpdateFactory.newLatLng(projectLocation));
 
                 Marker marker = mAllMarkers.get(position);
                 if (position > 0) {
                     setMarkerIcon(mAllMarkers.get(position - 1),
-                            getMarkerBitmap(false, mListings.get(position - 1)));
+                            getMarkerBitmap(false, mMapListings.get(position - 1)));
                 }
 
                 if ((position + 1) < mAllMarkers.size()) {
                     setMarkerIcon(mAllMarkers.get(position + 1),
-                            getMarkerBitmap(false, mListings.get(position + 1)));
+                            getMarkerBitmap(false, mMapListings.get(position + 1)));
                 }
 
-                setMarkerIcon(marker, getMarkerBitmap(true, mListings.get(position)));
+                setMarkerIcon(marker, getMarkerBitmap(true, mMapListings.get(position)));
 
                 mSelectedObject.marker = marker;
-                mSelectedObject.listing = listing;
+                mSelectedObject.listing = listing;*/
+                adapter.setSelectedMarkerPosition(position, false);
             }
         });
     }
 
-    private void populateMarker(List<Listing> listings){
-
-        mAllMarkers.clear();
-        clearMap();
-
-        if (mListings.isEmpty()) {
-            return;
-        }
-
-        mLatLngBoundsBuilder = new LatLngBounds.Builder();
-
-        for (int i = 0; i < listings.size(); i++) {
-            double lat = listings.get(i).latitude;
-            double lng = listings.get(i).longitude;
-            if (lat != 0.0 && !Double.isNaN(lat) && lng != 0.0 && !Double.isNaN(lng)) {
-                addMarker(mLatLngBoundsBuilder, lat, lng, mListings.get(i));
-            } else {
-                // remove listing which cannot be represented on the map
-                listings.remove(i);
-                i--;
-            }
-        }
-
-        animateToLocation(mLatLngBoundsBuilder);
-    }
-
-    private void displayProject(Marker marker){
-        mSelectedObject.marker = marker;
-
-        for (int i = 0; i < mListings.size(); i++) {
-            if (marker.getTitle().equalsIgnoreCase(String.valueOf(mListings.get(i).lisitingId))) {
-                mProjectViewPager.setCurrentItem(i, true);
-                mSelectedObject.listing = mListings.get(i);
-
-            }
-        }
-        selectMarker();
-    }
-
-
-    private boolean unselectMarker(){
-        if(mProjectViewPager.getVisibility()==View.VISIBLE){
-            mProjectViewPager.hide();
-            Bitmap markerBitmap = getMarkerBitmap(false, mSelectedObject.listing);
-            setMarkerIcon(mSelectedObject.marker, markerBitmap);
-            return true;
-        }
-        return false;
-    }
-
-    private boolean selectMarker(){
-        if(mProjectViewPager.getVisibility()!=View.VISIBLE){
-            mProjectViewPager.show();
-            Bitmap markerBitmap = getMarkerBitmap(true, mSelectedObject.listing);
-            setMarkerIcon(mSelectedObject.marker, markerBitmap);
-            return true;
-        }
-        return false;
-    }
-
-    private void clearMap(){
-        if(mPropertyMap!=null){
+    private void clearMap() {
+        if (mPropertyMap != null) {
             mPropertyMap.clear();
         }
-        mSelectedObject.marker = null;
     }
 
-    private void addMarker(LatLngBounds.Builder latLngBoundsBuilder,
-                           double lat, double lng, Listing listing) {
+    private class ListingAndMarkerAdapter {
+        ArrayList<Marker> markers = new ArrayList<>();
+        ArrayList<Listing> listings = new ArrayList<>();
+        ArrayList<ClubbedMarker> clubbedMarkers = new ArrayList<>();
+        int selectedMarkerPosition = 0;
 
-        IconGenerator iconGenerator = new IconGenerator(getActivity());
-        iconGenerator.setStyle(IconGenerator.STYLE_RED);
-        Bitmap markerBitmap =
-                iconGenerator.makeIcon(String.valueOf(listing.bedrooms));
-
-        MarkerOptions markerOptions = new MarkerOptions()
-                .position(new LatLng(lat, lng))
-                .title(String.valueOf(listing.lisitingId))
-                .icon(BitmapDescriptorFactory
-                        .fromBitmap(markerBitmap));
-
-        Marker marker = mPropertyMap.addMarker(markerOptions);
-        latLngBoundsBuilder.include(new LatLng(lat, lng));
-        mAllMarkers.add(marker);
-    }
-
-    private void animateToLocation(final LatLngBounds.Builder latLngBoundsBuilder) {
-
-        if(mMapView==null){
-            return;
+        class ClubbedMarker {
+            double lat;
+            double lng;
+            ArrayList<Marker> markers = new ArrayList<>();
         }
 
-        //TODO calculate padding
-        final int mapPadding = 180;
+        Marker checkIfAlreadyExists(double lat, double lng) {
+            for(Marker marker : markers) {
+                if(marker.getPosition().latitude == lat && marker.getPosition().longitude == lng) {
+                    return marker;
+                }
+            }
+            return null;
+        }
 
-        final LatLngBounds current_LatLngBounds = latLngBoundsBuilder.build();
+        private void populateMarker(List<Listing> listings) {
+            this.listings.clear();
+            this.listings.addAll(listings);
+
+            markers.clear();
+            clubbedMarkers.clear();
+            clearMap();
+
+            if (this.listings.isEmpty()) {
+                return;
+            }
+
+            mLatLngBoundsBuilder = new LatLngBounds.Builder();
+
+            for (int i = 0; i < this.listings.size(); i++) {
+                double lat = this.listings.get(i).latitude;
+                double lng = this.listings.get(i).longitude;
+                if (lat != 0.0 && !Double.isNaN(lat) && lng != 0.0 && !Double.isNaN(lng)) {
+                    addMarker(mLatLngBoundsBuilder, lat, lng, this.listings.get(i));
+                } else {
+                    // remove listing which cannot be represented on the map
+                    this.listings.remove(i);
+                    i--;
+                }
+            }
+            mapClubbedMarkers();
+
+            animateToLocation(mLatLngBoundsBuilder);
+        }
+
+        private void mapClubbedMarkers() {
+            for(ClubbedMarker clubbedMarker : clubbedMarkers) {
+                int length = clubbedMarker.markers.size();
+
+                for(int i = 0; i < length; i++) {
+                    Marker marker = clubbedMarker.markers.get(i);
+                    marker.setRotation((360.0f / length) * i);
+                    if(i == 0) {
+                        marker.setAlpha(1);
+                    } else {
+                        marker.setAlpha(0.1f);
+                    }
+                }
+            }
+        }
+
+        private void handleMarkerAlpha(Marker marker) {
+            for(ClubbedMarker clubbedMarker : clubbedMarkers) {
+                if(clubbedMarker.lat == marker.getPosition().latitude
+                        && clubbedMarker.lng == marker.getPosition().longitude) {
+                    int length = clubbedMarker.markers.size();
+
+                    for(int i = 0; i < length; i++) {
+                        Marker currentMarker = clubbedMarker.markers.get(i);
+                        if(currentMarker == marker) {
+                            currentMarker.setAlpha(1);
+                        } else {
+                            currentMarker.setAlpha(0.1f);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void addMarker(LatLngBounds.Builder latLngBoundsBuilder,
+                               double lat, double lng, Listing listing) {
+            ClubbedMarker clubbedMarker = null;
+            Marker marker = checkIfAlreadyExists(lat, lng);
+            if(marker != null) {
+                for(ClubbedMarker club : clubbedMarkers) {
+                    if(club.lat == lat && club.lng == lng) {
+                        clubbedMarker = club;
+                        break;
+                    }
+                }
+                if(clubbedMarker == null) {
+                    clubbedMarker = new ClubbedMarker();
+                    clubbedMarker.lat = lat;
+                    clubbedMarker.lng = lng;
+                    clubbedMarker.markers.add(marker);
+                }
+                clubbedMarkers.add(clubbedMarker);
+            }
+
+            IconGenerator iconGenerator = new IconGenerator(getActivity());
+            iconGenerator.setStyle(IconGenerator.STYLE_RED);
+            Bitmap markerBitmap =
+                    iconGenerator.makeIcon(String.valueOf(listing.bedrooms));
+
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(new LatLng(lat, lng))
+                    .icon(BitmapDescriptorFactory
+                            .fromBitmap(markerBitmap));
+
+            Marker newMarker = mPropertyMap.addMarker(markerOptions);
+            Log.d("DEBUG", "lat = " + lat + ", lng = " + lng);
+
+            if(clubbedMarker != null) {
+                clubbedMarker.markers.add(newMarker);
+            }
+            latLngBoundsBuilder.include(new LatLng(lat, lng));
+            markers.add(newMarker);
+        }
+
+        private void animateToLocation(final LatLngBounds.Builder latLngBoundsBuilder) {
+
+            if (mMapView == null) {
+                return;
+            }
+
+            //TODO calculate padding
+            final int mapPadding = 180;
+
+            final LatLngBounds current_LatLngBounds = latLngBoundsBuilder.build();
             try {
                 mPropertyMap.animateCamera(
                         CameraUpdateFactory.newLatLngBounds(
@@ -292,46 +341,97 @@ public class SerpMapFragment extends MakaanBaseFragment {
                     mMapView.getViewTreeObserver().addOnGlobalLayoutListener(
                             new ViewTreeObserver.OnGlobalLayoutListener() {
 
-                        @SuppressWarnings("deprecation")
-                        @SuppressLint("NewApi")
-                        @Override
-                        public void onGlobalLayout() {
-                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                                mMapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                            } else {
-                                mMapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                            }
-                            try {
-                                mPropertyMap.animateCamera(
-                                        CameraUpdateFactory.newLatLngBounds(
-                                                current_LatLngBounds, mapPadding));
-                            } catch (Exception e) {}
-                        }
-                    });
+                                @SuppressWarnings("deprecation")
+                                @SuppressLint("NewApi")
+                                @Override
+                                public void onGlobalLayout() {
+                                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                                        mMapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                                    } else {
+                                        mMapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                                    }
+                                    try {
+                                        mPropertyMap.animateCamera(
+                                                CameraUpdateFactory.newLatLngBounds(
+                                                        current_LatLngBounds, mapPadding));
+                                    } catch (Exception e) {
+                                    }
+                                }
+                            });
                 }
-        }
-    }
-
-    private void setMarkerIcon(Marker marker, Bitmap icon){
-        try {
-            if (marker != null) {
-                marker.hideInfoWindow();
-                marker.setIcon(BitmapDescriptorFactory
-                        .fromBitmap(icon));
             }
-        }catch(Exception e){}
-    }
+        }
 
-    private Bitmap getMarkerBitmap(boolean isSelected, Listing listing){
-        IconGenerator iconGenerator = new IconGenerator(getActivity());
-        iconGenerator.setStyle(isSelected ? IconGenerator.STYLE_ORANGE : IconGenerator.STYLE_RED);
-        Bitmap markerBitmap = iconGenerator.makeIcon(String.valueOf(listing.bedrooms));
-        return markerBitmap;
-    }
+        private void displayProject(Marker marker) {
+            if (markers.contains(marker)) {
+                int pos = markers.indexOf(marker);
+                mProjectViewPager.setCurrentItem(pos, true);
+                selectMarker(pos);
+            }
+        }
 
-    private class SelectedObject {
-        Marker marker;
-        Listing listing;
+        private void displayProject(int pos) {
+            if (pos < markers.size()) {
+                mProjectViewPager.setCurrentItem(pos, true);
+                selectMarker(pos);
+            }
+        }
+
+        void setSelectedMarkerPosition(int position, boolean displayProperty) {
+            unselectMarker(selectedMarkerPosition);
+
+            if (position < markers.size()) {
+                mProjectViewPager.setVisibility(View.VISIBLE);
+                selectedMarkerPosition = position;
+                if (displayProperty) {
+                    displayProject(selectedMarkerPosition);
+                }
+
+                setMarkerIcon(markers.get(selectedMarkerPosition),
+                        getMarkerBitmap(true, listings.get(selectedMarkerPosition)));
+
+                LatLng projectLocation = new LatLng(listings.get(selectedMarkerPosition).latitude, listings.get(selectedMarkerPosition).longitude);
+                mPropertyMap.animateCamera(CameraUpdateFactory.newLatLng(projectLocation));
+
+                handleMarkerAlpha(markers.get(selectedMarkerPosition));
+            }
+
+        }
+
+        public void displayProject() {
+            setSelectedMarkerPosition(selectedMarkerPosition, true);
+        }
+
+        private void setMarkerIcon(Marker marker, Bitmap icon) {
+            try {
+                if (marker != null) {
+                    marker.hideInfoWindow();
+                    marker.setIcon(BitmapDescriptorFactory
+                            .fromBitmap(icon));
+                }
+            } catch (Exception e) {
+            }
+        }
+
+        private Bitmap getMarkerBitmap(boolean isSelected, Listing listing) {
+            IconGenerator iconGenerator = new IconGenerator(getActivity());
+            iconGenerator.setStyle(isSelected ? IconGenerator.STYLE_ORANGE : IconGenerator.STYLE_RED);
+            Bitmap markerBitmap = iconGenerator.makeIcon(String.valueOf(listing.bedrooms));
+            return markerBitmap;
+        }
+
+
+        private boolean unselectMarker(int i) {
+            Bitmap markerBitmap = getMarkerBitmap(false, listings.get(i));
+            setMarkerIcon(markers.get(i), markerBitmap);
+            return true;
+        }
+
+        private boolean selectMarker(int i) {
+            Bitmap markerBitmap = getMarkerBitmap(true, listings.get(i));
+            setMarkerIcon(markers.get(i), markerBitmap);
+            return true;
+        }
     }
 
 }

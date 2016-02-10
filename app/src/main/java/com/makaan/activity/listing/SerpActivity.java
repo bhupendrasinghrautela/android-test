@@ -390,7 +390,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             if(mMapFragment != null) {
                 mListingGetEvent = listingGetEvent;
                 updateListings(listingGetEvent, null);
-                mMapFragment.setData(mListings);
+                mMapFragment.setData(mListings, mListingCount, this);
 
                 if((mSerpRequestType & MASK_LISTING_UPDATE_TYPE) == 0) {
                     initFragment(R.id.activity_serp_content_frame_layout, mMapFragment, false);
@@ -399,7 +399,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 mMapFragment = new SerpMapFragment();
                 mListingGetEvent = listingGetEvent;
                 updateListings(listingGetEvent, null);
-                mMapFragment.setData(mListings);
+                mMapFragment.setData(mListings, mListingCount, this);
                 initFragment(R.id.activity_serp_content_frame_layout, mMapFragment, false);
             }
         } else if (isSellerSerp) {
@@ -653,7 +653,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 if(mMapFragment == null) {
                     mMapFragment = new SerpMapFragment();
                 }
-                mMapFragment.setData(mListings);
+                mMapFragment.setData(mListings, mListingCount, this);
                 initFragment(R.id.activity_serp_content_frame_layout, mMapFragment, false);
                 mIsMapFragment = true;
                 mMapImageView.setImageResource(R.drawable.list);

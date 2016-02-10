@@ -31,6 +31,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
     protected ArrayList<GroupCluster> mGroupClusterListings;
     private String mCount;
     private boolean mBuilderSellerPopulated = false;
+    private boolean mEventSent;
 
     public SerpListingAdapter(Context context, SerpRequestCallback callbacks) {
         mContext = context;
@@ -157,6 +158,10 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
                     }
                 }
                 // TODO handle when group clusters are more than required
+                if(position - extraCount == 5 && !mEventSent) {
+                    mEventSent = true;
+                    // TODO send event
+                }
                 viewHolder.populateData(mItems.get(position - extraCount), mCallback);
             }
         }
@@ -201,6 +206,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
 
         this.mItems.addAll(listings);
         mBuilderSellerPopulated = false;
+        mEventSent = false;
         notifyDataSetChanged();
     }
 }
