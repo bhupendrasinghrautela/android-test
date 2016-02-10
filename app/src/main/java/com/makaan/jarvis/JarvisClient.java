@@ -49,4 +49,8 @@ public class JarvisClient {
         jarvisSocket.sendMessage(event.message);
     }
 
+    public void rateAgent(float rating){
+        jarvisSocket.rateAgent(rating);
+    }
+
 }

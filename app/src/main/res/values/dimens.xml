@@ -1255,5 +1255,5 @@
     <dimen name="activity_home_buy_rent_button_width">50dp</dimen>
     <dimen name="activity_home_buy_rent_button_height">35dp</dimen>
 
-    <dimen name="card_agent_rating_item_height">14dp</dimen>
+    <dimen name="card_agent_rating_item_dimen">22dp</dimen>
 </resources>

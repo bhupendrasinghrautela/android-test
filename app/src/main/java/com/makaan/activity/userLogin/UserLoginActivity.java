@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.HomeActivity;
 import com.makaan.fragment.userLogin.ReplaceFragment;
-import com.makaan.network.VolleyErrorParser;
 import com.makaan.response.ResponseError;
 import com.makaan.response.login.OnUserLoginListener;
 import com.makaan.response.login.OnUserRegistrationListener;
@@ -22,7 +20,6 @@ import com.makaan.ui.CommonProgressDialog;
 import com.makaan.util.LoginPreferences;
 import com.makaan.util.Preference;
 
-import java.util.prefs.Preferences;
 
 /**
  * Created by sunil on 29/12/15.
@@ -38,9 +35,15 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_login_activity);
+        Intent intent = getIntent();
+        int loginType = UserLoginPresenter.LOGIN_NONE;
+        if(intent != null && intent.hasExtra(UserLoginPresenter.LOGIN_TYPE)) {
+            loginType = intent.getIntExtra(UserLoginPresenter.LOGIN_TYPE, UserLoginPresenter.LOGIN_NONE);
+
+        }
         mProgressDialog =new CommonProgressDialog();
         mUserLoginPresenter = new UserLoginPresenter(this, this, this, this);
-        mUserLoginPresenter.showLoginChooserFragment();
+        mUserLoginPresenter.showLoginChooserFragment(loginType);
     }
 
     @Override
