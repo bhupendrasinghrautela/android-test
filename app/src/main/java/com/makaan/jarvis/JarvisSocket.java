@@ -113,6 +113,24 @@ public class JarvisSocket {
         }
     }
 
+    public void rateAgent(float rating){
+
+        try {
+            JSONObject data = new JSONObject();
+            data.put("deliveryId", JarvisConstants.DELIVERY_ID);
+            data.put("rating", rating);
+            data.put("agent","acquired");
+
+            mSocket.emit("done-rating", data, new Ack() {
+                @Override
+                public void call(Object... args) {
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private Emitter.Listener onConnectError = new Emitter.Listener() {
         @Override

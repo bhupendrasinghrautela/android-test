@@ -16,7 +16,7 @@
         android:paddingTop="@dimen/seller_overview_card_padding"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="please rate your experience with"
+        android:text="please rate your \nexperience with"
         android:layout_gravity="center"
         android:textSize="16sp"/>
 
@@ -27,7 +27,7 @@
         android:layout_margin="@dimen/thumbnail_margin"
         android:tint="@color/white"
         android:layout_gravity="center"
-        android:src="@drawable/star"
+        android:src="@drawable/jarvis"
         app:border="true"
         app:border_color="@color/light_gray"
         app:border_width="@dimen/border_width"
@@ -35,23 +35,24 @@
 
 
     <com.makaan.ui.view.CustomRatingBar
-        android:id="@+id/rating_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:id="@+id/ratingbar"
+        android:layout_width="124dp"
+        android:layout_height="32dp"
+        android:layout_margin="6dp"
         android:layout_gravity="center"
+        android:gravity="center"
         android:numStars="5"
-        android:stepSize="0.1"
-        app:itemHeight="@dimen/card_agent_rating_item_height"
-        app:itemWidth="@dimen/card_agent_rating_item_height"
+        android:stepSize="0.5"
+        app:itemHeight="@dimen/card_agent_rating_item_dimen"
+        app:itemWidth="@dimen/card_agent_rating_item_dimen"
         app:itemMarginLeft="@dimen/serp_listing_card_seller_rating_item_margin_left"
         app:itemMarginRight="@dimen/serp_listing_card_seller_rating_item_margin_right"
         app:itemProgressIcon="@drawable/star_selected"
         app:itemSecondaryProgressIcon="@drawable/star_unselected"
-        style="?android:attr/ratingBarStyleSmall"/>
+        style="?android:attr/ratingBarStyle"/>
 
     <Button
-        android:id="@+id/btn_yes"
+        android:id="@+id/btn_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -59,6 +60,6 @@
         android:background="@drawable/filled_red"
         android:text="Submit"
         android:textColor="@android:color/white"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
 </com.makaan.jarvis.ui.cards.AgentRatingCard>

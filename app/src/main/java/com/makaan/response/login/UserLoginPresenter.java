@@ -13,6 +13,12 @@ import com.makaan.fragment.userLogin.SignUpFragment;
 public class UserLoginPresenter implements
         OnLoginWithMakaanSelectedListener,OnSignUpSelectedListener {
 
+    public static final String LOGIN_TYPE = "loginType";
+    public static final int LOGIN_NONE = 0x00;
+    public static final int LOGIN_FB = 0x01;
+    public static final int LOGIN_GMAIL = 0x02;
+    public static final int LOGIN_MAKAAN = 0x03;
+
     private OnUserLoginListener mOnUserLoginListener;
     private OnUserRegistrationListener mRegistrationListener;
     private LoginSocialFragment mLoginSocialFragment;
@@ -30,9 +36,9 @@ public class UserLoginPresenter implements
         mContext = context;
     }
 
-    public void showLoginChooserFragment(){
+    public void showLoginChooserFragment(int loginType){
         mLoginSocialFragment = new LoginSocialFragment();
-        mLoginSocialFragment.bindView(this, mOnUserLoginListener);
+        mLoginSocialFragment.bindView(this, mOnUserLoginListener, loginType);
         mReplaceFragment.replaceFragment(mLoginSocialFragment, true);
     }
 

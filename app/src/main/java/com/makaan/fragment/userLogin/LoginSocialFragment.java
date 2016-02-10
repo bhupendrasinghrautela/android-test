@@ -22,6 +22,7 @@ import com.makaan.R;
 import com.makaan.response.login.OnLoginWithMakaanSelectedListener;
 import com.makaan.response.login.OnUserLoginListener;
 
+import com.makaan.response.login.UserLoginPresenter;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.user.FacebookTokenInteractor;
 import com.makaan.service.user.GoogleTokenInteractor;
@@ -55,6 +56,7 @@ public class LoginSocialFragment extends Fragment implements OnGoogleTokenListen
     private OnUserLoginListener mOnUserLoginListener;
     private OnLoginWithMakaanSelectedListener mOnLoginWithMakaanSelectedListener;
     private FacebookTokenInteractor mFacebookTokenInteractor;
+    private int mLoginType;
 
     @Nullable
     @Override
@@ -69,9 +71,16 @@ public class LoginSocialFragment extends Fragment implements OnGoogleTokenListen
         return view;
     }
 
-    public void bindView(OnLoginWithMakaanSelectedListener listener, OnUserLoginListener onUserLoginListener){
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        parseLoginType(mLoginType);
+    }
+
+    public void bindView(OnLoginWithMakaanSelectedListener listener, OnUserLoginListener onUserLoginListener, int loginType){
         mOnLoginWithMakaanSelectedListener = listener;
         mOnUserLoginListener = onUserLoginListener;
+        mLoginType = loginType;
     }
 
     @Override
@@ -147,6 +156,23 @@ public class LoginSocialFragment extends Fragment implements OnGoogleTokenListen
     @Override
     public void onFacebookTokenFail() {
         Toast.makeText(getActivity(), getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
+    }
+
+    private void parseLoginType(int loginType){
+        switch (loginType){
+            case UserLoginPresenter.LOGIN_FB:
+                onFacebookLoginClick();
+                break;
+            case UserLoginPresenter.LOGIN_GMAIL:
+                onGoogleLoginClick();
+                break;
+            case UserLoginPresenter.LOGIN_MAKAAN:
+                onMakaanLoginClick();
+                break;
+            default:
+                break;
+        }
+        mLoginType = 0;
     }
 }
 
