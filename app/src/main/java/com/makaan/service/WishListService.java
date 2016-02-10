@@ -31,11 +31,12 @@ public class WishListService implements MakaanService {
         }
     }
 
-    public void addListing(Integer listingId){
+    public void addListing(Integer listingId, Integer projectId){
         try {
             JSONObject wishListPayload = new JSONObject();
             if(null!=listingId){
                 wishListPayload.put("listingId", listingId);
+                wishListPayload.put("projectId", projectId);
             }else {
                 throw new IllegalArgumentException("Invalid arguments");
             }
@@ -62,7 +63,7 @@ public class WishListService implements MakaanService {
     }
 
     private String buildWishListUrl(){
-        
+
         StringBuilder requestBuilder = new StringBuilder();
         requestBuilder.append(ApiConstants.BASE_URL);
         requestBuilder.append("/data/v1/entity/user/wish-list");
