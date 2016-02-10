@@ -590,7 +590,7 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         WishListService wishListService =
                 (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
         if(isChecked) {
-            wishListService.addListing(mListing.lisitingId);
+            wishListService.addListing(mListing.lisitingId, mListing.projectId);
         } else {
             wishListService.delete(mListing.lisitingId);
         }

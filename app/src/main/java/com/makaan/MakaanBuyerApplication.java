@@ -65,11 +65,11 @@ public class MakaanBuyerApplication extends Application {
     public static SparseArray<SerpObjects> serpObjects = new SparseArray<>();
 
     public static Gson gson;
-    private RefWatcher refWatcher;
+    private static RefWatcher refWatcher;
 
-    public static RefWatcher getRefWatcher(Context context) {
-        MakaanBuyerApplication application = (MakaanBuyerApplication) context.getApplicationContext();
-        return application.refWatcher;
+    public static RefWatcher getRefWatcher() {
+        //MakaanBuyerApplication application = (MakaanBuyerApplication) context.getApplicationContext();
+        return refWatcher;
     }
 
     @Override

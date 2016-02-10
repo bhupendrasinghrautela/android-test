@@ -598,11 +598,13 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     public void onResults(SearchResultEvent searchResultEvent) {
-        if(null!=searchResultEvent.error) {
+        if(null==searchResultEvent || null!=searchResultEvent.error) {
             //TODO handle error
             return;
         }
+        
         if(mSearchResultFrameLayout.getVisibility() == View.VISIBLE && !TextUtils.isEmpty(mSearchEditText.getText())) {
+
             mSearchResultReceived = true;
             setSearchResultFrameLayoutVisibility(true);
             this.mSearches = searchResultEvent.searchResponse.getData();
