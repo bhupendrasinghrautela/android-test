@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.makaan.R;
+import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.listing.ListingPagerAdapter;
 import com.makaan.response.listing.Listing;
 import com.makaan.util.AnimUtil;
@@ -18,11 +19,13 @@ import java.util.List;
 /**
  * Created by sunil on 06/01/16.
  */
-public class ListingViewPager extends ViewPager {
+public class ListingViewPager extends ViewPager implements ListingPagerAdapter.PaginationListener {
     private static final int MARGIN = 30;
     private static final int H_PADDING = 120;
     private Context mContext;
     ListingPagerAdapter mListingPagerAdapter;
+    private SerpRequestCallback mCallback;
+
     public ListingViewPager(Context context) {
         super(context);
         mContext = context;
@@ -34,7 +37,7 @@ public class ListingViewPager extends ViewPager {
     }
 
     public void bindView(){
-        mListingPagerAdapter = new ListingPagerAdapter(mContext);
+        mListingPagerAdapter = new ListingPagerAdapter(mContext, this);
         setAdapter(mListingPagerAdapter);
         setClipToPadding(false);
         setPageMargin(mContext.getResources().getDimensionPixelSize(R.dimen.map_listing_view_pager_page_gap));
@@ -44,8 +47,9 @@ public class ListingViewPager extends ViewPager {
         setOffscreenPageLimit(2);
     }
 
-    public void setData(List<Listing> listings){
-        mListingPagerAdapter.setData(listings);
+    public void setData(List<Listing> listings, boolean needLoadMore, SerpRequestCallback callback){
+        mCallback = callback;
+        mListingPagerAdapter.setData(listings, needLoadMore);
     }
 
     public void hide(){
@@ -65,6 +69,13 @@ public class ListingViewPager extends ViewPager {
             setVisibility(View.VISIBLE);
             startAnimation(anim);
             AnimUtil.clearAnimationAfterFinish((Activity) mContext, anim, this);
+        }
+    }
+
+    @Override
+    public void onLoadMoreItems() {
+        if(mCallback != null) {
+            mCallback.loadMoreItems();
         }
     }
 }

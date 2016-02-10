@@ -47,6 +47,7 @@ import com.makaan.service.LocalityService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SellerService;
 import com.makaan.ui.listing.RelevancePopupWindowController;
+import com.makaan.ui.view.MPlusBadgePopupDialog;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.Preference;
 import com.squareup.otto.Subscribe;
@@ -106,6 +107,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public static final int REQUEST_PROJECT_PAGE = 2;
     public static final int REQUEST_LEAD_FORM = 3;
     public static final int REQUEST_SET_ALERT = 4;
+    public static final int REQUEST_MPLUS_POPUP = 5;
 
 
     private static final int MAX_ITEMS_TO_REQUEST = 20;
@@ -292,17 +294,21 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             if((type & MASK_LISTING_TYPE) > 0) {
                 if (!request.isFromBackstack()) {
                     if (type == SerpActivity.TYPE_GPID) {
+                        setSearchBarCollapsible(false);
                         mIsMapFragment = true;
                         mMapImageView.setImageResource(R.drawable.list);
                     } else {
+                        setSearchBarCollapsible(true);
                         mIsMapFragment = false;
                         mMapImageView.setImageResource(R.drawable.map_icon);
                     }
                 } else {
                     if (mSerpBackStack.peekType() == SerpBackStack.TYPE_DEFAULT) {
+                        setSearchBarCollapsible(true);
                         mIsMapFragment = false;
                         mMapImageView.setImageResource(R.drawable.map_icon);
                     } else {
+                        setSearchBarCollapsible(false);
                         mIsMapFragment = true;
                         mMapImageView.setImageResource(R.drawable.list);
                     }
@@ -356,6 +362,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             mFiltersFrameLayout.setVisibility(View.VISIBLE);
             mSimilarPropertiesFrameLayout.setVisibility(View.GONE);
             mMapImageView.setImageResource(R.drawable.map_icon);
+            setSearchBarCollapsible(true);
 
             mSerpSelector.removePaging();
         } else {
@@ -390,7 +397,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             if(mMapFragment != null) {
                 mListingGetEvent = listingGetEvent;
                 updateListings(listingGetEvent, null);
-                mMapFragment.setData(mListings);
+                mMapFragment.setData(mListings, mListingCount, this);
 
                 if((mSerpRequestType & MASK_LISTING_UPDATE_TYPE) == 0) {
                     initFragment(R.id.activity_serp_content_frame_layout, mMapFragment, false);
@@ -399,7 +406,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 mMapFragment = new SerpMapFragment();
                 mListingGetEvent = listingGetEvent;
                 updateListings(listingGetEvent, null);
-                mMapFragment.setData(mListings);
+                mMapFragment.setData(mListings, mListingCount, this);
                 initFragment(R.id.activity_serp_content_frame_layout, mMapFragment, false);
             }
         } else if (isSellerSerp) {
@@ -641,6 +648,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         if(mIsMapFragment) {
             mSerpBackStack.addToBackstack(mSerpBackStack.peek(), SerpBackStack.TYPE_DEFAULT);
             mMapImageView.setImageResource(R.drawable.map_icon);
+            setSearchBarCollapsible(true);
             mIsMapFragment = false;
             if(mListingFragment != null) {
                 mListingFragment = SerpListFragment.init(false);
@@ -653,10 +661,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 if(mMapFragment == null) {
                     mMapFragment = new SerpMapFragment();
                 }
-                mMapFragment.setData(mListings);
+                mMapFragment.setData(mListings, mListingCount, this);
                 initFragment(R.id.activity_serp_content_frame_layout, mMapFragment, false);
                 mIsMapFragment = true;
                 mMapImageView.setImageResource(R.drawable.list);
+                setSearchBarCollapsible(false);
                 setIsJarvisVisibile(false);
             }
         }
@@ -819,6 +828,10 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             startActivity(intent);
         } else if(type == REQUEST_SET_ALERT) {
             // TODO
+        } else if(type == REQUEST_MPLUS_POPUP) {
+            FragmentTransaction ft = this.getFragmentManager().beginTransaction();
+            MPlusBadgePopupDialog dialog = new MPlusBadgePopupDialog();
+            dialog.show(ft, "MPlus");
         }
     }
 

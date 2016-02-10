@@ -117,7 +117,8 @@
                 android:layout_toEndOf="@id/serp_default_listing_property_price_sq_ft_text_view"
                 android:layout_toRightOf="@id/serp_default_listing_property_price_sq_ft_text_view"
                 android:scaleType="centerCrop"
-                android:src="@drawable/bottom_arrow_circle_green" />
+                android:src="@drawable/bottom_arrow_circle_green"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/serp_default_listing_property_bhk_info_text_view"

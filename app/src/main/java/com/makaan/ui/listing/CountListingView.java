@@ -78,7 +78,10 @@ public class CountListingView extends RelativeLayout {
         }
         mCallback = callback;
         mTotalPropertiesTextView.setText(String.valueOf(data));
-        String text = mCallback.getOverviewText();
+        String text = null;
+        if(mCallback != null) {
+            text = mCallback.getOverviewText();
+        }
         if(TextUtils.isEmpty(text)) {
             mOverviewButton.setVisibility(View.GONE);
         } else {

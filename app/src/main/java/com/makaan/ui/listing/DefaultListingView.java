@@ -1,5 +1,6 @@
 package com.makaan.ui.listing;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -32,6 +33,7 @@ import com.makaan.activity.project.ProjectActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.PreferenceConstants;
 import com.makaan.event.wishlist.WishListResultEvent;
+import com.makaan.fragment.listing.FiltersDialogFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.pojo.SerpRequest;
@@ -626,6 +628,13 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         bundle.putString("id", String.valueOf(mListing.lisitingPostedBy.id));
 
         mCallback.requestDetailPage(SerpActivity.REQUEST_LEAD_FORM, bundle);
+    }
+
+    @OnClick(R.id.serp_default_listing_assist_button)
+    public void onAssistClicked(View view) {
+        if(mCallback != null) {
+            mCallback.requestDetailPage(SerpActivity.REQUEST_MPLUS_POPUP, null);
+        }
     }
 
     @Subscribe
