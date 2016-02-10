@@ -603,7 +603,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             return;
         }
         
-        if(mSearchResultFrameLayout.getVisibility() == View.VISIBLE && !TextUtils.isEmpty(mSearchEditText.getText())) {
+        if(mSearchResultFrameLayout.getVisibility() == View.VISIBLE) {
 
             mSearchResultReceived = true;
             setSearchResultFrameLayoutVisibility(true);

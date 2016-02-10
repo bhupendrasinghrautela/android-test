@@ -47,6 +47,7 @@ import com.makaan.service.LocalityService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SellerService;
 import com.makaan.ui.listing.RelevancePopupWindowController;
+import com.makaan.ui.view.MPlusBadgePopupDialog;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.Preference;
 import com.squareup.otto.Subscribe;
@@ -106,6 +107,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public static final int REQUEST_PROJECT_PAGE = 2;
     public static final int REQUEST_LEAD_FORM = 3;
     public static final int REQUEST_SET_ALERT = 4;
+    public static final int REQUEST_MPLUS_POPUP = 5;
 
 
     private static final int MAX_ITEMS_TO_REQUEST = 20;
@@ -819,6 +821,10 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             startActivity(intent);
         } else if(type == REQUEST_SET_ALERT) {
             // TODO
+        } else if(type == REQUEST_MPLUS_POPUP) {
+            FragmentTransaction ft = this.getFragmentManager().beginTransaction();
+            MPlusBadgePopupDialog dialog = new MPlusBadgePopupDialog();
+            dialog.show(ft, "MPlus");
         }
     }
 
