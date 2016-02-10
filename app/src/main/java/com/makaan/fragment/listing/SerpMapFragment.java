@@ -422,15 +422,21 @@ public class SerpMapFragment extends MakaanBaseFragment {
 
 
         private boolean unselectMarker(int i) {
-            Bitmap markerBitmap = getMarkerBitmap(false, listings.get(i));
-            setMarkerIcon(markers.get(i), markerBitmap);
-            return true;
+            if(i < listings.size()) {
+                Bitmap markerBitmap = getMarkerBitmap(false, listings.get(i));
+                setMarkerIcon(markers.get(i), markerBitmap);
+                return true;
+            }
+            return false;
         }
 
         private boolean selectMarker(int i) {
-            Bitmap markerBitmap = getMarkerBitmap(true, listings.get(i));
-            setMarkerIcon(markers.get(i), markerBitmap);
-            return true;
+            if(i < listings.size()) {
+                Bitmap markerBitmap = getMarkerBitmap(true, listings.get(i));
+                setMarkerIcon(markers.get(i), markerBitmap);
+                return true;
+            }
+            return false;
         }
     }
 

@@ -760,6 +760,9 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             params.setScrollFlags(0);
         }
         mSearchLayoutFrameLayout.setLayoutParams(params);
+        if(!isCollapsible) {
+            ((AppBarLayout) findViewById(R.id.main_appbar)).setExpanded(true);
+        }
     }
 
     protected void applySearch(ArrayList<SearchResponseItem> searches) {

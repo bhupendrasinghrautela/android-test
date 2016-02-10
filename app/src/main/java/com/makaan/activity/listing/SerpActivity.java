@@ -294,17 +294,21 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             if((type & MASK_LISTING_TYPE) > 0) {
                 if (!request.isFromBackstack()) {
                     if (type == SerpActivity.TYPE_GPID) {
+                        setSearchBarCollapsible(false);
                         mIsMapFragment = true;
                         mMapImageView.setImageResource(R.drawable.list);
                     } else {
+                        setSearchBarCollapsible(true);
                         mIsMapFragment = false;
                         mMapImageView.setImageResource(R.drawable.map_icon);
                     }
                 } else {
                     if (mSerpBackStack.peekType() == SerpBackStack.TYPE_DEFAULT) {
+                        setSearchBarCollapsible(true);
                         mIsMapFragment = false;
                         mMapImageView.setImageResource(R.drawable.map_icon);
                     } else {
+                        setSearchBarCollapsible(false);
                         mIsMapFragment = true;
                         mMapImageView.setImageResource(R.drawable.list);
                     }
@@ -358,6 +362,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             mFiltersFrameLayout.setVisibility(View.VISIBLE);
             mSimilarPropertiesFrameLayout.setVisibility(View.GONE);
             mMapImageView.setImageResource(R.drawable.map_icon);
+            setSearchBarCollapsible(true);
 
             mSerpSelector.removePaging();
         } else {
@@ -643,6 +648,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         if(mIsMapFragment) {
             mSerpBackStack.addToBackstack(mSerpBackStack.peek(), SerpBackStack.TYPE_DEFAULT);
             mMapImageView.setImageResource(R.drawable.map_icon);
+            setSearchBarCollapsible(true);
             mIsMapFragment = false;
             if(mListingFragment != null) {
                 mListingFragment = SerpListFragment.init(false);
@@ -659,6 +665,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 initFragment(R.id.activity_serp_content_frame_layout, mMapFragment, false);
                 mIsMapFragment = true;
                 mMapImageView.setImageResource(R.drawable.list);
+                setSearchBarCollapsible(false);
                 setIsJarvisVisibile(false);
             }
         }

@@ -94,12 +94,31 @@ public class ListingCardView extends BaseCardView<Listing> implements CompoundBu
             priceUnit = priceParts[1];
         }
 
-        mPropertyPriceTextView.setText(priceString);
+        mPropertyPriceTextView.setText(priceString.toLowerCase());
         mPropertyPriceUnitTextView.setText(priceUnit);
-        mPropertyPriceSqFtTextView.setText(String.format("%d/sqft", item.pricePerUnitArea));
-        mPropertyBhkInfoTextView.setText(item.bhkInfo);
-        mPropertySizeInfoTextView.setText(item.sizeInfo);
-        mPropertyAddressTextView.setText(String.format("%s, %s", item.localityName, item.cityName));
+        mPropertyPriceSqFtTextView.setText(String.format("%s%s/sqft", "\u20B9", StringUtil.getFormattedNumber(mListing.pricePerUnitArea)).toLowerCase());
+
+        // set property bhk and size info
+        if(mListing.bhkInfo == null) {
+            mPropertyBhkInfoTextView.setVisibility(View.GONE);
+        } else {
+            mPropertyBhkInfoTextView.setVisibility(View.VISIBLE);
+            mPropertyBhkInfoTextView.setText(mListing.bhkInfo.toLowerCase());
+        }
+
+        if(mListing.sizeInfo == null) {
+            mPropertySizeInfoTextView.setVisibility(View.GONE);
+        } else {
+            mPropertySizeInfoTextView.setVisibility(View.VISIBLE);
+            mPropertySizeInfoTextView.setText(mListing.sizeInfo.toLowerCase());
+        }
+
+        // set property address info {project_name},{localityName}_{cityName}
+        if(mListing.project.name != null) {
+            mPropertyAddressTextView.setText(String.format("%s, %s, %s", mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase());
+        } else {
+            mPropertyAddressTextView.setText(String.format("%s, %s", mListing.localityName, mListing.cityName).toLowerCase());
+        }
 
 
         if(mListing.mainImageUrl != null && !TextUtils.isEmpty(mListing.mainImageUrl)) {
