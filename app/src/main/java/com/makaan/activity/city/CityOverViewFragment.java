@@ -292,7 +292,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         mBarChartView.setListener(new OnBarTouchListener() {
             @Override
             public void onBarTouched(CityTrendData cityTrendData) {
-                SerpRequest serpRequest = new SerpRequest();
+                SerpRequest serpRequest = new SerpRequest(SerpActivity.TYPE_CITY);
                 if (cityTrendData.minPrice != null) {
                     serpRequest.setMinBudget(cityTrendData.minPrice.longValue());
                 }
@@ -316,7 +316,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
                     serpRequest.setSerpContext(SerpRequest.CONTEXT_BUY);
                 }
                 serpRequest.setCityId(mCity.id);
-                serpRequest.launchSerp(mContext, SerpActivity.TYPE_CITY);
+                serpRequest.launchSerp(mContext);
             }
         });
     }

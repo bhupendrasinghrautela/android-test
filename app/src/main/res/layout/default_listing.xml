@@ -15,7 +15,8 @@
     app:cardBackgroundColor="@color/serp_listing_card_background"
     app:cardCornerRadius="@dimen/serp_listing_card_radius"
     app:cardElevation="3dp"
-    app:cardMaxElevation="3dp">
+    app:cardMaxElevation="3dp"
+    app:cardPreventCornerOverlap="false">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -223,7 +224,7 @@
                 android:layout_toEndOf="@id/serp_default_listing_property_possession_image_view"
                 android:layout_toRightOf="@id/serp_default_listing_property_possession_image_view"
                 android:scaleType="centerCrop"
-                android:src="@drawable/floor" />
+                android:src="@drawable/new_resale" />
 
             <ImageView
                 android:id="@+id/serp_default_listing_property_bathroom_image_view"
@@ -345,15 +346,15 @@
                 android:typeface="serif" />
         </RelativeLayout>
 
-        <View
+        <!--<View
             android:layout_width="match_parent"
             android:layout_height="@dimen/serp_listing_card_empty_view_height"
             android:layout_marginLeft="@dimen/serp_listing_card_empty_view_after_address_text_view_margin_left"
             android:layout_marginStart="@dimen/serp_listing_card_empty_view_after_address_text_view_margin_left"
             android:layout_marginTop="@dimen/serp_listing_card_empty_view_after_property_detail_view_margin_top"
-            android:background="@color/serp_listing_view_empty_view_color" />
+            android:background="@color/serp_listing_view_empty_view_color" />-->
 
-        <TextView
+        <!--<TextView
             android:id="@+id/serp_default_listing_property_tagline_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -369,7 +370,7 @@
             android:textSize="@dimen/serp_listing_card_property_tagline_text_view_text_size"
             android:textAllCaps="false"
             android:typeface="serif"
-            android:lineSpacingExtra="2dp" />
+            android:lineSpacingExtra="2dp" />-->
 
         <RelativeLayout
             android:id="@+id/serp_default_listing_property_seller_info_relative_layout"
@@ -422,7 +423,8 @@
                     android:visibility="gone"
                     app:border="true"
                     app:border_color="@color/serp_listing_card_seller_mask_color"
-                    app:border_width="@dimen/border_width" />
+                    app:border_width="@dimen/border_width"
+                    android:scaleType="centerCrop"/>
 
                 <TextView
                     android:id="@+id/serp_default_listing_seller_logo_text_view"

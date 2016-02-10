@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.activity.city.CityActivity;
 import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.locality.LocalityActivity;
@@ -313,6 +314,12 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
             }
             mUnitName.setText(listingDetail.property.bedrooms + "bhk " +
                     (property.unitType != null ? property.unitType : "") + " - ");
+
+            if(getActivity() instanceof MakaanBaseSearchActivity) {
+                getActivity().setTitle((listingDetail.property.bedrooms + "bhk " +
+                        (property.unitType != null ? property.unitType : "")).toLowerCase());
+            }
+
             mUnitArea.setText(
                     (property.size != null ? property.size : "") + " " +
                     (property.measure != null ? property.measure : ""));

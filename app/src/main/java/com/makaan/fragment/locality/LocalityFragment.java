@@ -449,16 +449,16 @@ public class LocalityFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResult(OnTopAgentClickEvent onTopAgentClickEvent){
-        SerpRequest serpRequest = new SerpRequest();
+        SerpRequest serpRequest = new SerpRequest(SerpActivity.TYPE_SELLER);
         serpRequest.setSellerId(onTopAgentClickEvent.agentId);
-        serpRequest.launchSerp(getActivity(), SerpActivity.TYPE_SELLER);
+        serpRequest.launchSerp(getActivity());
     }
 
     @Subscribe
     public void onResult(OnTopBuilderClickEvent onTopBuilderClickEvent){
-        SerpRequest serpRequest = new SerpRequest();
+        SerpRequest serpRequest = new SerpRequest(SerpActivity.TYPE_BUILDER);
         serpRequest.setBuilderId(onTopBuilderClickEvent.builderId);
-        serpRequest.launchSerp(getActivity(), SerpActivity.TYPE_BUILDER);
+        serpRequest.launchSerp(getActivity());
     }
 
     @OnClick(R.id.pyr_button_bottom)

@@ -21,6 +21,12 @@ public class CompanySeller {
     public class Seller {
         public String sellerType;
         public CompanyUser companyUser;
+        public ArrayList<City> cities;
+
+        public class City {
+            public Long id;
+            public String label;
+        }
 
         public class CompanyUser {
 

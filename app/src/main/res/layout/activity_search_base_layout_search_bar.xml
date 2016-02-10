@@ -1,30 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/activity_search_base_layout_search_bar_background_color">
 
-        <Button
-            android:id="@+id/activity_search_base_layout_search_bar_back_button"
-            android:layout_width="@dimen/activity_search_base_layout_search_bar_back_button_width"
-            android:layout_height="@dimen/activity_search_base_layout_search_bar_back_button_height"
-            android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_back_button_margin_top"
-            android:layout_marginBottom="@dimen/activity_search_base_layout_search_bar_back_button_margin_bottom"
-            android:layout_marginLeft="@dimen/activity_search_base_layout_search_bar_back_button_margin_left"
-            android:layout_marginStart="@dimen/activity_search_base_layout_search_bar_back_button_margin_left"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="@drawable/back_arrow_white" />
+        <FrameLayout
+            android:id="@+id/activity_search_base_layout_search_bar_back_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/activity_search_base_layout_search_bar_back_layout_padding_left"
+            android:paddingStart="@dimen/activity_search_base_layout_search_bar_back_layout_padding_left"
+            android:paddingRight="@dimen/activity_search_base_layout_search_bar_back_layout_padding_right"
+            android:paddingEnd="@dimen/activity_search_base_layout_search_bar_back_layout_padding_right">
+            <Button
+                android:id="@+id/activity_search_base_layout_search_bar_back_button"
+                android:layout_width="@dimen/activity_search_base_layout_search_bar_back_button_width"
+                android:layout_height="@dimen/activity_search_base_layout_search_bar_back_button_height"
+                android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_back_button_margin_top"
+                android:layout_marginBottom="@dimen/activity_search_base_layout_search_bar_back_button_margin_bottom"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/back_arrow_white" />
+        </FrameLayout>
 
         <RelativeLayout
             android:id="@+id/activity_search_base_layout_search_bar_description_relative_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/activity_search_base_layout_search_bar_back_button"
-            android:layout_toEndOf="@id/activity_search_base_layout_search_bar_back_button"
+            android:layout_toRightOf="@id/activity_search_base_layout_search_bar_back_layout"
+            android:layout_toEndOf="@id/activity_search_base_layout_search_bar_back_layout"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true">
 
@@ -74,8 +80,8 @@
             android:id="@+id/activity_search_base_layout_search_bar_search_relative_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/activity_search_base_layout_search_bar_back_button"
-            android:layout_toEndOf="@id/activity_search_base_layout_search_bar_back_button"
+            android:layout_toRightOf="@id/activity_search_base_layout_search_bar_back_layout"
+            android:layout_toEndOf="@id/activity_search_base_layout_search_bar_back_layout"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:visibility="gone">
@@ -120,7 +126,8 @@
                 android:background="@null"
                 android:imeOptions="actionSearch"
                 android:textCursorDrawable="@drawable/search_view_white_cursor"
-                android:hint="@string/search_default_hint"/>
+                android:hint="@string/search_default_hint"
+                android:typeface="monospace"/>
 
         </RelativeLayout>
     </RelativeLayout>

@@ -2,6 +2,7 @@ package com.makaan.util;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Build;
@@ -77,4 +78,21 @@ public class ImageUtils {
 		}
 		return display.getWidth();
 	}
+
+    /**
+     *
+     * @param url url of the image
+     * @param width width of the image
+     * @param height height of the image
+     * @param dimensionsInDp if true, then width and height will be used as dp based dimension
+     *                       so size will be used based on device density
+     * @return url to be used
+     */
+	public static String getImageRequestUrl(String url, int width, int height, boolean dimensionsInDp) {
+        if(dimensionsInDp) {
+            width = (int) (width * Resources.getSystem().getDisplayMetrics().density);
+            height = (int) (height * Resources.getSystem().getDisplayMetrics().density);
+        }
+        return url.concat(String.format("?width=%d&height=%d", width, height));
+    }
 }

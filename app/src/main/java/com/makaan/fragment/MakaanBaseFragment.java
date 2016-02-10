@@ -28,7 +28,12 @@ public abstract class MakaanBaseFragment extends Fragment {
         // bind view to ButterKnife
         ButterKnife.bind(this, view);
         // register for event bus callbacks
-        AppBus.getInstance().register(this);
+//        try {
+            AppBus.getInstance().register(this);
+        /*} catch(IllegalArgumentException ex) {
+            AppBus.getInstance().unregister(this);
+            AppBus.getInstance().register(this);
+        }*/
 
         if (!AppUtils.haveNetworkConnection(getActivity())) {
             showNoNetworkFound();
@@ -51,9 +56,9 @@ public abstract class MakaanBaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        RefWatcher refWatcher = MakaanBuyerApplication.getRefWatcher(getActivity());
+        /*RefWatcher refWatcher = MakaanBuyerApplication.getRefWatcher(getActivity());
         if(refWatcher != null) {
             refWatcher.watch(this);
-        }
+        }*/
     }
 }

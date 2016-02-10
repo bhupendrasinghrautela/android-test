@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.lead.LeadFormActivity;
+import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.event.amenity.AmenityGetEvent;
@@ -153,17 +154,18 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResults(OnViewAllPropertiesClicked onViewAllPropertiesClicked) {
-        SerpRequest request = new SerpRequest();
+        SerpRequest request = new SerpRequest(SerpActivity.TYPE_PROJECT);
         request.setCityId(project.locality.cityId);
         request.setLocalityId(project.localityId);
         request.setProjectId(project.projectId);
+        request.setTitle(project.name);
         if(onViewAllPropertiesClicked.isRent) {
             request.setSerpContext(SerpRequest.CONTEXT_RENT);
         } else {
             request.setSerpContext(SerpRequest.CONTEXT_BUY);
         }
 
-        request.launchSerp(getActivity(), SerpActivity.TYPE_PROJECT);
+        request.launchSerp(getActivity());
     }
 
     @Subscribe
@@ -194,7 +196,7 @@ public class ProjectFragment extends MakaanBaseFragment{
     }
 
     private void startSerpActivity(ProjectConfigItemClickListener configItemClickListener) {
-        SerpRequest request = new SerpRequest();
+        SerpRequest request = new SerpRequest(SerpActivity.TYPE_PROJECT);
         request.setCityId(project.locality.cityId);
         request.setLocalityId(project.localityId);
         request.setProjectId(project.projectId);
@@ -206,7 +208,7 @@ public class ProjectFragment extends MakaanBaseFragment{
             request.setSerpContext(SerpRequest.CONTEXT_BUY);
         }
 
-        request.launchSerp(getActivity(), SerpActivity.TYPE_PROJECT);
+        request.launchSerp(getActivity());
     }
 
     @Subscribe
@@ -266,6 +268,9 @@ public class ProjectFragment extends MakaanBaseFragment{
             scoreFrameLayout.setVisibility(View.GONE);
         }
         projectNameTv.setText(project.name);
+        if(getActivity() instanceof MakaanBaseSearchActivity) {
+            getActivity().setTitle(project.name.toLowerCase());
+        }
         projectLocationTv.setText(project.address);
     }
 

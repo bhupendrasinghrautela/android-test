@@ -41,7 +41,8 @@
             android:clickable="false"
             android:text="@string/login"
             android:textColor="@color/login_text_color"
-            android:textSize="@dimen/makaan_toolbar_login_text_view_text_size" />
+            android:textSize="@dimen/makaan_toolbar_login_text_view_text_size"
+            android:typeface="monospace"/>
 
         <FrameLayout
             android:id="@+id/makaan_toolbar_profile_icon"

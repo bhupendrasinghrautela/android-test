@@ -98,9 +98,10 @@ public class SearchResponseHelper {
 
         Map<String,ApiLabel> searchResultType = MasterDataCache.getInstance().getSearchTypeMap();
 
-        SerpRequest request = new SerpRequest();
+
         if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchItem.type)
                 || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchItem.type)) {
+            SerpRequest request = new SerpRequest(SerpActivity.TYPE_SEARCH);
             // as selected item is locality/suburb
             // we need to add all the selected localities/suburbs to get serp
             for(SearchResponseItem item : searchResponseArrayList) {
@@ -113,38 +114,54 @@ public class SearchResponseHelper {
                     request.setSearch(item);
                 }
             }
+            if(searchResponseArrayList.size() == 1) {
+                request.setTitle(searchResponseArrayList.get(0).displayText);
+            } else {
+                request.setTitle(String.format("%s +%d", searchResponseArrayList.get(0).displayText, searchResponseArrayList.size() - 1));
+            }
             // TODO cityId is not coming in search results
 //            MakaanBuyerApplication.mSerpSelector.term("cityId", String.valueOf(searchItem.cityId));
-            request.launchSerp(context, SerpActivity.TYPE_SEARCH);
+            request.launchSerp(context);
             return;
         } else if (SearchSuggestionType.BUILDER.getValue().equalsIgnoreCase(searchItem.type)) {
+            SerpRequest request = new SerpRequest(SerpActivity.TYPE_BUILDER);
             request.setBuilderId(Long.valueOf(searchItem.entityId));
-            request.launchSerp(context, SerpActivity.TYPE_BUILDER);
+            request.setTitle(searchItem.displayText);
+            request.launchSerp(context);
             return;
         } else if (SearchSuggestionType.BUILDERCITY.getValue().equalsIgnoreCase(searchItem.type)) {
+            SerpRequest request = new SerpRequest(SerpActivity.TYPE_BUILDER_CITY);
             request.setBuilderId(Long.valueOf(searchItem.builderId));
             request.setCityId(Long.valueOf(searchItem.entityId));
-            request.launchSerp(context, SerpActivity.TYPE_BUILDER_CITY);
+            request.setTitle(searchItem.displayText);
+            request.launchSerp(context);
             return;
         } else if (SearchSuggestionType.CITY.getValue().equalsIgnoreCase(searchItem.type)) {
+            SerpRequest request = new SerpRequest(SerpActivity.TYPE_CITY);
             request.setCityId(Long.valueOf(searchItem.entityId));
-            request.launchSerp(context, SerpActivity.TYPE_CITY);
+            request.setTitle(searchItem.displayText);
+            request.launchSerp(context);
             return;
 
         } else if (SearchSuggestionType.GOOGLE_PLACE.getValue().equalsIgnoreCase(searchItem.type)) {
+            SerpRequest request = new SerpRequest(SerpActivity.TYPE_GPID);
             request.setGpId(searchItem.googlePlaceId);
-            request.launchSerp(context, SerpActivity.TYPE_GPID);
+            request.setTitle(searchResponseArrayList.get(0).displayText);
+            request.launchSerp(context);
             return;
 
-        } else if(SearchSuggestionType.NEARBY_PROPERTIES.getValue().equalsIgnoreCase(searchItem.type)){
+        } else if(SearchSuggestionType.NEARBY_PROPERTIES.getValue().equalsIgnoreCase(searchItem.type)) {
+            SerpRequest request = new SerpRequest(SerpActivity.TYPE_NEARBY);
             request.setLatitude(Session.myLocation.centerLatitude);
             request.setLongitude(Session.myLocation.centerLongitude);
             request.setSort(SerpRequest.Sort.GEO_ASC);
-            request.launchSerp(context, SerpActivity.TYPE_NEARBY);
+            request.setTitle(searchItem.displayText);
+            request.launchSerp(context);
             return;
 
         }
-        request.launchSerp(context, SerpActivity.TYPE_UNKNOWN);
+        SerpRequest request = new SerpRequest(SerpActivity.TYPE_UNKNOWN);
+        request.launchSerp(context);
     }
 
     public static String getType(SearchResponseItem searchResponseItem){

@@ -443,9 +443,11 @@
     <dimen name="fragment_listing_total_properties_text_view_text_size">14sp</dimen>
 
     <!-- search bar dimen values -->
+    <dimen name="activity_search_base_layout_search_bar_back_layout_padding_left">10dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_back_layout_padding_right">10dp</dimen>
+\
     <dimen name="activity_search_base_layout_search_bar_back_button_height">24dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_back_button_width">24dp</dimen>
-    <dimen name="activity_search_base_layout_search_bar_back_button_margin_left">10dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_back_button_margin_top">14dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_back_button_margin_bottom">12dp</dimen>
 
@@ -666,7 +668,7 @@
 
     <dimen name="map_listing_view_pager_page_gap">14dp</dimen>
     <dimen name="map_listing_view_pager_page_left_padding">10dp</dimen>
-    <dimen name="map_listing_view_pager_page_right_padding">14dp</dimen>
+    <dimen name="map_listing_view_pager_page_right_padding">20dp</dimen>
     <dimen name="map_listing_view_pager_page_bottom_padding">10dp</dimen>
 
     <!--nearby localities card view-->
@@ -841,6 +843,8 @@
 
     <dimen name="serp_listing_item_seller_company_name_text_view_margin_top">3dp</dimen>
     <dimen name="serp_listing_item_seller_company_name_text_view_text_size">18sp</dimen>
+
+    <dimen name="serp_listing_item_seller_company_not_rated_text_size">14sp</dimen>
 
     <dimen name="serp_listing_item_seller_rating_bar_item_width">12dp</dimen>
     <dimen name="serp_listing_item_seller_rating_bar_item_height">12dp</dimen>

@@ -168,7 +168,8 @@
                 android:background="@drawable/buy_radio_button_background_selector"
                 android:button="@null"
                 android:text="buy"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:typeface="sans"/>
 
             <RadioButton
                 android:id="@+id/activity_home_property_rent_radio_button"
@@ -180,7 +181,8 @@
                 android:background="@drawable/rent_radio_button_background_selector"
                 android:button="@null"
                 android:text="rent"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:typeface="sans"/>
         </RadioGroup>
     </RelativeLayout>
 

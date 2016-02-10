@@ -26,7 +26,7 @@ public class SellerService implements  MakaanService {
         if (null != sellerId) {
             Selector builderSelector = new Selector();
             builderSelector.fields(new String[]{"id", "name", /*"address", */"score", "logo", "activeSince",
-                    "coverPicture", "sellers", "sellerType", "companyUser", "user", "fullName", "listingCount", "sellerListingData",
+                    "coverPicture", "sellers", "sellerType", "cities", "label", "companyUser", "user", "fullName", "listingCount", "sellerListingData",
                     "localityCount", "projectCount", "categoryWiseCount", "listingCategoryType"});
 
 

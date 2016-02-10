@@ -34,27 +34,49 @@ public class SerpRequest implements Parcelable {
         QUALITY_SCORE_ASC, QUALITY_SCORE_DESC, DISTANCE_ASC, DISTANCE_DESC, GEO_ASC, GEO_DESC
     }
 
-    ArrayList<Long> cityIds = new ArrayList<Long>();
-    ArrayList<Long> localityIds = new ArrayList<Long>();
-    ArrayList<Long> suburbIds = new ArrayList<Long>();
-    ArrayList<Long> projectIds = new ArrayList<Long>();
-    ArrayList<Long> builderIds = new ArrayList<Long>();
-    ArrayList<Long> sellerIds = new ArrayList<Long>();
-    ArrayList<Integer> bedrooms = new ArrayList<Integer>();
-    ArrayList<Integer> bathrooms = new ArrayList<Integer>();
-    ArrayList<Integer> propertyTypes = new ArrayList<Integer>();
-    ArrayList<String> gpIds = new ArrayList<String>();
-    ArrayList<SearchResponseItem> searchItems = new ArrayList<>();
+    private ArrayList<Long> cityIds = new ArrayList<Long>();
+    private ArrayList<Long> localityIds = new ArrayList<Long>();
+    private ArrayList<Long> suburbIds = new ArrayList<Long>();
+    private ArrayList<Long> projectIds = new ArrayList<Long>();
+    private ArrayList<Long> builderIds = new ArrayList<Long>();
+    private ArrayList<Long> sellerIds = new ArrayList<Long>();
+    private ArrayList<Integer> bedrooms = new ArrayList<Integer>();
+    private ArrayList<Integer> bathrooms = new ArrayList<Integer>();
+    private ArrayList<Integer> propertyTypes = new ArrayList<Integer>();
+    private ArrayList<String> gpIds = new ArrayList<String>();
+    private ArrayList<SearchResponseItem> searchItems = new ArrayList<>();
 
-    long minBudget = UNEXPECTED_VALUE;
-    long maxBudget = UNEXPECTED_VALUE;
-    long minArea = UNEXPECTED_VALUE;
-    long maxArea = UNEXPECTED_VALUE;
-    int serpContext = UNEXPECTED_VALUE;
-    int sort = UNEXPECTED_VALUE;
+    private long minBudget = UNEXPECTED_VALUE;
+    private long maxBudget = UNEXPECTED_VALUE;
+    private long minArea = UNEXPECTED_VALUE;
+    private long maxArea = UNEXPECTED_VALUE;
 
-    double latitude = Double.MIN_VALUE;
-    double longitude = Double.MIN_VALUE;
+    private int serpContext = UNEXPECTED_VALUE;
+    private int sort = UNEXPECTED_VALUE;
+    private int type = UNEXPECTED_VALUE;
+
+    private double latitude = Double.MIN_VALUE;
+    private double longitude = Double.MIN_VALUE;
+
+    private boolean isFromBackstack = false;
+
+    private String displayText = "";
+
+    public SerpRequest(int type) {
+        this.type = type;
+    }
+
+    public int getType() {
+        return this.type;
+    }
+
+    public boolean isFromBackstack() {
+        return isFromBackstack;
+    }
+
+    public void setIsFromBackstack(boolean isFromBackstack) {
+        this.isFromBackstack = isFromBackstack;
+    }
 
     public void setSort(Sort sort) {
         this.sort = sort.ordinal();
@@ -68,6 +90,27 @@ public class SerpRequest implements Parcelable {
         if(!this.cityIds.contains(cityId)) {
             this.cityIds.add(cityId);
         }
+    }
+
+    public long getCityId() {
+        if(this.cityIds.size() > 0) {
+            return this.cityIds.get(0);
+        }
+        return 0;
+    }
+
+    public long getLocalityId() {
+        if(this.localityIds.size() > 0) {
+            return this.localityIds.get(0);
+        }
+        return getSuburbId();
+    }
+
+    private long getSuburbId() {
+        if(this.suburbIds.size() > 0) {
+            return this.suburbIds.get(0);
+        }
+        return 0;
     }
 
     public void setLocalityId(long localityId) {
@@ -86,6 +129,13 @@ public class SerpRequest implements Parcelable {
         if(!this.projectIds.contains(projectId)) {
             this.projectIds.add(projectId);
         }
+    }
+
+    public long getProjectId() {
+        if(this.projectIds.size() > 0) {
+            return this.projectIds.get(0);
+        }
+        return 0;
     }
 
     public void setBuilderId(long builderId) {
@@ -124,6 +174,14 @@ public class SerpRequest implements Parcelable {
         }
     }
 
+    public void setTitle(String displayText) {
+        this.displayText = displayText;
+    }
+
+    public String getTitle() {
+        return this.displayText;
+    }
+
     public void setMinBudget(long minBudget) {
         this.minBudget = minBudget;
     }
@@ -160,9 +218,12 @@ public class SerpRequest implements Parcelable {
         this.longitude = longitude;
     }
 
-    public SerpRequest() { }
+    public int selectedLocalitiesAndSuburbs() {
+        return this.localityIds.size() + this.suburbIds.size();
+    }
 
     public SerpRequest(Parcel source) {
+        this.type = source.readInt();
         readLongList(source, this.cityIds);
         readLongList(source, this.localityIds);
         readLongList(source, this.suburbIds);
@@ -186,6 +247,10 @@ public class SerpRequest implements Parcelable {
 
         setLatitude(source.readDouble());
         setLongitude(source.readDouble());
+
+        setIsFromBackstack(source.readByte() == 1);
+
+        setTitle(source.readString());
     }
 
     @Override
@@ -195,6 +260,8 @@ public class SerpRequest implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.type);
+
         writeLongList(dest, this.cityIds);
         writeLongList(dest, this.localityIds);
         writeLongList(dest, this.suburbIds);
@@ -218,6 +285,10 @@ public class SerpRequest implements Parcelable {
 
         dest.writeDouble(this.latitude);
         dest.writeDouble(this.longitude);
+
+        dest.writeByte((byte) (isFromBackstack ? 1 : 0));
+
+        dest.writeString(displayText);
     }
 
     private void writeParceableList(Parcel dest, ArrayList<SearchResponseItem> list, int flags) {
@@ -320,7 +391,7 @@ public class SerpRequest implements Parcelable {
             selector.removeTerm(KeyUtil.SUBURB_ID);
             selector.removeTerm(KeyUtil.LOCALITY_OR_SUBURB_ID);
             for (Long suburbId : this.suburbIds) {
-                selector.term(KeyUtil.LOCALITY_ID, String.valueOf(suburbId));
+                selector.term(KeyUtil.SUBURB_ID, String.valueOf(suburbId));
             }
         }
 
@@ -530,7 +601,7 @@ public class SerpRequest implements Parcelable {
         return null;
     }
 
-    public void launchSerp(Context context, int type) {
+    public void launchSerp(Context context) {
         Intent intent = new Intent(context, SerpActivity.class);
         intent.putExtra(SerpActivity.REQUEST_TYPE, type);
         intent.putExtra(SerpActivity.REQUEST_DATA, this);
