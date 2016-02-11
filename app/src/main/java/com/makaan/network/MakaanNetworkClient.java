@@ -274,14 +274,18 @@ public class MakaanNetworkClient {
                     @Override
                     public void onResponse(String response) {
                         completeRequestInQueue(url);
-                        stringRequestCallback.onSuccess(response);
+                        if(null!=stringRequestCallback) {
+                            stringRequestCallback.onSuccess(response);
+                        }
 
                     }
                 }, jsonObject, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         completeRequestInQueue(url);
-                        stringRequestCallback.onError(getResponseError(error));
+                        if(null!=stringRequestCallback) {
+                            stringRequestCallback.onError(getResponseError(error));
+                        }
                     }
                 });
         addToRequestQueue(stringRequest, tag);
@@ -370,6 +374,29 @@ public class MakaanNetworkClient {
                     public void onErrorResponse(VolleyError error) {
                         completeRequestInQueue(url);
                         stringRequestCallback.onError(getResponseError(error));
+                    }
+                });
+        addToRequestQueue(stringRequest, tag);
+    }
+
+    public void postTrack(final String url, JSONObject jsonObject,
+                     final StringRequestCallback stringRequestCallback, String tag) {
+
+        StringRequest stringRequest = new StringRequest
+                (Request.Method.POST, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if(null!=stringRequestCallback) {
+                            stringRequestCallback.onSuccess(response);
+                        }
+
+                    }
+                }, jsonObject, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if(null!=stringRequestCallback) {
+                            stringRequestCallback.onError(getResponseError(error));
+                        }
                     }
                 });
         addToRequestQueue(stringRequest, tag);

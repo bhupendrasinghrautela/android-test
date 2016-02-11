@@ -50,7 +50,7 @@ public class JarvisSocket {
         mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
         mSocket.on("user-acquired", onUserAcquired);
         mSocket.on("new-message-for-user", onNewMessageForUser);
-        //mSocket.on("expose-session", onExposeSession);
+        mSocket.on("expose-session", onExposeSession);
         mSocket.on("agent-confirms-user", onAgentConfirmUser);
         mSocket.connect();
         joinUser();
@@ -62,7 +62,7 @@ public class JarvisSocket {
         mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
         mSocket.off("user-acquired", onUserAcquired);
         mSocket.off("new-message-for-user", onNewMessageForUser);
-        //mSocket.off("expose-session", onExposeSession);
+        mSocket.off("expose-session", onExposeSession);
         mSocket.off("agent-confirms-user", onAgentConfirmUser);
     }
 
