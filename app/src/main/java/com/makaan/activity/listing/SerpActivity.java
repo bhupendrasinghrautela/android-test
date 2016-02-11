@@ -64,6 +64,8 @@ import butterknife.OnClick;
  */
 public class SerpActivity extends MakaanBaseSearchActivity implements SerpRequestCallback,
         FiltersDialogFragment.FilterDialogFragmentCallback {
+    public static final String SCREEN_NAME = "serp";
+
     // type of request to open serp, it must be one of the following values
     public static final String REQUEST_TYPE = "type";
 

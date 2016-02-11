@@ -15,6 +15,7 @@ import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.fragment.MakaanBaseFragment;
 
 import com.makaan.jarvis.JarvisConstants;
+import com.makaan.jarvis.analytics.AnalyticsService;
 import com.makaan.pojo.GroupCluster;
 import com.makaan.request.selector.Selector;
 
@@ -23,11 +24,15 @@ import com.makaan.response.listing.Listing;
 import com.makaan.adapter.listing.SerpListingAdapter;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.SearchSuggestionType;
+import com.makaan.service.MakaanServiceFactory;
 import com.makaan.ui.PaginatedListView;
 import com.makaan.util.StringUtil;
 import com.segment.analytics.Analytics;
 import com.segment.analytics.Properties;
 import com.segment.analytics.Traits;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -50,7 +55,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
     private String mSearchedEntities = "";
 
     private boolean mIsChildSerp;
-    private boolean mIsScrollEventSent;
+    private boolean mIsIdentifyEventSent;
 
     int page;
     private SerpRequestCallback mSerpRequestCallback;
@@ -216,15 +221,31 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
 
                 .putValue("serp_filter_bhk", null));*/
 
-        if(mIsScrollEventSent){
-            return;
-        }
 
-        mIsScrollEventSent = true;
         Traits traits = new Traits();
         traits.put("serp_visible_item", mListings.size());
         Analytics.with(getActivity()).identify(traits);
         Analytics.with(getActivity()).flush();
+
+
+    }
+
+    private void identifyUser(){
+        if(mIsIdentifyEventSent){
+            return;
+        }
+
+        mIsIdentifyEventSent = true;
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("page_type", SerpActivity.SCREEN_NAME);
+            AnalyticsService analyticsService =
+                    (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
+            analyticsService.track(AnalyticsService.Type.identify, jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
     }

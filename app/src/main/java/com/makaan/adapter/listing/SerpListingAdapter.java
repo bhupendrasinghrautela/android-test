@@ -11,11 +11,17 @@ import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.PaginatedBaseAdapter;
 import com.makaan.adapter.RecycleViewMode;
+import com.makaan.jarvis.JarvisConstants;
+import com.makaan.jarvis.analytics.AnalyticsService;
 import com.makaan.pojo.GroupCluster;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
+import com.makaan.service.MakaanServiceFactory;
 import com.makaan.ui.listing.ListingViewHolderFactory;
 import com.makaan.ui.listing.BaseListingAdapterViewHolder;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -160,7 +166,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
                 // TODO handle when group clusters are more than required
                 if(position - extraCount == 5 && !mEventSent) {
                     mEventSent = true;
-                    // TODO send event
+                    trackScroll(position - extraCount);
                 }
                 viewHolder.populateData(mItems.get(position - extraCount), mCallback);
             }
@@ -208,5 +214,23 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
         mBuilderSellerPopulated = false;
         mEventSent = false;
         notifyDataSetChanged();
+    }
+
+    private void trackScroll(int position){
+        //TODO to be done from fragment/activity where we have current serp request using a callback
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("page_type", SerpActivity.SCREEN_NAME);
+            jsonObject.put("serp_visible_item", position);
+            jsonObject.put("delivery_id", JarvisConstants.DELIVERY_ID);
+            jsonObject.put("event_name", "serp_scroll");
+            jsonObject.put("serp_filter_bhk", null);
+            AnalyticsService analyticsService =
+                    (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
+            analyticsService.track(AnalyticsService.Type.track, jsonObject);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

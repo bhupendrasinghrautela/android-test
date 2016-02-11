@@ -11,6 +11,7 @@ import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.jarvis.message.Message;
+import com.makaan.jarvis.message.MessageType;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.ui.view.BaseView;
 
@@ -47,7 +48,16 @@ public class LocalityCard extends BaseView<Message> {
 
     @Override
     public void bindView(final Context context, final Message item) {
-        textViewTitle.setText("Properties in");
+
+        if(MessageType.localityOverview==item.messageType){
+            textViewTitle.setVisibility(View.GONE);
+        }else if(MessageType.localityBuy==item.messageType) {
+            textViewTitle.setText("property for buy near");
+        }
+        else if(MessageType.localityRent==item.messageType) {
+            textViewTitle.setText("property for rent near");
+        }
+
         textViewSubTitle.setText(item.chatObj.localityName);
         textViewSubTitle2.setText(item.chatObj.cityName);
 

@@ -12,6 +12,7 @@ import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.MakaanCookieStore;
 import com.makaan.jarvis.JarvisConstants;
 import com.makaan.jarvis.JarvisServiceCreator;
+import com.makaan.jarvis.analytics.AnalyticsService;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.service.LocationService;
@@ -120,6 +121,7 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(LeadInstantCallbackService.class, new LeadInstantCallbackService());
         MakaanServiceFactory.getInstance().registerService(ForgotPasswordService.class, new ForgotPasswordService());
         MakaanServiceFactory.getInstance().registerService(UserRegistrationService.class, new UserRegistrationService());
+        MakaanServiceFactory.getInstance().registerService(AnalyticsService.class, new AnalyticsService());
 
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();
