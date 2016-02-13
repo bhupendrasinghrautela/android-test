@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
@@ -29,6 +30,7 @@ import com.makaan.fragment.listing.ChildSerpClusterFragment;
 import com.makaan.fragment.listing.FiltersDialogFragment;
 import com.makaan.fragment.listing.SerpListFragment;
 import com.makaan.fragment.listing.SerpMapFragment;
+import com.makaan.fragment.listing.SetAlertsDialogFragment;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.OnExposeEvent;
 import com.makaan.pojo.GroupCluster;
@@ -249,6 +251,10 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
                 parseSerpRequest(intent, SerpActivity.TYPE_SEARCH);
 
+            } else if (type == SerpActivity.TYPE_BUILDER) {
+                removeAllSelectors();
+
+                parseSerpRequest(intent, SerpActivity.TYPE_BUILDER);
             } else if (type == SerpActivity.TYPE_UNKNOWN) {
                 // TODO check whether it should be used or not
                 fetchData();
@@ -273,6 +279,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     private void removeAllSelectors() {
         mSerpSelector.removeGeo();
+        mSerpSelector.removeFacets();
         mSerpSelector.removeTerm("builderId");
         mSerpSelector.removeTerm("projectId");
         mSerpSelector.removeTerm("localityId");
@@ -392,6 +399,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public synchronized void onResults(SerpGetEvent listingGetEvent) {
         if(null==listingGetEvent|| null!=listingGetEvent.error){
             //TODO handle error
+            mSerpReceived = true;
+            Toast.makeText(this, "An error occurred while fetching results", Toast.LENGTH_SHORT).show();
+            mProgressDialog.dismiss();
             return;
         }
 
@@ -490,6 +500,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public synchronized void onResults(GroupSerpGetEvent groupListingGetEvent) {
         if(null==groupListingGetEvent|| null!=groupListingGetEvent.error){
             //TODO handle error
+            if(mSerpReceived) {
+                mProgressDialog.dismiss();
+            } else {
+                mGroupReceived = true;
+            }
             return;
         }
         mGroupListingGetEvent = groupListingGetEvent;
@@ -639,6 +654,10 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             mSerpRequestType = TYPE_GPID;
         }
 
+        mSerpSelector.page(0, MAX_ITEMS_TO_REQUEST);
+        mGroupSelector.reset();
+        generateGroupSelector();
+
         mSerpSelector.term("cityId", String.valueOf(gpIdResultEvent.gpDetail.cityid));
         ((ListingService) MakaanServiceFactory.getInstance().getService(ListingService.class))
                 .handleSerpRequest(mSerpSelector, gpIdResultEvent.gpDetail.placeId, true, mGroupSelector);
@@ -652,7 +671,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             mMapImageView.setImageResource(R.drawable.map_icon);
             setSearchBarCollapsible(true);
             mIsMapFragment = false;
-            if(mListingFragment != null) {
+            if(mListingFragment == null) {
                 mListingFragment = SerpListFragment.init(false);
             }
             mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE), mListingCount);
@@ -829,7 +848,10 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             intent.putExtras(bundle);
             startActivity(intent);
         } else if(type == REQUEST_SET_ALERT) {
-            // TODO
+            FragmentTransaction ft = this.getFragmentManager().beginTransaction();
+            SetAlertsDialogFragment dialog = new SetAlertsDialogFragment();
+            dialog.setData(mFilterGroups, mListingGetEvent);
+            dialog.show(ft, "Set Alerts");
         } else if(type == REQUEST_MPLUS_POPUP) {
             FragmentTransaction ft = this.getFragmentManager().beginTransaction();
             MPlusBadgePopupDialog dialog = new MPlusBadgePopupDialog();
@@ -867,8 +889,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Override
     public String getOverviewText() {
-        if(mSerpBackStack.peek().selectedLocalitiesAndSuburbs() <= 1) {
-            return String.format("more about %s", mSerpBackStack.peek().getTitle());
+        if(mSerpBackStack.peek().selectedLocalitiesAndSuburbs() <= 1 && mListingGetEvent.listingData.facets != null) {
+            return String.format("more about %s", mListingGetEvent.listingData.facets.buildDisplayName());
         }
         return null;
     }
@@ -906,8 +928,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         }
         mProgressDialog.setTitle("Loading");
         mProgressDialog.setMessage("Wait while loading...");
-        //mProgressDialog.setCancelable(false);
-        //mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.show();
     }
 

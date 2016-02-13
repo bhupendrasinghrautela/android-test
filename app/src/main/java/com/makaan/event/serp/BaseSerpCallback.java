@@ -2,11 +2,15 @@ package com.makaan.event.serp;
 
 import android.util.Log;
 
+import com.google.gson.reflect.TypeToken;
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ResponseConstants;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.response.ResponseError;
+import com.makaan.response.agents.TopAgent;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.listing.ListingData;
+import com.makaan.response.listing.ListingFacets;
 import com.makaan.response.parser.ListingParser;
 import com.makaan.util.AppBus;
 
@@ -16,6 +20,9 @@ import static com.makaan.constants.MessageConstants.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 /**
  * Created by vaibhav on 24/12/15.
@@ -56,6 +63,15 @@ public class BaseSerpCallback extends JSONGetCallback {
                             listingData.cityName = listing.cityName;
                         }
                     }
+                    if(apiResponse.has(FACETS)) {
+                        JSONObject facets = apiResponse.getJSONObject(FACETS);
+
+                        Type facetsType = new TypeToken<ListingFacets>() {
+                        }.getType();
+
+                        serpGetEvent.listingData.facets = MakaanBuyerApplication.gson.fromJson(facets.toString(), facetsType);
+                    }
+
                 }
             } catch (JSONException e) {
                 Log.e(TAG, "Unable to parse lisiting data", e);

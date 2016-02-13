@@ -54,6 +54,7 @@ public class SerpRequest implements Parcelable {
     private int serpContext = UNEXPECTED_VALUE;
     private int sort = UNEXPECTED_VALUE;
     private int type = UNEXPECTED_VALUE;
+    private int backstackType = UNEXPECTED_VALUE;
 
     private double latitude = Double.MIN_VALUE;
     private double longitude = Double.MIN_VALUE;
@@ -76,6 +77,14 @@ public class SerpRequest implements Parcelable {
 
     public void setIsFromBackstack(boolean isFromBackstack) {
         this.isFromBackstack = isFromBackstack;
+    }
+
+    public void setBackStackType(int type) {
+        backstackType = type;
+    }
+
+    public int getBackStackType() {
+        return backstackType;
     }
 
     public void setSort(Sort sort) {
@@ -244,6 +253,7 @@ public class SerpRequest implements Parcelable {
 
         setSerpContext(source.readInt());
         setSort(source.readInt());
+        setBackStackType(source.readInt());
 
         setLatitude(source.readDouble());
         setLongitude(source.readDouble());
@@ -282,6 +292,7 @@ public class SerpRequest implements Parcelable {
 
         dest.writeInt(this.serpContext);
         dest.writeInt(this.sort);
+        dest.writeInt(this.backstackType);
 
         dest.writeDouble(this.latitude);
         dest.writeDouble(this.longitude);
@@ -364,6 +375,8 @@ public class SerpRequest implements Parcelable {
             for (Long cityId : this.cityIds) {
                 selector.term(KeyUtil.CITY_ID, String.valueOf(cityId));
             }
+            selector.facet("cityId");
+            selector.facet("cityLabel");
         }
 
         // locality and suburb ids
@@ -379,6 +392,10 @@ public class SerpRequest implements Parcelable {
             for (Long suburbId : this.suburbIds) {
                 selector.term(KeyUtil.LOCALITY_OR_SUBURB_ID, String.valueOf(suburbId));
             }
+            selector.facet("localityId");
+            selector.facet("localityLabel");
+            selector.facet("suburbId");
+            selector.facet("suburbLabel");
         } else if(this.localityIds.size() > 0) {
             selector.removeTerm(KeyUtil.LOCALITY_ID);
             selector.removeTerm(KeyUtil.SUBURB_ID);
@@ -386,6 +403,8 @@ public class SerpRequest implements Parcelable {
             for (Long localityId : this.localityIds) {
                 selector.term(KeyUtil.LOCALITY_ID, String.valueOf(localityId));
             }
+            selector.facet("localityId");
+            selector.facet("localityLabel");
         } else if(this.suburbIds.size() > 0) {
             selector.removeTerm(KeyUtil.LOCALITY_ID);
             selector.removeTerm(KeyUtil.SUBURB_ID);
@@ -393,6 +412,8 @@ public class SerpRequest implements Parcelable {
             for (Long suburbId : this.suburbIds) {
                 selector.term(KeyUtil.SUBURB_ID, String.valueOf(suburbId));
             }
+            selector.facet("suburbId");
+            selector.facet("suburbLabel");
         }
 
         // project ids
@@ -401,6 +422,7 @@ public class SerpRequest implements Parcelable {
             for (Long projectId : this.projectIds) {
                 selector.term(KeyUtil.PROJECT_ID, String.valueOf(projectId));
             }
+            selector.facet("projectId");
         }
 
         // builder ids
@@ -409,6 +431,8 @@ public class SerpRequest implements Parcelable {
             for (Long builderId : this.builderIds) {
                 selector.term(KeyUtil.BUILDER_ID, String.valueOf(builderId));
             }
+            selector.facet("builderId");
+            selector.facet("builderLabel");
         }
 
         // seller ids

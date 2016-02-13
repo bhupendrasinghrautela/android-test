@@ -5,7 +5,7 @@
         {
           "displayName":"age",
           "fieldName":"propertyAge",
-          "imageName":"ready_to_move"
+          "imageName":"age_property"
         },
         {
           "displayName":"possession",
@@ -52,7 +52,7 @@
         {
           "displayName":"open sides",
           "fieldName":"noOfOpenSides",
-          "imageName":"shower"
+          "imageName":"open_sides"
         },
         {
           "displayName":"bookamt",
@@ -62,7 +62,7 @@
         {
           "displayName":"facing",
           "fieldName":"facing",
-          "imageName":"shower"
+          "imageName":"facing"
         },
         {
           "displayName":"ownership",
@@ -84,7 +84,7 @@
         {
           "displayName":"availability",
           "fieldName":"isReadyToMove",
-          "imageName":"ready_to_move"
+          "imageName":"available"
         },
         {
           "displayName":"bathroom",
@@ -99,7 +99,7 @@
         {
           "displayName":"balcony",
           "fieldName":"balcony",
-          "imageName":"shower"
+          "imageName":"balcony"
         },
         {
           /* TODO */

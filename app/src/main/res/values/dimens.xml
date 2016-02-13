@@ -1256,4 +1256,44 @@
     <dimen name="activity_home_buy_rent_button_height">35dp</dimen>
 
     <dimen name="card_agent_rating_item_dimen">22dp</dimen>
+    <dimen name="card_agent_rating_item_height">14dp</dimen>
+
+    <!-- set alerts dialog values -->
+    <dimen name="fragment_set_alerts_button_height">36dp</dimen>
+    <dimen name="fragment_set_alerts_button_width">150dp</dimen>
+    <dimen name="fragment_set_alerts_button_bottom_margin">20dp</dimen>
+    <dimen name="fragment_set_alerts_button_text_size">16sp</dimen>
+
+    <dimen name="fragment_set_alerts_top_bar_padding_left">20dp</dimen>
+    <dimen name="fragment_set_alerts_top_bar_padding_top">12dp</dimen>
+    <dimen name="fragment_set_alerts_top_bar_padding_bottom">12dp</dimen>
+
+    <dimen name="fragment_set_alerts_stay_informed_text_size">20sp</dimen>
+    <dimen name="fragment_set_alerts_stay_informed_text_margin_left">20dp</dimen>
+
+    <dimen name="fragment_set_alerts_back_button_width">24dp</dimen>
+    <dimen name="fragment_set_alerts_back_button_height">24dp</dimen>
+
+    <dimen name="fragment_set_alerts_name_edit_text_margin_left">20dp</dimen>
+    <dimen name="fragment_set_alerts_name_edit_text_margin_right">20dp</dimen>
+    <dimen name="fragment_set_alerts_name_edit_text_text_size">22sp</dimen>
+
+    <dimen name="fragment_set_alerts_save_text_view_text_size">12sp</dimen>
+
+
+    <dimen name="fragment_set_alerts_content_card_view_margin_left">20dp</dimen>
+    <dimen name="fragment_set_alerts_content_card_view_margin_right">20dp</dimen>
+    <dimen name="fragment_set_alerts_content_card_view_margin_top">20dp</dimen>
+    <dimen name="fragment_set_alerts_content_card_view_margin_bottom">20dp</dimen>
+
+    <dimen name="fragment_set_alerts_list_item_padding_top">10dp</dimen>
+    <dimen name="fragment_set_alerts_list_item_padding_bottom">10dp</dimen>
+    <dimen name="fragment_set_alerts_list_item_padding_left">20dp</dimen>
+    <dimen name="fragment_set_alerts_list_item_padding_right">20dp</dimen>
+
+    <dimen name="fragment_set_alerts_list_item_image_view_width">28dp</dimen>
+    <dimen name="fragment_set_alerts_list_item_image_view_height">28dp</dimen>
+    <dimen name="fragment_set_alerts_list_item_image_view_margin_bottom">6dp</dimen>
+
+    <dimen name="fragment_set_alerts_list_item_display_text_text_size">14sp</dimen>
 </resources>

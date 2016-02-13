@@ -27,6 +27,7 @@ import com.makaan.pojo.SerpObjects;
 import com.makaan.response.listing.Listing;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.WishListService;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
 
@@ -122,11 +123,15 @@ public class ListingCardView extends BaseCardView<Listing> implements CompoundBu
 
 
         if(mListing.mainImageUrl != null && !TextUtils.isEmpty(mListing.mainImageUrl)) {
-            mPropertyImageView.setImageUrl(mListing.mainImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
+            int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_width);
+            int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_height);
+            mPropertyImageView.setImageUrl(ImageUtils.getImageRequestUrl(mListing.mainImageUrl, width, height, false), MakaanNetworkClient.getInstance().getImageLoader());
         } else {
             //TODO this is just a dummy image
+            int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_width);
+            int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_height);
             String url = "https://im.proptiger-ws.com/1/644953/6/imperial-project-image-460007.jpeg";
-            mPropertyImageView.setImageUrl(url, MakaanNetworkClient.getInstance().getImageLoader());
+            mPropertyImageView.setImageUrl(ImageUtils.getImageRequestUrl(url, width, height, false), MakaanNetworkClient.getInstance().getImageLoader());
         }
 
         this.setOnClickListener(new OnClickListener() {

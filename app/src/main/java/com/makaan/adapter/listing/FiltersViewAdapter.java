@@ -39,7 +39,12 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
     public static final int RADIO_BUTTON_RANGE = 6;
     public static final int SINGLE_CHECKBOX = 7;
 
-    private static final int UNEXPECTED_VALUE = -1000000;
+    public static final int UNEXPECTED_VALUE = -1000000;
+    public static final String RADIO_BUTTON_BOTH_SELECTED = "-1";
+    public static final String TYPE_YEAR = "year";
+    public static final String TYPE_DAY = "day";
+    public static final String INFINITE_SELECTOR = "+";
+    public static final String MIN_MAX_SEPARATOR = "-";
 
     private final int type;
     Context context;
@@ -200,6 +205,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
         }
     }
 
+    // Same logic should be updated in SetAlertsDialogFragment::createSelector() as well
     public void applyFilters(Selector selector, ArrayList<FilterGroup> filterGroups) {
         FilterGroup currentGroup = clearFilterGroup(filterGroups);
         if(type == SEEKBAR) {
@@ -220,9 +226,9 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                     if(currentGroup != null) {
                         currentGroup.isSelected = true;
                     }
-                    if("-1".equals(filter.value)) {
+                    if(RADIO_BUTTON_BOTH_SELECTED.equals(filter.value)) {
                         for(TermFilter filter2 : termValues) {
-                            if(!filter2.selected && !"-1".equals(filter2.value)) {
+                            if(!filter2.selected && !RADIO_BUTTON_BOTH_SELECTED.equals(filter2.value)) {
                                 selector.term(filter2.fieldName, filter2.value);
                             }
                         }
@@ -242,7 +248,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                     if(filter.minValue != UNEXPECTED_VALUE || filter.maxValue != UNEXPECTED_VALUE) {
                         Long minValue = (long)UNEXPECTED_VALUE;
                         Long maxValue = (long)UNEXPECTED_VALUE;
-                        if (filterGroup.type.equalsIgnoreCase("year")) {
+                        if (filterGroup.type.equalsIgnoreCase(TYPE_YEAR)) {
                             Calendar cal = Calendar.getInstance();
                             if(filter.minValue != UNEXPECTED_VALUE) {
                                 cal.add(Calendar.YEAR, (int) filter.minValue);
@@ -262,7 +268,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                             }
 
                             selector.range(filter.fieldName, minValue, maxValue);
-                        } else if(filterGroup.type.equalsIgnoreCase("day")) {
+                        } else if(filterGroup.type.equalsIgnoreCase(TYPE_DAY)) {
                             Calendar cal = Calendar.getInstance();
                             if(filter.minValue != UNEXPECTED_VALUE) {
                                 cal.add(Calendar.DAY_OF_MONTH, (int) filter.minValue);
@@ -297,7 +303,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                     if(currentGroup != null) {
                         currentGroup.isSelected = true;
                     }
-                    if (filterGroup.type.equalsIgnoreCase("year")) {
+                    if (filterGroup.type.equalsIgnoreCase(TYPE_YEAR)) {
                         Calendar cal = Calendar.getInstance();
                         long minValue = UNEXPECTED_VALUE;
                         long maxValue = UNEXPECTED_VALUE;
@@ -336,8 +342,8 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                     if(currentGroup != null) {
                         currentGroup.isSelected = true;
                     }
-                    if(filter.displayName.contains("+")) {
-                        String[] val = filter.value.split("-");
+                    if(filter.displayName.contains(INFINITE_SELECTOR)) {
+                        String[] val = filter.value.split(MIN_MAX_SEPARATOR);
                         int min = Integer.valueOf(val[0]);
                         int max = Integer.valueOf(val[1]);
                         for(int i = min; i <= max; i++) {

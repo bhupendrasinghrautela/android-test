@@ -598,7 +598,7 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         }
     }
 
-    @OnClick({R.id.serp_default_listing_seller_image_view, R.id.serp_default_listing_seller_name_text_view})
+    @OnClick({R.id.serp_default_listing_seller_image_frame_layout, R.id.serp_default_listing_seller_name_text_view, R.id.serp_default_listing_seller_rating})
     public void onSellerPressed(View view) {
         // TODO discuss what should be done if listing posted by is not present
         SerpRequest request = new SerpRequest(SerpActivity.TYPE_SELLER);

@@ -217,8 +217,13 @@ public class ListingParser {
     private void buildBHKInfo(Listing listing, JSONObject property) {
         String unitTypeString = property.optString(UNIT_TYPE);
 
-        listing.bhkInfo = listing.bedrooms > 0 ? listing.bedrooms.toString().concat(BHK_STR) : null;
-        listing.bhkInfo = listing.bhkInfo != null ? listing.bhkInfo.concat(unitTypeString) : null;
+        if(unitTypeString != null && "plot".equalsIgnoreCase(unitTypeString)) {
+            listing.bhkInfo = "residential plot";
+        } else {
+
+            listing.bhkInfo = listing.bedrooms > 0 ? listing.bedrooms.toString().concat(BHK_STR) : null;
+            listing.bhkInfo = listing.bhkInfo != null ? listing.bhkInfo.concat(unitTypeString) : null;
+        }
 
 
     }

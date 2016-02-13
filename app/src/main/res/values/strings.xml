@@ -279,6 +279,8 @@
     <!--chart strings-->
     <string name="no_data">data not available</string>
     <string name="mplus_badge_popup_text">qualified sellers who’ll understand what you want and will help you get it. they have access to a wide variety of properties to match every kind of need. from loans to paperwork to registration they’ll be there to guide you till you get the keys to your home. in other words, till you find joy. these sellers have been personally selected by us. so that you get the best, always.</string>
+    <string name="stay_informed">stay informed</string>
+    <string name="save_your_requirement_as">save your requirements as</string>
 
 </resources>
 
