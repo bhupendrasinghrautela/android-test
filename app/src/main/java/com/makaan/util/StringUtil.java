@@ -84,7 +84,8 @@ public class StringUtil {
                 return String.valueOf(price);
             }
             if (price == 0) {
-                return "Price on request";
+//                return "Price on request";
+                return "0";
             }
             StringBuilder priceStringBuilder = new StringBuilder();
             priceStringBuilder.append("\u20B9");

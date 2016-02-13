@@ -32,6 +32,7 @@ public class Selector implements Cloneable {
     private SortSelector sortSelector = new SortSelector();
     private GeoSelector geoSelector = new GeoSelector();
     private GroupBySelector groupBySelector = new GroupBySelector();
+    private FacetsSelector facetsSelector = new FacetsSelector();
 
     public Selector() {
     }
@@ -53,6 +54,18 @@ public class Selector implements Cloneable {
 
     public Selector field(String fieldName) {
         fieldSelector.add(fieldName);
+        return this;
+    }
+
+    public Selector facets(String[] facets) {
+        for (String facet : facets) {
+            facetsSelector.add(facet);
+        }
+        return this;
+    }
+
+    public Selector facet(String facet) {
+        facetsSelector.add(facet);
         return this;
     }
 
@@ -279,6 +292,8 @@ public class Selector implements Cloneable {
 
             jsonBuilder.append("}");
 
+            jsonBuilder.append(facetsSelector.build());
+
             return SELECTOR.concat("=").concat(jsonBuilder.toString());
 
         } catch (Exception e) {
@@ -296,6 +311,11 @@ public class Selector implements Cloneable {
         if(this.sortSelector.fieldName != null && this.sortSelector.fieldName.equalsIgnoreCase("geoDistance")) {
             this.sortSelector = new SortSelector();
         }
+        return this;
+    }
+
+    public Selector removeFacets() {
+        this.facetsSelector.reset();
         return this;
     }
 

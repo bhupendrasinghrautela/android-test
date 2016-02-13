@@ -14,6 +14,6 @@ public class ListingData {
     public int totalCount;
     //public int readableTotalCount;
     public ArrayList<Listing> listings = new ArrayList<>();
-
+    public ListingFacets facets;
 
 }

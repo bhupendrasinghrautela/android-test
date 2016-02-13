@@ -76,7 +76,9 @@ public class SerpBackStack {
             if(request == null) {
                 return;
             }
-            if(!request.isFromBackstack()) {
+            if(!request.isFromBackstack() || request.getBackStackType() != type) {
+                request.setBackStackType(type);
+                request.setIsFromBackstack(false);
                 serpRequests.add(request);
             }
         }

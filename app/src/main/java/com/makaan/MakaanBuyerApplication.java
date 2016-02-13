@@ -80,7 +80,7 @@ public class MakaanBuyerApplication extends Application {
 
         // leak canary to detect memory leaks
         // comment below line to disable leak canary
-        refWatcher = LeakCanary.install(this, TemporaryLeakUploadService.class, AndroidExcludedRefs.createAppDefaults().build());
+        //refWatcher = LeakCanary.install(this, TemporaryLeakUploadService.class, AndroidExcludedRefs.createAppDefaults().build());
 
         FontTypeface.setDefaultFont(this, "DEFAULT", "fonts/ProximaNova-Bold.otf");
         FontTypeface.setDefaultFont(this, "MONOSPACE", "fonts/proxima.otf");

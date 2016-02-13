@@ -107,8 +107,14 @@ public class SearchResponseHelper {
             for(SearchResponseItem item : searchResponseArrayList) {
                 if(KeyUtil.LOCALITY_ID.equalsIgnoreCase(searchResultType.get(item.type).key)) {
                     request.setLocalityId(Long.valueOf(item.entityId));
+                    if(item.cityId > 0) {
+                        request.setCityId(item.cityId);
+                    }
                 } else if(KeyUtil.SUBURB_ID.equalsIgnoreCase(searchResultType.get(item.type).key)) {
                     request.setSuburbId(Long.valueOf(item.entityId));
+                    if(item.cityId > 0) {
+                        request.setCityId(item.cityId);
+                    }
                 }
                 if(!supportsListing) {
                     request.setSearch(item);

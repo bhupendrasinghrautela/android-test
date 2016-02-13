@@ -106,7 +106,9 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public void clear() {
-        mSearches.clear();
+        if(mSearches != null) {
+            mSearches.clear();
+        }
         notifyDataSetChanged();
     }
 
