@@ -541,7 +541,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             }
         }
 
-        setIsJarvisVisibile(!searchViewVisible);
+        setIsJarvisVisible(!searchViewVisible);
     }
 
     private void showEmptySearchResults() {

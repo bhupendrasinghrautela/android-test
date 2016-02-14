@@ -24,7 +24,6 @@ import com.makaan.jarvis.ui.cards.SerpFilterCard;
 import com.makaan.pojo.SerpObjects;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -42,7 +41,11 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
     @Nullable
     @Bind(R.id.card_cta)
-    LinearLayout mCardCta;
+    LinearLayout mJarvisPopupCard;
+
+    @Nullable
+    @Bind(R.id.jarvis_container)
+    View mJarvisContainer;
 
     Runnable mPopupDismissRunnable;
     Handler mPopupDismissHandler =new Handler();
@@ -84,8 +87,8 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
             return;
         }
 
-        if(null==mCardCta){
-            mCardCta = (LinearLayout) findViewById(R.id.card_cta);
+        if(null== mJarvisPopupCard){
+            mJarvisPopupCard = (LinearLayout) findViewById(R.id.card_cta);
         }
 
         mPopupDismissRunnable=new Runnable() {
@@ -96,7 +99,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
             }
         };
 
-        mCardCta.setOnTouchListener(new View.OnTouchListener() {
+        mJarvisPopupCard.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 mPopupDismissHandler.removeCallbacks(mPopupDismissRunnable);
@@ -108,7 +111,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 dismissPopupWithAnim();
-                return false;
+                return true;
             }
         });
     }
@@ -154,13 +157,10 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mCardCta.removeAllViews();
-
-                //TODO card factory is required to determine type of card
-
+                mJarvisPopupCard.removeAllViews();
                 BaseCtaView card = CtaCardFactory.createCard(BaseJarvisActivity.this, message);
-
-                mCardCta.addView(card);
+                mJarvisPopupCard.addView(card);
+                //mJarvisContainer.invalidate();
                 showPopupWithAnim();
                 card.setOnApplyClickListener(new SerpFilterCard.OnApplyClickListener() {
                     @Override
@@ -177,31 +177,35 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-        if(mCardCta!=null && mCardCta.getVisibility()==View.VISIBLE){
-            mCardCta.removeAllViews();
-            mCardCta.setVisibility(View.GONE);
+        if(mJarvisPopupCard !=null && mJarvisPopupCard.getVisibility()==View.VISIBLE){
+            mJarvisPopupCard.removeAllViews();
+            mJarvisPopupCard.setVisibility(View.GONE);
+            //mJarvisContainer.invalidate();
         }else {
             super.onBackPressed();
         }
     }
 
     private void showPopupWithAnim(){
-        mCardCta.setVisibility(View.VISIBLE);
-        Animation zoomin = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoom_in);
-        mCardCta.setAnimation(zoomin);
+        mJarvisPopupCard.setVisibility(View.VISIBLE);
+       // mJarvisContainer.invalidate();
+        //Animation zoomin = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoom_in);
+        //mJarvisPopupCard.setAnimation(zoomin);
     }
 
     private void dismissPopupWithAnim(){
-        if(this==null || isFinishing() || mCardCta==null){
+        if(this==null || isFinishing() || mJarvisPopupCard ==null){
             return;
         }
-        mCardCta.removeAllViews();
-        mCardCta.setVisibility(View.GONE);
+
+        mJarvisPopupCard.removeAllViews();
+        mJarvisPopupCard.setVisibility(View.GONE);
+        //mJarvisContainer.invalidate();
         //Animation zoomout = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoom_out);
-        //mCardCta.setAnimation(zoomout);
+        //mJarvisPopupCard.setAnimation(zoomout);
     }
 
-    protected void setIsJarvisVisibile(boolean visible) {
+    protected void setIsJarvisVisible(boolean visible) {
         if(mJarvisHead != null) {
             mJarvisHead.setVisibility(visible ? View.VISIBLE : View.GONE);
         }

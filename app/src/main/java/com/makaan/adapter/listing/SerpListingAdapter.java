@@ -241,9 +241,9 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
                     SerpFilterMessageMap serpFilterMessageMap = (SerpFilterMessageMap) pair.getValue();
 
                     if (selectedFiltersName.contains(serpFilterMessageMap.internalName)) {
-                        jsonObject.put(serpFilterMessageMap.internalName, true);
+                        jsonObject.put(serpFilterMessageMap.filter, true);
                     } else {
-                        jsonObject.put(serpFilterMessageMap.internalName, null);
+                        jsonObject.put(serpFilterMessageMap.filter, null);
                     }
                 }
             }
