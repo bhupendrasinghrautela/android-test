@@ -687,7 +687,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 mIsMapFragment = true;
                 mMapImageView.setImageResource(R.drawable.list);
                 setSearchBarCollapsible(false);
-                setIsJarvisVisibile(false);
+                setIsJarvisVisible(false);
             }
         }
     }
