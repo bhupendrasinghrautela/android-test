@@ -1,0 +1,19 @@
+{
+  "data": {
+    "bhk": {
+      "filter":"serp_filter_bhk",
+      "internalName":"i_beds",
+      "message":"would you like to apply bedroom filter?"},
+
+    "budget": {
+      "filter":"serp_filter_budget",
+      "internalName":"i_budget",
+      "message":"would you like to apply budget filter?"},
+
+    "property_type": {
+      "filter":"serp_filter_property_type",
+      "internalName":"i_property_type",
+      "message":"would you like to apply property type filter?"}
+  }
+
+}

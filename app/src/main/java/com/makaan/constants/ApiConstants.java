@@ -10,8 +10,8 @@ public class ApiConstants {
 
     //public static final String BASE_URL = "http://mp-qa2.proptiger-ws.com";
     //public static final String BASE_URL = "https://marketplace-qa.proptiger-ws.com";
-//    public static final String BASE_URL = "http://marketplace-qa.makaan-ws.com";
-    public static final String BASE_URL = "http://beta.makaan-ws.com";
+    public static final String BASE_URL = "https://marketplace-qa.makaan-ws.com";
+    //public static final String BASE_URL = "http://beta.makaan-ws.com";
     //public static final String BASE_URL = "http://mp-qa1.makaan-ws.com/";
     public static final String FILTER_GROUP = BASE_URL.concat("/data/v1/entity/filter-group");           //TODO: need to implement this on server side
     public static final String LISTING_INFO_MAP = BASE_URL.concat("/data/v1/entity/listing-info-map");           //TODO: need to implement this on server side
@@ -23,6 +23,7 @@ public class ApiConstants {
     public static final String AMENITY = BASE_URL.concat("/data/v1/entity/amenities");
     public static final String JARVIS_MESSAGE_TYPE = BASE_URL.concat("/data/v1/entity/jarvis/message-type");
     public static final String JARVIS_CTA_MESSAGE_TYPE = BASE_URL.concat("/data/v1/entity/jarvis/cta-message-type");
+    public static final String JARVIS_SERP_FILTER_MESSAGE_MAP = BASE_URL.concat("/data/v1/entity/jarvis/serp_filter-message-message");
     public static final String SEARCH_TYPE = BASE_URL.concat("/data/v1/entity/search-types");
     public static final String PROPERTY_AMENITY = BASE_URL.concat("/data/v1/entity/master-amenities");
     public static final String MASTER_FURNISHINGS = BASE_URL.concat("/data/v1/entity/master-furnishings");

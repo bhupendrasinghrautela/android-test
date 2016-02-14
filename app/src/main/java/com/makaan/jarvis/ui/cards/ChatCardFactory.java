@@ -82,6 +82,16 @@ public class ChatCardFactory {
             propertyCard.setLayoutParams(param);
             return  propertyCard;
 
+        }else if(messageType == MessageType.projectOverview.value){
+            param.rightMargin=margin;
+            param.leftMargin=defaultLeftMargin;
+            param.topMargin=defaultTopBottomMargin;
+            param.bottomMargin=defaultTopBottomMargin;
+            PropertyCard propertyCard=(PropertyCard) LayoutInflater.from(context)
+                    .inflate(R.layout.card_property, parent, false);
+            propertyCard.setLayoutParams(param);
+            return  propertyCard;
+
         }else if(messageType == MessageType.localityOverview.value ||
                 messageType == MessageType.localityBuy.value ||
                 messageType == MessageType.localityRent.value){

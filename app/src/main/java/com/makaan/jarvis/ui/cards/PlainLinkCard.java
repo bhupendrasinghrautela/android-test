@@ -1,5 +1,6 @@
 package com.makaan.jarvis.ui.cards;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -49,8 +50,10 @@ public class PlainLinkCard extends BaseView<Message> {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.chatObj.plainLink));
-                //mContext.startActivity(browserIntent);
+                try {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.chatObj.link));
+                    mContext.startActivity(browserIntent);
+                }catch (ActivityNotFoundException e){}
             }
         });
     }

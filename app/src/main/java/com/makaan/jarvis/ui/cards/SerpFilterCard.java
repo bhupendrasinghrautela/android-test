@@ -110,26 +110,20 @@ public class SerpFilterCard extends BaseCtaView<ExposeMessage>{
         request.launchSerp(getContext());
 
 
-        Intent intent = new Intent(mContext, SerpActivity.class);
-        intent.putExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_FILTER);
-        mContext.startActivity(intent);
-
         if(null!=mOnApplyClickListener){
             mOnApplyClickListener.onApplyClick();
         }
-
-
     }
 
     private String getFilterType(ExposeMessage item){
         //This will be picked from config file
 
         if(item.properties.suggest_filter.equalsIgnoreCase("bhk")){
-            return "Beds";
+            return "bedroom";
         } else if(item.properties.suggest_filter.equalsIgnoreCase("budget")){
-            return "Budget";
+            return "budget";
         } else if(item.properties.suggest_filter.equalsIgnoreCase("property_type")){
-            return "Property Type";
+            return "property type";
         }
         return "";
     }

@@ -73,7 +73,7 @@ public class AskReqCard extends BaseView<Message> {
                     continue;
                 }
 
-                if("Beds".equalsIgnoreCase(filterGroup.displayName)){
+                if("bedroom".equalsIgnoreCase(filterGroup.displayName)){
                     GridView gridView = (GridView) findViewById(R.id.fragment_dialog_filters_item_layout_grid_view);
                     if (gridView != null) {
                         ((ExpandableHeightGridView) gridView).setExpanded(true);

@@ -3,6 +3,7 @@ package com.makaan.cache;
 
 import android.util.SparseArray;
 
+import com.makaan.jarvis.analytics.SerpFilterMessageMap;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.master.ApiLabel;
@@ -53,6 +54,7 @@ public class MasterDataCache {
 
     private Map<String, Integer> jarvisMessageTypeMap = new HashMap<>();
     private Map<String, Integer> jarvisCtaMessageTypeMap = new HashMap<>();
+    private Map<String, SerpFilterMessageMap> jarvisSerpFilterMessageMap = new HashMap<>();
 
     private HashSet<Integer> userWishList;
     private ListingInfoMap listingInfoMap;
@@ -208,6 +210,9 @@ public class MasterDataCache {
         jarvisCtaMessageTypeMap = map;
     }
 
+    public void addJarvisSerpFilterMessageMap(Map<String, SerpFilterMessageMap> map) {
+        jarvisSerpFilterMessageMap = map;
+    }
 
     public ArrayList<ApiIntLabel> getBuyPropertyTypes() {
         ArrayList<ApiIntLabel> propertyTypes = new ArrayList<>();
@@ -267,6 +272,8 @@ public class MasterDataCache {
     public Map<String, Integer> getJarvisCtaMessageTypeMap(){
         return jarvisCtaMessageTypeMap;
     }
+
+    public Map<String, SerpFilterMessageMap> getSerpFilterMessageMap(){ return  jarvisSerpFilterMessageMap; }
 
 
     public ArrayList<FilterGroup> getAllBuyPyrGroups() {

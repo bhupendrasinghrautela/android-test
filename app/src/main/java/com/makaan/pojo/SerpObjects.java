@@ -10,6 +10,8 @@ import com.makaan.response.serp.FilterGroup;
 import com.makaan.util.Preference;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by rohitgarg on 2/3/16.
@@ -72,5 +74,19 @@ public class SerpObjects {
         }
         return (Preference.getInt(context.getSharedPreferences(PreferenceConstants.PREF, Context.MODE_PRIVATE),
                 PreferenceConstants.PREF_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_BUY) == MakaanBaseSearchActivity.SERP_CONTEXT_BUY);
+    }
+
+    public static Set<String> getSelectedFilterNames(Context context){
+        SerpObjects obj = MakaanBuyerApplication.serpObjects.get(context.hashCode());
+        if(null!=obj &&  null!=obj.filterGroups) {
+            Set<String> selectedFilterNames = new HashSet();
+            for(FilterGroup filterGroup : obj.filterGroups){
+                if(filterGroup.isSelected){
+                    selectedFilterNames.add(filterGroup.internalName);
+                }
+            }
+            return selectedFilterNames;
+        }
+        return null;
     }
 }

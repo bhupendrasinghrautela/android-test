@@ -38,7 +38,7 @@ public class CityActivity extends MakaanFragmentActivity {
 
     @Override
     public boolean isJarvisSupported() {
-        return false;
+        return true;
     }
 
     private void fetchData() {

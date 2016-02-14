@@ -121,6 +121,12 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         mListingRecyclerView.setAdapter(mListingAdapter);
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        identifyUser();
+    }
+
     public void updateListings(ArrayList<Listing> listings, ArrayList<GroupListing> groupListings,
                                ArrayList<SearchResponseItem> selectedSearches, SerpRequestCallback serpRequestCallback,
                                int requestType, int listingTotalCount) {
@@ -211,23 +217,6 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
     @Override
     public void onLoadMoreItems() {
         mSerpRequestCallback.loadMoreItems();
-
-        //TODO temp for testing
-/*        Analytics.with(getActivity()).track(JarvisConstants.DELIVERY_ID, new Properties()
-                .putValue("listing_id", mListings.get(9).id)
-                .putValue("serp_visible_item", 9)
-                .putValue("serp_filter_budget", null)
-                .putValue("serp_filter_property_type", null)
-
-                .putValue("serp_filter_bhk", null));*/
-
-
-        Traits traits = new Traits();
-        traits.put("serp_visible_item", mListings.size());
-        Analytics.with(getActivity()).identify(traits);
-        Analytics.with(getActivity()).flush();
-
-
     }
 
     private void identifyUser(){

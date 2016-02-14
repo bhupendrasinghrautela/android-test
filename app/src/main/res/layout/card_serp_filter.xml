@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:drawable/alert_light_frame"
+    android:background="@drawable/jarvis_popup_bg"
     android:orientation="vertical">
 
     <TextView
@@ -21,8 +21,8 @@
         android:id="@+id/serp_jarvis_filters_item_layout_grid_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:horizontalSpacing="@dimen/fragment_dialog_filters_toggle_button_grid_item_horizontal_padding"
+        android:padding="16dp"
+        android:horizontalSpacing="12dp"
         android:isScrollContainer="false"
         android:numColumns="4"
         android:verticalSpacing="@dimen/fragment_dialog_filters_checkbox_grid_item_vertical_padding"  />

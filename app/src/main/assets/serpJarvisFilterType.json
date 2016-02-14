@@ -1,8 +1,0 @@
-{
-  "data": {
-    "bhk": {"filter":"i_beds","message":"would you like to apply bedroom filter?"},
-    "budget": {"filter":"i_budget","message":"would you like to apply budget filter?"},
-    "property_type": {"filter":"i_property_type","message":"would you like to apply property type filter?"}
-  }
-
-}

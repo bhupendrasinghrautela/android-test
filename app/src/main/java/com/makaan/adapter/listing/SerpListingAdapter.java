@@ -11,9 +11,13 @@ import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.PaginatedBaseAdapter;
 import com.makaan.adapter.RecycleViewMode;
+import com.makaan.cache.MasterDataCache;
 import com.makaan.jarvis.JarvisConstants;
+import com.makaan.jarvis.analytics.AnalyticsConstants;
 import com.makaan.jarvis.analytics.AnalyticsService;
+import com.makaan.jarvis.analytics.SerpFilterMessageMap;
 import com.makaan.pojo.GroupCluster;
+import com.makaan.pojo.SerpObjects;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
 import com.makaan.service.MakaanServiceFactory;
@@ -24,7 +28,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by rohitgarg on 1/6/16.
@@ -217,14 +224,30 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
     }
 
     private void trackScroll(int position){
-        //TODO to be done from fragment/activity where we have current serp request using a callback
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("page_type", SerpActivity.SCREEN_NAME);
-            jsonObject.put("serp_visible_item", position);
-            jsonObject.put("delivery_id", JarvisConstants.DELIVERY_ID);
-            jsonObject.put("event_name", "serp_scroll");
-            jsonObject.put("serp_filter_bhk", null);
+            jsonObject.put(AnalyticsConstants.KEY_PAGE_TYPE, SerpActivity.SCREEN_NAME);
+            jsonObject.put(AnalyticsConstants.KEY_SERP_VISIBLE_ITEM, position);
+            jsonObject.put(AnalyticsConstants.KEY_DELIVERY_ID, JarvisConstants.DELIVERY_ID);
+            jsonObject.put(AnalyticsConstants.KEY_EVENT_NAME, AnalyticsConstants.SERP_SCROLL);
+
+            Map<String, SerpFilterMessageMap> filterMessageMapMap = MasterDataCache.getInstance().getSerpFilterMessageMap();
+            Iterator iterator = filterMessageMapMap.entrySet().iterator();
+            Set<String> selectedFiltersName = SerpObjects.getSelectedFilterNames(mContext);
+
+            if(null!=selectedFiltersName) {
+                while (iterator.hasNext()) {
+                    Map.Entry pair = (Map.Entry) iterator.next();
+                    SerpFilterMessageMap serpFilterMessageMap = (SerpFilterMessageMap) pair.getValue();
+
+                    if (selectedFiltersName.contains(serpFilterMessageMap.internalName)) {
+                        jsonObject.put(serpFilterMessageMap.internalName, true);
+                    } else {
+                        jsonObject.put(serpFilterMessageMap.internalName, null);
+                    }
+                }
+            }
+
             AnalyticsService analyticsService =
                     (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
             analyticsService.track(AnalyticsService.Type.track, jsonObject);
