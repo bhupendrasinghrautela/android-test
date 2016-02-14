@@ -9,10 +9,12 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
+import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.jarvis.message.Message;
 import com.makaan.jarvis.message.MessageType;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.pojo.SerpRequest;
 import com.makaan.ui.view.BaseView;
 
 import butterknife.Bind;
@@ -34,6 +36,8 @@ public class LocalityCard extends BaseView<Message> {
     @Bind(R.id.text_line3)
     TextView textViewSubTitle2;
 
+    private Message message;
+
     public LocalityCard(Context context) {
         super(context);
     }
@@ -49,6 +53,7 @@ public class LocalityCard extends BaseView<Message> {
     @Override
     public void bindView(final Context context, final Message item) {
 
+        message = item;
         if(MessageType.localityOverview==item.messageType){
             textViewTitle.setVisibility(View.GONE);
         }else if(MessageType.localityBuy==item.messageType) {
@@ -70,9 +75,25 @@ public class LocalityCard extends BaseView<Message> {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent localityIntent = new Intent(context, LocalityActivity.class);
-                localityIntent.putExtra(LocalityActivity.LOCALITY_ID, Long.valueOf(item.chatObj.localityId));
-                context.startActivity(localityIntent);
+                if(message==null){
+                    return;
+                }
+                if(MessageType.localityOverview==message.messageType) {
+                    Intent localityIntent = new Intent(context, LocalityActivity.class);
+                    localityIntent.putExtra(LocalityActivity.LOCALITY_ID, Long.valueOf(item.chatObj.localityId));
+                    context.startActivity(localityIntent);
+                }else if(MessageType.localityBuy==message.messageType) {
+                    SerpRequest serpRequest = new SerpRequest(SerpActivity.TYPE_LOCALITY);
+                    serpRequest.setSerpContext(SerpActivity.SERP_CONTEXT_BUY);
+                    serpRequest.setLocalityId(message.chatObj.localityId);
+                    serpRequest.launchSerp(context);
+                }
+                else if(MessageType.localityRent==message.messageType) {
+                    SerpRequest serpRequest = new SerpRequest(SerpActivity.TYPE_LOCALITY);
+                    serpRequest.setSerpContext(SerpActivity.SERP_CONTEXT_RENT);
+                    serpRequest.setLocalityId(message.chatObj.localityId);
+                    serpRequest.launchSerp(context);
+                }
             }
         });
     }

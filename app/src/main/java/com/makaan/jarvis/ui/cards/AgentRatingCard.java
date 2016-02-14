@@ -78,6 +78,7 @@ public class AgentRatingCard extends BaseView<Message> {
     @OnClick(R.id.btn_submit)
     public void onSubmitClick(){
         JarvisClient.getInstance().rateAgent(mRating);
+        mRatingBar.setIsIndicator(true);
         mSubmitButton.setVisibility(View.GONE);
     }
 }

@@ -15,10 +15,11 @@ public class ChatObject {
     public String localityName;
     public int localityId;
     public int propertyId;
+    public int projectId;
     public int suburbId;
     public int suburbName;
     public String cityName;
-    public String plainLink;
+    public String link;
     public String beds;
     public String propertyType;
     public int budget;

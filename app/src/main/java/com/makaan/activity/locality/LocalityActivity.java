@@ -57,6 +57,6 @@ public class LocalityActivity extends MakaanFragmentActivity {
 
     @Override
     public boolean isJarvisSupported() {
-        return false;
+        return true;
     }
 }

@@ -390,6 +390,7 @@ public class MakaanNetworkClient {
                             stringRequestCallback.onSuccess(response);
                         }
 
+
                     }
                 }, jsonObject, new Response.ErrorListener() {
                     @Override
@@ -397,6 +398,7 @@ public class MakaanNetworkClient {
                         if(null!=stringRequestCallback) {
                             stringRequestCallback.onError(getResponseError(error));
                         }
+                        Log.e("Analytics error : ", VolleyErrorParser.getMessage(error));
                     }
                 });
         addToRequestQueue(stringRequest, tag);

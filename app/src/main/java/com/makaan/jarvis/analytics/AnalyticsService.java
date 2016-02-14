@@ -18,6 +18,10 @@ public class AnalyticsService implements MakaanService {
         identify, track;
     }
 
+    public synchronized void trackSerpScroll(){
+
+    }
+
     public synchronized void track(Type type, JSONObject object){
         if(object==null){
             return;
