@@ -231,7 +231,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         int type;
         if(intent != null) {
             type = intent.getIntExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_UNKNOWN);
-            if(type == SerpActivity.TYPE_HOME){
+            if(type == SerpActivity.TYPE_HOME) {
                 mSerpSelector.reset();
                 parseSerpRequest(intent, SerpActivity.TYPE_HOME);
 
@@ -267,6 +267,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 mSerpSelector.removeTerm("listingCompanyId");
                 parseSerpRequest(intent, type);
             } else if (type == SerpActivity.TYPE_NEARBY) {
+                removeAllSelectors();
+                parseSerpRequest(intent, type);
+            } else if (type == SerpActivity.TYPE_SUGGESTION) {
                 removeAllSelectors();
                 parseSerpRequest(intent, type);
             } else {
@@ -850,7 +853,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         } else if(type == REQUEST_SET_ALERT) {
             FragmentTransaction ft = this.getFragmentManager().beginTransaction();
             SetAlertsDialogFragment dialog = new SetAlertsDialogFragment();
-            dialog.setData(mFilterGroups, mListingGetEvent);
+            dialog.setData(mFilterGroups, mListingGetEvent, mSerpContext == SERP_CONTEXT_BUY);
             dialog.show(ft, "Set Alerts");
         } else if(type == REQUEST_MPLUS_POPUP) {
             FragmentTransaction ft = this.getFragmentManager().beginTransaction();
@@ -889,7 +892,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Override
     public String getOverviewText() {
-        if(mSerpBackStack.peek().selectedLocalitiesAndSuburbs() <= 1 && mListingGetEvent.listingData.facets != null) {
+        if(mSerpBackStack.peek().selectedLocalitiesAndSuburbs() <= 1 && mListingGetEvent.listingData != null &&  mListingGetEvent.listingData.facets != null) {
             return String.format("more about %s", mListingGetEvent.listingData.facets.buildDisplayName());
         }
         return null;

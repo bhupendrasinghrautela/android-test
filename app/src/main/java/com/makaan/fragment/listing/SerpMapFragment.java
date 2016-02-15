@@ -2,6 +2,7 @@ package com.makaan.fragment.listing;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -301,15 +303,21 @@ public class SerpMapFragment extends MakaanBaseFragment {
                 clubbedMarkers.add(clubbedMarker);
             }
 
-            IconGenerator iconGenerator = new IconGenerator(getActivity());
+            /*IconGenerator iconGenerator = new IconGenerator(getActivity());
             iconGenerator.setStyle(IconGenerator.STYLE_RED);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                iconGenerator.setBackground(getContext().getResources().getDrawable(R.drawable.map_1, null));
+            } else {
+                iconGenerator.setBackground(getContext().getResources().getDrawable(R.drawable.map_1));
+            }
             Bitmap markerBitmap =
-                    iconGenerator.makeIcon(String.valueOf(listing.bedrooms));
+                    iconGenerator.makeIcon(String.valueOf(listing.bedrooms));*/
+            Bitmap mapIcon = generateMapPointer(listing.bedrooms);
 
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(new LatLng(lat, lng))
                     .icon(BitmapDescriptorFactory
-                            .fromBitmap(markerBitmap));
+                            .fromBitmap(mapIcon));
 
             Marker newMarker = mPropertyMap.addMarker(markerOptions);
             Log.d("DEBUG", "lat = " + lat + ", lng = " + lng);
@@ -319,6 +327,23 @@ public class SerpMapFragment extends MakaanBaseFragment {
             }
             latLngBoundsBuilder.include(new LatLng(lat, lng));
             markers.add(newMarker);
+        }
+
+        private Bitmap generateMapPointer(Integer bedrooms) {
+            ViewGroup container = (ViewGroup)LayoutInflater.from(getContext()).inflate(R.layout.map_pointer, (ViewGroup)null);
+            ((TextView)container.findViewById(R.id.map_pointer_text)).setText(String.valueOf(bedrooms));
+            int measureSpec = View.MeasureSpec.makeMeasureSpec(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            container.measure(measureSpec, measureSpec);
+            int measuredWidth = container.getMeasuredWidth();
+            int measuredHeight = container.getMeasuredHeight();
+            container.layout(0, 0, measuredWidth, measuredHeight);
+
+            Bitmap r = Bitmap.createBitmap(measuredWidth, measuredHeight, Bitmap.Config.ARGB_8888);
+            r.eraseColor(0);
+            Canvas canvas = new Canvas(r);
+
+            container.draw(canvas);
+            return r;
         }
 
         private void animateToLocation(final LatLngBounds.Builder latLngBoundsBuilder) {
@@ -414,10 +439,10 @@ public class SerpMapFragment extends MakaanBaseFragment {
         }
 
         private Bitmap getMarkerBitmap(boolean isSelected, Listing listing) {
-            IconGenerator iconGenerator = new IconGenerator(getActivity());
+            /*IconGenerator iconGenerator = new IconGenerator(getActivity());
             iconGenerator.setStyle(isSelected ? IconGenerator.STYLE_ORANGE : IconGenerator.STYLE_RED);
-            Bitmap markerBitmap = iconGenerator.makeIcon(String.valueOf(listing.bedrooms));
-            return markerBitmap;
+            Bitmap markerBitmap = iconGenerator.makeIcon(String.valueOf(listing.bedrooms));*/
+            return generateMapPointer(listing.bedrooms);
         }
 
 
@@ -439,5 +464,7 @@ public class SerpMapFragment extends MakaanBaseFragment {
             return false;
         }
     }
+
+
 
 }

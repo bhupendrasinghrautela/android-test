@@ -7,26 +7,35 @@ import android.os.Parcelable;
 
 import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.activity.listing.SerpActivity;
-import com.makaan.network.ObjectGetCallback;
+import com.makaan.adapter.listing.FiltersViewAdapter;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.serp.FilterGroup;
+import com.makaan.response.serp.RangeFilter;
+import com.makaan.response.serp.RangeMinMaxFilter;
 import com.makaan.response.serp.TermFilter;
 import com.makaan.util.KeyUtil;
 
+import java.security.Key;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Calendar;
+import java.util.HashMap;
 
 /**
  * Created by rohitgarg on 2/3/16.
  */
-public class SerpRequest implements Parcelable {
+public class SerpRequest implements Parcelable, Cloneable {
 
-    private static final int UNEXPECTED_VALUE = Integer.MIN_VALUE;
+    public static final int UNEXPECTED_VALUE = Integer.MIN_VALUE;
     public static final int CONTEXT_RENT = 0x01;
     public static final int CONTEXT_PRIMARY = 0x02;
     public static final int CONTEXT_RESALE = 0x04;
     public static final int CONTEXT_BUY = CONTEXT_PRIMARY | CONTEXT_RESALE;
+
+    public static final int LISTED_BY_SELLER = 0x01;
+    public static final int LISTED_BY_BUILDER = 0x02;
+    public static final int LISTED_BY_OWNER = 0x04;
+
 
     public enum Sort {
         RELEVANCE, PRICE_HIGH_TO_LOW, PRICE_LOW_TO_HIGH, SELLER_RATING_ASC, SELLER_RATING_DESC,
@@ -46,6 +55,10 @@ public class SerpRequest implements Parcelable {
     private ArrayList<String> gpIds = new ArrayList<String>();
     private ArrayList<SearchResponseItem> searchItems = new ArrayList<>();
 
+    private HashMap<String, ArrayList<String>> termMap = new HashMap<>();
+    private HashMap<String, Long[]> rangeMap = new HashMap<>();
+    private HashMap<String, Long[]> minMaxRangeMap = new HashMap<>();
+
     private long minBudget = UNEXPECTED_VALUE;
     private long maxBudget = UNEXPECTED_VALUE;
     private long minArea = UNEXPECTED_VALUE;
@@ -55,16 +68,22 @@ public class SerpRequest implements Parcelable {
     private int sort = UNEXPECTED_VALUE;
     private int type = UNEXPECTED_VALUE;
     private int backstackType = UNEXPECTED_VALUE;
+    private int listedBy = UNEXPECTED_VALUE;
 
     private double latitude = Double.MIN_VALUE;
     private double longitude = Double.MIN_VALUE;
 
     private boolean isFromBackstack = false;
+    private boolean mPlus = false;
 
     private String displayText = "";
 
     public SerpRequest(int type) {
         this.type = type;
+    }
+
+    public SerpRequest(String json) {
+        SelectorParser.parse(json).applySelections(this);
     }
 
     public int getType() {
@@ -77,6 +96,10 @@ public class SerpRequest implements Parcelable {
 
     public void setIsFromBackstack(boolean isFromBackstack) {
         this.isFromBackstack = isFromBackstack;
+    }
+
+    public void setMPlus(boolean mPlus) {
+        this.mPlus = mPlus;
     }
 
     public void setBackStackType(int type) {
@@ -211,6 +234,24 @@ public class SerpRequest implements Parcelable {
         this.serpContext = context;
     }
 
+    public void addSerpContext(int context) {
+        if(this.serpContext == UNEXPECTED_VALUE) {
+            this.serpContext = 0;
+        }
+        this.serpContext |= context;
+    }
+
+    public void setListedBy(int listedBy) {
+        this.listedBy = listedBy;
+    }
+
+    public void addListedBy(int listedBy) {
+        if(this.listedBy == UNEXPECTED_VALUE) {
+            this.listedBy = 0;
+        }
+        this.listedBy |= listedBy;
+    }
+
     public void setSearch(SearchResponseItem item) {
         searchItems.add(item);
     }
@@ -229,6 +270,43 @@ public class SerpRequest implements Parcelable {
 
     public int selectedLocalitiesAndSuburbs() {
         return this.localityIds.size() + this.suburbIds.size();
+    }
+
+    public void addTerms(String fieldName, ArrayList<String> values) {
+        ArrayList<String> terms = termMap.get(fieldName);
+        if(terms == null) {
+            termMap.put(fieldName, values);
+        } else {
+            terms.addAll(values);
+        }
+    }
+
+    public void addTerm(String fieldName, String value) {
+        ArrayList<String> terms = termMap.get(fieldName);
+        if(terms == null) {
+            ArrayList<String> values = new ArrayList<String>();
+            values.add(value);
+            termMap.put(fieldName, values);
+        } else {
+            terms.add(value);
+        }
+    }
+
+    public void addRange(String fieldName, Long from, Long to) {
+        HashMap<String, Long[]> map;
+        if(from == null || to == null) {
+            map = minMaxRangeMap;
+        } else {
+            map = rangeMap;
+        }
+        Long[] terms = map.get(fieldName);
+        if(terms != null) {
+            map.remove(fieldName);
+        }
+        terms = new Long[2];
+        terms[0] = from;
+        terms[1] = to;
+        map.put(fieldName, terms);
     }
 
     public SerpRequest(Parcel source) {
@@ -254,13 +332,57 @@ public class SerpRequest implements Parcelable {
         setSerpContext(source.readInt());
         setSort(source.readInt());
         setBackStackType(source.readInt());
+        setListedBy(source.readInt());
 
         setLatitude(source.readDouble());
         setLongitude(source.readDouble());
 
         setIsFromBackstack(source.readByte() == 1);
+        setMPlus(source.readByte() == 1);
 
         setTitle(source.readString());
+
+        readTermMap(source);
+        readRangeMap(source);
+        readRangeMap(source);
+    }
+
+    public SerpRequest(SerpRequest request) {
+        this.type = request.type;
+        this.cityIds.addAll(request.cityIds);
+        this.localityIds.addAll(request.localityIds);
+        this.suburbIds.addAll(request.suburbIds);
+        this.projectIds.addAll(request.projectIds);
+        this.builderIds.addAll(request.builderIds);
+        this.sellerIds.addAll(request.sellerIds);
+        this.bedrooms.addAll(request.bedrooms);
+        this.bathrooms.addAll(request.bathrooms);
+        this.propertyTypes.addAll(request.propertyTypes);
+        this.gpIds.addAll(request.gpIds);
+        this.searchItems.addAll(request.searchItems);
+
+        this.setMinBudget(request.minBudget);
+        this.setMaxBudget(request.maxBudget);
+
+        setMinArea(request.minArea);
+        setMaxArea(request.maxArea);
+
+        setSerpContext(request.serpContext);
+        setSort(request.sort);
+        setBackStackType(request.backstackType);
+        setListedBy(request.listedBy);
+
+        setLatitude(request.latitude);
+        setLongitude(request.longitude);
+
+        setIsFromBackstack(request.isFromBackstack);
+        setMPlus(request.mPlus);
+
+        setTitle(request.getTitle());
+
+        this.termMap = new HashMap<> (request.termMap);
+        this.rangeMap = new HashMap<> (request.rangeMap);
+        this.minMaxRangeMap = new HashMap<> (request.minMaxRangeMap);
     }
 
     @Override
@@ -293,13 +415,95 @@ public class SerpRequest implements Parcelable {
         dest.writeInt(this.serpContext);
         dest.writeInt(this.sort);
         dest.writeInt(this.backstackType);
+        dest.writeInt(this.listedBy);
 
         dest.writeDouble(this.latitude);
         dest.writeDouble(this.longitude);
 
         dest.writeByte((byte) (isFromBackstack ? 1 : 0));
+        dest.writeByte((byte) (mPlus ? 1 : 0));
 
         dest.writeString(displayText);
+
+        writeTermMap(dest);
+        writeRangeMap(dest);
+    }
+
+    private void writeRangeMap(Parcel dest) {
+        int keySize = rangeMap.keySet().size();
+        dest.writeInt(keySize);
+        for(String key : rangeMap.keySet()) {
+            dest.writeString(key);
+            Long[] values = rangeMap.get(key);
+            if(values[0] == null) {
+                dest.writeLong(Long.MIN_VALUE);
+            } else {
+                dest.writeLong(values[0]);
+            }
+            if(values[1] == null) {
+                dest.writeLong(Long.MIN_VALUE);
+            } else {
+                dest.writeLong(values[1]);
+            }
+        }
+
+        keySize = minMaxRangeMap.keySet().size();
+        dest.writeInt(keySize);
+        for(String key : minMaxRangeMap.keySet()) {
+            dest.writeString(key);
+            Long[] values = minMaxRangeMap.get(key);
+            if(values[0] == null) {
+                dest.writeLong(Long.MIN_VALUE);
+            } else {
+                dest.writeLong(values[0]);
+            }
+            if(values[1] == null) {
+                dest.writeLong(Long.MIN_VALUE);
+            } else {
+                dest.writeLong(values[1]);
+            }
+        }
+    }
+
+    private void readRangeMap(Parcel source) {
+        int keySize = source.readInt();
+        for(int i = 0; i < keySize; i++) {
+            String key = source.readString();
+            Long[] values = new Long[2];
+            values[0] = source.readLong();
+            values[1] = source.readLong();
+            if(values[0] == Long.MIN_VALUE) {
+                values[0] = null;
+            }
+            if(values[1] == Long.MIN_VALUE) {
+                values[1] = null;
+            }
+            if(values[0] == null || values[1] == null) {
+                minMaxRangeMap.put(key, values);
+            } else {
+                rangeMap.put(key, values);
+            }
+        }
+    }
+
+    private void writeTermMap(Parcel dest) {
+        int keySize = termMap.keySet().size();
+        dest.writeInt(keySize);
+        for(String key : termMap.keySet()) {
+            dest.writeString(key);
+            ArrayList<String> values = termMap.get(key);
+            writeStringList(dest, values);
+        }
+    }
+
+    private void readTermMap(Parcel source) {
+        int keySize = source.readInt();
+        for(int i = 0; i < keySize; i++) {
+            String key = source.readString();
+            ArrayList<String> values = new ArrayList<>();
+            readStringList(source, values);
+            termMap.put(key, values);
+        }
     }
 
     private void writeParceableList(Parcel dest, ArrayList<SearchResponseItem> list, int flags) {
@@ -443,7 +647,7 @@ public class SerpRequest implements Parcelable {
             }
         }
 
-        // seller ids
+        // gp ids
         if(this.gpIds.size() > 0) {
             // TODO
         }
@@ -475,6 +679,7 @@ public class SerpRequest implements Parcelable {
             }
         }
 
+        // buy/rent context
         if(serpContext != UNEXPECTED_VALUE) {
             selector.removeTerm(KeyUtil.LISTING_CATEGORY);
             if((serpContext & CONTEXT_PRIMARY) > 0) {
@@ -512,6 +717,26 @@ public class SerpRequest implements Parcelable {
         } else if (maxArea != UNEXPECTED_VALUE) {
             selector.removeRange(KeyUtil.PRICE);
             selector.range(KeyUtil.PRICE, null, maxArea);
+        }
+
+        // listed by
+        if(listedBy != UNEXPECTED_VALUE) {
+            selector.removeTerm(KeyUtil.LISTING_SELLER_COMPANY_TYPE);
+            if((listedBy & LISTED_BY_BUILDER) > 0) {
+                selector.term(KeyUtil.LISTING_SELLER_COMPANY_TYPE, "Builder");
+            }
+            if((listedBy & LISTED_BY_SELLER) > 0) {
+                selector.term(KeyUtil.LISTING_SELLER_COMPANY_TYPE, "Broker");
+            }
+            if((listedBy & LISTED_BY_OWNER) > 0) {
+                selector.term(KeyUtil.LISTING_SELLER_COMPANY_TYPE, "Owner");
+            }
+        }
+
+        // m plus
+        if(mPlus) {
+            selector.removeTerm(KeyUtil.LISTING_SELLER_COMPANY_ASSIST);
+            selector.term(KeyUtil.LISTING_SELLER_COMPANY_ASSIST, "true");
         }
 
         if(Double.compare(latitude, Double.MIN_VALUE) != 0 && Double.compare(longitude, Double.MIN_VALUE) != 0) {
@@ -585,6 +810,248 @@ public class SerpRequest implements Parcelable {
                 if(this.propertyTypes.size() > 0) {
                     applyIntTermFilter(grp, propertyTypes);
                 }
+            } else if(grp.termFilterValues.size() > 0 && KeyUtil.LISTING_SELLER_COMPANY_TYPE.equalsIgnoreCase(grp.termFilterValues.get(0).fieldName)) {
+                if(this.listedBy != UNEXPECTED_VALUE) {
+                    if((listedBy & LISTED_BY_BUILDER) > 0) {
+                        for(TermFilter filter : grp.termFilterValues) {
+                            if("Builder".equalsIgnoreCase(filter.value)) {
+                                filter.selected = true;
+                                grp.isSelected = true;
+                            }
+                        }
+                    }
+                    if((listedBy & LISTED_BY_SELLER) > 0) {
+                        for(TermFilter filter : grp.termFilterValues) {
+                            if("Broker".equalsIgnoreCase(filter.value)) {
+                                filter.selected = true;
+                                grp.isSelected = true;
+                            }
+                        }
+                    }
+                    if((listedBy & LISTED_BY_OWNER) > 0) {
+                        for(TermFilter filter : grp.termFilterValues) {
+                            if("Owner".equalsIgnoreCase(filter.value)) {
+                                filter.selected = true;
+                                grp.isSelected = true;
+                            }
+                        }
+                    }
+                }
+            } else if(grp.termFilterValues.size() > 0 && KeyUtil.LISTING_SELLER_COMPANY_ASSIST.equalsIgnoreCase(grp.termFilterValues.get(0).fieldName)) {
+                if(mPlus) {
+                    grp.termFilterValues.get(0).selected = true;
+                    grp.isSelected = true;
+                }
+            }
+        }
+
+        if(termMap.keySet().size() > 0) {
+            for (String key : termMap.keySet()) {
+                boolean isApplied = false;
+                for (FilterGroup grp : filterGroup) {
+                    if(grp.termFilterValues.size() > 0 && grp.termFilterValues.get(0).fieldName.equals(key)) {
+                        isApplied = true;
+                        for(String value : termMap.get(key)) {
+                            for(TermFilter filter : grp.termFilterValues) {
+                                if(filter.value.equalsIgnoreCase(value)) {
+                                    filter.selected = true;
+                                    grp.isSelected = true;
+                                }
+                            }
+
+                            if(value.indexOf(FiltersViewAdapter.MIN_MAX_SEPARATOR) > 0) {
+                                String[] values = value.split(FiltersViewAdapter.MIN_MAX_SEPARATOR);
+                                if(values.length == 2) {
+                                    try {
+                                        int minValue = Integer.parseInt(values[0]);
+                                        int maxValue = Integer.parseInt(values[1]);
+                                        for (int i = minValue; i <= maxValue; i++) {
+                                            selector.term(key, String.valueOf(i));
+                                        }
+                                    } catch (NumberFormatException ex) {
+                                        // TODO
+                                    }
+                                }
+                            } else {
+                                selector.term(key, value);
+                            }
+                        }
+                    }
+                }
+                if(!isApplied) {
+                    selector.term(key, termMap.get(key));
+                    if(KeyUtil.CITY_ID.equalsIgnoreCase(key)) {
+                        selector.facet("cityId");
+                        selector.facet("cityLabel");
+                    } else if(KeyUtil.LOCALITY_ID.equalsIgnoreCase(key)) {
+                        selector.facet("localityId");
+                        selector.facet("localityLabel");
+                    } else if(KeyUtil.SUBURB_ID.equalsIgnoreCase(key)) {
+                        selector.facet("suburbId");
+                        selector.facet("suburbLabel");
+                    } else if(KeyUtil.LOCALITY_OR_SUBURB_ID.equalsIgnoreCase(key)) {
+                        selector.facet("localityId");
+                        selector.facet("localityLabel");
+                        selector.facet("suburbId");
+                        selector.facet("suburbLabel");
+                    } else if(KeyUtil.PROJECT_ID.equalsIgnoreCase(key)) {
+                        selector.facet("projectId");
+                    } else if(KeyUtil.BUILDER_ID.equalsIgnoreCase(key)) {
+                        selector.facet("builderId");
+                        selector.facet("builderLabel");
+                    }
+                }
+            }
+        }
+
+        if(rangeMap.keySet().size() > 0) {
+            for (String key : rangeMap.keySet()) {
+                for (FilterGroup grp : filterGroup) {
+                    if(grp.rangeFilterValues.size() > 0 && grp.rangeFilterValues.get(0).fieldName.equals(key)) {
+                        Long[] value = rangeMap.get(key);
+                        if(FiltersViewAdapter.RADIO_BUTTON_RANGE == grp.layoutType) {
+                            for (RangeFilter filter : grp.rangeFilterValues) {
+                                if (value[0] == filter.minValue && value[1] == filter.maxValue) {
+                                    filter.selected = true;
+                                    grp.isSelected = true;
+
+                                    if(filter.minValue != FiltersViewAdapter.UNEXPECTED_VALUE || filter.maxValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                        Long minValue = (long) FiltersViewAdapter.UNEXPECTED_VALUE;
+                                        Long maxValue = (long) FiltersViewAdapter.UNEXPECTED_VALUE;
+                                        if (grp.type.equalsIgnoreCase(FiltersViewAdapter.TYPE_YEAR)) {
+                                            Calendar cal = Calendar.getInstance();
+                                            if (filter.minValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                                cal.add(Calendar.YEAR, (int) filter.minValue);
+                                                minValue = cal.getTimeInMillis();
+                                                cal.add(Calendar.YEAR, -(int) filter.minValue);
+                                            }
+
+                                            if (filter.maxValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                                cal.add(Calendar.YEAR, (int) filter.maxValue);
+                                                maxValue = cal.getTimeInMillis();
+                                            }
+                                            if (minValue == FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                                minValue = null;
+                                            }
+                                            if (maxValue == FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                                maxValue = null;
+                                            }
+
+                                            selector.range(filter.fieldName, minValue, maxValue);
+                                        } else if (grp.type.equalsIgnoreCase(FiltersViewAdapter.TYPE_DAY)) {
+                                            Calendar cal = Calendar.getInstance();
+                                            if (filter.minValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                                cal.add(Calendar.DAY_OF_MONTH, (int) filter.minValue);
+                                                minValue = cal.getTimeInMillis();
+                                                cal.add(Calendar.DAY_OF_MONTH, -(int) filter.minValue);
+                                            }
+
+                                            if (filter.maxValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                                cal.add(Calendar.DAY_OF_MONTH, (int) filter.maxValue);
+                                                maxValue = cal.getTimeInMillis();
+                                            }
+                                            if (minValue == FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                                minValue = null;
+                                            }
+                                            if (maxValue == FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                                maxValue = null;
+                                            }
+
+                                            selector.range(filter.fieldName, minValue, maxValue);
+                                        } else {
+                                            selector.range(filter.fieldName, filter.minValue, filter.maxValue);
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            for (RangeFilter filter : grp.rangeFilterValues) {
+                                filter.selectedMinValue = value[0];
+                                filter.selectedMaxValue = value[1];
+                                if (filter.selectedMinValue != filter.minValue || filter.selectedMaxValue != filter.maxValue) {
+                                    filter.selected = true;
+                                    grp.isSelected = true;
+                                }
+                            }
+
+                            selector.range(key, value[0], value[1]);
+                        }
+                    }
+                }
+            }
+        }
+
+        if(minMaxRangeMap.keySet().size() > 0) {
+            ArrayList<Double> minFieldMap = new ArrayList<>();
+            ArrayList<Double> maxFieldMap = new ArrayList<>();
+            for (String key : minMaxRangeMap.keySet()) {
+                for (FilterGroup grp : filterGroup) {
+                    if (grp.rangeMinMaxFilterValues.size() > 0) {
+                        if(grp.rangeMinMaxFilterValues.get(0).minFieldName.equals(key)) {
+                            Long[] value = minMaxRangeMap.get(key);
+                            for (RangeMinMaxFilter filter : grp.rangeMinMaxFilterValues) {
+                                if(filter.minValue == value[0]) {
+                                    if(maxFieldMap.contains(filter.maxValue)) {
+                                        maxFieldMap.remove(filter.maxValue);
+                                        filter.selected = true;
+                                        grp.isSelected = true;
+                                    } else {
+                                        minFieldMap.add(filter.minValue);
+                                    }
+                                }
+                            }
+                        } else if(grp.rangeMinMaxFilterValues.get(0).maxFieldName.equals(key)) {
+                            Long[] value = minMaxRangeMap.get(key);
+                            for (RangeMinMaxFilter filter : grp.rangeMinMaxFilterValues) {
+                                if(filter.maxValue == value[1]) {
+                                    if(minFieldMap.contains(filter.minValue)) {
+                                        maxFieldMap.remove(filter.minValue);
+                                        filter.selected = true;
+                                        grp.isSelected = true;
+                                    } else {
+                                        maxFieldMap.add(filter.maxValue);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            for (FilterGroup grp : filterGroup) {
+                if (grp.isSelected && grp.rangeMinMaxFilterValues.size() > 0) {
+                    for (RangeMinMaxFilter filter : grp.rangeMinMaxFilterValues) {
+                        if(filter.selected) {
+                            if (grp.type.equalsIgnoreCase(FiltersViewAdapter.TYPE_YEAR)) {
+                                Calendar cal = Calendar.getInstance();
+                                long minValue = FiltersViewAdapter.UNEXPECTED_VALUE;
+                                long maxValue = FiltersViewAdapter.UNEXPECTED_VALUE;
+                                if(filter.minValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                    cal.add(Calendar.YEAR, (int) filter.minValue);
+                                    minValue = cal.getTimeInMillis();
+                                    cal.add(Calendar.YEAR, -(int) filter.minValue);
+                                }
+                                if(filter.maxValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                    cal.add(Calendar.YEAR, (int) filter.maxValue);
+                                    maxValue = cal.getTimeInMillis();
+                                }
+                                if(minValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                    selector.range(filter.minFieldName, minValue, null);
+                                }
+                                if(maxValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                    selector.range(filter.maxFieldName, null, maxValue);
+                                }
+                            } else {
+                                if(filter.minValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                    selector.term(filter.minFieldName, String.valueOf(filter.minValue));
+                                }
+                                if(filter.maxValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                    selector.term(filter.maxFieldName, String.valueOf(filter.maxValue));
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -639,5 +1106,10 @@ public class SerpRequest implements Parcelable {
         }
         context.startActivity(intent);
 
+    }
+
+    @Override
+    protected SerpRequest clone() throws CloneNotSupportedException {
+        return new SerpRequest(this);
     }
 }

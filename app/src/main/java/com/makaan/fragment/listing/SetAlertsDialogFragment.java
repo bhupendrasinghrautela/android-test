@@ -21,6 +21,7 @@ import com.makaan.response.serp.TermFilter;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
 import com.makaan.util.AppBus;
+import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
 
 import java.util.ArrayList;
@@ -53,10 +54,12 @@ public class SetAlertsDialogFragment extends DialogFragment {
     private ArrayList<FilterGroup> mGroups;
     private SerpGetEvent mListingGetEvent;
     private String mSearchName;
+    private boolean mIsBuyContext;
 
-    public void setData(ArrayList<FilterGroup> grps, SerpGetEvent listingGetEvent) {
+    public void setData(ArrayList<FilterGroup> grps, SerpGetEvent listingGetEvent, boolean serpContext) {
         mGroups = grps;
         mListingGetEvent = listingGetEvent;
+        mIsBuyContext = serpContext;
     }
 
     @Override
@@ -164,6 +167,14 @@ public class SetAlertsDialogFragment extends DialogFragment {
                 }
             }
 
+            for(RangeMinMaxFilter filter : grp.rangeMinMaxFilterValues) {
+                if(filter.selected) {
+                    builder.append(separator);
+                    builder.append(filter.displayName);
+                    separator = ",";
+                }
+            }
+
             ((TextView) view.findViewById(R.id.fragment_set_alerts_list_item_content_text_view)).setText(builder.toString());
         }
         if(mListingGetEvent.listingData.facets != null) {
@@ -184,8 +195,17 @@ public class SetAlertsDialogFragment extends DialogFragment {
         Selector selector = new Selector();
         StringBuilder searchNameBuilder = new StringBuilder();
         String separator = "";
+        if(!mIsBuyContext) {
+            selector.term(KeyUtil.LISTING_CATEGORY, "Rental");
+        }
         for (FilterGroup grp : mGroups) {
             if(!grp.isSelected) {
+                if("i_new_resale".equalsIgnoreCase(grp.internalName)) {
+                    if(mIsBuyContext) {
+                        selector.term(KeyUtil.LISTING_CATEGORY, "Primary");
+                        selector.term(KeyUtil.LISTING_CATEGORY, "Resale");
+                    }
+                }
                 continue;
             }
             searchNameBuilder.append(separator);
@@ -207,16 +227,8 @@ public class SetAlertsDialogFragment extends DialogFragment {
             } else if(type == RADIO_BUTTON) {
                 for(TermFilter filter : grp.termFilterValues) {
                     if(filter.selected) {
-                        if(RADIO_BUTTON_BOTH_SELECTED.equals(filter.value)) {
-                            for(TermFilter filter2 : grp.termFilterValues) {
-                                if(!filter2.selected && !RADIO_BUTTON_BOTH_SELECTED.equals(filter2.value)) {
-                                    selector.term(filter2.fieldName, filter2.value);
-                                }
-                            }
-                        } else {
-                            selector.term(filter.fieldName, filter.value);
-                            searchNameBuilder.append(filter.displayName);
-                        }
+                        selector.term(filter.fieldName, filter.value);
+                        searchNameBuilder.append(filter.displayName);
                     }
                 }
             } else if(type == RADIO_BUTTON_RANGE) {
@@ -225,17 +237,14 @@ public class SetAlertsDialogFragment extends DialogFragment {
                         if(filter.minValue != UNEXPECTED_VALUE || filter.maxValue != UNEXPECTED_VALUE) {
                             Long minValue = (long)UNEXPECTED_VALUE;
                             Long maxValue = (long)UNEXPECTED_VALUE;
-                            if (grp.type.equalsIgnoreCase(TYPE_YEAR)) {
-                                Calendar cal = Calendar.getInstance();
+                            // TODO check if there can be other case possible than YEAR case
+                            //if (grp.type.equalsIgnoreCase(TYPE_YEAR)) {
                                 if(filter.minValue != UNEXPECTED_VALUE) {
-                                    cal.add(Calendar.YEAR, (int) filter.minValue);
-                                    minValue = cal.getTimeInMillis();
-                                    cal.add(Calendar.YEAR, -(int)filter.minValue);
+                                    minValue = (long)filter.minValue;
                                 }
 
                                 if(filter.maxValue != UNEXPECTED_VALUE) {
-                                    cal.add(Calendar.YEAR, (int) filter.maxValue);
-                                    maxValue = cal.getTimeInMillis();
+                                    maxValue = (long)filter.maxValue;
                                 }
                                 if(minValue == UNEXPECTED_VALUE) {
                                     minValue = null;
@@ -246,7 +255,7 @@ public class SetAlertsDialogFragment extends DialogFragment {
 
                                 selector.range(filter.fieldName, minValue, maxValue);
                                 searchNameBuilder.append(minValue + "-" + maxValue);
-                            } else if(grp.type.equalsIgnoreCase(TYPE_DAY)) {
+                            /*} else if(grp.type.equalsIgnoreCase(TYPE_DAY)) {
                                 Calendar cal = Calendar.getInstance();
                                 if(filter.minValue != UNEXPECTED_VALUE) {
                                     cal.add(Calendar.DAY_OF_MONTH, (int) filter.minValue);
@@ -270,7 +279,7 @@ public class SetAlertsDialogFragment extends DialogFragment {
                             } else {
                                 selector.range(filter.fieldName, filter.minValue, filter.maxValue);
                                 searchNameBuilder.append(filter.minValue + "-" + filter.maxValue);
-                            }
+                            }*/
                         }
                     }
                 }
@@ -278,18 +287,16 @@ public class SetAlertsDialogFragment extends DialogFragment {
 
                 for(RangeMinMaxFilter filter : grp.rangeMinMaxFilterValues) {
                     if(filter.selected) {
-                        if (grp.type.equalsIgnoreCase(TYPE_YEAR)) {
+                        // TODO check if there can be other case possible than YEAR case
+                        //if (grp.type.equalsIgnoreCase(TYPE_YEAR)) {
                             Calendar cal = Calendar.getInstance();
                             long minValue = UNEXPECTED_VALUE;
                             long maxValue = UNEXPECTED_VALUE;
                             if(filter.minValue != UNEXPECTED_VALUE) {
-                                cal.add(Calendar.YEAR, (int) filter.minValue);
-                                minValue = cal.getTimeInMillis();
-                                cal.add(Calendar.YEAR, -(int) filter.minValue);
+                                minValue = (long)filter.minValue;
                             }
                             if(filter.maxValue != UNEXPECTED_VALUE) {
-                                cal.add(Calendar.YEAR, (int) filter.maxValue);
-                                maxValue = cal.getTimeInMillis();
+                                maxValue = (long)filter.maxValue;
                             }
                             String s = "";
                             if(minValue != UNEXPECTED_VALUE) {
@@ -302,7 +309,7 @@ public class SetAlertsDialogFragment extends DialogFragment {
                                 searchNameBuilder.append(s);
                                 searchNameBuilder.append(maxValue);
                             }
-                        } else {
+                        /*} else {
                             String s = "";
                             if(filter.minValue != UNEXPECTED_VALUE) {
                                 selector.term(filter.minFieldName, String.valueOf(filter.minValue));
@@ -314,23 +321,14 @@ public class SetAlertsDialogFragment extends DialogFragment {
                                 searchNameBuilder.append(s);
                                 searchNameBuilder.append(String.valueOf(filter.maxValue));
                             }
-                        }
+                        }*/
                     }
                 }
             } else {
                 String s = "";
                 for(TermFilter filter : grp.termFilterValues) {
                     if(filter.selected) {
-                        if(filter.displayName.contains(INFINITE_SELECTOR)) {
-                            String[] val = filter.value.split(MIN_MAX_SEPARATOR);
-                            int min = Integer.valueOf(val[0]);
-                            int max = Integer.valueOf(val[1]);
-                            for(int i = min; i <= max; i++) {
-                                selector.term(filter.fieldName, String.valueOf(i));
-                            }
-                        } else {
-                            selector.term(filter.fieldName, filter.value);
-                        }
+                        selector.term(filter.fieldName, filter.value);
                         searchNameBuilder.append(s);
                         searchNameBuilder.append(String.valueOf(filter.displayName));
                         s = ",";
@@ -342,6 +340,7 @@ public class SetAlertsDialogFragment extends DialogFragment {
             }
             separator = "|";
         }
+
         if(mListingGetEvent.listingData.facets != null) {
             searchNameBuilder.append(";");
             searchNameBuilder.append(mListingGetEvent.listingData.facets.buildDisplayName());
@@ -375,8 +374,8 @@ public class SetAlertsDialogFragment extends DialogFragment {
 
     @OnClick(R.id.fragment_set_alerts_submit_button)
     public void onSubmitClicked (View view) {
-        getSearchName();
         ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).saveNewSearch(createSelector(), getSearchName());
+        dismiss();
     }
 
     private String getSearchName() {
