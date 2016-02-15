@@ -12,8 +12,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.listing.SerpActivity;
 import com.makaan.event.saveSearch.SaveSearchGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.pojo.SelectorParser;
+import com.makaan.pojo.SerpRequest;
 import com.makaan.response.saveSearch.SaveSearch;
 import com.squareup.otto.Subscribe;
 
@@ -54,7 +57,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
     private class SaveSearchAdapter extends RecyclerView.Adapter<SaveSearchAdapter.ViewHolder> {
         private List<SaveSearch> savedSearches;
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             // each data item is just a string in this case
             public TextView saveSearchName;
             public TextView saveSearchFilter;
@@ -62,9 +65,17 @@ public class SaveSearchFragment extends MakaanBaseFragment {
 
             public ViewHolder(View v) {
                 super(v);
+                v.setOnClickListener(this);
                 saveSearchName = (TextView) v.findViewById(R.id.search_name);
                 saveSearchFilter = (TextView) v.findViewById(R.id.filter_name);
                 saveSearchPlace = (TextView) v.findViewById(R.id.place_name);
+            }
+
+            @Override
+            public void onClick(View v) {
+                SerpRequest request = new SerpRequest(SerpActivity.TYPE_SUGGESTION);
+                SelectorParser.parse(saveSearchFilter.getText().toString(), request);
+                request.launchSerp(getActivity());
             }
         }
 
