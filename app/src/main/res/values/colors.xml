@@ -175,4 +175,5 @@
     <color name="locality_collapsed_toolbar_red">#e71c28</color>
 
     <color name="grey_unselected">#D0D0D0</color>
+    <color name="progressbar_color">#FBA511</color>
 </resources>

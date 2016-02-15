@@ -7,26 +7,21 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 
 import com.makaan.activity.listing.PropertyActivity;
-import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.project.ProjectActivity;
-import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.PreferenceConstants;
 
 import com.makaan.network.MakaanNetworkClient;
-import com.makaan.pojo.SerpObjects;
 import com.makaan.response.listing.Listing;
-import com.makaan.service.MakaanServiceFactory;
-import com.makaan.service.WishListService;
+import com.makaan.ui.view.WishListButton;
+import com.makaan.ui.view.WishListButton.WishListDto;
+import com.makaan.ui.view.WishListButton.WishListType;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
@@ -41,13 +36,13 @@ import butterknife.OnClick;
 /**
  * Created by sunil on 04/01/16.
  */
-public class ListingCardView extends BaseCardView<Listing> implements CompoundButton.OnCheckedChangeListener {
+public class ListingCardView extends BaseCardView<Listing> {
 
 
     @Bind(R.id.listing_brief_view_layout_property_image_view)FadeInNetworkImageView mPropertyImageView;
     @Bind(R.id.listing_brief_view_layout_property_price_text_view)TextView mPropertyPriceTextView;
     @Bind(R.id.listing_brief_view_layout_property_price_unit_text_view)TextView mPropertyPriceUnitTextView;
-    @Bind(R.id.listing_brief_view_layout_property_shortlist_checkbox)CheckBox mShortlistPropertyCheckbox;
+    @Bind(R.id.listing_brief_view_layout_property_shortlist_checkbox)public WishListButton mPropertyWishListCheckbox;
     @Bind(R.id.listing_brief_view_layout_property_price_sq_ft_text_view)TextView mPropertyPriceSqFtTextView;
     @Bind(R.id.listing_brief_view_layout_property_price_difference_image_view)ImageView mDifferenceImageView;
     @Bind(R.id.listing_brief_view_layout_property_bhk_info_text_view)TextView mPropertyBhkInfoTextView;
@@ -79,9 +74,7 @@ public class ListingCardView extends BaseCardView<Listing> implements CompoundBu
         mListing = (Listing)item;
         mPreferences = context.getSharedPreferences(
                 PreferenceConstants.PREF_SHORTLISTED_PROPERTIES, Context.MODE_PRIVATE);
-        mShortlistPropertyCheckbox.setOnCheckedChangeListener(null);
-        boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(mListing.lisitingId);
-        mShortlistPropertyCheckbox.setOnCheckedChangeListener(this);
+        mPropertyWishListCheckbox.bindView(new WishListDto(mListing.lisitingId.longValue(), mListing.projectId.longValue(), WishListType.listing));
 
         // TODO check for unit info
         String priceString = StringUtil.getDisplayPrice(item.price);
@@ -151,17 +144,6 @@ public class ListingCardView extends BaseCardView<Listing> implements CompoundBu
                 }
             }
         });
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        WishListService wishListService =
-                (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
-        if(isChecked) {
-            wishListService.addListing(mListing.lisitingId, mListing.projectId);
-        } else {
-            wishListService.delete(mListing.lisitingId);
-        }
     }
 
     @OnClick(R.id.listing_brief_view_layout_address_relative_view)

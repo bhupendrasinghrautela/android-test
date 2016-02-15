@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.HomeActivity;
+import com.makaan.cookie.CookiePreferences;
 import com.makaan.fragment.userLogin.ReplaceFragment;
 import com.makaan.response.ResponseError;
 import com.makaan.response.login.OnUserLoginListener;
@@ -17,7 +18,6 @@ import com.makaan.response.login.UserLoginPresenter;
 
 import com.makaan.response.user.UserResponse;
 import com.makaan.ui.CommonProgressDialog;
-import com.makaan.util.LoginPreferences;
 import com.makaan.util.Preference;
 
 
@@ -60,8 +60,8 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
     public void onUserLoginSuccess(UserResponse userResponse, String response) {
         if(mProgressDialog !=null)
             mProgressDialog.dismissDialog();
-        LoginPreferences.setUserInfo(this, response);
-        LoginPreferences.setUserLoggedIn(this);
+        CookiePreferences.setUserInfo(this, response);
+        CookiePreferences.setUserLoggedIn(this);
         Toast.makeText(this, "Welcome " +
                 userResponse.getData().firstName, Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
@@ -94,8 +94,8 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
     public void onUserRegistrationSuccess(UserResponse userResponse, String response) {
         if(mProgressDialog !=null)
             mProgressDialog.dismissDialog();
-        Preference.setUserInfo(this, response);
-        Preference.setUserLoggedIn(this);
+        CookiePreferences.setUserInfo(this, response);
+        CookiePreferences.setUserLoggedIn(this);
         Toast.makeText(this, "Registration Successful ", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(UserLoginActivity.this, HomeActivity.class);
         startActivity(intent);

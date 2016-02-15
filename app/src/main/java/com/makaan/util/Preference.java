@@ -86,31 +86,4 @@ public class Preference {
         }
         return preferences.getInt(key, defaultValue);
     }
-    private static final String PREF = "makaan_buyer";
-    private static final String PREF_USER_INFO = "user_info";
-    private static final String PREF_IS_USER_LOGGED_IN = "isLoggedIn";
-
-    private static SharedPreferences getSharedPref(Context ctx) {
-        return ctx.getSharedPreferences(PREF, Context.MODE_PRIVATE);
-    }
-
-    public static void setUserInfo(Context context, String userInfo) {
-        SharedPreferences.Editor edit = getSharedPref(context).edit();
-        edit.putString(PREF_USER_INFO, userInfo);
-        edit.commit();
-    }
-
-    public static UserResponse getUserInfo(Context context) {
-        return (UserResponse) JsonParser.parseJson(
-                getSharedPref(context).getString(PREF_USER_INFO, null),UserResponse.class);
-    }
-
-    public static void setUserLoggedIn(Context context) {
-        SharedPreferences.Editor edit = getSharedPref(context).edit();
-        edit.putBoolean(PREF_IS_USER_LOGGED_IN, true);
-        edit.commit();
-    }
-    public static boolean isUserLoggedIn(Context context) {
-        return getSharedPref(context).getBoolean(PREF_IS_USER_LOGGED_IN, false);
-    }
 }

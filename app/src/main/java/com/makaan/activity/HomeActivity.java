@@ -103,35 +103,21 @@ public class HomeActivity extends MakaanBaseSearchActivity {
 
                 setShowSearchBar(true, false);
                 setSearchViewVisibility(true);
-
-                /*Intent intent = new Intent(HomeActivity.this, SerpActivity.class);
-                intent.putExtra(SerpActivity.REQUEST_TYPE, SerpActivity.TYPE_HOME);
-                SharedPreferences.Editor editor = getSharedPreferences(PreferenceConstants.PREF, MODE_PRIVATE).edit();
-
-                SerpRequest request = new SerpRequest();
-                switch (rgType.getCheckedRadioButtonId()) {
-                    case R.id.activity_home_property_buy_radio_button:
-                        Preference.putInt(editor, PreferenceConstants.PREF_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_BUY);
-                        request.setSerpContext(SerpRequest.CONTEXT_BUY);
-                        break;
-                    case R.id.activity_home_property_rent_radio_button:
-                        request.setSerpContext(SerpRequest.CONTEXT_RENT);
-                        break;
-                }
-                request.launchSerp(HomeActivity.this, SerpActivity.TYPE_HOME);*/
             }
         });
 
         try{
-            if(Preference.isUserLoggedIn(this)){
-                    setUserData();
+            if(CookiePreferences.isUserLoggedIn(this)){
+                setUserData();
+                WishListService wishListService =
+                        (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
+                wishListService.get();
             }else{
 
             }
         }catch (Exception e){
 
         }
-        //testWishList();
 
         rgType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -163,49 +149,13 @@ public class HomeActivity extends MakaanBaseSearchActivity {
 
         initUi(false);
 
-        /*rlSearch = (RelativeLayout) findViewById(R.id.rl_footer);
-        rlSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (isBottom) {
-                    slideToTop();
-                    isBottom = false;
-                } else {
-                    slideToBottom();
-                    isBottom = true;
-                }
-
-
-            }
-        });*/
-
-        /*setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);*/
-
-        /*final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
-        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        */
     }
 
     private void setUserData() {
-        UserResponse info=Preference.getUserInfo(this);
+        UserResponse info=CookiePreferences.getUserInfo(this);
         tvUserName.setText(info.getData().getFirstName());
         mTextViewBuyerInitials.setText(info.getData().getFirstName());
     }
-
-   /* private void testWishList() {
-        if (!CookiePreferences.isUserLoggedIn(this)) {
-            UserLoginService userLoginService =
-                    (UserLoginService) MakaanServiceFactory.getInstance().getService(UserLoginService.class);
-            userLoginService.loginWithMakaanAccount("harvi@proptiger.com", "123456");
-        } else {
-            WishListService wishListService =
-                    (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
-            wishListService.get();
-        }
-    }*/
 
     @Subscribe
     public void onResults(UserLoginEvent userLoginEvent) {
@@ -214,11 +164,14 @@ public class HomeActivity extends MakaanBaseSearchActivity {
             return;
         }
 
+
         Toast.makeText(this, userLoginEvent.userResponse.getData().firstName, Toast.LENGTH_SHORT).show();
         try {
             CookiePreferences.setUserInfo(this,
                     JsonBuilder.toJson(userLoginEvent.userResponse).toString());
             CookiePreferences.setUserLoggedIn(this);
+
+            setUserData();
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -232,8 +185,6 @@ public class HomeActivity extends MakaanBaseSearchActivity {
             return;
         }
         WishListResponse response = wishListResultEvent.wishListResponse;
-//        Toast.makeText(this,"Wish list  - " + response.totalCount, Toast.LENGTH_SHORT).show(); causing null pointer
-
 
     }
 
@@ -369,8 +320,7 @@ public class HomeActivity extends MakaanBaseSearchActivity {
 
     @OnClick(R.id.linear_layout_makaan_toolbar_login)
     public void onLoginCLick() {
-        //TODO for logged and non logged users
-        if(Preference.isUserLoggedIn(this)){
+        if(CookiePreferences.isUserLoggedIn(this)){
             Intent intent = new Intent(HomeActivity.this, BuyerJourneyActivity.class);
             startActivity(intent);
         }else{
