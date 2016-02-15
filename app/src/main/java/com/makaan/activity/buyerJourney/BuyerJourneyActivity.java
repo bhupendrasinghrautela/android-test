@@ -16,9 +16,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.userLogin.UserLoginActivity;
+import com.makaan.cookie.CookiePreferences;
 import com.makaan.ui.view.BadgeView;
 import com.makaan.util.Preference;
 import com.pkmmte.view.CircularImageView;
@@ -74,7 +76,7 @@ public class BuyerJourneyActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.do_not_move, R.anim.do_not_move);
         setContentView(R.layout.fragment_buyer_profile);
         ButterKnife.bind(BuyerJourneyActivity.this);
-        IS_LOGGED=Preference.isUserLoggedIn(BuyerJourneyActivity.this);
+        IS_LOGGED= CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this);
         initViews();
 
         setupAppBar();
@@ -86,7 +88,7 @@ public class BuyerJourneyActivity extends AppCompatActivity {
                 if (verticalOffset == toolbarOffset) {
                     mCollapsingToolbar.setCollapsedTitleTextColor(0xFFFFFFFF);
                     if(IS_LOGGED)
-                        mCollapsingToolbar.setTitle(Preference.getUserInfo(BuyerJourneyActivity.this).getData().getFirstName());
+                        mCollapsingToolbar.setTitle(CookiePreferences.getUserInfo(BuyerJourneyActivity.this).getData().getFirstName());
                     else
                         mCollapsingToolbar.setTitle("guest user");
 
@@ -107,7 +109,7 @@ public class BuyerJourneyActivity extends AppCompatActivity {
     private void setUserData() {
         if (IS_LOGGED) {
             mLoginButton.setVisibility(View.GONE);
-            mUserName.setText(Preference.getUserInfo(this).getData().getFirstName());
+            mUserName.setText(CookiePreferences.getUserInfo(this).getData().getFirstName());
         }else{
             mLoginButton.setVisibility(View.VISIBLE);
         }
@@ -161,7 +163,7 @@ public class BuyerJourneyActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         if (IS_LOGGED) {
             getMenuInflater().inflate(R.menu.menu, menu);//Menu Resource, Menu
-            mUserName.setText(Preference.getUserInfo(this).getData().getFirstName());
+            mUserName.setText(CookiePreferences.getUserInfo(this).getData().getFirstName());
             return true;
         } else {
             return false;
@@ -173,9 +175,11 @@ public class BuyerJourneyActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.item_settings:
                 //TODO
+                Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_logout:
                 //TODO
+                Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
                 break;
             case android.R.id.home:
                 onBackPressed();

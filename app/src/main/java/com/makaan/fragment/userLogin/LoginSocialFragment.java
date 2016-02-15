@@ -18,7 +18,9 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.AccountPicker;
+import com.google.gson.Gson;
 import com.makaan.R;
+import com.makaan.event.user.UserLoginEvent;
 import com.makaan.response.login.OnLoginWithMakaanSelectedListener;
 import com.makaan.response.login.OnUserLoginListener;
 
@@ -30,6 +32,7 @@ import com.makaan.service.user.OnFacebookTokenListener;
 import com.makaan.service.user.OnGoogleTokenListener;
 import com.makaan.service.user.UserLoginService;
 import com.makaan.util.NetworkUtil;
+import com.squareup.otto.Subscribe;
 
 import java.util.Arrays;
 
@@ -173,6 +176,16 @@ public class LoginSocialFragment extends Fragment implements OnGoogleTokenListen
                 break;
         }
         mLoginType = 0;
+    }
+
+    @Subscribe
+    public void loginResults(UserLoginEvent userLoginEvent){
+        if(userLoginEvent.error!=null){
+            mOnUserLoginListener.onUserLoginError(userLoginEvent.error);
+        } else {
+            String str = new Gson().toJson(userLoginEvent.userResponse);
+            mOnUserLoginListener.onUserLoginSuccess(userLoginEvent.userResponse , str);
+        }
     }
 }
 

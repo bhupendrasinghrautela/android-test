@@ -99,18 +99,9 @@ public class LoginFragment extends Fragment {
         }else if(TextUtils.isEmpty(pwd)) {
             Toast.makeText(getActivity(),getString(R.string.enter_password),Toast.LENGTH_SHORT).show();
         } else {
-           /*((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
+           ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
             ))).loginWithMakaanAccount(email,pwd);
-            mOnUserLoginListener.onUserLoginBegin();*/
-            if (!CookiePreferences.isUserLoggedIn(getActivity())) {
-                UserLoginService userLoginService =
-                        (UserLoginService) MakaanServiceFactory.getInstance().getService(UserLoginService.class);
-                userLoginService.loginWithMakaanAccount(email, pwd);
-            } else {
-                WishListService wishListService =
-                        (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
-                wishListService.get();
-            }
+            mOnUserLoginListener.onUserLoginBegin();
         }
     }
 

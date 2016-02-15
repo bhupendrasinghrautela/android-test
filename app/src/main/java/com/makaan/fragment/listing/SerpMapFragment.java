@@ -71,7 +71,11 @@ public class SerpMapFragment extends MakaanBaseFragment {
         super.onActivityCreated(savedInstanceState);
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
         if (status == ConnectionResult.SUCCESS) {
-            initMap(savedInstanceState);
+            try {
+                initMap(savedInstanceState);
+            }catch(Exception e){
+                return;
+            }
             initPager();
             if (mListings != null) {
                 adapter.populateMarker(mListings);

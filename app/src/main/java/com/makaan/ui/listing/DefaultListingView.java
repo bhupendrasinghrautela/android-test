@@ -1,10 +1,7 @@
 package com.makaan.ui.listing;
 
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
@@ -14,35 +11,27 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader;
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.cache.MasterDataCache;
-import com.makaan.constants.PreferenceConstants;
-import com.makaan.event.wishlist.WishListResultEvent;
-import com.makaan.fragment.listing.FiltersDialogFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.serp.ListingInfoMap;
-import com.makaan.response.wishlist.WishListResponse;
-import com.makaan.service.MakaanServiceFactory;
-import com.makaan.service.WishListService;
-import com.makaan.util.Blur;
+import com.makaan.ui.view.WishListButton;
+import com.makaan.ui.view.WishListButton.WishListDto;
+import com.makaan.ui.view.WishListButton.WishListType;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
@@ -58,10 +47,10 @@ import butterknife.OnClick;
 /**
  * Created by rohitgarg on 1/7/16.
  */
-public class DefaultListingView extends AbstractListingView implements CompoundButton.OnCheckedChangeListener {
+public class DefaultListingView extends AbstractListingView{
 
     @Bind(R.id.serp_default_listing_property_shortlist_checkbox)
-    public CheckBox mPropertyShortlistCheckbox;
+    public WishListButton mPropertyWishListCheckbox;
 
     @Bind(R.id.serp_default_listing_property_image_image_view)
     FadeInNetworkImageView mPropertyImageView;
@@ -175,12 +164,7 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         boolean isBuy = SerpObjects.isBuyContext(getContext());
 
         mListing = (Listing)data;
-        mPropertyShortlistCheckbox.setOnCheckedChangeListener(null);
-        mPreferences = mContext.getSharedPreferences(
-                PreferenceConstants.PREF_SHORTLISTED_PROPERTIES, Context.MODE_PRIVATE);
-
-        boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(mListing.lisitingId);
-        mPropertyShortlistCheckbox.setChecked(isShortlisted);
+        mPropertyWishListCheckbox.bindView(new WishListDto(mListing.lisitingId.longValue(), mListing.projectId.longValue(), WishListType.listing));
 
         if(mListing.mainImageUrl != null && !TextUtils.isEmpty(mListing.mainImageUrl)) {
             int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_width);
@@ -344,9 +328,6 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         } else {
             mSellerInfoRelativeLayout.setVisibility(View.GONE);
         }
-
-        // TODO diff image view
-        mPropertyShortlistCheckbox.setOnCheckedChangeListener(this);
 
         this.setOnClickListener(new OnClickListener() {
             @Override
@@ -585,19 +566,6 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         return false;
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        //TODO need to have a small progressbar here
-        // TODO store in device if user is not logged in
-        WishListService wishListService =
-                (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
-        if(isChecked) {
-            wishListService.addListing(mListing.lisitingId, mListing.projectId);
-        } else {
-            wishListService.delete(mListing.lisitingId);
-        }
-    }
-
     @OnClick({R.id.serp_default_listing_seller_image_frame_layout, R.id.serp_default_listing_seller_name_text_view, R.id.serp_default_listing_seller_rating})
     public void onSellerPressed(View view) {
         // TODO discuss what should be done if listing posted by is not present
@@ -637,15 +605,4 @@ public class DefaultListingView extends AbstractListingView implements CompoundB
         }
     }
 
-    @Subscribe
-    public void onResults(WishListResultEvent wishListResultEvent) {
-        //TODO Wishlist api result has to be handled using some callback 
-        if(null!=wishListResultEvent || null!=wishListResultEvent.error){
-            //TODO show error here
-            return;
-        }else {
-            WishListResponse response = wishListResultEvent.wishListResponse;
-        }
-
-    }
 }

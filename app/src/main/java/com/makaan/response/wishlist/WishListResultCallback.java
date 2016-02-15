@@ -13,6 +13,14 @@ import com.makaan.util.JsonParser;
  * Created by sunil on 25/01/16.
  */
 public class WishListResultCallback extends StringRequestCallback {
+    private WishListResponseUICallback wishListResponseUICallback;
+
+    public WishListResultCallback(){}
+
+    public WishListResultCallback(WishListResponseUICallback wishListResponseUICallback){
+        this.wishListResponseUICallback = wishListResponseUICallback;
+    }
+
     @Override
     public void onSuccess(String response) {
 
@@ -29,17 +37,26 @@ public class WishListResultCallback extends StringRequestCallback {
             error.msg = "No data";
             wishListResultEvent.error = error;
 
+            if(null!=wishListResponseUICallback){
+                wishListResponseUICallback.onError(error);
+            }
+
         }else {
 
             wishListResultEvent.wishListResponse = wishListResponse;
+            //MasterDataCache.getInstance().clearWishList();
             for (WishList wishList : wishListResponse.data){
                 if(null!=wishList){
                     if(null!=wishList.listingId){
-                        MasterDataCache.getInstance().addShortlistedProperty(wishList.listingId);
+                        MasterDataCache.getInstance().addShortlistedProperty(wishList.listingId, wishList.wishListId);
                     }else if(null!=wishList.projectId){
-                        MasterDataCache.getInstance().addShortlistedProperty(wishList.projectId);
+                        MasterDataCache.getInstance().addShortlistedProperty(wishList.projectId, wishList.wishListId);
                     }
                 }
+            }
+
+            if(null!=wishListResponseUICallback){
+                wishListResponseUICallback.onSuccess(wishListResponse);
             }
         }
 
@@ -51,6 +68,11 @@ public class WishListResultCallback extends StringRequestCallback {
     public void onError(ResponseError error) {
         WishListResultEvent wishListResultEvent = new WishListResultEvent();
         wishListResultEvent.error = error;
+
+        if(null!=wishListResponseUICallback){
+            wishListResponseUICallback.onError(error);
+        }
+
         AppBus.getInstance().post(wishListResultEvent);
     }
 }
