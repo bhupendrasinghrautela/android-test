@@ -37,6 +37,7 @@ import com.makaan.service.LocationService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.WishListService;
 import com.makaan.service.user.UserLoginService;
+import com.makaan.util.AppBus;
 import com.makaan.util.JsonBuilder;
 import com.makaan.util.Preference;
 import com.squareup.otto.Subscribe;
@@ -151,10 +152,22 @@ public class HomeActivity extends MakaanBaseSearchActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setUserData();
+    }
+
     private void setUserData() {
         UserResponse info=CookiePreferences.getUserInfo(this);
-        tvUserName.setText(info.getData().getFirstName());
-        mTextViewBuyerInitials.setText(info.getData().getFirstName());
+        if(null!=info && null!=info.getData()) {
+            tvUserName.setText(info.getData().getFirstName());
+            mTextViewBuyerInitials.setText(info.getData().getFirstName());
+        }else{
+            tvUserName.setText(R.string.login);
+            mTextViewBuyerInitials.setVisibility(View.GONE);
+            mImageViewBuyer.setVisibility(View.VISIBLE);
+        }
     }
 
     @Subscribe
@@ -163,28 +176,7 @@ public class HomeActivity extends MakaanBaseSearchActivity {
         if (null != userLoginEvent.error) {
             return;
         }
-
-
-        Toast.makeText(this, userLoginEvent.userResponse.getData().firstName, Toast.LENGTH_SHORT).show();
-        try {
-            CookiePreferences.setUserInfo(this,
-                    JsonBuilder.toJson(userLoginEvent.userResponse).toString());
-            CookiePreferences.setUserLoggedIn(this);
-
-            setUserData();
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @Subscribe
-    public void onResults(WishListResultEvent wishListResultEvent) {
-        if(null==wishListResultEvent || null!=wishListResultEvent.error){
-            return;
-        }
-        WishListResponse response = wishListResultEvent.wishListResponse;
+        setUserData();
 
     }
 
@@ -203,97 +195,6 @@ public class HomeActivity extends MakaanBaseSearchActivity {
         return false;
     }
 
-    /*public void slideToTop() {
-        Animation slide;
-        slide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
-                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-                0.0f, Animation.RELATIVE_TO_SELF, -3.2f);
-
-        slide.setDuration(500);
-        rlSearch.startAnimation(slide);
-
-        slide.setAnimationListener(new Animation.AnimationListener() {
-
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-                rlSearch.clearAnimation();
-
-                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                lp.setMargins(0, 0, 0, 0);
-                lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-                rlSearch.setLayoutParams(lp);
-                mToolbar.setVisibility(View.GONE);
-                rgType.setVisibility(View.GONE);
-                rlSearch.setVisibility(View.GONE);
-                topBar.setVisibility(View.VISIBLE);
-                //tvSearch.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                //tvSearch.setFocusableInTouchMode(true);
-
-            }
-        });
-    }
-
-    public void slideToBottom() {
-        Animation slide;
-        slide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
-                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-                0.0f, Animation.RELATIVE_TO_SELF, 3.2f);
-
-        slide.setDuration(500);
-        rlSearch.startAnimation(slide);
-
-        slide.setAnimationListener(new Animation.AnimationListener() {
-
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-                rlSearch.clearAnimation();
-
-                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                lp.setMargins(25, 25, 0, 74);
-                lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                rlSearch.setLayoutParams(lp);
-                mToolbar.setVisibility(View.VISIBLE);
-                rgType.setVisibility(View.VISIBLE);
-
-            }
-        });
-    }
-
-    private void initFragment(int fragmentHolderId, Fragment fragment, boolean shouldAddToBackStack) {
-        // reference fragment transaction
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(fragmentHolderId, fragment, fragment.getClass().getName());
-        // if need to be added to the backstack, then do so
-        if(shouldAddToBackStack) {
-            fragmentTransaction.addToBackStack(fragment.getClass().getName());
-        }
-        // TODO
-        // check if we this can be called from any background thread or after background to ui thread communication
-        // then we need to make use of commitAllowingStateLoss()
-        fragmentTransaction.commit();
-    }*/
 
     @Override
     protected void setSearchViewVisibility(boolean visible) {

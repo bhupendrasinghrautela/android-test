@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.cookie.CookiePreferences;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,6 +20,8 @@ public class BuyerJourneyFragment extends Fragment {
 
 
     private Intent intent;
+
+    private boolean isUserLoggedIn = false;
 
     @Bind(R.id.tv_search_subtitle)
     TextView mSearchSubTitle;
@@ -32,7 +35,7 @@ public class BuyerJourneyFragment extends Fragment {
     @OnClick(R.id.ll_search)
     public void onSearchCLick() {
 
-        if (BuyerJourneyActivity.IS_LOGGED) {
+        if (isUserLoggedIn) {
             onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_SAVE_SEARCH);
         } else {
             intent.putExtra(BuyerDashboardActivity.DATA, "search");
@@ -42,7 +45,7 @@ public class BuyerJourneyFragment extends Fragment {
 
     @OnClick(R.id.ll_shortlist)
     public void onShortlistClick() {
-        if (BuyerJourneyActivity.IS_LOGGED) {
+        if (isUserLoggedIn) {
             onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_SHORTLIST);
         } else {
             intent.putExtra(BuyerDashboardActivity.DATA, "shortlist");
@@ -54,7 +57,7 @@ public class BuyerJourneyFragment extends Fragment {
     public void onSiteVisitClick() {
         //TODO
 
-        if (BuyerJourneyActivity.IS_LOGGED) {
+        if (isUserLoggedIn) {
         /*intent.putExtra(BuyerDashboardActivity.DATA, "homeloan");
         onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);*/
         } else {
@@ -109,8 +112,11 @@ public class BuyerJourneyFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_buyer_journey, container, false);
         ButterKnife.bind(this, view);
         intent = new Intent(getActivity(), BuyerDashboardActivity.class);
-        if(BuyerJourneyActivity.IS_LOGGED)
-        setSubTitle();
+
+        isUserLoggedIn = CookiePreferences.isUserLoggedIn(getActivity());
+        if(isUserLoggedIn) {
+            setSubTitle();
+        }
 
         return view;
     }

@@ -17,6 +17,8 @@ import com.makaan.response.login.OnUserRegistrationListener;
 import com.makaan.response.login.UserLoginPresenter;
 
 import com.makaan.response.user.UserResponse;
+import com.makaan.service.MakaanServiceFactory;
+import com.makaan.service.WishListService;
 import com.makaan.ui.CommonProgressDialog;
 import com.makaan.util.Preference;
 
@@ -64,6 +66,7 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
         CookiePreferences.setUserLoggedIn(this);
         Toast.makeText(this, "Welcome " +
                 userResponse.getData().firstName, Toast.LENGTH_SHORT).show();
+        refreshWishList();
         setResult(RESULT_OK);
         finish();
     }
@@ -96,9 +99,8 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
             mProgressDialog.dismissDialog();
         CookiePreferences.setUserInfo(this, response);
         CookiePreferences.setUserLoggedIn(this);
-        Toast.makeText(this, "Registration Successful ", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(UserLoginActivity.this, HomeActivity.class);
-        startActivity(intent);
+        refreshWishList();
+        finish();
     }
 
     @Override
@@ -111,5 +113,11 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
     @Override
     public void onUserRegistrationBegin() {
         mProgressDialog.showDialog(this, PLEASE_WAIT);
+    }
+
+    private void refreshWishList(){
+        WishListService wishListService =
+                (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
+        wishListService.get();
     }
 }

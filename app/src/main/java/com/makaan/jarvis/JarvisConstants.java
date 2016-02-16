@@ -12,9 +12,9 @@ public class JarvisConstants {
     public static final String CHAT_OBJECT = "chatObj";
 
     public static final String CHAT_SERVER_URL = "https://mp-chat.proptiger-ws.com";
-    public static final String DELIVERY_ID = "12965289-3f28-474a-a37b-fb270fd90711";
+    public static String DELIVERY_ID = "12965289-3f28-474a-a37b-fb270fd90711";
     public static final int CHAT_CARD_DEFAULT_LEFT_MARGIN=20;
-    public static final int CHAT_CARD_DEFAULT_TOP_BOTTOM_MARGIN=10;
+    public static final int CHAT_CARD_DEFAULT_TOP_BOTTOM_MARGIN=20;
 
     public static int JARVIS_ACTION_DISMISS_TIMEOUT = 10000;
 }

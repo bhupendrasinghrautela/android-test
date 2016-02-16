@@ -14,6 +14,7 @@ import com.makaan.jarvis.JarvisConstants;
 import com.makaan.jarvis.JarvisServiceCreator;
 import com.makaan.jarvis.analytics.AnalyticsService;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.notification.GcmRegister;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.service.LocationService;
 import com.makaan.service.leakcanary.TemporaryLeakUploadService;
@@ -86,6 +87,8 @@ public class MakaanBuyerApplication extends Application {
         FontTypeface.setDefaultFont(this, "MONOSPACE", "fonts/proxima.otf");
         FontTypeface.setDefaultFont(this, "SERIF", "fonts/proxima-light.otf");
         FontTypeface.setDefaultFont(this, "SANS_SERIF", "fonts/comforta.ttf");
+
+        GcmRegister.checkAndSetGcmId(this, null);
 
         MakaanNetworkClient.init(this);
         JarvisServiceCreator.create(this);

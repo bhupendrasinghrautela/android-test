@@ -15,10 +15,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
+        android:gravity="right"
         android:background="@drawable/bg_message_you"
         android:paddingBottom="@dimen/out_text_message_padding_top_bottom"
-        android:paddingLeft="@dimen/out_text_message_padding_left_right"
-        android:paddingRight="@dimen/out_text_message_padding_left_right"
+        android:paddingLeft="@dimen/out_text_message_padding_left"
+        android:paddingRight="@dimen/out_text_message_padding_right"
         android:paddingTop="@dimen/out_text_message_padding_top_bottom"
         android:textColor="@color/white"
         android:textSize="@dimen/out_text_message_text_size" />

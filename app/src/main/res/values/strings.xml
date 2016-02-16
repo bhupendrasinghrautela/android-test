@@ -263,6 +263,7 @@
     <!-- shortlist strings -->
     <string name="rupee">\u20B9</string>
     <string name="no_shortlisting">no shortlisted available</string>
+    <string name="no_notifications">You do not have any notifications</string>
 
     <!-- get rewards strings -->
     <string name="get_upto">get upto</string>
