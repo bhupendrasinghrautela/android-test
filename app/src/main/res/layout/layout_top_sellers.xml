@@ -15,6 +15,13 @@
         android:text="@string/select_sellers"
         android:gravity="center_horizontal"
         />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_your_prprty_adv"
+        android:background="@android:color/darker_gray" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/sellers_recycler_view"
         android:layout_below="@+id/tv_your_prprty_adv"
@@ -38,7 +45,8 @@
             android:paddingLeft="@dimen/contact_advisors_button_padding_left_right"
             android:paddingRight="@dimen/contact_advisors_button_padding_left_right"
             android:text="@string/contact_top_advisors_string"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textAllCaps="false"/>
     </LinearLayout>
 
 </RelativeLayout>

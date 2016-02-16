@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/pyr_main_page_background"
     android:scrollbars="none"
     android:clipToPadding="false">
 
@@ -14,44 +14,51 @@
     android:layout_height="wrap_content"
     android:clipToPadding="false">
 
-    <include layout="@layout/pyr_buy_rent_radio_group" />
+    <include layout="@layout/pyr_buy_rent_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/pyr_page_margin_twenty"
+        android:layout_marginLeft="@dimen/pyr_page_margin_twenty"
+        android:layout_marginRight="@dimen/pyr_page_margin_twenty"/>
+
 
     <include layout="@layout/pyr_budget_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/pyr_page_card_height"
         android:layout_marginTop="@dimen/pyr_page_margin_top"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="@dimen/pyr_page_margin_twenty"
+        android:layout_marginRight="@dimen/pyr_page_margin_twenty"
         android:layout_gravity="center_horizontal" />
 
     <include layout="@layout/pyr_property_card_layout"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="@dimen/pyr_location_and_property_card_height"
         android:layout_marginTop="@dimen/pyr_page_margin_top"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_gravity="center_horizontal" />
+        android:layout_marginLeft="@dimen/pyr_page_margin_fifteen"
+        android:layout_marginRight="@dimen/pyr_page_margin_fifteen"
+        android:layout_gravity="center_horizontal"/>
 
     <include layout="@layout/pyr_bedroom_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/pyr_page_card_height"
         android:layout_marginTop="@dimen/pyr_page_margin_top"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="@dimen/pyr_page_margin_twenty"
+        android:layout_marginRight="@dimen/pyr_page_margin_twenty"
         android:layout_gravity="center_horizontal"/>
 
     <include layout="@layout/pyr_location_card_layout"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="@dimen/pyr_location_and_property_card_height"
         android:layout_marginTop="@dimen/pyr_page_margin_top"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginLeft="@dimen/pyr_page_margin_fifteen"
+        android:layout_marginRight="@dimen/pyr_page_margin_fifteen"
         android:layout_gravity="center_horizontal"/>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:background="@color/pyr_main_page_background">
 
         <EditText
             android:id="@+id/pyr_page_name"
@@ -101,11 +108,10 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="@drawable/edittext_light_background_drawable">
+            android:layout_height="match_parent">
             <Spinner
                 android:id="@+id/select_country_spinner"
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/country_spinner_width"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:background="@drawable/edittext_bg_bottom_border"
@@ -146,7 +152,8 @@
                 android:singleLine="true"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/mobile_no_text_size"
-                android:typeface="sans" />
+                android:typeface="sans"
+                android:maxLength="10"/>
         </LinearLayout>
     </LinearLayout>
 

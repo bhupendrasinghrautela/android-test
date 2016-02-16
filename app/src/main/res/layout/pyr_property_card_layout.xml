@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
-    android:background="@color/white"
+    android:background="@color/pyr_main_page_background"
     android:clipToPadding="false"
     android:padding="@dimen/pyr_propert_card_padding">
 
@@ -16,7 +16,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@color/white">
 
         <LinearLayout
             android:layout_width="@dimen/pyr_property_icon_layout_width"

@@ -7,5 +7,6 @@ import android.support.v4.app.Fragment;
  */
 public interface LeadFormReplaceFragment {
     void replaceFragment(Fragment fragment, boolean shouldAddToBackStack);
+    void popFromBackstack(int popCount);
 
 }

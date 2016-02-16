@@ -9,6 +9,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.pkmmte.view.CircularImageView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,7 +22,9 @@ public class SellerViewHolder extends RecyclerView.ViewHolder{
     @Bind(R.id.cb_tick)
     CheckBox mCheckBoxTick;
     @Bind(R.id.iv_seller_image)
-    TextView mSellerImage;
+    TextView mTextSellerImage;
+    @Bind(R.id.seller_image)
+    CircularImageView mSellerImage;
     @Bind(R.id.tv_seller_name)
     TextView mSellerName;
     @Bind(R.id.tv_details_expertise)

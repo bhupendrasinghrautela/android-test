@@ -1,5 +1,9 @@
 package com.makaan.activity.lead;
 
+import android.os.Bundle;
+
+import com.makaan.fragment.pyr.ThankYouScreenFragment;
+
 /**
  * Created by proptiger on 7/1/16.
  */
@@ -9,6 +13,9 @@ public class LeadFormPresenter {
     private LeadCallNowFragment mLeadCallNowFragment;
     private LeadInstantCallBackFragment mLeadInstantCallBackFragment;
     private LeadLaterCallBackFragment mLeadLaterCallBackFragment;
+    private ThankYouScreenFragment mThankYouFragment;
+    public static String MAKAAN_ASSIST_VALUE = "makaan_assist";
+    public static String NO_SELLERS_FRAGMENT = "no_seller";
 
     String name;
     String id;
@@ -76,6 +83,16 @@ public class LeadFormPresenter {
     public void showLeadLaterCallBAckFragment() {
         mLeadLaterCallBackFragment = new LeadLaterCallBackFragment();
         mLeadFormReplaceFragment.replaceFragment(mLeadLaterCallBackFragment, true);
+    }
+
+    public void showThankYouScreenFragment(boolean makaanAssist, boolean throughNoSellers) {
+        mThankYouFragment = new ThankYouScreenFragment();
+        Bundle bundle=new Bundle();
+        bundle.putBoolean(MAKAAN_ASSIST_VALUE, makaanAssist);
+        bundle.putBoolean(NO_SELLERS_FRAGMENT, throughNoSellers);
+        mThankYouFragment.setArguments(bundle);
+        mLeadFormReplaceFragment.popFromBackstack(2);
+        mLeadFormReplaceFragment.replaceFragment(mThankYouFragment, false);
     }
 
 }

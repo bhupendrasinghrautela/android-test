@@ -10,4 +10,5 @@ public class User {
     public String name;
     public String fullName;
     public ArrayList<ContactNumber> contactNumbers = new ArrayList<>();
+    public String profilePictureURL;
 }

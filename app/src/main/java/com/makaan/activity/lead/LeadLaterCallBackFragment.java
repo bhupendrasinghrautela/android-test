@@ -172,9 +172,12 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void pyrResponse(PyrPostResponse pyrPostResponse){
+
         if(pyrPostResponse.getStatusCode().equals("2XX")) {
             Toast.makeText(getActivity(),"Requirement Posted Successfully",Toast.LENGTH_SHORT).show();
-            getActivity().finish();
+            LeadFormPresenter leadFormPresenter=LeadFormPresenter.getLeadFormPresenter();
+            leadFormPresenter.showThankYouScreenFragment(false, false);
+            //getActivity().finish();
         }
     }
 }
