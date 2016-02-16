@@ -35,12 +35,14 @@ import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.adapter.listing.SearchAdapter;
 import com.makaan.adapter.listing.SelectedSearchAdapter;
+import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.Session;
 import com.makaan.response.search.SearchResponseHelper;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.SearchSuggestionType;
 import com.makaan.response.search.SearchType;
 import com.makaan.response.search.event.SearchResultEvent;
+import com.makaan.response.user.UserResponse;
 import com.makaan.service.LocationService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SearchService;
@@ -80,8 +82,10 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     @Bind(R.id.activity_search_base_search_results_frame_layout)
     FrameLayout mSearchResultFrameLayout;
 
-    @Bind(R.id.activity_search_base_layout_search_bar_user_image_view)
-    ImageView mUserImageView;
+    @Bind(R.id.activity_search_toolbar_profile_icon_image_view)
+    ImageView mImageViewBuyer;
+    @Bind(R.id.activity_search_toolbar_profile_icon_text_view)
+    TextView  mTextViewBuyerInitials;
 
     @Bind(R.id.activity_search_base_layout_search_bar_search_image_view)
     ImageView mSearchImageView;
@@ -168,6 +172,12 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         super.onCreate(savedInstanceState);
 
         setSearchBarCollapsible(needScrollableSearchBar());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setUserData();
     }
 
     private void initializeViewData() {
@@ -733,7 +743,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     /**
      * open buyer journey activity
      */
-    @OnClick(R.id.activity_search_base_layout_search_bar_user_image_view)
+    @OnClick(R.id.activity_search_toolbar_profile_icon)
     public void click(){
         startActivity(new Intent(MakaanBaseSearchActivity.this, BuyerJourneyActivity.class));
     }
@@ -783,6 +793,16 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             if(mSelectedSearchAdapter != null) {
                 mSelectedSearchAdapter.setData(mSelectedSearches);
             }
+        }
+    }
+
+    private void setUserData() {
+        UserResponse info= CookiePreferences.getUserInfo(this);
+        if(null!=info && null!=info.getData()) {
+            mTextViewBuyerInitials.setText(info.getData().getFirstName());
+        }else{
+            mTextViewBuyerInitials.setVisibility(View.GONE);
+            mImageViewBuyer.setVisibility(View.VISIBLE);
         }
     }
 }

@@ -16,7 +16,7 @@ public class CompanySeller {
     public ArrayList<Seller> sellers;
     public String logo;
     public String coverPicture;
-    public int score;
+    public float score;
 
     public class Seller {
         public String sellerType;

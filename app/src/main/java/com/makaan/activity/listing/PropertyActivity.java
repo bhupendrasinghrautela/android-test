@@ -7,6 +7,7 @@ import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
+import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.service.AmenityService;
 import com.makaan.service.ListingService;
@@ -105,5 +106,10 @@ public class PropertyActivity extends MakaanBaseSearchActivity implements ShowMa
         mNeighborhoodMapFragment.setData(mAmenityGetEvent.amenityClusters);
         initFragment(R.id.container, mNeighborhoodMapFragment, true);
         //produceAmenityEvent();
+    }
+
+    @Subscribe
+    public void onIncomingMessage(IncomingMessageEvent event){
+        animateJarvisHead();
     }
 }

@@ -143,6 +143,9 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     }
 
     protected void animateJarvisHead() {
+        if(!isJarvisSupported()){
+            return;
+        }
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
