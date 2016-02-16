@@ -6,7 +6,9 @@ import android.view.MenuItem;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
+import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.service.CityService;
+import com.squareup.otto.Subscribe;
 
 /**
  * Created by aishwarya on 19/01/16.
@@ -56,5 +58,10 @@ public class CityActivity extends MakaanFragmentActivity {
                 break;
         }
         return true;
+    }
+
+    @Subscribe
+    public void onIncomingMessage(IncomingMessageEvent event){
+        animateJarvisHead();
     }
 }

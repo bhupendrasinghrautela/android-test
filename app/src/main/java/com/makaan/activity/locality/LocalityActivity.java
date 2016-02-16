@@ -9,6 +9,7 @@ import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.event.project.OnSeeOnMapClicked;
 import com.makaan.fragment.locality.LocalityFragment;
 import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
+import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.util.KeyUtil;
 import com.squareup.otto.Subscribe;
 
@@ -60,6 +61,11 @@ public class LocalityActivity extends MakaanFragmentActivity {
     @Override
     public boolean isJarvisSupported() {
         return true;
+    }
+
+    @Subscribe
+    public void onIncomingMessage(IncomingMessageEvent event){
+        animateJarvisHead();
     }
 
     @Override

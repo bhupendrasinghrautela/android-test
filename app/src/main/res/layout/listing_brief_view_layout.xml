@@ -64,12 +64,16 @@
             android:textAllCaps="false"
             android:typeface="serif" />
 
-        <com.makaan.ui.view.WishListButton
+        <include
+            layout="@layout/wishlist_button_layout"
             android:id="@+id/listing_brief_view_layout_property_shortlist_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/serp_listing_card_property_shortlist_checkbox_right_margin"
+            android:layout_marginRight="@dimen/serp_listing_card_property_shortlist_checkbox_right_margin"
+            android:layout_marginTop="@dimen/serp_listing_card_property_shortlist_checkbox_top_margin"/>
 
         <TextView
             android:id="@+id/listing_brief_view_layout_property_price_sq_ft_text_view"

@@ -34,16 +34,38 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true">
 
-            <com.pkmmte.view.CircularImageView
-                android:id="@+id/activity_search_base_layout_search_bar_user_image_view"
+            <FrameLayout
+                android:id="@+id/activity_search_toolbar_profile_icon"
                 android:layout_width="@dimen/activity_search_base_layout_search_bar_builder_image_view_width"
                 android:layout_height="@dimen/activity_search_base_layout_search_bar_builder_image_view_height"
                 android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_top"
                 android:layout_marginRight="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_right"
                 android:layout_marginEnd="@dimen/activity_search_base_layout_search_bar_builder_image_view_margin_right"
-                android:src="@drawable/edit_avatar"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true">
+
+                <ImageView
+                    android:id="@+id/activity_search_toolbar_profile_icon_image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="false"
+                    android:src="@drawable/edit_avatar"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/activity_search_toolbar_profile_icon_text_view"
+                    android:layout_width="@dimen/makaan_toolbar_profile_image_view_width"
+                    android:layout_height="@dimen/makaan_toolbar_profile_image_view_width"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/profile_image_drawable"
+                    android:clickable="false"
+                    android:gravity="center"
+                    android:maxLength="1"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+            </FrameLayout>
                 <!--android:src="@color/app_grey" />-->
             <ImageButton
                 android:id="@+id/activity_search_base_layout_search_bar_search_image_button"
@@ -52,8 +74,8 @@
                 android:layout_marginRight="@dimen/activity_search_base_layout_search_bar_search_image_button_margin_right"
                 android:layout_marginEnd="@dimen/activity_search_base_layout_search_bar_search_image_button_margin_right"
                 android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_search_image_button_margin_top"
-                android:layout_toLeftOf="@id/activity_search_base_layout_search_bar_user_image_view"
-                android:layout_toStartOf="@id/activity_search_base_layout_search_bar_user_image_view"
+                android:layout_toLeftOf="@id/activity_search_toolbar_profile_icon"
+                android:layout_toStartOf="@id/activity_search_toolbar_profile_icon"
                 android:background="@drawable/search_white" />
 
             <TextView
