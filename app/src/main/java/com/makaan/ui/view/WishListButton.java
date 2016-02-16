@@ -16,6 +16,7 @@ import com.makaan.cache.MasterDataCache;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.user.UserLoginEvent;
 import com.makaan.event.wishlist.WishListResultEvent;
+import com.makaan.network.VolleyErrorParser;
 import com.makaan.response.ResponseError;
 import com.makaan.response.wishlist.WishListResponse;
 import com.makaan.response.wishlist.WishListResponseUICallback;
@@ -106,11 +107,11 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
                     wishListService.addProject(mWishListDto.projectId, this);
                 }
             } else {
-                Long wishListId = MasterDataCache.getInstance().getWishlistId(
-                        mWishListDto.type==WishListType.listing?mWishListDto.listingId:mWishListDto.projectId);
 
-                if(null!=wishListId) {
-                    wishListService.delete(wishListId, this);
+
+                Long itemId = mWishListDto.type==WishListType.listing?mWishListDto.listingId:mWishListDto.projectId;
+                if(null!=itemId) {
+                    wishListService.delete(itemId, this);
                 }
             }
 
@@ -140,7 +141,7 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
     @Override
     public void onError(ResponseError error) {
         setChecked(!mShortlistCheckBox.isChecked());
-        Toast.makeText(mContext, R.string.generic_error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, VolleyErrorParser.getMessage(error.error), Toast.LENGTH_SHORT).show();
         mShortlistCheckBox.setVisibility(View.VISIBLE);
         mLoadingProgressBar.setVisibility(View.GONE);
         return;

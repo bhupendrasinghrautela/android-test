@@ -2,6 +2,7 @@ package com.makaan.response.wishlist;
 
 import android.util.Log;
 
+import com.android.volley.Request;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.network.StringRequestCallback;
@@ -14,11 +15,20 @@ import com.makaan.util.JsonParser;
  */
 public class WishListResultCallback extends StringRequestCallback {
     private WishListResponseUICallback wishListResponseUICallback;
+    private int requestMethod = -1;
+    private Long itemId;
 
-    public WishListResultCallback(){}
+    public WishListResultCallback(int requestMethod){
+        this.requestMethod = requestMethod;
+    }
 
-    public WishListResultCallback(WishListResponseUICallback wishListResponseUICallback){
+    public WishListResultCallback(int requestMethod, WishListResponseUICallback wishListResponseUICallback){
+        this.requestMethod = requestMethod;
         this.wishListResponseUICallback = wishListResponseUICallback;
+    }
+
+    public void setItemId(Long itemId){
+        this.itemId = itemId;
     }
 
     @Override
@@ -43,16 +53,20 @@ public class WishListResultCallback extends StringRequestCallback {
 
         }else {
 
-            wishListResultEvent.wishListResponse = wishListResponse;
-            //MasterDataCache.getInstance().clearWishList();
-            for (WishList wishList : wishListResponse.data){
-                if(null!=wishList){
-                    if(null!=wishList.listingId){
-                        MasterDataCache.getInstance().addShortlistedProperty(wishList.listingId, wishList.wishListId);
-                    }else if(null!=wishList.projectId){
-                        MasterDataCache.getInstance().addShortlistedProperty(wishList.projectId, wishList.wishListId);
+            if(Request.Method.GET==requestMethod || Request.Method.POST==requestMethod) {
+                wishListResultEvent.wishListResponse = wishListResponse;
+                MasterDataCache.getInstance().clearWishList();
+                for (WishList wishList : wishListResponse.data) {
+                    if (null != wishList) {
+                        if (null != wishList.listingId) {
+                            MasterDataCache.getInstance().addShortlistedProperty(wishList.listingId, wishList.wishListId);
+                        } else if (null != wishList.projectId) {
+                            MasterDataCache.getInstance().addShortlistedProperty(wishList.projectId, wishList.wishListId);
+                        }
                     }
                 }
+            }else  if (Request.Method.DELETE==requestMethod){
+                MasterDataCache.getInstance().removeShortlistedProperty(itemId);
             }
 
             if(null!=wishListResponseUICallback){
