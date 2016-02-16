@@ -25,6 +25,7 @@ public class ListingDetail {
     public Long propertyId, projectId;
     public String unitType, unitName, measure;
     public Integer bedrooms, bathrooms, balcony, storeRoom, halls, studyRoom, servantRoom, poojaRoom;
+    public String mainImageURL;
 
     public Double size, budget, minResaleOrPrimaryPrice, maxResaleOrPrimaryPrice;
     public Double avgPriceRisePercentage, bookingAmount, mainEntryRoadWidth, pricePerUnitArea;

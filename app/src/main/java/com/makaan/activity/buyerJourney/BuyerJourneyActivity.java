@@ -91,7 +91,7 @@ public class BuyerJourneyActivity extends AppCompatActivity {
                 int toolbarOffset = -238;
                 if (verticalOffset == toolbarOffset) {
                     mCollapsingToolbar.setCollapsedTitleTextColor(0xFFFFFFFF);
-                    if(CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this))
+                    if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this))
                         mCollapsingToolbar.setTitle(CookiePreferences.getUserInfo(BuyerJourneyActivity.this).getData().getFirstName());
                     else
                         mCollapsingToolbar.setTitle("guest user");
@@ -134,6 +134,7 @@ public class BuyerJourneyActivity extends AppCompatActivity {
         //set up button
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.mipmap.back_white);
         actionBar.setTitle("");
 
     }
