@@ -10,12 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.fragment.pyr.PyrPagePresenter;
 import com.makaan.fragment.pyr.TopSellersFragment;
+import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.agents.Agent;
 import com.makaan.response.agents.TopAgent;
+import com.pkmmte.view.CircularImageView;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -60,19 +65,20 @@ public class SellerListingAdapter extends RecyclerView.Adapter<RecyclerView.View
         int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
         shapeDrawable.getPaint().setColor(color);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            mSellerViewHolder.mSellerImage.setBackground(shapeDrawable);
+            mSellerViewHolder.mTextSellerImage.setBackground(shapeDrawable);
         }
         else{
-            mSellerViewHolder.mSellerImage.setBackgroundDrawable(shapeDrawable);
+            mSellerViewHolder.mTextSellerImage.setBackgroundDrawable(shapeDrawable);
         }
 
         TopAgent topAgent = topAgentsList.get(position);
         if (null != topAgent) {
             final Agent agent = topAgent.agent;
             if (null != agent) {
-                mSellerViewHolder.mSellerName.setText(topAgent.agent.user.fullName);
-                mSellerViewHolder.mSellerImage.setText(topAgent.agent.user.fullName);
-                //mSellerViewHolder.mSellerRatingBar.setRating(agent.score);        //TODO: change double to int
+                mSellerViewHolder.mSellerName.setText(topAgent.agent.user.fullName.toLowerCase());
+                mSellerViewHolder.mTextSellerImage.setText(topAgent.agent.user.fullName);
+                setAgentImage(agent, mSellerViewHolder.mTextSellerImage, mSellerViewHolder.mSellerImage);
+                mSellerViewHolder.mSellerRatingBar.setRating((float) (agent.company.score/2));        //TODO: change double to int
                 mSellerViewHolder.mCheckBoxTick.setOnCheckedChangeListener(null);
                 mPyrPresenter.setSellerIds(agent.company.id, selectedValues.contains(agent.company.id));
                 if (mPyrPresenter.getSellerIdStatus(agent.company.id)) {
@@ -109,6 +115,33 @@ public class SellerListingAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public int getItemCount() {
         return topAgentsList.size();
+    }
+
+    public void setAgentImage(Agent agent, final TextView mNameImage, final CircularImageView imageView){
+        if(agent.user.profilePictureURL!=null && agent.user.profilePictureURL.length()>0 )
+        {
+
+            MakaanNetworkClient.getInstance().getImageLoader().get(agent.user.profilePictureURL, new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
+                    if (b && imageContainer.getBitmap() == null) {
+                        return;
+                    }
+                    imageView.setVisibility(View.VISIBLE);
+                    imageView.setImageBitmap(imageContainer.getBitmap());
+                    mNameImage.setVisibility(View.INVISIBLE);
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    mNameImage.setVisibility(View.VISIBLE);
+                }
+            });
+        }
+        else {
+            imageView.setVisibility(View.INVISIBLE);
+            mNameImage.setVisibility(View.VISIBLE);
+        }
     }
 
 }

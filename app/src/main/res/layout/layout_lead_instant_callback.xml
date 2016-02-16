@@ -33,7 +33,9 @@
             android:id="@+id/seller_ratingbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/lead_rating_bar_padding_left"
             android:layout_marginTop="@dimen/serp_listing_card_seller_rating_margin_top"
+            android:layout_gravity="center_horizontal"
             android:isIndicator="true"
             app:itemHeight="@dimen/serp_listing_card_seller_rating_item_height"
             app:itemWidth="@dimen/serp_listing_card_seller_rating_item_width"
@@ -61,8 +63,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edittext_light_background_drawable">
+                android:layout_height="wrap_content">
                 <Spinner
                     android:id="@+id/select_country_spinner"
                     android:layout_width="match_parent"

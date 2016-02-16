@@ -137,8 +137,9 @@ public class TopSellersFragment extends Fragment {
 
     public void changeSellerCount(int count){
         String value =count>0?String.valueOf(count):"";
-        mButtonContactAdvisors.setText(getResources().getString(R.string.contact_string)+" "+ value +" "+
-                getResources().getString(R.string.advisors_string));
+        String contactValue=getResources().getString(R.string.contact_string)+" "+ value +" "+
+                getResources().getString(R.string.advisors_string);
+        mButtonContactAdvisors.setText(contactValue.toLowerCase());
     }
 
 }

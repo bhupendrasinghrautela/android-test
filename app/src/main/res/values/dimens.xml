@@ -101,12 +101,13 @@
     <dimen name="pyr_rent_selected_corner_radius">8dp</dimen>
     <dimen name="pyr_rent_unselected_radius">8dp</dimen>
     <dimen name="pyr_buy_button_width">167dp</dimen>
-    <dimen name="pyr_buy_button_height">35dp</dimen>
+    <dimen name="pyr_buy_button_height">40dp</dimen>
     <dimen name="pyr_rent_button_width">170dp</dimen>
     <dimen name="pyr_rent_button_height">32dp</dimen>
-    <dimen name="pyr_buy_rent_total_width">340dp</dimen>
+    <dimen name="pyr_buy_rent_total_width">343dp</dimen>
     <dimen name="pyr_page_card_width">320dp</dimen>
     <dimen name="pyr_page_card_height">100dp</dimen>
+    <dimen name="pyr_location_and_property_card_height">110dp</dimen>
     <dimen name="pyr_page_margin_top">16dp</dimen>
     <dimen name="pyr_page_edit_text_width">306dp</dimen>
     <dimen name="pyr_page_edit_text_height">40dp</dimen>
@@ -130,6 +131,13 @@
     <dimen name="mobile_no_layout_margin_left">10dp</dimen>
     <dimen name="post_requirements_padding_left_right">20dp</dimen>
     <dimen name="post_requirements_padding_top_bottom">10dp</dimen>
+    <dimen name="buy_rent_tab_background_margin_left">3dp</dimen>
+    <dimen name="buy_rent_tab_background_margin_right">3dp</dimen>
+    <dimen name="buy_rent_tab_background_margin_top">5dp</dimen>
+    <dimen name="buy_rent_tab_background_margin_bottom">5dp</dimen>
+    <dimen name="pyr_page_margin_twenty">20dp</dimen>
+    <dimen name="pyr_page_margin_fifteen">15dp</dimen>
+    <dimen name="country_spinner_width">190dp</dimen>
 
     <!--Pyr budget layout-->
     <dimen name="pyr_budget_icon_layout_width">80dp</dimen>
@@ -241,6 +249,9 @@
     <dimen name="select_sellers_margin_bottom">60dp</dimen>
     <dimen name="contact_advisors_button_padding_left_right">30dp</dimen>
     <dimen name="contact_advisors_button_layout_padding">10dp</dimen>
+    <dimen name="rating_star_width">12dp</dimen>
+    <dimen name="rating_star_height">12dp</dimen>
+    <dimen name="seller_image_padding_top">5dp</dimen>
 
     <!--pyr location card-->
     <dimen name="pyr_location_card_padding">5dp</dimen>
@@ -1108,6 +1119,7 @@
     <dimen name="lead_form_later_margin_bottom">22dp</dimen>
     <dimen name="button_padding">40dp</dimen>
     <dimen name="button_text_size">16sp</dimen>
+    <dimen name="lead_rating_bar_padding_left">11dp</dimen>
 
     <!--Shortlist card dimensions-->
     <dimen name="fav_card_height">220dp</dimen>

@@ -33,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/serp_listing_card_seller_rating_margin_top"
+            android:paddingLeft="@dimen/lead_rating_bar_padding_left"
             android:isIndicator="true"
             app:itemHeight="@dimen/serp_listing_card_seller_rating_item_height"
             app:itemWidth="@dimen/serp_listing_card_seller_rating_item_width"

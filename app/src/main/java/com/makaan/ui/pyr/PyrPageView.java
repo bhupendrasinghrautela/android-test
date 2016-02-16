@@ -54,15 +54,17 @@ public class PyrPageView extends LinearLayout {
     @OnCheckedChanged(R.id.buy) void buyCheckChange(RadioButton buyButton){
         LinearLayout.LayoutParams params;
         if(!buyButton.isChecked()){
-            params = (LayoutParams) buyButton.getLayoutParams();
+            //buyButton.setElevation(8);
+           /* params = (LayoutParams) buyButton.getLayoutParams();
             buyButton.getLayoutParams().height = (int) dpToPixel(mContext, 32);
-            buyButton.setLayoutParams(params);
+            buyButton.setLayoutParams(params);*/
         }
         else{
+            //buyButton.setElevation(8);
             mPyrPresenter.setBuySelected(true);
-            params = (LayoutParams) buyButton.getLayoutParams();
+            /*params = (LayoutParams) buyButton.getLayoutParams();
             buyButton.getLayoutParams().height = (int) dpToPixel(mContext, 35);
-            buyButton.setLayoutParams(params);
+            buyButton.setLayoutParams(params);*/
         }
 
     }
@@ -70,15 +72,17 @@ public class PyrPageView extends LinearLayout {
     @OnCheckedChanged(R.id.rent) void rentCheckChange(RadioButton sellButton) {
         LinearLayout.LayoutParams params;
         if(!sellButton.isChecked()){
-            params = (LayoutParams) sellButton.getLayoutParams();
+            //sellButton.setElevation(8);
+            /*params = (LayoutParams) sellButton.getLayoutParams();
             sellButton.getLayoutParams().height = (int) dpToPixel(mContext, 32);
-            sellButton.setLayoutParams(params);
+            sellButton.setLayoutParams(params);*/
         }
         else{
+            //sellButton.setElevation(8);
             mPyrPresenter.setBuySelected(false);
-            params = (LayoutParams) sellButton.getLayoutParams();
+           /* params = (LayoutParams) sellButton.getLayoutParams();
             sellButton.getLayoutParams().height = (int) dpToPixel(mContext, 35);
-            sellButton.setLayoutParams(params);
+            sellButton.setLayoutParams(params);*/
         }
     }
 
