@@ -21,9 +21,13 @@ import android.widget.Toast;
 import com.makaan.R;
 import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.cookie.CookiePreferences;
+import com.makaan.event.user.UserLoginEvent;
 import com.makaan.ui.view.BadgeView;
-import com.makaan.util.Preference;
+import com.makaan.util.AppBus;
 import com.pkmmte.view.CircularImageView;
+import com.squareup.otto.Subscribe;
+
+import org.json.JSONException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -51,7 +55,8 @@ public class BuyerJourneyActivity extends AppCompatActivity {
 
     private AlertDialog mAlertDialog;
 
-    public static boolean IS_LOGGED = false; //TODO: get it from prefs for login status
+    private static final int LOGIN_REQUEST =1001;
+
 
     @Bind(R.id.toolbar_layout)
     CollapsingToolbarLayout mCollapsingToolbar;
@@ -76,7 +81,6 @@ public class BuyerJourneyActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.do_not_move, R.anim.do_not_move);
         setContentView(R.layout.fragment_buyer_profile);
         ButterKnife.bind(BuyerJourneyActivity.this);
-        IS_LOGGED= CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this);
         initViews();
 
         setupAppBar();
@@ -87,7 +91,7 @@ public class BuyerJourneyActivity extends AppCompatActivity {
                 int toolbarOffset = -238;
                 if (verticalOffset == toolbarOffset) {
                     mCollapsingToolbar.setCollapsedTitleTextColor(0xFFFFFFFF);
-                    if(IS_LOGGED)
+                    if(CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this))
                         mCollapsingToolbar.setTitle(CookiePreferences.getUserInfo(BuyerJourneyActivity.this).getData().getFirstName());
                     else
                         mCollapsingToolbar.setTitle("guest user");
@@ -100,14 +104,23 @@ public class BuyerJourneyActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==LOGIN_REQUEST && resultCode == RESULT_OK){
+            setUserData();
+            initViews();
+        }
+    }
+
     @OnClick(R.id.button_login)
     public void onLoginClick() {
         Intent intent = new Intent(this, UserLoginActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, LOGIN_REQUEST);
     }
 
     private void setUserData() {
-        if (IS_LOGGED) {
+        if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this)) {
             mLoginButton.setVisibility(View.GONE);
             mUserName.setText(CookiePreferences.getUserInfo(this).getData().getFirstName());
         }else{
@@ -127,6 +140,9 @@ public class BuyerJourneyActivity extends AppCompatActivity {
 
     private void initViews() {
 
+        //TODO need to refresh this layout based on
+        mTabLayout.removeAllTabs();
+
         mTabLayout.addTab(mTabLayout.newTab().setText(TabType.Journey.value));
         mTabLayout.addTab(mTabLayout.newTab().setText(TabType.Notifications.value));
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -136,9 +152,10 @@ public class BuyerJourneyActivity extends AppCompatActivity {
 
         mViewPager.setAdapter(adapter);
 
-        BadgeView badge = new BadgeView(this, mTabLayout);
+        //TODO show notification count here
+/*        BadgeView badge = new BadgeView(this, mTabLayout);
         badge.setText("5");
-        badge.show();
+        badge.show();*/
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
@@ -161,7 +178,7 @@ public class BuyerJourneyActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (IS_LOGGED) {
+        if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this)) {
             getMenuInflater().inflate(R.menu.menu, menu);//Menu Resource, Menu
             mUserName.setText(CookiePreferences.getUserInfo(this).getData().getFirstName());
             return true;
@@ -178,8 +195,9 @@ public class BuyerJourneyActivity extends AppCompatActivity {
                 Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_logout:
-                //TODO
+                //TODO have to make logout api call
                 Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
+                //finish();
                 break;
             case android.R.id.home:
                 onBackPressed();

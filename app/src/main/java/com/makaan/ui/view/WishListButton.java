@@ -48,7 +48,7 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
 
     private WishListDto mWishListDto;
 
-
+    private boolean isLoginInitiatedFromWishList;
 
     public WishListButton(Context context) {
         super(context);
@@ -69,6 +69,7 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
     public void bindView(WishListDto item) {
         try {
             AppBus.getInstance().register(this);
+            isLoginInitiatedFromWishList = false;
         }catch(Exception e){}
         mWishListDto = item;
         boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(
@@ -120,6 +121,7 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
 
         }else{
 
+            isLoginInitiatedFromWishList = true;
             setChecked(!isChecked);
             Intent intent = new Intent(mContext, UserLoginActivity.class);
             mContext.startActivity(intent);
@@ -149,6 +151,12 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
 
     @Subscribe
     public void loginResults(UserLoginEvent userLoginEvent){
+        if(!isLoginInitiatedFromWishList){
+            return;
+        }
+
+        isLoginInitiatedFromWishList = false;
+
         if(userLoginEvent.error!=null){
             Toast.makeText(mContext, R.string.generic_error, Toast.LENGTH_SHORT).show();
         } else {

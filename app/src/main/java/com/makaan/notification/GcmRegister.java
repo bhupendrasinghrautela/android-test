@@ -11,6 +11,7 @@ import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.makaan.jarvis.JarvisConstants;
 import com.makaan.util.CommonUtil;
 
 import org.json.JSONException;
@@ -123,7 +124,7 @@ public class GcmRegister{
     }
 
     private static void sendRegistrationIdToBackend(String regId) {
-
+        JarvisConstants.DELIVERY_ID = regId;
     }
 
 }

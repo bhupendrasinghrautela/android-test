@@ -1052,11 +1052,13 @@
     <dimen name="out_text_card_padding_top_bottom">5dp</dimen>
     <dimen name="out_text_card_padding_right">10dp</dimen>
     <dimen name="out_text_message_padding_top_bottom">5dp</dimen>
-    <dimen name="out_text_message_padding_left_right">10dp</dimen>
+    <dimen name="out_text_message_padding_left">40dp</dimen>
+    <dimen name="out_text_message_padding_right">10dp</dimen>
     <dimen name="out_text_message_text_size">16sp</dimen>
     <dimen name="int_text_card_padding_top_bottom">5dp</dimen>
     <dimen name="in_text_message_padding_top_bottom">5dp</dimen>
-    <dimen name="int_text_message_padding_left_right">10dp</dimen>
+    <dimen name="in_text_message_padding_left">10dp</dimen>
+    <dimen name="in_text_message_padding_right">40dp</dimen>
     <dimen name="in_text_message_text_size">16sp</dimen>
     <dimen name="plain_link_card_padding_top_bottom">5dp</dimen>
     <dimen name="plain_link_card_padding_right">10dp</dimen>

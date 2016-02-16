@@ -13,10 +13,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
+        android:gravity="left"
         android:background="@drawable/bg_message_from"
         android:paddingBottom="@dimen/in_text_message_padding_top_bottom"
-        android:paddingLeft="@dimen/int_text_message_padding_left_right"
-        android:paddingRight="@dimen/int_text_message_padding_left_right"
+        android:paddingLeft="@dimen/in_text_message_padding_left"
+        android:paddingRight="@dimen/in_text_message_padding_right"
         android:paddingTop="@dimen/in_text_message_padding_top_bottom"
         android:textColor="@color/black"
         android:textSize="@dimen/in_text_message_text_size" />

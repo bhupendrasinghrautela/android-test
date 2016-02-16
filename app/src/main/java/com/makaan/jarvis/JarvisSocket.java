@@ -76,6 +76,7 @@ public class JarvisSocket {
             mSocket.emit("join-user", JsonBuilder.toJson(new JoinUser()), new Ack() {
                 @Override
                 public void call(Object... args) {
+                    Log.e("join user", "user");
                 }
             });
         } catch (JSONException e) {
