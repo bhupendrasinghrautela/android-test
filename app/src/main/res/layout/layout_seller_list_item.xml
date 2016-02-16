@@ -12,17 +12,18 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/seller_image_margin"
         android:layout_marginRight="@dimen/seller_image_margin"
-        android:layout_marginBottom="@dimen/seller_image_margin">
+        android:layout_marginBottom="@dimen/seller_image_margin"
+        android:paddingTop="@dimen/seller_image_padding_top">
 
         <com.pkmmte.view.CircularImageView
             android:id="@+id/seller_image"
             android:layout_width="@dimen/seller_image_width_height"
             android:layout_height="@dimen/seller_image_width_height"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:border="true"
             app:border_color="@color/light_gray"
             app:border_width="@dimen/border_width"
-            app:shadow="true" />
+            app:shadow="false" />
 
         <TextView
             android:id="@+id/iv_seller_image"
@@ -40,7 +41,9 @@
         android:layout_width="wrap_content"
         android:layout_centerVertical="true"
         android:paddingBottom="@dimen/seller_name_layout_padding_bottom"
+        android:layout_marginLeft="@dimen/seller_name_layout_padding_bottom"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/seller_name_layout_padding_bottom"
         android:orientation="vertical">
 
         <TextView
@@ -51,6 +54,7 @@
             android:layout_marginBottom="@dimen/seller_name_text_view_margin_bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/tv_details_expertise"
             android:text="Details of Expertise"
@@ -59,14 +63,20 @@
             android:textColor="@android:color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <RatingBar
+
+        <com.makaan.ui.view.CustomRatingBar
             android:id="@+id/seller_ratingbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:numStars="5"
-            android:layout_marginTop="@dimen/rating_bar_margin_top"
-            android:stepSize="0.1"
+            android:layout_marginTop="0dp"
             android:isIndicator="true"
+            app:itemHeight="@dimen/rating_star_height"
+            app:itemWidth="@dimen/rating_star_width"
+            app:itemMarginLeft="@dimen/serp_listing_card_seller_rating_item_margin_left"
+            app:itemMarginRight="@dimen/serp_listing_card_seller_rating_item_margin_right"
+            app:paddingEnd="10dp"
+            app:itemProgressIcon="@drawable/star_selected"
+            app:itemSecondaryProgressIcon="@drawable/star_unselected"
             style="?android:attr/ratingBarStyleSmall"
             />
 

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:ellipsize="marquee"
     android:singleLine="true"
-    android:padding="1dp"
+    android:padding="2dp"
     android:textSize="16sp" >
 
 </TextView>

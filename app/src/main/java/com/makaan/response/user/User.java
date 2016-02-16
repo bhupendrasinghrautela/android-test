@@ -9,6 +9,6 @@ public class User {
     public Long id;
     public String name;
     public String fullName;
-    public String profilePictureURL;
     public ArrayList<ContactNumber> contactNumbers = new ArrayList<>();
+    public String profilePictureURL;
 }
