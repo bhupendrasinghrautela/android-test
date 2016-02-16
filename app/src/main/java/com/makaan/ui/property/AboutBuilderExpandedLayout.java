@@ -82,11 +82,10 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
     @Override
     public void bindView(Builder item) {
         if(item != null) {
-            mBuilderLogo.setVisibility(VISIBLE);
             mAboutBuilderTv.setText(getResources().getString(R.string.more_about_builder));
             if(item.imageURL!=null) {
+                mBuilderLogo.setVisibility(VISIBLE);
                 mBuilderLogo.setImageUrl(item.imageURL, MakaanNetworkClient.getInstance().getImageLoader());
-                this.setVisibility(VISIBLE);
             }
             if(item.establishedDate!=null){
                 try {

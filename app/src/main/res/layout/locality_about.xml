@@ -84,6 +84,7 @@
         android:layout_marginTop="@dimen/locality_seperator_top_margin"
         android:layout_below="@id/tv_locality_annual_growth_label"
         android:layout_marginLeft="@dimen/locality_seperator_left_margin"
+        android:visibility="gone"
         android:id="@+id/view_locality_seperator"
         android:background="@color/locality_seprator"/>
 
@@ -140,16 +141,6 @@
         android:layout_marginRight="@dimen/locality_about_median_left_margin"
         android:layout_below="@id/tv_locality_annual_growth_rent"
         />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/locality_seperator_height"
-        android:layout_marginTop="@dimen/locality_seperator_top_margin"
-        android:layout_below="@id/tv_locality_annual_growth_label_rent"
-        android:layout_marginLeft="@dimen/locality_seperator_left_margin"
-        android:id="@+id/view_locality_seperator_2"
-        android:background="@color/locality_seprator"/>
-
 </RelativeLayout>
 
     <include layout="@layout/compressed_text_layout_for_black"/>

@@ -5,10 +5,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
-import com.makaan.constants.ImageConstants;
 import com.makaan.event.image.ImagesGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.image.Image;
@@ -19,7 +19,6 @@ import com.tusharchoudhary.timeline.Timeline;
 import com.tusharchoudhary.timeline.TimelineView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -32,6 +31,8 @@ public class ConstructionTimelineFragment extends MakaanBaseFragment{
     TextView titleTv;
     @Bind(R.id.timeline_main_view)
     Timeline timeline;
+    @Bind(R.id.timeline_container)
+    LinearLayout container;
 
     @Override
     protected int getContentViewId() {
@@ -59,8 +60,9 @@ public class ConstructionTimelineFragment extends MakaanBaseFragment{
             list.add(new TimelineView.TimelineDataItem(image.createdAt, image.absolutePath));//TODO: replace createdAt with imageTakenAt when ever it is available
         if(imagesGetEvent.images.size()>0)
             timeline.bindView(list, timeline);
-        else
-            timeline.bindView(getDummy(), timeline);
+        else {
+            container.setVisibility(View.GONE);
+        }
     }
 
     private List<TimelineView.TimelineDataItem> getDummy() {

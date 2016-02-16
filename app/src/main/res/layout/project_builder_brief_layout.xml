@@ -17,6 +17,7 @@
         <com.android.volley.toolbox.FadeInNetworkImageView
             android:layout_width="@dimen/property_page_builder_logo_width"
             android:id="@+id/builder_logo"
+            android:visibility="gone"
             android:layout_height="@dimen/property_page_builder_logo_height"/>
         <TextView
             android:id="@+id/builder_description"

@@ -68,9 +68,11 @@ public class ProjectConfigView extends LinearLayout implements ViewPager.OnPageC
 
 
     public void bindView(ProjectConfigEvent projectConfigEvent, FragmentActivity compatActivity) {
-        if(projectConfigEvent.buyProjectConfigItems.size()==0 && projectConfigEvent.rentProjectConfigItems.size()==0)
-            this.setVisibility(GONE);
+        if(projectConfigEvent.buyProjectConfigItems.size()==0 && projectConfigEvent.rentProjectConfigItems.size()==0){
+            return;
+        }
         else {
+            this.setVisibility(VISIBLE);
             this.projectConfigEvent = projectConfigEvent;
             initView(compatActivity);
         }
