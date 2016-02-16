@@ -161,7 +161,7 @@ public class BlogContentFragment extends MakaanBaseFragment {
                         if(activity instanceof BuyerDashboardCallbacks) {
                             Bundle bundle = new Bundle();
                             bundle.putString(KeyUtil.KEY_REQUEST_URL, link);
-                            ((BuyerDashboardCallbacks) activity).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_WEB_VIEW, true, bundle);
+                            ((BuyerDashboardCallbacks) activity).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_WEB_VIEW, true, bundle, null);
                         }
                     }
                 }

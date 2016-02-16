@@ -32,7 +32,7 @@ import butterknife.Bind;
  * Created by sunil on 15/02/16.
  */
 public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto> implements CompoundButton.OnCheckedChangeListener,
-        WishListResponseUICallback{
+        WishListResponseUICallback, View.OnClickListener {
 
     public enum WishListType{
         listing, project;
@@ -83,6 +83,7 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
         }
 
         mShortlistCheckBox.setOnCheckedChangeListener(this);
+        this.setOnClickListener(this);
     }
 
     public static class WishListDto{
@@ -95,6 +96,11 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
             this.projectId = projectId;
             this.type = type;
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        mShortlistCheckBox.setChecked(!mShortlistCheckBox.isChecked());
     }
 
     @Override

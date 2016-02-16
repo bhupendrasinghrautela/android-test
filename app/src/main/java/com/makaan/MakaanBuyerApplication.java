@@ -16,6 +16,7 @@ import com.makaan.jarvis.analytics.AnalyticsService;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.notification.GcmRegister;
 import com.makaan.pojo.SerpObjects;
+import com.makaan.service.ClientLeadsService;
 import com.makaan.service.LocationService;
 import com.makaan.service.leakcanary.TemporaryLeakUploadService;
 import com.makaan.service.user.ForgotPasswordService;
@@ -125,6 +126,7 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(ForgotPasswordService.class, new ForgotPasswordService());
         MakaanServiceFactory.getInstance().registerService(UserRegistrationService.class, new UserRegistrationService());
         MakaanServiceFactory.getInstance().registerService(AnalyticsService.class, new AnalyticsService());
+        MakaanServiceFactory.getInstance().registerService(ClientLeadsService.class, new ClientLeadsService());
 
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();

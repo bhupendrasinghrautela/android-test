@@ -230,7 +230,12 @@ public class DefaultListingView extends AbstractListingView{
         // set price info
         mPropertyPriceTextView.setText(priceString.toLowerCase());
         mPropertyPriceUnitTextView.setText(priceUnit);
-        mPropertyPriceSqFtTextView.setText(String.format("%s%s/sqft", "\u20B9", StringUtil.getFormattedNumber(mListing.pricePerUnitArea)).toLowerCase());
+        if(mListing.pricePerUnitArea == 0) {
+            mPropertyPriceSqFtTextView.setVisibility(View.VISIBLE);
+            mPropertyPriceSqFtTextView.setText(String.format("%s%s/sqft", "\u20B9", StringUtil.getFormattedNumber(mListing.pricePerUnitArea)).toLowerCase());
+        } else {
+            mPropertyPriceSqFtTextView.setVisibility(View.INVISIBLE);
+        }
 
         // set property bhk and size info
         if(mListing.bhkInfo == null) {
@@ -240,7 +245,7 @@ public class DefaultListingView extends AbstractListingView{
             mPropertyBhkInfoTextView.setText(mListing.bhkInfo.toLowerCase());
         }
 
-        if(mListing.sizeInfo == null) {
+        if(mListing.sizeInfo == null || TextUtils.isEmpty(mListing.sizeInfo) || "0".equals(mListing.sizeInfo)) {
             mPropertySizeInfoTextView.setVisibility(View.GONE);
         } else {
             mPropertySizeInfoTextView.setVisibility(View.VISIBLE);

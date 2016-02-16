@@ -2,6 +2,8 @@ package com.makaan.activity.buyerJourney;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,6 +12,9 @@ import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.shortlist.ShortListFragment;
 import com.makaan.fragment.WebViewFragment;
 import com.makaan.fragment.buyerJourney.BlogContentFragment;
+import com.makaan.fragment.buyerJourney.ClientCompanyLeadFragment;
+import com.makaan.fragment.buyerJourney.ClientLeadsFragment;
+import com.makaan.fragment.buyerJourney.RewardsFragment;
 import com.makaan.fragment.buyerJourney.SaveSearchFragment;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
@@ -31,6 +36,8 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
     public static final int LOAD_FRAGMENT_SHORTLIST = 3;
     public static final int LOAD_FRAGMENT_REWARDS = 4;
     public static final int LOAD_FRAGMENT_SAVE_SEARCH = 5;
+    public static final int LOAD_FRAGMENT_CLIENT_LEADS = 6;
+    public static final int LOAD_FRAGMENT_CLIENT_COMPANY_LEAD = 7;
 
 
     @Override
@@ -72,19 +79,38 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
                     break;
             }
         }
-
     }
 
     @Override
-    public void loadFragment(int type, boolean shouldAddToBackStack, Bundle data) {
+    public void loadFragment(int type, boolean shouldAddToBackStack, Bundle data, String title) {
         switch (type) {
-            case LOAD_FRAGMENT_WEB_VIEW:
+            case LOAD_FRAGMENT_WEB_VIEW: {
                 WebViewFragment fragment = new WebViewFragment();
-                if(data != null) {
+                if (data != null) {
                     fragment.setArguments(data);
                 }
                 initFragment(R.id.activity_base_buyer_journey_content_frame_layout, fragment, shouldAddToBackStack);
                 break;
+            }
+            case LOAD_FRAGMENT_CLIENT_LEADS: {
+                ClientLeadsFragment fragment = new ClientLeadsFragment();
+                if (data != null) {
+                    fragment.setArguments(data);
+                }
+                initFragment(R.id.activity_base_buyer_journey_content_frame_layout, fragment, shouldAddToBackStack);
+                break;
+            }
+            case LOAD_FRAGMENT_CLIENT_COMPANY_LEAD: {
+                ClientCompanyLeadFragment fragment = new ClientCompanyLeadFragment();
+                if (data != null) {
+                    fragment.setArguments(data);
+                }
+                initFragment(R.id.activity_base_buyer_journey_content_frame_layout, fragment, shouldAddToBackStack);
+                break;
+            }
+        }
+        if(!TextUtils.isEmpty(title)) {
+            setTitle(title);
         }
     }
 

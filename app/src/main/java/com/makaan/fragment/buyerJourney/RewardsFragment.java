@@ -1,15 +1,17 @@
-package com.makaan.activity.buyerJourney;
+package com.makaan.fragment.buyerJourney;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.makaan.R;
-import com.makaan.activity.shortlist.ShortlistPagerAdapter;
+import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
+import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
 import com.makaan.fragment.MakaanBaseFragment;
+
+import butterknife.OnClick;
 
 public class RewardsFragment extends MakaanBaseFragment {
 
@@ -24,5 +26,12 @@ public class RewardsFragment extends MakaanBaseFragment {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         return view;
+    }
+
+    @OnClick(R.id.fragment_get_rewards_button)
+    void onGetRewardsClicked(View view) {
+        if(getActivity() instanceof BuyerDashboardCallbacks) {
+            ((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_CLIENT_LEADS, true, null, "select an agent");
+        }
     }
 }

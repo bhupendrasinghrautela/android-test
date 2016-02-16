@@ -316,8 +316,8 @@
     <dimen name="serp_listing_card_property_price_unit_top_margin">24dp</dimen>
     <dimen name="serp_listing_card_property_price_unit_text_size">18sp</dimen>
 
-    <dimen name="serp_listing_card_property_shortlist_checkbox_right_margin">16dp</dimen>
-    <dimen name="serp_listing_card_property_shortlist_checkbox_top_margin">14dp</dimen>
+    <dimen name="serp_listing_card_property_shortlist_checkbox_right_margin">14dp</dimen>
+    <dimen name="serp_listing_card_property_shortlist_checkbox_top_margin">12dp</dimen>
     <dimen name="serp_listing_card_property_shortlist_checkbox_width">20dp</dimen>
     <dimen name="serp_listing_card_property_shortlist_checkbox_height">20dp</dimen>
 
@@ -458,10 +458,10 @@
     <dimen name="activity_search_base_layout_search_bar_back_layout_padding_left">10dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_back_layout_padding_right">10dp</dimen>
 \
-    <dimen name="activity_search_base_layout_search_bar_back_button_height">24dp</dimen>
-    <dimen name="activity_search_base_layout_search_bar_back_button_width">24dp</dimen>
-    <dimen name="activity_search_base_layout_search_bar_back_button_margin_top">14dp</dimen>
-    <dimen name="activity_search_base_layout_search_bar_back_button_margin_bottom">12dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_back_button_height">36dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_back_button_width">36dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_back_button_margin_top">6dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_back_button_margin_bottom">6dp</dimen>
 
     <dimen name="activity_search_base_layout_search_bar_builder_image_view_width">38dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_builder_image_view_height">38dp</dimen>

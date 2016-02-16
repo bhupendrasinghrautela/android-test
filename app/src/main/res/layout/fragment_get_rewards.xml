@@ -78,6 +78,7 @@
             android:textSize="@dimen/get_upto_text_size" />
 
         <Button
+            android:id="@+id/fragment_get_rewards_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

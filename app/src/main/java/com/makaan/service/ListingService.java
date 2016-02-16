@@ -1,10 +1,14 @@
 package com.makaan.service;
 
 import com.google.gson.reflect.TypeToken;
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ApiConstants;
+import com.makaan.constants.ResponseConstants;
 import com.makaan.event.listing.ListingByIdGetEvent;
+import com.makaan.event.listing.ListingByIdsGetEvent;
 import com.makaan.event.serp.BaseSerpCallback;
 import com.makaan.event.serp.GroupSerpCallback;
+import com.makaan.network.JSONGetCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
@@ -13,7 +17,11 @@ import com.makaan.response.listing.ListingOtherSellersCallback;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.util.AppBus;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import static com.makaan.constants.RequestConstants.BATHROOMS;
 import static com.makaan.constants.RequestConstants.BEDROOMS;
@@ -94,6 +102,49 @@ public class ListingService implements MakaanService {
 
                     //listingDetail.description = AppUtils.stripHtml(listingDetail.description);
                     AppBus.getInstance().post(new ListingByIdGetEvent(listingDetail));
+                }
+            });
+
+        }
+
+    }
+
+    public void getListingDetailByIds(ArrayList<String> listingIds) {
+        if (null != listingIds) {
+            Selector selector = new Selector();
+            selector.field("user").field("mainImageURL").field("logo").field("profilePictureURL").field("currentListingPrice")
+                    .field("price").field("projectId").field("companySeller").field("company")
+                    .field("name").field("score").field("halls").field("unitType")
+                    .field("unitName").field("measure").field("size").field("bathrooms")
+                    .field("bedrooms").field("listing").field("id").field("property")
+                    .field("project").field("builder").field("locality").field("suburb")
+                    .field("label").field("city").field("imageURL");
+
+            selector.term("listingId", listingIds);
+            String listingDetailUrl = ApiConstants.LISTING.concat("?").concat(selector.build());
+            Type listingDetailType = new TypeToken<ListingByIdsGetEvent>() {}.getType();
+
+            MakaanNetworkClient.getInstance().get(listingDetailUrl, new JSONGetCallback() {
+                @Override
+                public void onError(ResponseError error) {
+
+                    ListingByIdsGetEvent listingByIdsGetEvent = new ListingByIdsGetEvent();
+                    listingByIdsGetEvent.error = error;
+                    AppBus.getInstance().post(listingByIdsGetEvent);
+                }
+
+                @Override
+                public void onSuccess(JSONObject responseObject) {
+                    if (responseObject != null) {
+                        try {
+                            JSONObject data = responseObject.getJSONObject(ResponseConstants.DATA);
+                            Type type = new TypeToken<ListingByIdsGetEvent>() {}.getType();
+                            ListingByIdsGetEvent listingByIdsGetEvent = MakaanBuyerApplication.gson.fromJson(data.toString(), type);
+                            AppBus.getInstance().post(listingByIdsGetEvent);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             });
 
