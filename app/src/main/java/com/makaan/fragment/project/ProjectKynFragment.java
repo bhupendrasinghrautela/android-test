@@ -24,7 +24,6 @@ import com.makaan.ui.amenity.AmenityCardView;
 import com.makaan.util.AppBus;
 import com.makaan.util.KeyUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;

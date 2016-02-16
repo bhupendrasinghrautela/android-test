@@ -71,6 +71,12 @@ public class ListingOtherSellersCallback extends JSONGetCallback {
                     sellerCard.name = company.name;
                     sellerCard.type = company.type;
                     sellerCard.rating = company.score;
+                    if(company.logo!=null){
+                        sellerCard.imageUrl = company.logo;
+                    }
+                    else if(listingDetail.companySeller.user!=null && listingDetail.companySeller.user.profilePictureURL!=null){
+                        sellerCard.imageUrl = listingDetail.companySeller.user.profilePictureURL;
+                    }
                     sellerCard.noOfProperties = sellerPropCountMap.get(listingDetail.sellerId);
                 }
             }

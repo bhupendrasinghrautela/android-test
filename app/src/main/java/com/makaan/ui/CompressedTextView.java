@@ -26,7 +26,9 @@ public class CompressedTextView extends BaseLinearLayout<String> {
     TextView mReadMore;
     private Boolean isCollapsed = true;
     private static int MAX_LINE = 5;
+    private boolean workedOnce = false;
     @OnClick(R.id.read_more) void click(){
+        workedOnce = true;
         if(isCollapsed){
             mReadMore.setText(mContext.getString(R.string.read_less));
             mContentText.setMaxLines(Integer.MAX_VALUE);
@@ -55,7 +57,21 @@ public class CompressedTextView extends BaseLinearLayout<String> {
     }
 
     @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+    }
+    @Override
     public void bindView(String item) {
 
+    }
+
+    public void removeMore(boolean shouldHide) {
+        if(!workedOnce) {
+            if (shouldHide) {
+                mReadMore.setVisibility(GONE);
+            } else {
+                mReadMore.setVisibility(VISIBLE);
+            }
+        }
     }
 }

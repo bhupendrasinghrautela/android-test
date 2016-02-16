@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:typeface="serif"
+            android:typeface="sans"
             android:textSize="@dimen/city_big_text"
             app:layout_collapseMode="parallax"/>
     </android.support.design.widget.CollapsingToolbarLayout>
@@ -64,13 +64,15 @@
             <include
                 layout="@layout/city_header"
                 android:layout_width="match_parent"
-                android:layout_margin="@dimen/city_internal_padding"
+                android:layout_marginLeft="@dimen/city_internal_padding"
+                android:layout_marginTop="@dimen/city_header_margin_top"
+                android:layout_marginRight="@dimen/city_internal_padding"
                 android:layout_height="wrap_content"/>
             <include layout="@layout/compressed_text_layout_for_black"/>
-            <include layout="@layout/property_range_layout"/>
-            <include layout="@layout/locality_lifestyle"/>
             <include layout="@layout/price_trend_layout"/>
             <include layout="@layout/top_locality_layout"/>
+            <include layout="@layout/locality_lifestyle"/>
+            <include layout="@layout/property_range_layout"/>
             <include layout="@layout/locality_properties"/>
             <include
                 layout="@layout/locality_interested_to_buy"

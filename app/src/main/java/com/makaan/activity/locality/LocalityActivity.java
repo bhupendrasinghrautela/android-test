@@ -2,6 +2,8 @@ package com.makaan.activity.locality;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.event.project.OnSeeOnMapClicked;
@@ -57,6 +59,16 @@ public class LocalityActivity extends MakaanFragmentActivity {
 
     @Override
     public boolean isJarvisSupported() {
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+        }
         return true;
     }
 }

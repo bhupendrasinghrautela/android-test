@@ -13,13 +13,6 @@
     android:layout_width="match_parent"
     android:scaleType="centerCrop"
     android:layout_height="match_parent"/>
-    <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginRight="8dp"
-        android:layout_gravity="end"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/makaan_outline"/>
     <RelativeLayout
         android:id="@+id/property_image_detail"
         android:layout_gravity="bottom"
@@ -30,8 +23,8 @@
             android:id="@+id/rupee_icon"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="14dp"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:src="@drawable/rupee"/>
         <TextView
             android:id="@+id/price_text"
@@ -60,6 +53,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"/>
         <TextView
+            android:id="@+id/emi_text"
             android:paddingRight="10dp"
             android:paddingLeft="10dp"
             android:paddingTop="5dp"

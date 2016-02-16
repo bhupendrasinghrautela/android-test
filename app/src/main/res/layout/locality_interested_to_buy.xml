@@ -23,6 +23,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="41dp"
+
+
     android:layout_marginBottom="50dp"
     android:gravity="center_horizontal"
     android:layout_marginLeft="80dp"
@@ -40,7 +42,7 @@
     android:background="@drawable/btn_find_your_home"
     android:layout_gravity="center_horizontal"
     android:layout_marginBottom="50dp"
-    android:textSize="12sp"
+    android:textSize="16sp"
     android:textAllCaps="false"
     android:textColor="@color/white"
     android:text="find your home"

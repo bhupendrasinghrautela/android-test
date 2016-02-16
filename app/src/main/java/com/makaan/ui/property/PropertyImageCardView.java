@@ -12,6 +12,8 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.image.Image;
 import com.makaan.util.StringUtil;
 
+import java.text.DecimalFormat;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -29,6 +31,8 @@ public class PropertyImageCardView extends CardView {
     TextView priceUnitText;
     @Bind(R.id.area_text)
     TextView sizeText;
+    @Bind(R.id.emi_text)
+    TextView emiText;
 
     public PropertyImageCardView(Context context) {
         super(context);
@@ -64,9 +68,18 @@ public class PropertyImageCardView extends CardView {
             priceUnitText.setText(priceUnit);
         }
         if(size != null){
-            sizeText.setText(size+" "+mContext.getString(R.string.avg_price_postfix));
+            sizeText.setText(StringUtil.getFormattedNumber(size)+" "+mContext.getString(R.string.avg_price_postfix));
+        }
+        if(price!=null) {
+            String formatted = new DecimalFormat("##,##,##0").format(calculateEmi(price, 9.55 / 100, 20));
+            emiText.setText(mContext.getString(R.string.emi_rs) + " " + formatted);
         }
         mPropertyImageView.setDefaultImageResId(R.drawable.luxury_project);
         mPropertyImageView.setImageUrl(listingDetailImage.absolutePath, MakaanNetworkClient.getInstance().getImageLoader());
+    }
+
+    public Long calculateEmi(Double principal,Double ratePerAnuminFraction,Integer tenure) {
+        Double emi = principal * (ratePerAnuminFraction / 12) * Math.pow(1 + ratePerAnuminFraction / 12, tenure * 12) / (Math.pow(1 + ratePerAnuminFraction / 12, tenure * 12) - 1);
+        return Math.round(emi);
     }
 }

@@ -60,7 +60,7 @@
         android:id="@+id/button_show_properties"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_find_your_home"
+        android:background="@drawable/contact_seller_selector"
         android:layout_marginTop="25dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="20dp"

@@ -76,7 +76,7 @@ public class MakaanBarChartView extends BaseLinearLayout<List<CityTrendData>>{
     }
 
     private void generateDataForChart() {
-        if(mColumns == null || mAxisXValues == null || mAxisXLabels == null){
+        if(mColumns == null || mAxisXValues == null || mAxisXLabels == null || mChartData == null){
             mNoDataText.setVisibility(VISIBLE);
             return;
         }
@@ -105,11 +105,12 @@ public class MakaanBarChartView extends BaseLinearLayout<List<CityTrendData>>{
             axisX.setHasTiltedLabels(true);
             axisX.setInside(false);
             axisX.setMaxLabelChars(6);
+            axisX.setName("Price");
             Float gap = (float) mMaxListings / 5;
             Float value;
             for (value = 0f; value < mMaxListings + gap; value = value + gap) {
-                AxisValue axisValue = new AxisValue(value);
-                axisValue.setLabel(StringUtil.getDisplayPriceForChart(value));
+                AxisValue axisValue = new AxisValue(Math.round(value));
+                axisValue.setLabel(StringUtil.getDisplayPriceForChart(Math.round(value)));
                 mAxisYValues.add(axisValue);
             }
             Axis axisY = new Axis(mAxisYValues);

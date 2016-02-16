@@ -136,10 +136,11 @@
     <string name="price_growth">price growth</string>
     <string name="demand_supply">demand &amp; supply</string>
     <string name="annual_growth">annual price growth</string>
-    <string name="rental_yield">rental yield</string>
+    <string name="rental_yield">annual rental yield</string>
     <string name="avg_price_prefix">avg. price</string>
     <string name="avg_price_postfix">/ sq ft</string>
     <string name="property_range">property range</string>
+    <string name="emi_rs">emi \u20B9</string>
     <string name="floor_plan">floor plan</string>
     <string name="top_localities">top localities</string>
     <string name="view_properties">view properties</string>

@@ -14,10 +14,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <com.android.volley.toolbox.FadeInNetworkImageView
             android:id="@+id/amenity_logo"
             android:layout_width="@dimen/amenity_type_logo_dimen"
             android:layout_height="@dimen/amenity_type_logo_dimen"
+            android:src="@drawable/placeholder_amenity"
             android:layout_marginTop="@dimen/amenity_margin_top"
             android:layout_marginBottom="@dimen/amenity_type_logo_margin"/>
 

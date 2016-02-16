@@ -3,6 +3,7 @@ package com.makaan.activity.lead;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.PhoneNumberUtils;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -44,7 +45,9 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
         mLeadFormPresenter= LeadFormPresenter.getLeadFormPresenter();
         mTextViewSellerName.setText(mLeadFormPresenter.getName());
         mRatingBarSeller.setRating(Float.valueOf(mLeadFormPresenter.getScore()));
-        mButtonCall.setText("call +91"+mLeadFormPresenter.getPhone());
+        if(mLeadFormPresenter.getPhone()!=null) {
+            mButtonCall.setText("call +91" + PhoneNumberUtils.formatNumber(mLeadFormPresenter.getPhone()));
+        }
     }
 
     @OnClick(R.id.btn_call)

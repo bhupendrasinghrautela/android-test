@@ -10,6 +10,8 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -23,7 +25,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
-import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.pyr.PyrPageActivity;
@@ -53,7 +54,6 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.TaxonomyService;
 import com.makaan.ui.CompressedTextView;
 import com.makaan.util.Blur;
-import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -86,6 +86,8 @@ public class LocalityFragment extends MakaanBaseFragment {
     TextView salesMedianPriceLabel;
     @Bind(R.id.tv_locality_per_sqr_ft_median_price_rent)
     TextView rentMedianPrice;
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
     @Bind(R.id.tv_locality_per_sqr_ft_median_price_rent_label)
     TextView rentMedianPriceLabel;
     @Bind(R.id.tv_locality_annual_growth)
@@ -125,9 +127,22 @@ public class LocalityFragment extends MakaanBaseFragment {
         super.onActivityCreated(savedInstanceState);
         mContext = getActivity();
         mMainCityImage.setDefaultImageResId(R.drawable.locality_hero);
+        initToolbar();
         setLocalityId();
         fetchData();
         initListeners();
+    }
+
+    private void initToolbar() {
+        if(getActivity().isFinishing()){
+            return;
+        }
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
+        if(((AppCompatActivity)getActivity()).getSupportActionBar()!=null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back_white);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
+        }
     }
 
     private void setLocalityId() {

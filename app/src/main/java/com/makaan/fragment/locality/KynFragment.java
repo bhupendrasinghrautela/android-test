@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
@@ -20,7 +18,6 @@ import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.ui.amenity.AmenityCardView;
 import com.makaan.util.AppBus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;

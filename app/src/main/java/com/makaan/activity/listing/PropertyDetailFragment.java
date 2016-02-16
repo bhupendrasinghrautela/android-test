@@ -2,7 +2,6 @@ package com.makaan.activity.listing;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
@@ -11,14 +10,21 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Html;
+import android.text.Layout;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.activity.city.CityActivity;
@@ -32,6 +38,7 @@ import com.makaan.event.listing.OtherSellersGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.property.SimilarPropertyFragment;
 import com.makaan.fragment.property.ViewSellersDialogFragment;
+import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SellerCard;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.listing.detail.ListingDetail;
@@ -52,8 +59,14 @@ import com.makaan.ui.property.FloorPlanLayout;
 import com.makaan.ui.property.ListingDataOverViewScroll;
 import com.makaan.ui.property.PropertyImageViewPager;
 import com.makaan.ui.view.CustomRatingBar;
+import com.makaan.ui.view.WishListButton;
+import com.makaan.ui.view.WishListButton.WishListDto;
+import com.makaan.ui.view.WishListButton.WishListType;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
+import com.makaan.util.StringUtil;
 import com.pkmmte.view.CircularImageView;
+import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -80,6 +93,9 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
 
     @Bind(R.id.floor_plan_layout)
     FloorPlanLayout mFloorPlanLayout;
+
+    @Bind(R.id.serp_default_listing_property_shortlist_checkbox)
+    public WishListButton mPropertyWishListCheckbox;
 
     @Bind(R.id.unit_name)
     TextView mUnitName;
@@ -181,6 +197,11 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
         }
     }
 
+    @Produce
+    public ListingByIdGetEvent produceListing(){
+        return new ListingByIdGetEvent(mListingDetail);
+    }
+
     @OnClick(R.id.amenity_see_on_map)
     public void showMap(){
         mShowMapCallback.showMapFragment();
@@ -249,7 +270,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
             TestUi(mListingDetail);
             ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getOtherSellersOnListingDetail(
                     mListingDetail.projectId, mListingDetail.bedrooms, mListingDetail.bathrooms, mListingDetail.studyRoom
-                    , mListingDetail.poojaRoom, mListingDetail.servantRoom, null
+                    , mListingDetail.poojaRoom, mListingDetail.servantRoom, 5
             );
             ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId);
             ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId, ImageConstants.THREED_FLOOR_PLAN);
@@ -263,12 +284,18 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
             if (imagesGetEvent.images.size() > 0) {
                 mPropertyImageViewPager.setVisibility(View.VISIBLE);
             }
+            else{
+                mPropertyImageViewPager.setVisibility(View.GONE);
+            }
             mPropertyImageViewPager.bindView();
-            mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.property.size);
+            mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea);
         }
-        else{
-            if(imagesGetEvent.images!= null && imagesGetEvent.images.size()>0)
+        else if(imagesGetEvent.images!= null && imagesGetEvent.images.size()>0){
             mFloorPlanLayout.bindFloorPlan(imagesGetEvent);
+        }
+        else if(imagesGetEvent.error!=null){
+            mFloorPlanLayout.setVisibility(View.GONE);
+            mPropertyImageViewPager.setVisibility(View.GONE);
         }
     }
 
@@ -283,28 +310,12 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
         // todo need to show seller logo image if available
         Company company = listingDetail.companySeller!=null?listingDetail.companySeller.company:null;
         if(company!=null) {
-            mAllSellerLayout.setVisibility(View.VISIBLE);
-            mSellerLogoTextView.setText(String.valueOf(company.name.charAt(0)));
-            mSellerName.setText(String.format("%s(%s)",company.name,company.type));
-            mSellerLogoTextView.setVisibility(View.VISIBLE);
-            mSellerImageView.setVisibility(View.GONE);
-            // show seller first character as logo
-            Random random = new Random();
-            ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
-            int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
-            drawable.getPaint().setColor(color);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                mSellerLogoTextView.setBackground(drawable);
-            } else {
-                mSellerLogoTextView.setBackgroundDrawable(drawable);
-            }
-            if(!company.assist){
-                mSellerAssistButton.setVisibility(View.GONE);
-            }
+            showSellerDetail(company);
         }
         if(listingDetail.property != null) {
             Property property = listingDetail.property;
 
+            mPropertyWishListCheckbox.bindView(new WishListDto(mListingDetail.id.longValue(),property.projectId.longValue(), WishListType.listing));
             if(listingDetail.listingAmenities !=null && !listingDetail.listingAmenities.isEmpty()) {
                 mAmenitiesViewScroll.setVisibility(View.VISIBLE);
                 mAmenitiesViewScroll.bindView(listingDetail.listingCategory,property.unitType, listingDetail.listingAmenities);
@@ -321,7 +332,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
             }
 
             mUnitArea.setText(
-                    (property.size != null ? property.size : "") + " " +
+                    (property.size != null ? StringUtil.getFormattedNumber(property.size) : "") + " " +
                     (property.measure != null ? property.measure : ""));
             if(property.project != null) {
                 Project project = property.project;
@@ -357,10 +368,100 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
                 mCompressedDescriptionLayout.setVisibility(View.VISIBLE);
                 mListingBrief.setTextColor(getResources().getColor(R.color.listingBlack));
                 mListingBrief.setText((listingDetail.description != null ? Html.fromHtml(listingDetail.description) : ""));
+                ViewTreeObserver vto = mListingBrief.getViewTreeObserver();
+                vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        if(mListingBrief!=null) {
+                            Layout l = mListingBrief.getLayout();
+                            if (l != null) {
+                                int lines = l.getLineCount();
+                                if (lines > 0) {
+                                    if (l.getEllipsisCount(lines - 1) > 0) {
+                                        Log.d("test", "Text is ellipsized");
+                                    } else {
+                                        mCompressedDescriptionLayout.removeMore(true);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
             }
             else{
                 mCompressedDescriptionLayout.setVisibility(View.GONE);
             }
+        }
+    }
+
+    private void showSellerDetail(Company company) {
+        int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_width);
+        int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_height);
+        mAllSellerLayout.setVisibility(View.VISIBLE);
+        mSellerLogoTextView.setText(String.valueOf(company.name.charAt(0)));
+        mSellerName.setText(String.format("%s(%s)", company.name, company.type));
+        User user = mListingDetail.companySeller!=null?mListingDetail.companySeller.user:null;
+        if(!company.assist){
+            mSellerAssistButton.setVisibility(View.GONE);
+        }
+        if(!TextUtils.isEmpty(company.logo)) {
+            mSellerLogoTextView.setVisibility(View.GONE);
+            mSellerImageView.setVisibility(View.VISIBLE);
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(company.logo, width, height, false), new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
+                    if (b && imageContainer.getBitmap() == null) {
+                        return;
+                    }
+                    mSellerImageView.setImageBitmap(imageContainer.getBitmap());
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    showTextAsImage();
+                }
+            });
+        } else if(user!=null && !TextUtils.isEmpty(user.profilePictureURL)) {
+            mSellerLogoTextView.setVisibility(View.GONE);
+            mSellerImageView.setVisibility(View.VISIBLE);
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(user.profilePictureURL, width, height, false), new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
+                    if (b && imageContainer.getBitmap() == null) {
+                        return;
+                    }
+                    mSellerImageView.setImageBitmap(imageContainer.getBitmap());
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    showTextAsImage();
+                }
+            });
+        } else {
+            showTextAsImage();
+        }
+    }
+
+    private void showTextAsImage() {
+        if(mListingDetail.companySeller.company.name == null) {
+            mSellerLogoTextView.setVisibility(View.INVISIBLE);
+        }
+        mSellerLogoTextView.setText(String.valueOf(mListingDetail.companySeller.company.name.charAt(0)));
+        mSellerLogoTextView.setVisibility(View.VISIBLE);
+        mSellerImageView.setVisibility(View.GONE);
+        // show seller first character as logo
+
+        int[] bgColorArray = getResources().getIntArray(R.array.bg_colors);
+
+        Random random = new Random();
+        ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+//        int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
+        drawable.getPaint().setColor(bgColorArray[random.nextInt(bgColorArray.length)]);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mSellerLogoTextView.setBackground(drawable);
+        } else {
+            mSellerLogoTextView.setBackgroundDrawable(drawable);
         }
     }
 
