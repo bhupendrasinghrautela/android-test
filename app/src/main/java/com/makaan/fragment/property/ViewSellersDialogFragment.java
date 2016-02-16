@@ -277,7 +277,7 @@ public class ViewSellersDialogFragment extends DialogFragment {
                 holder.mSellerLogoTextView.setBackgroundDrawable(drawable);
             }
             if(mSellerCards.get(position).name!=null) {
-                holder.mSellerName.setText(String.format("%s(%s)",mSellerCards.get(position).name, mSellerCards.get(position).type));
+                holder.mSellerName.setText(mSellerCards.get(position).name + (mSellerCards.get(position).type==null?"":"("+mSellerCards.get(position).type+")"));
                 holder.mSellerLogoTextView.setText(String.valueOf(mSellerCards.get(position).name.charAt(0)));
             }
         }

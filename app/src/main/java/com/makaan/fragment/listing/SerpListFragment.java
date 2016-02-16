@@ -12,24 +12,16 @@ import android.view.ViewGroup;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
+import com.makaan.adapter.listing.SerpListingAdapter;
 import com.makaan.fragment.MakaanBaseFragment;
-
-import com.makaan.jarvis.JarvisConstants;
 import com.makaan.jarvis.analytics.AnalyticsService;
-import com.makaan.pojo.GroupCluster;
-import com.makaan.request.selector.Selector;
-
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
-import com.makaan.adapter.listing.SerpListingAdapter;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.SearchSuggestionType;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.ui.PaginatedListView;
 import com.makaan.util.StringUtil;
-import com.segment.analytics.Analytics;
-import com.segment.analytics.Properties;
-import com.segment.analytics.Traits;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -237,5 +229,11 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         }
 
 
+    }
+
+    @Override
+    public void onResume() {
+        mListingAdapter.notifyDataSetChanged();
+        super.onResume();
     }
 }
