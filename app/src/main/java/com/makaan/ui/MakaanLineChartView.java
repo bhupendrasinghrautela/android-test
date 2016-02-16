@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.GridView;
-import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.adapter.LegendAdapter;
@@ -179,6 +178,7 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
             Axis axisX = Axis.generateAxisFromCollection(x, y);
             axisX.setHasTiltedLabels(true);
             axisX.setMaxLabelChars(5);
+            axisX.setTextColor(mContext.getResources().getColor(R.color.listingBlack));
             mLineChartData.setAxisXBottom(axisX);
             Float gap = (float)mMaxPrice/5;
             Float value;
@@ -191,6 +191,7 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
             axisY.setHasLines(true);
             axisY.setHasTiltedLabels(true);
             axisY.setMaxLabelChars(5);
+            axisY.setTextColor(mContext.getResources().getColor(R.color.listingBlack));
             mLineChartData.setAxisYLeft(axisY);
             mLineChartData.setBaseValue(Float.NEGATIVE_INFINITY);
             mLineChartView.setLineChartData(mLineChartData);

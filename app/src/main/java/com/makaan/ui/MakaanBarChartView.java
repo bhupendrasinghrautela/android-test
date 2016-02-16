@@ -106,6 +106,7 @@ public class MakaanBarChartView extends BaseLinearLayout<List<CityTrendData>>{
             axisX.setInside(false);
             axisX.setMaxLabelChars(6);
             axisX.setName("Price");
+        axisX.setTextColor(mContext.getResources().getColor(R.color.listingBlack));
             Float gap = (float) mMaxListings / 5;
             Float value;
             for (value = 0f; value < mMaxListings + gap; value = value + gap) {
@@ -117,6 +118,7 @@ public class MakaanBarChartView extends BaseLinearLayout<List<CityTrendData>>{
             axisY.setHasLines(true);
             axisY.setHasTiltedLabels(true);
             axisY.setMaxLabelChars(5);
+        axisY.setTextColor(mContext.getResources().getColor(R.color.listingBlack));
             axisY.setName("No. of Properties");
             mColumnChartData.setAxisYLeft(axisY);
             mColumnChartData.setAxisXBottom(axisX);

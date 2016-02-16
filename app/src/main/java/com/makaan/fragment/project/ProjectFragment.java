@@ -11,14 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.makaan.R;
-import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.MakaanBaseSearchActivity;
+import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.event.amenity.AmenityGetEvent;
@@ -74,7 +73,7 @@ public class ProjectFragment extends MakaanBaseFragment{
     @Bind(R.id.tv_project_location) TextView projectLocationTv;
     @Bind(R.id.content_text) TextView descriptionTv;
     @Bind(R.id.amenities_scroll_layout) AmenitiesViewScroll mAmenitiesViewScroll;
-    @Bind(R.id.ll_project_container) LinearLayout projectContainer;
+    @Bind(R.id.ll_project_container) FrameLayout projectContainer;
     @Bind(R.id.frame_locality_score) FrameLayout scoreFrameLayout;
     private Context mContext;
     private Project project;

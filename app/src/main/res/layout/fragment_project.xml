@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.makaan.ui.view.VerticalNestedScrollView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/ll_project_container"
+    android:visibility="gone"
+    android:layout_height="match_parent"
+    >
+<ScrollView
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:overScrollMode="never"
     android:background="@color/white"
+    android:paddingBottom="60dp"
     android:layout_width="match_parent">
 
     <LinearLayout
         android:orientation="vertical"
-        android:id="@+id/ll_project_container"
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="match_parent">
 
         <com.makaan.ui.property.PropertyImageViewPager
@@ -49,24 +53,25 @@
             android:id="@+id/container_similar_projects"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
-        <View
-            android:layout_gravity="bottom"
-            android:layout_marginTop="@dimen/project_contact_seller_top_margin"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/project_yellow_strip_above_contact_seller_button_height"
-            android:background="@color/app_yellow"
-            />
-        <Button
-            android:id="@+id/contact_top_seller"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/project_button_contact_seller_height"
-            android:textColor="@color/white"
-            android:textSize="@dimen/project_button_contact_seller_text_height"
-            android:background="@color/project_similar_projects_red"
-            android:textAllCaps="false"
-            android:text="@string/contact_top_seller"
-            />
-
     </LinearLayout>
-</com.makaan.ui.view.VerticalNestedScrollView>
+</ScrollView>
+    <View
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/project_contact_seller_bottom_margin"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/project_yellow_strip_above_contact_seller_button_height"
+        android:background="@color/app_yellow"
+        />
+    <Button
+        android:id="@+id/contact_top_seller"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_height="@dimen/project_button_contact_seller_height"
+        android:textColor="@color/white"
+        android:textSize="@dimen/project_button_contact_seller_text_height"
+        android:background="@color/project_similar_projects_red"
+        android:textAllCaps="false"
+        android:typeface="monospace"
+        android:text="@string/contact_top_seller"
+        />
+</FrameLayout>

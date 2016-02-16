@@ -323,8 +323,14 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
             else{
                 mAmenitiesViewScroll.setVisibility(View.GONE);
             }
-            mUnitName.setText(listingDetail.property.bedrooms + "bhk " +
-                    (property.unitType != null ? property.unitType : "") + " - ");
+            StringBuilder bhkInfo = new StringBuilder();
+            if(property.unitType != null && "plot".equalsIgnoreCase(property.unitType)) {
+                bhkInfo.append("residential plot");
+            } else {
+                bhkInfo.append(property.bedrooms > 0 ? property.bedrooms.toString()+"bhk ": "");
+                bhkInfo.append(property.unitType != null ? property.unitType:"");
+            }
+            mUnitName.setText(bhkInfo.toString()+ " - ");
 
             if(getActivity() instanceof MakaanBaseSearchActivity) {
                 getActivity().setTitle((listingDetail.property.bedrooms + "bhk " +

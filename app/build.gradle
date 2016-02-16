@@ -74,8 +74,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'org.apmem.tools:layouts:1.10@aar'
     compile 'com.facebook.android:facebook-android-sdk:4.1.0'
-    compile 'com.tusharchoudhary:timeline:1.2.1'
-    compile 'com.tusharchoudhary:timeline:1.2.0'
+    compile 'com.tusharchoudhary:timeline:1.2.2'
     compile 'com.segment.analytics.android:analytics:4.+'
     compile('org.apache.httpcomponents:httpmime:4.3.1') {
         exclude module: "httpclient"
