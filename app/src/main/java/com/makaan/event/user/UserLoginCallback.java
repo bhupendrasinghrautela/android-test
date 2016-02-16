@@ -1,6 +1,8 @@
 package com.makaan.event.user;
 
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.cookie.CookiePreferences;
 import com.makaan.network.StringRequestCallback;
 import com.makaan.response.ResponseError;
 import com.makaan.response.search.SearchResponse;
@@ -29,6 +31,8 @@ public class UserLoginCallback extends StringRequestCallback {
         }else {
             //TODO populate UI field for project id
 
+
+            MasterDataCache.getInstance().setUserData(userResponse.getData());
             userLoginEvent.userResponse = userResponse;
         }
 

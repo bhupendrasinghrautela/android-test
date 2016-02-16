@@ -51,7 +51,11 @@ public class PlainLinkCard extends BaseView<Message> {
             @Override
             public void onClick(View view) {
                 try {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.chatObj.link));
+                    Uri uri = Uri.parse(item.chatObj.link);
+                    if (!item.chatObj.link.startsWith("http://") && !item.chatObj.link.startsWith("https://")) {
+                        uri = Uri.parse("http://" + item.chatObj.link);
+                    }
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
                     mContext.startActivity(browserIntent);
                 }catch (ActivityNotFoundException e){}
             }

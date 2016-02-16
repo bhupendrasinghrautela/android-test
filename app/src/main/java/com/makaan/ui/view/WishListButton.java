@@ -69,14 +69,17 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
     public void bindView(WishListDto item) {
         try {
             AppBus.getInstance().register(this);
-            isLoginInitiatedFromWishList = false;
         }catch(Exception e){}
+        isLoginInitiatedFromWishList = false;
         mWishListDto = item;
         boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(
                 mWishListDto.type==WishListType.listing?mWishListDto.listingId:mWishListDto.projectId);
 
+        mShortlistCheckBox.setOnCheckedChangeListener(null);
         if(isShortlisted){
             mShortlistCheckBox.setChecked(true);
+        }else{
+            mShortlistCheckBox.setChecked(false);
         }
 
         mShortlistCheckBox.setOnCheckedChangeListener(this);
@@ -97,7 +100,7 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
 
-        if(CookiePreferences.isUserLoggedIn(mContext)) {
+        if(null!=MasterDataCache.getInstance().getUserData()) {
 
             WishListService wishListService =
                     (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
@@ -151,6 +154,9 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
 
     @Subscribe
     public void loginResults(UserLoginEvent userLoginEvent){
+        if(null==userLoginEvent || null!=userLoginEvent.error){
+            Toast.makeText(mContext, R.string.generic_error, Toast.LENGTH_SHORT).show();
+        }
         if(!isLoginInitiatedFromWishList){
             return;
         }

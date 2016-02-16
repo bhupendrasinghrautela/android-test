@@ -367,7 +367,7 @@ public class ProjectFragment extends MakaanBaseFragment{
         Bundle bundle = new Bundle();
         bundle.putString("title", "about " + project.locality.label);
         bundle.putLong("localityId", project.localityId);
-        bundle.putDouble("score", project.locality.livabilityScore);
+        bundle.putDouble("score", project.locality.livabilityScore==null?0:project.locality.livabilityScore);
         bundle.putString("description", project.locality.description);
         fragment.setArguments(bundle);
         initFragment(R.id.container_about_locality, fragment, false);
