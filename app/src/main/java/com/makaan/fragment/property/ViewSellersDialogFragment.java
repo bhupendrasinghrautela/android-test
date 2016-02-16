@@ -10,6 +10,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +20,19 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.lead.LeadFormActivity;
+import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SellerCard;
 import com.makaan.ui.view.CustomRatingBar;
 import com.makaan.util.AppBus;
+import com.makaan.util.ImageUtils;
 import com.pkmmte.view.CircularImageView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -142,6 +148,7 @@ public class ViewSellersDialogFragment extends DialogFragment {
     }
 
     public void bindView(ArrayList<SellerCard> sellerCards) {
+        Collections.sort(sellerCards);
         mSellerCards = sellerCards;
         int count = 0;
         for(SellerCard sellerCard:mSellerCards){
@@ -180,6 +187,8 @@ public class ViewSellersDialogFragment extends DialogFragment {
 
     public class AllSellersAdapter extends RecyclerView.Adapter<AllSellersAdapter.ViewHolder> {
         private List<SellerCard> sellerCards;
+        int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_width);
+        int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_height);
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             // each data item is just a string in this case
@@ -218,21 +227,27 @@ public class ViewSellersDialogFragment extends DialogFragment {
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mSellerImageView.setVisibility(View.GONE);
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
             final SellerCard sellerCard = mSellerCards.get(position);
-            Random random = new Random();
-            ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
-            int color = ChartUtils.COLORS[position%5];
-            drawable.getPaint().setColor(color);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                holder.mSellerLogoTextView.setBackground(drawable);
+            if(!TextUtils.isEmpty(sellerCard.imageUrl)) {
+                holder.mSellerLogoTextView.setVisibility(View.GONE);
+                holder.mSellerImageView.setVisibility(View.VISIBLE);
+                MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(sellerCard.imageUrl, width, height, false), new ImageLoader.ImageListener() {
+                    @Override
+                    public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
+                        if (b && imageContainer.getBitmap() == null) {
+                            return;
+                        }
+                        holder.mSellerImageView.setImageBitmap(imageContainer.getBitmap());
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        showTextAsImage(position,holder);
+                    }
+                });
             } else {
-                holder.mSellerLogoTextView.setBackgroundDrawable(drawable);
-            }
-            if(sellerCard.name!=null) {
-                holder.mSellerName.setText(String.format("%s(%s)", sellerCard.name, mSellerCards.get(position).type));
-                holder.mSellerLogoTextView.setText(String.valueOf(sellerCard.name.charAt(0)));
+                showTextAsImage(position,holder);
             }
             if(sellerCard.noOfProperties!=null) {
                 holder.mSellerTotalProperty.setText(String.valueOf(sellerCard.noOfProperties) + " " + getString(R.string.property));
@@ -249,6 +264,22 @@ public class ViewSellersDialogFragment extends DialogFragment {
                     sellerCard.isChecked = isChecked;
                 }
             });
+        }
+
+        private void showTextAsImage(int position,ViewHolder holder) {
+            Random random = new Random();
+            ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+            int color = ChartUtils.COLORS[position%5];
+            drawable.getPaint().setColor(color);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                holder.mSellerLogoTextView.setBackground(drawable);
+            } else {
+                holder.mSellerLogoTextView.setBackgroundDrawable(drawable);
+            }
+            if(mSellerCards.get(position).name!=null) {
+                holder.mSellerName.setText(String.format("%s(%s)",mSellerCards.get(position).name, mSellerCards.get(position).type));
+                holder.mSellerLogoTextView.setText(String.valueOf(mSellerCards.get(position).name.charAt(0)));
+            }
         }
 
         @Override

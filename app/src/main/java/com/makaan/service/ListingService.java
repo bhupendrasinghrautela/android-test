@@ -139,7 +139,7 @@ public class ListingService implements MakaanService {
     public void getOtherSellersOnListingDetail(Long projectId, Integer bedrooms, Integer bathrooms, Integer studyRoom, Integer poojaRoom, Integer servantRoom, Integer noOfSellers) {
 
         Selector otherSellersSelector = new Selector();
-        otherSellersSelector.fields(new String[]{"companyImage", "score", "contactNumber", "contactNumbers", "user", "name", "id", "label", "sellerId", "property", "currentListingPrice", "price", "bedrooms", "bathrooms", "size", "unitTypeId", "project", "projectId", "studyRoom", "servantRoom", "poojaRoom", "companySeller", "company", "companyScore"});
+        otherSellersSelector.fields(new String[]{"companyImage", "score", "contactNumber", "contactNumbers", "user", "name", "id","logo","profileImageURL", "label", "sellerId", "property", "currentListingPrice", "price", "bedrooms", "bathrooms", "size", "unitTypeId", "project", "projectId", "studyRoom", "servantRoom", "poojaRoom", "companySeller", "company", "companyScore"});
         if (null != projectId) {
             otherSellersSelector.term(PROJECT_ID, projectId.toString());
         }

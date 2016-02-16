@@ -20,7 +20,6 @@
         android:clipToPadding="false">
 
         <com.makaan.ui.property.PropertyImageViewPager
-            android:visibility="invisible"
             android:id="@+id/property_image_viewpager"
             android:layout_width="match_parent"
             android:background="@drawable/stack_background"
@@ -48,6 +47,15 @@
                 android:textColor="@color/app_grey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+            <include
+                layout="@layout/wishlist_button_layout"
+                android:id="@+id/serp_default_listing_property_shortlist_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="@dimen/serp_listing_card_property_shortlist_checkbox_right_margin"
+                android:layout_marginRight="@dimen/serp_listing_card_property_shortlist_checkbox_right_margin"/>
         </RelativeLayout>
         <include layout="@layout/builder_brief_layout"/>
         <include layout="@layout/listing_over_view_scroll_layout"/>

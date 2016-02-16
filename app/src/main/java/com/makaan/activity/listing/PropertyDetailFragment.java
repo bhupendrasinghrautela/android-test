@@ -59,6 +59,9 @@ import com.makaan.ui.property.FloorPlanLayout;
 import com.makaan.ui.property.ListingDataOverViewScroll;
 import com.makaan.ui.property.PropertyImageViewPager;
 import com.makaan.ui.view.CustomRatingBar;
+import com.makaan.ui.view.WishListButton;
+import com.makaan.ui.view.WishListButton.WishListDto;
+import com.makaan.ui.view.WishListButton.WishListType;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
@@ -90,6 +93,9 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
 
     @Bind(R.id.floor_plan_layout)
     FloorPlanLayout mFloorPlanLayout;
+
+    @Bind(R.id.serp_default_listing_property_shortlist_checkbox)
+    public WishListButton mPropertyWishListCheckbox;
 
     @Bind(R.id.unit_name)
     TextView mUnitName;
@@ -264,7 +270,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
             TestUi(mListingDetail);
             ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getOtherSellersOnListingDetail(
                     mListingDetail.projectId, mListingDetail.bedrooms, mListingDetail.bathrooms, mListingDetail.studyRoom
-                    , mListingDetail.poojaRoom, mListingDetail.servantRoom, null
+                    , mListingDetail.poojaRoom, mListingDetail.servantRoom, 5
             );
             ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId);
             ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId, ImageConstants.THREED_FLOOR_PLAN);
@@ -309,6 +315,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
         if(listingDetail.property != null) {
             Property property = listingDetail.property;
 
+            mPropertyWishListCheckbox.bindView(new WishListDto(mListingDetail.id.longValue(),property.projectId.longValue(), WishListType.listing));
             if(listingDetail.listingAmenities !=null && !listingDetail.listingAmenities.isEmpty()) {
                 mAmenitiesViewScroll.setVisibility(View.VISIBLE);
                 mAmenitiesViewScroll.bindView(listingDetail.listingCategory,property.unitType, listingDetail.listingAmenities);
