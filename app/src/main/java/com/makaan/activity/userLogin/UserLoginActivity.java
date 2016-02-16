@@ -64,8 +64,6 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
             mProgressDialog.dismissDialog();
         CookiePreferences.setUserInfo(this, response);
         CookiePreferences.setUserLoggedIn(this);
-        Toast.makeText(this, "Welcome " +
-                userResponse.getData().firstName, Toast.LENGTH_SHORT).show();
         refreshWishList();
         setResult(RESULT_OK);
         finish();
@@ -100,6 +98,7 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
         CookiePreferences.setUserInfo(this, response);
         CookiePreferences.setUserLoggedIn(this);
         refreshWishList();
+        setResult(RESULT_OK);
         finish();
     }
 
