@@ -30,7 +30,7 @@ import static com.makaan.constants.RequestConstants.ENTITY_DESCRIPTION_CATEGORIE
 import static com.makaan.constants.RequestConstants.ID;
 import static com.makaan.constants.RequestConstants.LABEL;
 import static com.makaan.constants.RequestConstants.LISTING_CATEGORY;
-import static com.makaan.constants.RequestConstants.LOCALITY_PRIORITY;
+import static com.makaan.constants.RequestConstants.LOCALITY_LIVABILITY_SCORE;
 import static com.makaan.constants.RequestConstants.MASTER_DESCRIPTION_CATEGORIES;
 import static com.makaan.constants.RequestConstants.MASTER_DESCRIPTION_PARENT_CATEGORIES;
 import static com.makaan.constants.RequestConstants.NAME;
@@ -98,7 +98,7 @@ public class CityService implements MakaanService {
 
             Selector topLocaliltySelector = new Selector();
             topLocaliltySelector.term(CITY_ID, cityId.toString()).page(0, noOfTopLocalities != null ? noOfTopLocalities : 5)
-                    .sort(LOCALITY_PRIORITY, SORT_DESC);
+                    .sort(LOCALITY_LIVABILITY_SCORE, SORT_DESC);
 
             Type topLocalitiesListType = new TypeToken<ArrayList<Locality>>() {
             }.getType();

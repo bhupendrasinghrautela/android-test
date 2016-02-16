@@ -2,11 +2,11 @@ package com.makaan.activity.city;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.service.CityService;
-import com.makaan.util.KeyUtil;
 
 /**
  * Created by aishwarya on 19/01/16.
@@ -45,5 +45,16 @@ public class CityActivity extends MakaanFragmentActivity {
         new CityService().getCityById(mCityId);
         new CityService().getTopLocalitiesInCity(mCityId, 4);
         new CityService().getPropertyRangeInCity(mCityId,null,null,false,10000,500000,50000);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
     }
 }

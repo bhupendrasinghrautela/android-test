@@ -6,7 +6,7 @@ package com.makaan.response.user;
 public class Company {
     public boolean makaanOnly;
     public boolean assist;
-    public String name, primaryEmail;
+    public String name, primaryEmail,logo;
     public String type;
     public Long id;
     public Double score;

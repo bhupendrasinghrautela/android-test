@@ -4,15 +4,15 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
+import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.amenity.Amenity;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.ui.listing.BaseCardView;
-import com.makaan.ui.view.BaseView;
 
 import butterknife.Bind;
 
@@ -22,8 +22,9 @@ import butterknife.Bind;
 public class AmenityCardView extends BaseCardView<AmenityCluster> {
 
     @Bind(R.id.amenity_title)TextView mAmenityTitle;
-    @Bind(R.id.amenity_logo)ImageView mAmenityLogo;
+    @Bind(R.id.amenity_logo)FadeInNetworkImageView mAmenityLogo;
     @Bind(R.id.amenity_list)LinearLayout mAmenityListLayout;
+    private final static String URL = "http://content.makaan.com.s3.amazonaws.com/app/icons/amenities";
 
     private Context mContext;
 
@@ -47,15 +48,22 @@ public class AmenityCardView extends BaseCardView<AmenityCluster> {
 
         LayoutInflater mLayoutInflater =
                 (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        StringBuilder finalImageUrl = new StringBuilder();
+        finalImageUrl.append(URL.toString());
+        finalImageUrl.append("/");
+        finalImageUrl.append(item.amenityId);
+        finalImageUrl.append(".png");
         mAmenityTitle.setText(item.name);
+        mAmenityLogo.setImageUrl(finalImageUrl.toString(), MakaanNetworkClient.getInstance().getImageLoader());
             for (int i = 0; i < 3; i++) {
                 final View amenityItem =
                         mLayoutInflater.inflate(R.layout.amenity_item_layout, null);
                 if(i < item.cluster.size()) {
                     Amenity amenity = item.cluster.get(i);
 
-                    ((TextView) amenityItem.findViewById(R.id.amenity_name)).setText(amenity.name);
+                    if(amenity.name!=null) {
+                        ((TextView) amenityItem.findViewById(R.id.amenity_name)).setText(amenity.name.toLowerCase());
+                    }
                     ((TextView) amenityItem.findViewById(R.id.amenity_distance)).setText(amenity.displayDistance);
                 }
                 mAmenityListLayout.addView(amenityItem);

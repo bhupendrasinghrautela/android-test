@@ -140,7 +140,7 @@ public class StringUtil {
             }
             StringBuilder priceStringBuilder = new StringBuilder();
             if(price<1000){
-                return String.valueOf(String.format("%.2f",price));
+                return String.valueOf(String.format("%.0f",price));
             }
             double displayPrice = (double) price / 100000.00;
 

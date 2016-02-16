@@ -5,6 +5,7 @@
                                   android:id="@+id/compressed_text_view"
                                   android:layout_width="match_parent"
                                   android:layout_height="match_parent">
+    <include layout="@layout/city_empty_view"/>
     <com.makaan.ui.view.FontTextView
         android:id="@+id/header_text"
         android:gravity="center"

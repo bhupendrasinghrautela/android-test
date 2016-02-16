@@ -8,6 +8,6 @@ import java.util.List;
 public class AmenityCluster {
 
     public String description, name;
-    public int id, placeTypeId, displayOrder;
+    public int id, placeTypeId, displayOrder,amenityId;
     public List<Amenity> cluster;
 }

@@ -3,6 +3,7 @@
       {
         "description": "Restaurant",
         "id": 5,
+        "amenityId":5,
         "name": "restaurant",
         "placeTypeId":5,
         "displayOrder":1,
@@ -11,6 +12,7 @@
       {
         "description": "School",
         "id": 1,
+        "amenityId":22,
         "name": "school",
         "placeTypeId":1,
         "displayOrder":2,
@@ -19,6 +21,7 @@
       {
         "description": "Atm",
         "id": 4,
+        "amenityId":24,
         "name": "atm",
         "placeTypeId":4,
         "displayOrder":3,
@@ -27,6 +30,7 @@
       {
         "description": "Hospital",
         "id": 2,
+        "amenityId":23,
         "name": "hospital",
         "placeTypeId":2,
         "displayOrder":4,

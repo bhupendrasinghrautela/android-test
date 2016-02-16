@@ -6,6 +6,7 @@
 
     <dimen name="border_width">1dp</dimen>
     <dimen name="card_elevation_small">4dp</dimen>
+    <dimen name="card_elevation_big">8dp</dimen>
 
 
     <!--Listing manag header layout -->
@@ -731,6 +732,7 @@
     <!--city overview page dimens-->
     <dimen name="city_internal_padding">20dp</dimen>
     <dimen name="city_internal_margin">15dp</dimen>
+    <dimen name="city_header_margin_top">51dp</dimen>
     <dimen name="city_internal_margin_text">30dp</dimen>
     <dimen name="city_header_text">24sp</dimen>
     <dimen name="line_chart_height">300dp</dimen>
@@ -767,7 +769,7 @@
 
 
     <!--Property page dimens-->
-    <dimen name="property_page_stack_like_pager_margin">10dp</dimen>
+    <dimen name="property_page_stack_like_pager_margin">15dp</dimen>
     <dimen name="property_page_stack_like_pager_height">342dp</dimen>
     <dimen name="property_page_external_margin">24dp</dimen>
     <dimen name="property_page_scroll_margin_bottom">60dp</dimen>
@@ -1236,7 +1238,7 @@
     <dimen name="fragment_dialog_contact_sellers_submit_button_height">50dp</dimen>
     <dimen name="fragment_dialog_contact_sellers_submit_button_text_size">18sp</dimen>
 
-    <dimen name="fragment_dialog_contact_sellers_sellect_all_checbox_margin_left">10dp</dimen>
+    <dimen name="fragment_dialog_contact_sellers_sellect_all_checbox_margin_left">20dp</dimen>
     <dimen name="fragment_dialog_contact_sellers_sellect_all_checbox_margin_top">12dp</dimen>
     <dimen name="fragment_dialog_contact_sellers_sellect_all_checbox_text_size">14sp</dimen>
 

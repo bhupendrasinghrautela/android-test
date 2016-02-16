@@ -32,9 +32,9 @@ public class StackLikePagerTransform implements PageTransformer {
             // Use the default slide transition when moving to the left page
             view.setAlpha(1);
             view.setTranslationX(0);
-            view.setScaleX(1);
+            view.setScaleX(0.99f);
             view.setScaleY(1);
-            view.setRotation(90*(position));
+            view.setRotation(90 * (position));
 
         } else if (position < 1) { // (0,1]
             // Fade the page out.
@@ -44,7 +44,7 @@ public class StackLikePagerTransform implements PageTransformer {
             // Counteract the default slide transition
             view.setTranslationX(pageWidth * -position);
 
-            view.setScaleX(1);
+            view.setScaleX(0.99f);
             view.setScaleY(1);
 
         } else if (position==1) {

@@ -23,6 +23,7 @@
             android:visibility="invisible"
             android:id="@+id/property_image_viewpager"
             android:layout_width="match_parent"
+            android:background="@drawable/stack_background"
             android:layout_margin="@dimen/property_page_stack_like_pager_margin"
             android:layout_height="@dimen/property_page_stack_like_pager_height"
             android:clipToPadding="false"/>

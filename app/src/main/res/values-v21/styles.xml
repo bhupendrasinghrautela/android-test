@@ -7,6 +7,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:homeAsUpIndicator">@drawable/back_arrow_white</item>
+        <item name="homeAsUpIndicator">@drawable/back_arrow_white</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@color/colorAccent</item>
         <item name="android:spinnerStyle">@style/SpinnerStyle</item>

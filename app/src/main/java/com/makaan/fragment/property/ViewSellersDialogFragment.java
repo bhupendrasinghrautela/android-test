@@ -13,12 +13,10 @@ import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
@@ -134,22 +132,6 @@ public class ViewSellersDialogFragment extends DialogFragment {
             int height = ViewGroup.LayoutParams.MATCH_PARENT;
             d.getWindow().setLayout(width, height);
         }
-    }
-
-
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final RelativeLayout root = new RelativeLayout(getActivity());
-        root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-        // creating the fullscreen dialog
-        final Dialog dialog = new Dialog(getActivity());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(root);
-//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.YELLOW));
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        dialog.getWindow().getDecorView().setPadding(0, 0, 0, 0);
-        return dialog;
     }
 
 

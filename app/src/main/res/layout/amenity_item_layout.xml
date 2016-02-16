@@ -14,7 +14,7 @@
         android:layout_marginRight="12dp"
         android:typeface="serif"
         android:maxLength="22"
-        font:fontName="proxima.otf"
+        font:fontName="proxima-light.otf"
         android:textColor="@color/project_text_default"
         android:textSize="@dimen/amenity_name_text_size"/>
 
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        font:fontName="proxima.otf"
+        font:fontName="proxima-light.otf"
         android:textColor="@color/project_text_red"
         android:textSize="@dimen/amenity_name_text_size"/>
 

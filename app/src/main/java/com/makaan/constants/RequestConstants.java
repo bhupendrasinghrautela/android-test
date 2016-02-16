@@ -39,6 +39,7 @@ public class RequestConstants {
     public static final String BATHROOMS = "bathrooms";
 
     public static final String LOCALITY_PRIORITY = "localityPriority";
+    public static final String LOCALITY_LIVABILITY_SCORE = "localityLivabilityScore";
     public static final String MIN_PRICE_PER_UNIT_AREA = "minPricePerUnitArea";
 
     public static final String GEO_DISTANCE = "geoDistance";

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.response.trend.PriceTrendKey;
+import com.makaan.util.CommonUtil;
 
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class LegendAdapter extends AbstractBaseAdapter<PriceTrendKey> {
         coloredDrawable.getPaint().setStyle(Style.FILL_AND_STROKE);
         coloredDrawable.setPadding(1, 1, 1, 1);
         coloredDrawable.getPaint().setPathEffect(
-                new CornerPathEffect(30));
+                new CornerPathEffect(CommonUtil.pixelToDp(mContext,30)));
         h.mLegendsView.setBackgroundDrawable(coloredDrawable);
         final ShapeDrawable greyedDrawable = new ShapeDrawable(new RectShape());
         greyedDrawable.getPaint().setColor(mContext.getResources().getColor(R.color.grayDivider));

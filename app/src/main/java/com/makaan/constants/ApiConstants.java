@@ -1,17 +1,15 @@
 package com.makaan.constants;
 
-import com.makaan.util.StringUtil;
-
 /**
  * Created by vaibhav on 29/12/15.
  */
 public class ApiConstants {
 
 
-    //public static final String BASE_URL = "http://mp-qa2.proptiger-ws.com";
+    //public static final String BASE_URL = "http://mp-qa2.makaan-ws.com";
     //public static final String BASE_URL = "https://marketplace-qa.proptiger-ws.com";
-    public static final String BASE_URL = "https://marketplace-qa.makaan-ws.com";
-    //public static final String BASE_URL = "http://beta.makaan-ws.com";
+    //public static final String BASE_URL = "https://marketplace-qa.makaan-ws.com";
+    public static final String BASE_URL = "http://beta.makaan-ws.com";
     //public static final String BASE_URL = "http://mp-qa1.makaan-ws.com/";
     public static final String FILTER_GROUP = BASE_URL.concat("/data/v1/entity/filter-group");           //TODO: need to implement this on server side
     public static final String LISTING_INFO_MAP = BASE_URL.concat("/data/v1/entity/listing-info-map");           //TODO: need to implement this on server side
@@ -50,7 +48,7 @@ public class ApiConstants {
     public static final String PROJECT_TREND_URL = TREND_URL.concat("?fields=minBuyPricePerUnitArea,localityName,projectName&group=projectId,month");
 
     public static final String SAVED_SEARCH_URL = BASE_URL.concat("/data/v1/entity/user/saved-searches");
-    public static final String SAVE_NEW_SEARCH_URL = BASE_URL.concat("data/v1/entity/saved-searches");
+    public static final String SAVE_NEW_SEARCH_URL = BASE_URL.concat("/data/v1/entity/saved-searches");
     public static final String TOP_AGENTS_CITY = BASE_URL.concat("/data/v1/entity/city/");
     public static final String TOP_AGENTS = "/top-agents";
     public static final String PYR = BASE_URL.concat("/data/v1/entity/enquiry");

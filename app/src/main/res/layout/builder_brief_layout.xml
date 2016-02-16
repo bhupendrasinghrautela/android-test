@@ -101,7 +101,7 @@
         </RelativeLayout>
     </com.makaan.ui.ExpandableLinearLayout>
     <TextView
-        android:layout_marginLeft="@dimen/property_page_internal_padding"
+        android:layout_marginRight="@dimen/property_page_internal_padding"
         android:layout_marginTop="@dimen/property_page_builder_margin_top"
         android:layout_marginBottom="@dimen/property_page_builder_margin_bottom"
         android:id="@+id/about_builder"
@@ -111,5 +111,5 @@
         android:clickable="true"
         android:typeface="serif"
         android:text="@string/more_about_builder"
-        android:layout_gravity="start" />
+        android:layout_gravity="end" />
 </com.makaan.ui.property.AboutBuilderExpandedLayout>

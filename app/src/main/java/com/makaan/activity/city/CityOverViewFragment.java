@@ -10,6 +10,8 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
@@ -89,6 +91,8 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     TextView mAnnualGrowthRefer;
     @Bind(R.id.content_text)
     TextView mCityDescription;
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
     @Bind(R.id.compressed_text_view)
     LinearLayout mCompressedTextViewLayout;
     @Bind(R.id.top_locality_layout)
@@ -137,7 +141,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     private City mCity;
     private Boolean isRent = false;
     private String PREFIX_PROPERTY_SPINNER = "property type :";
-    private String POSTFIX_BHK_SPINNER = "bhk";
+    private String POSTFIX_BHK_SPINNER = "bhk :";
     private ArrayList<Locality> mCityTopLocalities;
 
     @Override
@@ -149,8 +153,21 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = getActivity();
+        initToolbar();
         initView();
         initListeners();
+    }
+
+    private void initToolbar() {
+        if(getActivity().isFinishing()){
+            return;
+        }
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
+        if(((AppCompatActivity)getActivity()).getSupportActionBar()!=null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back_white);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
+        }
     }
 
     private void initUiUsingCityDetails() {
@@ -265,8 +282,8 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     @Subscribe
     public void onResults(CityByIdEvent cityByIdEvent){
         if (null == cityByIdEvent || null != cityByIdEvent.error) {
-            getActivity().finish();
             Toast.makeText(getActivity(), "city details could not be loaded at this time. please try later.", Toast.LENGTH_LONG).show();
+            getActivity().finish();
         }
         else {
             mCity = cityByIdEvent.city;
