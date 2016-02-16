@@ -1,9 +1,11 @@
 package com.makaan.service;
 
+import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ApiConstants;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.response.ResponseError;
 import com.makaan.response.wishlist.WishListResponseUICallback;
 import com.makaan.response.wishlist.WishListResultCallback;
 
@@ -25,7 +27,7 @@ public class WishListService implements MakaanService {
             }else {
                 throw new IllegalArgumentException("Invalid arguments");
             }
-            add(wishListPayload, new WishListResultCallback(callback));
+            add(wishListPayload, new WishListResultCallback(Request.Method.POST, callback));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -41,7 +43,7 @@ public class WishListService implements MakaanService {
             }else {
                 throw new IllegalArgumentException("Invalid arguments");
             }
-            add(wishListPayload, new WishListResultCallback(callback));
+            add(wishListPayload, new WishListResultCallback(Request.Method.POST,callback));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -55,12 +57,23 @@ public class WishListService implements MakaanService {
 
     public void get(){
         String requestUrl = buildWishListUrl();
-        MakaanNetworkClient.getInstance().get(requestUrl, new WishListResultCallback(), TAG);
+        MakaanNetworkClient.getInstance().get(requestUrl, new WishListResultCallback(Request.Method.GET), TAG);
     }
 
-    public void delete(Long wishListId, WishListResponseUICallback callback){
-        String requestUrl = buildWishListUrl().concat("/" + wishListId);
-        MakaanNetworkClient.getInstance().delete(requestUrl, null, new WishListResultCallback(callback), TAG);
+    public void delete(Long itemId, WishListResponseUICallback callback){
+        Long wishListId = MasterDataCache.getInstance().getWishlistId(itemId);
+        if(null!=wishListId) {
+            String requestUrl = buildWishListUrl().concat("/" + wishListId);
+            WishListResultCallback wishListResultCallback = new WishListResultCallback(Request.Method.DELETE, callback);
+            wishListResultCallback.setItemId(itemId);
+            MakaanNetworkClient.getInstance().delete(requestUrl, null, wishListResultCallback, TAG);
+        }else {
+            ResponseError error = new ResponseError();
+            error.msg = "";
+            if(null!=callback){
+                callback.onError(error);
+            }
+        }
     }
 
     private String buildWishListUrl(){

@@ -31,6 +31,9 @@ public class VolleyErrorParser {
      * @return
      */
     public static String getMessage(Object error) {
+        if(null==error){
+            return GENERIC_ERROR;
+        }
         if (error instanceof TimeoutError) {
             return GENERIC_ERROR;
         } else if(isNoInternetConnection(error)) {
