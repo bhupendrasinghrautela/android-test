@@ -56,7 +56,7 @@ public class MasterDataCache {
     private Map<String, Integer> jarvisCtaMessageTypeMap = new HashMap<>();
     private Map<String, SerpFilterMessageMap> jarvisSerpFilterMessageMap = new HashMap<>();
 
-    private HashSet<Integer> userWishList;
+    private HashMap<Long, Long> userWishListMap;
     private ListingInfoMap listingInfoMap;
     private SparseArray<String> directionApiList = new SparseArray<>();
     private SparseArray<String> ownershipTypeApiList = new SparseArray<>();
@@ -319,36 +319,46 @@ public class MasterDataCache {
         return idToPropertyStatus.get(status);
     }
 
-    public void addShortlistedProperty(Integer id) {
+    public void addShortlistedProperty(Long id, Long wishlistId) {
 
-        if(null==userWishList) {
-            userWishList = new HashSet<>();
+        if(null==userWishListMap) {
+            userWishListMap = new HashMap<>();
         }
 
-        userWishList.add(id);
+        userWishListMap.put(id, wishlistId);
 
     }
 
-    public void removeShortlistedProperty(Integer id) {
-        if(null!=userWishList) {
-            userWishList.remove(id);
+    public void removeShortlistedProperty(long id) {
+        if(null!=userWishListMap) {
+            userWishListMap.remove(id);
         }
     }
 
     public void clearWishList(){
-        if(null!=userWishList) {
-            userWishList.clear();
+        if(null!=userWishListMap) {
+            userWishListMap.clear();
         }
     }
 
-    public boolean isShortlistedProperty(Integer id) {
+    public boolean isShortlistedProperty(Long id) {
 
-        if(null!=userWishList) {
-            if (userWishList.contains(id)) {
+        if(null!=userWishListMap) {
+            if (userWishListMap.containsKey(id)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public Long getWishlistId(Long id) {
+
+        if(null!=userWishListMap) {
+            if (userWishListMap.containsKey(id)) {
+                return userWishListMap.get(id);
+            }
+        }
+        return null;
     }
 
     public List<String> getDisplayOrder(String category, String type, String card) {

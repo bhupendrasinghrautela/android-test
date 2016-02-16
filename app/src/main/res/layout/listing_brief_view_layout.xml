@@ -64,17 +64,12 @@
             android:textAllCaps="false"
             android:typeface="serif" />
 
-        <CheckBox
+        <com.makaan.ui.view.WishListButton
             android:id="@+id/listing_brief_view_layout_property_shortlist_checkbox"
-            android:layout_width="@dimen/listing_brief_view_layout_property_shortlist_checkbox_width"
-            android:layout_height="@dimen/listing_brief_view_layout_property_shortlist_checkbox_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="@dimen/listing_brief_view_layout_property_shortlist_checkbox_right_margin"
-            android:layout_marginRight="@dimen/listing_brief_view_layout_property_shortlist_checkbox_right_margin"
-            android:layout_marginTop="@dimen/listing_brief_view_layout_property_shortlist_checkbox_top_margin"
-            android:background="@drawable/shortlist_checkbox_selector"
-            android:button="@null" />
+            android:layout_alignParentRight="true" />
 
         <TextView
             android:id="@+id/listing_brief_view_layout_property_price_sq_ft_text_view"

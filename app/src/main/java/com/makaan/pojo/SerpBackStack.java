@@ -15,7 +15,12 @@ public class SerpBackStack {
     public void addToBackstack(SerpRequest request, int type) {
         if(singleSerpBackstacks.size() > 0) {
             if(singleSerpBackstacks.peek().type == type) {
-                singleSerpBackstacks.peek().addToBackstack(request);
+                try {
+                    singleSerpBackstacks.peek().addToBackstack(request.clone());
+                } catch (CloneNotSupportedException e) {
+                    // TODO
+                    e.printStackTrace();
+                }
             } else {
                 singleSerpBackstacks.add(new SingleSerpBackstack(type));
                 addToBackstack(request, type);

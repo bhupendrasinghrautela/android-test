@@ -10,15 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
-import com.makaan.cache.MasterDataCache;
-import com.makaan.response.master.ApiLabel;
 import com.makaan.response.search.SearchResponseHelper;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.SearchSuggestionType;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by rohitgarg on 1/9/16.
@@ -144,11 +141,27 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             // TODO implement lru cache
             if(SearchSuggestionType.NEARBY_PROPERTIES.getValue().equalsIgnoreCase(searchResponseItem.type)) {
-                ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.near_by_locality);
+                ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_near_by);
             } else if (mIsRecent) {
-                ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_history);
+                ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_recent);
             } else {
-                ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.map_marker);
+                if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)
+                        || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                    ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_locality);
+                } else if(SearchSuggestionType.GOOGLE_PLACE.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                    ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_google_place);
+                } else if(SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                    ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_project);
+                } else if(SearchSuggestionType.SUGGESTION.getValue().equalsIgnoreCase(searchResponseItem.type)
+                        || SearchSuggestionType.PROJECT_SUGGESTION.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                    ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_suggestion);
+                } else if(SearchSuggestionType.CITY.getValue().equalsIgnoreCase(searchResponseItem.type)
+                        || SearchSuggestionType.BUILDERCITY.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                    ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_city);
+                } else if(SearchSuggestionType.BUILDER.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                    ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_builder);
+                }
+                //((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.map_marker);
             }
             //((TextView) view.findViewById(R.id.search_result_item_address_text_view)).setText(search.displayText);
         }

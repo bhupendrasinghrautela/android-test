@@ -62,9 +62,9 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
         }else{
             shortListFavoriteViewHolder.mTextViewArea.setVisibility(View.GONE);
         }
-        String imageUrl=null;
-        if(wishList.get(position).project.imageURL.contains("http")){
-            imageUrl=wishList.get(position).project.imageURL.replace("http","https");//TODO : handle it in volley
+        String imageUrl=wishList.get(position).project.imageURL;
+        if(!wishList.get(position).project.imageURL.contains("https")){
+            imageUrl=imageUrl.replace("http","https");//TODO : handle it in volley
         }
         shortListFavoriteViewHolder.mImageViewBackground.setImageUrl(imageUrl, MakaanNetworkClient.getInstance().getImageLoader());
 

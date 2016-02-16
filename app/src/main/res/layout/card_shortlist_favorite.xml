@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/card_margin"
+    android:background="@color/light_gray"
     card_view:cardCornerRadius="@dimen/card_radius">
 
     <RelativeLayout
@@ -51,7 +52,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text=" dlf phase V"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:textColor="@color/white"
                 android:textSize="@dimen/shortlist_text_size_large" />
 
@@ -60,7 +62,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text=" sector 24 , new gurgaon"
                 android:textColor="@color/white"
                 android:textSize="@dimen/shortlist_text_size_small" />
 
