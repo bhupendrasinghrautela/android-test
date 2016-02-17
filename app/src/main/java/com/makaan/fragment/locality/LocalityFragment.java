@@ -104,8 +104,6 @@ public class LocalityFragment extends MakaanBaseFragment {
     CompressedTextView compressedTv;
     @Bind(R.id.view_locality_seperator)
     View firstSectionSeperator;
-    @Bind(R.id.view_locality_seperator_2)
-    View secondSectionSeperator;
     @Bind(R.id.tv_locality_interested_in)
     TextView interestedInTv;
 
@@ -236,45 +234,53 @@ public class LocalityFragment extends MakaanBaseFragment {
         livinScoreTv.setVisibility(locality.livabilityScore == null ? View.GONE : View.VISIBLE);
         calculateMedian(locality.listingAggregations);
         interestedInTv.setText("interested in "+locality.label+"?");
-        boolean showFirstSectionDivider = false;
-        boolean showSecondSectionDivider = false;
+        boolean showFirstSection = false;
+        boolean showSecondSection = false;
         if(meadianSale != null && meadianSale.intValue() != 0) {
-            showFirstSectionDivider = true;
+            showFirstSection = true;
             salesMedianPrice.setVisibility(View.VISIBLE);
             salesMedianPriceLabel.setVisibility(View.VISIBLE);
             salesMedianPrice.setText("\u20B9 " + meadianSale + " / sq ft");
         }
+        else{
+            salesMedianPrice.setVisibility(View.GONE);
+            salesMedianPriceLabel.setVisibility(View.GONE);
+        }
         if(meadianRental != null && meadianRental.intValue() != 0) {
-            showSecondSectionDivider = true;
+            showSecondSection = true;
             rentMedianPrice.setVisibility(View.VISIBLE);
             rentMedianPriceLabel.setVisibility(View.VISIBLE);
             rentMedianPrice.setText("\u20B9 " + meadianRental + " / month");
         }
+        else{
+
+            rentMedianPrice.setVisibility(View.GONE);
+            rentMedianPriceLabel.setVisibility(View.GONE);
+        }
         if(locality.avgPriceRisePercentage!=null){
-            showFirstSectionDivider = true;
+            showFirstSection = true;
             annualGrowthLabelTv.setVisibility(View.VISIBLE);
             annualGrowthTv.setVisibility(View.VISIBLE);
             annualGrowthTv.setText(locality.avgPriceRisePercentage + " %");
         }
+        else{
+
+            annualGrowthLabelTv.setVisibility(View.GONE);
+            annualGrowthTv.setVisibility(View.GONE);
+        }
        if(locality.avgRentalDemandRisePercentage != null) {
-            showSecondSectionDivider = true;
+            showSecondSection = true;
             annualRentDemandGrowthTv.setVisibility(View.VISIBLE);
             annualRentDemandGrowthLabelTv.setVisibility(View.VISIBLE);
             annualRentDemandGrowthTv.setText(locality.avgPriceRisePercentage + " %");
         }
-        if(!showSecondSectionDivider) {
-            rentMedianPrice.setVisibility(View.GONE);
-            rentMedianPriceLabel.setVisibility(View.GONE);
-            annualRentDemandGrowthLabelTv.setVisibility(View.GONE);
-            annualRentDemandGrowthTv.setVisibility(View.GONE);
-            secondSectionSeperator.setVisibility(View.GONE);
-        }
-        if(!showFirstSectionDivider) {
-            annualGrowthTv.setVisibility(View.GONE);
-            annualGrowthLabelTv.setVisibility(View.GONE);
-            firstSectionSeperator.setVisibility(View.GONE);
-            salesMedianPrice.setVisibility(View.GONE);
-            salesMedianPriceLabel.setVisibility(View.GONE);
+        else{
+
+           annualRentDemandGrowthTv.setVisibility(View.GONE);
+           annualRentDemandGrowthLabelTv.setVisibility(View.GONE);
+       }
+        if(showSecondSection && showFirstSection) {
+            firstSectionSeperator.setVisibility(View.VISIBLE);
         }
     }
 
@@ -286,9 +292,13 @@ public class LocalityFragment extends MakaanBaseFragment {
                 Log.e("value", scrollY + " " + oldScrollY + " " + alpha);
                 if (alpha > 1) {
                     alpha = 1;
-                    mCityCollapseToolbar.setTitle(locality.label+" - "+locality.suburb.city.label);
+                    if(locality!=null) {
+                        mCityCollapseToolbar.setTitle(locality.label + " - " + locality.suburb.city.label);
+                    }
                 }else{
-                    mCityCollapseToolbar.setTitle(locality.label);
+                    if(locality!=null) {
+                        mCityCollapseToolbar.setTitle(locality.label);
+                    }
                 }
                 mBlurredCityImage.setAlpha(alpha);
             }

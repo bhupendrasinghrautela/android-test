@@ -360,8 +360,8 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
                         mLocalityScoreProgress.setProgress((int) (locality.livabilityScore * 10));
                         mLocalityScoreText.setText(String.valueOf(locality.livabilityScore));
                     } else {
-                        mLocalityScoreProgress.setProgress(0);
-                        mLocalityScoreText.setText("NA");
+                        mLocalityScoreProgress.setVisibility(View.GONE);
+                        mLocalityScoreText.setVisibility(View.GONE);
                     }
                 }
                 else{

@@ -7,10 +7,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Html;
+import android.text.Layout;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,11 +50,13 @@ import com.makaan.service.ImageService;
 import com.makaan.service.LocalityService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.ProjectService;
+import com.makaan.ui.CompressedTextView;
 import com.makaan.ui.locality.ProjectConfigView;
 import com.makaan.ui.project.ProjectSpecificationView;
 import com.makaan.ui.property.AboutBuilderExpandedLayout;
 import com.makaan.ui.property.AmenitiesViewScroll;
 import com.makaan.ui.property.PropertyImageViewPager;
+import com.makaan.ui.view.FontTextView;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -68,10 +76,16 @@ public class ProjectFragment extends MakaanBaseFragment{
     @Bind(R.id.builder_description) TextView builderDescriptionTv;
     @Bind(R.id.about_builder) TextView aboutBuilderTv;
     @Bind(R.id.project_score_progress) ProgressBar projectScoreProgreessBar;
+    @Bind(R.id.locality_score_label)
+    FontTextView mScoreLabel;
     @Bind(R.id.project_score_text) TextView projectScoreTv;
     @Bind(R.id.tv_project_name) TextView projectNameTv;
     @Bind(R.id.tv_project_location) TextView projectLocationTv;
     @Bind(R.id.content_text) TextView descriptionTv;
+    @Bind(R.id.compressed_text_layout)
+    CompressedTextView mCompressedDescriptionLayout;
+    @Bind(R.id.project_description)
+    LinearLayout mProjectDescriptionLayout;
     @Bind(R.id.amenities_scroll_layout) AmenitiesViewScroll mAmenitiesViewScroll;
     @Bind(R.id.ll_project_container) FrameLayout projectContainer;
     @Bind(R.id.frame_locality_score) FrameLayout scoreFrameLayout;
@@ -237,7 +251,13 @@ public class ProjectFragment extends MakaanBaseFragment{
         } else {
             project = projectByIdEvent.project;
             mAmenitiesViewScroll.bindView(project.projectAmenities);
-            projectSpecificationView.bindView(project.getFormattedSpecifications(), getActivity());
+            if(project.getFormattedSpecifications() !=null && project.getFormattedSpecifications().size()>0) {
+                projectSpecificationView.setVisibility(View.VISIBLE);
+                projectSpecificationView.bindView(project.getFormattedSpecifications(), getActivity());
+            }
+            else {
+                projectSpecificationView.setVisibility(View.GONE);
+            }
             initUi();
             if (project.locality.latitude != null && project.locality.longitude != null) {
                 ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(project.locality.latitude, project.locality.longitude, 10);
@@ -256,7 +276,33 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     private void initUi() {
         projectContainer.setVisibility(View.VISIBLE);
-        descriptionTv.setText(Html.fromHtml(project.description));
+        if(!TextUtils.isEmpty(project.description)) {
+            mProjectDescriptionLayout.setVisibility(View.VISIBLE);
+            descriptionTv.setTextColor(getResources().getColor(R.color.listingBlack));
+            descriptionTv.setText((project.description != null ? Html.fromHtml(project.description) : ""));
+            ViewTreeObserver vto = descriptionTv.getViewTreeObserver();
+            vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    if(descriptionTv!=null) {
+                        Layout l = descriptionTv.getLayout();
+                        if (l != null) {
+                            int lines = l.getLineCount();
+                            if (lines > 0) {
+                                if (l.getEllipsisCount(lines - 1) > 0) {
+                                    Log.d("test", "Text is ellipsized");
+                                } else {
+                                    mCompressedDescriptionLayout.removeMore(true);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        else{
+            mProjectDescriptionLayout.setVisibility(View.GONE);
+        }
         aboutBuilderExpandedLayout.bindView(project.builder);
         builderDescriptionTv.setText(Html.fromHtml(project.builder.description));
 
@@ -265,6 +311,7 @@ public class ProjectFragment extends MakaanBaseFragment{
             projectScoreTv.setText("" + project.livabilityScore);
         } else {
             scoreFrameLayout.setVisibility(View.GONE);
+            mScoreLabel.setVisibility(View.GONE);
         }
         projectNameTv.setText(project.name);
         if(getActivity() instanceof MakaanBaseSearchActivity) {

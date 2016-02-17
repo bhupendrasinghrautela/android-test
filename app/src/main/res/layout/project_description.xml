@@ -3,6 +3,7 @@
     android:layout_marginTop="26dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:id="@+id/project_description"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:font="http://schemas.android.com/apk/res-auto">
