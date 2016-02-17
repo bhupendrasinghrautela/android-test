@@ -133,6 +133,8 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
     public void instantResponse(InstantCallbackResponse instantCallbackResponse) {
       if(instantCallbackResponse.getStatusCode().equals("2XX")){
           Toast.makeText(getActivity(),getString(R.string.instant_call),Toast.LENGTH_SHORT).show();
+          LeadFormPresenter leadFormPresenter=LeadFormPresenter.getLeadFormPresenter();
+          leadFormPresenter.showThankYouScreenFragment(false, false);
       }
     }
 }
