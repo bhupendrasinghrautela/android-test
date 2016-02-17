@@ -22,6 +22,9 @@ import java.util.List;
  */
 public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final int TYPE_HEADER = 1;
+    private static final int TYPE_SEARCH_ITEM = 2;
+
     List<SearchResponseItem> mSearches;
     private final Context mContext;
     private final SearchAdapterCallbacks mCallbacks;
@@ -44,49 +47,33 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
         this.mSearches.clear();
         this.mSearches.addAll(searches);
-
-        /*if(mSearches.size() > 0) {
-            SearchResponseItem search = mSearches.get(0);
-            Map<String,ApiLabel> searchResultType = MasterDataCache.getInstance().getSearchTypeMap();
-            String searchField = searchResultType.get(search.type).key;
-
-            if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(search.type)) {
-                try {
-                    SearchResponseItem item = search.clone();
-                    item.displayText = "Know More \n overview - " + item.displayText;
-                    item.type = SearchSuggestionType.LOCALITY_OVERVIEW.getValue();
-                    if(mSearches.size() > 5) {
-                        mSearches.add(5, item);
-                    } else {
-                        mSearches.add(item);
-                    }
-                } catch (CloneNotSupportedException e) {
-                    e.printStackTrace();
-                }
-            } else if(SearchSuggestionType.CITY.getValue().equalsIgnoreCase(search.type)) {
-                try {
-                    SearchResponseItem item = search.clone();
-                    item.displayText = "Know More \n overview - " + item.displayText;
-                    item.type = SearchSuggestionType.CITY_OVERVIEW.getValue();
-                    if(mSearches.size() > 5) {
-                        mSearches.add(5, item);
-                    } else {
-                        mSearches.add(item);
-                    }
-                } catch (CloneNotSupportedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }*/
         this.mIsRecent = isRecent;
         notifyDataSetChanged();
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if(mSearches != null && mSearches.size() > position) {
+            if(SearchSuggestionType.HEADER_TEXT.getValue().equalsIgnoreCase(mSearches.get(position).type)) {
+                return TYPE_HEADER;
+            } else {
+                return TYPE_SEARCH_ITEM;
+            }
+        }
+        return super.getItemViewType(position);
+    }
+
+    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.search_result_item, parent, false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+        if(viewType == TYPE_HEADER) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.search_result_header_item, parent, false);
+            ViewHolder holder = new ViewHolder(view, viewType);
+            return holder;
+        } else {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.search_result_item, parent, false);
+            ViewHolder holder = new ViewHolder(view, viewType);
+            return holder;
+        }
     }
 
     @Override
@@ -111,59 +98,69 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        int viewType;
         private final View view;
         private SearchResponseItem searchResponseItem;
 
-        public ViewHolder(View view) {
+        public ViewHolder(View view, int viewType) {
             super(view);
+            this.viewType = viewType;
             this.view = view;
-            view.setOnClickListener(this);
+            if(viewType == TYPE_SEARCH_ITEM) {
+                view.setOnClickListener(this);
+            }
         }
 
         public void bindData(SearchResponseItem searchResponseItem) {
             this.searchResponseItem = searchResponseItem;
 
-            // TODO need to check which kind of data we should map
-            ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setText(searchResponseItem.displayText);
-            if (TextUtils.isEmpty(SearchResponseHelper.getType(searchResponseItem))) {
-                view.findViewById(R.id.search_result_item_type_text_view).setVisibility(View.GONE);
+            if(SearchSuggestionType.HEADER_TEXT.getValue().equalsIgnoreCase(searchResponseItem.type)
+                    && viewType == TYPE_HEADER) {
+                ((TextView)view.findViewById(R.id.search_result_item_name_text_view)).setText(searchResponseItem.displayText);
             } else {
-                view.findViewById(R.id.search_result_item_type_text_view).setVisibility(View.VISIBLE);
-                ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText(SearchResponseHelper.getType(searchResponseItem));
-            }
 
-            if(SearchSuggestionType.CITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)
-                    || SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)) {
-                view.findViewById(R.id.search_result_item_image_view).setVisibility(View.GONE);
-            } else {
-                view.findViewById(R.id.search_result_item_image_view).setVisibility(View.VISIBLE);
-            }
-
-            // TODO implement lru cache
-            if(SearchSuggestionType.NEARBY_PROPERTIES.getValue().equalsIgnoreCase(searchResponseItem.type)) {
-                ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_near_by);
-            } else if (mIsRecent) {
-                ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_recent);
-            } else {
-                if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)
-                        || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchResponseItem.type)) {
-                    ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_locality);
-                } else if(SearchSuggestionType.GOOGLE_PLACE.getValue().equalsIgnoreCase(searchResponseItem.type)) {
-                    ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_google_place);
-                } else if(SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searchResponseItem.type)) {
-                    ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_project);
-                } else if(SearchSuggestionType.SUGGESTION.getValue().equalsIgnoreCase(searchResponseItem.type)
-                        || SearchSuggestionType.PROJECT_SUGGESTION.getValue().equalsIgnoreCase(searchResponseItem.type)) {
-                    ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_suggestion);
-                } else if(SearchSuggestionType.CITY.getValue().equalsIgnoreCase(searchResponseItem.type)
-                        || SearchSuggestionType.BUILDERCITY.getValue().equalsIgnoreCase(searchResponseItem.type)) {
-                    ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_city);
-                } else if(SearchSuggestionType.BUILDER.getValue().equalsIgnoreCase(searchResponseItem.type)) {
-                    ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_builder);
+                // TODO need to check which kind of data we should map
+                ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setText(searchResponseItem.displayText);
+                if (TextUtils.isEmpty(SearchResponseHelper.getType(searchResponseItem))) {
+                    view.findViewById(R.id.search_result_item_type_text_view).setVisibility(View.GONE);
+                } else {
+                    view.findViewById(R.id.search_result_item_type_text_view).setVisibility(View.VISIBLE);
+                    ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText(SearchResponseHelper.getType(searchResponseItem));
                 }
-                //((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.map_marker);
+
+                if (SearchSuggestionType.CITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)
+                        || SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                    view.findViewById(R.id.search_result_item_image_view).setVisibility(View.GONE);
+                } else {
+                    view.findViewById(R.id.search_result_item_image_view).setVisibility(View.VISIBLE);
+                }
+
+                // TODO implement lru cache
+                if (SearchSuggestionType.NEARBY_PROPERTIES.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                    ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_near_by);
+                } else if (mIsRecent) {
+                    ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_recent);
+                } else {
+                    if (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)
+                            || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                        ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_locality);
+                    } else if (SearchSuggestionType.GOOGLE_PLACE.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                        ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_google_place);
+                    } else if (SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                        ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_project);
+                    } else if (SearchSuggestionType.SUGGESTION.getValue().equalsIgnoreCase(searchResponseItem.type)
+                            || SearchSuggestionType.PROJECT_SUGGESTION.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                        ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_suggestion);
+                    } else if (SearchSuggestionType.CITY.getValue().equalsIgnoreCase(searchResponseItem.type)
+                            || SearchSuggestionType.BUILDERCITY.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                        ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_city);
+                    } else if (SearchSuggestionType.BUILDER.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                        ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_builder);
+                    }
+                    //((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.map_marker);
+                }
+                //((TextView) view.findViewById(R.id.search_result_item_address_text_view)).setText(search.displayText);
             }
-            //((TextView) view.findViewById(R.id.search_result_item_address_text_view)).setText(search.displayText);
         }
 
         @Override

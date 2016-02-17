@@ -31,7 +31,7 @@ public class RewardsFragment extends MakaanBaseFragment {
     @OnClick(R.id.fragment_get_rewards_button)
     void onGetRewardsClicked(View view) {
         if(getActivity() instanceof BuyerDashboardCallbacks) {
-            ((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_CLIENT_LEADS, true, null, "select an agent");
+            ((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_CLIENT_LEADS, true, null, "cashback request", null);
         }
     }
 }

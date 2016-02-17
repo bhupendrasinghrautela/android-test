@@ -192,6 +192,9 @@ public class SearchResponseHelper {
         } else if (SearchSuggestionType.NEARBY_PROPERTIES.getValue().equalsIgnoreCase(searchResponseItem.type)) {
             return "";
 
+        } else if (SearchSuggestionType.HEADER_TEXT.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+            return "header";
+
         }
 
         Map<String,ApiLabel> searchResultType = MasterDataCache.getInstance().getSearchTypeMap();

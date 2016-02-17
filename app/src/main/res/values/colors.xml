@@ -177,4 +177,5 @@
 
     <color name="grey_unselected">#D0D0D0</color>
     <color name="progressbar_color">#FBA511</color>
+    <color name="edit_text_bottom_border">#4C979797</color>
 </resources>

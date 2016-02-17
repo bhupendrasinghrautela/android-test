@@ -13,7 +13,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/add_white"
+        android:src="@drawable/add_red"
         android:scaleType="centerCrop"/>
     <TextView
         android:layout_width="wrap_content"

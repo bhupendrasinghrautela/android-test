@@ -79,7 +79,8 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
                     }
                 }
                 bundle.putStringArrayList(ClientCompanyLeadFragment.LISTING_IDS, finalArray);
-                ((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_CLIENT_COMPANY_LEAD, true, bundle, "select a property");
+                ((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_CLIENT_COMPANY_LEAD,
+                        true, bundle, "cashback request", mClientLeadsObjects.get(mSelected));
             }
         }
     }
@@ -114,7 +115,11 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
         mAdapter.addData(mClientLeadsObjects);
     }
 
-    class ClientLeadsObject {
+    public void setData(Object obj) {
+
+    }
+
+    public class ClientLeadsObject {
         ClientLead clientLead;
         Company company;
 

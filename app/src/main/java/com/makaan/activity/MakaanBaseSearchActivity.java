@@ -575,9 +575,22 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         } else {
             ArrayList<SearchResponseItem> searches = RecentSearchManager.getInstance(this).getRecentSearches(this);
             if (searches != null && searches.size() > 0) {
+
                 mSearchResultReceived = false;
                 setSearchResultFrameLayoutVisibility(true);
-                mSearches = searches;
+                if(mSearches == null) {
+                    mSearches = new ArrayList<>();
+                } else {
+                    mSearches.clear();
+                }
+                mSearches.addAll(searches);
+
+                // add header text
+                SearchResponseItem item = new SearchResponseItem();
+                item.type = SearchSuggestionType.HEADER_TEXT.getValue();
+                item.displayText = "recent searches";
+                mSearches.add(0, item);
+
                 clearSelectedSearches();
                 addNearbyPropertiesSearchItem();
                 mSearchAdapter.setData(mAvailableSearches, true);
