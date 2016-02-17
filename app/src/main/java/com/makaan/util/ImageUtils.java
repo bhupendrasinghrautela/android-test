@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
 
@@ -89,10 +90,14 @@ public class ImageUtils {
      * @return url to be used
      */
 	public static String getImageRequestUrl(String url, int width, int height, boolean dimensionsInDp) {
+		if(TextUtils.isEmpty(url)){
+			return url;
+		}
         if(dimensionsInDp) {
             width = (int) (width * Resources.getSystem().getDisplayMetrics().density);
             height = (int) (height * Resources.getSystem().getDisplayMetrics().density);
         }
         return url.concat(String.format("?width=%d&height=%d", width, height));
     }
+
 }

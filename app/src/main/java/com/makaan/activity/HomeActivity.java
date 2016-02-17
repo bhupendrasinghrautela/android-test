@@ -163,6 +163,8 @@ public class HomeActivity extends MakaanBaseSearchActivity {
         if(null!=info && null!=info.getData()) {
             tvUserName.setText(info.getData().getFirstName());
             mTextViewBuyerInitials.setText(info.getData().getFirstName());
+            mTextViewBuyerInitials.setVisibility(View.VISIBLE);
+            mImageViewBuyer.setVisibility(View.GONE);
         }else{
             tvUserName.setText(R.string.login);
             mTextViewBuyerInitials.setVisibility(View.GONE);

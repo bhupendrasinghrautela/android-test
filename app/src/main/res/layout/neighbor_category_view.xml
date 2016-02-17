@@ -9,7 +9,7 @@
     android:background="@drawable/neighbor_category_drawable"
     android:clipToPadding="false">
 
-    <ImageView
+    <com.android.volley.toolbox.FadeInNetworkImageView
         android:id="@+id/neighborhood_category_icon"
         android:layout_width="@dimen/neighbor_category_icon_width_height"
         android:layout_height="@dimen/neighbor_category_icon_width_height"/>

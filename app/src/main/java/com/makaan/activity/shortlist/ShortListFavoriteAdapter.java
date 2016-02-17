@@ -14,6 +14,7 @@ import com.makaan.R;
 import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.wishlist.WishList;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.StringUtil;
 
 import java.util.List;

@@ -7,7 +7,7 @@
     <com.android.volley.toolbox.FadeInNetworkImageView
         android:id="@+id/image"
         android:scaleType="fitXY"
-        android:background="@drawable/chat_card_bg"
+        android:background="@drawable/chat_card_rounded_corner_gray_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
