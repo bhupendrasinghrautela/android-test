@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by sunil on 24/01/16.
@@ -282,4 +283,13 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
         Amenity amenity;
     }
 
+    @OnClick(R.id.previous_amenity)
+    public void previousButtonClick(){
+        mNeighborhoodCategoryView.getLayoutManager().scrollToPosition(mLayoutManager.findFirstVisibleItemPosition() - 1);
+    }
+
+    @OnClick(R.id.next_amenity)
+    public void nextButtonClick(){
+        mNeighborhoodCategoryView.getLayoutManager().scrollToPosition(mLayoutManager.findLastVisibleItemPosition() + 1);
+    }
 }
