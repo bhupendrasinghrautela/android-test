@@ -1314,4 +1314,5 @@
     <dimen name="fragment_set_alerts_list_item_display_text_text_size">14sp</dimen>
 
     <dimen name="progressbar_small">20dp</dimen>
+    <dimen name="progressbar_medium">48dp</dimen>
 </resources>

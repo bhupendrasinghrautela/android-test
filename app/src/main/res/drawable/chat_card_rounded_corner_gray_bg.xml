@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" >
+
+    <!-- view background color -->
+    <solid android:color="@color/listingGray" >
+    </solid>
+
+    <stroke android:color="@color/chat_card_stroke"
+        android:width="@dimen/jarvis_chat_card_stroke_width"/>
+
+    <corners android:radius="4dp" >
+    </corners>
+
+</shape>

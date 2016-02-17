@@ -10,7 +10,9 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
+import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.amenity.AmenityCluster;
 
 import java.util.ArrayList;
@@ -25,6 +27,8 @@ public class NeighborhoodCategoryAdapter extends RecyclerView.Adapter<RecyclerVi
     private CategoryClickListener mCategoryClickListener;
     private CheckBox lastAmenityView;
     private int selectedPosition=0;
+
+    private final static String URL = "http://content.makaan.com.s3.amazonaws.com/app/icons/amenities";
 
     public NeighborhoodCategoryAdapter(Context context,
                                        CategoryClickListener categoryClickListener){
@@ -69,13 +73,13 @@ public class NeighborhoodCategoryAdapter extends RecyclerView.Adapter<RecyclerVi
 
     private class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView label;
-        ImageView icon;
+        FadeInNetworkImageView icon;
         CheckBox checkBox;
 
         public CategoryViewHolder(View itemView) {
             super(itemView);
             label = (TextView) itemView.findViewById(R.id.neighborhood_category_name);
-            icon = (ImageView) itemView.findViewById(R.id.neighborhood_category_icon);
+            icon = (FadeInNetworkImageView) itemView.findViewById(R.id.neighborhood_category_icon);
             checkBox=(CheckBox)itemView.findViewById(R.id.amenity_selector);
             checkBox.setOnCheckedChangeListener(null);
             checkBox.setClickable(false);
@@ -99,7 +103,13 @@ public class NeighborhoodCategoryAdapter extends RecyclerView.Adapter<RecyclerVi
         }
 
         public void bind(AmenityCluster amenityCluster){
-                label.setText(amenityCluster.name);
+            StringBuilder finalImageUrl = new StringBuilder();
+            finalImageUrl.append(URL.toString());
+            finalImageUrl.append("/");
+            finalImageUrl.append(amenityCluster.amenityId);
+            finalImageUrl.append(".png");
+            icon.setImageUrl(finalImageUrl.toString(), MakaanNetworkClient.getInstance().getImageLoader());
+            label.setText(amenityCluster.name);
         }
 
         //TODO remove this listener 

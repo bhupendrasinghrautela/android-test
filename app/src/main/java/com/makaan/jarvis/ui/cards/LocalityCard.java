@@ -16,6 +16,7 @@ import com.makaan.jarvis.message.MessageType;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.ui.view.BaseView;
+import com.makaan.util.ImageUtils;
 
 import butterknife.Bind;
 
@@ -66,7 +67,7 @@ public class LocalityCard extends BaseView<Message> {
         textViewSubTitle.setText(item.chatObj.localityName);
         textViewSubTitle2.setText(item.chatObj.cityName);
 
-        item.chatObj.image = item.chatObj.imageURL;//TODO this temp due to api
+        item.chatObj.image = item.chatObj.imageURL+"?WIDTH=220&HEIGHT=120";
 
         if(!TextUtils.isEmpty(item.chatObj.image)){
             imageView.setImageUrl(item.chatObj.image, MakaanNetworkClient.getInstance().getImageLoader());
