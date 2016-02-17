@@ -169,6 +169,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         @Override
         public void onClick(View v) {
             mCallbacks.onSearchItemClick(searchResponseItem);
+
         }
     }
 

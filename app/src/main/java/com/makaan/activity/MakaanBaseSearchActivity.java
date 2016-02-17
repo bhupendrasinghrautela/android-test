@@ -35,6 +35,8 @@ import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.adapter.listing.SearchAdapter;
 import com.makaan.adapter.listing.SelectedSearchAdapter;
+import com.makaan.analytics.MakaanEventTracker;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.Session;
 import com.makaan.response.search.SearchResponseHelper;
@@ -50,6 +52,8 @@ import com.makaan.service.SearchService;
 import com.makaan.ui.listing.CustomFlowLayout;
 import com.makaan.util.RecentSearchManager;
 import com.makaan.util.StringUtil;
+import com.segment.analytics.Analytics;
+import com.segment.analytics.Properties;
 
 
 import java.io.UnsupportedEncodingException;
@@ -354,6 +358,14 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     private void handleSearch() {
+
+        //TODO test
+        Analytics.with(this).track(MakaanTrackerConstants.Action.searchPropertyBuy.getValue(), new Properties()
+        .putValue("Category", MakaanTrackerConstants.Category.property.getValue())
+        .putValue(MakaanTrackerConstants.KEYWORD, mSearchEditText.getText().toString())
+        .putValue(MakaanTrackerConstants.LISTING_POSITION, 3));
+
+        Analytics.with(this).flush();
 
         // hide the keypad
         showKeypad(mSearchEditText, false);
