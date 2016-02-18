@@ -7,8 +7,11 @@ import com.makaan.constants.ResponseConstants;
 import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.network.ObjectGetCallback;
 import com.makaan.response.ResponseError;
+import com.makaan.response.buyerjourney.AgentRating;
 import com.makaan.response.buyerjourney.Company;
+import com.makaan.response.saveSearch.SaveSearch;
 import com.makaan.util.AppBus;
 
 import org.json.JSONArray;
@@ -22,8 +25,36 @@ import java.util.ArrayList;
  * Created by rohitgarg on 2/16/16.
  */
 public class ClientLeadsService implements MakaanService {
+    public final String TAG = ClientLeadsService.class.getSimpleName();
+
     public void requestClientLeads() {
         String detailsURL = ApiConstants.ICRM_CLIENT_LEADS.concat("?fields=createdAt,companyId,listingId,propertyRequirements");
+        MakaanNetworkClient.getInstance().get(detailsURL, new JSONGetCallback() {
+            @Override
+            public void onSuccess(JSONObject responseObject) {
+                if(responseObject != null) {
+                    try {
+                        JSONObject data = responseObject.getJSONObject(ResponseConstants.DATA);
+                        Type clientLeadsType = new TypeToken<ClientLeadsByGetEvent>() {}.getType();
+                        ClientLeadsByGetEvent clientLeadsByGetEvent = MakaanBuyerApplication.gson.fromJson(data.toString(), clientLeadsType);
+                        AppBus.getInstance().post(clientLeadsByGetEvent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+                ClientLeadsByGetEvent event = new ClientLeadsByGetEvent();
+                event.error = error;
+                AppBus.getInstance().post(event);
+            }
+        });
+    }
+
+    public void requestClientLeadsActivity() {
+        String detailsURL = ApiConstants.ICRM_CLIENT_LEADS.concat("?sort=-clientActivity.phaseId&fields=clientActivity.phaseId&rows=1");
         MakaanNetworkClient.getInstance().get(detailsURL, new JSONGetCallback() {
             @Override
             public void onSuccess(JSONObject responseObject) {
@@ -79,5 +110,21 @@ public class ClientLeadsService implements MakaanService {
                 AppBus.getInstance().post(companies);
             }
         });
+    }
+
+    public void postSellerRating(JSONObject jsonObject) {
+        Type type = new TypeToken<AgentRating>() {}.getType();
+        MakaanNetworkClient.getInstance().post(ApiConstants.SELLER_RATING, type, jsonObject, new ObjectGetCallback() {
+
+            @Override
+            public void onSuccess(Object responseObject) {
+                AgentRating rating = (AgentRating) responseObject;
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+                //TODO handle error
+            }
+        }, TAG, false);
     }
 }

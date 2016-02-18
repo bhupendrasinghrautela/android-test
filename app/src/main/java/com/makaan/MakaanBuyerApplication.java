@@ -1,7 +1,6 @@
 package com.makaan;
 
 import android.app.Application;
-import android.content.Context;
 import android.util.SparseArray;
 
 import com.crashlytics.android.Crashlytics;
@@ -19,7 +18,7 @@ import com.makaan.notification.GcmRegister;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.service.ClientLeadsService;
 import com.makaan.service.LocationService;
-import com.makaan.service.leakcanary.TemporaryLeakUploadService;
+import com.makaan.service.ClientEventsService;
 import com.makaan.service.user.ForgotPasswordService;
 import com.makaan.service.user.UserRegistrationService;
 import com.makaan.service.AgentService;
@@ -47,8 +46,6 @@ import com.makaan.service.user.UserLoginService;
 import com.makaan.util.FontTypeface;
 import com.makaan.util.RandomString;
 import com.segment.analytics.Analytics;
-import com.squareup.leakcanary.AndroidExcludedRefs;
-import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
 import io.fabric.sdk.android.Fabric;
@@ -128,6 +125,7 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(UserRegistrationService.class, new UserRegistrationService());
         MakaanServiceFactory.getInstance().registerService(AnalyticsService.class, new AnalyticsService());
         MakaanServiceFactory.getInstance().registerService(ClientLeadsService.class, new ClientLeadsService());
+        MakaanServiceFactory.getInstance().registerService(ClientEventsService.class, new ClientEventsService());
 
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();

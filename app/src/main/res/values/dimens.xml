@@ -1087,7 +1087,7 @@
 
     <!--buyer journey -->
     <dimen name="card_elevation">5dp</dimen>
-    <dimen name="header_height">200dp</dimen>
+    <dimen name="header_height">160dp</dimen>
     <dimen name="text_size_medium">16sp</dimen>
     <dimen name="text_size_small">13sp</dimen>
     <dimen name="text_size_medium_2">13sp</dimen>
@@ -1095,7 +1095,7 @@
     <dimen name="padding_layout">10dp</dimen>
     <dimen name="view_left_padding_layout">2dp</dimen>
     <dimen name="view_height">940dp</dimen>
-    <dimen name="view_left_margin">17dp</dimen>
+    <dimen name="view_left_margin">18dp</dimen>
     <dimen name="view_top_margin">30dp</dimen>
     <dimen name="view_width">2dp</dimen>
     <dimen name="joy_image_height">330dp</dimen>
@@ -1191,9 +1191,9 @@
 
 
     <!--buyer profile-->
-    <dimen name="header_margin">50dp</dimen>
+    <dimen name="header_margin">36dp</dimen>
     <dimen name="guest_text_size">14sp</dimen>
-    <dimen name="profile_layout_padding">10dp</dimen>
+    <dimen name="profile_layout_padding">14dp</dimen>
     <dimen name="edit_profile_text_size_large">20sp</dimen>
     <dimen name="edit_profile_left_padding">40dp</dimen>
     <dimen name="edit_profile_top_padding">30dp</dimen>

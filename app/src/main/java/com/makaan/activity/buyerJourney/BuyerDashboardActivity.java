@@ -18,6 +18,7 @@ import com.makaan.fragment.buyerJourney.ClientLeadsFragment;
 import com.makaan.fragment.buyerJourney.ReviewAgentFragment;
 import com.makaan.fragment.buyerJourney.RewardsFragment;
 import com.makaan.fragment.buyerJourney.SaveSearchFragment;
+import com.makaan.fragment.buyerJourney.UploadDocumentsFragment;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
 
@@ -42,6 +43,7 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
     public static final int LOAD_FRAGMENT_CLIENT_COMPANY_LEAD = 7;
     public static final int LOAD_FRAGMENT_CLIENT_COMPANY_LEAD_ADD_PROPERTY = 8;
     public static final int LOAD_FRAGMENT_REVIEW_AGENT = 9;
+    public static final int LOAD_FRAGMENT_UPLOAD_DOCUMENTS = 10;
 
 
     @Override
@@ -136,6 +138,17 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
             }
             case LOAD_FRAGMENT_REVIEW_AGENT: {
                 ReviewAgentFragment fragment = new ReviewAgentFragment();
+                if (data != null) {
+                    fragment.setArguments(data);
+                }
+                if(obj != null) {
+                    fragment.setData(obj);
+                }
+                initFragment(R.id.activity_base_buyer_journey_content_frame_layout, fragment, shouldAddToBackStack);
+                break;
+            }
+            case LOAD_FRAGMENT_UPLOAD_DOCUMENTS: {
+                UploadDocumentsFragment fragment = new UploadDocumentsFragment();
                 if (data != null) {
                     fragment.setArguments(data);
                 }

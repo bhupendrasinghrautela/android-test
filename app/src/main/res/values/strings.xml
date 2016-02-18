@@ -189,19 +189,20 @@
     <!--buyer journey-->
     <string name="search">search</string>
     <string name="shortlist">shortlist</string>
-    <string name="site_visit">site visit</string>
+    <string name="site_visit">property visit</string>
     <string name="effective_home_search">effective home search</string>
     <string name="home_loan">home loan</string>
-    <string name="unit_booking">unit booking</string>
+    <string name="booking">booking</string>
     <string name="possession">possession</string>
     <string name="registration">registration</string>
-    <string name="expert_help">expert help for peace of mind</string>
+    <string name="make_home_yours">make the home all yours</string>
     <string name="moving_in">moving in or renting? get help</string>
-    <string name="best_legal">best legal advice on your side</string>
-    <string name="best_advise">best advise for your requirements </string>
-    <string name="search_sub_title">fast &amp; easy search from 431k options</string>
-    <string name="shortlist_sub_title">meet best brokers for your shortlist</string>
-    <string name="site_visit_sub_title">easily validate broker claims</string>
+    <string name="prepare_to_enter">prepare to enter your home</string>
+    <string name="booking_subtitle">close the deal with ease</string>
+    <string name="home_loan_subtitle">access your personal finances </string>
+    <string name="search_sub_title">checkout homes chosen for you</string>
+    <string name="shortlist_sub_title">view homes that have interested you</string>
+    <string name="site_visit_sub_title">checkin for the joy ride</string>
     <string name="find_joy">find joy</string>
     <string name="happy_buyers">a reward</string>
     <string name="happy_below_buyers">for finding joy</string>
@@ -244,7 +245,9 @@
     <string name="send_reset">send reset link</string>
     <string name="user_name">user name</string>
     <string name="guest_text">hi guest,\nlog into makaan for benefits</string>
-    <string name="log_in">log in</string>
+    <string name="personalized_assistance">personalized assistance</string>
+    <string name="start_to_finish">from start to finish</string>
+    <string name="log_in">login</string>
 
 
 
@@ -270,8 +273,8 @@
     <string name="get_15000">\u20B9 15000 off</string>
     <string name="on_brokerage">on your brokerage</string>
     <string name="how_it_works_heading">how it works</string>
-    <string name="how_it_works">1. contact makaan agent\n2. do site visit &amp; provide reviews\n3. book a property\n4. upload proof of ownership</string>
-    <string name="redeem_now">redeem now</string>
+    <string name="how_it_works">1. contact makaan seller\n2. provide feedback\n3. share booking details</string>
+    <string name="redeem_now">get cashback</string>
 
     <string name="password_recovery">please check your mail for password recovery details</string>
     <string name="app_FB_id">111204692324347</string>
@@ -284,5 +287,19 @@
     <string name="stay_informed">stay informed</string>
     <string name="save_your_requirement_as">save your requirements as</string>
 
+    <!-- blog content top part strings -->
+    <string name="blog_content_search_title">find saved searches here</string>
+    <string name="blog_content_search_sub_title">to save a search, click the \u0022set alerts\u0022 button on the search result page</string>
+    <string name="blog_content_search_action">advice for best home buying experience</string>
+    <string name="blog_content_shortlist_title">find shortlists here</string>
+    <string name="blog_content_shortlist_sub_title">to shortlist a property, click {img=makaan_logo} on the search results page</string>
+    <string name="blog_content_shortlist_action">shortlist the right properties</string>
+    <string name="blog_content_site_visit_title">find site visits here</string>
+    <string name="blog_content_site_visit_sub_title">to plan for your site visits, get in touch with any seller on makaan.com</string>
+    <string name="blog_content_site_visit_action">making the most of your site visits</string>
+    <string name="blog_content_home_loan_action">home loans advice</string>
+    <string name="blog_content_home_booking_action">home booking guidance</string>
+    <string name="blog_content_home_possession_action">home possession advice</string>
+    <string name="blog_content_home_registration_action">home registration guidance</string>
 </resources>
 

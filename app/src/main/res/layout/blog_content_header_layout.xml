@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_blog_linear_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp">
+    <TextView
+        android:id="@+id/fragment_blog_title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="find searches here"
+        android:textSize="18sp"
+        android:typeface="sans"
+        android:textColor="@color/listingBlack"
+        android:singleLine="true"
+        android:textAllCaps="false"/>
+    <TextView
+        android:id="@+id/fragment_blog_subtitle_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="to save a search, click the \u0022set alerts\u0022 button on the search result page"
+        android:textSize="12sp"
+        android:typeface="serif"
+        android:textColor="@color/listingBlack"
+        android:textAllCaps="false"/>
+    <TextView
+        android:id="@+id/fragment_blog_action_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="advice for best home buying experience"
+        android:textSize="15sp"
+        android:typeface="serif"
+        android:textColor="@color/listingBlack"
+        android:singleLine="true"
+        android:textAllCaps="false"/>
+</LinearLayout>

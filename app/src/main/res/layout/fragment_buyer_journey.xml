@@ -24,9 +24,9 @@
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:layout_width="0dp"
+                android:layout_width="24dp"
+                android:layout_marginLeft="7dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_makaan" />
 
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="9"
                 android:text="@string/effective_home_search"
-                android:textColor="@color/black"
+                android:textColor="#B0000000"
                 android:textSize="@dimen/text_size_small"
                 android:typeface="serif" />
         </LinearLayout>
@@ -52,9 +52,9 @@
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:layout_width="0dp"
+                android:layout_width="36dp"
+                android:layout_marginLeft="-1dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_search" />
 
@@ -81,7 +81,9 @@
                     android:text="@string/search_sub_title"
                     android:textColor="@color/buyer_journey_light_grey_color"
                     android:textSize="@dimen/medium_text"
-                    android:typeface="serif" />
+                    android:typeface="serif"
+                    android:singleLine="true"
+                    android:ellipsize="end"/>
             </LinearLayout>
 
             <ImageView
@@ -104,9 +106,9 @@
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:layout_width="0dp"
+                android:layout_width="36dp"
+                android:layout_marginLeft="-1dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_tick" />
 
@@ -133,7 +135,9 @@
                     android:text="@string/shortlist_sub_title"
                     android:textColor="@color/buyer_journey_light_grey_color"
                     android:textSize="@dimen/medium_text"
-                    android:typeface="serif" />
+                    android:typeface="serif"
+                    android:singleLine="true"
+                    android:ellipsize="end" />
             </LinearLayout>
 
             <ImageView
@@ -156,9 +160,9 @@
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:layout_width="0dp"
+                android:layout_width="36dp"
+                android:layout_marginLeft="-1dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_recent_view" />
 
@@ -185,7 +189,9 @@
                     android:text="@string/site_visit_sub_title"
                     android:textColor="@color/buyer_journey_light_grey_color"
                     android:textSize="@dimen/medium_text"
-                    android:typeface="serif" />
+                    android:typeface="serif"
+                    android:singleLine="true"
+                    android:ellipsize="end" />
             </LinearLayout>
 
             <ImageView
@@ -207,9 +213,9 @@
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:layout_width="0dp"
+                android:layout_width="24dp"
+                android:layout_marginLeft="7dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_makaan_outline" />
 
@@ -218,7 +224,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="9"
                 android:text="@string/find_joy"
-                android:textColor="@color/black"
+                android:textColor="#B0000000"
                 android:textSize="@dimen/text_size_small"
                 android:typeface="serif" />
         </LinearLayout>
@@ -242,7 +248,7 @@
                 android:text="@string/happy_buyers"
                 android:textColor="@color/white"
                 android:textSize="@dimen/happy_buyers_text_size"
-                android:typeface="monospace" />
+                android:typeface="sans" />
             <TextView
                 android:layout_below="@id/tv_buyers"
                 android:id="@+id/tv_below_buyers"
@@ -253,7 +259,7 @@
                 android:text="@string/happy_below_buyers"
                 android:textColor="@color/white"
                 android:textSize="@dimen/below_happy_buyers_text_size"
-                android:typeface="monospace" />
+                android:typeface="sans" />
 
             <TextView
                 android:id="@+id/tv_found_home"
@@ -266,23 +272,22 @@
                 android:text="@string/found_your_dream_home"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_large"
-                android:typeface="serif" />
+                android:typeface="monospace" />
 
             <Button
                 android:id="@+id/button_get_rewards"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="160dp"
+                android:layout_height="36dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/reward_text_margin_top"
                 android:background="@drawable/white_stroke_button"
-                android:paddingLeft="@dimen/reward_button_padding"
-                android:paddingRight="@dimen/reward_button_padding"
                 android:text="@string/get_reward"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_large"
-                android:typeface="monospace" />
+                android:textSize="16sp"
+                android:typeface="monospace"
+                android:gravity="center"/>
 
         </RelativeLayout>
 
@@ -296,9 +301,9 @@
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:layout_width="0dp"
+                android:layout_width="24dp"
+                android:layout_marginLeft="7dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_makaan_outline" />
 
@@ -307,7 +312,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="9"
                 android:text="booking, possession &amp; registry"
-                android:textColor="@color/black"
+                android:textColor="#B0000000"
                 android:textSize="@dimen/text_size_small"
                 android:typeface="serif" />
         </LinearLayout>
@@ -323,9 +328,9 @@
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:layout_width="0dp"
+                android:layout_width="36dp"
+                android:layout_marginLeft="-1dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_loan" />
 
@@ -348,10 +353,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="@string/best_advise"
+                    android:text="@string/home_loan_subtitle"
                     android:textColor="@color/buyer_journey_light_grey_color"
                     android:textSize="@dimen/medium_text"
-                    android:typeface="serif" />
+                    android:typeface="serif"
+                    android:singleLine="true"
+                    android:ellipsize="end" />
             </LinearLayout>
 
             <ImageView
@@ -373,10 +380,9 @@
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:layout_width="0dp"
+                android:layout_width="36dp"
+                android:layout_marginLeft="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/small_image_padding"
-                android:layout_weight="1"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_unit_booking" />
 
@@ -390,7 +396,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="@string/unit_booking"
+                    android:text="@string/booking"
                     android:textColor="@color/dark_grey_text"
                     android:textSize="@dimen/text_size_medium"
                     android:typeface="monospace" />
@@ -399,10 +405,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="@string/best_legal"
+                    android:text="@string/booking_subtitle"
                     android:textColor="@color/buyer_journey_light_grey_color"
                     android:textSize="@dimen/medium_text"
-                    android:typeface="serif" />
+                    android:typeface="serif"
+                    android:singleLine="true"
+                    android:ellipsize="end" />
             </LinearLayout>
 
             <ImageView
@@ -424,10 +432,9 @@
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:layout_width="0dp"
+                android:layout_width="36dp"
+                android:layout_marginLeft="1dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/view_left_padding_layout"
-                android:layout_weight="1"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_lock" />
 
@@ -441,7 +448,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="@string/possession"
+                    android:text="@string/moving_in"
                     android:textColor="@color/dark_grey_text"
                     android:textSize="@dimen/text_size_medium"
                     android:typeface="monospace" />
@@ -450,10 +457,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="@string/moving_in"
+                    android:text="@string/prepare_to_enter"
                     android:textColor="@color/buyer_journey_light_grey_color"
                     android:textSize="@dimen/medium_text"
-                    android:typeface="serif"/>
+                    android:typeface="serif"
+                    android:singleLine="true"
+                    android:ellipsize="end"/>
             </LinearLayout>
 
             <ImageView
@@ -475,10 +484,9 @@
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
-                android:layout_width="0dp"
+                android:layout_width="36dp"
+                android:layout_marginLeft="1dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/view_left_padding_layout"
-                android:layout_weight="1"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/journey_registration" />
 
@@ -501,7 +509,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="@string/expert_help"
+                    android:text="@string/make_home_yours"
                     android:textColor="@color/buyer_journey_light_grey_color"
                     android:textSize="@dimen/medium_text"
                     android:typeface="serif" />

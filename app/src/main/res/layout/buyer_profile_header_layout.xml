@@ -6,6 +6,7 @@
     android:gravity="center_vertical"
     android:minHeight="@dimen/header_height"
     android:paddingLeft="@dimen/header_margin"
+    android:paddingStart="@dimen/header_margin"
     android:clipToPadding="false">
 
     <com.pkmmte.view.CircularImageView
@@ -28,18 +29,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="2"
-            android:text="@string/guest_text"
-            android:textColor="@color/white"
+            android:text="@string/personalized_assistance"
+            android:textColor="#666666"
             android:textSize="@dimen/buyer_name_textSize"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/tv_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:text="@string/start_to_finish"
+            android:textColor="#CC666666"
+            android:textSize="14sp"
             android:typeface="monospace" />
 
         <Button
             android:id="@+id/button_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="76dp"
+            android:layout_height="32dp"
             android:layout_marginBottom="@dimen/profile_layout_padding"
             android:layout_marginTop="@dimen/profile_layout_padding"
-            android:background="@drawable/white_stroke_button"
+            android:background="@drawable/filled_red"
             android:text="@string/log_in"
             android:textAllCaps="false"
             android:textColor="@color/white"
