@@ -134,4 +134,9 @@
         <item name="android:stepSize">0.5</item>
     </style>
 
+
+    <style name="TabWidgetTextAppearance" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:typeface">sans</item>
+    </style>
+
 </resources>

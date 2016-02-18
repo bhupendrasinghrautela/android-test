@@ -9,8 +9,13 @@ public class ClientLead {
     public Long createdAt;
     public Long companyId;
     public ArrayList<PropertyRequirement> propertyRequirements;
+    public ClientActivity clientActivity;
 
     public class PropertyRequirement {
         public Long listingId;
+    }
+
+    public class ClientActivity {
+        public int phaseId;
     }
 }

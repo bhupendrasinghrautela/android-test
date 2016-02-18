@@ -53,6 +53,32 @@ public class ClientLeadsService implements MakaanService {
         });
     }
 
+    public void requestClientLeadsActivity() {
+        String detailsURL = ApiConstants.ICRM_CLIENT_LEADS.concat("?sort=-clientActivity.phaseId&fields=clientActivity.phaseId&rows=1");
+        MakaanNetworkClient.getInstance().get(detailsURL, new JSONGetCallback() {
+            @Override
+            public void onSuccess(JSONObject responseObject) {
+                if(responseObject != null) {
+                    try {
+                        JSONObject data = responseObject.getJSONObject(ResponseConstants.DATA);
+                        Type clientLeadsType = new TypeToken<ClientLeadsByGetEvent>() {}.getType();
+                        ClientLeadsByGetEvent clientLeadsByGetEvent = MakaanBuyerApplication.gson.fromJson(data.toString(), clientLeadsType);
+                        AppBus.getInstance().post(clientLeadsByGetEvent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+                ClientLeadsByGetEvent event = new ClientLeadsByGetEvent();
+                event.error = error;
+                AppBus.getInstance().post(event);
+            }
+        });
+    }
+
     public void requestClientLeadCompanies(ArrayList<Long> ids) {
         String detailsURL = ApiConstants.USER_SERVICE_ENTITY_COMPANIES;
         for(Long id : ids) {

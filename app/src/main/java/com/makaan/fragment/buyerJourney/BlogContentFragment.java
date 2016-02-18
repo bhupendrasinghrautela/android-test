@@ -4,17 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.webkit.WebViewFragment;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,24 +22,18 @@ import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
 import com.makaan.event.content.BlogByTagEvent;
-import com.makaan.event.serp.GroupSerpGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.content.BlogItem;
 import com.makaan.service.BlogService;
 import com.makaan.service.MakaanServiceFactory;
-import com.makaan.util.AppBus;
-import com.makaan.util.AppUtils;
 import com.makaan.util.KeyUtil;
 import com.squareup.otto.Subscribe;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by rohitgarg on 1/28/16.
@@ -52,7 +44,17 @@ public class BlogContentFragment extends MakaanBaseFragment {
     RecyclerView mRecyclerView;
     @Bind(R.id.fragment_blog_content_progress_bar)
     ProgressBar mProgressBar;
+
     private BlogContentAdapter mAdapter;
+
+    public static final String SEARCH = "search";
+    public static final String SHORTLIST = "shortlist";
+    public static final String SITE_VISIT = "sitevisit";
+    public static final String HOME_LOAN = "homeloan";
+    public static final String UNIT_BOOK = "unitbook";
+    public static final String POSSESSION = "possession";
+    public static final String REGISTRATION = "registration";
+    private String mType;
 
     @Override
     protected int getContentViewId() {
@@ -65,11 +67,17 @@ public class BlogContentFragment extends MakaanBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
+
+
         Bundle bundle = getArguments();
-        if(bundle!=null && !TextUtils.isEmpty(bundle.getString(TYPE)))
-        ((BlogService)MakaanServiceFactory.getInstance().getService(BlogService.class)).getBlogs(bundle.getString(TYPE));
-        else
+        if(bundle!=null && !TextUtils.isEmpty(bundle.getString(TYPE))) {
+            String type = bundle.getString(TYPE);
+            ((BlogService) MakaanServiceFactory.getInstance().getService(BlogService.class)).getBlogs(type);
+            mType = type;
+
+        } else {
             Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
+        }
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
 
@@ -77,6 +85,87 @@ public class BlogContentFragment extends MakaanBaseFragment {
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
+    }
+
+    private void initHeaderUi(View view) {
+        TextView titleTextView = (TextView)view.findViewById(R.id.fragment_blog_title_text_view);
+        TextView subTitleTextView = (TextView)view.findViewById(R.id.fragment_blog_subtitle_text_view);
+        TextView actionTextView = (TextView)view.findViewById(R.id.fragment_blog_action_text_view);
+
+        switch (mType) {
+            case SEARCH:
+                titleTextView.setVisibility(View.VISIBLE);
+                subTitleTextView.setVisibility(View.VISIBLE);
+                actionTextView.setVisibility(View.VISIBLE);
+
+                titleTextView.setText(getResources().getString(R.string.blog_content_search_title));
+                subTitleTextView.setText(getResources().getString(R.string.blog_content_search_sub_title));
+                actionTextView.setText(getResources().getString(R.string.blog_content_search_action));
+                break;
+            case SHORTLIST:
+                titleTextView.setVisibility(View.VISIBLE);
+                subTitleTextView.setVisibility(View.VISIBLE);
+                actionTextView.setVisibility(View.VISIBLE);
+
+                titleTextView.setText(getResources().getString(R.string.blog_content_shortlist_title));
+                String subtitle = getResources().getString(R.string.blog_content_shortlist_sub_title);
+                if(subtitle.indexOf("{img=") >= 0) {
+                    int index = subtitle.indexOf("{img=");
+                    subtitle = subtitle.replace("{img=", "");
+                    int lastIndex = subtitle.indexOf("}", index);
+                    String imageName = subtitle.substring(index, lastIndex);
+                    subtitle = subtitle.replace(imageName + "}", "");
+                    int id = this.getResources().getIdentifier(imageName, "drawable", "com.makaan");
+
+                    SpannableStringBuilder builder = new SpannableStringBuilder();
+                    builder.append(subtitle.substring(0, index)).append(" ");
+                    builder.setSpan(new ImageSpan(getActivity(), id), builder.length() - 1, builder.length(), 0);
+                    builder.append(subtitle.substring(index, subtitle.length()));
+
+                    subTitleTextView.setText(builder);
+                } else {
+                    subTitleTextView.setText(getResources().getString(R.string.blog_content_shortlist_sub_title));
+                }
+                actionTextView.setText(getResources().getString(R.string.blog_content_shortlist_action));
+                break;
+            case SITE_VISIT:
+                titleTextView.setVisibility(View.VISIBLE);
+                subTitleTextView.setVisibility(View.VISIBLE);
+                actionTextView.setVisibility(View.VISIBLE);
+
+                titleTextView.setText(getResources().getString(R.string.blog_content_site_visit_title));
+                subTitleTextView.setText(getResources().getString(R.string.blog_content_site_visit_sub_title));
+                actionTextView.setText(getResources().getString(R.string.blog_content_site_visit_action));
+                break;
+            case HOME_LOAN:
+                titleTextView.setVisibility(View.GONE);
+                subTitleTextView.setVisibility(View.GONE);
+                actionTextView.setVisibility(View.VISIBLE);
+
+                actionTextView.setText(getResources().getString(R.string.blog_content_home_loan_action));
+                break;
+            case UNIT_BOOK:
+                titleTextView.setVisibility(View.GONE);
+                subTitleTextView.setVisibility(View.GONE);
+                actionTextView.setVisibility(View.VISIBLE);
+
+                actionTextView.setText(getResources().getString(R.string.blog_content_home_booking_action));
+                break;
+            case POSSESSION:
+                titleTextView.setVisibility(View.GONE);
+                subTitleTextView.setVisibility(View.GONE);
+                actionTextView.setVisibility(View.VISIBLE);
+
+                actionTextView.setText(getResources().getString(R.string.blog_content_home_possession_action));
+                break;
+            case REGISTRATION:
+                titleTextView.setVisibility(View.GONE);
+                subTitleTextView.setVisibility(View.GONE);
+                actionTextView.setVisibility(View.VISIBLE);
+
+                actionTextView.setText(getResources().getString(R.string.blog_content_home_registration_action));
+                break;
+        }
     }
 
     @Subscribe
@@ -101,30 +190,56 @@ public class BlogContentFragment extends MakaanBaseFragment {
         private final Context mContext;
         private List<BlogItem> mBlogItems;
 
+        static final int TYPE_HEADER = 1;
+        static final int TYPE_ITEM = 2;
+
         BlogContentAdapter(Context context) {
             mContext = context;
         }
 
         @Override
         public BlogContentHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.card_content, parent, false);
+            if(viewType == TYPE_ITEM) {
+                View view = LayoutInflater.from(mContext).inflate(R.layout.card_content, parent, false);
 
-            return new BlogContentHolder(view);
+                return new BlogContentHolder(view, viewType);
+            } else if(viewType == TYPE_HEADER) {
+                View view = LayoutInflater.from(mContext).inflate(R.layout.blog_content_header_layout, parent, false);
+
+                return new BlogContentHolder(view, viewType);
+            }
+            return null;
         }
 
         @Override
         public int getItemCount() {
             if(mBlogItems != null) {
-                return mBlogItems.size();
+                return mBlogItems.size() + 1;
             }
-            return 0;
+            return 1;
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            if(mBlogItems != null) {
+                if(position == 0) {
+                    return TYPE_HEADER;
+                } else {
+                    return TYPE_ITEM;
+                }
+            }
+            return TYPE_HEADER;
         }
 
         @Override
         public void onBindViewHolder(BlogContentHolder holder, int position) {
-            holder.imageView.setImageUrl(mBlogItems.get(position).primaryImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
-            holder.titleTextView.setText(mBlogItems.get(position).postTitle);
-            holder.link = mBlogItems.get(position).guid;
+            if(holder.viewType == TYPE_ITEM) {
+                holder.imageView.setImageUrl(mBlogItems.get(position).primaryImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
+                holder.titleTextView.setText(mBlogItems.get(position).postTitle);
+                holder.link = mBlogItems.get(position).guid;
+            } else {
+                initHeaderUi(holder.view);
+            }
         }
 
         void setData(ArrayList<BlogItem> blogItems) {
@@ -141,16 +256,22 @@ public class BlogContentFragment extends MakaanBaseFragment {
         }
 
         class BlogContentHolder extends RecyclerView.ViewHolder {
+            private final int viewType;
+            private final View view;
             FadeInNetworkImageView imageView;
             TextView titleTextView;
             public String link;
 
-            public BlogContentHolder(View itemView) {
+            public BlogContentHolder(View itemView, int viewType) {
                 super(itemView);
-                imageView = (FadeInNetworkImageView)itemView.findViewById(R.id.iv_content);
-                titleTextView = (TextView)itemView.findViewById(R.id.txt_content);
+                this.viewType = viewType;
+                this.view = itemView;
+                if(viewType == TYPE_ITEM) {
+                    imageView = (FadeInNetworkImageView) itemView.findViewById(R.id.iv_content);
+                    titleTextView = (TextView) itemView.findViewById(R.id.txt_content);
 
-                itemView.setOnClickListener(listener);
+                    itemView.setOnClickListener(listener);
+                }
             }
 
             View.OnClickListener listener = new View.OnClickListener() {

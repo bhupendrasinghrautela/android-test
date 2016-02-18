@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_blog_content_frame_layout">
-
+    android:id="@+id/fragment_blog_content_frame_layout"
+    android:paddingTop="10dp"
+    android:paddingLeft="20dp"
+    android:paddingStart="20dp"
+    android:paddingRight="20dp"
+    android:paddingEnd="20dp">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/fragment_blog_content_recycler_view"

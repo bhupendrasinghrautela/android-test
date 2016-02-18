@@ -1,6 +1,7 @@
 package com.makaan.activity.buyerJourney;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -11,6 +12,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,7 +66,7 @@ public class BuyerJourneyActivity extends AppCompatActivity {
     AppBarLayout mAppBarLayout;
 
     enum TabType {
-        Journey("my journey"),
+        Journey("journey"),
         Notifications("notifications");
         String value;
 
@@ -88,16 +90,45 @@ public class BuyerJourneyActivity extends AppCompatActivity {
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                int toolbarOffset = -238;
-                if (verticalOffset == toolbarOffset) {
+                int toolbarOffset = mAppBarLayout.getTotalScrollRange();
+                if (verticalOffset + toolbarOffset == 0) {
                     mCollapsingToolbar.setCollapsedTitleTextColor(0xFFFFFFFF);
-                    if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this))
+                    if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this)) {
                         mCollapsingToolbar.setTitle(CookiePreferences.getUserInfo(BuyerJourneyActivity.this).getData().getFirstName());
-                    else
+                    } else {
                         mCollapsingToolbar.setTitle("guest user");
+                    }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        mAppBarLayout.setBackgroundColor(getResources().getColor(R.color.app_red, null));
+                        mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white, null));
+                        mTabLayout.setTabTextColors(getResources().getColor(R.color.white, null), getResources().getColor(R.color.white, null));
+                    } else {
+                        mAppBarLayout.setBackgroundColor(getResources().getColor(R.color.app_red));
+                        mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white));
+                        mTabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources().getColor(R.color.white));
+                    }
 
                 } else {
                     mCollapsingToolbar.setTitle("");
+                    if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this)) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red, null));
+                            mTabLayout.setTabTextColors(getResources().getColor(R.color.white, null), getResources().getColor(R.color.white, null));
+                        } else {
+                            mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red));
+                            mTabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources().getColor(R.color.white));
+                        }
+                    } else {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            mAppBarLayout.setBackgroundColor(getResources().getColor(R.color.buyer_dashboard_profile_background_color, null));
+                            mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red, null));
+                            mTabLayout.setTabTextColors(getResources().getColor(R.color.listingBlack, null), getResources().getColor(R.color.listingBlack, null));
+                        } else {
+                            mAppBarLayout.setBackgroundColor(getResources().getColor(R.color.buyer_dashboard_profile_background_color));
+                            mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red));
+                            mTabLayout.setTabTextColors(getResources().getColor(R.color.listingBlack), getResources().getColor(R.color.listingBlack));
+                        }
+                    }
                 }
 
             }
@@ -123,7 +154,7 @@ public class BuyerJourneyActivity extends AppCompatActivity {
         if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this)) {
             mLoginButton.setVisibility(View.GONE);
             mUserName.setText(CookiePreferences.getUserInfo(this).getData().getFirstName());
-        }else{
+        } else{
             mLoginButton.setVisibility(View.VISIBLE);
         }
     }
@@ -134,7 +165,7 @@ public class BuyerJourneyActivity extends AppCompatActivity {
         //set up button
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.mipmap.back_white);
+        actionBar.setHomeAsUpIndicator(R.mipmap.back_black);
         actionBar.setTitle("");
 
     }
