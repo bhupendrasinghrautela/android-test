@@ -24,6 +24,7 @@ import com.makaan.ui.view.WishListButton.WishListDto;
 import com.makaan.ui.view.WishListButton.WishListType;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
+import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
 
 import java.util.Locale;
@@ -48,6 +49,8 @@ public class ListingCardView extends BaseCardView<Listing> {
     @Bind(R.id.listing_brief_view_layout_property_bhk_info_text_view)TextView mPropertyBhkInfoTextView;
     @Bind(R.id.listing_brief_view_layout_property_size_info_text_view)TextView mPropertySizeInfoTextView;
     @Bind(R.id.listing_brief_view_layout_property_address_text_view)TextView mPropertyAddressTextView;
+    @Bind(R.id.listing_brief_view_layout_badge_Image_view)ImageView mBadgeImageView;
+    @Bind(R.id.listing_brief_view_layout_text_view)TextView mBadgeTextView;
     private SharedPreferences mPreferences;
     private Listing mListing;
 
@@ -72,6 +75,15 @@ public class ListingCardView extends BaseCardView<Listing> {
     @Override
     public void bindView(final Context context, Listing item) {
         mListing = (Listing)item;
+
+        if(RecentPropertyProjectManager.getInstance(context.getApplicationContext()).containsProperty(mListing.id)) {
+            mBadgeImageView.setVisibility(View.VISIBLE);
+            mBadgeTextView.setVisibility(View.VISIBLE);
+
+            mBadgeImageView.setImageResource(R.drawable.badge_seen);
+            mBadgeTextView.setText("seen");
+        }
+        // TODO implement new
         mPreferences = context.getSharedPreferences(
                 PreferenceConstants.PREF_SHORTLISTED_PROPERTIES, Context.MODE_PRIVATE);
         mPropertyWishListCheckbox.bindView(new WishListDto(mListing.lisitingId.longValue(), mListing.projectId.longValue(), WishListType.listing));

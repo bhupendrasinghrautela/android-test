@@ -146,15 +146,21 @@ public class BuyerJourneyActivity extends AppCompatActivity {
 
     @OnClick(R.id.button_login)
     public void onLoginClick() {
-        Intent intent = new Intent(this, UserLoginActivity.class);
-        startActivityForResult(intent, LOGIN_REQUEST);
+        if("login".equals(mLoginButton.getText().toString())) {
+            Intent intent = new Intent(this, UserLoginActivity.class);
+            startActivityForResult(intent, LOGIN_REQUEST);
+        } else {
+
+        }
     }
 
     private void setUserData() {
         if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this)) {
-            mLoginButton.setVisibility(View.GONE);
+//            mLoginButton.setVisibility(View.GONE);
+            mLoginButton.setText("logout");
             mUserName.setText(CookiePreferences.getUserInfo(this).getData().getFirstName());
-        } else{
+        } else {
+            mLoginButton.setText("login");
             mLoginButton.setVisibility(View.VISIBLE);
         }
     }

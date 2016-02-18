@@ -322,7 +322,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
         if(!SearchSuggestionType.NEARBY_PROPERTIES.getValue().equals(searchResponseItem.type)) {
             // add selected search to recent searches
-            RecentSearchManager.getInstance(this).addEntryToRecentSearch(searchResponseItem, this);
+            RecentSearchManager.getInstance(getApplicationContext()).addEntryToRecentSearch(searchResponseItem, this);
         }
 
         /*if(!areListingsAvailable() && (SearchSuggestionType.CITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)
@@ -573,7 +573,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             service.getTopNearbyLocalitiesAsSearchResult(mSelectedSearches.get(mSelectedSearches.size() - 1));
             setSearchResultFrameLayoutVisibility(true);
         } else {
-            ArrayList<SearchResponseItem> searches = RecentSearchManager.getInstance(this).getRecentSearches(this);
+            ArrayList<SearchResponseItem> searches = RecentSearchManager.getInstance(getApplicationContext()).getRecentSearches(this);
             if (searches != null && searches.size() > 0) {
 
                 mSearchResultReceived = false;

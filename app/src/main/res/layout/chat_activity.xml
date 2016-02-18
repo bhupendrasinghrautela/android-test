@@ -40,7 +40,10 @@
             android:inputType="text"
             android:hint="How can I help?"
             android:paddingLeft="@dimen/jarvis_chat_compose_padding"
-            android:paddingRight="@dimen/jarvis_chat_compose_padding"/>
+            android:paddingRight="@dimen/jarvis_chat_compose_padding"
+            >
+            <requestFocus />
+        </EditText>
 
         <ImageView
             android:id="@+id/jarvis_head"

@@ -532,8 +532,7 @@
             android:layout_width="@dimen/serp_listing_card_badge_width"
             android:layout_height="@dimen/serp_listing_card_badge_height"
             android:scaleType="centerCrop"
-            android:src="@drawable/badge_new"
-            android:visibility="gone" />
+            android:src="@drawable/badge_new" />
 
         <TextView
             android:id="@+id/serp_default_listing_badge_text_view"
@@ -546,7 +545,6 @@
             android:textColor="@color/white"
             android:textSize="@dimen/serp_listing_card_badge_text_size"
             android:visibility="gone"
-            android:textAllCaps="false"
-            android:typeface="serif" />
+            android:textAllCaps="false" />
     </FrameLayout>
 </com.makaan.ui.listing.DefaultListingView>

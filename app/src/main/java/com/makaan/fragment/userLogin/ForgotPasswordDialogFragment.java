@@ -2,6 +2,7 @@ package com.makaan.fragment.userLogin;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +71,17 @@ public class ForgotPasswordDialogFragment extends DialogFragment {
         if(baseResponse.getStatusCode()!=null && baseResponse.getStatusCode().equals("2XX")){
             Toast.makeText(getActivity(),getActivity().getString(R.string.password_recovery),Toast.LENGTH_SHORT).show();
         }else {
-            Toast.makeText(getActivity(),getActivity().getString(R.string.generic_error),Toast.LENGTH_SHORT).show();
+            if(baseResponse.getError() != null && !TextUtils.isEmpty(baseResponse.getError().msg)) {
+                Toast.makeText(getActivity(), baseResponse.getError().msg, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), getActivity().getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
+            }
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        AppBus.getInstance().unregister(this);
     }
 }

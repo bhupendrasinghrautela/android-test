@@ -64,6 +64,7 @@ import com.makaan.ui.view.WishListButton.WishListDto;
 import com.makaan.ui.view.WishListButton.WishListType;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
+import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
 import com.pkmmte.view.CircularImageView;
 import com.squareup.otto.Produce;
@@ -267,6 +268,10 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
         }
         else {
             mListingDetail = listingByIdGetEvent.listingDetail;
+            // adding property to recent manager
+            RecentPropertyProjectManager manager = RecentPropertyProjectManager.getInstance(getActivity().getApplicationContext());
+            manager.addEntryToRecent(manager.new DataObject(mListingDetail), getActivity().getApplicationContext());
+
             TestUi(mListingDetail);
             ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getOtherSellersOnListingDetail(
                     mListingDetail.projectId, mListingDetail.bedrooms, mListingDetail.bathrooms, mListingDetail.studyRoom

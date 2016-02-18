@@ -34,6 +34,7 @@ import com.makaan.ui.view.WishListButton.WishListDto;
 import com.makaan.ui.view.WishListButton.WishListType;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
+import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
 import com.pkmmte.view.CircularImageView;
 import com.squareup.otto.Subscribe;
@@ -164,6 +165,16 @@ public class DefaultListingView extends AbstractListingView{
         boolean isBuy = SerpObjects.isBuyContext(getContext());
 
         mListing = (Listing)data;
+
+        if(RecentPropertyProjectManager.getInstance(mContext.getApplicationContext()).containsProperty(mListing.id)) {
+            mBadgeImageView.setVisibility(View.VISIBLE);
+            mBadgeTextView.setVisibility(View.VISIBLE);
+
+            mBadgeImageView.setImageResource(R.drawable.badge_seen);
+            mBadgeTextView.setText("seen");
+        }
+        // TODO implement new
+
         mPropertyWishListCheckbox.bindView(new WishListDto(mListing.lisitingId.longValue(), mListing.projectId.longValue(), WishListType.listing));
 
         if(mListing.mainImageUrl != null && !TextUtils.isEmpty(mListing.mainImageUrl)) {
