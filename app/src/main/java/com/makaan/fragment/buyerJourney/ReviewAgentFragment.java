@@ -3,9 +3,12 @@ package com.makaan.fragment.buyerJourney;
 import android.os.Bundle;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.Nullable;
+import android.support.v4.text.TextUtilsCompat;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -15,6 +18,12 @@ import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.request.buyerjourney.AgentRating;
+import com.makaan.service.ClientLeadsService;
+import com.makaan.service.MakaanServiceFactory;
+import com.makaan.util.JsonBuilder;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -49,6 +58,9 @@ public class ReviewAgentFragment extends MakaanBaseFragment {
 
     @Bind(R.id.fragment_review_agent_rating_bar)
     RatingBar mRatingBar;
+
+    @Bind(R.id.fragment_review_agent_comment_edit_text)
+    EditText mCommentEditText;
 
     @Override
     protected int getContentViewId() {
@@ -125,23 +137,69 @@ public class ReviewAgentFragment extends MakaanBaseFragment {
         // TODO we are not checking any details filled by user
         if(getActivity() instanceof BuyerDashboardCallbacks) {
             if(mObj != null) {
-                ((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_REVIEW_AGENT,
-                        true, null, "cashback request", mObj);
-            }
-        }
-    }
+                /*((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_REVIEW_AGENT,
+                        true, null, "cashback request", mObj);*/
+                if(mRatingBar.getRating() < 1) {
+                    // TODO
+                } else {
+                    AgentRating rating = new AgentRating();
+                    rating.sellerId = mObj.clientLeadObject.company.id;
+                    rating.rating = (int)mRatingBar.getRating();
+                    if(mObj.listingDetail != null) {
+                        rating.listingId = mObj.listingDetail.id;
+                        if(mObj.listingDetail.property != null && mObj.listingDetail.property.project != null && mObj.listingDetail.property.project.locality != null) {
+                            rating.localityName = mObj.listingDetail.property.project.locality.label;
+                            if(mObj.listingDetail.property.project.locality.suburb != null
+                                    && mObj.listingDetail.property.project.locality.suburb.city != null
+                                    && mObj.listingDetail.property.project.locality.suburb.city.id != null) {
+                                rating.cityId = mObj.listingDetail.property.project.locality.suburb.city.id;
+                            }
+                        }
+                    }
+                    if(!TextUtils.isEmpty(mCommentEditText.getText().toString())) {
+                        rating.reviewComment = mCommentEditText.getText().toString();
+                    }
 
-    class AgentRating {
-        long sellerId;
-        int rating;
-        long listingId;
-        String listingName;
-        String localityName;
-        long cityId;
-        String reviewComment;
-        ArrayList<SellerRatingParameter> sellerRatingParameters;
-        class SellerRatingParameter {
-            int id;
+                    if(mListedPropertyToggleButton.isChecked()) {
+                        if(rating.sellerRatingParameters == null) {
+                            rating.sellerRatingParameters = new ArrayList<>();
+                        }
+                        rating.sellerRatingParameters.add(rating.new SellerRatingParameter(1));
+                    }
+                    if(mUnreachableToggleButton.isChecked()) {
+                        if(rating.sellerRatingParameters == null) {
+                            rating.sellerRatingParameters = new ArrayList<>();
+                        }
+                        rating.sellerRatingParameters.add(rating.new SellerRatingParameter(2));
+                    }
+                    if(mPoorKnowledgeToggleButton.isChecked()) {
+                        if(rating.sellerRatingParameters == null) {
+                            rating.sellerRatingParameters = new ArrayList<>();
+                        }
+                        rating.sellerRatingParameters.add(rating.new SellerRatingParameter(3));
+                    }
+                    if(mUnprofessionalBehaviourToggleButton.isChecked()) {
+                        if(rating.sellerRatingParameters == null) {
+                            rating.sellerRatingParameters = new ArrayList<>();
+                        }
+                        rating.sellerRatingParameters.add(rating.new SellerRatingParameter(4));
+                    }
+                    if(mOtherToggleButton.isChecked()) {
+                        if(rating.sellerRatingParameters == null) {
+                            rating.sellerRatingParameters = new ArrayList<>();
+                        }
+                        rating.sellerRatingParameters.add(rating.new SellerRatingParameter(5));
+                    }
+
+                    try {
+                        ((ClientLeadsService) MakaanServiceFactory.getInstance().getService(ClientLeadsService.class))
+                                .postSellerRating(JsonBuilder.toJson(rating));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    ((BuyerDashboardCallbacks)getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_UPLOAD_DOCUMENTS, true, null, null, null);
+                }
+            }
         }
     }
 }

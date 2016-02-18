@@ -14,6 +14,7 @@
         android:id="@+id/fragment_review_agent_next_button"
         android:layout_width="150dp"
         android:layout_height="34dp"
+        android:layout_marginTop="10dp"
         android:text="next"
         android:textColor="@color/app_red"
         android:textSize="16sp"
@@ -106,7 +107,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_review_agent_empty_view"
-        android:layout_above="@id/fragment_client_leads_next_button">
+        android:layout_above="@id/fragment_review_agent_next_button">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -283,8 +284,17 @@
                     android:textAllCaps="false"/>
             </RelativeLayout>
             <EditText
+                android:id="@+id/fragment_review_agent_comment_edit_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:minLines="3"
+                android:background="@drawable/edittext_background_selector_grey"
+                android:hint="write a review"
+                android:textColor="@color/listingBlack"
+                android:textSize="16sp"
+                android:textColorHint="#999999"
+                android:singleLine="false"
+                android:typeface="serif"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

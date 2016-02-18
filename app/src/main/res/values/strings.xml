@@ -270,8 +270,8 @@
     <string name="get_15000">\u20B9 15000 off</string>
     <string name="on_brokerage">on your brokerage</string>
     <string name="how_it_works_heading">how it works</string>
-    <string name="how_it_works">1. contact makaan agent\n2. do site visit &amp; provide reviews\n3. book a property\n4. upload proof of ownership</string>
-    <string name="redeem_now">redeem now</string>
+    <string name="how_it_works">1. contact makaan seller\n2. provide feedback\n3. share booking details</string>
+    <string name="redeem_now">get cashback</string>
 
     <string name="password_recovery">please check your mail for password recovery details</string>
     <string name="app_FB_id">111204692324347</string>
