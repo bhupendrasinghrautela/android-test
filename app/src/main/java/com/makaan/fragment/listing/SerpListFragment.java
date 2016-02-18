@@ -14,6 +14,7 @@ import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.listing.SerpListingAdapter;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.jarvis.analytics.AnalyticsConstants;
 import com.makaan.jarvis.analytics.AnalyticsService;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
@@ -220,7 +221,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
 
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("page_type", SerpActivity.SCREEN_NAME);
+            jsonObject.put(AnalyticsConstants.KEY_PAGE_TYPE, SerpActivity.SCREEN_NAME);
             AnalyticsService analyticsService =
                     (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
             analyticsService.track(AnalyticsService.Type.identify, jsonObject);

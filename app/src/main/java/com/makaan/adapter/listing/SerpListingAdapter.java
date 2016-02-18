@@ -224,36 +224,8 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
     }
 
     private void trackScroll(int position){
-        try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put(AnalyticsConstants.KEY_PAGE_TYPE, SerpActivity.SCREEN_NAME);
-            jsonObject.put(AnalyticsConstants.KEY_SERP_VISIBLE_ITEM, position);
-            jsonObject.put(AnalyticsConstants.KEY_DELIVERY_ID, JarvisConstants.DELIVERY_ID);
-            jsonObject.put(AnalyticsConstants.KEY_EVENT_NAME, AnalyticsConstants.SERP_SCROLL);
-
-            Map<String, SerpFilterMessageMap> filterMessageMapMap = MasterDataCache.getInstance().getSerpFilterMessageMap();
-            Iterator iterator = filterMessageMapMap.entrySet().iterator();
-            Set<String> selectedFiltersName = SerpObjects.getSelectedFilterNames(mContext);
-
-            if(null!=selectedFiltersName) {
-                while (iterator.hasNext()) {
-                    Map.Entry pair = (Map.Entry) iterator.next();
-                    SerpFilterMessageMap serpFilterMessageMap = (SerpFilterMessageMap) pair.getValue();
-
-                    if (selectedFiltersName.contains(serpFilterMessageMap.internalName)) {
-                        jsonObject.put(serpFilterMessageMap.filter, true);
-                    } else {
-                        jsonObject.put(serpFilterMessageMap.filter, null);
-                    }
-                }
-            }
-
-            AnalyticsService analyticsService =
-                    (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
-            analyticsService.track(AnalyticsService.Type.track, jsonObject);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        AnalyticsService analyticsService =
+                (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
+        analyticsService.trackSerpScroll(SerpObjects.getSelectedFilterNames(mContext), position);
     }
 }

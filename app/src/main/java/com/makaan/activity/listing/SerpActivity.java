@@ -712,6 +712,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     }
 
     @Override
+    public String getScreenName() {
+        return SCREEN_NAME;
+    }
+
+    @Override
     public void serpRequest(int type, Selector selector) {
         serpRequest(type, selector, true);
     }
@@ -849,7 +854,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         } else if(type == REQUEST_LEAD_FORM) {
             Intent intent = new Intent(this, LeadFormActivity.class);
             intent.putExtras(bundle);
-            startActivity(intent);
+            startActivityForResult(intent, LeadFormActivity.LEAD_DROP_REQUEST);
         } else if(type == REQUEST_SET_ALERT) {
             FragmentTransaction ft = this.getFragmentManager().beginTransaction();
             SetAlertsDialogFragment dialog = new SetAlertsDialogFragment();

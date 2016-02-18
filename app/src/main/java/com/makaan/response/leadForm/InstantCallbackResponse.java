@@ -1,12 +1,12 @@
 package com.makaan.response.leadForm;
 
+import com.makaan.response.BaseResponse;
+
 /**
  * Created by makaanuser on 25/1/16.
  */
-public class InstantCallbackResponse {
+public class InstantCallbackResponse extends BaseResponse{
 
-    private String statusCode;
-    private String version;
     private String data;
 
     public String getData() {
@@ -17,19 +17,4 @@ public class InstantCallbackResponse {
         this.data = data;
     }
 
-    public String getStatusCode() {
-        return statusCode;
-    }
-
-    public void setStatusCode(String statusCode) {
-        this.statusCode = statusCode;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
 }

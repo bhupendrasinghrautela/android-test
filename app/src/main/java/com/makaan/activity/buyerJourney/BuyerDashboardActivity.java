@@ -54,6 +54,11 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
         return false;
     }
 
+    @Override
+    public String getScreenName() {
+        return "BuyerDashboard";
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

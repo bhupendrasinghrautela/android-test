@@ -43,6 +43,11 @@ public class CityActivity extends MakaanFragmentActivity {
         return true;
     }
 
+    @Override
+    public String getScreenName() {
+        return "City";
+    }
+
     private void fetchData() {
         new CityService().getCityById(mCityId);
         new CityService().getTopLocalitiesInCity(mCityId, 4);

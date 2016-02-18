@@ -17,11 +17,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.makaan.R;
+import com.makaan.activity.lead.LeadFormActivity;
+import com.makaan.activity.listing.SerpActivity;
+import com.makaan.jarvis.analytics.AnalyticsConstants;
+import com.makaan.jarvis.analytics.AnalyticsService;
 import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.jarvis.ui.cards.BaseCtaView;
 import com.makaan.jarvis.ui.cards.CtaCardFactory;
 import com.makaan.jarvis.ui.cards.SerpFilterCard;
 import com.makaan.pojo.SerpObjects;
+import com.makaan.service.MakaanServiceFactory;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -33,7 +41,9 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
     private FrameLayout mActivityContent;
 
+
     public abstract boolean isJarvisSupported();
+    public abstract String getScreenName();
 
     @Nullable
     @Bind(R.id.jarvis_head)
@@ -80,6 +90,30 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
         setupPopup();
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == LeadFormActivity.LEAD_DROP_REQUEST && resultCode==RESULT_OK){
+            if(null!=data){
+                int listingId = data.getIntExtra("listingId",-1);
+                if(listingId>0){
+                    try {
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put(AnalyticsConstants.KEY_PAGE_TYPE, getScreenName());
+                        jsonObject.put(AnalyticsConstants.KEY_EVENT_NAME, AnalyticsConstants.ENQUIRY_DROPPED);
+                        jsonObject.put(AnalyticsConstants.KEY_LISTING_ID, listingId);
+                        AnalyticsService analyticsService =
+                                (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
+                        analyticsService.track(AnalyticsService.Type.track, jsonObject);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        }
     }
 
     private void setupPopup(){

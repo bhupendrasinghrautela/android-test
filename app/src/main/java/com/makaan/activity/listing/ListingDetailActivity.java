@@ -171,4 +171,9 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
     public boolean isJarvisSupported() {
         return true;
     }
+
+    @Override
+    public String getScreenName() {
+        return "Listing detail";
+    }
 }

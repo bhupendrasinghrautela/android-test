@@ -93,4 +93,9 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
     public boolean isJarvisSupported() {
         return false;
     }
+
+    @Override
+    public String getScreenName() {
+        return "Pyr";
+    }
 }
