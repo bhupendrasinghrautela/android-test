@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ApiConstants;
 import com.makaan.constants.ResponseConstants;
+import com.makaan.cookie.Session;
 import com.makaan.event.location.LocationGetEvent;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.network.MakaanNetworkClient;
@@ -108,6 +109,12 @@ public class LocationService implements MakaanService {
                                 items.add(item);
                             }
                         }
+
+                        SearchResponseItem item = new SearchResponseItem();
+                        item.type = SearchSuggestionType.HEADER_TEXT.getValue();
+                        item.displayText = "top localities";
+                        items.add(0, item);
+
                         SearchResponse response = new SearchResponse();
                         response.setTotalCount(items.size());
                         response.setData(items);
@@ -160,6 +167,12 @@ public class LocationService implements MakaanService {
                             items.add(item);
                         }
                     }
+
+                    SearchResponseItem item = new SearchResponseItem();
+                    item.type = SearchSuggestionType.HEADER_TEXT.getValue();
+                    item.displayText = "nearby localities";
+                    items.add(0, item);
+
                     SearchResponse response = new SearchResponse();
                     response.setTotalCount(items.size());
                     response.setData(items);

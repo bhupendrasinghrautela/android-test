@@ -15,9 +15,12 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
+import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
+import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
 import com.makaan.event.listing.ListingByIdsGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.response.buyerjourney.ClientLead;
 import com.makaan.response.buyerjourney.Company;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.service.ClientLeadsService;
@@ -30,6 +33,7 @@ import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by rohitgarg on 2/16/16.
@@ -43,6 +47,8 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
 
     ClientCompanyLeadsAdapter mAdapter;
     private int mSelected = 0;
+    private ArrayList<ListingByIdsGetEvent.Listing> mItems;
+    private ClientCompanyLeadsObject mObj;
 
     @Override
     protected int getContentViewId() {
@@ -75,13 +81,39 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
         return view;
     }
 
+    @OnClick(R.id.fragment_client_company_leads_next_button)
+    void onNextClicked(View view) {
+        if(getActivity() instanceof BuyerDashboardCallbacks) {
+            if(mItems != null && mSelected < mItems.size()) {
+                if(mObj != null) {
+                    mObj.listingDetail = mItems.get(mSelected).listing;
+                    ((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_REVIEW_AGENT,
+                            true, null, "cashback request", mObj);
+                }
+            }
+        }
+    }
+
+    class ClientCompanyLeadsObject {
+        ClientLeadsFragment.ClientLeadsObject clientLeadObject;
+        ListingDetail listingDetail;
+    }
+
     @Subscribe
     public void onResults(ListingByIdsGetEvent listingByIdsGetEvent) {
         if(listingByIdsGetEvent == null || listingByIdsGetEvent.error != null) {
             // TODO
             return;
         }
+        mItems = listingByIdsGetEvent.items;
         mAdapter.setData(listingByIdsGetEvent.items);
+    }
+
+    public void setData(Object obj) {
+        if(obj instanceof ClientLeadsFragment.ClientLeadsObject) {
+            mObj = new ClientCompanyLeadsObject();
+            mObj.clientLeadObject = (ClientLeadsFragment.ClientLeadsObject)obj;
+        }
     }
 
     class ClientCompanyLeadsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -172,7 +204,14 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
                     mSelected = position;
                     notifyDataSetChanged();
                 } else if(viewType == TYPE_ADD) {
-
+                    if(getActivity() instanceof BuyerDashboardCallbacks) {
+                        if(mObj != null) {
+                            mObj.listingDetail = mItems.get(position).listing;
+                            ((BuyerDashboardCallbacks) getActivity()).loadFragment(
+                                    BuyerDashboardActivity.LOAD_FRAGMENT_CLIENT_COMPANY_LEAD_ADD_PROPERTY,
+                                    true, null, "add property", mObj);
+                        }
+                    }
                 }
             }
 

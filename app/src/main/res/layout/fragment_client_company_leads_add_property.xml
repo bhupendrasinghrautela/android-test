@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingStart="20dp"
+    android:paddingRight="20dp"
+    android:paddingEnd="20dp"
+    android:paddingTop="28dp"
+    android:paddingBottom="28dp">
+
+    <TextView
+        android:id="@+id/fragment_client_company_leads_add_property_another_property_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/listingBlack"
+        android:typeface="sans"
+        android:text="another property"
+        android:textAllCaps="false"
+        android:singleLine="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/fragment_client_company_leads_add_property_property_name_text_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/fragment_client_company_leads_add_property_another_property_text_view">
+
+        <EditText
+            android:id="@+id/fragment_client_company_leads_add_property_property_name_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/input_top_margin"
+            android:background="@drawable/edittext_bg_bottom_border"
+            android:hint="property name"
+            android:textColorHint="#66444444"
+            android:textSize="16sp"
+            android:textColor="#444444"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:singleLine="true"
+            android:typeface="serif" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/fragment_client_company_leads_add_property_name_text_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/fragment_client_company_leads_add_property_property_name_text_input">
+
+        <EditText
+            android:id="@+id/fragment_client_company_leads_add_property_name_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/input_top_margin"
+            android:background="@drawable/edittext_bg_bottom_border"
+            android:hint="name"
+            android:textColorHint="#66444444"
+            android:textSize="16sp"
+            android:textColor="#444444"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:singleLine="true"
+            android:typeface="serif" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/fragment_client_company_leads_add_property_city_name_text_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/fragment_client_company_leads_add_property_name_text_input">
+
+        <EditText
+            android:id="@+id/fragment_client_company_leads_add_property_city_name_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/input_top_margin"
+            android:background="@drawable/edittext_bg_bottom_border"
+            android:hint="city"
+            android:textColorHint="#66444444"
+            android:textSize="16sp"
+            android:textColor="#444444"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:singleLine="true"
+            android:typeface="serif" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/fragment_client_leads_add_property_next_button"
+        android:layout_width="150dp"
+        android:layout_height="34dp"
+        android:text="next"
+        android:textColor="@color/app_red"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:singleLine="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/round_red" />
+</RelativeLayout>

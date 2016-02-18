@@ -13,7 +13,9 @@ import com.makaan.activity.shortlist.ShortListFragment;
 import com.makaan.fragment.WebViewFragment;
 import com.makaan.fragment.buyerJourney.BlogContentFragment;
 import com.makaan.fragment.buyerJourney.ClientCompanyLeadFragment;
+import com.makaan.fragment.buyerJourney.ClientCompanyLeadsAddProperty;
 import com.makaan.fragment.buyerJourney.ClientLeadsFragment;
+import com.makaan.fragment.buyerJourney.ReviewAgentFragment;
 import com.makaan.fragment.buyerJourney.RewardsFragment;
 import com.makaan.fragment.buyerJourney.SaveSearchFragment;
 import com.makaan.service.MakaanServiceFactory;
@@ -38,6 +40,8 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
     public static final int LOAD_FRAGMENT_SAVE_SEARCH = 5;
     public static final int LOAD_FRAGMENT_CLIENT_LEADS = 6;
     public static final int LOAD_FRAGMENT_CLIENT_COMPANY_LEAD = 7;
+    public static final int LOAD_FRAGMENT_CLIENT_COMPANY_LEAD_ADD_PROPERTY = 8;
+    public static final int LOAD_FRAGMENT_REVIEW_AGENT = 9;
 
 
     @Override
@@ -82,7 +86,7 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
     }
 
     @Override
-    public void loadFragment(int type, boolean shouldAddToBackStack, Bundle data, String title) {
+    public void loadFragment(int type, boolean shouldAddToBackStack, Bundle data, String title, Object obj) {
         switch (type) {
             case LOAD_FRAGMENT_WEB_VIEW: {
                 WebViewFragment fragment = new WebViewFragment();
@@ -97,6 +101,9 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
                 if (data != null) {
                     fragment.setArguments(data);
                 }
+                if(obj != null) {
+                    fragment.setData(obj);
+                }
                 initFragment(R.id.activity_base_buyer_journey_content_frame_layout, fragment, shouldAddToBackStack);
                 break;
             }
@@ -104,6 +111,31 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
                 ClientCompanyLeadFragment fragment = new ClientCompanyLeadFragment();
                 if (data != null) {
                     fragment.setArguments(data);
+                }
+                if(obj != null) {
+                    fragment.setData(obj);
+                }
+                initFragment(R.id.activity_base_buyer_journey_content_frame_layout, fragment, shouldAddToBackStack);
+                break;
+            }
+            case LOAD_FRAGMENT_CLIENT_COMPANY_LEAD_ADD_PROPERTY: {
+                ClientCompanyLeadsAddProperty fragment = new ClientCompanyLeadsAddProperty();
+                if (data != null) {
+                    fragment.setArguments(data);
+                }
+                if(obj != null) {
+                    fragment.setData(obj);
+                }
+                initFragment(R.id.activity_base_buyer_journey_content_frame_layout, fragment, shouldAddToBackStack);
+                break;
+            }
+            case LOAD_FRAGMENT_REVIEW_AGENT: {
+                ReviewAgentFragment fragment = new ReviewAgentFragment();
+                if (data != null) {
+                    fragment.setArguments(data);
+                }
+                if(obj != null) {
+                    fragment.setData(obj);
                 }
                 initFragment(R.id.activity_base_buyer_journey_content_frame_layout, fragment, shouldAddToBackStack);
                 break;
