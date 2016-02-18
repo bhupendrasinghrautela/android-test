@@ -8,6 +8,7 @@ import com.makaan.R;
 import com.makaan.adapter.listing.ListingPagerAdapter;
 import com.makaan.jarvis.message.ChatObject;
 import com.makaan.jarvis.message.Message;
+import com.makaan.jarvis.message.MessageType;
 import com.makaan.response.listing.Listing;
 
 import java.util.ArrayList;
@@ -47,11 +48,13 @@ public class PropertyPager extends ViewPager {
         for(Property property : listings){
             Message message = new Message();
             message.chatObj = new ChatObject();
+            message.messageType = MessageType.propertyOverview;
             message.chatObj.image = property.property.project.imageURL;
-            message.chatObj.builderName = property.property.project.builder.name;
-            message.chatObj.projectName = property.property.project.name;
-            message.chatObj.cityName = property.property.project.locality.label;
-            message.chatObj.localityName = property.property.project.locality.suburb.city.label;
+            message.chatObj.locality = property.property.project.builder.name + " " + property.property.project.name;
+            message.chatObj.area = property.property.project.locality.label + " " + property.property.project.locality.suburb.city.label;
+            if(null!=property.currentListingPrice){
+                message.chatObj.price = property.currentListingPrice.price;
+            }
             properties.add(message);
         }
 

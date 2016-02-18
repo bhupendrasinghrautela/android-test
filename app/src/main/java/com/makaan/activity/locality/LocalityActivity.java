@@ -63,6 +63,11 @@ public class LocalityActivity extends MakaanFragmentActivity {
         return true;
     }
 
+    @Override
+    public String getScreenName() {
+        return "Locality";
+    }
+
     @Subscribe
     public void onIncomingMessage(IncomingMessageEvent event){
         animateJarvisHead();

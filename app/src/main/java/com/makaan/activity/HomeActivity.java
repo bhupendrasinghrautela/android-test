@@ -197,6 +197,11 @@ public class HomeActivity extends MakaanBaseSearchActivity {
         return false;
     }
 
+    @Override
+    public String getScreenName() {
+        return "Home";
+    }
+
 
     @Override
     protected void setSearchViewVisibility(boolean visible) {

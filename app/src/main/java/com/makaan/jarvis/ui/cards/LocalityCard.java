@@ -67,10 +67,8 @@ public class LocalityCard extends BaseView<Message> {
         textViewSubTitle.setText(item.chatObj.localityName);
         textViewSubTitle2.setText(item.chatObj.cityName);
 
-        item.chatObj.image = item.chatObj.imageURL+"?WIDTH=220&HEIGHT=120";
-
         if(!TextUtils.isEmpty(item.chatObj.image)){
-            imageView.setImageUrl(item.chatObj.image, MakaanNetworkClient.getInstance().getImageLoader());
+            imageView.setImageUrl(item.chatObj.image + "?WIDTH=220&HEIGHT=120", MakaanNetworkClient.getInstance().getImageLoader());
         }
 
         setOnClickListener(new OnClickListener() {

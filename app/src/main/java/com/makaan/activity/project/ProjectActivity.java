@@ -72,6 +72,11 @@ public class ProjectActivity extends MakaanBaseSearchActivity {
         return true;
     }
 
+    @Override
+    public String getScreenName() {
+        return "Project";
+    }
+
     @Subscribe
     public void onResults(SearchResultEvent searchResultEvent) {
         super.onResults(searchResultEvent);

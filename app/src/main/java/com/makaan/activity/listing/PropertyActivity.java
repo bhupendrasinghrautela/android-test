@@ -72,6 +72,11 @@ public class PropertyActivity extends MakaanBaseSearchActivity implements ShowMa
         return true;
     }
 
+    @Override
+    public String getScreenName() {
+        return "Listing detail";
+    }
+
     @Subscribe
     public void onResults(SearchResultEvent searchResultEvent) {
         super.onResults(searchResultEvent);

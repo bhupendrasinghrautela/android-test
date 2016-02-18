@@ -7,6 +7,7 @@ import android.util.SparseArray;
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.MakaanCookieStore;
@@ -155,7 +156,7 @@ public class MakaanBuyerApplication extends Application {
         CookieManager cookieManager = new CookieManager(cookieStore, CookiePolicy.ACCEPT_ALL);
         CookieHandler.setDefault(cookieManager);
 
-        Analytics analytics = new Analytics.Builder(this, "xMHqomsTMdGwOiJByBsKUbH78Akhbaku").build();
+        Analytics analytics = new Analytics.Builder(this, MakaanTrackerConstants.segmentSdkKey).build();
         Analytics.setSingletonInstance(analytics);
         Analytics.with(this).identify(JarvisConstants.DELIVERY_ID);
         Analytics.with(this).flush();
