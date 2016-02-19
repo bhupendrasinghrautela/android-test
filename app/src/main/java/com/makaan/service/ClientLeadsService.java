@@ -28,7 +28,7 @@ public class ClientLeadsService implements MakaanService {
     public final String TAG = ClientLeadsService.class.getSimpleName();
 
     public void requestClientLeads() {
-        String detailsURL = ApiConstants.ICRM_CLIENT_LEADS.concat("?fields=createdAt,companyId,listingId,propertyRequirements");
+        String detailsURL = ApiConstants.ICRM_CLIENT_LEADS.concat("?fields=createdAt,companyId,listingId,propertyRequirements,projectId");
         MakaanNetworkClient.getInstance().get(detailsURL, new JSONGetCallback() {
             @Override
             public void onSuccess(JSONObject responseObject) {
@@ -87,7 +87,7 @@ public class ClientLeadsService implements MakaanService {
         if(ids.size() > 0 && detailsURL.length() > 0) {
             detailsURL = detailsURL.substring(0, detailsURL.length() - 1);
         }
-        detailsURL = detailsURL.concat("&fields=name,id");
+        detailsURL = detailsURL.concat("&fields=name,id,score");
 
         MakaanNetworkClient.getInstance().get(detailsURL, new JSONGetCallback() {
             @Override

@@ -183,6 +183,41 @@ public class ListingService implements MakaanService {
     }
 
 
+    public void getListingDetailForEnquiry(Long listingId){
+        if (null != listingId) {
+            Selector listingDetailSelector = new Selector();
+            listingDetailSelector.field("user").field("mainImageURL").field("logo").field("profilePictureURL").field("currentListingPrice")
+                    .field("price").field("projectId").field("companySeller").field("company")
+                    .field("name").field("score").field("halls").field("unitType")
+                    .field("unitName").field("measure").field("size").field("bathrooms")
+                    .field("bedrooms").field("listing").field("id").field("property")
+                    .field("project").field("builder").field("locality").field("suburb")
+                    .field("label").field("city").field("imageURL");
+            String listingDetailUrl = ApiConstants.LISTING.concat(listingId.toString()).concat("?").concat(listingDetailSelector.build());
+            Type listingDetailType = new TypeToken<ListingDetail>() {
+            }.getType();
+
+            MakaanNetworkClient.getInstance().get(listingDetailUrl, listingDetailType, new ObjectGetCallback() {
+                @Override
+                public void onError(ResponseError error) {
+                    ListingByIdGetEvent listingByIdGetEvent = new ListingByIdGetEvent();
+                    listingByIdGetEvent.error = error;
+                    AppBus.getInstance().post(listingByIdGetEvent);
+                }
+
+                @Override
+                public void onSuccess(Object responseObject) {
+                    ListingDetail listingDetail = (ListingDetail) responseObject;
+
+                    //listingDetail.description = AppUtils.stripHtml(listingDetail.description);
+                    AppBus.getInstance().post(new ListingByIdGetEvent(listingDetail));
+                }
+            });
+
+        }
+    }
+
+
     /**
      * http:/marketplace-qa.makaan-ws.com/data/v2/entity/domain?selector={"fields":["companyImage","score","contactNumber","contactNumbers","user","name","id","label","sellerId","property","currentListingPrice","price","bedrooms","bathrooms","size","unitTypeId","project","projectId","studyRoom","servantRoom","poojaRoom","companySeller","company","companyScore"],"filters":{"and":[{"equal":{"projectId":["654368"]}},{"equal":{"bedrooms":["3"]}},{"equal":{"bathrooms":["3"]}},{"equal":{"studyRoom":["0"]}},{"equal":{"poojaRoom":["0"]}},{"equal":{"servantRoom":["0"]}}]},"paging":{"start":"0","rows":"5"},"groupBy":{"field":"sellerId","min":"listingSellerCompanyScore"}}&documentType=LISTING&facets=bedrooms,sellerId&sourceDomain=Makaan
      */

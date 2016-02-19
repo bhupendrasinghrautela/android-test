@@ -2,7 +2,6 @@ package com.makaan.activity.buyerJourney;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -10,6 +9,7 @@ import android.widget.TextView;
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.shortlist.ShortListFragment;
+import com.makaan.activity.sitevisit.SiteVisitFragment;
 import com.makaan.fragment.WebViewFragment;
 import com.makaan.fragment.buyerJourney.BlogContentFragment;
 import com.makaan.fragment.buyerJourney.ClientCompanyLeadFragment;
@@ -44,6 +44,7 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
     public static final int LOAD_FRAGMENT_CLIENT_COMPANY_LEAD_ADD_PROPERTY = 8;
     public static final int LOAD_FRAGMENT_REVIEW_AGENT = 9;
     public static final int LOAD_FRAGMENT_UPLOAD_DOCUMENTS = 10;
+    public static final int LOAD_FRAGMENT_SITE_VISIT = 11;
 
 
     @Override
@@ -85,6 +86,9 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
                     break;
                 case LOAD_FRAGMENT_REWARDS:
                     initFragment(R.id.activity_base_buyer_journey_content_frame_layout, new RewardsFragment(), false);
+                    break;
+                case LOAD_FRAGMENT_SITE_VISIT:
+                    initFragment(R.id.activity_base_buyer_journey_content_frame_layout, new SiteVisitFragment(), false);
                     break;
                 default:
                     break;

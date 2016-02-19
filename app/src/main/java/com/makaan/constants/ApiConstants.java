@@ -8,8 +8,8 @@ public class ApiConstants {
 
     //public static final String BASE_URL = "http://mp-qa2.makaan-ws.com";
     //public static final String BASE_URL = "https://marketplace-qa.proptiger-ws.com";
-    //public static final String BASE_URL = "https://marketplace-qa.makaan-ws.com";
-    public static final String BASE_URL = "http://beta.makaan-ws.com";
+    public static final String BASE_URL = "https://marketplace-qa.makaan-ws.com";
+    //public static final String BASE_URL = "http://beta.makaan-ws.com";
     //public static final String BASE_URL = "http://mp-qa1.makaan-ws.com/";
     public static final String FILTER_GROUP = BASE_URL.concat("/data/v1/entity/filter-group");           //TODO: need to implement this on server side
     public static final String LISTING_INFO_MAP = BASE_URL.concat("/data/v1/entity/listing-info-map");           //TODO: need to implement this on server side
@@ -70,6 +70,7 @@ public class ApiConstants {
     public static final String APP_V1 = "/app/v1";
     public final static int CONNECTION_TIMEOUT = 30000;
     public static final String FORGOT_PASSWORD = "/app/v1/reset-password?email=";
+    public static final String GOOGLE_NAV_BASE_STRING = "http://maps.google.com/?daddr=";
     public static final String ICRM_CLIENT_LEADS = BASE_URL.concat("/icrm/v1/client-leads");
     public static final String USER_SERVICE_ENTITY_COMPANIES = BASE_URL.concat("/userservice/data/v1/entity/companies?filters=");
     public static final String USER_SERVICE_ENTITY_COMPANIES_FILTER = "id==%d,";

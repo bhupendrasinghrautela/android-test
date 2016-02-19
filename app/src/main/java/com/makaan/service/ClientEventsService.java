@@ -1,5 +1,7 @@
 package com.makaan.service;
 
+import android.net.Uri;
+
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ApiConstants;
@@ -46,5 +48,17 @@ public class ClientEventsService implements MakaanService {
                 AppBus.getInstance().post(event);
             }
         });
+    }
+
+    public static Uri buildNavigationIntentUri(double lat, double lng) {
+        Uri navUri;
+        StringBuilder sBuilder = new StringBuilder();
+        sBuilder.append(ApiConstants.GOOGLE_NAV_BASE_STRING);
+        sBuilder.append(String.valueOf(lat));
+        sBuilder.append(",");
+        sBuilder.append(String.valueOf(lng));
+
+        navUri = Uri.parse(sBuilder.toString());
+        return navUri;
     }
 }

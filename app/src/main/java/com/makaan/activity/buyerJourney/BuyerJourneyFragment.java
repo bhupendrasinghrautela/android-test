@@ -41,13 +41,6 @@ public class BuyerJourneyFragment extends Fragment {
     @Bind(R.id.tv_site_visit_subtitle)
     TextView mSiteVisitSubTitle;
 
-    @Bind(R.id.tv_search_subtitle)
-    TextView mSearchSubtitle;
-    @Bind(R.id.tv_shortlist_subtitle)
-    TextView mShortlistSubtitle;
-    @Bind(R.id.tv_site_visit_subtitle)
-    TextView mSiteVisitSubtitle;
-
     private int mSavedSearchesCount;
     private int mNewMatchesCount;
     private int mClientLeadsCount;
@@ -85,8 +78,7 @@ public class BuyerJourneyFragment extends Fragment {
         //TODO
 
         if (isUserLoggedIn) {
-        /*intent.putExtra(BuyerDashboardActivity.DATA, "homeloan");
-        onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);*/
+            onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_SITE_VISIT);
         } else {
             intent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.SITE_VISIT);
             onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);
@@ -204,12 +196,12 @@ public class BuyerJourneyFragment extends Fragment {
     void updateUi() {
         if(mClientEventsReceived && mClientLeadsReceived && mNewSearchesReceived && mSavedSearchesReceived) {
             if(mSavedSearchesCount + mNewMatchesCount > 0) {
-                mSearchSubtitle.setText(String.format("%d saved searches | %d new matches", mSavedSearchesCount, mNewMatchesCount));
+                mSearchSubTitle.setText(String.format("%d saved searches | %d new matches", mSavedSearchesCount, mNewMatchesCount));
             } else {
-                mSearchSubtitle.setText(getResources().getString(R.string.search_sub_title));
+                mSearchSubTitle.setText(getResources().getString(R.string.search_sub_title));
             }
-            mSearchSubtitle.setText(String.format("%d shortlisted properties", mClientLeadsCount));
-            mSearchSubtitle.setText(String.format("%d upcoming site visits", mClientEventsCount));
+            mSearchSubTitle.setText(String.format("%d shortlisted properties", mClientLeadsCount));
+            mSearchSubTitle.setText(String.format("%d upcoming site visits", mClientEventsCount));
         }
     }
 }

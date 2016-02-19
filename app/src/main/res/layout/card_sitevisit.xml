@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    xmlns:app="http://schemas.android.com/tools"
+                                    android:layout_margin="@dimen/card_margin"
+                                    card_view:cardCornerRadius="@dimen/card_radius">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <com.android.volley.toolbox.FadeInNetworkImageView
+            android:id="@+id/iv_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/enq_card_height"
+            android:scaleType="fitXY"
+            android:textSize="@dimen/title_text_size" />
+        <View android:layout_width="match_parent" android:layout_height="250dp"
+              android:background="#80000000"/>
+        <LinearLayout
+            android:id="@+id/details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/timing"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/address"
+                android:textColor="@color/white"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textSize="@dimen/shortlist_text_size_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <FrameLayout
+                android:id="@+id/seller_image_frame_layout"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content">
+
+                <com.pkmmte.view.CircularImageView
+                    android:id="@+id/seller_image_view"
+                    android:layout_width="@dimen/shortlist_card_seller_image_view_width"
+                    android:layout_height="@dimen/shortlist_card_seller_image_view_height"
+                    android:visibility="gone"
+                    app:border="true"
+                    app:border_color="@color/serp_listing_card_seller_mask_color"
+                    app:border_width="@dimen/border_width" />
+
+                <TextView
+                    android:id="@+id/seller_logo_text_view"
+                    android:layout_width="@dimen/shortlist_card_seller_image_view_width"
+                    android:layout_height="@dimen/shortlist_card_seller_image_view_height"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:typeface="serif"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+            </FrameLayout>
+            <TextView
+                android:id="@+id/name"
+                android:textColor="@color/white"
+                android:layout_gravity="center_horizontal"
+                android:textSize="@dimen/shortlist_text_size_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <com.makaan.ui.view.CustomRatingBar
+                android:id="@+id/seller_rating"
+                android:layout_width="60dp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/serp_listing_card_seller_rating_margin_top"
+                android:numStars="5"
+                android:rating="0"
+                android:isIndicator="true"
+                card_view:itemHeight="@dimen/serp_listing_card_seller_rating_item_height"
+                card_view:itemWidth="@dimen/serp_listing_card_seller_rating_item_width"
+                card_view:itemMarginLeft="@dimen/serp_listing_card_seller_rating_item_margin_left"
+                card_view:itemMarginRight="@dimen/serp_listing_card_seller_rating_item_margin_right"
+                card_view:itemProgressIcon="@drawable/star_selected"
+                card_view:itemSecondaryProgressIcon="@drawable/star_unselected"
+                style="?android:attr/ratingBarStyleSmall"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_below="@id/iv_content"
+            android:id="@+id/timing"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <View
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="18dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/directions"/>
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="18dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/appThemeRed"
+                android:text="@string/directions"
+                android:typeface="serif"
+                android:layout_marginLeft="13.6dp"
+                android:layout_gravity="center"
+                android:textSize="@dimen/content_text_size" />
+            <View
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="18dp"
+                android:layout_marginLeft="32dp"
+                android:layout_gravity="center"
+                android:background="@drawable/icon_call_sellers"/>
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="18dp"
+                android:layout_marginLeft="13.6dp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:textColor="@color/appThemeRed"
+                android:text="call"
+                android:typeface="serif"
+                android:layout_marginRight="53dp"
+                android:textSize="@dimen/content_text_size" />
+        </LinearLayout>
+        <View
+            android:layout_below="@id/timing"
+            android:layout_width="match_parent" android:layout_height="1dp"
+            android:background="@color/city_empty_view_color"/>
+        <LinearLayout
+            android:layout_below="@id/timing"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <View
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="28dp"
+                android:layout_gravity="center"
+                android:background="@drawable/directions"/>
+        <TextView
+            android:id="@+id/direction"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/appThemeRed"
+            android:text="@string/directions"
+            android:typeface="serif"
+            android:layout_marginLeft="13.6dp"
+            android:layout_gravity="center"
+            android:textSize="@dimen/content_text_size" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="24dp"
+                android:background="@color/city_empty_view_color"/>
+            <View
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="28dp"
+                android:layout_gravity="center"
+                android:background="@drawable/icon_call_sellers"/>
+        <TextView
+            android:id="@+id/call_now"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="13.6dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:textColor="@color/appThemeRed"
+            android:text="call"
+            android:typeface="serif"
+            android:layout_marginRight="53dp"
+            android:textSize="@dimen/content_text_size" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

@@ -1,8 +1,7 @@
-package com.makaan.activity.shortlist;
+package com.makaan.activity.sitevisit;
 
-import android.app.DatePickerDialog;
-import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
@@ -12,12 +11,10 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
-import com.makaan.activity.shortlist.ShortListEnquiredViewHolder.ScheduleSiteVisit;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.locality.Locality;
@@ -26,30 +23,31 @@ import com.makaan.response.property.Property;
 import com.makaan.response.user.Company;
 import com.makaan.response.user.CompanySeller;
 import com.makaan.response.user.User;
+import com.makaan.service.ClientEventsService;
 import com.makaan.util.ImageUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 /**
- * Created by makaanuser on 2/2/16.
+ * Created by aishwarya on 18/02/16.
  */
-public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ScheduleSiteVisit {
+public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements SiteVisitCallbacks {
     Context mContext;
-    HashMap<Long,Enquiry> mEnquiries;
+    ArrayList<Enquiry> mEnquiries;
     private int width,height;
 
-    public ShortListEnquiredAdapter(Context mContext){
+    public SiteVisitUpcommingAdapter(Context mContext){
         this.mContext=mContext;
         width = mContext.getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_width);
         height = mContext.getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_height);
     }
 
     public void setData(HashMap<Long,Enquiry> enquiries){
-        this.mEnquiries = enquiries;
+        this.mEnquiries = (new ArrayList<Enquiry>(enquiries.values()));
         notifyDataSetChanged();
     }
 
@@ -57,10 +55,10 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         try {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.card_shortlist_enquired, parent, false);
-            ShortListEnquiredViewHolder shortListEnquiredViewHolder = new ShortListEnquiredViewHolder(view);
-            shortListEnquiredViewHolder.setListener(this);
-            return shortListEnquiredViewHolder;
+            View view = LayoutInflater.from(mContext).inflate(R.layout.card_sitevisit, parent, false);
+            SiteVisitViewHolder siteVisitViewHolder = new SiteVisitViewHolder(view);
+            siteVisitViewHolder.setCallback(this);
+            return siteVisitViewHolder;
         } catch(InflateException ex) {
             return null;
         }
@@ -69,15 +67,21 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ShortListEnquiredViewHolder shortListEnquiredViewHolder = (ShortListEnquiredViewHolder)holder;
+        SiteVisitViewHolder shortListEnquiredViewHolder = (SiteVisitViewHolder)holder;
         shortListEnquiredViewHolder.setPosition(position);
-        List<Enquiry> enquiryList = (new ArrayList<Enquiry>(mEnquiries.values()));
-        Enquiry enquiry = enquiryList.get(position);
+        Enquiry enquiry = mEnquiries.get(position);
 
         shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.locality_hero);
+        Date date = new Date(enquiry.time);
+
+        // S is the millisecond
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM, yyyy");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("h.mm a");
+        shortListEnquiredViewHolder.mSiteVisitDate.setText(simpleDateFormat.format(enquiry.time));
+        shortListEnquiredViewHolder.mSiteVisitTime.setText(timeFormat.format(enquiry.time));
         if(enquiry.type == EnquiryType.LISTING){
             if(enquiry.listingDetail!=null){
-                populateListingDetail(enquiry.listingDetail,shortListEnquiredViewHolder);
+                populateListingDetail(enquiry.listingDetail, shortListEnquiredViewHolder);
             }
             else{
                 shortListEnquiredViewHolder.mAddress.setText("");
@@ -112,7 +116,7 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
         }
     }
 
-    private void populateProjectDetail(Project project, ShortListEnquiredViewHolder holder) {
+    private void populateProjectDetail(Project project, SiteVisitViewHolder holder) {
         StringBuilder name = new StringBuilder();
         if(project.builder!=null && project.builder.name!=null) {
             name.append(project.builder.name+" ");
@@ -134,7 +138,7 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
         holder.mMainImage.setImageUrl(project.imageURL, MakaanNetworkClient.getInstance().getImageLoader());
     }
 
-    private void populateListingDetail(ListingDetail listingDetail, final ShortListEnquiredViewHolder holder) {
+    private void populateListingDetail(ListingDetail listingDetail, final SiteVisitViewHolder holder) {
         StringBuilder name = new StringBuilder();
         if(listingDetail.property!=null) {
             Property property = listingDetail.property;
@@ -160,7 +164,7 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
         holder.mMainImage.setImageUrl(listingDetail.mainImageURL, MakaanNetworkClient.getInstance().getImageLoader());
     }
 
-    private void populateCompany(CompanySeller companySeller, final ShortListEnquiredViewHolder holder) {
+    private void populateCompany(CompanySeller companySeller, final SiteVisitViewHolder holder) {
         if(companySeller!=null) {
             final Company company = companySeller.company;
             User user = companySeller.user;
@@ -206,7 +210,7 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
         }
     }
 
-    private void showTextAsImage(ShortListEnquiredViewHolder holder,String name) {
+    private void showTextAsImage(SiteVisitViewHolder holder,String name) {
         if(name == null) {
             holder.mSellerText.setVisibility(View.INVISIBLE);
             return;
@@ -242,18 +246,21 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     @Override
-    public void onSiteVisitClicked(int position) {
-        Calendar newCalendar = Calendar.getInstance();
-        DatePickerDialog fromDatePickerDialog = new DatePickerDialog(mContext, new OnDateSetListener() {
+    public void openDirections(int position) {
+        Enquiry enquiry = mEnquiries.get(position);
+        if(enquiry.latitude== null || enquiry.longitude == null){
+            return;
+        }
+        else{
+            Intent myIntent = new Intent(Intent.ACTION_VIEW, ClientEventsService.buildNavigationIntentUri(
+                    enquiry.latitude, enquiry.longitude));
+            mContext.startActivity(myIntent);
+        }
+    }
 
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-            }
+    @Override
+    public void callNumber(int position) {
 
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-        fromDatePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-        fromDatePickerDialog.show();
     }
 
     public enum  EnquiryType{
@@ -262,8 +269,12 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
 
     public class Enquiry{
         public Long id;
+        public Double latitude;
+        public Double longitude;
         public Long projectId;
+        public Long listingId;
         public Long clientId;
+        public Long time;
         public ListingDetail listingDetail;
         public Project project;
         public com.makaan.response.buyerjourney.Company company;
