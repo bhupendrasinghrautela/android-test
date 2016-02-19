@@ -2,21 +2,14 @@ package com.makaan.activity.project;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.event.project.OnSeeOnMapClicked;
-import com.makaan.event.project.ProjectByIdEvent;
-import com.makaan.event.project.ProjectConfigEvent;
-import com.makaan.event.project.SimilarProjectGetEvent;
 import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
 import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.response.search.event.SearchResultEvent;
-import com.makaan.service.ListingService;
-import com.makaan.service.MakaanServiceFactory;
-import com.makaan.service.ProjectService;
 import com.squareup.otto.Subscribe;
 
 /**
@@ -31,7 +24,7 @@ public class ProjectActivity extends MakaanBaseSearchActivity {
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_locality;
+        return R.layout.activity_project;
     }
 
     @Override

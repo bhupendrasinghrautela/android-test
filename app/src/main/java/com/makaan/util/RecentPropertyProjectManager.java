@@ -160,7 +160,9 @@ public class RecentPropertyProjectManager {
             if(project != null) {
                 this.id = project.projectId;
                 this.type = TYPE_PROJECT;
-                this.minPrice = project.minResaleOrPrimaryPrice;
+                if(project.minResaleOrPrimaryPrice != null && !Double.isNaN(project.minResaleOrPrimaryPrice)) {
+                    this.minPrice = project.minResaleOrPrimaryPrice;
+                }
                 if(project.maxResaleOrPrimaryPrice != null && !Double.isNaN(project.maxResaleOrPrimaryPrice)) {
                     this.maxPrice = project.maxResaleOrPrimaryPrice;
                 }

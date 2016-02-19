@@ -2,15 +2,15 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:id="@+id/ll_project_container"
     android:visibility="gone"
+    android:id="@+id/ll_project_container"
+    android:background="@color/white"
     android:layout_height="match_parent"
     >
 <ScrollView
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
-    android:paddingBottom="60dp"
+    android:paddingBottom="50dp"
     android:layout_width="match_parent">
 
     <LinearLayout
@@ -18,6 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <View android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:focusableInTouchMode="true"
+              android:focusable="true"/>
         <com.makaan.ui.property.PropertyImageViewPager
             android:visibility="invisible"
             android:id="@+id/property_image_viewpager"
