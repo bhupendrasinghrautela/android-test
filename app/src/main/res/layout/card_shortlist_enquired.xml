@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/card_margin"
-    card_view:cardCornerRadius="@dimen/card_radius">
+                                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    xmlns:app="http://schemas.android.com/tools"
+                                    android:layout_margin="@dimen/card_margin"
+                                    card_view:cardCornerRadius="@dimen/card_radius">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
 
-        <ImageView
+        <com.android.volley.toolbox.FadeInNetworkImageView
             android:id="@+id/iv_content"
             android:layout_width="match_parent"
             android:layout_height="@dimen/enq_card_height"
-            android:background="@drawable/property"
+            android:scaleType="fitXY"
             android:textSize="@dimen/title_text_size" />
+        <View android:layout_width="match_parent" android:layout_height="250dp"
+            android:background="#80000000"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,54 +27,63 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/center_text"
-                android:text=" dlf phase V"
+                android:id="@+id/address"
                 android:textColor="@color/white"
                 android:layout_gravity="center_horizontal"
+                android:gravity="center"
                 android:textSize="@dimen/shortlist_text_size_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/bottom_text"
-                android:text=" sector 24 , new gurgaon"
-                android:textColor="@color/white"
-                android:layout_gravity="center_horizontal"
-                android:textSize="@dimen/shortlist_text_size_small"
+            <FrameLayout
+                android:id="@+id/seller_image_frame_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_gravity="center"
+                android:layout_height="wrap_content">
 
-         <ImageView
-             android:layout_width="56dp"
-             android:layout_height="56dp"
-             android:layout_gravity="center_horizontal"
-             android:src="@drawable/edit_avatar"/>
+                <com.pkmmte.view.CircularImageView
+                    android:id="@+id/seller_image_view"
+                    android:layout_width="@dimen/shortlist_card_seller_image_view_width"
+                    android:layout_height="@dimen/shortlist_card_seller_image_view_height"
+                    android:visibility="gone"
+                    app:border="true"
+                    app:border_color="@color/serp_listing_card_seller_mask_color"
+                    app:border_width="@dimen/border_width" />
+
+                <TextView
+                    android:id="@+id/seller_logo_text_view"
+                    android:layout_width="@dimen/shortlist_card_seller_image_view_width"
+                    android:layout_height="@dimen/shortlist_card_seller_image_view_height"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:typeface="serif"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+            </FrameLayout>
             <TextView
                 android:id="@+id/name"
-                android:text=" anand singh"
                 android:textColor="@color/white"
                 android:layout_gravity="center_horizontal"
                 android:textSize="@dimen/shortlist_text_size_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/company"
-                android:text="hihand greens pvt ltd"
-                android:textColor="@color/white"
-                android:layout_gravity="center_horizontal"
-                android:textSize="@dimen/shortlist_text_size_small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <RatingBar
-                android:id="@+id/ratingbar"
-                style="?android:attr/ratingBarStyleSmall"
-                android:layout_width="wrap_content"
+            <com.makaan.ui.view.CustomRatingBar
+                android:id="@+id/seller_rating"
+                android:layout_width="60dp"
+                android:layout_gravity="center"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:isIndicator="true"
+                android:layout_marginTop="@dimen/serp_listing_card_seller_rating_margin_top"
                 android:numStars="5"
-                android:rating="4"
-                android:stepSize="1.0" />
+                android:rating="0"
+                android:isIndicator="true"
+                card_view:itemHeight="@dimen/serp_listing_card_seller_rating_item_height"
+                card_view:itemWidth="@dimen/serp_listing_card_seller_rating_item_width"
+                card_view:itemMarginLeft="@dimen/serp_listing_card_seller_rating_item_margin_left"
+                card_view:itemMarginRight="@dimen/serp_listing_card_seller_rating_item_margin_right"
+                card_view:itemProgressIcon="@drawable/star_selected"
+                card_view:itemSecondaryProgressIcon="@drawable/star_unselected"
+                style="?android:attr/ratingBarStyleSmall"/>
 
         </LinearLayout>
 

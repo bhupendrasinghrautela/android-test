@@ -1,4 +1,4 @@
-package com.makaan.activity.shortlist;
+package com.makaan.activity.sitevisit;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.shortlist.ShortListCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +17,14 @@ import java.util.List;
 /**
  * adapter for buyer journey
  */
-public class ShortlistPagerAdapter extends FragmentStatePagerAdapter implements ShortListCallback {
+public class SiteVisitPagerAdapter extends FragmentStatePagerAdapter implements ShortListCallback {
     int mNumOfTabs;
     Context mContext;
-    String [] label = {"enquired","favorite","recent"};
-    String [] count = {"00","08","00"};
+    String [] label = {"site visits"};
+    String [] count = {"00"};
     List<View> mViews;
 
-    public ShortlistPagerAdapter(Context context , FragmentManager fm, int numOfTabs) {
+    public SiteVisitPagerAdapter(Context context, FragmentManager fm, int numOfTabs) {
         super(fm);
         this.mNumOfTabs = numOfTabs;
         this.mContext=context;
@@ -34,16 +35,9 @@ public class ShortlistPagerAdapter extends FragmentStatePagerAdapter implements 
 
         switch (position) {
             case 0:
-                ShortlistEnquiredFragment enquiredFragment = new ShortlistEnquiredFragment();
+                SiteVisitUpcommingFragment enquiredFragment = new SiteVisitUpcommingFragment();
                 enquiredFragment.bindView(this,0);
                 return enquiredFragment;
-            case 1:
-                ShortListFavoriteFragment favoriteFragment = new ShortListFavoriteFragment();
-                return favoriteFragment;
-            case 2:
-                //TODO change this to recent
-                ShortListRecentFragment recentFragment = new ShortListRecentFragment();
-                return recentFragment;
             default:
                 return null;
         }

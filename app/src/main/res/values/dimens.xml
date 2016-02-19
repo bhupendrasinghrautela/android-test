@@ -643,6 +643,9 @@
     <dimen name="listing_brief_view_layout_property_shortlist_checkbox_right_margin">14dp</dimen>
     <dimen name="listing_brief_view_layout_property_shortlist_checkbox_top_margin">12dp</dimen>
 
+    <dimen name="shortlist_card_seller_image_view_width">56dp</dimen>
+    <dimen name="shortlist_card_seller_image_view_height">56dp</dimen>
+
     <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_left_margin">0dp</dimen>
     <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_top_margin">0dp</dimen>
     <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_text_size">16sp</dimen>

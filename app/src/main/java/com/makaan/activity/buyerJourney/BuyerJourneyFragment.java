@@ -80,9 +80,8 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     public void onSiteVisitClick() {
         //TODO
 
-        if (isUserLoggedIn && (mClientEventsCount > 0)) {
-        /*intent.putExtra(BuyerDashboardActivity.DATA, "homeloan");
-        onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);*/
+        if (isUserLoggedIn) {
+            onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_SITE_VISIT);
         } else {
             intent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.SITE_VISIT);
             onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);

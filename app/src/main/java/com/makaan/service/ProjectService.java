@@ -54,6 +54,35 @@ public class ProjectService implements MakaanService {
         }
     }
 
+    public void getProjectByIdEnquiry(Long projectId) {
+
+        if (null != projectId) {
+            Selector projectDetailSelector = new Selector();
+            projectDetailSelector.fields(new String[]{"mainImageURL","user","profilePictureURL","currentListingPrice","price","latitude","longitude","activeStatus","projectId","companySeller","company","name","score","halls","unitType","unitName","measure","size","bathrooms","bedrooms","minResaleOrPrimaryPrice","maxResaleOrPrimaryPrice","listing","id","possessionDate","property","project","builder","name","minSize","maxSize","locality","suburb","label","city","imageURL"});
+            String projectUrl = ApiConstants.PROJECT.concat("/").concat(projectId.toString()).concat("?").concat(projectDetailSelector.build());
+
+            Type projectType = new TypeToken<Project>() {
+            }.getType();
+
+            MakaanNetworkClient.getInstance().get(projectUrl, projectType, new ObjectGetCallback() {
+                        @Override
+                        public void onError(ResponseError error) {
+                            ProjectByIdEvent projectByIdEvent = new ProjectByIdEvent();
+                            projectByIdEvent.error = error;
+                            AppBus.getInstance().post(projectByIdEvent);
+                        }
+
+                        @Override
+                        public void onSuccess(Object responseObject) {
+                            Project project = (Project) responseObject;
+                            project.getFormattedSpecifications();
+                            AppBus.getInstance().post(new ProjectByIdEvent(project));
+                        }
+                    }
+
+            );
+        }
+    }
 
     /**
      * http://marketplace-qa.makaan-ws.com/data/v2/recommendation?type=similar&projectId=506147&selector={"fields":["projectId","URL","imageURL","altText","mainImage","minPrice","minResaleOrPrimaryPrice","id","city","suburb","label","name","type","user","contactNumbers","locality","contactNumber","sellerId","listingCategory","property","currentListingPrice","price","bedrooms","bathrooms","size","unitTypeId","project","projectId","studyRoom","servantRoom","poojaRoom","companySeller","company","companyScore"],"paging":{"start":0,"rows":15}}&sourceDomain=Makaan

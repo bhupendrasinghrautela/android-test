@@ -1,4 +1,4 @@
-package com.makaan.activity.shortlist;
+package com.makaan.activity.sitevisit;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,35 +11,44 @@ import com.makaan.ui.view.CustomRatingBar;
 import com.pkmmte.view.CircularImageView;
 
 /**
- * Created by makaanuser on 2/2/16.
+ * Created by aishwarya on 18/02/16.
  */
-public class ShortListEnquiredViewHolder extends RecyclerView.ViewHolder {
+public class SiteVisitViewHolder extends RecyclerView.ViewHolder {
     public FadeInNetworkImageView mMainImage;
     public TextView mAddress;
     public TextView mName;
     public TextView mSellerText;
+    public TextView mSiteVisitDate;
+    public TextView mSiteVisitTime;
+    public TextView mDirection;
+    public TextView mCallNow;
     public CustomRatingBar mRating;
     public CircularImageView mSellerImage;
-    public TextView mRequestSiteVisit;
     private int position;
-    private ScheduleSiteVisit listener;
-    public interface ScheduleSiteVisit{
-        public void onSiteVisitClicked(int position);
-    }
+    private SiteVisitCallbacks callbacks;
 
-    public ShortListEnquiredViewHolder(View itemView) {
+    public SiteVisitViewHolder(View itemView) {
         super(itemView);
         mMainImage = (FadeInNetworkImageView) itemView.findViewById(R.id.iv_content);
         mAddress = (TextView) itemView.findViewById(R.id.address);
         mName = (TextView) itemView.findViewById(R.id.name);
+        mSiteVisitDate = (TextView) itemView.findViewById(R.id.date);
+        mSiteVisitTime = (TextView) itemView.findViewById(R.id.time);
+        mDirection = (TextView) itemView.findViewById(R.id.direction);
+        mCallNow = (TextView) itemView.findViewById(R.id.call_now);
         mSellerImage = (CircularImageView) itemView.findViewById(R.id.seller_image_view);
         mSellerText = (TextView) itemView.findViewById(R.id.seller_logo_text_view);
         mRating = (CustomRatingBar) itemView.findViewById(R.id.seller_rating);
-        mRequestSiteVisit = (TextView) itemView.findViewById(R.id.txt_content);
-        mRequestSiteVisit.setOnClickListener(new OnClickListener() {
+        mDirection.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onSiteVisitClicked(position);
+                callbacks.openDirections(position);
+            }
+        });
+        mCallNow.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callbacks.callNumber(position);
             }
         });
     }
@@ -48,7 +57,7 @@ public class ShortListEnquiredViewHolder extends RecyclerView.ViewHolder {
         this.position = position;
     }
 
-    public void setListener(ScheduleSiteVisit listener){
-        this.listener = listener;
+    public void setCallback(SiteVisitCallbacks callback){
+        this.callbacks = callback;
     }
 }

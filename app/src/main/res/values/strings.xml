@@ -224,6 +224,7 @@
 
     <!--Shortlist strings -->
     <string name="request_site_visit">request site visit</string>
+    <string name="directions">directions</string>
     <string name="project_amenities_title">amenities</string>
 
 
