@@ -515,11 +515,11 @@
     <dimen name="fragment_dialog_filters_submit_button_text_size">18sp</dimen>
     <dimen name="fragment_dialog_filters_submit_button_empty_view_margin_bottom">5dp</dimen>
 
-    <dimen name="fragment_dialog_filters_back_button_width">24dp</dimen>
-    <dimen name="fragment_dialog_filters_back_button_height">24dp</dimen>
+    <dimen name="fragment_dialog_filters_back_button_width">36dp</dimen>
+    <dimen name="fragment_dialog_filters_back_button_height">36dp</dimen>
     <dimen name="fragment_dialog_filters_back_button_margin_left">10dp</dimen>
-    <dimen name="fragment_dialog_filters_back_button_margin_top">14dp</dimen>
-    <dimen name="fragment_dialog_filters_back_button_margin_bottom">12dp</dimen>
+    <dimen name="fragment_dialog_filters_back_button_margin_top">6dp</dimen>
+    <dimen name="fragment_dialog_filters_back_button_margin_bottom">6dp</dimen>
 
     <dimen name="fragment_dialog_filters_filter_text_margin_left">14dp</dimen>
     <dimen name="fragment_dialog_filters_filter_text_margin_top">16dp</dimen>
@@ -527,9 +527,9 @@
 
     <dimen name="fragment_dialog_filters_reset_button_width">24dp</dimen>
     <dimen name="fragment_dialog_filters_reset_button_height">24dp</dimen>
-    <dimen name="fragment_dialog_filters_reset_button_margin_right">18.1dp</dimen>
-    <dimen name="fragment_dialog_filters_reset_button_margin_top">16.9dp</dimen>
-    <dimen name="fragment_dialog_filters_reset_button_margin_bottom">9.1dp</dimen>
+    <dimen name="fragment_dialog_filters_reset_button_margin_right">18dp</dimen>
+    <dimen name="fragment_dialog_filters_reset_button_margin_top">16dp</dimen>
+    <dimen name="fragment_dialog_filters_reset_button_margin_bottom">9dp</dimen>
 
     <dimen name="fragment_dialog_filters_item_layout_padding_top">35dp</dimen>
     <dimen name="fragment_dialog_filters_item_layout_padding_bottom">24dp</dimen>
@@ -1286,14 +1286,14 @@
     <dimen name="fragment_set_alerts_button_text_size">16sp</dimen>
 
     <dimen name="fragment_set_alerts_top_bar_padding_left">20dp</dimen>
-    <dimen name="fragment_set_alerts_top_bar_padding_top">12dp</dimen>
-    <dimen name="fragment_set_alerts_top_bar_padding_bottom">12dp</dimen>
+    <dimen name="fragment_set_alerts_top_bar_padding_top">6dp</dimen>
+    <dimen name="fragment_set_alerts_top_bar_padding_bottom">6dp</dimen>
 
     <dimen name="fragment_set_alerts_stay_informed_text_size">20sp</dimen>
     <dimen name="fragment_set_alerts_stay_informed_text_margin_left">20dp</dimen>
 
-    <dimen name="fragment_set_alerts_back_button_width">24dp</dimen>
-    <dimen name="fragment_set_alerts_back_button_height">24dp</dimen>
+    <dimen name="fragment_set_alerts_back_button_width">36dp</dimen>
+    <dimen name="fragment_set_alerts_back_button_height">36dp</dimen>
 
     <dimen name="fragment_set_alerts_name_edit_text_margin_left">20dp</dimen>
     <dimen name="fragment_set_alerts_name_edit_text_margin_right">20dp</dimen>

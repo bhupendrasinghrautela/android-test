@@ -8,6 +8,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -17,8 +18,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.makaan.R;
+import com.makaan.activity.city.CityActivity;
 import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.locality.LocalityActivity;
+import com.makaan.activity.project.ProjectActivity;
 import com.makaan.jarvis.analytics.AnalyticsConstants;
 import com.makaan.jarvis.analytics.AnalyticsService;
 import com.makaan.jarvis.message.ExposeMessage;
@@ -26,6 +30,7 @@ import com.makaan.jarvis.ui.cards.BaseCtaView;
 import com.makaan.jarvis.ui.cards.CtaCardFactory;
 import com.makaan.jarvis.ui.cards.SerpFilterCard;
 import com.makaan.pojo.SerpObjects;
+import com.makaan.response.project.Project;
 import com.makaan.service.MakaanServiceFactory;
 
 import org.json.JSONException;
@@ -57,13 +62,40 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     @Bind(R.id.jarvis_container)
     View mJarvisContainer;
 
-    Runnable mPopupDismissRunnable;
-    Handler mPopupDismissHandler =new Handler();
+    private Runnable mPopupDismissRunnable;
+    private Handler mPopupDismissHandler =new Handler();
+
+    private static Runnable mUserActivityTrackerRunnable;
+    private static Handler mUserActivityTrackerRenewHandler =new Handler();
+
+    private String currentPageUrl;
+    private static boolean isUserActivenessTrackEnabled;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SerpObjects.putSerpObject(this, getSerpObjects());
+
+        currentPageUrl = "";
+
+        setupActivityTimer();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isUserActivenessTrackEnabled = shouldTrackUserActiveness();
+        if(!TextUtils.isEmpty(currentPageUrl)) {
+            renewUserActivityTimer();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(shouldTrackUserActiveness()){
+            mUserActivityTrackerRenewHandler.removeCallbacks(mUserActivityTrackerRunnable);
+        }
     }
 
     @Override
@@ -116,6 +148,34 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         }
     }
 
+    private void setupActivityTimer(){
+        if(!shouldTrackUserActiveness()){
+            return;
+        }
+
+        if(null==mUserActivityTrackerRunnable) {
+            mUserActivityTrackerRunnable = new Runnable() {
+
+                @Override
+                public void run() {
+                    trackUserActiveness();
+                }
+            };
+        }
+
+    }
+
+    public static void renewUserActivityTimer(){
+        if(!isUserActivenessTrackEnabled){
+            return;
+        }
+
+        mUserActivityTrackerRenewHandler.removeCallbacks(mUserActivityTrackerRunnable);
+
+        mUserActivityTrackerRenewHandler.postDelayed(mUserActivityTrackerRunnable,
+                JarvisConstants.JARVIS_USER_ACTIVITY_TIMEOUT);
+    }
+
     private void setupPopup(){
         if(!isJarvisSupported()){
             return;
@@ -137,14 +197,6 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 mPopupDismissHandler.removeCallbacks(mPopupDismissRunnable);
-                return true;
-            }
-        });
-
-        mActivityContent.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                dismissPopupWithAnim();
                 return true;
             }
         });
@@ -247,4 +299,33 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
             mJarvisHead.setVisibility(visible ? View.VISIBLE : View.GONE);
         }
     }
+
+    public void setCurrentPageUrl(String currentPageUrl){
+        this.currentPageUrl = currentPageUrl;
+        renewUserActivityTimer();
+    }
+
+    private boolean shouldTrackUserActiveness(){
+        if(this instanceof SerpActivity || this instanceof ProjectActivity ||
+                this instanceof LocalityActivity || this instanceof CityActivity){
+            return true;
+        }
+
+        return false;
+    }
+
+    private void trackUserActiveness(){
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put(AnalyticsConstants.KEY_PAGE_TYPE, getScreenName());
+            jsonObject.put(AnalyticsConstants.KEY_EVENT_NAME, AnalyticsConstants.CONTENT_PYR);
+            jsonObject.put(AnalyticsConstants.KEY_CURRENT_PAGEURL, currentPageUrl);
+            AnalyticsService analyticsService =
+                    (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
+            analyticsService.track(AnalyticsService.Type.track, jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

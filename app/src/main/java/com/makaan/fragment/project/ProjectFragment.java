@@ -57,6 +57,7 @@ import com.makaan.ui.property.AboutBuilderExpandedLayout;
 import com.makaan.ui.property.AmenitiesViewScroll;
 import com.makaan.ui.property.PropertyImageViewPager;
 import com.makaan.ui.view.FontTextView;
+import com.makaan.util.RecentPropertyProjectManager;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -250,6 +251,11 @@ public class ProjectFragment extends MakaanBaseFragment{
             Toast.makeText(getActivity(), "project details could not be loaded at this time. please try later.", Toast.LENGTH_LONG).show();
         } else {
             project = projectByIdEvent.project;
+
+            // add project to recent
+            RecentPropertyProjectManager manager = RecentPropertyProjectManager.getInstance(getContext().getApplicationContext());
+            manager.addEntryToRecent(manager.new DataObject(project), getContext().getApplicationContext());
+
             mAmenitiesViewScroll.bindView(project.projectAmenities);
             if(project.getFormattedSpecifications() !=null && project.getFormattedSpecifications().size()>0) {
                 projectSpecificationView.setVisibility(View.VISIBLE);
