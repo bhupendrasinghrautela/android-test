@@ -128,8 +128,10 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
                 mEnquiryHashMap = new HashMap<>();
             }
             Enquiry enquiry = mEnquiryHashMap.get(listingByIdGetEvent.listingDetail.id);
-            enquiry.listingDetail = listingByIdGetEvent.listingDetail;
-            mEnquiryHashMap.put(enquiry.id, enquiry);
+            if(enquiry!=null) {
+                enquiry.listingDetail = listingByIdGetEvent.listingDetail;
+                mEnquiryHashMap.put(enquiry.id, enquiry);
+            }
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -144,14 +146,16 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
                 mEnquiryHashMap = new HashMap<>();
             }
             Enquiry enquiry = mEnquiryHashMap.get(projectByIdEvent.project.projectId);
-            enquiry.project = projectByIdEvent.project;
-            if(enquiry.clientId!=null && mCompanyHashMap != null){
-                Company company = mCompanyHashMap.get(enquiry.clientId);
-                if(company!=null){
-                    enquiry.company = company;
+            if(enquiry!=null) {
+                enquiry.project = projectByIdEvent.project;
+                if (enquiry.clientId != null && mCompanyHashMap != null) {
+                    Company company = mCompanyHashMap.get(enquiry.clientId);
+                    if (company != null) {
+                        enquiry.company = company;
+                    }
                 }
+                mEnquiryHashMap.put(enquiry.id, enquiry);
             }
-            mEnquiryHashMap.put(enquiry.id, enquiry);
             mAdapter.notifyDataSetChanged();
         }
     }

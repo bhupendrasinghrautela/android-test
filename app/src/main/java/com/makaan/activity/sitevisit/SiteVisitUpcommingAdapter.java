@@ -251,7 +251,7 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
         if(enquiry.latitude== null || enquiry.longitude == null){
             return;
         }
-        else{
+        else if(enquiry.latitude>0 && enquiry.longitude>0){
             Intent myIntent = new Intent(Intent.ACTION_VIEW, ClientEventsService.buildNavigationIntentUri(
                     enquiry.latitude, enquiry.longitude));
             mContext.startActivity(myIntent);

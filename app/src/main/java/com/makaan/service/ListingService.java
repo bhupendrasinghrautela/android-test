@@ -192,7 +192,7 @@ public class ListingService implements MakaanService {
                     .field("unitName").field("measure").field("size").field("bathrooms")
                     .field("bedrooms").field("listing").field("id").field("property")
                     .field("project").field("builder").field("locality").field("suburb")
-                    .field("label").field("city").field("imageURL");
+                    .field("label").field("city").field("imageURL").field("latitude").field("longitude");
             String listingDetailUrl = ApiConstants.LISTING.concat(listingId.toString()).concat("?").concat(listingDetailSelector.build());
             Type listingDetailType = new TypeToken<ListingDetail>() {
             }.getType();
