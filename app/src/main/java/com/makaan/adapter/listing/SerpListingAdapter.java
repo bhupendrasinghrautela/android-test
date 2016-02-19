@@ -224,8 +224,13 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
     }
 
     private void trackScroll(int position){
-        AnalyticsService analyticsService =
-                (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
-        analyticsService.trackSerpScroll(SerpObjects.getSelectedFilterNames(mContext), position);
+
+        if(mRequestType == SerpActivity.TYPE_CLUSTER) {
+
+        }else {
+            AnalyticsService analyticsService =
+                    (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
+            analyticsService.trackSerpScroll(SerpObjects.getSelectedFilterNames(mContext), position);
+        }
     }
 }

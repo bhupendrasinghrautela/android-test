@@ -28,7 +28,7 @@ public class AnalyticsService implements MakaanService {
         identify, track;
     }
 
-    public synchronized void trackSerpScroll(Set<String> selectedFiltersName, int position){
+    public void trackSerpScroll(Set<String> selectedFiltersName, int position){
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put(AnalyticsConstants.KEY_PAGE_TYPE, SerpActivity.SCREEN_NAME);
