@@ -2,7 +2,6 @@ package com.makaan.activity.buyerJourney;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,19 +12,21 @@ import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.buyerjourney.ClientEventsByGetEvent;
 import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
 import com.makaan.event.saveSearch.SaveSearchGetEvent;
+import com.makaan.event.wishlist.WishListResultEvent;
+import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.buyerJourney.BlogContentFragment;
 import com.makaan.service.ClientEventsService;
 import com.makaan.service.ClientLeadsService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
+import com.makaan.service.WishListService;
 import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class BuyerJourneyFragment extends Fragment {
+public class BuyerJourneyFragment extends MakaanBaseFragment {
 
 
     private Intent intent;
@@ -41,13 +42,6 @@ public class BuyerJourneyFragment extends Fragment {
     @Bind(R.id.tv_site_visit_subtitle)
     TextView mSiteVisitSubTitle;
 
-    @Bind(R.id.tv_search_subtitle)
-    TextView mSearchSubtitle;
-    @Bind(R.id.tv_shortlist_subtitle)
-    TextView mShortlistSubtitle;
-    @Bind(R.id.tv_site_visit_subtitle)
-    TextView mSiteVisitSubtitle;
-
     private int mSavedSearchesCount;
     private int mNewMatchesCount;
     private int mClientLeadsCount;
@@ -58,11 +52,13 @@ public class BuyerJourneyFragment extends Fragment {
     boolean mNewSearchesReceived = false;
     boolean mClientEventsReceived = false;
     boolean mClientLeadsReceived = false;
+    boolean mWishListsReceived = false;
+    private int mWishlistCount;
 
     @OnClick(R.id.ll_search)
     public void onSearchCLick() {
 
-        if (isUserLoggedIn) {
+        if (isUserLoggedIn && (mSavedSearchesCount + mNewMatchesCount > 0)) {
             onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_SAVE_SEARCH);
         } else {
             intent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.SEARCH);
@@ -72,7 +68,7 @@ public class BuyerJourneyFragment extends Fragment {
 
     @OnClick(R.id.ll_shortlist)
     public void onShortlistClick() {
-        if (isUserLoggedIn) {
+        if (isUserLoggedIn && (mClientLeadsCount + mWishlistCount > 0)) {
             onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_SHORTLIST);
         } else {
             intent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.SHORTLIST);
@@ -84,7 +80,7 @@ public class BuyerJourneyFragment extends Fragment {
     public void onSiteVisitClick() {
         //TODO
 
-        if (isUserLoggedIn) {
+        if (isUserLoggedIn && (mClientEventsCount > 0)) {
         /*intent.putExtra(BuyerDashboardActivity.DATA, "homeloan");
         onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);*/
         } else {
@@ -135,37 +131,30 @@ public class BuyerJourneyFragment extends Fragment {
     }
 
     @Override
+    protected int getContentViewId() {
+        return R.layout.fragment_buyer_journey;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_buyer_journey, container, false);
-        ButterKnife.bind(this, view);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
         intent = new Intent(getActivity(), BuyerDashboardActivity.class);
 
         isUserLoggedIn = CookiePreferences.isUserLoggedIn(getActivity());
         if(isUserLoggedIn) {
-            setSubTitle();
+            ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).getSavedSearches();
+            ((ClientLeadsService) MakaanServiceFactory.getInstance().getService(ClientLeadsService.class)).requestClientLeadsActivity();
+            ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).getSavedSearchesNewMatches();
+            ((ClientEventsService) MakaanServiceFactory.getInstance().getService(ClientEventsService.class)).getClientEvents(1);
+            ((WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class)).get();
+            mSavedSearchesReceived = false;
+            mNewSearchesReceived = true; // TODO need to implement this
+            mClientEventsReceived = false;
+            mClientLeadsReceived = false;
+            mWishListsReceived = false;
         }
 
-        ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).getSavedSearches();
-        ((ClientLeadsService) MakaanServiceFactory.getInstance().getService(ClientLeadsService.class)).requestClientLeadsActivity();
-        ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).getSavedSearchesNewMatches();
-        ((ClientEventsService) MakaanServiceFactory.getInstance().getService(ClientEventsService.class)).getClientEvents(1);
-        mSavedSearchesReceived = false;
-        mNewSearchesReceived = true; // TODO need to implement this
-        mClientEventsReceived = false;
-        mClientLeadsReceived = false;
-
         return view;
-    }
-
-    /**
-     *set subtitle if user is logged in
-     */
-    private void setSubTitle() {
-
-        mSearchSubTitle.setText("4 saved searches | 50 new matches");
-        mShortListSubTitle.setText("visit 12 shortlisted properties");
-        mSiteVisitSubTitle.setText("2 upcoming site visit");
-
     }
 
 
@@ -176,6 +165,19 @@ public class BuyerJourneyFragment extends Fragment {
             return;
         }
         mSavedSearchesCount = saveSearchGetEvent.saveSearchArrayList.size();
+        mSavedSearchesReceived = true;
+        updateUi();
+    }
+
+    @Subscribe
+    public void wishListResponse(WishListResultEvent wishListResultEvent){
+        if(wishListResultEvent == null || wishListResultEvent.error != null) {
+            // TODO handle error
+            return;
+        }
+        mWishlistCount = wishListResultEvent.wishListResponse.totalCount;
+        mWishListsReceived = true;
+        updateUi();
     }
 
     @Subscribe
@@ -185,11 +187,13 @@ public class BuyerJourneyFragment extends Fragment {
             return;
         }
         mClientLeadsCount = clientLeadsByGetEvent.totalCount;
-        if(clientLeadsByGetEvent.results != null && clientLeadsByGetEvent.results.size() >= 0) {
+        if(clientLeadsByGetEvent.results != null && clientLeadsByGetEvent.results.size() > 0) {
             if(clientLeadsByGetEvent.results.get(0).clientActivity != null) {
                 mPhaseId = clientLeadsByGetEvent.results.get(0).clientActivity.phaseId;
             }
         }
+        mClientLeadsReceived = true;
+        updateUi();
     }
 
     @Subscribe
@@ -199,17 +203,27 @@ public class BuyerJourneyFragment extends Fragment {
             return;
         }
         mClientEventsCount = clientEventsByGetEvent.totalCount;
+        mClientEventsReceived = true;
+        updateUi();
     }
 
     void updateUi() {
-        if(mClientEventsReceived && mClientLeadsReceived && mNewSearchesReceived && mSavedSearchesReceived) {
+        if(mClientEventsReceived && mClientLeadsReceived && mNewSearchesReceived && mSavedSearchesReceived && mWishListsReceived) {
             if(mSavedSearchesCount + mNewMatchesCount > 0) {
-                mSearchSubtitle.setText(String.format("%d saved searches | %d new matches", mSavedSearchesCount, mNewMatchesCount));
+                mSearchSubTitle.setText(String.format("%d saved searches | %d new matches", mSavedSearchesCount, mNewMatchesCount));
             } else {
-                mSearchSubtitle.setText(getResources().getString(R.string.search_sub_title));
+                mSearchSubTitle.setText(getResources().getString(R.string.search_sub_title));
             }
-            mSearchSubtitle.setText(String.format("%d shortlisted properties", mClientLeadsCount));
-            mSearchSubtitle.setText(String.format("%d upcoming site visits", mClientEventsCount));
+            if((mClientLeadsCount + mWishlistCount) > 0) {
+                mShortListSubTitle.setText(String.format("%d shortlisted properties", (mClientLeadsCount + mWishlistCount)));
+            } else {
+                mShortListSubTitle.setText(getResources().getString(R.string.shortlist_sub_title));
+            }
+            if(mClientEventsCount > 0) {
+                mSiteVisitSubTitle.setText(String.format("%d upcoming site visits", mClientEventsCount));
+            } else {
+                mSiteVisitSubTitle.setText(getResources().getString(R.string.site_visit_sub_title));
+            }
         }
     }
 }

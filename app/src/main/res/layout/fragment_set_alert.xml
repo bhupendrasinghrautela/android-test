@@ -67,6 +67,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/fragment_set_alerts_stay_informed_text_margin_left"
+            android:layout_marginStart="@dimen/fragment_set_alerts_stay_informed_text_margin_left"
+            android:layout_centerVertical="true"
             android:layout_toRightOf="@id/fragment_set_alerts_back_button"
             android:layout_toEndOf="@id/fragment_set_alerts_back_button"
             android:text="@string/stay_informed"
