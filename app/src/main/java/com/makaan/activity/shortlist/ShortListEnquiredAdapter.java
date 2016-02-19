@@ -19,6 +19,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.shortlist.ShortListEnquiredViewHolder.ScheduleSiteVisit;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.request.buyerjourney.SiteVisit;
+import com.makaan.request.buyerjourney.SiteVisit.ListingDetails;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Project;
@@ -26,12 +28,16 @@ import com.makaan.response.property.Property;
 import com.makaan.response.user.Company;
 import com.makaan.response.user.CompanySeller;
 import com.makaan.response.user.User;
+import com.makaan.service.ClientEventsService;
 import com.makaan.util.ImageUtils;
+import com.makaan.util.JsonBuilder;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -39,7 +45,7 @@ import java.util.Random;
  */
 public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ScheduleSiteVisit {
     Context mContext;
-    HashMap<Long,Enquiry> mEnquiries;
+    ArrayList<Enquiry> mEnquiries;
     private int width,height;
 
     public ShortListEnquiredAdapter(Context mContext){
@@ -49,7 +55,7 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     public void setData(HashMap<Long,Enquiry> enquiries){
-        this.mEnquiries = enquiries;
+        this.mEnquiries = (new ArrayList<Enquiry>(enquiries.values()));
         notifyDataSetChanged();
     }
 
@@ -71,8 +77,7 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ShortListEnquiredViewHolder shortListEnquiredViewHolder = (ShortListEnquiredViewHolder)holder;
         shortListEnquiredViewHolder.setPosition(position);
-        List<Enquiry> enquiryList = (new ArrayList<Enquiry>(mEnquiries.values()));
-        Enquiry enquiry = enquiryList.get(position);
+        Enquiry enquiry = mEnquiries.get(position);
 
         shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.locality_hero);
         if(enquiry.type == EnquiryType.LISTING){
@@ -242,18 +247,48 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     @Override
-    public void onSiteVisitClicked(int position) {
+    public void onSiteVisitClicked(final int position) {
         Calendar newCalendar = Calendar.getInstance();
         DatePickerDialog fromDatePickerDialog = new DatePickerDialog(mContext, new OnDateSetListener() {
 
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
+                makeSiteVisitPostRequest(position,newDate.getTimeInMillis());
             }
 
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
         fromDatePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
         fromDatePickerDialog.show();
+    }
+
+    private void makeSiteVisitPostRequest(int position, long timeInMillis) {
+        Enquiry enquiry = mEnquiries.get(position);
+        SiteVisit siteVisit = new SiteVisit();
+        siteVisit.eventTypeId = 1;
+        siteVisit.performTime = timeInMillis;
+        if(enquiry.type == EnquiryType.LISTING){
+            siteVisit.listingDetails = new ArrayList<>();
+            ListingDetails listingDetails = siteVisit.new ListingDetails();
+            listingDetails.listingId = enquiry.id;
+            siteVisit.listingDetails.add(listingDetails);
+            siteVisit.agentId = enquiry.listingDetail.companySeller.userId;
+        }
+        else  if(enquiry.type == EnquiryType.PROJECT){
+            ArrayList<Long> projectIds = new ArrayList<>();
+            projectIds.add(enquiry.id);
+            siteVisit.projectIds = projectIds;
+            siteVisit.agentId = enquiry.company.id;
+        }
+        else{
+            siteVisit.agentId = enquiry.company.id;
+        }
+        try {
+            JSONObject jsonObject = JsonBuilder.toJson(siteVisit);
+            ClientEventsService.postSiteVisitSchedule(jsonObject,enquiry.leadId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public enum  EnquiryType{
@@ -262,6 +297,7 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
 
     public class Enquiry{
         public Long id;
+        public Long leadId;
         public Long projectId;
         public Long clientId;
         public ListingDetail listingDetail;

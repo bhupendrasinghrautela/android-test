@@ -103,7 +103,7 @@
                 android:layout_marginBottom="18dp"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="center"
-                android:background="@drawable/directions"/>
+                android:background="@drawable/possession"/>
             <TextView
                 android:id="@+id/date"
                 android:layout_width="0dp"
@@ -124,7 +124,7 @@
                 android:layout_marginBottom="18dp"
                 android:layout_marginLeft="32dp"
                 android:layout_gravity="center"
-                android:background="@drawable/icon_call_sellers"/>
+                android:background="@drawable/clock"/>
             <TextView
                 android:id="@+id/time"
                 android:layout_width="0dp"
@@ -156,7 +156,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="28dp"
                 android:layout_gravity="center"
-                android:background="@drawable/directions"/>
+                android:background="@drawable/direction"/>
         <TextView
             android:id="@+id/direction"
             android:layout_width="wrap_content"

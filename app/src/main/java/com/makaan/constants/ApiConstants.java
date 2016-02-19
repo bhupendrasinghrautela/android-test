@@ -75,6 +75,7 @@ public class ApiConstants {
     public static final String USER_SERVICE_ENTITY_COMPANIES = BASE_URL.concat("/userservice/data/v1/entity/companies?filters=");
     public static final String USER_SERVICE_ENTITY_COMPANIES_FILTER = "id==%d,";
     public static final String SELLER_RATING = BASE_URL.concat("/data/v1/entity/user/seller-rating-review");
+    public static final String REQUEST_SITE_VISIT = BASE_URL.concat("/icrm/v1/client/events/");
     public static final String SITE_VISIT_CLIENT_EVENTS = BASE_URL.concat("/icrm/v1/client/events");
 
     //public static final String SIMILAR_LISTING = BASE_URL.concat("/app/v1/similar/listing/");

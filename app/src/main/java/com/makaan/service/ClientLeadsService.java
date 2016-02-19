@@ -11,7 +11,6 @@ import com.makaan.network.ObjectGetCallback;
 import com.makaan.response.ResponseError;
 import com.makaan.response.buyerjourney.AgentRating;
 import com.makaan.response.buyerjourney.Company;
-import com.makaan.response.saveSearch.SaveSearch;
 import com.makaan.util.AppBus;
 
 import org.json.JSONArray;
@@ -28,7 +27,7 @@ public class ClientLeadsService implements MakaanService {
     public final String TAG = ClientLeadsService.class.getSimpleName();
 
     public void requestClientLeads() {
-        String detailsURL = ApiConstants.ICRM_CLIENT_LEADS.concat("?fields=createdAt,companyId,listingId,propertyRequirements,projectId");
+        String detailsURL = ApiConstants.ICRM_CLIENT_LEADS.concat("?fields=createdAt,companyId,listingId,propertyRequirements,projectId,leadId");
         MakaanNetworkClient.getInstance().get(detailsURL, new JSONGetCallback() {
             @Override
             public void onSuccess(JSONObject responseObject) {

@@ -78,6 +78,7 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
                 if (clientLead.propertyRequirements != null && clientLead.propertyRequirements.size() > 0) {
                     for (PropertyRequirement propertyRequirement : clientLead.propertyRequirements) {
                         Enquiry enquiry = mAdapter.new Enquiry();
+                        enquiry.leadId = propertyRequirement.leadId;
                         if (propertyRequirement.listingId != null) {
                             enquiry.id = propertyRequirement.listingId;
                             enquiry.type = EnquiryType.LISTING;
@@ -132,7 +133,9 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
                 enquiry.listingDetail = listingByIdGetEvent.listingDetail;
                 mEnquiryHashMap.put(enquiry.id, enquiry);
             }
-            mAdapter.notifyDataSetChanged();
+            if(mAdapter!=null) {
+                mAdapter.notifyDataSetChanged();
+            }
         }
     }
 
@@ -156,7 +159,9 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
                 }
                 mEnquiryHashMap.put(enquiry.id, enquiry);
             }
-            mAdapter.notifyDataSetChanged();
+            if(mAdapter!=null) {
+                mAdapter.notifyDataSetChanged();
+            }
         }
     }
 
@@ -182,7 +187,9 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
                     }
                 }
             }
-            mAdapter.notifyDataSetChanged();
+            if(mAdapter!=null) {
+                mAdapter.notifyDataSetChanged();
+            }
         }
     }
 

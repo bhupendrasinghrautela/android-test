@@ -6,6 +6,7 @@ package com.makaan.response.user;
 public class CompanySeller {
 
     public Long id;
+    public Long userId;
     public Company company;
     public User user;
 }

@@ -188,7 +188,7 @@ public class ListingService implements MakaanService {
             Selector listingDetailSelector = new Selector();
             listingDetailSelector.field("user").field("mainImageURL").field("logo").field("profilePictureURL").field("currentListingPrice")
                     .field("price").field("projectId").field("companySeller").field("company")
-                    .field("name").field("score").field("halls").field("unitType")
+                    .field("name").field("score").field("halls").field("unitType").field("userId")
                     .field("unitName").field("measure").field("size").field("bathrooms")
                     .field("bedrooms").field("listing").field("id").field("property")
                     .field("project").field("builder").field("locality").field("suburb")

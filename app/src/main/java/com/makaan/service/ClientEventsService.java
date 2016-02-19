@@ -9,8 +9,10 @@ import com.makaan.constants.ResponseConstants;
 import com.makaan.event.buyerjourney.ClientEventsByGetEvent;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.network.StringRequestCallback;
 import com.makaan.response.ResponseError;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +23,7 @@ import java.lang.reflect.Type;
  * Created by rohitgarg on 2/18/16.
  */
 public class ClientEventsService implements MakaanService {
+    public static final String TAG = ClientEventsService.class.getSimpleName();
     public void getClientEvents(int rows) {
         String url = ApiConstants.SITE_VISIT_CLIENT_EVENTS.concat("?sort=-performTime");
         if(rows > 0) {
@@ -60,5 +63,21 @@ public class ClientEventsService implements MakaanService {
 
         navUri = Uri.parse(sBuilder.toString());
         return navUri;
+    }
+
+    public static void postSiteVisitSchedule(JSONObject jsonObject,Long id) {
+        String url = ApiConstants.REQUEST_SITE_VISIT.concat(String.valueOf(id));
+        MakaanNetworkClient.getInstance().post(url, jsonObject, new StringRequestCallback() {
+
+            @Override
+            public void onError(ResponseError error) {
+                CommonUtil.TLog("error");
+            }
+
+            @Override
+            public void onSuccess(String response) {
+                CommonUtil.TLog("success");
+            }
+        }, TAG);
     }
 }
