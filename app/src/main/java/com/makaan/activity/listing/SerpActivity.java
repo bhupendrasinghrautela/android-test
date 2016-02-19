@@ -593,6 +593,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             mGroupListings.addAll(groupListingGetEvent.groupListingData.groupListings);
             mGroupListingCount = groupListingGetEvent.groupListingData.totalCount;
         }
+
+        setUrl();
     }
 
     @OnClick(R.id.fragment_filters_filter_relative_layout)
@@ -990,5 +992,20 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             return false;
         }
         return true;
+    }
+
+    private void setUrl(){
+        if((MASK_LISTING_TYPE &mSerpRequestType) == SerpActivity.TYPE_CLUSTER) {
+            return;
+        }
+
+        if(null==mListings || mListings.isEmpty() || null==mListings.get(0)){
+            return;
+        }
+
+        Listing listing = mListings.get(0);
+
+        super.setCurrentPageUrl("/"+listing.cityName+"/"+listing.localityName);
+
     }
 }

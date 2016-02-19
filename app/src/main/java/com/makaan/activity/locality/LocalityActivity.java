@@ -3,9 +3,11 @@ package com.makaan.activity.locality;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
+import com.makaan.event.locality.LocalityByIdEvent;
 import com.makaan.event.project.OnSeeOnMapClicked;
 import com.makaan.fragment.locality.LocalityFragment;
 import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
@@ -81,5 +83,12 @@ public class LocalityActivity extends MakaanFragmentActivity {
                 break;
         }
         return true;
+    }
+
+    @Subscribe
+    public void onResults(LocalityByIdEvent localityByIdEvent) {
+        if (null != localityByIdEvent || null != localityByIdEvent.locality) {
+            setCurrentPageUrl("/"+localityByIdEvent.locality.label);
+        }
     }
 }

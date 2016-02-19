@@ -3,9 +3,11 @@ package com.makaan.activity.city;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
+import com.makaan.event.city.CityByIdEvent;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.service.CityService;
 import com.squareup.otto.Subscribe;
@@ -63,6 +65,13 @@ public class CityActivity extends MakaanFragmentActivity {
                 break;
         }
         return true;
+    }
+
+    @Subscribe
+    public void onResults(CityByIdEvent cityByIdEvent){
+        if (null != cityByIdEvent && null!=cityByIdEvent.city) {
+            setCurrentPageUrl("/"+cityByIdEvent.city.label);
+        }
     }
 
     @Subscribe
