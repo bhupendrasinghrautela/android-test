@@ -12,6 +12,8 @@ public class ExposeMessage {
     public String sessionId;
     public Properties properties;
 
+    public String city;
+
 
     public static class Properties{
         public String suggest_filter;
@@ -19,4 +21,5 @@ public class ExposeMessage {
         public List<Property> content;
         public CtaType ctaType;
     }
+
 }

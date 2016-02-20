@@ -60,7 +60,7 @@ public class PropertyPagerAdapter extends PagerAdapter {
                 (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         final View view =
-                mLayoutInflater.inflate(R.layout.card_property, null);
+                mLayoutInflater.inflate(R.layout.jarvis_card_property, null);
 
         PropertyCard propertyCard = (PropertyCard) view;
         propertyCard.bindView(mContext, mPropertyList.get(position));

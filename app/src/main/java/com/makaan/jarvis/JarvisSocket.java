@@ -168,10 +168,15 @@ public class JarvisSocket {
                         MasterDataCache.getInstance().getJarvisCtaMessageTypeMap();
                 ExposeMessage message = parseExposeMessage((JSONObject) args[0]);
                 Integer type = jarvisCtaMessageTypeMap.get(message.properties.type);
-                message.properties.ctaType = CtaType.fromInt(type);
-                OnExposeEvent event = new OnExposeEvent();
-                event.message = message;
-                AppBus.getInstance().post(event);
+
+                if(null!=type) {
+                    message.properties.ctaType = CtaType.fromInt(type);
+                    if(null!=message.properties.ctaType) {
+                        OnExposeEvent event = new OnExposeEvent();
+                        event.message = message;
+                        AppBus.getInstance().post(event);
+                    }
+                }
             }
         }
     };

@@ -570,6 +570,10 @@
     <dimen name="jarvis_chat_card_stroke_width">1dp</dimen>
     <dimen name="jarvis_bhk_horizontal_spacing">10dp</dimen>
     <dimen name="jarvis_chat_card_top_bottom_margin">5dp</dimen>
+    <dimen name="jarvis_chat_card_button_height">36dp</dimen>
+    <dimen name="jarvis_chat_card_button_text_size">16sp</dimen>
+    <dimen name="jarvis_chat_card_title_text_size">18sp</dimen>
+    <dimen name="jarvis_chat_card_subtitle_text_size">16sp</dimen>
 
     <!---Amenities-->
     <dimen name="amenity_type_logo_dimen">64dp</dimen>

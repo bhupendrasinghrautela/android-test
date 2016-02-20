@@ -180,4 +180,7 @@
     <color name="edit_text_bottom_border">#4C979797</color>
 
     <color name="buyer_dashboard_profile_background_color">#f7f7f7</color>
+
+    <color name="jarvis_card_title_color">#444444</color>
+    <color name="jarvis_card_subtitle_color">#9b9b9b</color>
 </resources>
