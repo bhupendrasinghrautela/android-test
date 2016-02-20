@@ -5,7 +5,7 @@ package com.makaan.jarvis.message;
  */
 public enum CtaType {
 
-    serpScroll(0), enquiryDropped(1);
+    serpScroll(0), enquiryDropped(1), contentPyr(2);
 
     public int value;
 

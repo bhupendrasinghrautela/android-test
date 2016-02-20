@@ -23,16 +23,23 @@ public class CtaCardFactory {
 
         if(CtaType.serpScroll == message.properties.ctaType){
             SerpFilterCard serpFilterCard =
-                    (SerpFilterCard) LayoutInflater.from(context).inflate(R.layout.card_serp_filter, null);
+                    (SerpFilterCard) LayoutInflater.from(context).inflate(R.layout.jarvis_card_serp_filter, null);
             serpFilterCard.bindView(context, message);
             return serpFilterCard;
 
         } else if (CtaType.enquiryDropped == message.properties.ctaType) {
             MultiPropertyCard multiPropertyCard =
                     (MultiPropertyCard) LayoutInflater.from(context).inflate(
-                            R.layout.card_multi_property, null);
+                            R.layout.jarvis_card_multi_property, null);
             multiPropertyCard.bindView(context, message);
             return multiPropertyCard;
+
+        }else if (CtaType.contentPyr == message.properties.ctaType) {
+            PyrPopupCard pyrPopupCard =
+                    (PyrPopupCard) LayoutInflater.from(context).inflate(
+                            R.layout.jarvis_card_pyr, null);
+            pyrPopupCard.bindView(context, message);
+            return pyrPopupCard;
 
         }else{
             return null;

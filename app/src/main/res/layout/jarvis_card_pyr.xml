@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:drawable/alert_light_frame"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:textColor="@color/jarvis_card_title_color"
+        android:textSize="@dimen/jarvis_chat_card_title_text_size" />
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:text="tell us your requirements and get in touch with top sellers"
+        android:layout_margin="20dp"
+        android:textColor="@color/jarvis_card_subtitle_color"
+        android:textSize="@dimen/jarvis_chat_card_title_text_size" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/btn_no"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/jarvis_chat_card_button_height"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_red"
+            android:text="No"
+            android:textColor="@color/app_red"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btn_yes"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/jarvis_chat_card_button_height"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/filled_red"
+            android:text="Yes"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+</LinearLayout>

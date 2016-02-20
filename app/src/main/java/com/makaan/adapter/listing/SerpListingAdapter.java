@@ -226,6 +226,16 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
     private void trackScroll(int position){
 
         if(mRequestType == SerpActivity.TYPE_CLUSTER) {
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put(AnalyticsConstants.KEY_PAGE_TYPE, "child serp");
+                jsonObject.put(AnalyticsConstants.KEY_EVENT_NAME, AnalyticsConstants.CHILD_SERP);
+                AnalyticsService analyticsService =
+                        (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
+                analyticsService.track(AnalyticsService.Type.track, jsonObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
         }else {
             AnalyticsService analyticsService =

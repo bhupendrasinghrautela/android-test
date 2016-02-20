@@ -594,7 +594,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             mGroupListingCount = groupListingGetEvent.groupListingData.totalCount;
         }
 
-        setUrl();
+        setTrackUrl();
     }
 
     @OnClick(R.id.fragment_filters_filter_relative_layout)
@@ -899,9 +899,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Override
     public String getOverviewText() {
-        if(mSerpBackStack.peek().selectedLocalitiesAndSuburbs() <= 1 && mListingGetEvent.listingData != null &&  mListingGetEvent.listingData.facets != null) {
-            return String.format("more about %s", mListingGetEvent.listingData.facets.buildDisplayName());
-        }
+        try {
+            if (mSerpBackStack.peek().selectedLocalitiesAndSuburbs() <= 1 && mListingGetEvent.listingData != null && mListingGetEvent.listingData.facets != null) {
+                return String.format("more about %s", mListingGetEvent.listingData.facets.buildDisplayName());
+            }
+        }catch (Exception e){}
         return null;
     }
 
@@ -950,6 +952,17 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Subscribe
     public void onExposeMessage(OnExposeEvent event) {
+        if(null!=event.message){
+            return;
+        }
+        if(null==mListings || mListings.isEmpty() || null==mListings.get(0)){
+            return;
+        }
+
+        Listing listing = mListings.get(0);
+        if(!TextUtils.isEmpty(listing.cityName)) {
+            event.message.city = listing.cityName;
+        }
         displayPopupWindow(event.message);
     }
 
@@ -994,7 +1007,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         return true;
     }
 
-    private void setUrl(){
+    private void setTrackUrl(){
         if((MASK_LISTING_TYPE &mSerpRequestType) == SerpActivity.TYPE_CLUSTER) {
             return;
         }
@@ -1008,4 +1021,5 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         super.setCurrentPageUrl("/"+listing.cityName+"/"+listing.localityName);
 
     }
+
 }

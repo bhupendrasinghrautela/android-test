@@ -11,9 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center_horizontal"
-        android:padding="20dp"
+        android:layout_margin="20dp"
         android:text="Do you want to drop an enquiry for the shortlisted properties"
-        android:textColor="@android:color/black"
+        android:textColor="@color/jarvis_card_subtitle_color"
         android:textSize="18sp" />
 
 
@@ -21,34 +21,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:orientation="horizontal">
 
 
         <Button
             android:id="@+id/btn_no"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="50dp"
+            android:layout_height="@dimen/jarvis_chat_card_button_height"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:background="@drawable/round_red"
-            android:text="No"
+            android:text="cancel"
             android:textColor="@color/app_red"
             android:textSize="20sp" />
 
         <Button
             android:id="@+id/btn_yes"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_height="@dimen/jarvis_chat_card_button_height"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:background="@drawable/filled_red"
-            android:text="Yes"
+            android:text="ok"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
     </LinearLayout>

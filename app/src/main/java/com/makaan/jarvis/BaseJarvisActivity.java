@@ -162,7 +162,6 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                 }
             };
         }
-
     }
 
     public static void renewUserActivityTimer(){
@@ -249,8 +248,9 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                 mJarvisPopupCard.removeAllViews();
                 BaseCtaView card = CtaCardFactory.createCard(BaseJarvisActivity.this, message);
                 mJarvisPopupCard.addView(card);
-                //mJarvisContainer.invalidate();
                 showPopupWithAnim();
+
+
                 card.setOnApplyClickListener(new SerpFilterCard.OnApplyClickListener() {
                     @Override
                     public void onApplyClick() {
@@ -269,7 +269,6 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         if(mJarvisPopupCard !=null && mJarvisPopupCard.getVisibility()==View.VISIBLE){
             mJarvisPopupCard.removeAllViews();
             mJarvisPopupCard.setVisibility(View.GONE);
-            //mJarvisContainer.invalidate();
         }else {
             super.onBackPressed();
         }
@@ -277,7 +276,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
     private void showPopupWithAnim(){
         mJarvisPopupCard.setVisibility(View.VISIBLE);
-       // mJarvisContainer.invalidate();
+        //mJarvisContainer.invalidate();
         //Animation zoomin = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoom_in);
         //mJarvisPopupCard.setAnimation(zoomin);
     }

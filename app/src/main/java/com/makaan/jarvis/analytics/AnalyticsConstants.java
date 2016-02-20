@@ -17,6 +17,7 @@ public class AnalyticsConstants {
     public static final String SERP_SCROLL = "serp_scroll";
     public static final String ENQUIRY_DROPPED = "enquiry_dropped";
     public static final String CONTENT_PYR = "content_pyr";
+    public static final String CHILD_SERP = "child_serp";
     public static final String IDENTIFY = "identify";
     public static final String TRACK = "track";
 

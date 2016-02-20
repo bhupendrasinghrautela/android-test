@@ -48,7 +48,7 @@ public class ChatCardFactory {
             param.topMargin=defaultTopBottomMargin;
             param.bottomMargin=defaultTopBottomMargin;
             SellerOverviewCard sellerOverviewCard=(SellerOverviewCard) LayoutInflater.from(context)
-                    .inflate(R.layout.card_seller, parent, false);
+                    .inflate(R.layout.jarvis_card_seller, parent, false);
             sellerOverviewCard.setLayoutParams(param);
             return sellerOverviewCard;
 
@@ -58,7 +58,7 @@ public class ChatCardFactory {
             param.topMargin=defaultTopBottomMargin;
             param.bottomMargin=defaultTopBottomMargin;
             AskReqCard askReqCard =(AskReqCard) LayoutInflater.from(context)
-                    .inflate(R.layout.card_requirement_filter, parent, false);
+                    .inflate(R.layout.jarvis_card_requirement_filter, parent, false);
             askReqCard.setLayoutParams(param);
             return askReqCard;
 
@@ -68,7 +68,7 @@ public class ChatCardFactory {
             param.topMargin=defaultTopBottomMargin;
             param.bottomMargin=defaultTopBottomMargin;
             SignupCard signupCard=(SignupCard) LayoutInflater.from(context)
-                    .inflate(R.layout.card_signup, parent, false);
+                    .inflate(R.layout.jarvis_card_signup, parent, false);
             signupCard.setLayoutParams(param);
             return signupCard;
 
@@ -78,7 +78,7 @@ public class ChatCardFactory {
             param.topMargin=defaultTopBottomMargin;
             param.bottomMargin=defaultTopBottomMargin;
             PropertyCard propertyCard=(PropertyCard) LayoutInflater.from(context)
-                    .inflate(R.layout.card_property, parent, false);
+                    .inflate(R.layout.jarvis_card_property, parent, false);
             propertyCard.setLayoutParams(param);
             return  propertyCard;
 
@@ -88,7 +88,7 @@ public class ChatCardFactory {
             param.topMargin=defaultTopBottomMargin;
             param.bottomMargin=defaultTopBottomMargin;
             PropertyCard propertyCard=(PropertyCard) LayoutInflater.from(context)
-                    .inflate(R.layout.card_property, parent, false);
+                    .inflate(R.layout.jarvis_card_property, parent, false);
             propertyCard.setLayoutParams(param);
             return  propertyCard;
 
@@ -100,7 +100,7 @@ public class ChatCardFactory {
             param.topMargin=defaultTopBottomMargin;
             param.bottomMargin=defaultTopBottomMargin;
             LocalityCard localityCard=(LocalityCard) LayoutInflater.from(context)
-                    .inflate(R.layout.card_locality, parent, false);
+                    .inflate(R.layout.jarvis_card_locality, parent, false);
             localityCard.setLayoutParams(param);
             return localityCard;
 
@@ -108,7 +108,7 @@ public class ChatCardFactory {
             param.rightMargin=margin;
             param.leftMargin=defaultLeftMargin;
             PlainLinkCard plainLinkCard=(PlainLinkCard) LayoutInflater.from(context)
-                    .inflate(R.layout.card_plainlink, parent, false);
+                    .inflate(R.layout.jarvis_card_plainlink, parent, false);
             plainLinkCard.setLayoutParams(param);
             return plainLinkCard;
 
@@ -119,7 +119,7 @@ public class ChatCardFactory {
             param.topMargin=defaultTopBottomMargin;
             param.bottomMargin=defaultTopBottomMargin;
             SellerOverviewCard sellerOverviewCard=(SellerOverviewCard) LayoutInflater.from(context)
-                    .inflate(R.layout.card_seller, parent, false);
+                    .inflate(R.layout.jarvis_card_seller, parent, false);
             sellerOverviewCard.setLayoutParams(param);
             return sellerOverviewCard;
 
@@ -129,7 +129,7 @@ public class ChatCardFactory {
             param.topMargin=defaultTopBottomMargin;
             param.bottomMargin=defaultTopBottomMargin;
             AgentRatingCard agentRatingCard=(AgentRatingCard) LayoutInflater.from(context)
-                    .inflate(R.layout.card_agent, parent, false);
+                    .inflate(R.layout.jarvis_card_agent, parent, false);
             agentRatingCard.setLayoutParams(param);
             return agentRatingCard;
 
