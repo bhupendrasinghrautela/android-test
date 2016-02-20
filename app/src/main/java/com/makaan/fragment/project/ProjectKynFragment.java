@@ -81,13 +81,15 @@ public class ProjectKynFragment extends MakaanBaseFragment{
         localityId = getArguments().getLong("localityId");
         description = getArguments().getString("description");
         score = getArguments().getDouble("score");
-        if(score==null)
+        if(score==null || score==0)
             scoreRl.setVisibility(View.GONE);
         else {
             scoreTv.setText(""+score);
             scoreProgress.setProgress((int) (score*10));
         }
-        descriptionTv.setText(Html.fromHtml(description));
+        if(description!=null) {
+            descriptionTv.setText(Html.fromHtml(description));
+        }
         titleTv.setText(title);
         if(amenityClusters.size()>0) {
             mRecyclerView.setVisibility(View.VISIBLE);

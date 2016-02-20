@@ -98,6 +98,9 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @OnClick(R.id.contact_top_seller)
     public void openTopSeller(){
+        if(mProjectConfigEvent == null){
+            return;
+        }
         SellerCard sellerCard = null;
         if(isRent && mProjectConfigEvent.rentProjectConfigItems!=null){
             for(ProjectConfigItem projectConfigItem:mProjectConfigEvent.rentProjectConfigItems){
@@ -312,7 +315,7 @@ public class ProjectFragment extends MakaanBaseFragment{
         aboutBuilderExpandedLayout.bindView(project.builder);
         builderDescriptionTv.setText(Html.fromHtml(project.builder.description));
 
-        if(project.livabilityScore !=null) {
+        if(project.livabilityScore !=null && project.livabilityScore!=0) {
             projectScoreProgreessBar.setProgress(project.livabilityScore.intValue() * 10);
             projectScoreTv.setText("" + project.livabilityScore);
         } else {

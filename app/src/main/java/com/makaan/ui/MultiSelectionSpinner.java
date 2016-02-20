@@ -7,7 +7,6 @@ package com.makaan.ui;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnDismissListener;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
@@ -231,19 +230,32 @@ public class MultiSelectionSpinner extends Spinner implements  OnMultiChoiceClic
         int count = 0;
         if(mPrefix!=null){
             sb.append(mPrefix);
+            String prefix = " ";
+            for (int i = 0; i < _items.length;i++) {
+                if (mSelection[i]) {
+                    sb.append(prefix);
+                    prefix = ",";
+                    sb.append(" "+_items[i]);
+                }
+            }
         }
-        String prefix = " ";
-        for (int i = 0; i < _items.length;i++) {
-            if (mSelection[i]) {
-                sb.append(prefix);
-                prefix = ",";
-                sb.append(" "+_items[i]);
+        else if(mPostFix != null){
+            String prefix = " ";
+            boolean selection = false;
+            for (int i = 0; i < _ids.length;i++) {
+                if (mSelection[i]) {
+                    sb.append(prefix);
+                    prefix = ",";
+                    selection = true;
+                    sb.append(" "+_ids[i]);
+                }
+            }
+            sb.append(mPostFix);
+            if(selection){
+                return sb.toString().replace(":","");
             }
         }
 
-        if(mPostFix != null){
-            sb.append(mPostFix);
-        }
         return sb.toString();
     }
 
