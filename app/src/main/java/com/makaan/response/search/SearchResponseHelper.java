@@ -5,20 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.activity.city.CityActivity;
 import com.makaan.activity.listing.SerpActivity;
-import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.cookie.Session;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.response.master.ApiLabel;
-import com.makaan.service.ListingService;
 import com.makaan.util.KeyUtil;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -116,9 +111,7 @@ public class SearchResponseHelper {
                         request.setCityId(item.cityId);
                     }
                 }
-                if(!supportsListing) {
-                    request.setSearch(item);
-                }
+                request.setSearch(item);
             }
             if(searchResponseArrayList.size() == 1) {
                 request.setTitle(searchResponseArrayList.get(0).displayText);
@@ -146,6 +139,7 @@ public class SearchResponseHelper {
             SerpRequest request = new SerpRequest(SerpActivity.TYPE_CITY);
             request.setCityId(Long.valueOf(searchItem.entityId));
             request.setTitle(searchItem.displayText);
+            request.setSearch(searchItem);
             request.launchSerp(context);
             return;
 
@@ -158,8 +152,13 @@ public class SearchResponseHelper {
 
         } else if(SearchSuggestionType.NEARBY_PROPERTIES.getValue().equalsIgnoreCase(searchItem.type)) {
             SerpRequest request = new SerpRequest(SerpActivity.TYPE_NEARBY);
-            request.setLatitude(Session.myLocation.centerLatitude);
-            request.setLongitude(Session.myLocation.centerLongitude);
+            if(Session.phoneLocation != null) {
+                request.setLatitude(Session.phoneLocation.getLatitude());
+                request.setLongitude(Session.phoneLocation.getLongitude());
+            } else if(Session.apiLocation != null) {
+                request.setLatitude(Session.apiLocation.centerLatitude);
+                request.setLongitude(Session.apiLocation.centerLongitude);
+            }
             request.setSort(SerpRequest.Sort.GEO_ASC);
             request.setTitle(searchItem.displayText);
             request.launchSerp(context);

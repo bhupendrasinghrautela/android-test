@@ -75,7 +75,7 @@ public class LocalityService implements MakaanService {
     public void getNearByLocalities(double lat, double lon, int noOfLocalities) {
 
         Selector nearByLocalitySelector = new Selector();
-        nearByLocalitySelector.nearby(10, lat, lon).fields(new String[]{LOCALITY_ID, LABEL, LISTING_AGGREGATIONS, LOCALITY_HEROSHOT_IMAGE_URL})
+        nearByLocalitySelector.nearby(10, lat, lon, false).fields(new String[]{LOCALITY_ID, LABEL, LISTING_AGGREGATIONS, LOCALITY_HEROSHOT_IMAGE_URL})
                 .sort(GEO_DISTANCE, SORT_ASC).page(0, noOfLocalities);
 
         String nearbyLocalityUrl = ApiConstants.LOCALITY_DATA.concat("?").concat(nearByLocalitySelector.build());

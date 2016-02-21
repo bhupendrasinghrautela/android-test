@@ -13,6 +13,8 @@ import java.util.LinkedHashMap;
 import static com.makaan.constants.RequestConstants.AND;
 import static com.makaan.constants.RequestConstants.FIELDS;
 import static com.makaan.constants.RequestConstants.FILTERS;
+import static com.makaan.constants.RequestConstants.LATITUDE;
+import static com.makaan.constants.RequestConstants.LONGITUDE;
 import static com.makaan.constants.RequestConstants.PAGING;
 import static com.makaan.constants.RequestConstants.SELECTOR;
 import static com.makaan.constants.RequestConstants.SORT;
@@ -23,6 +25,7 @@ import static com.makaan.constants.RequestConstants.SORT;
 public class Selector implements Cloneable {
 
     public static final String TAG = Selector.class.getSimpleName();
+    private static final double RADIUS_EARTH = 6378137;
 
 
     private HashSet<String> fieldSelector = new HashSet<>();
@@ -164,10 +167,32 @@ public class Selector implements Cloneable {
         return this;
     }
 
-    public Selector nearby(double distance, double lat, double lon) {
-        geoSelector.distance = distance;
-        geoSelector.lat = lat;
-        geoSelector.lon = lon;
+    public Selector nearby(double distance, double lat, double lon, boolean isViewPort) {
+        if(!isViewPort) {
+            geoSelector.distance = distance;
+            geoSelector.lat = lat;
+            geoSelector.lon = lon;
+        } else {
+
+            // convert distance from KM to Meters
+            double dispNorth = distance * 1000;
+            double dispEast = distance * 1000;
+
+            double dispLatRad = dispNorth / RADIUS_EARTH;
+            double dispLonRad = dispEast / (RADIUS_EARTH * Math.cos(Math.PI * lat / 180));
+
+            // bottom left point lat and lon
+            double latTopLeft = lat - (dispLatRad * 180 / Math.PI);
+            double lonTopLeft = lon - (dispLonRad * 180 / Math.PI);
+
+            // top right point lat and lon
+            double latBottomRight = lat + (dispLatRad * 180 / Math.PI);
+            double lonBottomRight = lon + (dispLonRad * 180 / Math.PI);
+
+            range(LATITUDE, latTopLeft, latBottomRight);
+            range(LONGITUDE, lonTopLeft, lonBottomRight);
+        }
+
         return this;
     }
 

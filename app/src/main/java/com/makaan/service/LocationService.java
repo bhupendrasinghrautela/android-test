@@ -3,6 +3,7 @@ package com.makaan.service;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ApiConstants;
+import com.makaan.constants.RequestConstants;
 import com.makaan.constants.ResponseConstants;
 import com.makaan.cookie.Session;
 import com.makaan.event.location.LocationGetEvent;
@@ -26,6 +27,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import static com.makaan.constants.RequestConstants.CITY;
 import static com.makaan.constants.RequestConstants.CITY_ID;
 import static com.makaan.constants.RequestConstants.GEO_DISTANCE;
 import static com.makaan.constants.RequestConstants.LABEL;
@@ -35,6 +37,7 @@ import static com.makaan.constants.RequestConstants.LOCALITY_HEROSHOT_IMAGE_URL;
 import static com.makaan.constants.RequestConstants.LOCALITY_ID;
 import static com.makaan.constants.RequestConstants.LONGITUDE;
 import static com.makaan.constants.RequestConstants.SORT_ASC;
+import static com.makaan.constants.RequestConstants.SUBURB;
 
 /**
  * Created by rohitgarg on 2/8/16.
@@ -70,12 +73,17 @@ public class LocationService implements MakaanService {
         });
     }
 
-    public void getTopLocalitiesAsSearchResult(final MyLocation myLocation) {
+    public void getTopLocalitiesAsSearchResult(double lat, double lon, final long id) {
         Selector selector = new Selector();
-        selector.field(LOCALITY_ID).field(CITY_ID).field(LABEL).field(LATITUDE).field(LONGITUDE);
+        selector.field(LOCALITY_ID).field(CITY_ID).field(LABEL).field(LATITUDE).field(LONGITUDE).field(SUBURB).field(CITY);
         selector.page(0, 5);
         selector.sort("localityLivabilityScore", "DESC");
-        selector.term("cityId", String.valueOf(myLocation.id));
+        if(id > 0) {
+            selector.term("cityId", String.valueOf(id));
+        } else if(lat > 0 && lon > 0) {
+            selector.nearby(RequestConstants.GEO_REQUEST_DISTANCE, lat, lon, false);
+        }
+
         MakaanNetworkClient.getInstance().get(ApiConstants.LOCALITY_DATA.concat("?").concat(selector.build()).concat("&format=json"), new JSONGetCallback() {
 
             @Override
@@ -99,13 +107,24 @@ public class LocationService implements MakaanService {
                                 item.entityId = String.valueOf(obj.getLong(LOCALITY_ID));
                                 item.displayText = obj.getString(LABEL);
                                 item.entityName = obj.getString(LABEL);
-                                if(item.cityId == myLocation.id) {
-                                    item.city = myLocation.label;
+                                if(id > 0 && item.cityId == id && Session.apiLocation != null) {
+                                    item.city = Session.apiLocation.label;
                                 }
                                 item.type = SearchSuggestionType.LOCALITY.getValue();
                                 item.id = String.format("TYPEAHEAD-LOCALITY-%s", item.entityId);
                                 item.latitude = obj.getDouble(LATITUDE);
                                 item.longitude = obj.getDouble(LONGITUDE);
+
+                                if(obj.has(SUBURB)) {
+                                    JSONObject obj1 = obj.getJSONObject(SUBURB);
+                                    if(obj1 != null && obj1.has(CITY)) {
+                                        obj1 = obj1.getJSONObject(CITY);
+                                        if(obj1 != null && obj1.has(LABEL)) {
+                                            item.city = obj1.getString(LABEL);
+                                        }
+                                    }
+                                }
+
                                 items.add(item);
                             }
                         }
@@ -131,10 +150,10 @@ public class LocationService implements MakaanService {
 
     public void getTopNearbyLocalitiesAsSearchResult(SearchResponseItem item) {
         Selector selector = new Selector();
-        selector.field(LOCALITY_ID).field(CITY_ID).field(LABEL).field(LATITUDE).field(LONGITUDE);
+        selector.field(LOCALITY_ID).field(CITY_ID).field(LABEL).field(LATITUDE).field(LONGITUDE).field(SUBURB).field(CITY);
         selector.page(0, 5);
         selector.sort("geoDistance", "ASC");
-        selector.nearby(10, item.latitude, item.longitude);
+        selector.nearby(10, item.latitude, item.longitude, false);
         MakaanNetworkClient.getInstance().get(ApiConstants.LOCALITY_DATA.concat("?").concat(selector.build()).concat("&format=json"), new JSONGetCallback() {
 
             @Override
@@ -157,13 +176,24 @@ public class LocationService implements MakaanService {
                             item.entityId = String.valueOf(obj.getLong(LOCALITY_ID));
                             item.displayText = obj.getString(LABEL);
                             item.entityName = obj.getString(LABEL);
-                            /*if(item.cityId == myLocation.id) {
-                                item.city = myLocation.label;
+                            /*if(item.cityId == apiLocation.id) {
+                                item.city = apiLocation.label;
                             }*/
                             item.type = SearchSuggestionType.LOCALITY.getValue();
                             item.id = String.format("TYPEAHEAD-LOCALITY-%s", item.entityId);
                             item.latitude = obj.getDouble(LATITUDE);
                             item.longitude = obj.getDouble(LONGITUDE);
+
+                            if(obj.has(SUBURB)) {
+                                JSONObject obj1 = obj.getJSONObject(SUBURB);
+                                if(obj1 != null && obj1.has(CITY)) {
+                                    obj1 = obj1.getJSONObject(CITY);
+                                    if(obj1 != null && obj1.has(LABEL)) {
+                                        item.city = obj1.getString(LABEL);
+                                    }
+                                }
+                            }
+
                             items.add(item);
                         }
                     }

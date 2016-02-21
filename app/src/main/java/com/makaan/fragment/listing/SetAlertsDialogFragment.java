@@ -13,7 +13,11 @@ import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.event.serp.SerpGetEvent;
+import com.makaan.pojo.SerpRequest;
 import com.makaan.request.selector.Selector;
+import com.makaan.response.search.SearchResponse;
+import com.makaan.response.search.SearchResponseItem;
+import com.makaan.response.search.SearchSuggestionType;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.response.serp.RangeFilter;
 import com.makaan.response.serp.RangeMinMaxFilter;
@@ -55,10 +59,17 @@ public class SetAlertsDialogFragment extends DialogFragment {
     private SerpGetEvent mListingGetEvent;
     private String mSearchName;
     private boolean mIsBuyContext;
+    private SerpRequest mSerpRequest;
 
     public void setData(ArrayList<FilterGroup> grps, SerpGetEvent listingGetEvent, boolean serpContext) {
         mGroups = grps;
         mListingGetEvent = listingGetEvent;
+        mIsBuyContext = serpContext;
+    }
+
+    public void setData(ArrayList<FilterGroup> grps, SerpRequest serpRequest, boolean serpContext) {
+        mGroups = grps;
+        mSerpRequest = serpRequest;
         mIsBuyContext = serpContext;
     }
 
@@ -77,7 +88,19 @@ public class SetAlertsDialogFragment extends DialogFragment {
     }
 
     private void handleSearchName() {
-        String name = mListingGetEvent.listingData.facets != null ? mListingGetEvent.listingData.facets.getSearchName() : null;
+        String name = null;
+        StringBuilder builder = new StringBuilder();
+
+        if(mSerpRequest != null) {
+            ArrayList<SearchResponseItem> searches = mSerpRequest.getSearches();
+            if(searches.size() == 1) {
+                name = searches.get(0).displayText;
+            } else if(searches.size() > 1) {
+                name = searches.get(0).displayText + " + " + (searches.size() - 1);
+            }
+        } else if(mListingGetEvent != null) {
+            name = mListingGetEvent.listingData.facets != null ? mListingGetEvent.listingData.facets.getSearchName() : null;
+        }
         if(TextUtils.isEmpty(name)) {
             StringBuilder bhk = new StringBuilder();
             StringBuilder budget = new StringBuilder();
@@ -123,17 +146,22 @@ public class SetAlertsDialogFragment extends DialogFragment {
     private void populateData() {
         StringBuilder builder = new StringBuilder();
         for (FilterGroup grp : mGroups) {
-            if(!grp.isSelected) {
+            if(!("i_beds".equalsIgnoreCase(grp.internalName)
+                    || "i_budget".equalsIgnoreCase(grp.internalName)
+                    || "i_property_type".equalsIgnoreCase(grp.internalName))) {
                 continue;
             }
-
             View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_set_alerts_list_item, mContentLinearLayout, false);
             mContentLinearLayout.addView(view);
             ((TextView) view.findViewById(R.id.fragment_set_alerts_list_item_display_text_view)).setText(grp.displayName);
-
             int id = this.getResources().getIdentifier(grp.imageName, "drawable", "com.makaan");
             if (id != 0) {
                 ((ImageView) view.findViewById(R.id.fragment_set_alerts_list_item_image_view)).setImageResource(id);
+            }
+
+            if(!grp.isSelected) {
+                ((TextView) view.findViewById(R.id.fragment_set_alerts_list_item_content_text_view)).setText("not selected");
+                continue;
             }
 
             if(builder.length() > 0) {
@@ -177,7 +205,30 @@ public class SetAlertsDialogFragment extends DialogFragment {
 
             ((TextView) view.findViewById(R.id.fragment_set_alerts_list_item_content_text_view)).setText(builder.toString());
         }
-        if(mListingGetEvent.listingData.facets != null) {
+        if(mSerpRequest != null) {
+            ArrayList<SearchResponseItem> searches = mSerpRequest.getSearches();
+            String location = "not available";
+            if(searches.size() == 1) {
+                location = searches.get(0).displayText;
+            } else if(searches.size() > 1) {
+                builder = new StringBuilder();
+                String separator = "";
+                for(SearchResponseItem item : searches) {
+                    builder.append(separator);
+                    builder.append(item.displayText);
+                    separator = ", ";
+                }
+                location = builder.toString();
+            }
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_set_alerts_list_item, mContentLinearLayout, false);
+            mContentLinearLayout.addView(view);
+            ((TextView) view.findViewById(R.id.fragment_set_alerts_list_item_display_text_view)).setText("location");
+
+            ((ImageView) view.findViewById(R.id.fragment_set_alerts_list_item_image_view)).setImageResource(R.drawable.location_icon);
+
+            ((TextView) view.findViewById(R.id.fragment_set_alerts_list_item_content_text_view)).setText(location);
+
+        } else if(mListingGetEvent != null && mListingGetEvent.listingData.facets != null) {
             String location = mListingGetEvent.listingData.facets.buildDisplayName();
             if (!TextUtils.isEmpty(location)) {
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_set_alerts_list_item, mContentLinearLayout, false);
@@ -341,7 +392,9 @@ public class SetAlertsDialogFragment extends DialogFragment {
             separator = "|";
         }
 
-        if(mListingGetEvent.listingData.facets != null) {
+        if(mSerpRequest != null) {
+            mSerpRequest.applySelector(selector, null, false, true);
+        } else if(mListingGetEvent != null && mListingGetEvent.listingData.facets != null) {
             searchNameBuilder.append(";");
             searchNameBuilder.append(mListingGetEvent.listingData.facets.buildDisplayName());
             mListingGetEvent.listingData.facets.applySelector(selector);

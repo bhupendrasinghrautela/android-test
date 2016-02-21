@@ -86,6 +86,7 @@ public class RequestConstants {
     public static final String AVG_RENTAL_DEMAND_RISE_PERCENTAGE = "avgRentalDemandRisePercentage";
     public static final String LOCALITY_HEROSHOT_IMAGE_URL = "localityHeroshotImageUrl";
     public static final String SUBURB = "suburb";
+    public static final String CITY = "city";
 
     public static final String AVG_RENT_PER_MONTH = "averageRentPerMonth";
     public static final String PROPERTY_DERIVED_INFO = "propertyDerivedInfo";
@@ -104,6 +105,7 @@ public class RequestConstants {
     public static final String SERVANT_ROOM = "servantRoom";
 
 
+    public static final double GEO_REQUEST_DISTANCE = 7.0;
 
 
 }

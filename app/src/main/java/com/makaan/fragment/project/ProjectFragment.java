@@ -95,6 +95,9 @@ public class ProjectFragment extends MakaanBaseFragment{
     private long projectId;
     private boolean isRent = false;
     private ProjectConfigEvent mProjectConfigEvent;
+    private RecentPropertyProjectManager.DataObject mDataObject;
+    private boolean mProjectReceived;
+    private boolean mConfigReceived;
 
     @OnClick(R.id.contact_top_seller)
     public void openTopSeller(){
@@ -164,6 +167,8 @@ public class ProjectFragment extends MakaanBaseFragment{
     }
 
     private void fetchData() {
+        mProjectReceived = false;
+        mConfigReceived = false;
         ((ProjectService) MakaanServiceFactory.getInstance().getService(ProjectService.class)).getProjectById(projectId);
         ((ProjectService) MakaanServiceFactory.getInstance().getService(ProjectService.class)).getProjectConfiguration(projectId);
         ((ProjectService) MakaanServiceFactory.getInstance().getService(ProjectService.class)).getSimilarProjects(projectId, 10);
@@ -255,9 +260,16 @@ public class ProjectFragment extends MakaanBaseFragment{
         } else {
             project = projectByIdEvent.project;
 
-            // add project to recent
-            RecentPropertyProjectManager manager = RecentPropertyProjectManager.getInstance(getContext().getApplicationContext());
-            manager.addEntryToRecent(manager.new DataObject(project), getContext().getApplicationContext());
+            /*if(mConfigReceived) {
+                // add project to recent
+                RecentPropertyProjectManager manager = RecentPropertyProjectManager.getInstance(getContext().getApplicationContext());
+                if (mDataObject == null) {
+                    mDataObject = manager.new DataObject(project);
+                } else {
+                    mDataObject.updateProjectData(project);
+                }
+                manager.addEntryToRecent(mDataObject, getContext().getApplicationContext());
+            }*/
 
             mAmenitiesViewScroll.bindView(project.projectAmenities);
             if(project.getFormattedSpecifications() !=null && project.getFormattedSpecifications().size()>0) {
@@ -346,6 +358,19 @@ public class ProjectFragment extends MakaanBaseFragment{
             //TODO handle error
             return;
         }
+
+        if(mProjectReceived) {
+
+        }
+
+        /*RecentPropertyProjectManager manager = RecentPropertyProjectManager.getInstance(getContext().getApplicationContext());
+        if(mDataObject == null) {
+            mDataObject = manager.new DataObject(mProjectConfigEvent);
+        } else {
+            mDataObject.updateProjectData(mProjectConfigEvent);
+        }
+        manager.addEntryToRecent(mDataObject, getContext().getApplicationContext());*/
+
         projectConfigView.bindView(projectConfigEvent, getActivity());
     }
 

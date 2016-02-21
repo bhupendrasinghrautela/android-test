@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
+import com.makaan.event.project.ProjectConfigEvent;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.project.Project;
 
@@ -103,6 +104,11 @@ public class RecentPropertyProjectManager {
         public String addressLine2;
         public double price, minPrice, maxPrice;
         public String type;
+        String imageUrl;
+        String sellerName;
+        String phoneNo;
+        double rating;
+        long sellerId;
 
         public DataObject() {}
 
@@ -130,6 +136,29 @@ public class RecentPropertyProjectManager {
                 if(listingDetail.currentListingPrice != null) {
                     this.price = listingDetail.currentListingPrice.price;
                 }
+
+                if(listingDetail.mainImageURL != null && !TextUtils.isEmpty(listingDetail.mainImageURL)) {
+                    this.imageUrl = listingDetail.mainImageURL;
+                }
+
+                if(listingDetail.companySeller != null) {
+                    if(listingDetail.companySeller.company != null) {
+                        if(listingDetail.companySeller.company.id != null) {
+                            this.sellerId = listingDetail.companySeller.company.id;
+                        }
+
+                        if(listingDetail.companySeller.company.name != null
+                                && !TextUtils.isEmpty(listingDetail.companySeller.company.name)) {
+                            this.sellerName = listingDetail.companySeller.company.name;
+                        } else if(listingDetail.companySeller.user != null && listingDetail.companySeller.user.fullName != null
+                                && !TextUtils.isEmpty(listingDetail.companySeller.user.fullName)){
+                            this.sellerName = listingDetail.companySeller.company.name;
+                        }
+
+                        this.rating = listingDetail.companySeller.company.score;
+                    }
+                }
+
                 if(listingDetail.property != null) {
                     if(listingDetail.property.project != null) {
                         if(!TextUtils.isEmpty(listingDetail.property.project.name)) {
@@ -160,18 +189,18 @@ public class RecentPropertyProjectManager {
             if(project != null) {
                 this.id = project.projectId;
                 this.type = TYPE_PROJECT;
-                if(project.minResaleOrPrimaryPrice != null && !Double.isNaN(project.minResaleOrPrimaryPrice)) {
-                    this.minPrice = project.minResaleOrPrimaryPrice;
+                if(project.minPrice != null && !Double.isNaN(project.minPrice)) {
+                    this.minPrice = project.minPrice;
                 }
-                if(project.maxResaleOrPrimaryPrice != null && !Double.isNaN(project.maxResaleOrPrimaryPrice)) {
-                    this.maxPrice = project.maxResaleOrPrimaryPrice;
+                if(project.maxPrice != null && !Double.isNaN(project.maxPrice)) {
+                    this.maxPrice = project.maxPrice;
                 }
                 if(!TextUtils.isEmpty(project.name)) {
                     this.addressLine1 = project.name;
                 }
 
-                if(project.locality != null) {
-
+                if(project.imageURL != null && !TextUtils.isEmpty(project.imageURL)) {
+                    this.imageUrl = project.imageURL;
                 }
 
                 if(project.locality != null) {
@@ -191,6 +220,52 @@ public class RecentPropertyProjectManager {
                     }
                 }
             }
+        }
+
+        public DataObject(ProjectConfigEvent projectConfigEvent) {
+            if(projectConfigEvent != null) {
+                this.type = TYPE_PROJECT;
+            }
+        }
+
+        public void updateProjectData(Project project) {
+            if(project != null) {
+                this.id = project.projectId;
+                if(project.minPrice != null && !Double.isNaN(project.minPrice)) {
+                    this.minPrice = project.minPrice;
+                }
+                if(project.maxPrice != null && !Double.isNaN(project.maxPrice)) {
+                    this.maxPrice = project.maxPrice;
+                }
+                if(!TextUtils.isEmpty(project.name)) {
+                    this.addressLine1 = project.name;
+                }
+
+                if(project.imageURL != null && !TextUtils.isEmpty(project.imageURL)) {
+                    this.imageUrl = project.imageURL;
+                }
+
+                if(project.locality != null) {
+                    if(!TextUtils.isEmpty(project.locality.label)) {
+                        this.addressLine2 = project.locality.label;
+                    }
+                    if(project.locality.suburb != null) {
+                        if(project.locality.suburb.city != null) {
+                            if(!TextUtils.isEmpty(project.locality.suburb.city.label)) {
+                                if(this.addressLine2 == null) {
+                                    this.addressLine2 = project.locality.suburb.city.label;
+                                } else {
+                                    this.addressLine2 = this.addressLine2.concat(", ").concat(project.locality.suburb.city.label);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public void updateProjectData(ProjectConfigEvent projectConfigEvent) {
+
         }
     }
 }
