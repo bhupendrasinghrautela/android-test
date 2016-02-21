@@ -29,7 +29,7 @@ import butterknife.Bind;
 /**
  * Created by rohitgarg on 1/7/16.
  */
-public class BuilderListingView extends AbstractListingView {
+public class BuilderListingView extends AbstractCardListingView {
     @Bind(R.id.serp_listing_item_builder_background_image_view)
     ImageView mBuilderBackgroundImageView;
     @Bind(R.id.serp_listing_item_builder_image_view)

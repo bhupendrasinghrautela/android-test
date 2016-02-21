@@ -22,7 +22,7 @@ import com.makaan.response.listing.GroupListing;
 /**
  * Created by rohitgarg on 1/7/16.
  */
-public class ClusterListingView extends AbstractListingView {
+public class ClusterListingView extends AbstractCardListingView {
 
     @Bind(R.id.cluster_view_pager)
     ViewPager viewPager;

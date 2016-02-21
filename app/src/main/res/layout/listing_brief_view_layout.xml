@@ -58,14 +58,13 @@
             android:layout_marginTop="@dimen/listing_brief_view_layout_property_price_top_margin"
             android:layout_toEndOf="@+id/listing_brief_view_layout_rupee_image_view"
             android:layout_toRightOf="@+id/listing_brief_view_layout_rupee_image_view"
-            android:layout_toLeftOf="@id/listing_brief_view_layout_property_shortlist_checkbox"
-            android:layout_toStartOf="@id/listing_brief_view_layout_property_shortlist_checkbox"
             android:textColor="@color/listing_brief_view_layout_default_text_color"
             android:textSize="@dimen/listing_brief_view_layout_property_price_text_size"
             android:singleLine="true"
             android:textAllCaps="false"
             android:typeface="serif"
-            android:ellipsize="none"/>
+            android:ellipsize="none"
+            android:maxLength="4"/>
 
         <TextView
             android:id="@+id/listing_brief_view_layout_property_price_unit_text_view"
@@ -74,12 +73,12 @@
             android:layout_marginLeft="@dimen/listing_brief_view_layout_property_price_unit_left_margin"
             android:layout_marginStart="@dimen/listing_brief_view_layout_property_price_unit_left_margin"
             android:layout_marginTop="@dimen/listing_brief_view_layout_property_price_unit_top_margin"
-            android:layout_toEndOf="@+id/listing_brief_view_layout_property_price_text_view"
-            android:layout_toRightOf="@+id/listing_brief_view_layout_property_price_text_view"
+            android:layout_toRightOf="@id/listing_brief_view_layout_property_price_text_view"
+            android:layout_toEndOf="@id/listing_brief_view_layout_property_price_text_view"
             android:textColor="@color/listing_brief_view_layout_default_text_color"
             android:textSize="@dimen/listing_brief_view_layout_property_price_unit_text_size"
             android:textAllCaps="false"
-            android:typeface="serif" />
+            android:typeface="serif"/>
 
         <TextView
             android:id="@+id/listing_brief_view_layout_property_price_sq_ft_text_view"

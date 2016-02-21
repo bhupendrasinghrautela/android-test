@@ -38,7 +38,7 @@ import butterknife.Bind;
 /**
  * Created by rohitgarg on 1/7/16.
  */
-public class SellerListingView extends AbstractListingView {
+public class SellerListingView extends AbstractCardListingView {
     @Bind(R.id.serp_listing_item_seller_background_image_view)
     ImageView mSellerBackgroundImageView;
 

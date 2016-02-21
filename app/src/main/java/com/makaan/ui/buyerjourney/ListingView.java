@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 import com.makaan.activity.listing.SerpRequestCallback;
+import com.makaan.ui.listing.AbstractCardListingView;
 import com.makaan.ui.listing.AbstractListingView;
 
 import butterknife.ButterKnife;
@@ -11,7 +12,7 @@ import butterknife.ButterKnife;
 /**
  * Created by rohitgarg on 2/16/16.
  */
-public class ListingView extends AbstractListingView {
+public class ListingView extends AbstractCardListingView {
     public ListingView(Context context) {
         super(context);
     }

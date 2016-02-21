@@ -21,6 +21,8 @@ public class DefaultListingViewHolder extends BaseListingAdapterViewHolder {
         if(view != null) {
             if(view instanceof AbstractListingView) {
                 ((AbstractListingView)view).populateData(data, callback);
+            } else if(view instanceof AbstractCardListingView) {
+                ((AbstractCardListingView)view).populateData(data, callback);
             }
         }
     }
