@@ -67,6 +67,11 @@ public class AppUtils {
         return mmYYFormatter.format(getDateFromEpoch(epochTime));
     }
 
+    public static String getDDMMMYYDateStringFromEpoch(String epochTime) {
+        SimpleDateFormat mmYYFormatter = new SimpleDateFormat("dd MMM, yy", Locale.getDefault());
+        return mmYYFormatter.format(getDateFromEpoch(epochTime));
+    }
+
 
     public static String getDateStringFromEpoch(String epochTime) {
         if (epochTime != null && !TextUtils.isEmpty(epochTime)) {
