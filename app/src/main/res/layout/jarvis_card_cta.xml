@@ -14,7 +14,7 @@
         android:layout_margin="20dp"
         android:text="Do you want to drop an enquiry for the shortlisted properties"
         android:textColor="@color/jarvis_card_subtitle_color"
-        android:textSize="18sp" />
+        android:textSize="@dimen/jarvis_chat_card_subtitle_text_size" />
 
 
     <LinearLayout
@@ -36,7 +36,7 @@
             android:background="@drawable/round_red"
             android:text="cancel"
             android:textColor="@color/app_red"
-            android:textSize="20sp" />
+            android:textSize="@dimen/jarvis_chat_card_button_text_size" />
 
         <Button
             android:id="@+id/btn_yes"
@@ -47,7 +47,7 @@
             android:background="@drawable/filled_red"
             android:text="ok"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="@dimen/jarvis_chat_card_button_text_size" />
     </LinearLayout>
 
 </LinearLayout>

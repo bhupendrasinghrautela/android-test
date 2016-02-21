@@ -6,9 +6,11 @@ import android.os.Bundle;
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.event.project.OnSeeOnMapClicked;
+import com.makaan.event.project.ProjectByIdEvent;
 import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
 import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.jarvis.event.IncomingMessageEvent;
+import com.makaan.response.project.Project;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.squareup.otto.Subscribe;
 
@@ -21,6 +23,7 @@ public class ProjectActivity extends MakaanBaseSearchActivity {
     private Long projectId;
     private ProjectFragment projectFragment;
     private NeighborhoodMapFragment mNeighborhoodMapFragment;
+    private NeighborhoodMapFragment.EntityInfo mEntityInfo;
 
     @Override
     protected int getContentViewId() {
@@ -56,7 +59,7 @@ public class ProjectActivity extends MakaanBaseSearchActivity {
     @Subscribe
     public void onResult(OnSeeOnMapClicked seeOnMapClicked){
         mNeighborhoodMapFragment = new NeighborhoodMapFragment();
-        mNeighborhoodMapFragment.setData(seeOnMapClicked.amenityClusters);
+        mNeighborhoodMapFragment.setData(mEntityInfo,seeOnMapClicked.amenityClusters);
         initFragment(R.id.container, mNeighborhoodMapFragment, true);
     }
 
@@ -83,6 +86,19 @@ public class ProjectActivity extends MakaanBaseSearchActivity {
     @Override
     protected boolean supportsListing() {
         return false;
+    }
+
+    @Subscribe
+    public void onResult(ProjectByIdEvent projectByIdEvent) {
+        if (null == projectByIdEvent || null != projectByIdEvent.error) {
+            //getActivity().finish();
+        } else {
+            Project project = projectByIdEvent.project;
+            if(null!=project) {
+                mEntityInfo = new NeighborhoodMapFragment.EntityInfo(project.name,
+                        project.latitude, project.longitude);
+            }
+        }
     }
 
     @Subscribe

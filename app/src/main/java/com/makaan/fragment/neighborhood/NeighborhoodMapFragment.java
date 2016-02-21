@@ -50,6 +50,8 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
     private SelectedMarker mSelectedMarker = new SelectedMarker();
     private NeighborhoodCategoryAdapter mNeighborhoodCategoryAdapter;
     private LinearLayoutManager mLayoutManager;
+    private EntityInfo mEntityInfo;
+    private Marker mEntityMarker;
 
     @Bind(R.id.neighborhood_map_view)
     MapView mMapView;
@@ -102,7 +104,8 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
         mMapView.onLowMemory();
     }
 
-    public void setData(List<AmenityCluster> amenityClusters){
+    public void setData(EntityInfo entityInfo, List<AmenityCluster> amenityClusters){
+        mEntityInfo = entityInfo;
         for(AmenityCluster cluster : amenityClusters){
             if(null!=cluster && null!=cluster.cluster && cluster.cluster.size()>0){
                 mAmenityClusters.add(cluster);
@@ -144,7 +147,9 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
         mPropertyMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                selectMarker(marker);
+                if(null==mEntityMarker || !marker.getTitle().equalsIgnoreCase(mEntityMarker.getTitle() )) {
+                    selectMarker(marker);
+                }
                 return false;
             }
         });
@@ -162,6 +167,7 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
         mAllMarkers.clear();
         clearMap();
 
+        addEntityMarker();
 
         mLatLngBoundsBuilder = new LatLngBounds.Builder();
 
@@ -199,6 +205,17 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
     private void clearMap(){
         if(mPropertyMap!=null){
             mPropertyMap.clear();
+        }
+    }
+
+    private void addEntityMarker(){
+        if(null==mEntityInfo){
+            return;
+        }
+        if(mEntityInfo.mPlaceLat>0 && mEntityInfo.mPlaceLon>0) {
+            mEntityMarker = mPropertyMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(mEntityInfo.mPlaceLat, mEntityInfo.mPlaceLon))
+                    .title(mEntityInfo.mPlaceName));
         }
     }
 
@@ -291,5 +308,17 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
     @OnClick(R.id.next_amenity)
     public void nextButtonClick(){
         mNeighborhoodCategoryView.getLayoutManager().scrollToPosition(mLayoutManager.findLastVisibleItemPosition() + 1);
+    }
+
+    public static class EntityInfo{
+        private String mPlaceName;
+        private double mPlaceLat;
+        private double mPlaceLon;
+
+        public EntityInfo(String name, double lat, double lon){
+            mPlaceName = name;
+            mPlaceLat = lat;
+            mPlaceLon = lon;
+        }
     }
 }

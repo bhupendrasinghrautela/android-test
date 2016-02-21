@@ -31,6 +31,7 @@ import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by sunil on 11/01/16.
@@ -51,6 +52,8 @@ public class ChatActivity extends AppCompatActivity {
 
     @Bind(R.id.compose)
     EditText mCompose;
+
+
 
 
     @Override
@@ -168,14 +171,12 @@ public class ChatActivity extends AppCompatActivity {
 
     @Subscribe
     public void onIncomingMessage(IncomingMessageEvent event){
-        //TODO code cleanup
         final Message message = (Message) event.message;
         addChatMessage(message);
     }
 
     @Subscribe
     public void onSendRequirementMessage(SendRequirementEvent event){
-        //TODO code cleanup
         final Message message = (Message) event.message;
         sendMessageToService(message);
         //addChatMessage(message);
@@ -200,5 +201,9 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick(R.id.close)
+    public void onChatCloseClick(){
+        finish();
+    }
 
 }

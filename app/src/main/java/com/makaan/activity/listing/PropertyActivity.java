@@ -6,8 +6,10 @@ import android.os.Bundle;
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.event.amenity.AmenityGetEvent;
+import com.makaan.event.listing.ListingByIdGetEvent;
 import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
 import com.makaan.jarvis.event.IncomingMessageEvent;
+import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.service.AmenityService;
 import com.makaan.service.ListingService;
@@ -29,6 +31,7 @@ public class PropertyActivity extends MakaanBaseSearchActivity implements ShowMa
     private long mListingId;
     private double mListingLon;
     private double mListingLat;
+    private NeighborhoodMapFragment.EntityInfo mEntityInfo;
 
     @Override
     protected int getContentViewId() {
@@ -108,9 +111,22 @@ public class PropertyActivity extends MakaanBaseSearchActivity implements ShowMa
     @Override
     public void showMapFragment() {
         mNeighborhoodMapFragment = new NeighborhoodMapFragment();
-        mNeighborhoodMapFragment.setData(mAmenityGetEvent.amenityClusters);
+        mNeighborhoodMapFragment.setData(mEntityInfo,mAmenityGetEvent.amenityClusters);
         initFragment(R.id.container, mNeighborhoodMapFragment, true);
         //produceAmenityEvent();
+    }
+
+    @Subscribe
+    public void onResults(ListingByIdGetEvent listingByIdGetEvent) {
+        if(listingByIdGetEvent.listingDetail ==null || null != listingByIdGetEvent.error){
+            return;
+        }else {
+            ListingDetail listingDetail = listingByIdGetEvent.listingDetail;
+            if(null!=listingDetail) {
+                mEntityInfo = new NeighborhoodMapFragment.EntityInfo(listingDetail.property.project.builder.name + " " + listingDetail.property.project.name ,
+                        listingDetail.latitude, listingDetail.longitude);
+            }
+        }
     }
 
     @Subscribe

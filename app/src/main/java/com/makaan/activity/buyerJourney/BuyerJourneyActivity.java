@@ -24,6 +24,7 @@ import com.makaan.R;
 import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.user.UserLoginEvent;
+import com.makaan.jarvis.BaseJarvisActivity;
 import com.makaan.ui.view.BadgeView;
 import com.makaan.util.AppBus;
 import com.pkmmte.view.CircularImageView;
@@ -36,7 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class BuyerJourneyActivity extends AppCompatActivity {
+public class BuyerJourneyActivity extends BaseJarvisActivity {
     @Bind(R.id.button_login)
     Button mLoginButton;
 
@@ -76,6 +77,16 @@ public class BuyerJourneyActivity extends AppCompatActivity {
     }
 
     public final String TAG = BuyerJourneyActivity.class.getSimpleName();
+
+    @Override
+    public boolean isJarvisSupported() {
+        return true;
+    }
+
+    @Override
+    public String getScreenName() {
+        return "Buyer journey";
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

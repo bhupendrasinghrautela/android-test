@@ -58,6 +58,10 @@ public class AnalyticsService implements MakaanService {
         }
     }
 
+    public void trackBuyerJourney(){
+
+    }
+
     public synchronized void track(Type type, JSONObject object){
         if(object==null){
             return;

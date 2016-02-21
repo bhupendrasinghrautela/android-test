@@ -315,6 +315,9 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
     private void trackUserActiveness(){
         try {
+            if(!shouldTrackUserActiveness()){
+                return;
+            }
             JSONObject jsonObject = new JSONObject();
             jsonObject.put(AnalyticsConstants.KEY_PAGE_TYPE, getScreenName());
             jsonObject.put(AnalyticsConstants.KEY_EVENT_NAME, AnalyticsConstants.CONTENT_PYR);
