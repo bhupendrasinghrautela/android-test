@@ -23,6 +23,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
     private Long localityId;
     private LocalityFragment localityFragment;
     private NeighborhoodMapFragment mNeighborhoodMapFragment;
+    private NeighborhoodMapFragment.EntityInfo mEntityInfo;
 
     @Override
     protected int getContentViewId() {
@@ -39,7 +40,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
     @Subscribe
     public void onResult(OnSeeOnMapClicked onSeeOnMapClicked){
         mNeighborhoodMapFragment = new NeighborhoodMapFragment();
-        mNeighborhoodMapFragment.setData(onSeeOnMapClicked.amenityClusters);
+        mNeighborhoodMapFragment.setData(mEntityInfo,onSeeOnMapClicked.amenityClusters);
         initFragment(R.id.container, mNeighborhoodMapFragment, true);
     }
 
@@ -89,6 +90,9 @@ public class LocalityActivity extends MakaanFragmentActivity {
     public void onResults(LocalityByIdEvent localityByIdEvent) {
         if (null != localityByIdEvent || null != localityByIdEvent.locality) {
             setCurrentPageUrl("/"+localityByIdEvent.locality.label);
+            mEntityInfo = new NeighborhoodMapFragment.EntityInfo(localityByIdEvent.locality.label,
+                    localityByIdEvent.locality.latitude,
+                    localityByIdEvent.locality.latitude);
         }
     }
 }
