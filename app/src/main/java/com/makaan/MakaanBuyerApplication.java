@@ -20,6 +20,7 @@ import com.makaan.service.ClientLeadsService;
 import com.makaan.service.LocationService;
 import com.makaan.service.ClientEventsService;
 import com.makaan.service.user.ForgotPasswordService;
+import com.makaan.service.user.UserLogoutService;
 import com.makaan.service.user.UserRegistrationService;
 import com.makaan.service.AgentService;
 import com.makaan.service.AmenityService;
@@ -116,6 +117,8 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(ProjectService.class, new ProjectService());
         MakaanServiceFactory.getInstance().registerService(BlogService.class, new BlogService());
         MakaanServiceFactory.getInstance().registerService(UserLoginService.class, new UserLoginService());
+        MakaanServiceFactory.getInstance().registerService(UserLogoutService.class, new UserLogoutService());
+
         MakaanServiceFactory.getInstance().registerService(WishListService.class, new WishListService());
         MakaanServiceFactory.getInstance().registerService(AgentService.class, new AgentService());
         MakaanServiceFactory.getInstance().registerService(OtpVerificationService.class, new OtpVerificationService());
