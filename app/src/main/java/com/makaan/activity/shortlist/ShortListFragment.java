@@ -69,6 +69,7 @@ public class ShortListFragment extends MakaanBaseFragment {
         final ShortlistPagerAdapter adapter = new ShortlistPagerAdapter(getActivity(), getChildFragmentManager(), mTabLayout.getTabCount());
 
         mViewPager.setAdapter(adapter);
+        mViewPager.setCurrentItem(1);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         for (int i = 0; i < mTabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = mTabLayout.getTabAt(i);
