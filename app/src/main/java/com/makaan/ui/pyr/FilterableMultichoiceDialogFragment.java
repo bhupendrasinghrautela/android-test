@@ -279,17 +279,23 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 	@Subscribe
 	public void searchResult(SearchResultEvent searchResultEvent){
 		mCompleteItemsList.clear();
-		ArrayList<SearchResponseItem> mOriginalList=searchResultEvent.searchResponse.getData();
-		mSelectedItemsFlag=new boolean[mOriginalList.size()];
-		if(mOriginalList.size()>0){
-			mMultiChoiceCardView.setVisibility(View.VISIBLE);
+		ArrayList<SearchResponseItem> mOriginalList;
+		if(searchResultEvent!=null && searchResultEvent.searchResponse!=null) {
+			mOriginalList = searchResultEvent.searchResponse.getData();
+			mSelectedItemsFlag = new boolean[mOriginalList.size()];
+
+			if (mOriginalList.size() > 0) {
+				mMultiChoiceCardView.setVisibility(View.VISIBLE);
+			}
+
+			for (int i = 0; i < mOriginalList.size(); i++) {
+				mCompleteItemsList.add(new Item(mOriginalList.get(i), mSelectedItemsFlag[i]));
+			}
+
+			mSelectedItemsLayout.setVisibility(View.GONE);
+			mMultiselectionListview.setVisibility(View.VISIBLE);
+			mUnselectedItemsAdapter.updateDataItems(mOriginalList);
 		}
-		for (int i = 0; i < mOriginalList.size(); i++) {
-			mCompleteItemsList.add(new Item(mOriginalList.get(i), mSelectedItemsFlag[i]));
-		}
-		mSelectedItemsLayout.setVisibility(View.GONE);
-		mMultiselectionListview.setVisibility(View.VISIBLE);
-		mUnselectedItemsAdapter.updateDataItems(mOriginalList);
 	}
 
 }
