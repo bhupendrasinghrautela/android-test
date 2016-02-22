@@ -147,6 +147,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
         </activity>
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" >
+        </activity>
+
+
         <activity
             android:name=".activity.userLogin.UserLoginActivity"
             android:label="@string/app_name"
@@ -174,6 +182,10 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="0d9f827a7cf965bf38c097cfb9becaa6e0d46db1" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/app_FB_id" />
     </application>
 
 </manifest>

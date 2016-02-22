@@ -20,6 +20,7 @@ import com.makaan.response.user.UserResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.WishListService;
 import com.makaan.ui.CommonProgressDialog;
+import com.makaan.util.AppBus;
 import com.makaan.util.Preference;
 
 
@@ -107,6 +108,18 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
         if(mProgressDialog !=null)
             mProgressDialog.dismissDialog();
         Toast.makeText(this,error.msg,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        AppBus.getInstance().unregister(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        AppBus.getInstance().register(this);
     }
 
     @Override
