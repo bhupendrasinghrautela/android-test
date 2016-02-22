@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
+import com.makaan.cookie.CookiePreferences;
 import com.makaan.fragment.MakaanBaseFragment;
 
 import butterknife.OnClick;
@@ -30,8 +31,10 @@ public class RewardsFragment extends MakaanBaseFragment {
 
     @OnClick(R.id.fragment_get_rewards_button)
     void onGetRewardsClicked(View view) {
-        if(getActivity() instanceof BuyerDashboardCallbacks) {
-            ((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_CLIENT_LEADS, true, null, "cashback request", null);
+        if(CookiePreferences.isUserLoggedIn(getActivity())) {
+            if (getActivity() instanceof BuyerDashboardCallbacks) {
+                ((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_CLIENT_LEADS, true, null, "cashback request", null);
+            }
         }
     }
 }

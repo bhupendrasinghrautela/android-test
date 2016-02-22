@@ -87,11 +87,17 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:id="@+id/iv_stage"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/arrow_right_small" />
+            <View
+                android:id="@+id/iv_view"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/app_red"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
@@ -99,7 +105,7 @@
             android:id="@+id/ll_shortlist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_search"
+            android:layout_below="@id/ll_search"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/padding_layout"
             android:paddingLeft="@dimen/view_left_padding_layout"
@@ -141,11 +147,17 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:id="@id/iv_stage"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/arrow_right_small" />
+            <View
+                android:id="@id/iv_view"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/app_red"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <LinearLayout
@@ -195,11 +207,17 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:id="@id/iv_stage"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/arrow_right_small" />
+            <View
+                android:id="@id/iv_view"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/app_red"
+                android:visibility="gone"/>
         </LinearLayout>
 
 
