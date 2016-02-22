@@ -21,6 +21,7 @@ import com.google.android.gms.common.AccountPicker;
 import com.google.gson.Gson;
 import com.makaan.R;
 import com.makaan.event.user.UserLoginEvent;
+import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.login.OnLoginWithMakaanSelectedListener;
 import com.makaan.response.login.OnUserLoginListener;
 
@@ -43,7 +44,7 @@ import butterknife.OnClick;
 /**
  * Created by root on 29/12/15.
  */
-public class LoginSocialFragment extends Fragment implements OnGoogleTokenListener,OnFacebookTokenListener {
+public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleTokenListener,OnFacebookTokenListener {
 
     @Bind(R.id.fb_login)
     ImageView mFbLogin;
@@ -61,22 +62,18 @@ public class LoginSocialFragment extends Fragment implements OnGoogleTokenListen
     private FacebookTokenInteractor mFacebookTokenInteractor;
     private int mLoginType;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.login_social,container,false);
-        ButterKnife.bind(this, view);
-
-        FacebookSdk.sdkInitialize(getActivity());
-        mFacebookTokenInteractor = new FacebookTokenInteractor(getActivity(), this);
-        mFacebookTokenInteractor.initFacebookSdk(savedInstanceState);
-
-        return view;
+    protected int getContentViewId() {
+        return R.layout.login_social;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        FacebookSdk.sdkInitialize(getActivity());
+        mFacebookTokenInteractor = new FacebookTokenInteractor(getActivity(), this);
+        mFacebookTokenInteractor.initFacebookSdk(savedInstanceState);
         parseLoginType(mLoginType);
     }
 

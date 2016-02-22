@@ -31,7 +31,7 @@
         android:layout_gravity="center_horizontal"
         android:id="@+id/btn_apply"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/jarvis_chat_card_button_height"
         android:layout_marginBottom="@dimen/apply_button_top_bottom_margin"
         android:layout_marginTop="@dimen/apply_button_top_bottom_margin"
         android:paddingLeft="@dimen/apply_button_left_right_padding"
@@ -40,6 +40,6 @@
         android:background="@drawable/filled_red"
         android:text="@string/jarvis_apply_button_string"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/apply_button_text_size" />
+        android:textSize="@dimen/jarvis_chat_card_button_text_size" />
 
 </com.makaan.jarvis.ui.cards.SerpFilterCard>

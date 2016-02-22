@@ -10,6 +10,7 @@ import com.makaan.jarvis.message.Message;
 import com.makaan.ui.view.BaseView;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by sunil on 19/02/16.
@@ -23,6 +24,22 @@ public class PyrPopupCard extends BaseCtaView<ExposeMessage> {
 
     @Bind(R.id.message)
     TextView mMessage;
+
+
+    @OnClick(R.id.btn_no)
+    public void OnCancelClick(){
+        if(null!=mOnCancelClickListener){
+            mOnCancelClickListener.onCancelClick();
+        }
+
+    }
+
+    @OnClick(R.id.btn_yes)
+    public void OnApplyClick(){
+        if(null!=mOnApplyClickListener){
+            mOnApplyClickListener.onApplyClick();
+        }
+    }
 
     public PyrPopupCard(Context context) {
         super(context);

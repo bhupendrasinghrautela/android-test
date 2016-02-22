@@ -956,7 +956,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Subscribe
     public void onExposeMessage(OnExposeEvent event) {
-        if(null!=event.message){
+        if(null==event.message){
             return;
         }
         if(null==mListings || mListings.isEmpty() || null==mListings.get(0)){

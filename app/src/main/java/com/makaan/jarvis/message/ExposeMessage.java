@@ -11,7 +11,6 @@ public class ExposeMessage {
 
     public String sessionId;
     public Properties properties;
-
     public String city;
 
 
