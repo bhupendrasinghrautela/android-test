@@ -157,7 +157,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/close_black"/>
+                    android:src="@drawable/check_tick_grey"/>
             </FrameLayout>
 
             <TextView
@@ -184,23 +184,25 @@
             android:paddingEnd="@dimen/fragment_upload_documents_action_button_right_padding"
             android:layout_marginBottom="@dimen/fragment_upload_documents_action_button_bottom_margin">
             <Button
+                android:id="@+id/fragment_upload_documents_done_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/round_red"
-                android:text="cancel"
+                android:text="done"
                 android:textColor="@color/app_red"
                 android:textSize="@dimen/fragment_upload_documents_action_button_text_size"
                 android:textAllCaps="false"
                 android:typeface="serif"/>
             <Button
+                android:id="@+id/fragment_upload_documents_send_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginLeft="@dimen/fragment_upload_documents_submit_button_left_margin"
                 android:layout_marginStart="@dimen/fragment_upload_documents_submit_button_left_margin"
                 android:background="@drawable/filled_red"
-                android:text="upload"
+                android:text="send email"
                 android:textColor="@color/white"
                 android:textSize="@dimen/fragment_upload_documents_action_button_text_size"
                 android:textAllCaps="false"

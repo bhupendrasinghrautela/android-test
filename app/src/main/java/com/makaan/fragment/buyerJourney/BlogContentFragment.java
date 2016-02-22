@@ -262,9 +262,9 @@ public class BlogContentFragment extends MakaanBaseFragment {
         @Override
         public void onBindViewHolder(BlogContentHolder holder, int position) {
             if(holder.viewType == TYPE_ITEM) {
-                holder.imageView.setImageUrl(mBlogItems.get(position).primaryImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
-                holder.titleTextView.setText(mBlogItems.get(position).postTitle);
-                holder.link = mBlogItems.get(position).guid;
+                holder.imageView.setImageUrl(mBlogItems.get(position - 1).primaryImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
+                holder.titleTextView.setText(mBlogItems.get(position - 1).postTitle);
+                holder.link = mBlogItems.get(position - 1).guid;
             } else {
                 initHeaderUi(holder.view);
             }

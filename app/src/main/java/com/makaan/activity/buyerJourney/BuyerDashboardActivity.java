@@ -182,7 +182,13 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
      * set title of the activity
      * @param title title to display in the toolbar*
      */
-    protected void setTitle(String title) {
-        mTitleTextView.setText(title);
+    @Override
+    public void setTitle(CharSequence title) {
+        mTitleTextView.setText(title.toString());
+    }
+
+    @Override
+    public void setTitle(int titleId) {
+        mTitleTextView.setText(getResources().getString(titleId));
     }
 }
