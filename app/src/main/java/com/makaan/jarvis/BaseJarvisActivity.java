@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -25,9 +26,11 @@ import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.jarvis.analytics.AnalyticsConstants;
 import com.makaan.jarvis.analytics.AnalyticsService;
+import com.makaan.jarvis.message.CtaType;
 import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.jarvis.ui.cards.BaseCtaView;
 import com.makaan.jarvis.ui.cards.CtaCardFactory;
+import com.makaan.jarvis.ui.cards.PyrPopupCard;
 import com.makaan.jarvis.ui.cards.SerpFilterCard;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.response.project.Project;
@@ -251,12 +254,22 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                 showPopupWithAnim();
 
 
-                card.setOnApplyClickListener(new SerpFilterCard.OnApplyClickListener() {
-                    @Override
-                    public void onApplyClick() {
-                        dismissPopupWithAnim();
-                    }
-                });
+                if(CtaType.serpScroll == message.properties.ctaType) {
+                    card.setOnApplyClickListener(new SerpFilterCard.OnApplyClickListener() {
+                        @Override
+                        public void onApplyClick() {
+                            dismissPopupWithAnim();
+                        }
+                    });
+                }else if (CtaType.contentPyr == message.properties.ctaType) {
+                    card.setOnApplyClickListener(new SerpFilterCard.OnApplyClickListener() {
+                        @Override
+                        public void onApplyClick() {
+                            dismissPopupWithAnim();
+                        }
+                    });
+
+                }
 
                 mPopupDismissHandler.postDelayed(mPopupDismissRunnable,
                         JarvisConstants.JARVIS_ACTION_DISMISS_TIMEOUT);
