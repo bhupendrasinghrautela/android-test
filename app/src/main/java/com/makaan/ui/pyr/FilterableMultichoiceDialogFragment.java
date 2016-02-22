@@ -2,6 +2,7 @@ package com.makaan.ui.pyr;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import android.widget.Toast;
 
 
 import com.makaan.R;
+import com.makaan.activity.MakaanBaseSearchActivity;
+import com.makaan.constants.PreferenceConstants;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.SearchType;
 import com.makaan.response.search.event.SearchResultEvent;
@@ -29,6 +32,7 @@ import com.makaan.fragment.pyr.PyrPagePresenter;
 import com.makaan.adapter.pyr.SearchableListviewAdapter;
 import com.makaan.adapter.pyr.SelectedListViewAdapter;
 import com.makaan.util.AppBus;
+import com.makaan.util.Preference;
 import com.squareup.otto.Subscribe;
 
 import java.io.UnsupportedEncodingException;
@@ -153,7 +157,9 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 		SearchService searchService = (SearchService) MakaanServiceFactory.getInstance().getService(SearchService.class);
 		try {
 			if(!cs.toString().isEmpty()) {
-				searchService.getSearchResults(cs.toString(), null, city, SearchType.LOCALITY, false);
+				boolean isBuy = (Preference.getInt(getActivity().getSharedPreferences(PreferenceConstants.PREF, Context.MODE_PRIVATE),
+						PreferenceConstants.PREF_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_BUY) == MakaanBaseSearchActivity.SERP_CONTEXT_BUY);
+				searchService.getSearchResults(cs.toString(), (isBuy ? "buy" : "rent"), city, SearchType.LOCALITY, false);
 			}
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();

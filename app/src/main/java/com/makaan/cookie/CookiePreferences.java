@@ -42,6 +42,8 @@ public class CookiePreferences {
         SharedPreferences.Editor edit = getSharedPref(context).edit();
         edit.putString(PREF_USER_INFO, userInfo);
         edit.commit();
+
+        setLastUserInfo(context, userInfo);
     }
 
 
@@ -88,14 +90,12 @@ public class CookiePreferences {
         return getSharedPref(context).getBoolean(PREF_IS_USER_LOGGED_IN, false);
     }
 
-    public static void setLastUserInfo(Context context, UserResponse uInfo){
+    public static void setLastUserInfo(Context context, String uInfo){
         if(uInfo==null){
             return;
         }
         SharedPreferences.Editor edit = getSharedPref(context).edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(uInfo);
-        edit.putString(PREF_LAST_USER, json);
+        edit.putString(PREF_LAST_USER, uInfo);
         edit.commit();
     }
 
