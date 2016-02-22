@@ -10,9 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,14 +21,12 @@ import android.widget.Toast;
 import com.makaan.R;
 import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.cookie.CookiePreferences;
-import com.makaan.event.user.UserLoginEvent;
+import com.makaan.event.user.UserLogoutEvent;
 import com.makaan.jarvis.BaseJarvisActivity;
-import com.makaan.ui.view.BadgeView;
-import com.makaan.util.AppBus;
+import com.makaan.service.MakaanServiceFactory;
+import com.makaan.service.user.UserLogoutService;
 import com.pkmmte.view.CircularImageView;
 import com.squareup.otto.Subscribe;
-
-import org.json.JSONException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -161,7 +157,12 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
             Intent intent = new Intent(this, UserLoginActivity.class);
             startActivityForResult(intent, LOGIN_REQUEST);
         } else {
-
+            try {
+                onLogoutClick();
+            } catch (Exception e) {
+                Toast.makeText(BuyerJourneyActivity.this,
+                        getResources().getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -244,9 +245,12 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
                 Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_logout:
-                //TODO have to make logout api call
-                Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
-                //finish();
+                try{
+                    onLogoutClick();
+                }catch (Exception e){
+                    Toast.makeText(BuyerJourneyActivity.this,getResources()
+                            .getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
+                }
                 break;
             case android.R.id.home:
                 onBackPressed();
@@ -256,6 +260,25 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
         }
 
         return true;
+    }
+
+    private void onLogoutClick() {
+        UserLogoutService userLogoutService =
+                (UserLogoutService) MakaanServiceFactory.getInstance()
+                        .getService(UserLogoutService.class);
+        userLogoutService.makeLogoutRequest();
+    }
+
+    @Subscribe
+    public void onLogoutResult(UserLogoutEvent userLogoutEvent){
+        if(null!=userLogoutEvent && userLogoutEvent.isLogoutSuccessfull()){
+            CookiePreferences.setUserLoggedOut(this);
+            CookiePreferences.setUserInfo(this, "");
+            finish();
+        }else{
+            Toast.makeText(this,getResources().getString(R.string.generic_error),
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
 }

@@ -13,6 +13,8 @@ import com.makaan.response.leadForm.InstantCallbackResponse;
 import com.makaan.response.pyr.PyrPostResponse;
 import com.squareup.otto.Subscribe;
 
+import butterknife.OnClick;
+
 /**
  * Created by makaanuser on 23/1/16.
  */
@@ -24,6 +26,14 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
     @Override
     protected int getContentViewId() {
         return R.layout.activity_lead_form;
+    }
+
+    /**
+     * back button handling for toolbar back click
+     */
+    @OnClick(R.id.btn_back_toolbar)
+    public void onToolbarBack(){
+        this.onBackPressed();
     }
 
     @Override
