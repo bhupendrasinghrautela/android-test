@@ -3,11 +3,8 @@ package com.makaan.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,37 +12,24 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
-import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
-import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.constants.PreferenceConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.Session;
 import com.makaan.event.location.LocationGetEvent;
 import com.makaan.event.user.UserLoginEvent;
-import com.makaan.event.wishlist.WishListResultEvent;
-import com.makaan.pojo.SerpRequest;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.response.user.UserResponse;
-import com.makaan.response.wishlist.WishListResponse;
 import com.makaan.service.LocationService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.WishListService;
-import com.makaan.service.user.UserLoginService;
-import com.makaan.util.AppBus;
-import com.makaan.util.JsonBuilder;
 import com.makaan.util.Preference;
 import com.squareup.otto.Subscribe;
 
-import org.json.JSONException;
-
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class HomeActivity extends MakaanBaseSearchActivity {
@@ -184,7 +168,7 @@ public class HomeActivity extends MakaanBaseSearchActivity {
 
     @Subscribe
     public void onResults(LocationGetEvent locationGetEvent) {
-        Session.myLocation = locationGetEvent.myLocation;
+        Session.apiLocation = locationGetEvent.myLocation;
     }
 
     @Override

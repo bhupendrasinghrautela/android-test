@@ -290,10 +290,10 @@
     <dimen name="serp_listing_cluster_card_margin_top">9dp</dimen>
 
 
-    <dimen name="serp_listing_card_badge_width">59dp</dimen>
+    <dimen name="serp_listing_card_badge_width">64dp</dimen>
     <dimen name="serp_listing_card_badge_height">28dp</dimen>
     <dimen name="serp_listing_card_badge_margin_top">7dp</dimen>
-    <dimen name="serp_listing_card_badge_margin_left">-7dp</dimen>
+    <dimen name="serp_listing_card_badge_margin_left">2dp</dimen>
     <dimen name="serp_listing_card_badge_text_margin_left">9dp</dimen>
     <dimen name="serp_listing_card_badge_text_height">19dp</dimen>
     <dimen name="serp_listing_card_badge_text_size">16sp</dimen>

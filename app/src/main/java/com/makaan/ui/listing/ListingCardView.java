@@ -82,6 +82,9 @@ public class ListingCardView extends BaseCardView<Listing> {
 
             mBadgeImageView.setImageResource(R.drawable.badge_seen);
             mBadgeTextView.setText("seen");
+        } else {
+            mBadgeImageView.setVisibility(View.GONE);
+            mBadgeTextView.setVisibility(View.GONE);
         }
         // TODO implement new
         mPreferences = context.getSharedPreferences(

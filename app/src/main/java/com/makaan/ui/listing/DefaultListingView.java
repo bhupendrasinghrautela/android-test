@@ -48,7 +48,7 @@ import butterknife.OnClick;
 /**
  * Created by rohitgarg on 1/7/16.
  */
-public class DefaultListingView extends AbstractListingView{
+public class DefaultListingView extends AbstractListingView {
 
     @Bind(R.id.serp_default_listing_property_shortlist_checkbox)
     public WishListButton mPropertyWishListCheckbox;
@@ -172,6 +172,9 @@ public class DefaultListingView extends AbstractListingView{
 
             mBadgeImageView.setImageResource(R.drawable.badge_seen);
             mBadgeTextView.setText("seen");
+        } else {
+            mBadgeImageView.setVisibility(View.GONE);
+            mBadgeTextView.setVisibility(View.GONE);
         }
         // TODO implement new
 
@@ -241,7 +244,7 @@ public class DefaultListingView extends AbstractListingView{
         // set price info
         mPropertyPriceTextView.setText(priceString.toLowerCase());
         mPropertyPriceUnitTextView.setText(priceUnit);
-        if(mListing.pricePerUnitArea == 0) {
+        if(mListing.pricePerUnitArea != 0) {
             mPropertyPriceSqFtTextView.setVisibility(View.VISIBLE);
             mPropertyPriceSqFtTextView.setText(String.format("%s%s/sqft", "\u20B9", StringUtil.getFormattedNumber(mListing.pricePerUnitArea)).toLowerCase());
         } else {

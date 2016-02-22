@@ -381,7 +381,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             if(needBackProcessing()) {
                 super.onBackPressed();
             } else if(mSerpBackStack.popFromBackstack(this)) {
-                super.removeTopSearchItem();
                 return;
             } else {
                 super.onBackPressed();
@@ -860,7 +859,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         } else if(type == REQUEST_SET_ALERT) {
             FragmentTransaction ft = this.getFragmentManager().beginTransaction();
             SetAlertsDialogFragment dialog = new SetAlertsDialogFragment();
-            dialog.setData(mFilterGroups, mListingGetEvent, mSerpContext == SERP_CONTEXT_BUY);
+            if(mSerpBackStack.peek() != null) {
+                dialog.setData(mFilterGroups, mSerpBackStack.peek(), mSerpContext == SERP_CONTEXT_BUY);
+            } else {
+                dialog.setData(mFilterGroups, mListingGetEvent, mSerpContext == SERP_CONTEXT_BUY);
+            }
             dialog.show(ft, "Set Alerts");
         } else if(type == REQUEST_MPLUS_POPUP) {
             FragmentTransaction ft = this.getFragmentManager().beginTransaction();
@@ -900,7 +903,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     @Override
     public String getOverviewText() {
         try {
-            if (mSerpBackStack.peek().selectedLocalitiesAndSuburbs() <= 1 && mListingGetEvent.listingData != null && mListingGetEvent.listingData.facets != null) {
+            if (mSerpBackStack.peek() != null && mSerpBackStack.peek().selectedLocalitiesAndSuburbs() <= 1
+                    && mListingGetEvent != null && mListingGetEvent.listingData != null && mListingGetEvent.listingData.facets != null) {
                 return String.format("more about %s", mListingGetEvent.listingData.facets.buildDisplayName());
             }
         }catch (Exception e){}

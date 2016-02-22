@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.adapter.listing.FiltersViewAdapter;
+import com.makaan.constants.RequestConstants;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.serp.FilterGroup;
@@ -571,16 +572,25 @@ public class SerpRequest implements Parcelable, Cloneable {
             return new SerpRequest[size];
         }
     };
-
     public void applySelector(Selector selector, ArrayList<FilterGroup> filterGroup) {
+        applySelector(selector, filterGroup, true);
+    }
+
+    public void applySelector(Selector selector, ArrayList<FilterGroup> filterGroup, boolean needFacets) {
+        applySelector(selector, filterGroup, needFacets, false);
+    }
+
+    public void applySelector(Selector selector, ArrayList<FilterGroup> filterGroup, boolean needFacets, boolean needViewPort) {
         // city ids
         if(this.cityIds.size() > 0){
             selector.removeTerm(KeyUtil.CITY_ID);
             for (Long cityId : this.cityIds) {
                 selector.term(KeyUtil.CITY_ID, String.valueOf(cityId));
             }
-            selector.facet("cityId");
-            selector.facet("cityLabel");
+            if(needFacets) {
+                selector.facet("cityId");
+                selector.facet("cityLabel");
+            }
         }
 
         // locality and suburb ids
@@ -596,10 +606,12 @@ public class SerpRequest implements Parcelable, Cloneable {
             for (Long suburbId : this.suburbIds) {
                 selector.term(KeyUtil.LOCALITY_OR_SUBURB_ID, String.valueOf(suburbId));
             }
-            selector.facet("localityId");
-            selector.facet("localityLabel");
-            selector.facet("suburbId");
-            selector.facet("suburbLabel");
+            if(needFacets) {
+                selector.facet("localityId");
+                selector.facet("localityLabel");
+                selector.facet("suburbId");
+                selector.facet("suburbLabel");
+            }
         } else if(this.localityIds.size() > 0) {
             selector.removeTerm(KeyUtil.LOCALITY_ID);
             selector.removeTerm(KeyUtil.SUBURB_ID);
@@ -607,8 +619,10 @@ public class SerpRequest implements Parcelable, Cloneable {
             for (Long localityId : this.localityIds) {
                 selector.term(KeyUtil.LOCALITY_ID, String.valueOf(localityId));
             }
-            selector.facet("localityId");
-            selector.facet("localityLabel");
+            if(needFacets) {
+                selector.facet("localityId");
+                selector.facet("localityLabel");
+            }
         } else if(this.suburbIds.size() > 0) {
             selector.removeTerm(KeyUtil.LOCALITY_ID);
             selector.removeTerm(KeyUtil.SUBURB_ID);
@@ -616,8 +630,10 @@ public class SerpRequest implements Parcelable, Cloneable {
             for (Long suburbId : this.suburbIds) {
                 selector.term(KeyUtil.SUBURB_ID, String.valueOf(suburbId));
             }
-            selector.facet("suburbId");
-            selector.facet("suburbLabel");
+            if(needFacets) {
+                selector.facet("suburbId");
+                selector.facet("suburbLabel");
+            }
         }
 
         // project ids
@@ -626,7 +642,9 @@ public class SerpRequest implements Parcelable, Cloneable {
             for (Long projectId : this.projectIds) {
                 selector.term(KeyUtil.PROJECT_ID, String.valueOf(projectId));
             }
-            selector.facet("projectId");
+            if(needFacets) {
+                selector.facet("projectId");
+            }
         }
 
         // builder ids
@@ -635,8 +653,10 @@ public class SerpRequest implements Parcelable, Cloneable {
             for (Long builderId : this.builderIds) {
                 selector.term(KeyUtil.BUILDER_ID, String.valueOf(builderId));
             }
-            selector.facet("builderId");
-            selector.facet("builderLabel");
+            if(needFacets) {
+                selector.facet("builderId");
+                selector.facet("builderLabel");
+            }
         }
 
         // seller ids
@@ -740,7 +760,7 @@ public class SerpRequest implements Parcelable, Cloneable {
         }
 
         if(Double.compare(latitude, Double.MIN_VALUE) != 0 && Double.compare(longitude, Double.MIN_VALUE) != 0) {
-            selector.nearby(10, latitude, longitude);
+            selector.nearby(RequestConstants.GEO_REQUEST_DISTANCE, latitude, longitude, needViewPort);
         }
 
         // sorting
@@ -772,75 +792,81 @@ public class SerpRequest implements Parcelable, Cloneable {
             } else if(this.sort == Sort.DISTANCE_DESC.ordinal()) {
 //                selector.sort("price", "DESC");
             } else if(this.sort == Sort.GEO_ASC.ordinal()) {
-                selector.sort("geoDistance", "ASC");
+                if(!needViewPort) {
+                    selector.sort("geoDistance", "ASC");
+                }
             } else if(this.sort == Sort.GEO_DESC.ordinal()) {
-                selector.sort("geoDistance", "DESC");
+                if(!needViewPort) {
+                    selector.sort("geoDistance", "DESC");
+                }
             }
         }
 
         // apply filters
-        for (FilterGroup grp : filterGroup) {
-            if (grp.rangeFilterValues.size() > 0 && KeyUtil.PRICE.equalsIgnoreCase(grp.rangeFilterValues.get(0).fieldName)) {
-                if(minBudget != UNEXPECTED_VALUE) {
-                    grp.rangeFilterValues.get(0).selectedMinValue = minBudget;
-                    grp.isSelected = true;
-                }
-                if(maxBudget != UNEXPECTED_VALUE) {
-                    grp.rangeFilterValues.get(0).selectedMaxValue = maxBudget;
-                    grp.isSelected = true;
-                }
-            } else if(grp.rangeFilterValues.size() > 0 && KeyUtil.AREA.equalsIgnoreCase(grp.rangeFilterValues.get(0).fieldName)) {
-                if(minArea != UNEXPECTED_VALUE) {
-                    grp.rangeFilterValues.get(0).selectedMinValue = minArea;
-                    grp.isSelected = true;
-                }
-                if(maxArea != UNEXPECTED_VALUE) {
-                    grp.rangeFilterValues.get(0).selectedMaxValue = maxArea;
-                    grp.isSelected = true;
-                }
-            } else if(grp.termFilterValues.size() > 0 && KeyUtil.BATHROOM.equalsIgnoreCase(grp.termFilterValues.get(0).fieldName)) {
-                if(this.bathrooms.size() > 0) {
-                    applyIntTermFilter(grp, bathrooms);
-                }
-            } else if(grp.termFilterValues.size() > 0 && KeyUtil.BEDROOM.equalsIgnoreCase(grp.termFilterValues.get(0).fieldName)) {
-                if(this.bedrooms.size() > 0) {
-                    applyIntTermFilter(grp, bedrooms);
-                }
-            } else if(grp.termFilterValues.size() > 0 && KeyUtil.PROPERTY_TYPES.equalsIgnoreCase(grp.termFilterValues.get(0).fieldName)) {
-                if(this.propertyTypes.size() > 0) {
-                    applyIntTermFilter(grp, propertyTypes);
-                }
-            } else if(grp.termFilterValues.size() > 0 && KeyUtil.LISTING_SELLER_COMPANY_TYPE.equalsIgnoreCase(grp.termFilterValues.get(0).fieldName)) {
-                if(this.listedBy != UNEXPECTED_VALUE) {
-                    if((listedBy & LISTED_BY_BUILDER) > 0) {
-                        for(TermFilter filter : grp.termFilterValues) {
-                            if("Builder".equalsIgnoreCase(filter.value)) {
-                                filter.selected = true;
-                                grp.isSelected = true;
+        if(filterGroup != null) {
+            for (FilterGroup grp : filterGroup) {
+                if (grp.rangeFilterValues.size() > 0 && KeyUtil.PRICE.equalsIgnoreCase(grp.rangeFilterValues.get(0).fieldName)) {
+                    if (minBudget != UNEXPECTED_VALUE) {
+                        grp.rangeFilterValues.get(0).selectedMinValue = minBudget;
+                        grp.isSelected = true;
+                    }
+                    if (maxBudget != UNEXPECTED_VALUE) {
+                        grp.rangeFilterValues.get(0).selectedMaxValue = maxBudget;
+                        grp.isSelected = true;
+                    }
+                } else if (grp.rangeFilterValues.size() > 0 && KeyUtil.AREA.equalsIgnoreCase(grp.rangeFilterValues.get(0).fieldName)) {
+                    if (minArea != UNEXPECTED_VALUE) {
+                        grp.rangeFilterValues.get(0).selectedMinValue = minArea;
+                        grp.isSelected = true;
+                    }
+                    if (maxArea != UNEXPECTED_VALUE) {
+                        grp.rangeFilterValues.get(0).selectedMaxValue = maxArea;
+                        grp.isSelected = true;
+                    }
+                } else if (grp.termFilterValues.size() > 0 && KeyUtil.BATHROOM.equalsIgnoreCase(grp.termFilterValues.get(0).fieldName)) {
+                    if (this.bathrooms.size() > 0) {
+                        applyIntTermFilter(grp, bathrooms);
+                    }
+                } else if (grp.termFilterValues.size() > 0 && KeyUtil.BEDROOM.equalsIgnoreCase(grp.termFilterValues.get(0).fieldName)) {
+                    if (this.bedrooms.size() > 0) {
+                        applyIntTermFilter(grp, bedrooms);
+                    }
+                } else if (grp.termFilterValues.size() > 0 && KeyUtil.PROPERTY_TYPES.equalsIgnoreCase(grp.termFilterValues.get(0).fieldName)) {
+                    if (this.propertyTypes.size() > 0) {
+                        applyIntTermFilter(grp, propertyTypes);
+                    }
+                } else if (grp.termFilterValues.size() > 0 && KeyUtil.LISTING_SELLER_COMPANY_TYPE.equalsIgnoreCase(grp.termFilterValues.get(0).fieldName)) {
+                    if (this.listedBy != UNEXPECTED_VALUE) {
+                        if ((listedBy & LISTED_BY_BUILDER) > 0) {
+                            for (TermFilter filter : grp.termFilterValues) {
+                                if ("Builder".equalsIgnoreCase(filter.value)) {
+                                    filter.selected = true;
+                                    grp.isSelected = true;
+                                }
+                            }
+                        }
+                        if ((listedBy & LISTED_BY_SELLER) > 0) {
+                            for (TermFilter filter : grp.termFilterValues) {
+                                if ("Broker".equalsIgnoreCase(filter.value)) {
+                                    filter.selected = true;
+                                    grp.isSelected = true;
+                                }
+                            }
+                        }
+                        if ((listedBy & LISTED_BY_OWNER) > 0) {
+                            for (TermFilter filter : grp.termFilterValues) {
+                                if ("Owner".equalsIgnoreCase(filter.value)) {
+                                    filter.selected = true;
+                                    grp.isSelected = true;
+                                }
                             }
                         }
                     }
-                    if((listedBy & LISTED_BY_SELLER) > 0) {
-                        for(TermFilter filter : grp.termFilterValues) {
-                            if("Broker".equalsIgnoreCase(filter.value)) {
-                                filter.selected = true;
-                                grp.isSelected = true;
-                            }
-                        }
+                } else if (grp.termFilterValues.size() > 0 && KeyUtil.LISTING_SELLER_COMPANY_ASSIST.equalsIgnoreCase(grp.termFilterValues.get(0).fieldName)) {
+                    if (mPlus) {
+                        grp.termFilterValues.get(0).selected = true;
+                        grp.isSelected = true;
                     }
-                    if((listedBy & LISTED_BY_OWNER) > 0) {
-                        for(TermFilter filter : grp.termFilterValues) {
-                            if("Owner".equalsIgnoreCase(filter.value)) {
-                                filter.selected = true;
-                                grp.isSelected = true;
-                            }
-                        }
-                    }
-                }
-            } else if(grp.termFilterValues.size() > 0 && KeyUtil.LISTING_SELLER_COMPANY_ASSIST.equalsIgnoreCase(grp.termFilterValues.get(0).fieldName)) {
-                if(mPlus) {
-                    grp.termFilterValues.get(0).selected = true;
-                    grp.isSelected = true;
                 }
             }
         }
@@ -848,32 +874,34 @@ public class SerpRequest implements Parcelable, Cloneable {
         if(termMap.keySet().size() > 0) {
             for (String key : termMap.keySet()) {
                 boolean isApplied = false;
-                for (FilterGroup grp : filterGroup) {
-                    if(grp.termFilterValues.size() > 0 && grp.termFilterValues.get(0).fieldName.equals(key)) {
-                        isApplied = true;
-                        for(String value : termMap.get(key)) {
-                            for(TermFilter filter : grp.termFilterValues) {
-                                if(filter.value.equalsIgnoreCase(value)) {
-                                    filter.selected = true;
-                                    grp.isSelected = true;
-                                }
-                            }
-
-                            if(value.indexOf(FiltersViewAdapter.MIN_MAX_SEPARATOR) > 0) {
-                                String[] values = value.split(FiltersViewAdapter.MIN_MAX_SEPARATOR);
-                                if(values.length == 2) {
-                                    try {
-                                        int minValue = Integer.parseInt(values[0]);
-                                        int maxValue = Integer.parseInt(values[1]);
-                                        for (int i = minValue; i <= maxValue; i++) {
-                                            selector.term(key, String.valueOf(i));
-                                        }
-                                    } catch (NumberFormatException ex) {
-                                        // TODO
+                if(filterGroup != null) {
+                    for (FilterGroup grp : filterGroup) {
+                        if (grp.termFilterValues.size() > 0 && grp.termFilterValues.get(0).fieldName.equals(key)) {
+                            isApplied = true;
+                            for (String value : termMap.get(key)) {
+                                for (TermFilter filter : grp.termFilterValues) {
+                                    if (filter.value.equalsIgnoreCase(value)) {
+                                        filter.selected = true;
+                                        grp.isSelected = true;
                                     }
                                 }
-                            } else {
-                                selector.term(key, value);
+
+                                if (value.indexOf(FiltersViewAdapter.MIN_MAX_SEPARATOR) > 0) {
+                                    String[] values = value.split(FiltersViewAdapter.MIN_MAX_SEPARATOR);
+                                    if (values.length == 2) {
+                                        try {
+                                            int minValue = Integer.parseInt(values[0]);
+                                            int maxValue = Integer.parseInt(values[1]);
+                                            for (int i = minValue; i <= maxValue; i++) {
+                                                selector.term(key, String.valueOf(i));
+                                            }
+                                        } catch (NumberFormatException ex) {
+                                            // TODO
+                                        }
+                                    }
+                                } else {
+                                    selector.term(key, value);
+                                }
                             }
                         }
                     }
@@ -906,75 +934,77 @@ public class SerpRequest implements Parcelable, Cloneable {
 
         if(rangeMap.keySet().size() > 0) {
             for (String key : rangeMap.keySet()) {
-                for (FilterGroup grp : filterGroup) {
-                    if(grp.rangeFilterValues.size() > 0 && grp.rangeFilterValues.get(0).fieldName.equals(key)) {
-                        Long[] value = rangeMap.get(key);
-                        if(FiltersViewAdapter.RADIO_BUTTON_RANGE == grp.layoutType) {
-                            for (RangeFilter filter : grp.rangeFilterValues) {
-                                if (value[0] == filter.minValue && value[1] == filter.maxValue) {
-                                    filter.selected = true;
-                                    grp.isSelected = true;
+                if(filterGroup != null) {
+                    for (FilterGroup grp : filterGroup) {
+                        if (grp.rangeFilterValues.size() > 0 && grp.rangeFilterValues.get(0).fieldName.equals(key)) {
+                            Long[] value = rangeMap.get(key);
+                            if (FiltersViewAdapter.RADIO_BUTTON_RANGE == grp.layoutType) {
+                                for (RangeFilter filter : grp.rangeFilterValues) {
+                                    if (value[0] == filter.minValue && value[1] == filter.maxValue) {
+                                        filter.selected = true;
+                                        grp.isSelected = true;
 
-                                    if(filter.minValue != FiltersViewAdapter.UNEXPECTED_VALUE || filter.maxValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
-                                        Long minValue = (long) FiltersViewAdapter.UNEXPECTED_VALUE;
-                                        Long maxValue = (long) FiltersViewAdapter.UNEXPECTED_VALUE;
-                                        if (grp.type.equalsIgnoreCase(FiltersViewAdapter.TYPE_YEAR)) {
-                                            Calendar cal = Calendar.getInstance();
-                                            if (filter.minValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
-                                                cal.add(Calendar.YEAR, (int) filter.minValue);
-                                                minValue = cal.getTimeInMillis();
-                                                cal.add(Calendar.YEAR, -(int) filter.minValue);
-                                            }
+                                        if (filter.minValue != FiltersViewAdapter.UNEXPECTED_VALUE || filter.maxValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                            Long minValue = (long) FiltersViewAdapter.UNEXPECTED_VALUE;
+                                            Long maxValue = (long) FiltersViewAdapter.UNEXPECTED_VALUE;
+                                            if (grp.type.equalsIgnoreCase(FiltersViewAdapter.TYPE_YEAR)) {
+                                                Calendar cal = Calendar.getInstance();
+                                                if (filter.minValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                                    cal.add(Calendar.YEAR, (int) filter.minValue);
+                                                    minValue = cal.getTimeInMillis();
+                                                    cal.add(Calendar.YEAR, -(int) filter.minValue);
+                                                }
 
-                                            if (filter.maxValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
-                                                cal.add(Calendar.YEAR, (int) filter.maxValue);
-                                                maxValue = cal.getTimeInMillis();
-                                            }
-                                            if (minValue == FiltersViewAdapter.UNEXPECTED_VALUE) {
-                                                minValue = null;
-                                            }
-                                            if (maxValue == FiltersViewAdapter.UNEXPECTED_VALUE) {
-                                                maxValue = null;
-                                            }
+                                                if (filter.maxValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                                    cal.add(Calendar.YEAR, (int) filter.maxValue);
+                                                    maxValue = cal.getTimeInMillis();
+                                                }
+                                                if (minValue == FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                                    minValue = null;
+                                                }
+                                                if (maxValue == FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                                    maxValue = null;
+                                                }
 
-                                            selector.range(filter.fieldName, minValue, maxValue);
-                                        } else if (grp.type.equalsIgnoreCase(FiltersViewAdapter.TYPE_DAY)) {
-                                            Calendar cal = Calendar.getInstance();
-                                            if (filter.minValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
-                                                cal.add(Calendar.DAY_OF_MONTH, (int) filter.minValue);
-                                                minValue = cal.getTimeInMillis();
-                                                cal.add(Calendar.DAY_OF_MONTH, -(int) filter.minValue);
-                                            }
+                                                selector.range(filter.fieldName, minValue, maxValue);
+                                            } else if (grp.type.equalsIgnoreCase(FiltersViewAdapter.TYPE_DAY)) {
+                                                Calendar cal = Calendar.getInstance();
+                                                if (filter.minValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                                    cal.add(Calendar.DAY_OF_MONTH, (int) filter.minValue);
+                                                    minValue = cal.getTimeInMillis();
+                                                    cal.add(Calendar.DAY_OF_MONTH, -(int) filter.minValue);
+                                                }
 
-                                            if (filter.maxValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
-                                                cal.add(Calendar.DAY_OF_MONTH, (int) filter.maxValue);
-                                                maxValue = cal.getTimeInMillis();
-                                            }
-                                            if (minValue == FiltersViewAdapter.UNEXPECTED_VALUE) {
-                                                minValue = null;
-                                            }
-                                            if (maxValue == FiltersViewAdapter.UNEXPECTED_VALUE) {
-                                                maxValue = null;
-                                            }
+                                                if (filter.maxValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                                    cal.add(Calendar.DAY_OF_MONTH, (int) filter.maxValue);
+                                                    maxValue = cal.getTimeInMillis();
+                                                }
+                                                if (minValue == FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                                    minValue = null;
+                                                }
+                                                if (maxValue == FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                                    maxValue = null;
+                                                }
 
-                                            selector.range(filter.fieldName, minValue, maxValue);
-                                        } else {
-                                            selector.range(filter.fieldName, filter.minValue, filter.maxValue);
+                                                selector.range(filter.fieldName, minValue, maxValue);
+                                            } else {
+                                                selector.range(filter.fieldName, filter.minValue, filter.maxValue);
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        } else {
-                            for (RangeFilter filter : grp.rangeFilterValues) {
-                                filter.selectedMinValue = value[0];
-                                filter.selectedMaxValue = value[1];
-                                if (filter.selectedMinValue != filter.minValue || filter.selectedMaxValue != filter.maxValue) {
-                                    filter.selected = true;
-                                    grp.isSelected = true;
+                            } else {
+                                for (RangeFilter filter : grp.rangeFilterValues) {
+                                    filter.selectedMinValue = value[0];
+                                    filter.selectedMaxValue = value[1];
+                                    if (filter.selectedMinValue != filter.minValue || filter.selectedMaxValue != filter.maxValue) {
+                                        filter.selected = true;
+                                        grp.isSelected = true;
+                                    }
                                 }
-                            }
 
-                            selector.range(key, value[0], value[1]);
+                                selector.range(key, value[0], value[1]);
+                            }
                         }
                     }
                 }
@@ -985,31 +1015,33 @@ public class SerpRequest implements Parcelable, Cloneable {
             ArrayList<Double> minFieldMap = new ArrayList<>();
             ArrayList<Double> maxFieldMap = new ArrayList<>();
             for (String key : minMaxRangeMap.keySet()) {
-                for (FilterGroup grp : filterGroup) {
-                    if (grp.rangeMinMaxFilterValues.size() > 0) {
-                        if(grp.rangeMinMaxFilterValues.get(0).minFieldName.equals(key)) {
-                            Long[] value = minMaxRangeMap.get(key);
-                            for (RangeMinMaxFilter filter : grp.rangeMinMaxFilterValues) {
-                                if(filter.minValue == value[0]) {
-                                    if(maxFieldMap.contains(filter.maxValue)) {
-                                        maxFieldMap.remove(filter.maxValue);
-                                        filter.selected = true;
-                                        grp.isSelected = true;
-                                    } else {
-                                        minFieldMap.add(filter.minValue);
+                if(filterGroup != null) {
+                    for (FilterGroup grp : filterGroup) {
+                        if (grp.rangeMinMaxFilterValues.size() > 0) {
+                            if (grp.rangeMinMaxFilterValues.get(0).minFieldName.equals(key)) {
+                                Long[] value = minMaxRangeMap.get(key);
+                                for (RangeMinMaxFilter filter : grp.rangeMinMaxFilterValues) {
+                                    if (filter.minValue == value[0]) {
+                                        if (maxFieldMap.contains(filter.maxValue)) {
+                                            maxFieldMap.remove(filter.maxValue);
+                                            filter.selected = true;
+                                            grp.isSelected = true;
+                                        } else {
+                                            minFieldMap.add(filter.minValue);
+                                        }
                                     }
                                 }
-                            }
-                        } else if(grp.rangeMinMaxFilterValues.get(0).maxFieldName.equals(key)) {
-                            Long[] value = minMaxRangeMap.get(key);
-                            for (RangeMinMaxFilter filter : grp.rangeMinMaxFilterValues) {
-                                if(filter.maxValue == value[1]) {
-                                    if(minFieldMap.contains(filter.minValue)) {
-                                        maxFieldMap.remove(filter.minValue);
-                                        filter.selected = true;
-                                        grp.isSelected = true;
-                                    } else {
-                                        maxFieldMap.add(filter.maxValue);
+                            } else if (grp.rangeMinMaxFilterValues.get(0).maxFieldName.equals(key)) {
+                                Long[] value = minMaxRangeMap.get(key);
+                                for (RangeMinMaxFilter filter : grp.rangeMinMaxFilterValues) {
+                                    if (filter.maxValue == value[1]) {
+                                        if (minFieldMap.contains(filter.minValue)) {
+                                            maxFieldMap.remove(filter.minValue);
+                                            filter.selected = true;
+                                            grp.isSelected = true;
+                                        } else {
+                                            maxFieldMap.add(filter.maxValue);
+                                        }
                                     }
                                 }
                             }
@@ -1018,35 +1050,37 @@ public class SerpRequest implements Parcelable, Cloneable {
                 }
             }
 
-            for (FilterGroup grp : filterGroup) {
-                if (grp.isSelected && grp.rangeMinMaxFilterValues.size() > 0) {
-                    for (RangeMinMaxFilter filter : grp.rangeMinMaxFilterValues) {
-                        if(filter.selected) {
-                            if (grp.type.equalsIgnoreCase(FiltersViewAdapter.TYPE_YEAR)) {
-                                Calendar cal = Calendar.getInstance();
-                                long minValue = FiltersViewAdapter.UNEXPECTED_VALUE;
-                                long maxValue = FiltersViewAdapter.UNEXPECTED_VALUE;
-                                if(filter.minValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
-                                    cal.add(Calendar.YEAR, (int) filter.minValue);
-                                    minValue = cal.getTimeInMillis();
-                                    cal.add(Calendar.YEAR, -(int) filter.minValue);
-                                }
-                                if(filter.maxValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
-                                    cal.add(Calendar.YEAR, (int) filter.maxValue);
-                                    maxValue = cal.getTimeInMillis();
-                                }
-                                if(minValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
-                                    selector.range(filter.minFieldName, minValue, null);
-                                }
-                                if(maxValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
-                                    selector.range(filter.maxFieldName, null, maxValue);
-                                }
-                            } else {
-                                if(filter.minValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
-                                    selector.term(filter.minFieldName, String.valueOf(filter.minValue));
-                                }
-                                if(filter.maxValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
-                                    selector.term(filter.maxFieldName, String.valueOf(filter.maxValue));
+            if(filterGroup != null) {
+                for (FilterGroup grp : filterGroup) {
+                    if (grp.isSelected && grp.rangeMinMaxFilterValues.size() > 0) {
+                        for (RangeMinMaxFilter filter : grp.rangeMinMaxFilterValues) {
+                            if (filter.selected) {
+                                if (grp.type.equalsIgnoreCase(FiltersViewAdapter.TYPE_YEAR)) {
+                                    Calendar cal = Calendar.getInstance();
+                                    long minValue = FiltersViewAdapter.UNEXPECTED_VALUE;
+                                    long maxValue = FiltersViewAdapter.UNEXPECTED_VALUE;
+                                    if (filter.minValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                        cal.add(Calendar.YEAR, (int) filter.minValue);
+                                        minValue = cal.getTimeInMillis();
+                                        cal.add(Calendar.YEAR, -(int) filter.minValue);
+                                    }
+                                    if (filter.maxValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                        cal.add(Calendar.YEAR, (int) filter.maxValue);
+                                        maxValue = cal.getTimeInMillis();
+                                    }
+                                    if (minValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                        selector.range(filter.minFieldName, minValue, null);
+                                    }
+                                    if (maxValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                        selector.range(filter.maxFieldName, null, maxValue);
+                                    }
+                                } else {
+                                    if (filter.minValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                        selector.term(filter.minFieldName, String.valueOf(filter.minValue));
+                                    }
+                                    if (filter.maxValue != FiltersViewAdapter.UNEXPECTED_VALUE) {
+                                        selector.term(filter.maxFieldName, String.valueOf(filter.maxValue));
+                                    }
                                 }
                             }
                         }

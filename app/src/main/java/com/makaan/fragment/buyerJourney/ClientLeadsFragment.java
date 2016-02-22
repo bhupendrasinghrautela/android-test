@@ -22,9 +22,12 @@ import com.makaan.response.buyerjourney.ClientLead;
 import com.makaan.response.buyerjourney.Company;
 import com.makaan.service.ClientLeadsService;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.util.AppUtils;
 import com.squareup.otto.Subscribe;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -207,7 +210,7 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
 
             public void bindData(ClientLeadsObject clientLeadsObject, int position) {
                 nameTextView.setText(clientLeadsObject.company.name);
-                companyNameTextView.setText(String.valueOf(clientLeadsObject.clientLead.createdAt));
+                companyNameTextView.setText(AppUtils.getDDMMMYYDateStringFromEpoch(String.valueOf(clientLeadsObject.clientLead.createdAt)));
                 radioButton.setOnCheckedChangeListener(null);
                 radioButton.setChecked(position == mSelected);
                 radioButton.setOnCheckedChangeListener(this);

@@ -3,8 +3,11 @@ package com.makaan.activity;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,17 +31,16 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.location.LocationListener;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
-import com.makaan.activity.city.CityActivity;
-import com.makaan.activity.locality.LocalityActivity;
-import com.makaan.activity.project.ProjectActivity;
 import com.makaan.adapter.listing.SearchAdapter;
 import com.makaan.adapter.listing.SelectedSearchAdapter;
-import com.makaan.analytics.MakaanEventTracker;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.Session;
+import com.makaan.location.LocationServiceConnectionListener;
+import com.makaan.location.MakaanLocationManager;
 import com.makaan.response.search.SearchResponseHelper;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.SearchSuggestionType;
@@ -51,7 +53,6 @@ import com.makaan.service.SearchService;
 
 import com.makaan.ui.listing.CustomFlowLayout;
 import com.makaan.util.RecentSearchManager;
-import com.makaan.util.StringUtil;
 import com.segment.analytics.Analytics;
 import com.segment.analytics.Properties;
 
@@ -68,7 +69,7 @@ import butterknife.OnClick;
  * Created by rohitgarg on 1/10/16.
  */
 public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity implements
-        SearchAdapter.SearchAdapterCallbacks, TextWatcher, CustomFlowLayout.ItemRemoveListener {
+        SearchAdapter.SearchAdapterCallbacks, TextWatcher, CustomFlowLayout.ItemRemoveListener, LocationListener {
 
     public static final int SERP_CONTEXT_BUY = 1;
     public static final int SERP_CONTEXT_RENT = 2;
@@ -132,6 +133,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     private int mMaxSearchClubCount;
     private ArrayList<SearchResponseItem> mAvailableSearches = new ArrayList<>();
     private boolean mSearchResultReceived;
+    private MakaanLocationManager mMakaanLocationManager;
+    private LocationManager mLocationManager;
 
     @Override
     protected abstract int getContentViewId();
@@ -182,6 +185,93 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     protected void onStart() {
         super.onStart();
         setUserData();
+        if(getLocationAvailabilty()) {
+            connectLocationApiClient(MakaanLocationManager.LocationUpdateMode.ONCE);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        try {
+            stopLocationUpdate(this);
+        }catch(Exception e){}
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            startLocationUpdate();
+        } catch(Exception e) {}
+    }
+
+    @Override
+    public void onDestroy() {
+
+        disconnectLocationApiClient();
+        super.onDestroy();
+    }
+
+    /**
+     * Starts location update
+     * */
+    protected void startLocationUpdate() {
+        if(mMakaanLocationManager != null) {
+            mMakaanLocationManager.requestLocationUpdate();
+        }
+    }
+
+
+    /**
+     * Stops location update
+     * @param listener a location listener
+     * */
+    protected void stopLocationUpdate(LocationListener listener){
+        if(mMakaanLocationManager != null) {
+            mMakaanLocationManager.stopLocationUpdate(listener);
+        }
+    }
+
+    /*
+    disconnect the Location client
+     */
+    protected void disconnectLocationApiClient() {
+        if (mMakaanLocationManager != null) {
+            mMakaanLocationManager.disconnectLocationApiClient(this);
+        }
+    }
+
+    public boolean getLocationAvailabilty() {
+        if(mLocationManager == null) {
+            mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        }
+        return mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    /**
+     * starts location update
+     * @param mode location update frequency mode
+     * */
+    protected void connectLocationApiClient(MakaanLocationManager.LocationUpdateMode mode) {
+        if(mMakaanLocationManager == null){
+            mMakaanLocationManager = new MakaanLocationManager();
+        }
+        LocationServiceConnectionListener listener =
+                new LocationServiceConnectionListener(this, mMakaanLocationManager);
+
+        mMakaanLocationManager.connectLocationApiClient(this, listener, this, mode);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Session.phoneLocation = location;
+        if(mMakaanLocationManager.getLocationUpdateMode()
+                == MakaanLocationManager.LocationUpdateMode.ONCE) {
+            try {
+                stopLocationUpdate(this);
+            }catch(Exception e){}
+        }
     }
 
     private void initializeViewData() {
@@ -597,9 +687,12 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             } else {
                 if(this instanceof HomeActivity) {
                     // check if we have user's location
-                    if(Session.myLocation != null) {
+                    if(Session.phoneLocation != null) {
                         LocationService service = (LocationService) MakaanServiceFactory.getInstance().getService(LocationService.class);
-                        service.getTopLocalitiesAsSearchResult(Session.myLocation);
+                        service.getTopLocalitiesAsSearchResult(Session.phoneLocation.getLatitude(), Session.phoneLocation.getLongitude(), 0);
+                    } else if(Session.apiLocation != null) {
+                        LocationService service = (LocationService) MakaanServiceFactory.getInstance().getService(LocationService.class);
+                        service.getTopLocalitiesAsSearchResult(Session.apiLocation.centerLatitude, Session.apiLocation.centerLongitude, Session.apiLocation.id);
                     }
                     setSearchResultFrameLayoutVisibility(true);
                 } else {
@@ -611,12 +704,17 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     private void addNearbyPropertiesSearchItem() {
-        if(Session.myLocation != null) {
+        if(Session.apiLocation != null || Session.phoneLocation != null) {
             SearchResponseItem item = new SearchResponseItem();
             item.type = SearchSuggestionType.NEARBY_PROPERTIES.getValue();
             item.displayText = "properties near my location";
-            item.latitude = Session.myLocation.centerLatitude;
-            item.longitude = Session.myLocation.centerLongitude;
+            if(Session.phoneLocation != null) {
+                item.latitude = Session.phoneLocation.getLatitude();
+                item.longitude = Session.phoneLocation.getLongitude();
+            } else if(Session.apiLocation != null) {
+                item.latitude = Session.apiLocation.centerLatitude;
+                item.longitude = Session.apiLocation.centerLongitude;
+            }
             mAvailableSearches.add(0, item);
         }
     }
@@ -801,9 +899,20 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     protected void applySearch(ArrayList<SearchResponseItem> searches) {
-        if((mSelectedSearches == null || mSelectedSearches.size() == 0)
-                && (searches != null && searches.size() > 0)) {
-            for(SearchResponseItem item : searches) {
+        if(mSelectedSearches == null) {
+            mSelectedSearches = new ArrayList<>();
+        }
+        if(mSelectedSearchAdapter == null) {
+            mSelectedSearchAdapter = new SelectedSearchAdapter(this);
+            mSearchResultsFlowLayout.setAdapter(mSelectedSearchAdapter);
+            mSelectedSearchAdapter.setItemRemoveListener(this);
+        }
+
+        mSelectedSearches.clear();
+        mSelectedSearchAdapter.setData(null);
+        for(SearchResponseItem item : searches) {
+            if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(item.type)
+                    || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(item.type)) {
                 addSearchInWrapLayout(item);
             }
         }
@@ -811,15 +920,6 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
     protected abstract boolean needScrollableSearchBar();
     protected abstract boolean supportsListing();
-
-    public void removeTopSearchItem() {
-        if(mSelectedSearches.size() > 0) {
-            mSelectedSearches.remove(mSelectedSearches.size() - 1);
-            if(mSelectedSearchAdapter != null) {
-                mSelectedSearchAdapter.setData(mSelectedSearches);
-            }
-        }
-    }
 
     private void setUserData() {
         UserResponse info= CookiePreferences.getUserInfo(this);
