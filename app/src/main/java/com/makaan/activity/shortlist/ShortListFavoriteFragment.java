@@ -35,6 +35,9 @@ public class ShortListFavoriteFragment extends MakaanBaseFragment{
     TextView statusMessage;
 
     private RecyclerView.LayoutManager mLayoutManager;
+    private ShortListCallback mCallback;
+    private int mPosition;
+
     @Override
     protected int getContentViewId() {
         return R.layout.layout_fragment_favorite;
@@ -63,10 +66,16 @@ public class ShortListFavoriteFragment extends MakaanBaseFragment{
         WishListResponse wishListResponse = wishListResultEvent.wishListResponse;
         if(wishListResponse!=null && wishListResponse.data!=null && wishListResponse.data.size()>0){
             favoriteRecyclerView.setVisibility(View.VISIBLE);
-            favoriteRecyclerView.setAdapter(new ShortListFavoriteAdapter(getActivity(),  wishListResponse.data));
+            favoriteRecyclerView.setAdapter(new ShortListFavoriteAdapter(getActivity(), wishListResponse.data));
+            mCallback.updateCount(mPosition, wishListResponse.data.size());
         }else{
             statusMessage.setVisibility(View.VISIBLE);
         }
 
+    }
+
+    public void bindView(ShortListCallback shortlistPagerAdapter, int i) {
+        this.mPosition = i;
+        this.mCallback = shortlistPagerAdapter;
     }
 }
