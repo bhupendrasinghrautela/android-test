@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.agents.TopBuyAgentsPyrEvent;
 import com.makaan.event.agents.TopRentAgentsPyrEvent;
 import com.makaan.event.agents.callback.TopBuyAgentsPyrCallback;
@@ -30,6 +31,7 @@ import com.makaan.response.country.CountryCodeResponse;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.response.serp.TermFilter;
+import com.makaan.response.user.UserResponse;
 import com.makaan.service.AgentService;
 import com.makaan.service.MakaanServiceFactory;
 
@@ -116,6 +118,15 @@ public class PyrPageFragment extends Fragment {
         // access group
         ArrayList<FilterGroup> grpsBuy = MasterDataCache.getInstance().getAllBuyPyrGroups();
         ArrayList<FilterGroup> grpsRent = MasterDataCache.getInstance().getAllRentPyrGroups();
+
+
+        //User data prefill
+        try{
+            UserResponse userResponse = CookiePreferences.getLastUserInfo(getContext());
+            mUserName.setText(userResponse.getData().firstName);
+            mUserEmail.setText(userResponse.getData().email);
+        }catch (Exception e){}
+
         try {
             boolean newGroups = false;
             if(mGroupsBuy == null || mGroupsRent == null) {
