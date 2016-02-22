@@ -31,6 +31,7 @@ import com.pkmmte.view.CircularImageView;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
+import org.w3c.dom.Text;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -55,6 +56,8 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
 
     @Bind(R.id.tv_username)
     TextView mUserName;
+    @Bind(R.id.tv_subtitle)
+    TextView mSubtitle;
 
     private AlertDialog mAlertDialog;
 
@@ -121,7 +124,7 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
 
                 } else {
                     mCollapsingToolbar.setTitle("");
-                    if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this)) {
+                    /*if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this)) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red, null));
                             mTabLayout.setTabTextColors(getResources().getColor(R.color.white, null), getResources().getColor(R.color.white, null));
@@ -129,7 +132,7 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
                             mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red));
                             mTabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources().getColor(R.color.white));
                         }
-                    } else {
+                    } else {*/
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             mAppBarLayout.setBackgroundColor(getResources().getColor(R.color.buyer_dashboard_profile_background_color, null));
                             mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red, null));
@@ -139,7 +142,7 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
                             mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red));
                             mTabLayout.setTabTextColors(getResources().getColor(R.color.listingBlack), getResources().getColor(R.color.listingBlack));
                         }
-                    }
+//                    }
                 }
 
             }
@@ -170,9 +173,11 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
 //            mLoginButton.setVisibility(View.GONE);
             mLoginButton.setText("logout");
             mUserName.setText(CookiePreferences.getUserInfo(this).getData().getFirstName());
+            mSubtitle.setVisibility(View.INVISIBLE);
         } else {
             mLoginButton.setText("login");
             mLoginButton.setVisibility(View.VISIBLE);
+            mSubtitle.setVisibility(View.VISIBLE);
         }
     }
 
