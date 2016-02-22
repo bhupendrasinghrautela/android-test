@@ -101,6 +101,10 @@ public class BlogContentFragment extends MakaanBaseFragment {
                 titleTextView.setText(getResources().getString(R.string.blog_content_search_title));
                 subTitleTextView.setText(getResources().getString(R.string.blog_content_search_sub_title));
                 actionTextView.setText(getResources().getString(R.string.blog_content_search_action));
+
+                if(getActivity() != null) {
+                    getActivity().setTitle("save searches");
+                }
                 break;
             case SHORTLIST:
                 titleTextView.setVisibility(View.VISIBLE);
@@ -127,6 +131,10 @@ public class BlogContentFragment extends MakaanBaseFragment {
                     subTitleTextView.setText(getResources().getString(R.string.blog_content_shortlist_sub_title));
                 }
                 actionTextView.setText(getResources().getString(R.string.blog_content_shortlist_action));
+
+                if(getActivity() != null) {
+                    getActivity().setTitle("shortlist");
+                }
                 break;
             case SITE_VISIT:
                 titleTextView.setVisibility(View.VISIBLE);
@@ -136,6 +144,10 @@ public class BlogContentFragment extends MakaanBaseFragment {
                 titleTextView.setText(getResources().getString(R.string.blog_content_site_visit_title));
                 subTitleTextView.setText(getResources().getString(R.string.blog_content_site_visit_sub_title));
                 actionTextView.setText(getResources().getString(R.string.blog_content_site_visit_action));
+
+                if(getActivity() != null) {
+                    getActivity().setTitle("site visits");
+                }
                 break;
             case HOME_LOAN:
                 titleTextView.setVisibility(View.GONE);
@@ -143,6 +155,10 @@ public class BlogContentFragment extends MakaanBaseFragment {
                 actionTextView.setVisibility(View.VISIBLE);
 
                 actionTextView.setText(getResources().getString(R.string.blog_content_home_loan_action));
+
+                if(getActivity() != null) {
+                    getActivity().setTitle("home loan");
+                }
                 break;
             case UNIT_BOOK:
                 titleTextView.setVisibility(View.GONE);
@@ -150,6 +166,10 @@ public class BlogContentFragment extends MakaanBaseFragment {
                 actionTextView.setVisibility(View.VISIBLE);
 
                 actionTextView.setText(getResources().getString(R.string.blog_content_home_booking_action));
+
+                if(getActivity() != null) {
+                    getActivity().setTitle("unit booking");
+                }
                 break;
             case POSSESSION:
                 titleTextView.setVisibility(View.GONE);
@@ -157,6 +177,10 @@ public class BlogContentFragment extends MakaanBaseFragment {
                 actionTextView.setVisibility(View.VISIBLE);
 
                 actionTextView.setText(getResources().getString(R.string.blog_content_home_possession_action));
+
+                if(getActivity() != null) {
+                    getActivity().setTitle("possession");
+                }
                 break;
             case REGISTRATION:
                 titleTextView.setVisibility(View.GONE);
@@ -164,6 +188,10 @@ public class BlogContentFragment extends MakaanBaseFragment {
                 actionTextView.setVisibility(View.VISIBLE);
 
                 actionTextView.setText(getResources().getString(R.string.blog_content_home_registration_action));
+
+                if(getActivity() != null) {
+                    getActivity().setTitle("registration");
+                }
                 break;
         }
     }

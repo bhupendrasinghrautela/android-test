@@ -79,16 +79,20 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
                     break;
                 case LOAD_FRAGMENT_SHORTLIST:
                     initFragment(R.id.activity_base_buyer_journey_content_frame_layout, new ShortListFragment(), false);
+                    setTitle("shortlist");
                     break;
                 case LOAD_FRAGMENT_SAVE_SEARCH:
                     ((SaveSearchService) (MakaanServiceFactory.getInstance().getService(SaveSearchService.class))).getSavedSearches();
                     initFragment(R.id.activity_base_buyer_journey_content_frame_layout, new SaveSearchFragment(), false);
+                    setTitle("save searches");
                     break;
                 case LOAD_FRAGMENT_REWARDS:
                     initFragment(R.id.activity_base_buyer_journey_content_frame_layout, new RewardsFragment(), false);
+                    setTitle("cashback request");
                     break;
                 case LOAD_FRAGMENT_SITE_VISIT:
                     initFragment(R.id.activity_base_buyer_journey_content_frame_layout, new SiteVisitFragment(), false);
+                    setTitle("site visits");
                     break;
                 default:
                     break;
