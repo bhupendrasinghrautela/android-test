@@ -155,7 +155,9 @@ public class RecentPropertyProjectManager {
                             this.sellerName = listingDetail.companySeller.company.name;
                         }
 
-                        this.rating = listingDetail.companySeller.company.score;
+                        if(listingDetail.companySeller.company.score != null) {
+                            this.rating = listingDetail.companySeller.company.score;
+                        }
                     }
                 }
 

@@ -10,12 +10,12 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <com.pkmmte.view.CircularImageView
             android:id="@+id/iv_profile_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="76dp"
+            android:layout_height="76dp"
             android:layout_marginLeft="48dp"
             android:layout_marginStart="48dp"
             android:layout_alignParentTop="true"
@@ -24,6 +24,7 @@
             android:src="@drawable/edit_avatar" />
 
         <Button
+            android:id="@+id/btn_profile_image"
             android:layout_width="156dp"
             android:layout_height="24dp"
             android:layout_marginTop="16dp"
@@ -38,7 +39,7 @@
             android:layout_below="@id/iv_profile_image"/>
 
         <EditText
-            android:id="@+id/et_mobile"
+            android:id="@+id/et_header_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
@@ -53,21 +54,22 @@
             android:background="@drawable/edittext_bg_bottom_border"
             android:layout_toRightOf="@id/iv_profile_image"
             android:layout_toEndOf="@id/iv_profile_image"
+            android:enabled="false"
             />
 
-        <ImageView
-            android:id="@+id/iv_edit_name"
+        <ImageButton
+            android:id="@+id/iv_edit_header_name"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="2dp"
-            android:layout_toRightOf="@id/et_mobile"
-            android:layout_toEndOf="@id/et_mobile"
+            android:layout_toRightOf="@id/et_header_name"
+            android:layout_toEndOf="@id/et_header_name"
             android:clickable="true"
             android:contentDescription="@string/app_name"
             android:src="@android:drawable/ic_menu_edit"
-            android:layout_alignBottom="@id/et_mobile"/>
+            android:layout_alignBottom="@id/et_header_name"/>
 
     </RelativeLayout>
 

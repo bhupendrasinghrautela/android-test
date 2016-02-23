@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.PopupOverlay">
+        android:theme="@style/AppTheme.PopupOverlay"
+        android:background="@color/buyer_dashboard_profile_background_color">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout_edit"
