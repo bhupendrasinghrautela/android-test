@@ -14,6 +14,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.crashlytics.android.Crashlytics;
+import com.google.gson.JsonSyntaxException;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.cache.LruBitmapCache;
 import com.makaan.constants.RequestConstants;
@@ -311,8 +313,10 @@ public class MakaanNetworkClient {
                                 }
                                 objectGetCallback.onSuccess(objResponse);
 
-                            } catch (JSONException e) {
+                            } catch (JSONException | JsonSyntaxException | IllegalArgumentException e) {
                                 Log.e(TAG, "JSONException", e);
+                                Crashlytics.logException(e);
+                                objectGetCallback.onError(getResponseError(new VolleyError()));
                             }
                         }
                     }

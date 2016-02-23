@@ -71,9 +71,12 @@ public class ReviewAgentFragment extends MakaanBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        if(mObj != null) {
-            mAgentNameTextView.setText(mObj.clientLeadObject.company.name);
+        if(mObj == null || mObj.clientLeadObject == null || mObj.clientLeadObject.company == null
+                || mObj.clientLeadObject.company.name == null) {
+            // TODO
+            return null;
         }
+        mAgentNameTextView.setText(mObj.clientLeadObject.company.name);
 
         mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -143,10 +146,15 @@ public class ReviewAgentFragment extends MakaanBaseFragment {
                     // TODO
                 } else {
                     AgentRating rating = new AgentRating();
-                    rating.sellerId = mObj.clientLeadObject.company.id;
+                    if(mObj.clientLeadObject != null && mObj.clientLeadObject.company != null
+                            && mObj.clientLeadObject.company.id != null) {
+                        rating.sellerId = mObj.clientLeadObject.company.id;
+                    }
                     rating.rating = (int)mRatingBar.getRating();
                     if(mObj.listingDetail != null) {
-                        rating.listingId = mObj.listingDetail.id;
+                        if(mObj.listingDetail.id != null) {
+                            rating.listingId = mObj.listingDetail.id;
+                        }
                         if(mObj.listingDetail.property != null && mObj.listingDetail.property.project != null && mObj.listingDetail.property.project.locality != null) {
                             rating.localityName = mObj.listingDetail.property.project.locality.label;
                             if(mObj.listingDetail.property.project.locality.suburb != null
