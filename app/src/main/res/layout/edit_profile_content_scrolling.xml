@@ -32,7 +32,7 @@
             android:theme="@style/TextLabel">
 
             <EditText
-                android:id="@+id/et_mobile"
+                android:id="@+id/et_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/input_top_margin"
@@ -42,11 +42,13 @@
                 android:paddingTop="@dimen/edit_internal_padding"
                 android:singleLine="true"
                 android:text="harvi"
-                android:textSize="@dimen/average_text" />
+                android:textSize="@dimen/average_text"
+                android:textColor="@color/listingBlack"
+                android:enabled="false" />
 
         </android.support.design.widget.TextInputLayout>
 
-        <ImageView
+        <ImageButton
             android:id="@+id/iv_edit_name"
             android:layout_width="24dp"
             android:layout_height="24dp"

@@ -110,7 +110,7 @@ public class HomeActivity extends MakaanBaseSearchActivity {
                 switch (checkedId) {
                     case R.id.activity_home_property_buy_radio_button: {
                         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) buyRadioButton.getLayoutParams();
-                        params.setMargins(0, 0, 0, 0);
+                        params.setMargins(0, 0, 1, 0);
                         buyRadioButton.setLayoutParams(params);
 
                         params = (LinearLayout.LayoutParams) rentRadioButton.getLayoutParams();
@@ -120,7 +120,7 @@ public class HomeActivity extends MakaanBaseSearchActivity {
                     }
                     case R.id.activity_home_property_rent_radio_button: {
                         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) rentRadioButton.getLayoutParams();
-                        params.setMargins(0, 0, 0, 0);
+                        params.setMargins(0, 0, 1, 0);
                         rentRadioButton.setLayoutParams(params);
 
                         params = (LinearLayout.LayoutParams) buyRadioButton.getLayoutParams();

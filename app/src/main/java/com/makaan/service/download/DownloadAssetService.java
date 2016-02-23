@@ -32,7 +32,7 @@ import java.lang.reflect.Type;
  */
 public class DownloadAssetService extends Service {
     public static final int REQUEST_CODE = 0x01;
-    private static final String ASSETS_URL = "http://content.makaan.com.s3.amazonaws.com/app/assets/";
+    private static final String ASSETS_URL = "http://content.makaan.com.s3.amazonaws.com/app/assets/buyer/";
     private static final String VERSION_CODES_FILE_NAME = "versionCodes.json";
 
     private VersionCodes mServerVersionCodes;
@@ -74,10 +74,8 @@ public class DownloadAssetService extends Service {
                     if(mLocalVersionCodes != null) {
                         // let compare the two objects
                         for(VersionCodes.Version version : mServerVersionCodes.data) {
-                            if(mLocalVersionCodes.checkIfNewVersion(version)) {
+                            if(mLocalVersionCodes.checkIfNewVersion(version, DownloadAssetService.this.getApplicationContext())) {
                                 downloadAndSave(version);
-                            } else {
-                                throw new RuntimeException();
                             }
                         }
                     } else {
@@ -140,11 +138,11 @@ public class DownloadAssetService extends Service {
         }
     }
 
-    private void downloadAndSave(VersionCodes.Version version) {
+    private void downloadAndSave(final VersionCodes.Version version) {
         MakaanNetworkClient.getInstance().get(ASSETS_URL.concat(version.url), new JSONGetCallback() {
             @Override
             public void onSuccess(JSONObject responseObject) {
-
+                saveToFileSystem(version.name, responseObject.toString());
             }
 
             @Override
