@@ -283,7 +283,7 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
     public void onLogoutResult(UserLogoutEvent userLogoutEvent){
         if(null!=userLogoutEvent && userLogoutEvent.isLogoutSuccessfull()){
             CookiePreferences.setUserLoggedOut(this);
-            CookiePreferences.setUserInfo(this, "");
+            //TODO also clear metadata and userinfo
             finish();
         }else{
             Toast.makeText(this,getResources().getString(R.string.generic_error),

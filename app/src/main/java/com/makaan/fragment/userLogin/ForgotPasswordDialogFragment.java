@@ -77,6 +77,7 @@ public class ForgotPasswordDialogFragment extends DialogFragment {
                 Toast.makeText(getActivity(), getActivity().getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
             }
         }
+        dismiss();
     }
 
     @Override
