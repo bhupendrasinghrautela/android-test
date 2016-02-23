@@ -31,7 +31,7 @@ public abstract class AbstractListingView extends FrameLayout {
         mContext = context;
     }
 
-    public void populateData(Object data, SerpRequestCallback callback) {
+    public void populateData(Object data, SerpRequestCallback callback, int position) {
         ButterKnife.bind(this, this);
     }
 }

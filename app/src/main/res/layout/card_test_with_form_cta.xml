@@ -43,7 +43,7 @@
             android:textSize="@dimen/indian_code_text_size" />
 
         <EditText
-            android:id="@+id/et_mobile"
+            android:id="@+id/et_header_name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="5"

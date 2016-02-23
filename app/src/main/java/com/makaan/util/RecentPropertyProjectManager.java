@@ -20,7 +20,7 @@ import java.util.Iterator;
 public class RecentPropertyProjectManager {
     private static final String SHARED_PREF_KEY = "recent_project_properties";
     private static final String PREF_KEY = "key";
-    private static final int MAX_ENTRIES = 5;
+    private static final int MAX_ENTRIES = 20;
     public static final String TYPE_PROPERTY = "property";
     public static final String TYPE_PROJECT = "project";
 
@@ -94,7 +94,7 @@ public class RecentPropertyProjectManager {
         return this.contain(id, TYPE_PROJECT);
     }
 
-    public ArrayList<DataObject> getRecentSearches(Context context) {
+    public ArrayList<DataObject> getRecentEntries(Context context) {
         return recentProjectPropertyList;
     }
 
@@ -104,11 +104,11 @@ public class RecentPropertyProjectManager {
         public String addressLine2;
         public double price, minPrice, maxPrice;
         public String type;
-        String imageUrl;
-        String sellerName;
-        String phoneNo;
-        double rating;
-        long sellerId;
+        public String imageUrl;
+        public String sellerName;
+        public String phoneNo;
+        public double rating;
+        public long sellerId;
 
         public DataObject() {}
 
@@ -155,7 +155,9 @@ public class RecentPropertyProjectManager {
                             this.sellerName = listingDetail.companySeller.company.name;
                         }
 
-                        this.rating = listingDetail.companySeller.company.score;
+                        if(listingDetail.companySeller.company.score != null) {
+                            this.rating = listingDetail.companySeller.company.score;
+                        }
                     }
                 }
 

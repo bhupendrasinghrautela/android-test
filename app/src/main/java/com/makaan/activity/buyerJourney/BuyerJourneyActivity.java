@@ -10,9 +10,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,24 +19,26 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
+import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.cookie.CookiePreferences;
-import com.makaan.event.user.UserLoginEvent;
-import com.makaan.jarvis.BaseJarvisActivity;
-import com.makaan.ui.view.BadgeView;
-import com.makaan.util.AppBus;
+import com.makaan.event.user.UserLogoutEvent;
+import com.makaan.network.MakaanNetworkClient;
+import com.makaan.response.user.UserResponse;
+import com.makaan.service.MakaanServiceFactory;
+import com.makaan.service.user.UserLogoutService;
+import com.makaan.util.ImageUtils;
 import com.pkmmte.view.CircularImageView;
 import com.squareup.otto.Subscribe;
 
-import org.json.JSONException;
-
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class BuyerJourneyActivity extends BaseJarvisActivity {
+public class BuyerJourneyActivity extends MakaanFragmentActivity {
     @Bind(R.id.button_login)
     Button mLoginButton;
 
@@ -55,6 +56,8 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
 
     @Bind(R.id.tv_username)
     TextView mUserName;
+    @Bind(R.id.tv_subtitle)
+    TextView mSubtitle;
 
     private AlertDialog mAlertDialog;
 
@@ -89,11 +92,15 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
     }
 
     @Override
+    protected int getContentViewId() {
+        return R.layout.fragment_buyer_profile;
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.do_not_move, R.anim.do_not_move);
-        setContentView(R.layout.fragment_buyer_profile);
-        ButterKnife.bind(BuyerJourneyActivity.this);
+//        overridePendingTransition(R.anim.do_not_move, R.anim.do_not_move);
+//        setContentView(R.layout.fragment_buyer_profile);
         initViews();
 
         setupAppBar();
@@ -121,7 +128,7 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
 
                 } else {
                     mCollapsingToolbar.setTitle("");
-                    if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this)) {
+                    /*if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this)) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red, null));
                             mTabLayout.setTabTextColors(getResources().getColor(R.color.white, null), getResources().getColor(R.color.white, null));
@@ -129,7 +136,7 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
                             mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red));
                             mTabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources().getColor(R.color.white));
                         }
-                    } else {
+                    } else {*/
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             mAppBarLayout.setBackgroundColor(getResources().getColor(R.color.buyer_dashboard_profile_background_color, null));
                             mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red, null));
@@ -139,7 +146,7 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
                             mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red));
                             mTabLayout.setTabTextColors(getResources().getColor(R.color.listingBlack), getResources().getColor(R.color.listingBlack));
                         }
-                    }
+//                    }
                 }
 
             }
@@ -152,6 +159,7 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
         if(requestCode==LOGIN_REQUEST && resultCode == RESULT_OK){
             setUserData();
             initViews();
+            invalidateOptionsMenu();
         }
     }
 
@@ -161,7 +169,12 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
             Intent intent = new Intent(this, UserLoginActivity.class);
             startActivityForResult(intent, LOGIN_REQUEST);
         } else {
-
+            try {
+                onLogoutClick();
+            } catch (Exception e) {
+                Toast.makeText(BuyerJourneyActivity.this,
+                        getResources().getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -169,10 +182,27 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
         if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this)) {
 //            mLoginButton.setVisibility(View.GONE);
             mLoginButton.setText("logout");
-            mUserName.setText(CookiePreferences.getUserInfo(this).getData().getFirstName());
+            UserResponse.UserData userData = CookiePreferences.getUserInfo(this).getData();
+            mUserName.setText(userData.getFirstName());
+            if(!TextUtils.isEmpty(userData.getProfileImageUrl())) {
+                MakaanNetworkClient.getInstance().getImageLoader().get(userData.profileImageUrl, new ImageLoader.ImageListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+
+                        }
+
+                        @Override
+                        public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
+                            mProfileImage.setImageBitmap(imageContainer.getBitmap());
+                        }
+                    }
+                );
+            }
+            mSubtitle.setVisibility(View.INVISIBLE);
         } else {
             mLoginButton.setText("login");
             mLoginButton.setVisibility(View.VISIBLE);
+            mSubtitle.setVisibility(View.VISIBLE);
         }
     }
 
@@ -240,13 +270,16 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_settings:
-                //TODO
-                Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, BuyerAccountSettingActivity.class);
+                startActivity(intent);
                 break;
             case R.id.item_logout:
-                //TODO have to make logout api call
-                Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
-                //finish();
+                try{
+                    onLogoutClick();
+                }catch (Exception e){
+                    Toast.makeText(BuyerJourneyActivity.this,getResources()
+                            .getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
+                }
                 break;
             case android.R.id.home:
                 onBackPressed();
@@ -256,6 +289,25 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
         }
 
         return true;
+    }
+
+    private void onLogoutClick() {
+        UserLogoutService userLogoutService =
+                (UserLogoutService) MakaanServiceFactory.getInstance()
+                        .getService(UserLogoutService.class);
+        userLogoutService.makeLogoutRequest();
+    }
+
+    @Subscribe
+    public void onLogoutResult(UserLogoutEvent userLogoutEvent){
+        if(null!=userLogoutEvent && userLogoutEvent.isLogoutSuccessfull()){
+            CookiePreferences.setUserLoggedOut(this);
+            CookiePreferences.setUserInfo(this, "");
+            finish();
+        }else{
+            Toast.makeText(this,getResources().getString(R.string.generic_error),
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
 }

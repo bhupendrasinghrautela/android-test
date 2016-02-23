@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -45,6 +46,9 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
     @Bind(R.id.fragment_client_company_leads_recycler_view)
     RecyclerView mRecyclerView;
 
+    @Bind(R.id.fragment_client_company_leads_next_button)
+    Button mNextButton;
+
     ClientCompanyLeadsAdapter mAdapter;
     private int mSelected = 0;
     private ArrayList<ListingByIdsGetEvent.Listing> mItems;
@@ -60,6 +64,7 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
+        mNextButton.setEnabled(false);
 
         Bundle bundle = getArguments();
         if(bundle != null) {
@@ -107,6 +112,7 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
         }
         mItems = listingByIdsGetEvent.items;
         mAdapter.setData(listingByIdsGetEvent.items);
+        mNextButton.setEnabled(true);
     }
 
     public void setData(Object obj) {

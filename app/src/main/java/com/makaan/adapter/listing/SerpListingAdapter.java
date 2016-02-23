@@ -11,11 +11,8 @@ import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.PaginatedBaseAdapter;
 import com.makaan.adapter.RecycleViewMode;
-import com.makaan.cache.MasterDataCache;
-import com.makaan.jarvis.JarvisConstants;
 import com.makaan.jarvis.analytics.AnalyticsConstants;
 import com.makaan.jarvis.analytics.AnalyticsService;
-import com.makaan.jarvis.analytics.SerpFilterMessageMap;
 import com.makaan.pojo.GroupCluster;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.response.listing.GroupListing;
@@ -28,10 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by rohitgarg on 1/6/16.
@@ -146,16 +140,16 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
         BaseListingAdapterViewHolder viewHolder = (BaseListingAdapterViewHolder) holder;
         int type = getItemViewType(position);
         if(type == RecycleViewMode.DATA_TYPE_CLUSTER.getValue()) {
-            viewHolder.populateData(mGroupClusterListings.get(position / 10), mCallback);
+            viewHolder.populateData(mGroupClusterListings.get(position / 10), mCallback, position);
         } else if(type == RecycleViewMode.DATA_TYPE_BUILDER.getValue()
                 || type == RecycleViewMode.DATA_TYPE_SELLER.getValue()) {
             if(!mBuilderSellerPopulated) {
-                viewHolder.populateData(null, mCallback);
+                viewHolder.populateData(null, mCallback, position);
                 mBuilderSellerPopulated = true;
             }
         } else {
             if(position == 0) {
-                viewHolder.populateData(mCount, mCallback);
+                viewHolder.populateData(mCount, mCallback, position);
             } else {
                 position--;
                 int extraCount = 0;
@@ -175,7 +169,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
                     mEventSent = true;
                     trackScroll(position - extraCount);
                 }
-                viewHolder.populateData(mItems.get(position - extraCount), mCallback);
+                viewHolder.populateData(mItems.get(position - extraCount), mCallback, position - extraCount);
             }
         }
     }

@@ -5,55 +5,71 @@
     android:clipToPadding="false"
     android:gravity="center_vertical"
     android:minHeight="@dimen/header_height"
-    android:orientation="horizontal">
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingLeft="20dp">
-
-        <com.pkmmte.view.CircularImageView
-            android:id="@+id/iv_profile_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/edit_avatar" />
-
-        <Button
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="change profile picture"
-            android:textAllCaps="false" />
-    </LinearLayout>
+    android:orientation="horizontal"
+    android:paddingLeft="20dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
+        <com.pkmmte.view.CircularImageView
+            android:id="@+id/iv_profile_image"
+            android:layout_width="76dp"
+            android:layout_height="76dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginStart="48dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/edit_avatar" />
+
+        <Button
+            android:id="@+id/btn_profile_image"
+            android:layout_width="156dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/change_profile_pic_button_backgroun"
+            android:text="change profile picture"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:typeface="serif"
+            android:textAllCaps="false"
+            android:layout_below="@id/iv_profile_image"/>
 
         <EditText
-            android:id="@+id/et_mobile"
+            android:id="@+id/et_header_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
             android:focusable="false"
             android:hint="@string/name"
             android:paddingBottom="@dimen/edit_internal_padding"
             android:paddingTop="@dimen/edit_internal_padding"
             android:singleLine="true"
+            android:textSize="@dimen/average_text"
+            android:background="@drawable/edittext_bg_bottom_border"
+            android:layout_toRightOf="@id/iv_profile_image"
+            android:layout_toEndOf="@id/iv_profile_image"
+            android:enabled="false"
+            />
 
-            android:textSize="@dimen/average_text" />
-
-        <ImageView
-            android:id="@+id/iv_edit_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/et_mobile"
+        <ImageButton
+            android:id="@+id/iv_edit_header_name"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="2dp"
+            android:layout_toRightOf="@id/et_header_name"
+            android:layout_toEndOf="@id/et_header_name"
             android:clickable="true"
             android:contentDescription="@string/app_name"
-            android:src="@android:drawable/ic_menu_edit" />
+            android:src="@android:drawable/ic_menu_edit"
+            android:layout_alignBottom="@id/et_header_name"/>
 
     </RelativeLayout>
 

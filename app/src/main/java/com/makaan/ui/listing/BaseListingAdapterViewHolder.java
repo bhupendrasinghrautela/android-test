@@ -13,5 +13,5 @@ public abstract class BaseListingAdapterViewHolder extends RecyclerView.ViewHold
         super(view);
     }
 
-    abstract public void populateData(Object data, SerpRequestCallback callback);
+    abstract public void populateData(Object data, SerpRequestCallback callback, int position);
 }

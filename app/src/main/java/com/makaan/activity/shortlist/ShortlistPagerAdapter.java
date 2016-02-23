@@ -20,7 +20,7 @@ public class ShortlistPagerAdapter extends FragmentStatePagerAdapter implements 
     int mNumOfTabs;
     Context mContext;
     String [] label = {"enquired","favorite","recent"};
-    String [] count = {"00","08","00"};
+    String [] count = {"00","00","00"};
     List<View> mViews;
 
     public ShortlistPagerAdapter(Context context , FragmentManager fm, int numOfTabs) {
@@ -39,10 +39,12 @@ public class ShortlistPagerAdapter extends FragmentStatePagerAdapter implements 
                 return enquiredFragment;
             case 1:
                 ShortListFavoriteFragment favoriteFragment = new ShortListFavoriteFragment();
+                favoriteFragment.bindView(this, 1);
                 return favoriteFragment;
             case 2:
                 //TODO change this to recent
                 ShortListRecentFragment recentFragment = new ShortListRecentFragment();
+                recentFragment.bindView(this, 2);
                 return recentFragment;
             default:
                 return null;
@@ -74,6 +76,11 @@ public class ShortlistPagerAdapter extends FragmentStatePagerAdapter implements 
     public void updateCount(int position,int count) {
         View v = mViews.get(position);
         TextView countValue = (TextView) v.findViewById(R.id.tv_count);
-        countValue.setText(String.valueOf(count));
+        if(count < 10) {
+            countValue.setText(String.format("%02d", count));
+        } else {
+            countValue.setText(String.valueOf(count));
+        }
+
     }
 }

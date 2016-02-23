@@ -586,7 +586,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                                 if(mSearchImageView != null) {
                                     mSearchImageView.setVisibility(View.GONE);
                                 }
-                                if(hintText != null) {
+                                if(hintText != null && mSearchEditText != null) {
                                     mSearchEditText.setHint(hintText);
                                 }
                             }

@@ -73,6 +73,10 @@ public class SerpRequest implements Parcelable, Cloneable {
 
     private double latitude = Double.MIN_VALUE;
     private double longitude = Double.MIN_VALUE;
+    private double fromLatitude = Double.MIN_VALUE;
+    private double fromLongitude = Double.MIN_VALUE;
+    private double toLatitude = Double.MIN_VALUE;
+    private double toLongitude = Double.MIN_VALUE;
 
     private boolean isFromBackstack = false;
     private boolean mPlus = false;
@@ -269,6 +273,13 @@ public class SerpRequest implements Parcelable, Cloneable {
         this.longitude = longitude;
     }
 
+    public void setFromToGeo(double fromLat, double toLat, double fromLon, double toLon) {
+        this.fromLatitude = fromLat;
+        this.fromLongitude = fromLon;
+        this.toLatitude = toLat;
+        this.toLongitude = toLon;
+    }
+
     public int selectedLocalitiesAndSuburbs() {
         return this.localityIds.size() + this.suburbIds.size();
     }
@@ -337,6 +348,7 @@ public class SerpRequest implements Parcelable, Cloneable {
 
         setLatitude(source.readDouble());
         setLongitude(source.readDouble());
+        setFromToGeo(source.readDouble(), source.readDouble(), source.readDouble(), source.readDouble());
 
         setIsFromBackstack(source.readByte() == 1);
         setMPlus(source.readByte() == 1);
@@ -375,6 +387,7 @@ public class SerpRequest implements Parcelable, Cloneable {
 
         setLatitude(request.latitude);
         setLongitude(request.longitude);
+        setFromToGeo(request.fromLatitude, request.toLatitude, request.fromLongitude, request.toLongitude);
 
         setIsFromBackstack(request.isFromBackstack);
         setMPlus(request.mPlus);
@@ -420,6 +433,10 @@ public class SerpRequest implements Parcelable, Cloneable {
 
         dest.writeDouble(this.latitude);
         dest.writeDouble(this.longitude);
+        dest.writeDouble(this.fromLatitude);
+        dest.writeDouble(this.toLatitude);
+        dest.writeDouble(this.fromLongitude);
+        dest.writeDouble(this.toLongitude);
 
         dest.writeByte((byte) (isFromBackstack ? 1 : 0));
         dest.writeByte((byte) (mPlus ? 1 : 0));
@@ -761,6 +778,13 @@ public class SerpRequest implements Parcelable, Cloneable {
 
         if(Double.compare(latitude, Double.MIN_VALUE) != 0 && Double.compare(longitude, Double.MIN_VALUE) != 0) {
             selector.nearby(RequestConstants.GEO_REQUEST_DISTANCE, latitude, longitude, needViewPort);
+        }
+
+        // view port
+        if(Double.compare(fromLatitude, Double.MIN_VALUE) != 0 && Double.compare(toLatitude, Double.MIN_VALUE) != 0
+                && Double.compare(fromLongitude, Double.MIN_VALUE) != 0 && Double.compare(toLongitude, Double.MIN_VALUE) != 0) {
+            selector.range(RequestConstants.LATITUDE, fromLatitude, toLatitude);
+            selector.range(RequestConstants.LONGITUDE, fromLongitude, toLongitude);
         }
 
         // sorting

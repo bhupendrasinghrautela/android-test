@@ -3,7 +3,6 @@ package com.makaan.ui.listing;
 import android.view.View;
 
 import com.makaan.activity.listing.SerpRequestCallback;
-import com.makaan.adapter.RecycleViewMode;
 
 /**
  * Created by rohitgarg on 1/6/16.
@@ -16,7 +15,7 @@ public class CountListingViewHolder extends BaseListingAdapterViewHolder {
     }
 
     @Override
-    public void populateData(Object data, SerpRequestCallback callback) {
+    public void populateData(Object data, SerpRequestCallback callback, int position) {
         if(view != null) {
             if(view instanceof CountListingView) {
                 ((CountListingView) view).populateData(data, callback);

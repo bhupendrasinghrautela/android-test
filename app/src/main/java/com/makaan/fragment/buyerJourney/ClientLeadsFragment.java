@@ -39,6 +39,9 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
     @Bind(R.id.fragment_client_leads_recycler_view)
     RecyclerView mRecyclerView;
 
+    @Bind(R.id.fragment_client_leads_next_button)
+    Button mNextButton;
+
     ArrayList<ClientLeadsObject> mClientLeadsObjects;
     private ClientLeadsAdapter mAdapter;
 
@@ -54,6 +57,7 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
+        mNextButton.setEnabled(false);
 
         ((ClientLeadsService)MakaanServiceFactory.getInstance().getService(ClientLeadsService.class)).requestClientLeads();
 
@@ -116,6 +120,7 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
             obj.selectAndAddCompany(companies);
         }
         mAdapter.addData(mClientLeadsObjects);
+        mNextButton.setEnabled(true);
     }
 
     public void setData(Object obj) {

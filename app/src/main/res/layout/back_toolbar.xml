@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/actionBarSize"
+    android:background="@color/activity_search_base_layout_search_bar_background_color">
+
+    <Button
+
+        android:id="@+id/btn_back_toolbar"
+        android:layout_width="@dimen/activity_base_buyer_journey_layout_back_button_width"
+        android:layout_height="@dimen/activity_base_buyer_journey_layout_back_button_height"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="5dp"
+        android:background="@drawable/back_arrow_white" />
+
+    <TextView
+        android:id="@+id/tv_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/activity_base_buyer_journey_layout_user_type_text_view_text_size" />
+</RelativeLayout>

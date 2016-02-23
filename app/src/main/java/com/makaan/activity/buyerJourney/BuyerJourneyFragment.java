@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
@@ -54,6 +55,9 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     boolean mClientLeadsReceived = false;
     boolean mWishListsReceived = false;
     private int mWishlistCount;
+
+
+    private View[] mViews = new View[3];
 
     @OnClick(R.id.ll_search)
     public void onSearchCLick() {
@@ -153,6 +157,9 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             mWishListsReceived = false;
         }
 
+        mViews[0] = view.findViewById(R.id.ll_search);
+        mViews[1] = view.findViewById(R.id.ll_shortlist);
+        mViews[2] = view.findViewById(R.id.ll_site_visit);
         return view;
     }
 
@@ -191,8 +198,29 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
                 mPhaseId = clientLeadsByGetEvent.results.get(0).clientActivity.phaseId;
             }
         }
+        if(mPhaseId > 0) {
+            updateStage(mPhaseId - 1);
+        }
         mClientLeadsReceived = true;
         updateUi();
+    }
+
+    private void updateStage(int i) {
+        if(i < mViews.length) {
+            mViews[i].findViewById(R.id.iv_view).setVisibility(View.VISIBLE);
+            mViews[i].findViewById(R.id.iv_stage).setVisibility(View.INVISIBLE);
+        }
+
+        for(int j = 0; j < i; j++) {
+            mViews[j].findViewById(R.id.iv_view).setVisibility(View.INVISIBLE);
+            mViews[j].findViewById(R.id.iv_stage).setVisibility(View.VISIBLE);
+            ((ImageView)mViews[j].findViewById(R.id.iv_stage)).setImageResource(R.drawable.check_tick_red);
+        }
+        for(int j = i + 1; j < mViews.length; j++) {
+            mViews[j].findViewById(R.id.iv_view).setVisibility(View.INVISIBLE);
+            mViews[j].findViewById(R.id.iv_stage).setVisibility(View.VISIBLE);
+            ((ImageView)mViews[j].findViewById(R.id.iv_stage)).setImageResource(R.drawable.arrow_right_small);
+        }
     }
 
     @Subscribe

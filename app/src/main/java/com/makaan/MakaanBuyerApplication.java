@@ -1,6 +1,12 @@
 package com.makaan;
 
+import android.app.AlarmManager;
 import android.app.Application;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.crashlytics.android.Crashlytics;
@@ -8,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.constants.PreferenceConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.MakaanCookieStore;
 import com.makaan.jarvis.JarvisConstants;
@@ -19,7 +26,9 @@ import com.makaan.pojo.SerpObjects;
 import com.makaan.service.ClientLeadsService;
 import com.makaan.service.LocationService;
 import com.makaan.service.ClientEventsService;
+import com.makaan.service.download.DownloadAssetService;
 import com.makaan.service.user.ForgotPasswordService;
+import com.makaan.service.user.UserLogoutService;
 import com.makaan.service.user.UserRegistrationService;
 import com.makaan.service.AgentService;
 import com.makaan.service.AmenityService;
@@ -116,6 +125,8 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(ProjectService.class, new ProjectService());
         MakaanServiceFactory.getInstance().registerService(BlogService.class, new BlogService());
         MakaanServiceFactory.getInstance().registerService(UserLoginService.class, new UserLoginService());
+        MakaanServiceFactory.getInstance().registerService(UserLogoutService.class, new UserLogoutService());
+
         MakaanServiceFactory.getInstance().registerService(WishListService.class, new WishListService());
         MakaanServiceFactory.getInstance().registerService(AgentService.class, new AgentService());
         MakaanServiceFactory.getInstance().registerService(OtpVerificationService.class, new OtpVerificationService());
@@ -163,6 +174,30 @@ public class MakaanBuyerApplication extends Application {
             MasterDataCache.getInstance().setUserData(CookiePreferences.getUserInfo(this).getData());
         }
 
+//        setPeriodicUpdateRequest();
+
+    }
+
+    private void setPeriodicUpdateRequest() {
+
+        SharedPreferences preferences = getSharedPreferences(PreferenceConstants.PREF, MODE_PRIVATE);
+        Boolean firstTime = preferences.getBoolean(PreferenceConstants.PREF_FIRST_TIME, true);
+
+        if(firstTime) {
+
+//            Log.d("DEBUG", "setPeriodicUpdateRequest");
+            // Construct an intent that will execute the AlarmReceiver
+            Intent intent = new Intent(getApplicationContext(), DownloadAssetService.class);
+            // Create a PendingIntent to be triggered when the alarm goes off
+            final PendingIntent pIntent = PendingIntent.getService(this, DownloadAssetService.REQUEST_CODE,
+                    intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            long firstMillis = System.currentTimeMillis();
+            AlarmManager alarm = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+            alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillis,
+                    60 * 1000, pIntent);
+            preferences.edit().putBoolean(PreferenceConstants.PREF_FIRST_TIME, false).apply();
+        }
     }
 
 
