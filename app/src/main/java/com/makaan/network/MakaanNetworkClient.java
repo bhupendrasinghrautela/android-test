@@ -129,6 +129,11 @@ public class MakaanNetworkClient {
     }
 
 
+   /* public void addSyncGet(JsonObjectRequest jsonObjectRequest) {
+        makaanGetRequestQueue.add(jsonObjectRequest);
+    }*/
+
+
     public void get(final String inputUrl, final Type type, final ObjectGetCallback objectGetCallback, String mockFile, String tag, final boolean isDataArr) {
 
         if (null != mockFile) {
@@ -188,11 +193,6 @@ public class MakaanNetworkClient {
 
         }
     }
-
-
-   /* public void addSyncGet(JsonObjectRequest jsonObjectRequest) {
-        makaanGetRequestQueue.add(jsonObjectRequest);
-    }*/
 
     public void get(final String inputUrl, final StringRequestCallback stringRequestCallback, String tag) {
 

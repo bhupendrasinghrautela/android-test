@@ -37,7 +37,6 @@ import com.makaan.util.KeyUtil;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
 import com.pkmmte.view.CircularImageView;
-import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -124,6 +123,7 @@ public class DefaultListingView extends AbstractListingView {
     ArrayList<ImageView> mPropertyInfoImageViews = new ArrayList<>();
     ArrayList<TextView> mPropertyInfoTextViews = new ArrayList<>();
     ArrayList<TextView> mPropertyInfoNameTextViews = new ArrayList<>();
+    private int mPosition;
 
     public DefaultListingView(Context context) {
         super(context);
@@ -138,11 +138,12 @@ public class DefaultListingView extends AbstractListingView {
     }
 
     @Override
-    public void populateData(Object data, SerpRequestCallback callback) {
-        super.populateData(data, callback);
+    public void populateData(Object data, SerpRequestCallback callback, int position) {
+        super.populateData(data, callback, position);
         if(!(data instanceof Listing)) {
             return;
         }
+        mPosition = position;
 
         mPropertyInfoImageViews.clear();
         mPropertyInfoTextViews.clear();

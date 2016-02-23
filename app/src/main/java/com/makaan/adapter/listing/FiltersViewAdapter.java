@@ -232,6 +232,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                                 selector.term(filter2.fieldName, filter2.value);
                             }
                         }
+                        currentGroup.isSelected = false;
                     } else {
                         selector.term(filter.fieldName, filter.value);
                     }
