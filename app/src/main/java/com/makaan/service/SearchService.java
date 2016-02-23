@@ -55,17 +55,12 @@ public class SearchService implements MakaanService {
     public void getSearchResults(String keyword, String category, String city, SearchType[] type, boolean supportGooglePlace)
             throws UnsupportedEncodingException {
 
-        if(keyword == null){
-            throw new IllegalArgumentException("Keyword cannot be empty");
+        if(TextUtils.isEmpty(keyword)){
+            return;
         } else {
 
             String mSearchString = keyword.trim();
-            if (!TextUtils.isEmpty(keyword) && !StringUtil.isValidKeyword(mSearchString,
-                    StringConstants.REGEX_TYPEAHEAD_ALLOWED_CHARS)) {
-                throw new IllegalArgumentException("Invalid keyword");
-            }
-
-            String requestUrl = buildSearchUrl(keyword, category, city, type, supportGooglePlace);
+            String requestUrl = buildSearchUrl(mSearchString, category, city, type, supportGooglePlace);
             makeSearchRequest(requestUrl);
         }
     }

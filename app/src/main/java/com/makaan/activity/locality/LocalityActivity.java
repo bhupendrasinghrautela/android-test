@@ -12,6 +12,7 @@ import com.makaan.event.project.OnSeeOnMapClicked;
 import com.makaan.fragment.locality.LocalityFragment;
 import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
 import com.makaan.jarvis.event.IncomingMessageEvent;
+import com.makaan.jarvis.event.PageTag;
 import com.makaan.util.KeyUtil;
 import com.squareup.otto.Subscribe;
 
@@ -89,7 +90,10 @@ public class LocalityActivity extends MakaanFragmentActivity {
     @Subscribe
     public void onResults(LocalityByIdEvent localityByIdEvent) {
         if (null != localityByIdEvent || null != localityByIdEvent.locality) {
-            setCurrentPageUrl("/"+localityByIdEvent.locality.label);
+
+            PageTag pageTag = new PageTag();
+            pageTag.addLocality(localityByIdEvent.locality.label);
+
             mEntityInfo = new NeighborhoodMapFragment.EntityInfo(localityByIdEvent.locality.label,
                     localityByIdEvent.locality.latitude,
                     localityByIdEvent.locality.latitude);

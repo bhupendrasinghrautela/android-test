@@ -33,6 +33,7 @@ import com.makaan.fragment.listing.SerpMapFragment;
 import com.makaan.fragment.listing.SetAlertsDialogFragment;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.OnExposeEvent;
+import com.makaan.jarvis.event.PageTag;
 import com.makaan.pojo.GroupCluster;
 import com.makaan.pojo.SerpBackStack;
 import com.makaan.pojo.SerpObjects;
@@ -1022,7 +1023,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
         Listing listing = mListings.get(0);
 
-        super.setCurrentPageUrl("/"+listing.cityName+"/"+listing.localityName);
+        PageTag pageTag = new PageTag();
+        pageTag.addCity(listing.cityName);
+        pageTag.addLocality(listing.localityName);
+
+        super.setCurrentPageTag(pageTag);
 
     }
 
