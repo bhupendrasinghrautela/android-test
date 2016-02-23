@@ -26,6 +26,7 @@ import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.jarvis.analytics.AnalyticsConstants;
 import com.makaan.jarvis.analytics.AnalyticsService;
+import com.makaan.jarvis.event.PageTag;
 import com.makaan.jarvis.message.CtaType;
 import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.jarvis.ui.cards.BaseCtaView;
@@ -35,6 +36,8 @@ import com.makaan.jarvis.ui.cards.SerpFilterCard;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.response.project.Project;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.util.JsonBuilder;
+import com.makaan.util.JsonParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,7 +74,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     private static Runnable mUserActivityTrackerRunnable;
     private static Handler mUserActivityTrackerRenewHandler =new Handler();
 
-    private String currentPageUrl;
+    private PageTag currentPageTag;
     private static boolean isUserActivenessTrackEnabled;
 
     @Override
@@ -79,7 +82,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         SerpObjects.putSerpObject(this, getSerpObjects());
 
-        currentPageUrl = "";
+        currentPageTag = new PageTag();
 
         setupActivityTimer();
     }
@@ -88,7 +91,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
         isUserActivenessTrackEnabled = shouldTrackUserActiveness();
-        if(!TextUtils.isEmpty(currentPageUrl)) {
+        if(null!=currentPageTag) {
             renewUserActivityTimer();
         }
     }
@@ -312,8 +315,8 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         }
     }
 
-    public void setCurrentPageUrl(String currentPageUrl){
-        this.currentPageUrl = currentPageUrl;
+    public void setCurrentPageTag(PageTag currentPageTag){
+        this.currentPageTag = currentPageTag;
         renewUserActivityTimer();
     }
 
@@ -334,7 +337,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
             JSONObject jsonObject = new JSONObject();
             jsonObject.put(AnalyticsConstants.KEY_PAGE_TYPE, getScreenName());
             jsonObject.put(AnalyticsConstants.KEY_EVENT_NAME, AnalyticsConstants.CONTENT_PYR);
-            jsonObject.put(AnalyticsConstants.KEY_CURRENT_PAGEURL, currentPageUrl);
+            jsonObject.put(AnalyticsConstants.KEY_CURRENT_PAGE_TAG, JsonBuilder.toJson(currentPageTag));
             AnalyticsService analyticsService =
                     (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
             analyticsService.track(AnalyticsService.Type.track, jsonObject);

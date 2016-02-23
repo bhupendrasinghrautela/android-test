@@ -1,0 +1,11 @@
+{
+  "data":{
+    "userAcquired":"user-acquired",
+    "newMessageForUser":"new-message-for-user",
+    "exposeSession":"expose-session",
+    "agentConfirmsUser":"agent-confirms-user",
+    "joinUser":"join-user",
+    "newMessageForAgent":"new-message-for-agent",
+    "userConfirmsAgent":"user-confirms-agent"
+  }
+}

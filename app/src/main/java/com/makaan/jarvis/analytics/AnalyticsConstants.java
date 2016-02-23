@@ -12,7 +12,7 @@ public class AnalyticsConstants {
     public static final String KEY_DELIVERY_ID = "delivery_id";
     public static final String KEY_EVENT_NAME = "event_name";
     public static final String KEY_LISTING_ID = "listing_id";
-    public static final String KEY_CURRENT_PAGEURL = "current_page_url";
+    public static final String KEY_CURRENT_PAGE_TAG = "current_page_tags";
 
     public static final String SERP_SCROLL = "serp_scroll";
     public static final String ENQUIRY_DROPPED = "enquiry_dropped";
