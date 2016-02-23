@@ -324,7 +324,7 @@
             "displayOrder": "3",
             "fieldName": "listingCategory",
             "value": "-1",
-            "selected": false
+            "selected": true
           }
         ],
         "rangeFilterValues": [

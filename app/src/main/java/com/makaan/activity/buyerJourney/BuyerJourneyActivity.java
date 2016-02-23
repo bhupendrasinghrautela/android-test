@@ -19,9 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.makaan.R;
+import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.user.UserLogoutEvent;
+import com.makaan.fragment.buyerJourney.BuyerAccountSettingFragment;
 import com.makaan.jarvis.BaseJarvisActivity;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.user.UserLogoutService;
@@ -33,7 +35,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class BuyerJourneyActivity extends BaseJarvisActivity {
+public class BuyerJourneyActivity extends MakaanFragmentActivity {
     @Bind(R.id.button_login)
     Button mLoginButton;
 
@@ -87,11 +89,15 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
     }
 
     @Override
+    protected int getContentViewId() {
+        return R.layout.fragment_buyer_profile;
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.do_not_move, R.anim.do_not_move);
-        setContentView(R.layout.fragment_buyer_profile);
-        ButterKnife.bind(BuyerJourneyActivity.this);
+//        overridePendingTransition(R.anim.do_not_move, R.anim.do_not_move);
+//        setContentView(R.layout.fragment_buyer_profile);
         initViews();
 
         setupAppBar();
@@ -245,8 +251,8 @@ public class BuyerJourneyActivity extends BaseJarvisActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_settings:
-                //TODO
-                Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
+                BuyerAccountSettingFragment fragment = new BuyerAccountSettingFragment();
+                initFragment(R.id.fl_content_scrolling, fragment, true);
                 break;
             case R.id.item_logout:
                 try{

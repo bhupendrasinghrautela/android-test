@@ -12,6 +12,8 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.makaan.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <permission
         android:name="com.makaan.permission.MAPS_RECEIVE"
@@ -161,8 +163,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.NoActionBarTheme">
         </activity>
-        <service android:name=".jarvis.JarvisService"></service>
-        <service android:name=".service.leakcanary.TemporaryLeakUploadService"></service>
+        <service android:name=".jarvis.JarvisService"/>
+        <service android:name=".service.leakcanary.TemporaryLeakUploadService"/>
+        <service android:name=".service.download.DownloadAssetService"/>
 
         <receiver
             android:name="com.makaan.notification.GcmReceiver"

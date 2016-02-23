@@ -11,4 +11,6 @@ public class PreferenceConstants {
 
     public static final String PREF = "makaan_pref";
     public static final String PREF_CONTEXT = "pref_context";
+
+    public static final String PREF_FIRST_TIME = "pref_first_time";
 }
