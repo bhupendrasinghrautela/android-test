@@ -10,6 +10,7 @@ import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.shortlist.ShortListFragment;
 import com.makaan.activity.sitevisit.SiteVisitFragment;
+import com.makaan.cache.MasterDataCache;
 import com.makaan.fragment.WebViewFragment;
 import com.makaan.fragment.buyerJourney.BlogContentFragment;
 import com.makaan.fragment.buyerJourney.ClientCompanyLeadFragment;
@@ -82,7 +83,9 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
                     setTitle("shortlist");
                     break;
                 case LOAD_FRAGMENT_SAVE_SEARCH:
-                    ((SaveSearchService) (MakaanServiceFactory.getInstance().getService(SaveSearchService.class))).getSavedSearches();
+                    if(MasterDataCache.getInstance().getSavedSearch() == null) {
+                        ((SaveSearchService) (MakaanServiceFactory.getInstance().getService(SaveSearchService.class))).getSavedSearches();
+                    }
                     initFragment(R.id.activity_base_buyer_journey_content_frame_layout, new SaveSearchFragment(), false);
                     setTitle("save searches");
                     break;

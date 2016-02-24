@@ -6,25 +6,44 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.makaan.MakaanBuyerApplication;
+import com.makaan.R;
 import com.makaan.util.AppBus;
 import com.makaan.util.AppUtils;
 import com.squareup.leakcanary.RefWatcher;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
  * Created by rohitgarg on 1/9/16.
  */
 public abstract class MakaanBaseFragment extends Fragment {
+    @Bind(R.id.fragment_makaan_base_no_result_image_view)
+    ImageView mNoResultsImageView;
+    @Bind(R.id.fragment_makaan_base_loading_progress_bar)
+    ProgressBar mLoadingProgressBar;
+    @Bind(R.id.fragment_makaan_base_content_frame_layout)
+    FrameLayout mContentFrameLayout;
 
     protected abstract int getContentViewId();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(getContentViewId(), container, false);
+        View view = inflater.inflate(R.layout.fragment_makaan_base, container, false);
+
+        View childView = inflater.inflate(getContentViewId(), container, false);
+
+        ((FrameLayout)view.findViewById(R.id.fragment_makaan_base_content_frame_layout)).addView(childView);
+
         // bind view to ButterKnife
         ButterKnife.bind(this, view);
         // register for event bus callbacks
@@ -60,5 +79,26 @@ public abstract class MakaanBaseFragment extends Fragment {
         if(refWatcher != null) {
             refWatcher.watch(this);
         }*/
+    }
+
+    protected void showProgress() {
+        mContentFrameLayout.setVisibility(View.GONE);
+        mNoResultsImageView.setVisibility(View.GONE);
+        mLoadingProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    protected void showNoResults() {
+        mContentFrameLayout.setVisibility(View.GONE);
+        mNoResultsImageView.setVisibility(View.VISIBLE);
+        mLoadingProgressBar.setVisibility(View.GONE);
+
+//        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(mNoResultsImageView);
+        Glide.with(this).load(R.raw.no_result).crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mNoResultsImageView);
+    }
+
+    protected void showContent() {
+        mContentFrameLayout.setVisibility(View.VISIBLE);
+        mNoResultsImageView.setVisibility(View.GONE);
+        mLoadingProgressBar.setVisibility(View.GONE);
     }
 }

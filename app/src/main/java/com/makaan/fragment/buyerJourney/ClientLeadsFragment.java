@@ -60,6 +60,7 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
         mNextButton.setEnabled(false);
 
         ((ClientLeadsService)MakaanServiceFactory.getInstance().getService(ClientLeadsService.class)).requestClientLeads();
+        showProgress();
 
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mAdapter = new ClientLeadsAdapter();
@@ -96,6 +97,7 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
     public void onResults(ClientLeadsByGetEvent clientLeadsByGetEvent) {
         if(clientLeadsByGetEvent == null || clientLeadsByGetEvent.error != null) {
             // TODO
+            showNoResults();
             return;
         }
 
@@ -113,6 +115,7 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
     public void onResults(ArrayList<Company> companies) {
         if(companies == null || companies.size() == 0) {
             // TODO
+            showNoResults();
             return;
         }
 
@@ -121,6 +124,7 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
         }
         mAdapter.addData(mClientLeadsObjects);
         mNextButton.setEnabled(true);
+        showContent();
     }
 
     public void setData(Object obj) {

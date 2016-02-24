@@ -479,9 +479,13 @@ public class DefaultListingView extends AbstractListingView {
                 if(mListing.isReadyToMove && mListing.age >= 0) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     if(mListing.age <= 1) {
-                        mPropertyInfoTextViews.get(j).setText(String.format("%d yr", mListing.age));
+                        mPropertyInfoTextViews.get(j).setText(String.format("%d - %d yr", mListing.age, mListing.age + 1));
+                    } else if(mListing.age <= 2) {
+                        mPropertyInfoTextViews.get(j).setText(String.format("%d - %d yrs", mListing.age, mListing.age + 1));
+                    } else if(mListing.age <= 5) {
+                        mPropertyInfoTextViews.get(j).setText(String.format("%d - %d yrs", 2, 5));
                     } else {
-                        mPropertyInfoTextViews.get(j).setText(String.format("%d yrs", mListing.age));
+                        mPropertyInfoTextViews.get(j).setText(String.format(">%d yrs", 5));
                     }
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
