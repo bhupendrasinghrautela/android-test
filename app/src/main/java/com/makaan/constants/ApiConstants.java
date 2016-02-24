@@ -6,10 +6,10 @@ package com.makaan.constants;
 public class ApiConstants {
 
 
-//    public static final String BASE_URL = "http://mp-qa2.makaan-ws.com";
+    public static final String BASE_URL = "http://mp-qa2.makaan-ws.com";
     //public static final String BASE_URL = "https://marketplace-qa.proptiger-ws.com";
-//    public static final String BASE_URL = "https://marketplace-qa.makaan-ws.com";
-    public static final String BASE_URL = "http://beta.makaan-ws.com";
+    //public static final String BASE_URL = "https://marketplace-qa.makaan-ws.com";
+    //public static final String BASE_URL = "http://beta.makaan-ws.com";
     //public static final String BASE_URL = "http://mp-qa1.makaan-ws.com/";
     public static final String FILTER_GROUP = BASE_URL.concat("/data/v1/entity/filter-group");           //TODO: need to implement this on server side
     public static final String LISTING_INFO_MAP = BASE_URL.concat("/data/v1/entity/listing-info-map");           //TODO: need to implement this on server side
