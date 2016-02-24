@@ -25,16 +25,17 @@ public class ForgotPasswordService implements MakaanService{
             /*MakaanNetworkClient.getInstance().socialLoginPost(buildForgotPasswordRequest() + email
                     + "&sourceDomain=Makaan", new ForgotPasswordCallBack(), TAG);*/
             Map<String, String> params = new HashMap<String, String>();
+            params.put("email",email);
             params.put("domainId", "1");
+            params.put("sourceDomain","Makaan");
 
             //TODO Check in sourceDomain needed or not
-            MakaanNetworkClient.getInstance().loginPost(buildForgotPasswordRequest() + email
-                    + "&sourceDomain=Makaan", params, new ForgotPasswordCallBack(), TAG);
+            MakaanNetworkClient.getInstance().loginPost(buildForgotPasswordRequest()
+                    , params, new ForgotPasswordCallBack(), TAG);
 
         } catch (Exception e) {
             //TODO Display an error here
         }
-
     }
 
     public static String buildForgotPasswordRequest() {
