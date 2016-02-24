@@ -16,25 +16,20 @@ import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
-import com.makaan.event.builder.BuilderByIdEvent;
 import com.makaan.event.seller.SellerByIdEvent;
 import com.makaan.network.MakaanNetworkClient;
-import com.makaan.response.image.Image;
 import com.makaan.response.listing.Listing;
-import com.makaan.response.project.Builder;
 import com.makaan.response.project.CompanySeller;
 import com.makaan.util.AppBus;
 import com.makaan.util.Blur;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.StringUtil;
-import com.pkmmte.view.CircularImageView;
 import com.squareup.otto.Subscribe;
-
-import org.w3c.dom.Text;
 
 import java.util.Calendar;
 
 import butterknife.Bind;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by rohitgarg on 1/7/16.
@@ -44,7 +39,7 @@ public class SellerListingView extends AbstractCardListingView {
     ImageView mSellerBackgroundImageView;
 
     @Bind(R.id.serp_listing_item_seller_image_view)
-    CircularImageView mSellerImageView;
+    CircleImageView mSellerImageView;
     @Bind(R.id.serp_listing_item_seller_name_text_view)
     TextView mSellerNameTextView;
     @Bind(R.id.serp_listing_item_seller_company_name_text_view)

@@ -38,7 +38,6 @@ import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
-import com.pkmmte.view.CircularImageView;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
@@ -47,6 +46,7 @@ import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by rohitgarg on 1/7/16.
@@ -71,7 +71,7 @@ public class DefaultListingView extends AbstractListingView {
     ImageView mBathroomImageView;
 
     @Bind(R.id.serp_default_listing_seller_image_view)
-    CircularImageView mSellerImageView;
+    CircleImageView mSellerImageView;
 
     @Bind(R.id.serp_default_listing_seller_logo_text_view)
     TextView mSellerLogoTextView;
@@ -119,6 +119,9 @@ public class DefaultListingView extends AbstractListingView {
 
     @Bind(R.id.serp_default_listing_property_seller_info_relative_layout)
     RelativeLayout mSellerInfoRelativeLayout;
+
+    @Bind(R.id.serp_default_listing_empty_view)
+    View mEmptyView;
 
     private SharedPreferences mPreferences;
     private Listing mListing;
@@ -455,6 +458,11 @@ public class DefaultListingView extends AbstractListingView {
                 mPropertyInfoNameTextViews.get(j).setVisibility(View.VISIBLE);
                 j++;
             }
+        }
+        if(j == 0) {
+            mEmptyView.setVisibility(View.GONE);
+        } else {
+            mEmptyView.setVisibility(View.VISIBLE);
         }
         while(j < mPropertyInfoImageViews.size()) {
             mPropertyInfoImageViews.get(j).setVisibility(View.GONE);

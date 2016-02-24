@@ -15,15 +15,13 @@
         android:layout_marginBottom="@dimen/seller_image_margin"
         android:paddingTop="@dimen/seller_image_padding_top">
 
-        <com.pkmmte.view.CircularImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/seller_image"
             android:layout_width="@dimen/seller_image_width_height"
             android:layout_height="@dimen/seller_image_width_height"
             android:visibility="invisible"
-            app:border="true"
-            app:border_color="@color/light_gray"
-            app:border_width="@dimen/border_width"
-            app:shadow="false" />
+            app:civ_border_color="@color/light_gray"
+            app:civ_border_width="@dimen/border_width" />
 
         <TextView
             android:id="@+id/iv_seller_image"

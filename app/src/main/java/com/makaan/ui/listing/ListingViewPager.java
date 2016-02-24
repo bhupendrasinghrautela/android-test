@@ -78,4 +78,8 @@ public class ListingViewPager extends ViewPager implements ListingPagerAdapter.P
             mCallback.loadMoreItems();
         }
     }
+
+    public void notifyDataSetChanged() {
+        mListingPagerAdapter.notifyDataSetChanged();
+    }
 }

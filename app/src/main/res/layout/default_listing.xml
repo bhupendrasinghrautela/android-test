@@ -203,6 +203,7 @@
                 </FrameLayout>
 
                 <View
+                    android:id="@+id/serp_default_listing_empty_view"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/serp_listing_card_empty_view_height"
                     android:layout_marginLeft="@dimen/serp_listing_card_empty_view_after_address_text_view_margin_left"
@@ -433,15 +434,13 @@
                         android:layout_marginStart="@dimen/serp_listing_card_seller_image_view_left_margin"
                         android:layout_marginTop="@dimen/serp_listing_card_seller_image_view_top_margin">
 
-                        <com.pkmmte.view.CircularImageView
+                        <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/serp_default_listing_seller_image_view"
                             android:layout_width="@dimen/serp_listing_card_seller_image_view_width"
                             android:layout_height="@dimen/serp_listing_card_seller_image_view_height"
-                            android:scaleType="centerCrop"
                             android:visibility="gone"
-                            app:border="true"
-                            app:border_color="@color/serp_listing_card_seller_mask_color"
-                            app:border_width="@dimen/border_width" />
+                            app:civ_border_color="@color/serp_listing_card_seller_mask_color"
+                            app:civ_border_width="@dimen/border_width" />
 
                         <TextView
                             android:id="@+id/serp_default_listing_seller_logo_text_view"

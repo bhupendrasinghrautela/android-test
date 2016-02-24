@@ -8,7 +8,8 @@ import android.widget.TextView;
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.ui.view.CustomRatingBar;
-import com.pkmmte.view.CircularImageView;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by aishwarya on 18/02/16.
@@ -23,7 +24,7 @@ public class SiteVisitViewHolder extends RecyclerView.ViewHolder {
     public TextView mDirection;
     public TextView mCallNow;
     public CustomRatingBar mRating;
-    public CircularImageView mSellerImage;
+    public CircleImageView mSellerImage;
     private int position;
     private SiteVisitCallbacks callbacks;
 
@@ -36,7 +37,7 @@ public class SiteVisitViewHolder extends RecyclerView.ViewHolder {
         mSiteVisitTime = (TextView) itemView.findViewById(R.id.time);
         mDirection = (TextView) itemView.findViewById(R.id.direction);
         mCallNow = (TextView) itemView.findViewById(R.id.call_now);
-        mSellerImage = (CircularImageView) itemView.findViewById(R.id.seller_image_view);
+        mSellerImage = (CircleImageView) itemView.findViewById(R.id.seller_image_view);
         mSellerText = (TextView) itemView.findViewById(R.id.seller_logo_text_view);
         mRating = (CustomRatingBar) itemView.findViewById(R.id.seller_rating);
         mDirection.setOnClickListener(new OnClickListener() {

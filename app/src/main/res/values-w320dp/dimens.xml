@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--<dimen name="serp_listing_card_property_image_width">148dp</dimen>
+    <dimen name="serp_listing_card_property_image_height">111dp</dimen>
+
+    <dimen name="serp_listing_card_property_price_text_size">28sp</dimen>
+    <dimen name="serp_listing_card_property_price_unit_text_size">16sp</dimen>
+    <dimen name="serp_listing_card_property_area_sq_ft_text_view_text_size">14sp</dimen>
+    <dimen name="serp_listing_card_property_info_text_view_text_size">14sp</dimen>
+    <dimen name="serp_listing_card_property_address_text_view_text_size">14sp</dimen>
+    <dimen name="serp_listing_card_possession_date_text_view_text_size">14sp</dimen>
+    <dimen name="serp_listing_card_floor_info_text_view_text_size">14sp</dimen>
+    <dimen name="serp_listing_card_bathroom_number_text_view_text_size">14sp</dimen>
+    <dimen name="serp_listing_card_possession_text_text_view_text_size">12sp</dimen>
+    <dimen name="serp_listing_card_floor_text_text_view_text_size">12sp</dimen>
+    <dimen name="serp_listing_card_bathroom_text_text_view_text_size">12sp</dimen>
+    <dimen name="serp_listing_card_property_tagline_text_view_text_size">12sp</dimen>
+    <dimen name="serp_listing_card_seller_name_text_view_text_size">14sp</dimen>
+    <dimen name="serp_listing_card_assist_button_text_size">12sp</dimen>
+    <dimen name="serp_listing_card_call_button_text_size">14sp</dimen>
+    <dimen name="serp_listing_cluster_card_group_text_view_text_size">23sp</dimen>
+    <dimen name="serp_listing_cluster_card_properties_info_text_size">28sp</dimen>
+    <dimen name="serp_listing_cluster_card_total_properties_text_size">27sp</dimen>
+    <dimen name="fragment_listing_total_properties_text_view_text_size">12sp</dimen>
+
+    <dimen name="activity_search_base_layout_search_bar_search_text_view_text_size">14sp</dimen>
+
+    <dimen name="fragment_filters_filter_text_view_text_size">14sp</dimen>
+    <dimen name="fragment_filters_applied_filter_count_text_view_text_size">12sp</dimen>
+    <dimen name="fragment_filters_relevance_text_view_text_size">14sp</dimen>
+    <dimen name="fragment_dialog_filters_submit_button_text_size">16sp</dimen>
+    <dimen name="fragment_dialog_filters_filter_text_text_size">14sp</dimen>
+    <dimen name="fragment_dialog_filters_item_layout_display_text_text_size">14sp</dimen>
+    <dimen name="fragment_dialog_filters_toggle_button_grid_item_text_size">16sp</dimen>-->
+</resources>

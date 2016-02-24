@@ -115,7 +115,6 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="@dimen/activity_home_search_relative_view_left_margin"
-
                 android:background="@color/activity_home_search_background">
 
                 <ImageView
@@ -130,7 +129,7 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/search_icon" />
 
-                <com.makaan.ui.view.FontTextView
+                <TextView
                     android:id="@+id/activity_home_search_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -140,9 +139,10 @@
                     android:layout_toEndOf="@id/activity_home_search_image_view"
                     android:layout_toRightOf="@id/activity_home_search_image_view"
                     android:hint="@string/search_by_location"
+                    android:textColorHint="@color/listingBlack"
                     android:textColor="@color/listingBlack"
                     android:textSize="@dimen/activity_home_search_text_text_size"
-                    app:fontName="comforta.ttf" />
+                    android:typeface="sans"/>
 
                 <EditText
                     android:layout_width="2dp"

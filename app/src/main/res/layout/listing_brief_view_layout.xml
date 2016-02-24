@@ -3,197 +3,211 @@
 <com.makaan.ui.listing.ListingCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    card_view:cardCornerRadius="@dimen/listing_brief_view_layout_card_view_radius"
-    card_view:cardElevation="6dp">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="7dp"
+        android:layout_marginStart="7dp">
 
-        <com.android.volley.toolbox.FadeInNetworkImageView
-            android:id="@+id/listing_brief_view_layout_property_image_view"
-            android:layout_width="@dimen/listing_brief_view_layout_image_view_width"
-            android:layout_height="@dimen/listing_brief_view_layout_image_view_height"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:scaleType="centerCrop" />
-
-        <ImageView
-            android:id="@+id/listing_brief_view_layout_rupee_image_view"
-            android:layout_width="@dimen/listing_brief_view_layout_rupee_image_width"
-            android:layout_height="@dimen/listing_brief_view_layout_rupee_image_height"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="@dimen/listing_brief_view_layout_rupee_image_top_margin"
-            android:layout_marginLeft="@dimen/listing_brief_view_layout_rupee_image_left_margin"
-            android:layout_marginStart="@dimen/listing_brief_view_layout_rupee_image_left_margin"
-            android:layout_toEndOf="@+id/listing_brief_view_layout_property_image_view"
-            android:layout_toRightOf="@+id/listing_brief_view_layout_property_image_view"
-            android:scaleType="centerCrop"
-            android:src="@drawable/rupee" />
-
-        <include
-            layout="@layout/wishlist_button_layout"
-            android:id="@+id/listing_brief_view_layout_property_shortlist_checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:layout_marginStart="2dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="@dimen/serp_listing_card_property_shortlist_checkbox_right_margin"
-            android:layout_marginRight="@dimen/serp_listing_card_property_shortlist_checkbox_right_margin"
-            android:layout_marginTop="@dimen/serp_listing_card_property_shortlist_checkbox_top_margin"/>
-
-        <TextView
-            android:id="@+id/listing_brief_view_layout_property_price_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="@dimen/listing_brief_view_layout_property_price_left_margin"
-            android:layout_marginStart="@dimen/listing_brief_view_layout_property_price_left_margin"
-            android:layout_marginTop="@dimen/listing_brief_view_layout_property_price_top_margin"
-            android:layout_toEndOf="@+id/listing_brief_view_layout_rupee_image_view"
-            android:layout_toRightOf="@+id/listing_brief_view_layout_rupee_image_view"
-            android:textColor="@color/listing_brief_view_layout_default_text_color"
-            android:textSize="@dimen/listing_brief_view_layout_property_price_text_size"
-            android:singleLine="true"
-            android:textAllCaps="false"
-            android:typeface="serif"
-            android:ellipsize="none"
-            android:maxLength="4"/>
-
-        <TextView
-            android:id="@+id/listing_brief_view_layout_property_price_unit_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/listing_brief_view_layout_property_price_unit_left_margin"
-            android:layout_marginStart="@dimen/listing_brief_view_layout_property_price_unit_left_margin"
-            android:layout_marginTop="@dimen/listing_brief_view_layout_property_price_unit_top_margin"
-            android:layout_toRightOf="@id/listing_brief_view_layout_property_price_text_view"
-            android:layout_toEndOf="@id/listing_brief_view_layout_property_price_text_view"
-            android:textColor="@color/listing_brief_view_layout_default_text_color"
-            android:textSize="@dimen/listing_brief_view_layout_property_price_unit_text_size"
-            android:textAllCaps="false"
-            android:typeface="serif"/>
-
-        <TextView
-            android:id="@+id/listing_brief_view_layout_property_price_sq_ft_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/listing_brief_view_layout_property_price_text_view"
-            android:layout_marginLeft="@dimen/listing_brief_view_layout_property_area_sq_ft_text_view_left_margin"
-            android:layout_marginStart="@dimen/listing_brief_view_layout_property_area_sq_ft_text_view_left_margin"
-            android:layout_marginTop="@dimen/listing_brief_view_layout_property_area_sq_ft_text_view_top_margin"
-            android:layout_alignLeft="@id/listing_brief_view_layout_property_price_text_view"
-            android:layout_alignStart="@id/listing_brief_view_layout_property_price_text_view"
-            android:text="5,490/ sqft"
-            android:textColor="@color/listing_brief_view_layout_property_price_sq_ft_text_color"
-            android:textSize="@dimen/listing_brief_view_layout_property_area_sq_ft_text_view_text_size"
-            android:textAllCaps="false"
-            android:typeface="serif" />
-
-        <ImageView
-            android:id="@+id/listing_brief_view_layout_property_price_difference_image_view"
-            android:layout_width="@dimen/listing_brief_view_layout_property_price_difference_image_view_width"
-            android:layout_height="@dimen/listing_brief_view_layout_property_price_difference_image_view_height"
-            android:layout_alignTop="@+id/listing_brief_view_layout_property_price_sq_ft_text_view"
-            android:layout_marginLeft="@dimen/listing_brief_view_layout_property_price_difference_image_view_left_margin"
-            android:layout_marginStart="@dimen/listing_brief_view_layout_property_price_difference_image_view_left_margin"
-            android:layout_marginTop="@dimen/listing_brief_view_layout_property_price_difference_image_view_top_margin"
-            android:layout_toEndOf="@+id/listing_brief_view_layout_property_price_sq_ft_text_view"
-            android:layout_toRightOf="@+id/listing_brief_view_layout_property_price_sq_ft_text_view"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bottom_arrow_circle_green" />
-
-        <TextView
-            android:id="@+id/listing_brief_view_layout_property_bhk_info_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/listing_brief_view_layout_property_price_sq_ft_text_view"
-            android:layout_marginLeft="@dimen/listing_brief_view_layout_property_info_text_view_left_margin"
-            android:layout_marginStart="@dimen/listing_brief_view_layout_property_info_text_view_left_margin"
-            android:layout_marginTop="@dimen/listing_brief_view_layout_property_info_text_view_top_margin"
-            android:layout_alignLeft="@id/listing_brief_view_layout_property_price_text_view"
-            android:layout_alignStart="@id/listing_brief_view_layout_property_price_text_view"
-            android:text="2 bhk apartment"
-            android:textColor="@color/listing_brief_view_layout_default_text_color"
-            android:textSize="@dimen/listing_brief_view_layout_property_info_text_view_text_size"
-            android:singleLine="true"
-            android:textAllCaps="false"
-            android:typeface="monospace"/>
-
-        <TextView
-            android:id="@+id/listing_brief_view_layout_property_size_info_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/listing_brief_view_layout_property_bhk_info_text_view"
-            android:layout_marginLeft="@dimen/listing_brief_view_layout_property_info_text_view_left_margin"
-            android:layout_marginStart="@dimen/listing_brief_view_layout_property_info_text_view_left_margin"
-            android:layout_alignLeft="@id/listing_brief_view_layout_property_price_text_view"
-            android:layout_alignStart="@id/listing_brief_view_layout_property_price_text_view"
-            android:text="1,900 sqft"
-            android:textColor="@color/listing_brief_view_layout_default_text_color"
-            android:textSize="@dimen/listing_brief_view_layout_property_info_text_view_text_size"
-            android:textAllCaps="false"
-            android:typeface="monospace" />
-
-        <View
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/listing_brief_view_layout_empty_view_height"
-            android:layout_below="@id/listing_brief_view_layout_property_image_view"
-            android:layout_marginLeft="@dimen/listing_brief_view_layout_empty_view_after_property_info_view_margin_left"
-            android:layout_marginStart="@dimen/listing_brief_view_layout_empty_view_after_property_info_view_margin_left"
-            android:layout_marginTop="@dimen/listing_brief_view_layout_empty_view_after_property_info_view_margin_top"
-            android:background="@color/listing_brief_view_layout_empty_view_color" />
-        <RelativeLayout
-            android:id="@+id/listing_brief_view_layout_address_relative_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/listing_brief_view_layout_property_image_view"
-            android:layout_marginBottom="@dimen/listing_brief_view_layout_map_image_bottom_margin">
+            android:layout_height="match_parent"
+            card_view:cardBackgroundColor="@color/serp_listing_card_background"
+            card_view:cardCornerRadius="@dimen/serp_listing_card_radius"
+            card_view:cardElevation="6dp"
+            card_view:cardMaxElevation="3dp"
+            card_view:cardPreventCornerOverlap="false">
 
-            <ImageView
-                android:id="@+id/listing_brief_view_layout_map_image_view"
-                android:layout_width="@dimen/listing_brief_view_layout_map_image_width"
-                android:layout_height="@dimen/listing_brief_view_layout_map_image_height"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="@dimen/listing_brief_view_layout_map_image_left_margin"
-                android:layout_marginStart="@dimen/listing_brief_view_layout_map_image_left_margin"
-                android:layout_marginTop="@dimen/listing_brief_view_layout_map_image_top_margin"
-                android:src="@drawable/map"
-                android:scaleType="centerCrop"/>
-
-            <TextView
-                android:id="@+id/listing_brief_view_layout_property_address_text_view"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/listing_brief_view_layout_property_address_text_view_left_margin"
-                android:layout_marginStart="@dimen/listing_brief_view_layout_property_address_text_view_left_margin"
-                android:layout_marginRight="@dimen/listing_brief_view_layout_property_address_text_view_right_margin"
-                android:layout_marginEnd="@dimen/listing_brief_view_layout_property_address_text_view_right_margin"
-                android:layout_alignTop="@id/listing_brief_view_layout_map_image_view"
-                android:layout_toEndOf="@+id/listing_brief_view_layout_map_image_view"
-                android:layout_toRightOf="@+id/listing_brief_view_layout_map_image_view"
-                android:text="sector - 2 sohna, gurgaon"
-                android:textColor="@color/listing_brief_view_layout_default_text_color"
-                android:textSize="@dimen/listing_brief_view_layout_property_address_text_view_text_size"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:textAllCaps="false"
-                android:typeface="serif" />
-        </RelativeLayout>
-    </RelativeLayout>
+                android:orientation="horizontal">
+
+                <com.android.volley.toolbox.FadeInNetworkImageView
+                    android:id="@+id/listing_brief_view_layout_property_image_view"
+                    android:layout_width="@dimen/listing_brief_view_layout_image_view_width"
+                    android:layout_height="@dimen/listing_brief_view_layout_image_view_height"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:scaleType="centerCrop" />
+
+                <ImageView
+                    android:id="@+id/listing_brief_view_layout_rupee_image_view"
+                    android:layout_width="@dimen/listing_brief_view_layout_rupee_image_width"
+                    android:layout_height="@dimen/listing_brief_view_layout_rupee_image_height"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/listing_brief_view_layout_rupee_image_left_margin"
+                    android:layout_marginStart="@dimen/listing_brief_view_layout_rupee_image_left_margin"
+                    android:layout_marginTop="@dimen/listing_brief_view_layout_rupee_image_top_margin"
+                    android:layout_toEndOf="@+id/listing_brief_view_layout_property_image_view"
+                    android:layout_toRightOf="@+id/listing_brief_view_layout_property_image_view"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/rupee" />
+
+                <include
+                    android:id="@+id/listing_brief_view_layout_property_shortlist_checkbox"
+                    layout="@layout/wishlist_button_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="@dimen/serp_listing_card_property_shortlist_checkbox_right_margin"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="@dimen/serp_listing_card_property_shortlist_checkbox_right_margin"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="@dimen/serp_listing_card_property_shortlist_checkbox_top_margin" />
+
+                <TextView
+                    android:id="@+id/listing_brief_view_layout_property_price_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/listing_brief_view_layout_property_price_left_margin"
+                    android:layout_marginStart="@dimen/listing_brief_view_layout_property_price_left_margin"
+                    android:layout_marginTop="@dimen/listing_brief_view_layout_property_price_top_margin"
+                    android:layout_toEndOf="@+id/listing_brief_view_layout_rupee_image_view"
+                    android:layout_toRightOf="@+id/listing_brief_view_layout_rupee_image_view"
+                    android:ellipsize="none"
+                    android:maxLength="4"
+                    android:singleLine="true"
+                    android:textAllCaps="false"
+                    android:textColor="@color/listing_brief_view_layout_default_text_color"
+                    android:textSize="@dimen/listing_brief_view_layout_property_price_text_size"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/listing_brief_view_layout_property_price_unit_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/listing_brief_view_layout_property_price_unit_left_margin"
+                    android:layout_marginStart="@dimen/listing_brief_view_layout_property_price_unit_left_margin"
+                    android:layout_marginTop="@dimen/listing_brief_view_layout_property_price_unit_top_margin"
+                    android:layout_toEndOf="@id/listing_brief_view_layout_property_price_text_view"
+                    android:layout_toRightOf="@id/listing_brief_view_layout_property_price_text_view"
+                    android:textAllCaps="false"
+                    android:textColor="@color/listing_brief_view_layout_default_text_color"
+                    android:textSize="@dimen/listing_brief_view_layout_property_price_unit_text_size"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/listing_brief_view_layout_property_price_sq_ft_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/listing_brief_view_layout_property_price_text_view"
+                    android:layout_alignStart="@id/listing_brief_view_layout_property_price_text_view"
+                    android:layout_below="@+id/listing_brief_view_layout_property_price_text_view"
+                    android:layout_marginLeft="@dimen/listing_brief_view_layout_property_area_sq_ft_text_view_left_margin"
+                    android:layout_marginStart="@dimen/listing_brief_view_layout_property_area_sq_ft_text_view_left_margin"
+                    android:layout_marginTop="@dimen/listing_brief_view_layout_property_area_sq_ft_text_view_top_margin"
+                    android:text="5,490/ sqft"
+                    android:textAllCaps="false"
+                    android:textColor="@color/listing_brief_view_layout_property_price_sq_ft_text_color"
+                    android:textSize="@dimen/listing_brief_view_layout_property_area_sq_ft_text_view_text_size"
+                    android:typeface="serif" />
+
+                <ImageView
+                    android:id="@+id/listing_brief_view_layout_property_price_difference_image_view"
+                    android:layout_width="@dimen/listing_brief_view_layout_property_price_difference_image_view_width"
+                    android:layout_height="@dimen/listing_brief_view_layout_property_price_difference_image_view_height"
+                    android:layout_alignTop="@+id/listing_brief_view_layout_property_price_sq_ft_text_view"
+                    android:layout_marginLeft="@dimen/listing_brief_view_layout_property_price_difference_image_view_left_margin"
+                    android:layout_marginStart="@dimen/listing_brief_view_layout_property_price_difference_image_view_left_margin"
+                    android:layout_marginTop="@dimen/listing_brief_view_layout_property_price_difference_image_view_top_margin"
+                    android:layout_toEndOf="@+id/listing_brief_view_layout_property_price_sq_ft_text_view"
+                    android:layout_toRightOf="@+id/listing_brief_view_layout_property_price_sq_ft_text_view"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bottom_arrow_circle_green" />
+
+                <TextView
+                    android:id="@+id/listing_brief_view_layout_property_bhk_info_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/listing_brief_view_layout_property_price_text_view"
+                    android:layout_alignStart="@id/listing_brief_view_layout_property_price_text_view"
+                    android:layout_below="@+id/listing_brief_view_layout_property_price_sq_ft_text_view"
+                    android:layout_marginLeft="@dimen/listing_brief_view_layout_property_info_text_view_left_margin"
+                    android:layout_marginStart="@dimen/listing_brief_view_layout_property_info_text_view_left_margin"
+                    android:layout_marginTop="@dimen/listing_brief_view_layout_property_info_text_view_top_margin"
+                    android:singleLine="true"
+                    android:text="2 bhk apartment"
+                    android:textAllCaps="false"
+                    android:textColor="@color/listing_brief_view_layout_default_text_color"
+                    android:textSize="@dimen/listing_brief_view_layout_property_info_text_view_text_size"
+                    android:typeface="monospace" />
+
+                <TextView
+                    android:id="@+id/listing_brief_view_layout_property_size_info_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/listing_brief_view_layout_property_price_text_view"
+                    android:layout_alignStart="@id/listing_brief_view_layout_property_price_text_view"
+                    android:layout_below="@+id/listing_brief_view_layout_property_bhk_info_text_view"
+                    android:layout_marginLeft="@dimen/listing_brief_view_layout_property_info_text_view_left_margin"
+                    android:layout_marginStart="@dimen/listing_brief_view_layout_property_info_text_view_left_margin"
+                    android:text="1,900 sqft"
+                    android:textAllCaps="false"
+                    android:textColor="@color/listing_brief_view_layout_default_text_color"
+                    android:textSize="@dimen/listing_brief_view_layout_property_info_text_view_text_size"
+                    android:typeface="monospace" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/listing_brief_view_layout_empty_view_height"
+                    android:layout_below="@id/listing_brief_view_layout_property_image_view"
+                    android:layout_marginLeft="@dimen/listing_brief_view_layout_empty_view_after_property_info_view_margin_left"
+                    android:layout_marginStart="@dimen/listing_brief_view_layout_empty_view_after_property_info_view_margin_left"
+                    android:layout_marginTop="@dimen/listing_brief_view_layout_empty_view_after_property_info_view_margin_top"
+                    android:background="@color/listing_brief_view_layout_empty_view_color" />
+
+                <RelativeLayout
+                    android:id="@+id/listing_brief_view_layout_address_relative_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/listing_brief_view_layout_property_image_view"
+                    android:layout_marginBottom="@dimen/listing_brief_view_layout_map_image_bottom_margin">
+
+                    <ImageView
+                        android:id="@+id/listing_brief_view_layout_map_image_view"
+                        android:layout_width="@dimen/listing_brief_view_layout_map_image_width"
+                        android:layout_height="@dimen/listing_brief_view_layout_map_image_height"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginLeft="@dimen/listing_brief_view_layout_map_image_left_margin"
+                        android:layout_marginStart="@dimen/listing_brief_view_layout_map_image_left_margin"
+                        android:layout_marginTop="@dimen/listing_brief_view_layout_map_image_top_margin"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/map" />
+
+                    <TextView
+                        android:id="@+id/listing_brief_view_layout_property_address_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/listing_brief_view_layout_map_image_view"
+                        android:layout_marginEnd="@dimen/listing_brief_view_layout_property_address_text_view_right_margin"
+                        android:layout_marginLeft="@dimen/listing_brief_view_layout_property_address_text_view_left_margin"
+                        android:layout_marginRight="@dimen/listing_brief_view_layout_property_address_text_view_right_margin"
+                        android:layout_marginStart="@dimen/listing_brief_view_layout_property_address_text_view_left_margin"
+                        android:layout_toEndOf="@+id/listing_brief_view_layout_map_image_view"
+                        android:layout_toRightOf="@+id/listing_brief_view_layout_map_image_view"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="sector - 2 sohna, gurgaon"
+                        android:textAllCaps="false"
+                        android:textColor="@color/listing_brief_view_layout_default_text_color"
+                        android:textSize="@dimen/listing_brief_view_layout_property_address_text_view_text_size"
+                        android:typeface="serif" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+    </FrameLayout>
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/listing_brief_view_layout_badge_margin_left"
-        android:layout_marginStart="@dimen/listing_brief_view_layout_badge_margin_left"
         android:layout_marginTop="@dimen/listing_brief_view_layout_badge_margin_top">
 
         <ImageView
@@ -212,11 +226,11 @@
             android:layout_marginStart="@dimen/listing_brief_view_layout_text_margin_left"
             android:gravity="bottom"
             android:text="Seen"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/listing_brief_view_layout_text_size"
-            android:visibility="gone"
-            android:textAllCaps="false"
-            android:typeface="serif" />
+            android:typeface="serif"
+            android:visibility="gone" />
     </FrameLayout>
 
 </com.makaan.ui.listing.ListingCardView>

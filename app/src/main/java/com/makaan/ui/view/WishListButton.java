@@ -119,7 +119,7 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-        if(mContext instanceof PropertyActivity) {
+        if(mContext instanceof PropertyActivity && mWishListDto.listingId != null) {
             Properties properties = MakaanEventPayload.beginBatch();
             if(isChecked) {
                 properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_Select");
@@ -130,7 +130,7 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
             MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyOverview);
         }
-        else if(mContext instanceof SerpActivity){
+        else if(mContext instanceof SerpActivity && mWishListDto.serpItemPosition != null && mWishListDto.listingId != null){
             Properties properties = MakaanEventPayload.beginBatch();
             if(isChecked) {
                 properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_"+(mWishListDto.serpItemPosition+1));

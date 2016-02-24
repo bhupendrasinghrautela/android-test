@@ -11,7 +11,7 @@
     android:layout_marginBottom="13dp">
 
 
-    <com.pkmmte.view.CircularImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/client_leads_item_layout_image_view"
         android:layout_width="54dp"
         android:layout_height="54dp"
@@ -19,9 +19,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:visibility="invisible"
-        app:border="true"
-        app:border_color="@color/serp_listing_card_seller_mask_color"
-        app:border_width="@dimen/border_width"
+        app:civ_border_color="@color/serp_listing_card_seller_mask_color"
+        app:civ_border_width="@dimen/border_width"
         android:scaleType="centerCrop"
         android:src="@drawable/map"/>
     <RadioButton

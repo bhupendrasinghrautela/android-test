@@ -89,7 +89,7 @@ public class ListingPagerAdapter extends PagerAdapter {
                     mLayoutInflater.inflate(R.layout.listing_brief_view_layout, null);
 
             ListingCardView listingCardView = (ListingCardView) markerInfoWindow;
-            listingCardView.bindView(mContext, mProjectList.get(position));
+            listingCardView.populateData(mProjectList.get(position), null, position);
             container.addView(markerInfoWindow);
             return markerInfoWindow;
         }
