@@ -102,7 +102,7 @@ public class ProjectActivity extends MakaanBaseSearchActivity implements TotalIm
             //getActivity().finish();
         } else {
             Project project = projectByIdEvent.project;
-            if(null!=project) {
+            if(null!=project && project.latitude!=null && project.longitude!=null) {
                 mEntityInfo = new NeighborhoodMapFragment.EntityInfo(project.name,
                         project.latitude, project.longitude);
             }

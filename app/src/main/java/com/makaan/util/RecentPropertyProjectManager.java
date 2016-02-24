@@ -154,7 +154,6 @@ public class RecentPropertyProjectManager {
                                 && !TextUtils.isEmpty(listingDetail.companySeller.user.fullName)){
                             this.sellerName = listingDetail.companySeller.user.fullName;
                         }
-
                         if(listingDetail.companySeller.company.score != null) {
                             this.rating = listingDetail.companySeller.company.score;
                         }

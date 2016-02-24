@@ -21,6 +21,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
  * Created by vaibhav on 24/01/16.
@@ -33,7 +35,7 @@ public class ProjectConfigCallback extends JSONGetCallback {
     @Override
     public void onSuccess(JSONObject responseObject) {
 
-        ArrayList<ProjectConfigItem> buyProjectConfigItems = new ArrayList<>();
+        SortedMap<Double,ProjectConfigItem> buyProjectConfigItems = new TreeMap<>();
         ArrayList<ProjectConfigItem> rentProjectConfigItems = new ArrayList<>();
 
         try {
@@ -61,16 +63,30 @@ public class ProjectConfigCallback extends JSONGetCallback {
 
             if (null != resaleConfig) {
                 temp = getProjectConfigItems(resaleConfig.getJSONObject("Apartment"), sellerPropCountMap);
-                buyProjectConfigItems.addAll(temp);
+                for(ProjectConfigItem projectConfigItem:temp){
+                    buyProjectConfigItems.put(projectConfigItem.minPrice,projectConfigItem);
+                }
             }
 
             if (null != primaryConfig) {
                 temp = getProjectConfigItems(primaryConfig.getJSONObject("Apartment"), sellerPropCountMap);
-                buyProjectConfigItems.addAll(temp);
+                for(ProjectConfigItem projectConfigItem:temp){
+                    ProjectConfigItem getProjectConfigItem = buyProjectConfigItems.get(projectConfigItem.minPrice);
+                    if(getProjectConfigItem == null) {
+                        buyProjectConfigItems.put(projectConfigItem.minPrice, projectConfigItem);
+                    }
+                    else{
+                        getProjectConfigItem.propertyCount +=projectConfigItem.propertyCount;
+                        getProjectConfigItem.bedrooms.addAll(projectConfigItem.bedrooms);
+                        for(SellerCard sellerCard:projectConfigItem.companies.values()){
+                            getProjectConfigItem.companies.put(sellerCard.sellerId,sellerCard);
+                        }
+                        buyProjectConfigItems.put(getProjectConfigItem.minPrice,getProjectConfigItem);
+                    }
+                }
             }
 
-
-            AppBus.getInstance().post(new ProjectConfigEvent(buyProjectConfigItems, rentProjectConfigItems));
+            AppBus.getInstance().post(new ProjectConfigEvent(new ArrayList<>(buyProjectConfigItems.values()), rentProjectConfigItems));
         } catch (JSONException e) {
             Log.e(TAG, "Error parsing project config", e);
         }
@@ -79,25 +95,30 @@ public class ProjectConfigCallback extends JSONGetCallback {
     private ArrayList<ProjectConfigItem> getProjectConfigItems(JSONObject apartment, HashMap<Long, Long> sellerPropCountMap) {
         ArrayList<ProjectConfigItem> projectConfigItems = new ArrayList<>();
 
-        Type type = new TypeToken<HashMap<Double, ArrayList<ListingDetail>>>() {
+        Type type = new TypeToken<SortedMap<Double, ArrayList<ListingDetail>>>() {
         }.getType();
-        HashMap<Double, ArrayList<ListingDetail>> apartMentListing = MakaanBuyerApplication.gson.fromJson(apartment.toString(), type);
+        SortedMap<Double, ArrayList<ListingDetail>> apartMentListing = MakaanBuyerApplication.gson.fromJson(apartment.toString(), type);
 
         Double minPrice = null;
+        ProjectConfigItem lastConfigItem = null;
+        int count  = 0;
         for (Map.Entry<Double, ArrayList<ListingDetail>> entry : apartMentListing.entrySet()) {
+            minPrice = entry.getKey();
+            if(lastConfigItem!=null){
+                lastConfigItem.maxPrice = minPrice;
+            }
             Double price = entry.getKey();
             ArrayList<ListingDetail> listings = entry.getValue();
-            if (null != minPrice && minPrice != 0 && null != listings && listings.size() > 0) {
+            if (null != listings && listings.size() > 0) {
                 ProjectConfigItem projectConfigItem = new ProjectConfigItem();
                 projectConfigItems.add(projectConfigItem);
 
                 projectConfigItem.minPrice = minPrice;
-                projectConfigItem.maxPrice = price;
+                lastConfigItem = projectConfigItem;
 
                 for (ListingDetail listingDetail : listings) {
                     projectConfigItem.bedrooms.add(listingDetail.property.bedrooms);
                     projectConfigItem.propertyCount++;
-                    projectConfigItem.sellerCount++;
                     Company company = listingDetail.companySeller.company;
                     SellerCard sellerCard = projectConfigItem.companies.get(company.id);
 
@@ -127,8 +148,6 @@ public class ProjectConfigCallback extends JSONGetCallback {
                 }
 
             }
-
-            minPrice = price;
         }
 
         return projectConfigItems;

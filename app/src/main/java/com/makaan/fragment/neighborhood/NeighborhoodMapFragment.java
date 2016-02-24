@@ -30,12 +30,10 @@ import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
-import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.amenity.Amenity;
 import com.makaan.response.amenity.AmenityCluster;
 import com.segment.analytics.Properties;
-import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -168,6 +166,9 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
     }
 
     private void populateMarker(AmenityCluster amenityCluster){
+        if(amenityCluster == null){
+            return;
+        }
         mSelectedAmenityCluster = amenityCluster;
         List<Amenity> amenities = amenityCluster.cluster;
         mAllMarkers.clear();

@@ -85,6 +85,9 @@ public class ProjectKynFragment extends MakaanBaseFragment{
     }
 
     private void initView() {
+        if(getArguments() == null){
+            return;
+        }
         title = getArguments().getString("title");
         localityId = getArguments().getLong("localityId");
         description = getArguments().getString("description");
@@ -99,7 +102,7 @@ public class ProjectKynFragment extends MakaanBaseFragment{
             descriptionTv.setText(Html.fromHtml(description));
         }
         titleTv.setText(title);
-        if(amenityClusters.size()>0) {
+        if(amenityClusters!=null && amenityClusters.size()>0) {
             mRecyclerView.setVisibility(View.VISIBLE);
             mRecyclerView.setHasFixedSize(true);
             mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);

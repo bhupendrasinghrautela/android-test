@@ -16,7 +16,6 @@ import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.search.event.SearchResultEvent;
-import com.makaan.service.AmenityService;
 import com.makaan.service.ListingService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.KeyUtil;
@@ -71,8 +70,7 @@ public class PropertyActivity extends MakaanBaseSearchActivity implements ShowMa
         //long listingId = intent.getExtras().getLong("listingId");
         ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getListingDetail(mListingId);
         //TODO correct similar listing
-        //((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getSimilarListingDetail(mListingId);
-        ((AmenityService) (MakaanServiceFactory.getInstance().getService(AmenityService.class))).getAmenitiesByLocation(mListingLat, mListingLon, 3);
+        ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getSimilarListingDetail(mListingId);
     }
 
 

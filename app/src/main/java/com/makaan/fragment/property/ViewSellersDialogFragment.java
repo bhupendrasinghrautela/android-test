@@ -102,6 +102,7 @@ public class ViewSellersDialogFragment extends DialogFragment {
     public void openLeadForm(){
         Intent intent = new Intent(getActivity(), LeadFormActivity.class);
         try {
+            //Todo add new multi lead fragment
             SellerCard sellerCard = mSellerCards.get(3);
             intent.putExtra("name", sellerCard.name);
             if(sellerCard.rating != null) {

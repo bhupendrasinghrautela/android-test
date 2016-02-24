@@ -119,7 +119,7 @@ public class ProjectConfigItemView extends LinearLayout implements View.OnClickL
     private void expandView(int tag) {
         ProjectConfigItem item =  items.get(tag);
         int propertyCount = item.propertyCount;
-        int sellerCount = item.sellerCount;
+        int sellerCount = item.companies.size();
         LinearLayout containerView = (LinearLayout) projectConfigItemView.getChildAt(tag).findViewById(R.id.project_config_row_container);
         containerView.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_config_item_selected_bg));
         View expandedView = mLayoutInflater.inflate(R.layout.row_project_config_item_expanded, null);

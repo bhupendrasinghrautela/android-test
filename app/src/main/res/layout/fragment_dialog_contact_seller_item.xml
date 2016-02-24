@@ -60,10 +60,11 @@
             android:layout_toEndOf="@id/seller_image_frame_layout"
             android:layout_toRightOf="@id/seller_image_frame_layout"
             android:text=""
+            android:maxLines="1"
             android:textColor="@color/serp_listing_card_default_text_color"
             android:textSize="@dimen/serp_listing_card_seller_name_text_view_text_size"
-            android:layout_toLeftOf="@id/seller_assist_button"
-            android:layout_toStartOf="@id/seller_assist_button"/>
+            android:layout_toLeftOf="@+id/fragment_dialog_contact_sellers_contact_text_view"
+            android:layout_toStartOf="@+id/fragment_dialog_contact_sellers_contact_text_view"/>
     <TextView
         android:id="@+id/seller_total_property_text_view"
         android:layout_width="wrap_content"
@@ -78,8 +79,8 @@
         android:text=""
         android:textColor="@color/app_grey"
         android:textSize="@dimen/serp_listing_card_seller_name_text_view_text_size"
-        android:layout_toLeftOf="@id/seller_assist_button"
-        android:layout_toStartOf="@id/seller_assist_button"/>
+        android:layout_toLeftOf="@+id/fragment_dialog_contact_sellers_contact_text_view"
+        android:layout_toStartOf="@id/fragment_dialog_contact_sellers_contact_text_view"/>
 
         <com.makaan.ui.view.CustomRatingBar
             android:id="@+id/seller_rating"

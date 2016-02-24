@@ -16,7 +16,6 @@ import com.makaan.service.LocalityService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PriceTrendService;
 import com.makaan.ui.MakaanLineChartView;
-import com.makaan.ui.PriceTrendView;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -74,6 +73,7 @@ public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
                 priceTrendViewl.setVisibility(View.VISIBLE);
                 priceTrendView.setProjectId(projectId);
                 priceTrendView.bindView(localityPriceTrendDto.data);
+                priceTrendView.changeDataBasedOnTime(12);
                 localityPriceTrendsData = localityPriceTrendDto.data;
             }});
 
@@ -81,11 +81,20 @@ public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResult(ProjectPriceTrendEvent projectPriceTrendEvent){
-        Set<PriceTrendKey> priceTrendKeySet = projectPriceTrendEvent.projectPriceTrendDto.data.keySet();
-        for(PriceTrendKey key : priceTrendKeySet){
-            localityPriceTrendsData.put(key,projectPriceTrendEvent.projectPriceTrendDto.data.get(key));
+        if(projectPriceTrendEvent == null || projectPriceTrendEvent.error!=null){
+            return;
         }
-        priceTrendView.bindView(localityPriceTrendsData);
+        if(localityPriceTrendsData == null){
+            return;
+        }
+        if(projectPriceTrendEvent.projectPriceTrendDto!=null && projectPriceTrendEvent.projectPriceTrendDto.data!=null) {
+            Set<PriceTrendKey> priceTrendKeySet = projectPriceTrendEvent.projectPriceTrendDto.data.keySet();
+            for (PriceTrendKey key : priceTrendKeySet) {
+                localityPriceTrendsData.put(key, projectPriceTrendEvent.projectPriceTrendDto.data.get(key));
+            }
+            priceTrendView.bindView(localityPriceTrendsData);
+            priceTrendView.changeDataBasedOnTime(12);
+        }
     }
     private void initView() {
         localityId = getArguments().getLong("localityId");

@@ -455,6 +455,9 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     private void addProjectAboutLocalityFragment(List<AmenityCluster> amenityClusterList) {
 
+        if(amenityClusterList == null || amenityClusterList.size() == 0){
+            return;
+        }
         List<AmenityCluster> mAmenityClusters = new ArrayList<>();
         if(mAmenityClusters.size()>0) {
             for (AmenityCluster cluster : amenityClusterList) {
