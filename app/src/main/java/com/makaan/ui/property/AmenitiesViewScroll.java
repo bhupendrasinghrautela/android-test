@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
@@ -82,10 +81,15 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
         mAmenityItems = new ArrayList<>();
         for(ProjectAmenity projectAmenity : projectAmenities){
             try {
+                if(projectAmenity.amenityMaster.amenityName!=null &&
+                        projectAmenity.amenityMaster.amenityName.toLowerCase().equals(mContext.getString(R.string.others))){
+                    continue;
+                }
                 HorizontalScrollItem amenityItem = new HorizontalScrollItem();
                 amenityItem.resourceId = R.drawable.possession;
                 amenityItem.value = MasterDataCache.getInstance().getPropertyAmenityById(projectAmenity.amenityMaster.amenityId).amenityName;
                 amenityItem.name = String.valueOf(projectAmenity.amenityMaster.amenityId);
+                amenityItem.activated = true;
                 mAmenityItems.add(amenityItem);
             }catch (Exception e){}
         }

@@ -14,7 +14,6 @@ public class ProjectConfigItem implements Parcelable {
     public double minPrice, maxPrice;
     public HashSet<Integer> bedrooms = new HashSet<>();
     public int propertyCount;
-    public int sellerCount;
     public SellerCard topSellerCard;
 
     public HashMap<Long, SellerCard> companies = new HashMap<>();
@@ -30,7 +29,6 @@ public class ProjectConfigItem implements Parcelable {
         dest.writeDouble(this.maxPrice);
         dest.writeSerializable(this.bedrooms);
         dest.writeInt(this.propertyCount);
-        dest.writeInt(this.sellerCount);
         dest.writeSerializable(this.companies);
     }
 
@@ -42,7 +40,6 @@ public class ProjectConfigItem implements Parcelable {
         this.maxPrice = in.readDouble();
         this.bedrooms = (HashSet<Integer>) in.readSerializable();
         this.propertyCount = in.readInt();
-        this.sellerCount = in.readInt();
         this.companies = (HashMap<Long, SellerCard>) in.readSerializable();
     }
 

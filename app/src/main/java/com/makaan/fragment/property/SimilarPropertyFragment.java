@@ -15,9 +15,12 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
+import com.makaan.event.listing.SimilarListingGetEvent.ListingItems;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.listing.detail.ListingDetail;
+import com.makaan.response.property.Property;
+import com.makaan.util.StringUtil;
 
 import java.util.List;
 
@@ -56,7 +59,7 @@ public class SimilarPropertyFragment extends MakaanBaseFragment implements View.
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    public void setData(List<ListingDetail> similarProjects) {
+    public void setData(List<ListingItems> similarProjects) {
         mAdapter = new SimilarPropertiesAdapter(similarProjects, this);
         if (mRecyclerView != null)
             mRecyclerView.setAdapter(mAdapter);
@@ -71,13 +74,15 @@ public class SimilarPropertyFragment extends MakaanBaseFragment implements View.
     private class SimilarPropertiesAdapter
             extends RecyclerView.Adapter<SimilarPropertiesAdapter.ViewHolder> {
         private final View.OnClickListener onClickListener;
-        private List<ListingDetail> similarPropertiesList;
+        private List<ListingItems> similarPropertiesList;
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             // each data item is just a string in this case
             public TextView nameTv;
             public TextView addressTv;
             public TextView priceTv;
+            public TextView pricePreTv;
+            public TextView pricePostTv;
             public ImageView projectIv;
             public CardView cardView;
 
@@ -86,12 +91,14 @@ public class SimilarPropertyFragment extends MakaanBaseFragment implements View.
                 nameTv = (TextView) v.findViewById(R.id.tv_similar_project_name);
                 addressTv = (TextView) v.findViewById(R.id.tv_similar_project_address);
                 priceTv = (TextView) v.findViewById(R.id.tv_similar_project_price);
+                pricePreTv = (TextView) v.findViewById(R.id.tv_similar_project_price_prefix);
+                pricePostTv = (TextView) v.findViewById(R.id.tv_similar_project_price_postfix);
                 projectIv = (ImageView) v.findViewById(R.id.iv_similar_project);
                 cardView = (CardView) v.findViewById(R.id.card_similar_projects);
             }
         }
 
-        public SimilarPropertiesAdapter(List<ListingDetail> similarProjectsList,View.OnClickListener onClickListener) {
+        public SimilarPropertiesAdapter(List<ListingItems> similarProjectsList,View.OnClickListener onClickListener) {
             this.similarPropertiesList = similarProjectsList;
             this.onClickListener = onClickListener;
         }
@@ -100,39 +107,72 @@ public class SimilarPropertyFragment extends MakaanBaseFragment implements View.
         public SimilarPropertiesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                                     int viewType) {
             View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.row_project_similar_property, parent, false);
+                    .inflate(R.layout.row_similar_property, parent, false);
             ViewHolder vh = new ViewHolder(v);
             return vh;
         }
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            final ListingDetail listing = similarPropertiesList.get(position);
+            final ListingDetail listing = similarPropertiesList.get(position).listing;
             holder.cardView.setTag(listing.id);
             holder.cardView.setOnClickListener(onClickListener);
-            holder.nameTv.setText(listing.property.project.getFullName());
-            holder.priceTv.setText(String.valueOf(listing.minResaleOrPrimaryPrice));
-            if(listing.property.project.address == null)
-                holder.addressTv.setVisibility(View.GONE);
-            else {
-                holder.addressTv.setVisibility(View.VISIBLE);
-                holder.addressTv.setText(listing.property.project.address );
-            }
-            MakaanNetworkClient.getInstance().getImageLoader().get(listing.property.project.imageURL.replace("http", "https"), new ImageLoader.ImageListener() {
-                @Override
-                public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
-                    if (b && imageContainer.getBitmap() == null) {
-                        return;
+            if(listing.property!=null) {
+                Property property = listing.property;
+                if (listing.property.project != null && listing.property.project.name != null) {
+                    String nameTv = listing.property.project.name;
+                    if (listing.property.project.locality != null && listing.property.project.locality.label != null) {
+                        holder.addressTv.setText(nameTv.toLowerCase().concat(", ").concat(listing.property.project.locality.label).toLowerCase());
                     }
-                    final Bitmap image = imageContainer.getBitmap();
-                    holder.projectIv.setImageBitmap(image);
+                    else {
+                        holder.addressTv.setText(nameTv);
+                    }
                 }
-
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-
+                StringBuilder bhkInfo = new StringBuilder();
+                if (property.unitType != null && "plot".equalsIgnoreCase(property.unitType)) {
+                    bhkInfo.append("residential plot");
+                } else {
+                    bhkInfo.append(property.bedrooms > 0 ? property.bedrooms.toString() + "bhk " : "");
+                    bhkInfo.append(property.unitType != null ? property.unitType : "");
                 }
-            });
+                bhkInfo.append((property.size != null ? "-" +StringUtil.getFormattedNumber(property.size) : "") + " " +
+                        (property.measure != null ? property.measure : ""));
+                holder.nameTv.setText(bhkInfo.toString());
+
+            }
+            if(listing.currentListingPrice!=null && listing.currentListingPrice.price!=0) {
+                Double price = listing.currentListingPrice.price;
+                String priceString = StringUtil.getDisplayPrice(price);
+                String priceUnit = "";
+                if(priceString.indexOf("\u20B9") == 0) {
+                    priceString = priceString.replace("\u20B9", "");
+                }
+                String[] priceParts = priceString.split(" ");
+                priceString = priceParts[0];
+                if(priceParts.length > 1) {
+                    priceUnit = priceParts[1];
+                }
+                holder.priceTv.setText(String.valueOf(priceString)+" ");
+                holder.pricePostTv.setText(priceUnit+" onwards");
+                holder.pricePreTv.setText("\u20B9 ");
+            }
+            if(listing.mainImageURL!=null) {
+                MakaanNetworkClient.getInstance().getImageLoader().get(listing.mainImageURL.replace("http", "https"), new ImageLoader.ImageListener() {
+                    @Override
+                    public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
+                        if (b && imageContainer.getBitmap() == null) {
+                            return;
+                        }
+                        final Bitmap image = imageContainer.getBitmap();
+                        holder.projectIv.setImageBitmap(image);
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                    }
+                });
+            }
         }
 
         @Override

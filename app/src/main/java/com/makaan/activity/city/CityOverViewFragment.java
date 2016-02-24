@@ -287,7 +287,9 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         }
         else {
             mCity = cityByIdEvent.city;
-            initUiUsingCityDetails();
+            if(mCity!=null) {
+                initUiUsingCityDetails();
+            }
         }
     }
 

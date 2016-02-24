@@ -6,16 +6,19 @@ import com.makaan.constants.ApiConstants;
 import com.makaan.constants.ResponseConstants;
 import com.makaan.event.listing.ListingByIdGetEvent;
 import com.makaan.event.listing.ListingByIdsGetEvent;
+import com.makaan.event.listing.SimilarListingGetEvent;
 import com.makaan.event.serp.BaseSerpCallback;
 import com.makaan.event.serp.GroupSerpCallback;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
+import com.makaan.network.StringRequestCallback;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.ResponseError;
 import com.makaan.response.listing.ListingOtherSellersCallback;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.util.AppBus;
+import com.makaan.util.JsonParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -156,26 +159,24 @@ public class ListingService implements MakaanService {
     public void getSimilarListingDetail(Long listingId){
         if (null != listingId) {
             Selector listingDetailSelector = new Selector();
-            listingDetailSelector.fields(new String[]{"size","property","project","builder", "isAssist", "carpetArea", "currentListingPrice", "unitName", "url", "id", "label", "name", "unitTypeId", "bedrooms", "type", "altText", "title", "carpetArea", "priceVerified", "imageType", "absolutePath", "propertyId", "images", "pricePerUnitArea", "price", "currentListingPrice", "project", "property", "builder", "locality", "suburb", "city", "amenity", "projectAmenityId", "verified"});
+            listingDetailSelector.fields(new String[]{"assist","company","companySeller","mainImageURL","resaleURL","overviewUrl","listing", "size", "isAssist", "carpetArea", "currentListingPrice", "unitName", "url", "id", "label", "name", "unitTypeId", "bedrooms", "type", "altText", "title", "carpetArea", "priceVerified", "imageType", "absolutePath",  "pricePerUnitArea", "price", "currentListingPrice", "project", "property", "builder", "locality", "suburb", "city", "amenity", "verified"});
 
             String listingDetailUrl = ApiConstants.SIMILAR_LISTING.concat(listingId.toString()).concat("?").concat(listingDetailSelector.build());
-            Type listingDetailType = new TypeToken<ListingDetail>() {
-            }.getType();
 
-            MakaanNetworkClient.getInstance().get(listingDetailUrl, listingDetailType, new ObjectGetCallback() {
+            MakaanNetworkClient.getInstance().get(listingDetailUrl, new StringRequestCallback() {
                 @Override
                 public void onError(ResponseError error) {
-                    ListingByIdGetEvent listingByIdGetEvent = new ListingByIdGetEvent();
-                    listingByIdGetEvent.error = error;
-                    AppBus.getInstance().post(listingByIdGetEvent);
+                    SimilarListingGetEvent similarListingGetEvent = new SimilarListingGetEvent();
+                    similarListingGetEvent.error = error;
+                    AppBus.getInstance().post(similarListingGetEvent);
                 }
 
                 @Override
-                public void onSuccess(Object responseObject) {
-                    ListingDetail listingDetail = (ListingDetail) responseObject;
+                public void onSuccess(String responseObject) {
+                    SimilarListingGetEvent similarListingGetEvent = (SimilarListingGetEvent) JsonParser.parseJson(responseObject,SimilarListingGetEvent.class);
 
                     //listingDetail.description = AppUtils.stripHtml(listingDetail.description);
-                    AppBus.getInstance().post(new ListingByIdGetEvent(listingDetail));
+                    AppBus.getInstance().post(similarListingGetEvent);
                 }
             });
 

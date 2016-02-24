@@ -13,24 +13,22 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
+import com.makaan.adapter.pyr.SearchableListviewAdapter;
+import com.makaan.adapter.pyr.SelectedListViewAdapter;
 import com.makaan.constants.PreferenceConstants;
+import com.makaan.fragment.pyr.PyrPagePresenter;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.SearchType;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SearchService;
-import com.makaan.fragment.pyr.PyrPagePresenter;
-import com.makaan.adapter.pyr.SearchableListviewAdapter;
-import com.makaan.adapter.pyr.SelectedListViewAdapter;
 import com.makaan.util.AppBus;
 import com.makaan.util.Preference;
 import com.squareup.otto.Subscribe;
@@ -282,6 +280,9 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 		ArrayList<SearchResponseItem> mOriginalList;
 		if(searchResultEvent!=null && searchResultEvent.searchResponse!=null) {
 			mOriginalList = searchResultEvent.searchResponse.getData();
+			if(mOriginalList == null){
+				return;
+			}
 			mSelectedItemsFlag = new boolean[mOriginalList.size()];
 
 			if (mOriginalList.size() > 0) {

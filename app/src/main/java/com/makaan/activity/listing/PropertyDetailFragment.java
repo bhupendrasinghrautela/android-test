@@ -27,7 +27,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
-import com.makaan.activity.city.CityActivity;
 import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.constants.ImageConstants;
@@ -35,6 +34,8 @@ import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.image.ImagesGetEvent;
 import com.makaan.event.listing.ListingByIdGetEvent;
 import com.makaan.event.listing.OtherSellersGetEvent;
+import com.makaan.event.listing.SimilarListingGetEvent;
+import com.makaan.event.listing.SimilarListingGetEvent.ListingItems;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.property.SimilarPropertyFragment;
 import com.makaan.fragment.property.ViewSellersDialogFragment;
@@ -47,6 +48,7 @@ import com.makaan.response.project.Project;
 import com.makaan.response.property.Property;
 import com.makaan.response.user.Company;
 import com.makaan.response.user.User;
+import com.makaan.service.AmenityService;
 import com.makaan.service.ImageService;
 import com.makaan.service.ListingService;
 import com.makaan.service.MakaanServiceFactory;
@@ -272,6 +274,9 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
             RecentPropertyProjectManager manager = RecentPropertyProjectManager.getInstance(getActivity().getApplicationContext());
             manager.addEntryToRecent(manager.new DataObject(mListingDetail), getActivity().getApplicationContext());
 
+            if(mListingDetail.latitude!=0 && mListingDetail.longitude!=0) {
+                ((AmenityService) (MakaanServiceFactory.getInstance().getService(AmenityService.class))).getAmenitiesByLocation(mListingDetail.latitude, mListingDetail.longitude, 3);
+            }
             TestUi(mListingDetail);
             ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getOtherSellersOnListingDetail(
                     mListingDetail.projectId, mListingDetail.bedrooms, mListingDetail.bathrooms, mListingDetail.studyRoom
@@ -307,6 +312,16 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
     @Subscribe
     public void onOtherSellers(OtherSellersGetEvent otherSellersGetEvent){
         mSellerCards = otherSellersGetEvent.sellerCards;
+    }
+
+    @Subscribe
+    public void onSimilarListings(SimilarListingGetEvent similarListingGetEvent){
+        if(similarListingGetEvent == null || similarListingGetEvent.error!=null){
+            return;
+        }
+        if(similarListingGetEvent.data!=null && similarListingGetEvent.data.items!=null){
+            addSimilarProperties(similarListingGetEvent.data.items);
+        }
     }
 
     private void TestUi(ListingDetail listingDetail){
@@ -477,18 +492,18 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
     }
 
     //TODO add smiliar properties instead of this
-    private void addSimilarProperties(List<ListingDetail> listingDetailList) {
+    private void addSimilarProperties(List<ListingItems> listingDetailList) {
         SimilarPropertyFragment newFragment = new SimilarPropertyFragment();
         Bundle bundle = new Bundle();
         bundle.putString("title", getResources().getString(R.string.similar_properties));
         newFragment.setArguments(bundle);
-        initFragment(R.id.container_nearby_localities_props, newFragment, false);
+        initFragment(R.id.container_similar_properties, newFragment, false);
         newFragment.setData(listingDetailList);
     }
 
     protected void initFragment(int fragmentHolderId, Fragment fragment, boolean shouldAddToBackStack) {
         // reference fragment transaction
-        FragmentTransaction fragmentTransaction =((CityActivity) mContext).getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction =((PropertyActivity) mContext).getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(fragmentHolderId, fragment, fragment.getClass().getName());
         // if need to be added to the backstack, then do so
         if (shouldAddToBackStack) {
