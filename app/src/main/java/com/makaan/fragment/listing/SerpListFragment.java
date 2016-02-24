@@ -99,6 +99,12 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
                 } else {
                     mListingRecyclerView.setHasMoreItems(false);
                 }
+
+                if(mTotalCount == 0) {
+                    showNoResults();
+                } else {
+                    showContent();
+                }
             } else {
                 mListingRecyclerView.setHasMoreItems(false);
             }
@@ -197,6 +203,11 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
                 mListingRecyclerView.setHasMoreItems(false);
             }
             mListingRecyclerView.setIsLoading(false);
+            if(listingTotalCount == 0) {
+                showNoResults();
+            } else {
+                showContent();
+            }
         } else {
             mListings.clear();
             mListings.addAll(listings);

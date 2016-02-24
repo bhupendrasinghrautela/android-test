@@ -1,7 +1,7 @@
 package com.makaan.activity.listing;
 
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -62,7 +62,6 @@ import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Stack;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -154,7 +153,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     private SerpGetEvent mListingGetEvent;
     private boolean mIsMapFragment;
     private SerpMapFragment mMapFragment;
-    private ProgressDialog mProgressDialog;
     private int mSerpRequestType = SerpActivity.TYPE_UNKNOWN;
 
     private boolean mGroupsRequested;
@@ -412,7 +410,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             //TODO handle error
             mSerpReceived = true;
             Toast.makeText(this, "An error occurred while fetching results", Toast.LENGTH_SHORT).show();
-            mProgressDialog.dismiss();
+            showNoResults();
             return;
         }
 
@@ -439,7 +437,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             if (mSellerSerpListFragment == null || !mSellerSerpListFragment.isVisible()) {
                 // create new child serp cluster fragment to show the cluster items
                 ChildSerpClusterFragment childSerpClusterFragment = ChildSerpClusterFragment.init();
-                childSerpClusterFragment.setData(mGroupListings, mChildSerpId, this);
+                childSerpClusterFragment.setData(mGroupListings, mChildSerpId, this, mChildListingId);
                 // create new listing fragment to show the listings
                 mSellerSerpListFragment = SerpListFragment.init(true);
                 updateListings(listingGetEvent, null);
@@ -459,7 +457,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             if (mChildSerpListFragment == null || !mChildSerpListFragment.isVisible()) {
                 // create new child serp cluster fragment to show the cluster items
                 ChildSerpClusterFragment childSerpClusterFragment = ChildSerpClusterFragment.init();
-                childSerpClusterFragment.setData(mGroupListings, mChildSerpId, this);
+                childSerpClusterFragment.setData(mGroupListings, mChildSerpId, this, mChildListingId);
                 // create new listing fragment to show the listings
                 mChildSerpListFragment = SerpListFragment.init(true);
                 updateListings(listingGetEvent, null);
@@ -500,22 +498,18 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         }
         mSerpReceived = true;
 
-        if(mProgressDialog != null) {
-            if(mGroupReceived) {
-                mProgressDialog.dismiss();
-            }
+//        if(mProgressDialog != null) {
+        if(mGroupReceived) {
+            showContent();
         }
+//        }
     }
 
     @Subscribe
     public synchronized void onResults(GroupSerpGetEvent groupListingGetEvent) {
         if(null==groupListingGetEvent|| null!=groupListingGetEvent.error){
             //TODO handle error
-            if(mSerpReceived) {
-                mProgressDialog.dismiss();
-            } else {
-                mGroupReceived = true;
-            }
+            mGroupReceived = true;
             return;
         }
         mGroupListingGetEvent = groupListingGetEvent;
@@ -523,9 +517,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         if(mIsMapFragment) {
             updateListings(mListingGetEvent, mGroupListingGetEvent);
             if(mSerpReceived) {
-                if (mProgressDialog != null) {
-                    mProgressDialog.dismiss();
-                }
+                showContent();
             }
             return;
         }
@@ -549,9 +541,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             }
 
 
-            if(mProgressDialog != null) {
-                mProgressDialog.dismiss();
-            }
+            showContent();
         }
     }
 
@@ -904,9 +894,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             FragmentTransaction ft = this.getFragmentManager().beginTransaction();
             SetAlertsDialogFragment dialog = new SetAlertsDialogFragment();
             if(mSerpBackStack.peek() != null) {
-                dialog.setData(mFilterGroups, mSerpBackStack.peek(), mSerpContext == SERP_CONTEXT_BUY);
+                dialog.setData(mFilterGroups, mSerpBackStack.peek(), mSerpContext == SERP_CONTEXT_BUY, this);
             } else {
-                dialog.setData(mFilterGroups, mListingGetEvent, mSerpContext == SERP_CONTEXT_BUY);
+                dialog.setData(mFilterGroups, mListingGetEvent, mSerpContext == SERP_CONTEXT_BUY, this);
             }
             dialog.show(ft, "Set Alerts");
         } else if(type == REQUEST_MPLUS_POPUP) {
@@ -1006,7 +996,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         }
     }
 
-    private void showProgress() {
+    /*private void showProgress() {
 
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
@@ -1016,7 +1006,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         mProgressDialog.setCancelable(false);
         mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.show();
-    }
+    }*/
 
     @Subscribe
     public void onIncomingMessage(IncomingMessageEvent event){

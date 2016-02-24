@@ -41,6 +41,7 @@ public class ChildSerpClusterFragment extends MakaanBaseFragment {
     private HorizontalScrollFragmentAdapter mFragmentPagerAdapter;
     private SerpRequestCallback mCallback;
     private GroupCluster mCluster;
+    private Long mSelectedChildListingId;
 
 
     @Override
@@ -61,6 +62,14 @@ public class ChildSerpClusterFragment extends MakaanBaseFragment {
 
             mViewPager.setAdapter(mFragmentPagerAdapter);
 
+            if(mSelectedChildListingId != null && mSelectedChildListingId > 0) {
+                for(int i = 0; i < mCluster.groupListings.size(); i++) {
+                    if(mCluster.groupListings.get(i).listing.id.equals(mSelectedChildListingId)) {
+                        mViewPager.setCurrentItem(i);
+                        break;
+                    }
+                }
+            }
 
             mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
@@ -118,8 +127,9 @@ public class ChildSerpClusterFragment extends MakaanBaseFragment {
         getActivity().onBackPressed();
     }
 
-    public void setData(ArrayList<GroupListing> groupListings, Long childSerpId, SerpRequestCallback callback) {
+    public void setData(ArrayList<GroupListing> groupListings, Long childSerpId, SerpRequestCallback callback, Long childListingId) {
         mCallback = callback;
+        mSelectedChildListingId = childListingId;
         if(groupListings != null) {
             mCluster = GroupCluster.getGroupCluster(groupListings, childSerpId);
         }

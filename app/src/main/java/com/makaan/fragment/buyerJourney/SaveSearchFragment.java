@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,10 @@ import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
+import com.makaan.cache.MasterDataCache;
 import com.makaan.event.saveSearch.SaveSearchGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.fragment.listing.SetAlertsDialogFragment;
 import com.makaan.pojo.SelectorParser;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.response.saveSearch.SaveSearch;
@@ -45,6 +48,14 @@ public class SaveSearchFragment extends MakaanBaseFragment {
         super.onActivityCreated(savedInstanceState);
         context = getActivity();
         initView();
+
+        if(MasterDataCache.getInstance().getSavedSearch() != null) {
+
+            mAdapter = new SaveSearchAdapter(MasterDataCache.getInstance().getSavedSearch());
+            if (mRecyclerView != null) {
+                mRecyclerView.setAdapter(mAdapter);
+            }
+        }
     }
 
     private void initView() {
@@ -56,6 +67,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
 
     private class SaveSearchAdapter extends RecyclerView.Adapter<SaveSearchAdapter.ViewHolder> {
         private List<SaveSearch> savedSearches;
+        private int position;
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             // each data item is just a string in this case
@@ -73,9 +85,11 @@ public class SaveSearchFragment extends MakaanBaseFragment {
 
             @Override
             public void onClick(View v) {
-                SerpRequest request = new SerpRequest(SerpActivity.TYPE_SUGGESTION);
-                SelectorParser.parse(saveSearchFilter.getText().toString(), request);
-                request.launchSerp(getActivity());
+                if(savedSearches != null && savedSearches.size() > position) {
+                    SerpRequest request = new SerpRequest(SerpActivity.TYPE_SUGGESTION);
+                    SelectorParser.parse(savedSearches.get(position).searchQuery, request);
+                    request.launchSerp(getActivity());
+                }
             }
         }
 
@@ -94,8 +108,31 @@ public class SaveSearchFragment extends MakaanBaseFragment {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.saveSearchName.setText(savedSearches.get(position).name);
-            holder.saveSearchFilter.setText(savedSearches.get(position).searchQuery);
+            this.position = position;
+            String name = savedSearches.get(position).name;
+            if(!TextUtils.isEmpty(name)) {
+                int semiIndex = name.indexOf(";");
+                String finalName = name;
+                if(semiIndex >= 0) {
+                    finalName = name.substring(0, semiIndex);
+                    holder.saveSearchName.setText(finalName);
+                    if(semiIndex < name.length() - 1) {
+                        String[] filterArray = name.substring(semiIndex + 1, name.length()).split(SetAlertsDialogFragment.SEPARATOR_FILTER);
+                        StringBuilder builder = new StringBuilder();
+                        String separator = "";
+                        if(filterArray != null) {
+                            for (String filter : filterArray) {
+                                builder.append(separator);
+                                builder.append(filter);
+                                separator = "\n";
+                            }
+                            holder.saveSearchFilter.setText(builder.toString());
+                        }
+                    }
+                } else {
+                    holder.saveSearchName.setText(finalName);
+                }
+            }
         }
 
         @Override

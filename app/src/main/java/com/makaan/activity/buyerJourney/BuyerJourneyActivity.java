@@ -295,7 +295,7 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
             mUserName.setText(CookiePreferences.getUserInfo(this).getData().getFirstName());
             return true;
         } else {
-            return false;
+            return true;
         }
     }
 

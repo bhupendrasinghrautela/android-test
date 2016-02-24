@@ -25,6 +25,7 @@ import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.response.user.UserResponse;
 import com.makaan.service.LocationService;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.service.SaveSearchService;
 import com.makaan.service.WishListService;
 import com.makaan.util.Preference;
 import com.squareup.otto.Subscribe;
@@ -103,6 +104,10 @@ public class HomeActivity extends MakaanBaseSearchActivity {
         }catch (Exception e){
 
         }
+        // get saved searches
+        SaveSearchService saveSearchService =
+                (SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class);
+        saveSearchService.getSavedSearches();
 
         rgType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.cache.MasterDataCache;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.buyerjourney.ClientEventsByGetEvent;
 import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
@@ -16,12 +17,15 @@ import com.makaan.event.saveSearch.SaveSearchGetEvent;
 import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.buyerJourney.BlogContentFragment;
+import com.makaan.response.saveSearch.SaveSearch;
 import com.makaan.service.ClientEventsService;
 import com.makaan.service.ClientLeadsService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
 import com.makaan.service.WishListService;
 import com.squareup.otto.Subscribe;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -58,6 +62,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
 
 
     private View[] mViews = new View[3];
+    private ArrayList<SaveSearch> savedSearches;
 
     @OnClick(R.id.ll_search)
     public void onSearchCLick() {
@@ -145,16 +150,25 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
 
         isUserLoggedIn = CookiePreferences.isUserLoggedIn(getActivity());
         if(isUserLoggedIn) {
-            ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).getSavedSearches();
+            savedSearches = MasterDataCache.getInstance().getSavedSearch();
+            if(savedSearches != null) {
+                mSavedSearchesCount = savedSearches.size();
+                mSavedSearchesReceived = true;
+            } else {
+                ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).getSavedSearches();
+                mSavedSearchesReceived = false;
+            }
+
             ((ClientLeadsService) MakaanServiceFactory.getInstance().getService(ClientLeadsService.class)).requestClientLeadsActivity();
             ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).getSavedSearchesNewMatches();
             ((ClientEventsService) MakaanServiceFactory.getInstance().getService(ClientEventsService.class)).getClientEvents(1);
             ((WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class)).get();
-            mSavedSearchesReceived = false;
+
             mNewSearchesReceived = true; // TODO need to implement this
             mClientEventsReceived = false;
             mClientLeadsReceived = false;
             mWishListsReceived = false;
+            showProgress();
         }
 
         mViews[0] = view.findViewById(R.id.ll_search);
@@ -168,6 +182,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     public void onResults(SaveSearchGetEvent saveSearchGetEvent){
         if(null == saveSearchGetEvent || null != saveSearchGetEvent.error){
             //TODO handle error
+            showNoResults();
             return;
         }
         mSavedSearchesCount = saveSearchGetEvent.saveSearchArrayList.size();
@@ -179,6 +194,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     public void wishListResponse(WishListResultEvent wishListResultEvent){
         if(wishListResultEvent == null || wishListResultEvent.error != null) {
             // TODO handle error
+            showNoResults();
             return;
         }
         mWishlistCount = wishListResultEvent.wishListResponse.totalCount;
@@ -190,6 +206,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     public void onResults(ClientLeadsByGetEvent clientLeadsByGetEvent){
         if(null == clientLeadsByGetEvent || null != clientLeadsByGetEvent.error){
             //TODO handle error
+            showNoResults();
             return;
         }
         mClientLeadsCount = clientLeadsByGetEvent.totalCount;
@@ -227,6 +244,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     public void onResults(ClientEventsByGetEvent clientEventsByGetEvent){
         if(null == clientEventsByGetEvent || null != clientEventsByGetEvent.error){
             //TODO handle error
+            showNoResults();
             return;
         }
         mClientEventsCount = clientEventsByGetEvent.totalCount;
@@ -251,6 +269,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             } else {
                 mSiteVisitSubTitle.setText(getResources().getString(R.string.site_visit_sub_title));
             }
+            showContent();
         }
     }
 }

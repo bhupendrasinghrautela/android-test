@@ -89,11 +89,9 @@ public class AppUtils {
 
     public static int getElapsedYearsFromNow(Long epochTime) {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(epochTime);
+        calendar.setTimeInMillis(new Date().getTime() - epochTime);
 
-        Calendar calendar1 = Calendar.getInstance();
-
-        return calendar1.get(Calendar.YEAR) - calendar.get(Calendar.YEAR);
+        return calendar.get(Calendar.YEAR) - 1970;
     }
 
 

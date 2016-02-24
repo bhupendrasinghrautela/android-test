@@ -3,6 +3,7 @@ package com.makaan.service;
 import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
+import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ApiConstants;
 import com.makaan.event.saveSearch.SaveSearchGetEvent;
 import com.makaan.network.MakaanNetworkClient;
@@ -11,6 +12,7 @@ import com.makaan.request.saveSearch.SaveNewSearch;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.ResponseError;
 import com.makaan.response.saveSearch.SaveSearch;
+import com.makaan.response.wishlist.WishList;
 import com.makaan.util.AppBus;
 import com.makaan.util.JsonBuilder;
 
@@ -46,6 +48,14 @@ public class SaveSearchService implements MakaanService {
             @Override
             public void onSuccess(Object responseObject) {
                 ArrayList<SaveSearch> saveSearchList = (ArrayList<SaveSearch>) responseObject;
+
+                MasterDataCache.getInstance().clearSavedSearches();
+                for (SaveSearch savedSearch : saveSearchList) {
+                    if (null != savedSearch) {
+                        MasterDataCache.getInstance().addSavedSearch(savedSearch);
+                    }
+                }
+
                 AppBus.getInstance().post(new SaveSearchGetEvent(saveSearchList));
             }
         }, true);

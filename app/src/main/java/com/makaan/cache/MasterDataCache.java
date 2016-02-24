@@ -10,6 +10,7 @@ import com.makaan.response.master.ApiLabel;
 import com.makaan.response.master.MasterFurnishing;
 import com.makaan.response.master.MasterSpecification;
 import com.makaan.response.master.PropertyAmenity;
+import com.makaan.response.saveSearch.SaveSearch;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.response.serp.ListingInfoMap;
 import com.makaan.response.serp.RangeFilter;
@@ -57,6 +58,7 @@ public class MasterDataCache {
     private Map<String, SerpFilterMessageMap> jarvisSerpFilterMessageMap = new HashMap<>();
 
     private HashMap<Long, Long> userWishListMap;
+    private ArrayList<SaveSearch> userSavedSearches;
     private ListingInfoMap listingInfoMap;
     private SparseArray<String> directionApiList = new SparseArray<>();
     private SparseArray<String> ownershipTypeApiList = new SparseArray<>();
@@ -339,6 +341,28 @@ public class MasterDataCache {
         if(null!=userWishListMap) {
             userWishListMap.clear();
         }
+    }
+
+    public void clearSavedSearches(){
+        if(null != userSavedSearches) {
+            userSavedSearches.clear();
+        }
+    }
+
+    public void addSavedSearch(SaveSearch savedSearch) {
+        if(userSavedSearches == null) {
+            userSavedSearches = new ArrayList<>();
+        }
+        userSavedSearches.add(savedSearch);
+    }
+
+    public ArrayList<SaveSearch> getSavedSearch() {
+        if(userSavedSearches != null) {
+            ArrayList<SaveSearch> saveSearches = new ArrayList<>();
+            saveSearches.addAll(userSavedSearches);
+            return saveSearches;
+        }
+        return null;
     }
 
     public boolean isShortlistedProperty(Long id) {

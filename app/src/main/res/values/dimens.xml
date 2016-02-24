@@ -515,11 +515,11 @@
     <dimen name="fragment_dialog_filters_submit_button_text_size">18sp</dimen>
     <dimen name="fragment_dialog_filters_submit_button_empty_view_margin_bottom">5dp</dimen>
 
-    <dimen name="fragment_dialog_filters_back_button_width">36dp</dimen>
-    <dimen name="fragment_dialog_filters_back_button_height">36dp</dimen>
-    <dimen name="fragment_dialog_filters_back_button_margin_left">10dp</dimen>
-    <dimen name="fragment_dialog_filters_back_button_margin_top">6dp</dimen>
-    <dimen name="fragment_dialog_filters_back_button_margin_bottom">6dp</dimen>
+    <dimen name="fragment_dialog_filters_back_button_width">28dp</dimen>
+    <dimen name="fragment_dialog_filters_back_button_height">28dp</dimen>
+    <dimen name="fragment_dialog_filters_back_button_margin_left">12dp</dimen>
+    <dimen name="fragment_dialog_filters_back_button_margin_top">10dp</dimen>
+    <dimen name="fragment_dialog_filters_back_button_margin_bottom">10dp</dimen>
 
     <dimen name="fragment_dialog_filters_filter_text_margin_left">14dp</dimen>
     <dimen name="fragment_dialog_filters_filter_text_margin_top">16dp</dimen>
@@ -1177,11 +1177,11 @@
     <dimen name="neighbor_category_drawable_radius">12dp</dimen>
 
     <!-- Buyer Journey Dimens -->
-    <dimen name="activity_base_buyer_journey_layout_back_button_width">32dp</dimen>
-    <dimen name="activity_base_buyer_journey_layout_back_button_height">32dp</dimen>
-    <dimen name="activity_base_buyer_journey_layout_back_button_margin_top">6dp</dimen>
-    <dimen name="activity_base_buyer_journey_layout_back_button_margin_left">15dp</dimen>
-    <dimen name="activity_base_buyer_journey_layout_back_button_margin_bottom">5dp</dimen>
+    <dimen name="activity_base_buyer_journey_layout_back_button_width">28dp</dimen>
+    <dimen name="activity_base_buyer_journey_layout_back_button_height">28dp</dimen>
+    <dimen name="activity_base_buyer_journey_layout_back_button_margin_top">8dp</dimen>
+    <dimen name="activity_base_buyer_journey_layout_back_button_margin_left">16dp</dimen>
+    <dimen name="activity_base_buyer_journey_layout_back_button_margin_bottom">7dp</dimen>
 
     <dimen name="activity_base_buyer_journey_layout_user_image_view_width">42dp</dimen>
     <dimen name="activity_base_buyer_journey_layout_user_image_view_height">42dp</dimen>
@@ -1297,8 +1297,8 @@
     <dimen name="fragment_set_alerts_stay_informed_text_size">20sp</dimen>
     <dimen name="fragment_set_alerts_stay_informed_text_margin_left">20dp</dimen>
 
-    <dimen name="fragment_set_alerts_back_button_width">36dp</dimen>
-    <dimen name="fragment_set_alerts_back_button_height">36dp</dimen>
+    <dimen name="fragment_set_alerts_back_button_width">28dp</dimen>
+    <dimen name="fragment_set_alerts_back_button_height">28dp</dimen>
 
     <dimen name="fragment_set_alerts_name_edit_text_margin_left">20dp</dimen>
     <dimen name="fragment_set_alerts_name_edit_text_margin_right">20dp</dimen>
