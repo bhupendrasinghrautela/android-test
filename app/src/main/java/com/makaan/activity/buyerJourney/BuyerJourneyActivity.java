@@ -182,23 +182,28 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
         if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this)) {
 //            mLoginButton.setVisibility(View.GONE);
             mLoginButton.setText("logout");
-            UserResponse.UserData userData = CookiePreferences.getUserInfo(this).getData();
-            mUserName.setText(userData.getFirstName());
-            if(!TextUtils.isEmpty(userData.getProfileImageUrl())) {
-                MakaanNetworkClient.getInstance().getImageLoader().get(userData.profileImageUrl, new ImageLoader.ImageListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
+            UserResponse userResponse = CookiePreferences.getUserInfo(this);
+            if(userResponse != null) {
+                UserResponse.UserData userData = userResponse.getData();
+                if(userData != null) {
+                    mUserName.setText(userData.getFirstName());
+                    if (!TextUtils.isEmpty(userData.getProfileImageUrl())) {
+                        MakaanNetworkClient.getInstance().getImageLoader().get(userData.profileImageUrl, new ImageLoader.ImageListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError volleyError) {
 
-                        }
+                                    }
 
-                        @Override
-                        public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                            mProfileImage.setImageBitmap(imageContainer.getBitmap());
-                        }
+                                    @Override
+                                    public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
+                                        mProfileImage.setImageBitmap(imageContainer.getBitmap());
+                                    }
+                                }
+                        );
                     }
-                );
+                    mSubtitle.setVisibility(View.INVISIBLE);
+                }
             }
-            mSubtitle.setVisibility(View.INVISIBLE);
         } else {
             mLoginButton.setText("login");
             mLoginButton.setVisibility(View.VISIBLE);

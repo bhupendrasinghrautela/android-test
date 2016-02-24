@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -98,7 +99,12 @@ public class BuilderListingView extends AbstractCardListingView {
     @Subscribe
     public void onResults(BuilderByIdEvent builderByIdEvent) {
         Builder builder = builderByIdEvent.builder;
-        mBuilderNameTextView.setText(builder.name);
+        if(builder == null) {
+            return;
+        }
+        if(!TextUtils.isEmpty(builder.name)) {
+            mBuilderNameTextView.setText(builder.name);
+        }
         try {
             mBuilderExperienceTextView.setText(StringUtil.getAgeFromTimeStamp(Long.valueOf(builder.establishedDate), Calendar.YEAR));
         } catch(NumberFormatException ex) {
