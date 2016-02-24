@@ -914,6 +914,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             if(SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(item.type)
                     || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(item.type)) {
                 addSearchInWrapLayout(item);
+            } else {
+                mSelectedSearches.add(item);
             }
         }
     }

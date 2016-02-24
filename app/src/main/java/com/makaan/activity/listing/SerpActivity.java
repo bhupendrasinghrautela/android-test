@@ -42,6 +42,7 @@ import com.makaan.request.selector.Selector;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.search.SearchResponseItem;
+import com.makaan.response.search.SearchSuggestionType;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.service.BuilderService;
@@ -328,6 +329,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 }
 
                 mSerpBackStack.addToBackstack(request, mIsMapFragment ? SerpBackStack.TYPE_MAP : SerpBackStack.TYPE_DEFAULT);
+                if(request.getSearches() != null && request.getSearches().size() > 0) {
+                    applySearch(request.getSearches());
+                }
             }
             request.applySelector(mSerpSelector, mFilterGroups);
 
@@ -340,9 +344,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
             if(type == TYPE_GPID) {
                 serpRequest(TYPE_GPID, mSerpSelector, request.getGpId());
-            } else if(type == TYPE_SEARCH) {
+            }/* else if(type == TYPE_SEARCH) {
                 applySearch(request.getSearches());
-            }
+            }*/
         }
         if(type != TYPE_HOME && type != TYPE_GPID) {
             serpRequest(type, mSerpSelector);
@@ -904,10 +908,35 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     @Override
     public String getOverviewText() {
         try {
-            if (mSerpBackStack.peek() != null && mSerpBackStack.peek().selectedLocalitiesAndSuburbs() <= 1
+            /*if (mSerpBackStack.peek() != null && mSerpBackStack.peek().selectedLocalitiesAndSuburbs() <= 1
                     && mListingGetEvent != null && mListingGetEvent.listingData != null && mListingGetEvent.listingData.facets != null) {
                 return String.format("more about %s", mListingGetEvent.listingData.facets.buildDisplayName());
+            }*/
+            ArrayList<SearchResponseItem> selectedSearches = getSelectedSearches();
+
+            if(selectedSearches != null && selectedSearches.size() == 1) {
+                if(SearchSuggestionType.CITY.getValue().equals(selectedSearches.get(0).type)) {
+                    if(!TextUtils.isEmpty(selectedSearches.get(0).city)) {
+                        return String.format("more about %s", selectedSearches.get(0).city.toLowerCase());
+                    }
+                } else {
+                    for(SearchResponseItem search : selectedSearches) {
+                        if(!TextUtils.isEmpty(search.entityName)) {
+                            if(SearchSuggestionType.GOOGLE_PLACE.getValue().equalsIgnoreCase(search.type)) {
+                                return search.entityName.toLowerCase();
+                            } else {
+
+                                if(!TextUtils.isEmpty(selectedSearches.get(0).city)) {
+                                    return String.format("more about %s", String.format("%s, %s", search.entityName.toLowerCase(), selectedSearches.get(0).city.toLowerCase()));
+                                } else {
+                                    return String.format("more about %s", search.entityName.toLowerCase());
+                                }
+                            }
+                        }
+                    }
+                }
             }
+
         }catch (Exception e){}
         return null;
     }

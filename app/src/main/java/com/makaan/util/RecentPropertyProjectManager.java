@@ -152,7 +152,7 @@ public class RecentPropertyProjectManager {
                             this.sellerName = listingDetail.companySeller.company.name;
                         } else if(listingDetail.companySeller.user != null && listingDetail.companySeller.user.fullName != null
                                 && !TextUtils.isEmpty(listingDetail.companySeller.user.fullName)){
-                            this.sellerName = listingDetail.companySeller.company.name;
+                            this.sellerName = listingDetail.companySeller.user.fullName;
                         }
 
                         if(listingDetail.companySeller.company.score != null) {

@@ -97,7 +97,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
             if(mItems == null) {
                 return 0;
             }
-            return mItems.size();
+            return mItems.size() + 1;
         } else if(mRequestType == SerpActivity.TYPE_BUILDER || mRequestType == SerpActivity.TYPE_SELLER) {
             if(mItems == null) {
                 return 1;

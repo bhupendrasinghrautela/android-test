@@ -191,7 +191,9 @@ public class CityOverViewFragment extends MakaanBaseFragment{
                     }
                     final Bitmap image = imageContainer.getBitmap();
                     final Bitmap newImg = Blur.fastblur(mContext, image, 25);
-                    mBlurredCityImage.setImageBitmap(newImg);
+                    if(mBlurredCityImage != null) {
+                        mBlurredCityImage.setImageBitmap(newImg);
+                    }
                 }
 
                 @Override
