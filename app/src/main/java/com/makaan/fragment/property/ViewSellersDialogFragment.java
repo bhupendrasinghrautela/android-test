@@ -24,12 +24,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.lead.LeadFormActivity;
+import com.makaan.activity.listing.PropertyActivity;
+import com.makaan.activity.project.ProjectActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SellerCard;
 import com.makaan.ui.view.CustomRatingBar;
 import com.makaan.util.AppBus;
 import com.makaan.util.ImageUtils;
 import com.pkmmte.view.CircularImageView;
+import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,10 +59,24 @@ public class ViewSellersDialogFragment extends DialogFragment {
     @Bind(R.id.fragment_dialog_contact_sellers_submit_button)
     Button mSubmitButton;
 
+
     @OnCheckedChanged(R.id.fragment_dialog_contact_sellers_select_all_checkbox)
     public void checkChanged(){
         if(selectSeller.isChecked()){
+            Bundle bundle=this.getArguments();
             for(SellerCard sellerCard : mSellerCards){
+                if(getActivity() instanceof ProjectActivity) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                    properties.put(MakaanEventPayload.LABEL, bundle.get(MakaanEventPayload.PROJECT_ID) + "_" + sellerCard.sellerId + "_all");
+                    MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectViewOtherSellers);
+                }
+                else if(getActivity() instanceof PropertyActivity) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                    properties.put(MakaanEventPayload.LABEL, bundle.get(MakaanEventPayload.PROJECT_ID) + "_" + sellerCard.sellerId + "_all");
+                    MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickPropertyViewOtherSellers);
+                }
                 sellerCard.isChecked = true;
             }
             mChecked = mSellerCards.size();
@@ -258,9 +277,27 @@ public class ViewSellersDialogFragment extends DialogFragment {
             }
             holder.mSellerCheckBox.setOnCheckedChangeListener(null);
             holder.mSellerCheckBox.setChecked(sellerCard.isChecked);
+            holder.mSellerCheckBox.setTag(position +1);
             holder.mSellerCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked && getActivity() instanceof ProjectActivity){
+                        Bundle bundle=getArguments();
+                        Properties properties = MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                        properties.put(MakaanEventPayload.LABEL, bundle.get(MakaanEventPayload.PROJECT_ID)+"_"+
+                                mSellerCards.get((int)buttonView.getTag()-1).sellerId+"_"+(int)buttonView.getTag()+"_"+ MakaanTrackerConstants.Label.checked);
+                        MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectViewOtherSellers);
+                    }
+                    else if(getActivity() instanceof PropertyActivity){
+                        Bundle bundle=getArguments();
+                        Properties properties = MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                        properties.put(MakaanEventPayload.LABEL, bundle.get(MakaanEventPayload.PROJECT_ID)+"_"+
+                                mSellerCards.get((int)buttonView.getTag()-1).sellerId+"_"+(int)buttonView.getTag()+"_"+ MakaanTrackerConstants.Label.unChecked);
+                        MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickPropertyViewOtherSellers);
+                    }
+
                     onItemClicked(isChecked);
                     sellerCard.isChecked = isChecked;
                 }

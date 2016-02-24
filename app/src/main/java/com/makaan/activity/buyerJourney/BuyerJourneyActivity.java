@@ -24,6 +24,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.userLogin.UserLoginActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.user.UserLogoutEvent;
 import com.makaan.network.MakaanNetworkClient;
@@ -32,6 +34,7 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.user.UserLogoutService;
 import com.makaan.util.ImageUtils;
 import com.pkmmte.view.CircularImageView;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
@@ -166,6 +169,31 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
     @OnClick(R.id.button_login)
     public void onLoginClick() {
         if("login".equals(mLoginButton.getText().toString())) {
+            String screenName=this.getIntent().getExtras().getString("screenName");
+            switch(screenName){
+                case "Project":{
+                    Properties properties= MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                    properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProject);
+                    break;
+                }
+                case "Listing detail":{
+                    Properties properties=MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                    properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProperty);
+                    break;
+                }
+                case "serp":{
+                    Properties properties=MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+                    properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickSerp);
+                    break;
+                }
+            }
+
             Intent intent = new Intent(this, UserLoginActivity.class);
             startActivityForResult(intent, LOGIN_REQUEST);
         } else {

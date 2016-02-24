@@ -12,16 +12,19 @@
         android:id="@+id/serp_listing_item_builder_background_image_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/builder_serp_placeholder"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#80000000"/>
 
     <LinearLayout
+        android:id="@+id/serp_listing_item_builder_content_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <android.support.v7.widget.CardView
             android:id="@+id/serp_listing_item_builder_image_card_view"

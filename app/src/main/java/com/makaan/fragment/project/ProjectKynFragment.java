@@ -17,12 +17,15 @@ import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.activity.locality.LocalityActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.project.OnSeeOnMapClicked;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.ui.amenity.AmenityCardView;
 import com.makaan.util.AppBus;
 import com.makaan.util.KeyUtil;
+import com.segment.analytics.Properties;
 
 import java.util.List;
 
@@ -71,6 +74,11 @@ public class ProjectKynFragment extends MakaanBaseFragment{
 
     @OnClick(R.id.more_about_locality)
     public void openLocality(){
+        Properties properties = MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+        properties.put(MakaanEventPayload.LABEL, "Know More About "+localityId);
+        MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectOverView);
+
         Intent intent = new Intent(getActivity(), LocalityActivity.class);
         intent.putExtra(KeyUtil.LOCALITY_ID, localityId);
         startActivity(intent);

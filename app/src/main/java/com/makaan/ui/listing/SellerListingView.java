@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -68,6 +69,9 @@ public class SellerListingView extends AbstractCardListingView {
     @Bind(R.id.serp_listing_item_seller_rating_bar)
     RatingBar mSellerRatingBar;
 
+    @Bind(R.id.serp_listing_item_seller_content_linear_layout)
+    LinearLayout mSellerContentLinearLayout;
+
     private Listing mListing;
 
     public SellerListingView(Context context) {
@@ -93,7 +97,7 @@ public class SellerListingView extends AbstractCardListingView {
         }
 
         callback.requestApi(SerpActivity.REQUEST_SELLER_API, "listingCompanyId");
-        this.setVisibility(View.GONE);
+        mSellerContentLinearLayout.setVisibility(View.GONE);
     }
 
     @Subscribe
@@ -214,7 +218,7 @@ public class SellerListingView extends AbstractCardListingView {
 
             mSellerBackgroundImageView.setImageBitmap(newImg);
         }
-        this.setVisibility(View.VISIBLE);
+        mSellerContentLinearLayout.setVisibility(View.VISIBLE);
 
         AppBus.getInstance().unregister(this);
     }

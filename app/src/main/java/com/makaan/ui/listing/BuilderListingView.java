@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -47,6 +48,9 @@ public class BuilderListingView extends AbstractCardListingView {
     @Bind(R.id.serp_listing_item_builder_avg_delay_text_view)
     TextView mBuilderAvgDelayTextView;
 
+    @Bind(R.id.serp_listing_item_builder_content_linear_layout)
+    LinearLayout mSellerContentLinearLayout;
+
 
     public BuilderListingView(Context context) {
         super(context);
@@ -76,10 +80,10 @@ public class BuilderListingView extends AbstractCardListingView {
         }
 
         callback.requestApi(SerpActivity.REQUEST_BUILDER_API, "builderId");
-        this.setVisibility(View.GONE);
+        mSellerContentLinearLayout.setVisibility(View.GONE);
 
         // TODO need to use original data
-        Bitmap bitmap = null;
+        /*Bitmap bitmap = null;
 
         final Drawable image = mContext.getResources().getDrawable(R.drawable.temp_bulding);
         if(image.getIntrinsicWidth() <= 0 || image.getIntrinsicHeight() <= 0) {
@@ -93,7 +97,7 @@ public class BuilderListingView extends AbstractCardListingView {
 
         final Bitmap newImg = Blur.fastblur(mContext, bitmap, 25);
 
-        mBuilderBackgroundImageView.setImageBitmap(newImg);
+        mBuilderBackgroundImageView.setImageBitmap(newImg);*/
     }
 
     @Subscribe
@@ -136,7 +140,7 @@ public class BuilderListingView extends AbstractCardListingView {
             });
         }
 
-        this.setVisibility(View.VISIBLE);
+        mSellerContentLinearLayout.setVisibility(View.VISIBLE);
         AppBus.getInstance().unregister(this);
     }
 }

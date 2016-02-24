@@ -21,6 +21,7 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -29,6 +30,8 @@ import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.locality.LocalityActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.constants.ImageConstants;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.image.ImagesGetEvent;
@@ -69,6 +72,7 @@ import com.makaan.util.KeyUtil;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
 import com.pkmmte.view.CircularImageView;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
 
@@ -160,6 +164,11 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
 
     @OnClick(R.id.more_about_locality)
     public void openLocality(){
+        Properties properties = MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.localityDetails);
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+        MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyOverview);
+
         Intent intent = new Intent(getActivity(), LocalityActivity.class);
         intent.putExtra(KeyUtil.LOCALITY_ID,mListingDetail.property.project.localityId);
         startActivity(intent);
@@ -167,9 +176,18 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
 
     @OnClick(R.id.all_seller_text)
     public void openAllSellerDialog(){
+        Properties properties = MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.sellerDetails);
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+        MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyOverview);
+
         if(mSellerCards!=null) {
             FragmentTransaction ft = this.getFragmentManager().beginTransaction();
             ViewSellersDialogFragment viewSellersDialogFragment = new ViewSellersDialogFragment();
+            Bundle args = getArguments();
+            Bundle bundle=new Bundle();
+            bundle.putString(MakaanEventPayload.PROJECT_ID, String.valueOf(args.getLong(KeyUtil.LISTING_ID)));
+            viewSellersDialogFragment.setArguments(bundle);
             viewSellersDialogFragment.bindView(mSellerCards);
             viewSellersDialogFragment.show(ft, "allSellers");
         }
@@ -177,6 +195,11 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
 
     @OnClick(R.id.contact_seller)
     public void openContactSeller(){
+        Properties properties = MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.contactSeller);
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+        MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyOverview);
+
         if(mListingDetail != null &&
                 mListingDetail.companySeller != null &&
                 mListingDetail.companySeller.user !=null) {
@@ -193,6 +216,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
                 if(user.contactNumbers!=null && !user.contactNumbers.isEmpty()) {
                     intent.putExtra("phone", user.contactNumbers.get(0).contactNumber);
                 }
+                intent.putExtra("source",PropertyDetailFragment.class.getName());
                 intent.putExtra("id",user.id);
                 getActivity().startActivity(intent);
             } catch (NullPointerException e) {

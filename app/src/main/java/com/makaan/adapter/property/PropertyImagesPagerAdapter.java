@@ -4,13 +4,20 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.makaan.R;
+import com.makaan.activity.listing.PropertyActivity;
+import com.makaan.activity.listing.TotalImagesCount;
+import com.makaan.activity.project.ProjectActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.response.image.Image;
 import com.makaan.ui.property.PropertyImageCardView;
+import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +34,8 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
     private Double price;
     private Double size;
     private PropertyImageCardView mCurrentPropertyImageCardView;
+    private int previousPosition=-1;
+    private int mTotalCount=0;
 
     public PropertyImagesPagerAdapter(final ViewPager pager,Context context) {
         this.mContext = context;
@@ -34,16 +43,63 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
         pager.setOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+               // Log.e("position ",""+position);
             }
 
             @Override
             public void onPageSelected(int position) {
+                mTotalCount=mTotalCount+1;
+                TotalImagesCount totalImagesCount=(TotalImagesCount)mContext;
+                totalImagesCount.ImageCount(mTotalCount);
+                Properties properties = MakaanEventPayload.beginBatch();
+
+                if(mContext instanceof PropertyActivity) {
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                }
+                else if(mContext instanceof ProjectActivity){
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                }
+
                 if (position == 0) {
+                    //left
+                    if(mContext instanceof PropertyActivity) {
+                        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.left);
+                        MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyImages);
+                    }
                     pager.setCurrentItem(mCount - 2, false);
                 } else if (position == mCount - 1) {
+                    //right
+                    if(mContext instanceof ProjectActivity) {
+                        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.right);
+                        MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickProjectImages);
+                    }
                     pager.setCurrentItem(1, false);
                 }
+                else{
+                    if(previousPosition!=-1 && previousPosition<position){
+                        //right
+                        if(mContext instanceof ProjectActivity) {
+                            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.left);
+                            MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickProjectImages);
+                        }
+                        else if(mContext instanceof PropertyActivity) {
+                            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.left);
+                            MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyImages);
+                        }
+                    }
+                    else if(previousPosition!=-1 && previousPosition>position){
+                        //left
+                        if(mContext instanceof ProjectActivity) {
+                            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.right);
+                            MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickProjectImages);
+                        }
+                        else if(mContext instanceof PropertyActivity) {
+                            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.right);
+                            MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyImages);
+                        }
+                    }
+                }
+                previousPosition=position;
             }
 
             @Override

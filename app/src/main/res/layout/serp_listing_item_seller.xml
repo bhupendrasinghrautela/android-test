@@ -12,16 +12,19 @@
         android:id="@+id/serp_listing_item_seller_background_image_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/serp_listing_item_seller_max_height"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/seller_serp_placeholder"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#80000000"/>
 
     <LinearLayout
+        android:id="@+id/serp_listing_item_seller_content_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <com.pkmmte.view.CircularImageView
             android:id="@+id/serp_listing_item_seller_image_view"

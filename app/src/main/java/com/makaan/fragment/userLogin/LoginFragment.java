@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.makaan.R;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.user.UserLoginEvent;
 import com.makaan.response.login.OnSignUpSelectedListener;
@@ -28,6 +30,7 @@ import com.makaan.service.WishListService;
 import com.makaan.service.user.UserLoginService;
 import com.makaan.util.AppBus;
 import com.makaan.util.CommonUtil;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
@@ -135,10 +138,16 @@ public class LoginFragment extends Fragment {
 
     @Subscribe
     public void loginResults(UserLoginEvent userLoginEvent){
+        Properties properties= MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY , MakaanTrackerConstants.Category.userLogin);
         if(userLoginEvent.error!=null){
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.loginWithEmailFail);
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.login);
             mOnUserLoginListener.onUserLoginError(userLoginEvent.error);
         }
         else {
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.loginWithEmailSuccess);
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.login);
             String str = new Gson().toJson(userLoginEvent.userResponse);
             mOnUserLoginListener.onUserLoginSuccess(userLoginEvent.userResponse , str);
         }

@@ -7,10 +7,13 @@ import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.city.CityByIdEvent;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.PageTag;
 import com.makaan.service.CityService;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 /**
@@ -62,6 +65,10 @@ public class CityActivity extends MakaanFragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.backToHome);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickLocality);
                 finish();
                 break;
         }
@@ -81,5 +88,14 @@ public class CityActivity extends MakaanFragmentActivity {
     @Subscribe
     public void onIncomingMessage(IncomingMessageEvent event){
         animateJarvisHead();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Properties properties = MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.backToHome);
+        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickLocality);
+        super.onBackPressed();
     }
 }

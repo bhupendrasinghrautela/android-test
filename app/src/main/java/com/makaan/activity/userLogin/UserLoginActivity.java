@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.HomeActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.fragment.userLogin.ReplaceFragment;
 import com.makaan.response.ResponseError;
@@ -22,6 +24,7 @@ import com.makaan.service.WishListService;
 import com.makaan.ui.CommonProgressDialog;
 import com.makaan.util.AppBus;
 import com.makaan.util.Preference;
+import com.segment.analytics.Properties;
 
 
 /**
@@ -94,6 +97,11 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
 
     @Override
     public void onUserRegistrationSuccess(UserResponse userResponse, String response) {
+        Properties properties= MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY , MakaanTrackerConstants.Category.userLogin);
+        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.registrationSuccess);
+        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.login);
+
         if(mProgressDialog !=null)
             mProgressDialog.dismissDialog();
         CookiePreferences.setUserInfo(this, response);
@@ -105,6 +113,10 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
 
     @Override
     public void onUserRegistrationError(ResponseError error) {
+        Properties properties= MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY , MakaanTrackerConstants.Category.userLogin);
+        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.registrationFailed);
+        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.login);
         if(mProgressDialog !=null)
             mProgressDialog.dismissDialog();
         Toast.makeText(this,error.msg,Toast.LENGTH_SHORT).show();

@@ -1,6 +1,7 @@
 package com.makaan.adapter.listing;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,9 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.makaan.R;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.event.MakaanEvent;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.image.Image;
 import com.makaan.response.serp.AbstractFilterValue;
@@ -22,6 +26,7 @@ import com.makaan.response.serp.RangeFilter;
 import com.makaan.response.serp.TermFilter;
 import com.makaan.ui.pyr.RangeSeekBar;
 import com.makaan.util.StringUtil;
+import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -208,6 +213,8 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
     // Same logic should be updated in SetAlertsDialogFragment::createSelector() as well
     public void applyFilters(Selector selector, ArrayList<FilterGroup> filterGroups) {
         FilterGroup currentGroup = clearFilterGroup(filterGroups);
+        Properties properties= MakaanEventPayload.beginBatch();
+        //properties.putCategory(MakaanTrackerConstants.Category.propertyFilter.getValue());
         if(type == SEEKBAR) {
             selector.removeRange(rangeValues.get(0).fieldName);
 
@@ -215,6 +222,16 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
             if(filter.selectedMinValue > filter.minValue || filter.selectedMaxValue < filter.maxValue) {
                 if(currentGroup != null) {
                     currentGroup.isSelected = true;
+                }
+
+                if(currentGroup!=null && currentGroup.internalName.equalsIgnoreCase("i_budget")) {
+                    properties.put(MakaanEventPayload.MIN_BUDGET, filter.selectedMinValue);
+                    properties.put(MakaanEventPayload.MAX_BUDGET, filter.selectedMaxValue);
+                } else if(currentGroup!=null && currentGroup.internalName.equalsIgnoreCase("i_sq_ft")) {
+                    properties.put(MakaanEventPayload.MIN_AREA, filter.selectedMinValue);
+                    properties.put(MakaanEventPayload.MAX_AREA, filter.selectedMaxValue);
+                } else {
+                    properties.put(filterGroup.displayName, filter.selectedMinValue + "-" + filter.selectedMaxValue);
                 }
                 selector.range(rangeValues.get(0).fieldName, rangeValues.get(0).selectedMinValue, rangeValues.get(0).selectedMaxValue);
             }
@@ -233,8 +250,22 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                             }
                         }
                         currentGroup.isSelected = false;
+        // both
+                        if(currentGroup!=null && currentGroup.internalName.equalsIgnoreCase("i_new_resale")){
+                            properties.put(MakaanEventPayload.NEW_RESALE, filter.displayName);
+                        } else {
+                            properties.put(filterGroup.displayName, filter.displayName);
+                        }
                     } else {
                         selector.term(filter.fieldName, filter.value);
+                        // rest
+
+
+                        if(currentGroup!=null && currentGroup.internalName.equalsIgnoreCase("i_new_resale")){
+                            properties.put(MakaanEventPayload.NEW_RESALE, filter.displayName);
+                        } else {
+                            properties.put(filterGroup.displayName, filter.displayName);
+                        }
                     }
                 }
             }
@@ -292,6 +323,14 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                         } else {
                             selector.range(filter.fieldName, filter.minValue, filter.maxValue);
                         }
+
+                        if(currentGroup!=null && currentGroup.internalName.equalsIgnoreCase("i_possession in")){
+                            properties.put(MakaanEventPayload.UNDER_CONSTRUCTION, filter.displayName);
+                        } else {
+                            properties.put(filterGroup.displayName, filter.displayName);
+                        }
+
+
                     }
                 }
             }
@@ -333,10 +372,17 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                             selector.term(filter.maxFieldName, String.valueOf(filter.maxValue));
                         }
                     }
+                    if(currentGroup!=null && currentGroup.internalName.equalsIgnoreCase("i_ready_to_move")){
+                        properties.put(MakaanEventPayload.READY_TO_MOVE, filter.displayName);
+                    } else {
+                        properties.put(filterGroup.displayName, filter.displayName);
+                    }
                 }
             }
         } else {
             selector.removeTerm(termValues.get(0).fieldName);
+            StringBuilder builder = new StringBuilder();
+            String separator = "";
 
             for(TermFilter filter : termValues) {
                 if(filter.selected) {
@@ -353,12 +399,32 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                     } else {
                         selector.term(filter.fieldName, filter.value);
                     }
-
-
+                    builder.append(separator + filter.displayName);
+                    separator = ",";
+                }
+            }
+            if(!TextUtils.isEmpty(builder.toString())) {
+                if(currentGroup.internalName.equalsIgnoreCase("i_beds")) {
+                    properties.put(MakaanEventPayload.BEDROOM, builder.toString());
+                }
+                else if(currentGroup.internalName.equalsIgnoreCase("i_property_type")){
+                    properties.put(MakaanEventPayload.PROPERTY_TYPE, builder.toString());
+                }
+                else if(currentGroup.internalName.equalsIgnoreCase("i_bathroom")){
+                    properties.put(MakaanEventPayload.BATHROOM, builder.toString());
+                }
+                else if(currentGroup.internalName.equalsIgnoreCase("i_listed_by")){
+                    properties.put(MakaanEventPayload.LISTED_BY, builder.toString());
+                }
+                else if(currentGroup.internalName.equalsIgnoreCase("i_m_plus")){
+                    properties.put(MakaanEventPayload.MPLUS, builder.toString());
+                }
+                else{
+                    properties.put(filterGroup.displayName, builder.toString());
                 }
             }
         }
-        if(currentGroup != null) {
+        if (currentGroup != null) {
             applyFilterGroup(currentGroup);
         } else {
             applyFilterGroup(filterGroups);

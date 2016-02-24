@@ -2,9 +2,14 @@ package com.makaan.activity.project;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
+import com.makaan.activity.listing.TotalImagesCount;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.project.OnSeeOnMapClicked;
 import com.makaan.event.project.ProjectByIdEvent;
 import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
@@ -12,18 +17,21 @@ import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.response.project.Project;
 import com.makaan.response.search.event.SearchResultEvent;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 /**
  * Created by tusharchaudhary on 1/26/16.
  */
-public class ProjectActivity extends MakaanBaseSearchActivity {
+public class ProjectActivity extends MakaanBaseSearchActivity implements TotalImagesCount {
 
     public static final String PROJECT_ID = "projectId";
     private Long projectId;
     private ProjectFragment projectFragment;
     private NeighborhoodMapFragment mNeighborhoodMapFragment;
     private NeighborhoodMapFragment.EntityInfo mEntityInfo;
+    private int mTotalImagesSeen=0;
+
 
     @Override
     protected int getContentViewId() {
@@ -104,5 +112,20 @@ public class ProjectActivity extends MakaanBaseSearchActivity {
     @Subscribe
     public void onIncomingMessage(IncomingMessageEvent event){
         animateJarvisHead();
+    }
+
+    @Override
+    public void ImageCount(int count) {
+        mTotalImagesSeen=count;
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Properties properties = MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+        properties.put(MakaanEventPayload.LABEL, mTotalImagesSeen);
+        MakaanEventPayload.endBatch(getApplicationContext(), MakaanTrackerConstants.Action.clickPropertyImages);
     }
 }

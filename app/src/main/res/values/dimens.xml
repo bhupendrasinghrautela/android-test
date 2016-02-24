@@ -458,10 +458,10 @@
     <dimen name="activity_search_base_layout_search_bar_back_layout_padding_left">10dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_back_layout_padding_right">10dp</dimen>
 \
-    <dimen name="activity_search_base_layout_search_bar_back_button_height">36dp</dimen>
-    <dimen name="activity_search_base_layout_search_bar_back_button_width">36dp</dimen>
-    <dimen name="activity_search_base_layout_search_bar_back_button_margin_top">6dp</dimen>
-    <dimen name="activity_search_base_layout_search_bar_back_button_margin_bottom">6dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_back_button_height">32dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_back_button_width">32dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_back_button_margin_top">8dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_back_button_margin_bottom">8dp</dimen>
 
     <dimen name="activity_search_base_layout_search_bar_builder_image_view_width">38dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_builder_image_view_height">38dp</dimen>
@@ -502,7 +502,7 @@
     <dimen name="fragment_filters_relevance_image_view_margin_bottom">13dp</dimen>
 
     <dimen name="fragment_filters_relevance_text_view_margin_left">2dp</dimen>
-    <dimen name="fragment_filters_relevance_text_view_margin_top">15dp</dimen>
+    <dimen name="fragment_filters_relevance_text_view_margin_top">17dp</dimen>
     <dimen name="fragment_filters_relevance_text_view_margin_right">27dp</dimen>
     <dimen name="fragment_filters_relevance_text_view_text_size">16sp</dimen>
 

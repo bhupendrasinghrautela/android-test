@@ -2,6 +2,7 @@ package com.makaan.activity.listing;
 
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,8 @@ import com.makaan.activity.city.CityActivity;
 import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.project.ProjectActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.PreferenceConstants;
 import com.makaan.event.locality.GpByIdEvent;
@@ -42,6 +45,7 @@ import com.makaan.request.selector.Selector;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.search.SearchResponseItem;
+import com.makaan.response.search.SearchSuggestionType;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.service.BuilderService;
@@ -53,6 +57,7 @@ import com.makaan.ui.listing.RelevancePopupWindowController;
 import com.makaan.ui.view.MPlusBadgePopupDialog;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.Preference;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -328,6 +333,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 }
 
                 mSerpBackStack.addToBackstack(request, mIsMapFragment ? SerpBackStack.TYPE_MAP : SerpBackStack.TYPE_DEFAULT);
+                if(request.getSearches() != null && request.getSearches().size() > 0) {
+                    applySearch(request.getSearches());
+                }
             }
             request.applySelector(mSerpSelector, mFilterGroups);
 
@@ -340,9 +348,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
             if(type == TYPE_GPID) {
                 serpRequest(TYPE_GPID, mSerpSelector, request.getGpId());
-            } else if(type == TYPE_SEARCH) {
+            }/* else if(type == TYPE_SEARCH) {
                 applySearch(request.getSearches());
-            }
+            }*/
         }
         if(type != TYPE_HOME && type != TYPE_GPID) {
             serpRequest(type, mSerpSelector);
@@ -610,6 +618,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @OnClick(R.id.fragment_filters_relevance_relative_layout)
     public void onRelevancePressed(View view) {
+        final Context context =this;
         new RelevancePopupWindowController().showRelevancePopupWindow(this, mRelevanceRelativeLayout,
                 new RelevancePopupWindowController.RelevancePopupWindowCallback() {
                     @Override
@@ -619,6 +628,19 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
                     @Override
                     public void sortSelected(String sort, String fieldName, String value, int i) {
+                        Properties properties = MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                        if(fieldName.equalsIgnoreCase(MakaanEventPayload.PRICE)){
+                            properties.put(MakaanEventPayload.LABEL, sort);
+                        }
+                        else if(sort.equalsIgnoreCase(MakaanEventPayload.SELLER_RATING)){
+                            properties.put(MakaanEventPayload.LABEL, sort);
+                        }
+                        else if(sort.equalsIgnoreCase(MakaanEventPayload.DATE_POSTED)){
+                            properties.put(MakaanEventPayload.LABEL, sort);
+                        }
+                        MakaanEventPayload.endBatch(context, MakaanTrackerConstants.Action.sortProperty);
+
                         mSortTextView.setText(sort);
                         mSerpSelector.sort(fieldName, value);
                         mSelectedSortIndex = i;
@@ -672,6 +694,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     @OnClick(R.id.fragment_filters_map_image_view)
     public void onMapViewPressed(View view) {
         if(mIsMapFragment) {
+            Properties properties =MakaanEventPayload.beginBatch();
+            properties.putValue(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.listView);
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.searchMap);
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickSerpViewSelection);
+
             mSerpBackStack.addToBackstack(mSerpBackStack.peek(), SerpBackStack.TYPE_DEFAULT);
             mMapImageView.setImageResource(R.drawable.map_icon);
             setSearchBarCollapsible(true);
@@ -682,6 +709,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE), mListingCount);
             initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
         } else {
+            Properties properties =MakaanEventPayload.beginBatch();
+            properties.putValue(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.map);
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.searchMap);
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickSerpViewSelection);
+
             if (mListingGetEvent != null) {
                 mSerpBackStack.addToBackstack(mSerpBackStack.peek(), SerpBackStack.TYPE_MAP);
                 if(mMapFragment == null) {
@@ -716,6 +748,16 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     @Override
     public String getScreenName() {
         return SCREEN_NAME;
+    }
+
+    protected String childScreenName() {
+        if((mSerpRequestType & MASK_LISTING_TYPE) == TYPE_SELLER) {
+            return "seller";
+        } else if((mSerpRequestType & MASK_LISTING_TYPE) == TYPE_BUILDER) {
+            return "builder";
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -855,6 +897,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             startActivity(intent);
         } else if(type == REQUEST_LEAD_FORM) {
             Intent intent = new Intent(this, LeadFormActivity.class);
+            intent.putExtra("source",SerpActivity.class.getName());
             intent.putExtras(bundle);
             startActivityForResult(intent, LeadFormActivity.LEAD_DROP_REQUEST);
         } else if(type == REQUEST_SET_ALERT) {
@@ -904,10 +947,35 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     @Override
     public String getOverviewText() {
         try {
-            if (mSerpBackStack.peek() != null && mSerpBackStack.peek().selectedLocalitiesAndSuburbs() <= 1
+            /*if (mSerpBackStack.peek() != null && mSerpBackStack.peek().selectedLocalitiesAndSuburbs() <= 1
                     && mListingGetEvent != null && mListingGetEvent.listingData != null && mListingGetEvent.listingData.facets != null) {
                 return String.format("more about %s", mListingGetEvent.listingData.facets.buildDisplayName());
+            }*/
+            ArrayList<SearchResponseItem> selectedSearches = getSelectedSearches();
+
+            if(selectedSearches != null && selectedSearches.size() == 1) {
+                if(SearchSuggestionType.CITY.getValue().equals(selectedSearches.get(0).type)) {
+                    if(!TextUtils.isEmpty(selectedSearches.get(0).city)) {
+                        return String.format("more about %s", selectedSearches.get(0).city.toLowerCase());
+                    }
+                } else {
+                    for(SearchResponseItem search : selectedSearches) {
+                        if(!TextUtils.isEmpty(search.entityName)) {
+                            if(SearchSuggestionType.GOOGLE_PLACE.getValue().equalsIgnoreCase(search.type)) {
+                                return search.entityName.toLowerCase();
+                            } else {
+
+                                if(!TextUtils.isEmpty(selectedSearches.get(0).city)) {
+                                    return String.format("more about %s", String.format("%s, %s", search.entityName.toLowerCase(), selectedSearches.get(0).city.toLowerCase()));
+                                } else {
+                                    return String.format("more about %s", search.entityName.toLowerCase());
+                                }
+                            }
+                        }
+                    }
+                }
             }
+
         }catch (Exception e){}
         return null;
     }
