@@ -24,6 +24,8 @@ import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.project.ProjectActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.jarvis.analytics.AnalyticsConstants;
 import com.makaan.jarvis.analytics.AnalyticsService;
 import com.makaan.jarvis.event.PageTag;
@@ -38,6 +40,7 @@ import com.makaan.response.project.Project;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.JsonBuilder;
 import com.makaan.util.JsonParser;
+import com.segment.analytics.Properties;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -227,6 +230,44 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     @Nullable
     @OnClick(R.id.jarvis_head)
     public void onJarvisClicked() {
+        switch(getScreenName()){
+            case "Project":{
+                Properties properties= MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.chat);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProject);
+                break;
+            }
+            case "Listing detail":{
+                Properties properties=MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.chat);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProperty);
+                break;
+            }
+            case "serp":{
+                Properties properties=MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.chat);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickSerp);
+                break;
+            }
+            case "City":{
+                Properties properties=MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerCity);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.chat);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickCity);
+                break;
+            }
+            case "Locality":{
+                Properties properties=MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.chat);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickLocality);
+                break;
+            }
+
+        }
         Intent intent = new Intent(this, ChatActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);

@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.agents.callback.TopAgentsCallback;
 import com.makaan.event.locality.OnNearByLocalityClickEvent;
 import com.makaan.event.locality.OnTopAgentClickEvent;
@@ -32,6 +34,8 @@ import com.makaan.service.AgentService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.AppBus;
 import com.makaan.util.DateUtil;
+import com.segment.analytics.Properties;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -84,6 +88,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         mLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnScrollListener(new scrollChange());
         if(this.cardType == CardType.TOPAGENTS)
             seperatorView.setVisibility(View.GONE);
         initSwitch();
@@ -91,7 +96,8 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
 
     private void initSwitch() {
         if(switchPrimarySecondary!=null)
-        switchPrimarySecondary.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        switchPrimarySecondary.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 ((AgentService) MakaanServiceFactory.getInstance().getService(AgentService.class)).getTopAgentsForLocality(citId, localitId, 10, isChecked, new TopAgentsCallback() {
@@ -212,12 +218,36 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         if(nearByLocalities!=null){
             switch (cardType){
                 case LOCALITY:
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    int pos=position+1;
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+                    properties.put(MakaanEventPayload.LABEL, nearByLocalities.get(position).id+"_"+pos);
+                    MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickLocalityNearbyLocalities);
+
                     AppBus.getInstance().post(new OnNearByLocalityClickEvent(nearByLocalities.get(position).id));
                     break;
                 case TOPAGENTS:
+                    Properties property = MakaanEventPayload.beginBatch();
+                    int posn=position+1;
+                    if(switchPrimarySecondary.isChecked()) {
+                        property.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+                        property.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.rent.getValue()+"_"+nearByLocalities.get(position).id + "_" + posn);
+                        MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickLocalityTopSellers);
+                    }
+                    else{
+                        property.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+                        property.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.buy.getValue()+"_"+nearByLocalities.get(position).id + "_" + posn);
+                        MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickLocalityTopSellers);
+                    }
                     AppBus.getInstance().post(new OnTopAgentClickEvent(nearByLocalities.get(position).id));
                     break;
                 case TOPBUILDERS:
+                    Properties propert = MakaanEventPayload.beginBatch();
+                    int posin=position+1;
+                    propert.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+                    propert.put(MakaanEventPayload.LABEL, nearByLocalities.get(position).id+"_"+posin);
+                    MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickLocalityTopBuilders);
+
                     AppBus.getInstance().post(new OnTopBuilderClickEvent(nearByLocalities.get(position).id));
                     break;
             }
@@ -355,6 +385,73 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
 
     public enum CardType{
         LOCALITY, TOPAGENTS, TOPBUILDERS
+    }
+
+    private class scrollChange extends RecyclerView.OnScrollListener {
+        int flingCoordinate;
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if(newState==RecyclerView.SCROLL_STATE_IDLE){
+                switch (cardType){
+                    case LOCALITY:{
+                        if(flingCoordinate>0){
+                            Properties properties = MakaanEventPayload.beginBatch();
+                            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+                            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.right);
+                            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickLocalityNearbyLocalities);
+                        }
+                        else if(flingCoordinate<0){
+                            Properties properties = MakaanEventPayload.beginBatch();
+                            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+                            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.left);
+                            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickLocalityNearbyLocalities);
+                        }
+                        break;
+                    }
+                    case TOPAGENTS:{
+                        if(flingCoordinate>0){
+                            Properties properties = MakaanEventPayload.beginBatch();
+                            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+                            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.right);
+                            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickLocalityTopSellers);
+                        }
+                        else if(flingCoordinate<0){
+                            Properties properties = MakaanEventPayload.beginBatch();
+                            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+                            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.left);
+                            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickLocalityTopSellers);
+                        }
+                        break;
+                    }
+                    case TOPBUILDERS:{
+                        if(flingCoordinate>0){
+                            Properties properties = MakaanEventPayload.beginBatch();
+                            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.right);
+                            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickLocalityTopBuilders);
+                        }
+                        else if(flingCoordinate<0){
+                            Properties properties = MakaanEventPayload.beginBatch();
+                            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.left);
+                            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickLocalityTopBuilders);
+                        }
+                        break;
+                    }
+
+                }
+
+            }
+
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            flingCoordinate=dx;
+        }
     }
 
 }

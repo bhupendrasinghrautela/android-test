@@ -29,13 +29,17 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.gms.location.LocationListener;
+import com.facebook.FacebookRequestError;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
 import com.makaan.adapter.listing.SearchAdapter;
 import com.makaan.adapter.listing.SelectedSearchAdapter;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanEventTracker;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.Session;
@@ -380,8 +384,200 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         }
     }
 
+    protected String childScreenName() {
+        return null;
+    }
+
     @Override
     public void onSearchItemClick(SearchResponseItem searchResponseItem) {
+
+        if(mSerpContext==SERP_CONTEXT_BUY){
+
+            switch(getScreenName()){
+                case "Home":{
+
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerHome);
+                    properties.put(MakaanEventPayload.KEYWORD, mSearchEditText.getText().toString());
+                    properties.put(MakaanEventPayload.CHARACTERS_LENGTH, String.valueOf(mSearchEditText.getText().toString().length()));
+                    properties.put(MakaanEventPayload.LABEL,
+                            properties.get(MakaanEventPayload.LABEL) + "_" + mSearchEditText.getText().toString());
+                    String rank=(String.valueOf(properties.get(MakaanEventPayload.SUGGESTION_POSITION)));
+
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchHomeBuy);
+                    Properties property = MakaanEventPayload.beginBatch();
+
+                    property.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerHome);
+                    property.put(MakaanEventPayload.LABEL, String.valueOf(mSearchEditText.getText().toString().length()));
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchHomeBuyLength);
+
+                    Properties propert = MakaanEventPayload.beginBatch();
+                    propert.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerHome);
+                    propert.put(MakaanEventPayload.LABEL,rank);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchHomeBuyRank);
+                    break;
+                }
+                case "Project":{
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                    properties.put(MakaanEventPayload.KEYWORD, mSearchEditText.getText().toString());
+                    properties.put(MakaanEventPayload.CHARACTERS_LENGTH, String.valueOf(mSearchEditText.getText().toString().length()));
+                    properties.put(MakaanEventPayload.LABEL,
+                            properties.get(MakaanEventPayload.LABEL) + "_" + mSearchEditText.getText().toString());
+                    String rank=(String.valueOf(properties.get(MakaanEventPayload.SUGGESTION_POSITION)));
+
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchProjectBuy);
+                    Properties property = MakaanEventPayload.beginBatch();
+
+                    property.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                    property.put(MakaanEventPayload.LABEL, String.valueOf(mSearchEditText.getText().toString().length()));
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchProjectBuyLength);
+
+                    Properties propert = MakaanEventPayload.beginBatch();
+                    propert.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                    propert.put(MakaanEventPayload.LABEL,rank);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchProjectBuyRank);
+                    break;
+                }
+                case "Listing detail":{
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                    properties.put(MakaanEventPayload.KEYWORD, mSearchEditText.getText().toString());
+                    properties.put(MakaanEventPayload.CHARACTERS_LENGTH, String.valueOf(mSearchEditText.getText().toString().length()));
+                    properties.put(MakaanEventPayload.LABEL,
+                            properties.get(MakaanEventPayload.LABEL) + "_" + mSearchEditText.getText().toString());
+                    String rank=(String.valueOf(properties.get(MakaanEventPayload.SUGGESTION_POSITION)));
+
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchPropertyBuy);
+                    Properties property = MakaanEventPayload.beginBatch();
+                    property.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                    property.put(MakaanEventPayload.LABEL, String.valueOf(mSearchEditText.getText().toString().length()));
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchPropertyBuyLength);
+
+                    Properties propert = MakaanEventPayload.beginBatch();
+                    propert.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                    propert.put(MakaanEventPayload.LABEL,rank);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchPropertyBuyRank);
+                    break;
+                }
+                case "serp":{
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+                    properties.put(MakaanEventPayload.KEYWORD, mSearchEditText.getText().toString());
+                    properties.put(MakaanEventPayload.CHARACTERS_LENGTH, String.valueOf(mSearchEditText.getText().toString().length()));
+                    properties.put(MakaanEventPayload.LABEL,
+                            properties.get(MakaanEventPayload.LABEL) + "_" + mSearchEditText.getText().toString());
+                    String rank=(String.valueOf(properties.get(MakaanEventPayload.SUGGESTION_POSITION)));
+
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchSerpBuy);
+                    Properties property = MakaanEventPayload.beginBatch();
+                    property.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+                    property.put(MakaanEventPayload.LABEL, String.valueOf(mSearchEditText.getText().toString().length()));
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchSerpBuyLength);
+
+                    Properties propert = MakaanEventPayload.beginBatch();
+                    propert.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+                    propert.put(MakaanEventPayload.LABEL,rank);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchSerpBuyRank);
+                    String s = childScreenName();
+                    break;
+                }
+            }
+
+
+        }
+        else if(mSerpContext==SERP_CONTEXT_RENT)  {
+
+            switch(getScreenName()){
+                case "Home":{
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerHome);
+                    properties.put(MakaanEventPayload.KEYWORD, mSearchEditText.getText().toString());
+                    properties.put(MakaanEventPayload.CHARACTERS_LENGTH, String.valueOf(mSearchEditText.getText().toString().length()));
+                    properties.put(MakaanEventPayload.LABEL,
+                            properties.get(MakaanEventPayload.LABEL) + "_" + mSearchEditText.getText().toString());
+                    String rank=(String.valueOf(properties.get(MakaanEventPayload.SUGGESTION_POSITION)));
+
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchHomeRent);
+                    Properties property = MakaanEventPayload.beginBatch();
+                    property.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerHome);
+                    property.put(MakaanEventPayload.LABEL,String.valueOf(mSearchEditText.getText().toString().length()));
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchHomeRentLength);
+
+                    Properties propert = MakaanEventPayload.beginBatch();
+                    propert.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerHome);
+                    propert.put(MakaanEventPayload.LABEL,rank);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchHomeRentRank);
+                    break;
+                }
+                case "Project":{
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                    properties.put(MakaanEventPayload.KEYWORD, mSearchEditText.getText().toString());
+                    properties.put(MakaanEventPayload.CHARACTERS_LENGTH, String.valueOf(mSearchEditText.getText().toString().length()));
+                    properties.put(MakaanEventPayload.LABEL,
+                            properties.get(MakaanEventPayload.LABEL) + "_" + mSearchEditText.getText().toString());
+                    String rank=(String.valueOf(properties.get(MakaanEventPayload.SUGGESTION_POSITION)));
+
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchProjectRent);
+                    Properties property = MakaanEventPayload.beginBatch();
+                    property.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                    property.put(MakaanEventPayload.LABEL,String.valueOf(mSearchEditText.getText().toString().length()));
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchProjectRentLength);
+
+                    Properties propert = MakaanEventPayload.beginBatch();
+                    propert.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                    propert.put(MakaanEventPayload.LABEL,rank);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchProjectRentRank);
+                    break;
+                }
+                case "Listing detail":{
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                    properties.put(MakaanEventPayload.KEYWORD, mSearchEditText.getText().toString());
+                    properties.put(MakaanEventPayload.CHARACTERS_LENGTH, String.valueOf(mSearchEditText.getText().toString().length()));
+                    properties.put(MakaanEventPayload.LABEL,
+                            properties.get(MakaanEventPayload.LABEL) + "_" + mSearchEditText.getText().toString());
+                    String rank=(String.valueOf(properties.get(MakaanEventPayload.SUGGESTION_POSITION)));
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchPropertyRent);
+
+                    Properties property = MakaanEventPayload.beginBatch();
+                    property.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                    property.put(MakaanEventPayload.LABEL,String.valueOf(mSearchEditText.getText().toString().length()));
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchPropertyRentLength);
+
+                    Properties propert = MakaanEventPayload.beginBatch();
+                    propert.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                    propert.put(MakaanEventPayload.LABEL,rank);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchPropertyRentRank);
+                    break;
+                }
+                case "serp":{
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+                    properties.put(MakaanEventPayload.KEYWORD, mSearchEditText.getText().toString());
+                    properties.put(MakaanEventPayload.CHARACTERS_LENGTH, String.valueOf(mSearchEditText.getText().toString().length()));
+                    properties.put(MakaanEventPayload.LABEL,
+                            properties.get(MakaanEventPayload.LABEL) + "_" + mSearchEditText.getText().toString());
+                    String rank=(String.valueOf(properties.get(MakaanEventPayload.SUGGESTION_POSITION)));
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchSerpRent);
+
+                    Properties property = MakaanEventPayload.beginBatch();
+                    property.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+                    property.put(MakaanEventPayload.LABEL,String.valueOf(mSearchEditText.getText().toString().length()));
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchSerpRentLength);
+
+                    Properties propert = MakaanEventPayload.beginBatch();
+                    propert.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+                    propert.put(MakaanEventPayload.LABEL,rank);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchSerpRentRank);
+                    break;
+                }
+
+            }
+
+        }
+
         setSearchResultFrameLayoutVisibility(false);
 
         if(supportsListing()  && (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)
@@ -450,12 +646,12 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     private void handleSearch() {
 
         //TODO test
-        Analytics.with(this).track(MakaanTrackerConstants.Action.searchPropertyBuy.getValue(), new Properties()
-        .putValue("Category", MakaanTrackerConstants.Category.property.getValue())
-        .putValue(MakaanTrackerConstants.KEYWORD, mSearchEditText.getText().toString())
-        .putValue(MakaanTrackerConstants.LISTING_POSITION, 3));
+        /*Analytics.with(this).track(MakaanTrackerConstants.Action.searchPropertyBuy.getValue(), new Properties()
+                .putValue("Category", MakaanTrackerConstants.Category.property.getValue())
+                .putValue(MakaanTrackerConstants.KEYWORD, mSearchEditText.getText().toString())
+                .putValue(MakaanTrackerConstants.LISTING_POSITION, 3));
 
-        Analytics.with(this).flush();
+        Analytics.with(this).flush();*/
 
         // hide the keypad
         showKeypad(mSearchEditText, false);
@@ -493,6 +689,31 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     @OnClick({R.id.activity_search_base_layout_search_bar_back_layout,
             R.id.activity_search_base_layout_search_bar_back_button})
     public void onBackPressed(View view) {
+        switch(getScreenName()){
+            case "Project":{
+                Properties properties=MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.backToHome);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProject);
+                break;
+            }
+            case "Listing detail":{
+                Properties properties=MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.backToHome);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProperty);
+                break;
+            }
+            case "serp":{
+                Properties properties=MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.backToHome);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickSerp);
+                break;
+            }
+
+
+        }
         onBackPressed();
     }
 
@@ -868,7 +1089,33 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
      */
     @OnClick(R.id.activity_search_toolbar_profile_icon)
     public void click(){
-        startActivity(new Intent(MakaanBaseSearchActivity.this, BuyerJourneyActivity.class));
+        Log.e("screen ","name"+getScreenName());
+        switch(getScreenName()){
+            case "Project":{
+                Properties properties= MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.myAccount);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProject);
+                break;
+            }
+            case "Listing detail":{
+                Properties properties=MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.myAccount);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProperty);
+                break;
+            }
+            case "serp":{
+                Properties properties=MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.myAccount);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickSerp);
+                break;
+            }
+        }
+        Intent intent=new Intent(MakaanBaseSearchActivity.this,BuyerJourneyActivity.class);
+        intent.putExtra("screenName", getScreenName());
+        startActivity(intent);
     }
 
     /**

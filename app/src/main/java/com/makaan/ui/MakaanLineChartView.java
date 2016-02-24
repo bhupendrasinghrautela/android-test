@@ -8,11 +8,14 @@ import android.widget.GridView;
 import com.makaan.R;
 import com.makaan.adapter.LegendAdapter;
 import com.makaan.adapter.LegendAdapter.OnLegendsTouchListener;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.response.trend.PriceTrendData;
 import com.makaan.response.trend.PriceTrendKey;
 import com.makaan.ui.view.FontTextView;
 import com.makaan.util.DateUtil;
 import com.makaan.util.StringUtil;
+import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -59,6 +62,7 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
     private Integer mMonths;
     private ArrayList<Long> mAllMonthsTime;
     private Long mMaxPrice;
+    private Long projectId=null;
 
     public MakaanLineChartView(Context context) {
         this(context, null);
@@ -212,7 +216,7 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
     }
 
     private void generateDataForGrid() {
-        List<PriceTrendKey> priceTrendKeyList = new ArrayList<>();
+        final List<PriceTrendKey> priceTrendKeyList = new ArrayList<>();
         int size = 0;
         for (Map.Entry<PriceTrendKey, List<PriceTrendData>> entry : mTrendsChartDataList.entrySet())
         {
@@ -224,10 +228,17 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
         final LegendAdapter adapter = new LegendAdapter(mContext,priceTrendKeyList);
         adapter.setLegendTouchListener(new OnLegendsTouchListener() {
             @Override
-            public void legendTouched(View view) {
+            public void legendTouched(View view, int position) {
+                if(projectId!=null){
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                    properties.put(MakaanEventPayload.LABEL, projectId+"_"+priceTrendKeyList.get(position).label);
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickProjectPriceTrends);
+                }
                 generateDataForChart();
                 if(mLines.size()==0){
                     view.performClick();
+
                 }
             }
         });
@@ -243,4 +254,9 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
         timeFrom =c.getTimeInMillis();
         generateDataForChart();
     }
+
+    public void setProjectId(Long projectId){
+        this.projectId=projectId;
+    }
+
 }

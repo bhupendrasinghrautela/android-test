@@ -2,6 +2,10 @@ package com.makaan.analytics;
 
 import android.content.Context;
 
+import com.makaan.analytics.MakaanTrackerConstants.Action;
+import com.segment.analytics.Analytics;
+import com.segment.analytics.Properties;
+
 import java.util.Map;
 
 /**
@@ -9,31 +13,86 @@ import java.util.Map;
  */
 public class MakaanEventTracker {
 
-    private static MakaanEventTracker instance;
+    public static void track(Context context, Action action, Properties makaanEventPayload){
 
-    private MakaanEventTracker(){
-    }
-
-    public static synchronized MakaanEventTracker getInstance(){
-        if(null==instance){
-            instance = new MakaanEventTracker();
+        switch (action){
+            case searchPropertyBuy:{
+                Properties properties=new Properties();
+                properties.put(MakaanEventPayload.CATEGORY, makaanEventPayload.get(MakaanEventPayload.CATEGORY));
+                properties.put(MakaanEventPayload.LABEL, makaanEventPayload.get(MakaanEventPayload.LABEL));
+                Analytics.with(context).track(action.getValue() ,properties);
+                Analytics.with(context).flush();
+                break;
+            }
+            case searchHomeBuy:{
+                Properties properties=new Properties();
+                properties.put(MakaanEventPayload.CATEGORY, makaanEventPayload.get(MakaanEventPayload.CATEGORY));
+                properties.put(MakaanEventPayload.LABEL, makaanEventPayload.get(MakaanEventPayload.LABEL));
+                Analytics.with(context).track(action.getValue() ,properties);
+                Analytics.with(context).flush();
+                break;
+            }
+            case searchSerpBuy:{
+                Properties properties=new Properties();
+                properties.put(MakaanEventPayload.CATEGORY, makaanEventPayload.get(MakaanEventPayload.CATEGORY));
+                properties.put(MakaanEventPayload.LABEL, makaanEventPayload.get(MakaanEventPayload.LABEL));
+                Analytics.with(context).track(action.getValue() ,properties);
+                Analytics.with(context).flush();
+                break;
+            }
+            case searchProjectBuy:{
+                Properties properties=new Properties();
+                properties.put(MakaanEventPayload.CATEGORY, makaanEventPayload.get(MakaanEventPayload.CATEGORY));
+                properties.put(MakaanEventPayload.LABEL, makaanEventPayload.get(MakaanEventPayload.LABEL));
+                Analytics.with(context).track(action.getValue() ,properties);
+                Analytics.with(context).flush();
+                break;
+            }
+            case searchPropertyRent:{
+                Properties properties=new Properties();
+                properties.put(MakaanEventPayload.CATEGORY, makaanEventPayload.get(MakaanEventPayload.CATEGORY));
+                properties.put(MakaanEventPayload.LABEL, makaanEventPayload.get(MakaanEventPayload.LABEL));
+                Analytics.with(context).track(action.getValue() ,properties);
+                Analytics.with(context).flush();
+                break;
+            }
+            case searchProjectRent:{
+                Properties properties=new Properties();
+                properties.put(MakaanEventPayload.CATEGORY, makaanEventPayload.get(MakaanEventPayload.CATEGORY));
+                properties.put(MakaanEventPayload.LABEL, makaanEventPayload.get(MakaanEventPayload.LABEL));
+                Analytics.with(context).track(action.getValue() ,properties);
+                Analytics.with(context).flush();
+                break;
+            }
+            case searchHomeRent:{
+                Properties properties=new Properties();
+                properties.put(MakaanEventPayload.CATEGORY, makaanEventPayload.get(MakaanEventPayload.CATEGORY));
+                properties.put(MakaanEventPayload.LABEL, makaanEventPayload.get(MakaanEventPayload.LABEL));
+                Analytics.with(context).track(action.getValue() ,properties);
+                Analytics.with(context).flush();
+                break;
+            }
+            case searchSerpRent:{
+                Properties properties=new Properties();
+                properties.put(MakaanEventPayload.CATEGORY, makaanEventPayload.get(MakaanEventPayload.CATEGORY));
+                properties.put(MakaanEventPayload.LABEL, makaanEventPayload.get(MakaanEventPayload.LABEL));
+                Analytics.with(context).track(action.getValue() ,properties);
+                Analytics.with(context).flush();
+                break;
+            }
+            case selectFilterMore:{
+                Properties properties=new Properties();
+                properties.put(MakaanEventPayload.LABEL, makaanEventPayload.toString());
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.searchFilter);
+                Analytics.with(context).track(action.getValue() ,properties);
+                Analytics.with(context).flush();
+                break;
+            }
+            default:{
+                Analytics.with(context).track(action.getValue() ,makaanEventPayload);
+                Analytics.with(context).flush();
+            }
         }
-
-        return instance;
-    }
-
-
-    //TODO temp for testing
-    /*Analytics.with(getActivity()).track(JarvisConstants.DELIVERY_ID, new Properties()
-    .putValue("listing_id", mListings.get(9).id)
-    .putValue("serp_visible_item", 9)
-    .putValue("serp_filter_budget", null)
-    .putValue("serp_filter_property_type", null)
-
-    .putValue("serp_filter_bhk", null));*/
-
-    public static void track(Context context, MakaanTrackerConstants.Category category, MakaanTrackerConstants.Action action){
-
     }
 
 }

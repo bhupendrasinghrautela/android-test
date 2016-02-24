@@ -20,6 +20,8 @@ import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.AccountPicker;
 import com.google.gson.Gson;
 import com.makaan.R;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.user.UserLoginEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.login.OnLoginWithMakaanSelectedListener;
@@ -33,6 +35,7 @@ import com.makaan.service.user.OnFacebookTokenListener;
 import com.makaan.service.user.OnGoogleTokenListener;
 import com.makaan.service.user.UserLoginService;
 import com.makaan.util.NetworkUtil;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import java.util.Arrays;
@@ -61,6 +64,7 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
     private OnLoginWithMakaanSelectedListener mOnLoginWithMakaanSelectedListener;
     private FacebookTokenInteractor mFacebookTokenInteractor;
     private int mLoginType;
+    private int loginType;
 
     @Override
     protected int getContentViewId() {
@@ -103,6 +107,8 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
         if (!NetworkUtil.isNetworkAvailable(getActivity())) {
             return;
         }
+        loginType=UserLoginPresenter.LOGIN_FB;
+
         if(AccessToken.getCurrentAccessToken()==null) {
             LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("email"));
         }else {
@@ -116,7 +122,7 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
         if (!NetworkUtil.isNetworkAvailable(getActivity())) {
             return;
         }
-
+        loginType=UserLoginPresenter.LOGIN_GMAIL;
         try {
             Intent intent = AccountPicker.newChooseAccountIntent(null, null, new String[]
                     {GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, true, null, null, null, null);
@@ -177,9 +183,33 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
 
     @Subscribe
     public void loginResults(UserLoginEvent userLoginEvent){
+        Properties properties= MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY ,MakaanTrackerConstants.Category.userLogin);
+
         if(userLoginEvent.error!=null){
+            switch (loginType){
+                case UserLoginPresenter.LOGIN_FB:
+                    properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.facebookFailed);
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.login);
+                    break;
+                case UserLoginPresenter.LOGIN_GMAIL:
+                    properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.googleFail);
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.login);
+                    break;
+            }
+
             mOnUserLoginListener.onUserLoginError(userLoginEvent.error);
         } else {
+            switch (loginType){
+                case UserLoginPresenter.LOGIN_FB:
+                    properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.facebookSuccess);
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.login);
+                    break;
+                case UserLoginPresenter.LOGIN_GMAIL:
+                    properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.googleSuccess);
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.login);
+                    break;
+            }
             String str = new Gson().toJson(userLoginEvent.userResponse);
             mOnUserLoginListener.onUserLoginSuccess(userLoginEvent.userResponse , str);
         }

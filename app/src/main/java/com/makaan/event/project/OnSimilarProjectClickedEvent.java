@@ -5,7 +5,9 @@ package com.makaan.event.project;
  */
 public class OnSimilarProjectClickedEvent {
     public Long id;
-    public OnSimilarProjectClickedEvent(Long id) {
+    public Integer clickedPosition;
+    public OnSimilarProjectClickedEvent(Long id,Integer clickedPosition) {
     this.id = id;
+    this.clickedPosition=clickedPosition;
     }
 }

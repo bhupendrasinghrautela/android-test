@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.locality.TrendingSearchLocalityEvent;
 import com.makaan.event.trend.callback.LocalityTrendCallback;
 import com.makaan.fragment.MakaanBaseFragment;
@@ -20,6 +22,7 @@ import com.makaan.response.trend.LocalityPriceTrendDto;
 import com.makaan.service.LocalityService;
 import com.makaan.service.PriceTrendService;
 import com.makaan.ui.PriceTrendView;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import java.io.Serializable;
@@ -217,6 +220,12 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
 
     @OnClick(R.id.button_show_properties)
     public void showAllPropertiesClick(){
+        if(localityId!=null){
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.propertiesForSale+String.valueOf(localityId));
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickLocalityPriceTrends);
+        }
         SerpRequest request = new SerpRequest(SerpActivity.TYPE_LOCALITY);
         request.setLocalityId(localityId);
         request.launchSerp(getActivity());

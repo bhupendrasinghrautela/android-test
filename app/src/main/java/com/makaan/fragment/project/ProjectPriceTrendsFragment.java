@@ -72,6 +72,7 @@ public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
             public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
                 ((PriceTrendService) MakaanServiceFactory.getInstance().getService(PriceTrendService.class)).getPriceTrendForProject(projectId, months);
                 priceTrendViewl.setVisibility(View.VISIBLE);
+                priceTrendView.setProjectId(projectId);
                 priceTrendView.bindView(localityPriceTrendDto.data);
                 localityPriceTrendsData = localityPriceTrendDto.data;
             }});

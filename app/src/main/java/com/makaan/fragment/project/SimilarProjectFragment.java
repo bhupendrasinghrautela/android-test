@@ -6,21 +6,27 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.locality.OnNearByLocalityClickEvent;
 import com.makaan.event.project.OnSimilarProjectClickedEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.project.Project;
+import com.makaan.ui.view.ParallexScrollview;
 import com.makaan.util.AppBus;
+import com.segment.analytics.Properties;
 
 import java.util.List;
 
@@ -37,6 +43,7 @@ public class SimilarProjectFragment extends MakaanBaseFragment implements View.O
     public TextView titleTv;
     @Bind(R.id.rv_similar_projects)
     public RecyclerView mRecyclerView;
+    public static final int CLICKED_POSITION=1;
 
 
     @Override
@@ -57,6 +64,7 @@ public class SimilarProjectFragment extends MakaanBaseFragment implements View.O
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnScrollListener(new scrollChange());
     }
 
     public void setData(List<Project> similarProjects) {
@@ -67,7 +75,7 @@ public class SimilarProjectFragment extends MakaanBaseFragment implements View.O
 
     @Override
     public void onClick(View v) {
-        AppBus.getInstance().post(new OnSimilarProjectClickedEvent((Long) v.getTag()));
+        AppBus.getInstance().post(new OnSimilarProjectClickedEvent(((Long) v.getTag()), (Integer) v.getTag(R.string.similar_project_clicked_position)) );
     }
 
 
@@ -112,6 +120,7 @@ public class SimilarProjectFragment extends MakaanBaseFragment implements View.O
         public void onBindViewHolder(final ViewHolder holder, int position) {
             final Project project = similarProjectsList.get(position);
             holder.cardView.setTag(project.projectId);
+            holder.cardView.setTag(R.string.similar_project_clicked_position ,position+1);
             holder.cardView.setOnClickListener(onClickListener);
             holder.nameTv.setText(project.getFullName());
             holder.priceTv.setText(project.getMinPriceOnwards());
@@ -143,5 +152,37 @@ public class SimilarProjectFragment extends MakaanBaseFragment implements View.O
             return similarProjectsList.size();
         }
 
+
     }
+
+    private class scrollChange extends RecyclerView.OnScrollListener {
+        int flingCoordinate;
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if(newState==RecyclerView.SCROLL_STATE_IDLE){
+                if(flingCoordinate>0){
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                    properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.right);
+                    MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectSimilarProjects);
+                }
+                else if(flingCoordinate<0){
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                    properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.left);
+                    MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectSimilarProjects);
+                }
+            }
+
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            flingCoordinate=dx;
+        }
+    }
+
 }

@@ -23,7 +23,7 @@ public class LegendAdapter extends AbstractBaseAdapter<PriceTrendKey> {
     private OnLegendsTouchListener mListener;
 
     public interface OnLegendsTouchListener{
-        public void legendTouched(View view);
+        public void legendTouched(View view, int position);
     }
     public LegendAdapter(Context context,List<PriceTrendKey>list) {
         super(context, list);
@@ -73,7 +73,7 @@ public class LegendAdapter extends AbstractBaseAdapter<PriceTrendKey> {
                     h.mLegendsView.setBackgroundDrawable(greyedDrawable);
                 }
                 if(mListener!=null){
-                    mListener.legendTouched(v);
+                    mListener.legendTouched(v,position);
                 }
             }
         });

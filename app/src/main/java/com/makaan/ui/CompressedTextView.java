@@ -6,6 +6,13 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.city.CityActivity;
+import com.makaan.activity.listing.PropertyActivity;
+import com.makaan.activity.locality.LocalityActivity;
+import com.makaan.activity.project.ProjectActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
+import com.segment.analytics.Properties;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -30,10 +37,61 @@ public class CompressedTextView extends BaseLinearLayout<String> {
     @OnClick(R.id.read_more) void click(){
         workedOnce = true;
         if(isCollapsed){
+            if(mContext instanceof PropertyActivity) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.descriptionMore);
+                MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyOverview);
+            }
+            else if(mContext instanceof ProjectActivity) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.descriptionMore);
+                MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickProjectOverView);
+            }
+            else if(mContext instanceof CityActivity) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerCity);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.descriptionMore);
+                MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickCityOverView);
+            }
+            else if(mContext instanceof LocalityActivity) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.descriptionMore);
+                MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickLocalityOverView);
+            }
+
             mReadMore.setText(mContext.getString(R.string.read_less));
             mContentText.setMaxLines(Integer.MAX_VALUE);
         }
         else{
+            if(mContext instanceof PropertyActivity) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.descriptionLess);
+                MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyOverview);
+            }
+
+            else if(mContext instanceof ProjectActivity) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.descriptionLess);
+                MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickProjectOverView);
+            }
+            else if(mContext instanceof CityActivity) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerCity);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.descriptionLess);
+                MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickCityOverView);
+            }
+            else if(mContext instanceof LocalityActivity) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.descriptionLess);
+                MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickLocalityOverView);
+            }
+
             mReadMore.setText(mContext.getString(R.string.read_more));
             mContentText.setMaxLines(MAX_LINE);
         }

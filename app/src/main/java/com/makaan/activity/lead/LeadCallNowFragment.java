@@ -9,7 +9,13 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.listing.PropertyDetailFragment;
+import com.makaan.activity.listing.SerpActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.fragment.project.ProjectFragment;
+import com.segment.analytics.Properties;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -52,6 +58,25 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
 
     @OnClick(R.id.btn_call)
     void callClick(){
+        Bundle bundle =getArguments();
+        if(bundle!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.callNow);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickSerpCallConnect);
+        }
+        else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName())) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.callNow);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectCallConnect);
+        }
+        else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName())) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.callNow);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickPropertyCallConnect);
+        }
         //TODO remove this hardcoded number
         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
                 + mLeadFormPresenter.getPhone()));
@@ -60,6 +85,25 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
 
     @OnClick(R.id.tv_get_callback)
     void getCallBackClick(){
+        Bundle bundle =getArguments();
+        if(bundle!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBackFromSeller);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickSerpCallConnect);
+        }
+        else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName())) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBackFromSeller);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectCallConnect);
+        }
+        else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName())) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBackFromSeller);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickPropertyCallConnect);
+        }
         LeadFormPresenter.getLeadFormPresenter().showLeadInstantCallBackFragment();
     }
 }

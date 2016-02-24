@@ -23,6 +23,8 @@ import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.activity.project.ProjectActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpObjects;
@@ -37,6 +39,8 @@ import com.makaan.util.KeyUtil;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
 import com.pkmmte.view.CircularImageView;
+import com.segment.analytics.Properties;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -179,7 +183,9 @@ public class DefaultListingView extends AbstractListingView {
         }
         // TODO implement new
 
-        mPropertyWishListCheckbox.bindView(new WishListDto(mListing.lisitingId.longValue(), mListing.projectId.longValue(), WishListType.listing));
+        WishListDto wishListDto=new WishListButton.WishListDto(mListing.lisitingId.longValue(), mListing.projectId.longValue(), WishListType.listing);
+        wishListDto.setSerpItemPosition((long) mPosition);
+        mPropertyWishListCheckbox.bindView(wishListDto);
 
         if(mListing.mainImageUrl != null && !TextUtils.isEmpty(mListing.mainImageUrl)) {
             int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_width);
@@ -607,6 +613,10 @@ public class DefaultListingView extends AbstractListingView {
 
     @OnClick(R.id.serp_default_listing_call_button)
     public void onCallClicked(View view) {
+        Properties properties = MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+        properties.put(MakaanEventPayload.LABEL, mListing.lisitingId+"_"+(mPosition+1));
+        MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.callSerpProperty);
 
         Bundle bundle = new Bundle();
 
@@ -615,7 +625,7 @@ public class DefaultListingView extends AbstractListingView {
         bundle.putString("phone", "9090909090");//todo: not available in pojo
         bundle.putString("id", String.valueOf(mListing.lisitingPostedBy.id));
         bundle.putInt("listingId", mListing.lisitingId);
-
+        bundle.putString("source", SerpActivity.class.getName());
 
         mCallback.requestDetailPage(SerpActivity.REQUEST_LEAD_FORM, bundle);
     }

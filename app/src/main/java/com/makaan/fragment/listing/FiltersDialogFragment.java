@@ -14,12 +14,15 @@ import android.widget.TextView;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.adapter.listing.FiltersViewAdapter;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.ui.view.ExpandableHeightGridView;
 import com.makaan.util.AppBus;
+import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -151,10 +154,12 @@ public class FiltersDialogFragment extends DialogFragment {
         Selector selector = SerpObjects.getSerpSelector(getActivity());
 
         if(filterGroups != null && selector != null) {
+            MakaanEventPayload.beginBatch();
             for (ExpandableHeightGridView gridView : mFilterGridViews) {
                 FiltersViewAdapter adapter = (FiltersViewAdapter) (gridView.getAdapter());
                 adapter.applyFilters(selector, filterGroups);
             }
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.selectFilterMore);
         }
         SerpRequest request = new SerpRequest(SerpActivity.TYPE_FILTER);
         request.launchSerp(getActivity());

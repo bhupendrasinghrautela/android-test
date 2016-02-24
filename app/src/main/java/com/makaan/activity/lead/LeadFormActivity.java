@@ -8,9 +8,15 @@ import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
+import com.makaan.activity.listing.PropertyDetailFragment;
+import com.makaan.activity.listing.SerpActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.network.VolleyErrorParser;
 import com.makaan.response.leadForm.InstantCallbackResponse;
 import com.makaan.response.pyr.PyrPostResponse;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import butterknife.OnClick;
@@ -23,6 +29,7 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
     private FragmentTransaction mFragmentTransaction;
     private LeadFormPresenter mLeadFormPresenter;
     private int mListingId = -1;
+    public String source;
     @Override
     protected int getContentViewId() {
         return R.layout.activity_lead_form;
@@ -43,6 +50,7 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
         String id=this.getIntent().getExtras().getString("id");
         String score=this.getIntent().getExtras().getString("score");
         String phone=this.getIntent().getExtras().getString("phone");
+        source=this.getIntent().getExtras().getString("source");
         mLeadFormPresenter = LeadFormPresenter.getLeadFormPresenter();
         mLeadFormPresenter.setId(id);
         mLeadFormPresenter.setName(name);
@@ -70,6 +78,11 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
 
     @Override
     public void replaceFragment(Fragment fragment, boolean shouldAddToBackStack) {
+        if(source!=null) {
+            Bundle bundle = new Bundle();
+            bundle.putString("source", source);
+            fragment.setArguments(bundle);
+        }
         mFragmentTransaction = getSupportFragmentManager().beginTransaction();
         mFragmentTransaction.replace(R.id.leadform_fragment_holder, fragment, fragment.getClass().getName());
         if(shouldAddToBackStack) {
@@ -104,6 +117,24 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
             Toast.makeText(this, VolleyErrorParser.getMessage(pyrPostResponse.getError()),Toast.LENGTH_SHORT).show();
         }
         if(pyrPostResponse.getStatusCode().equals("2XX")) {
+            if(source!=null && source.equalsIgnoreCase(SerpActivity.class.getName())) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBack);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickSerpCallConnect);
+            }
+            else if(source!=null && source.equalsIgnoreCase(ProjectFragment.class.getName())){
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBack);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProjectCallConnect);
+            }
+            else if(source!=null && source.equalsIgnoreCase(PropertyDetailFragment.class.getName())){
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBack);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickPropertyCallConnect);
+            }
             mLeadFormPresenter.showThankYouScreenFragment(false, false);
             setResult(RESULT_OK,new Intent().putExtra("listingId", mListingId));
         }
@@ -115,6 +146,26 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
             Toast.makeText(this, VolleyErrorParser.getMessage(instantCallbackResponse.getError()),Toast.LENGTH_SHORT).show();
         }
         if(instantCallbackResponse.getStatusCode().equals("2XX")){
+
+            if(source!=null && source.equalsIgnoreCase(SerpActivity.class.getName())){
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.connectNow);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickSerpCallConnect);
+            }
+            else if(source!=null && source.equalsIgnoreCase(ProjectFragment.class.getName())){
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.connectNow);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProjectCallConnect);
+            }
+            else if(source!=null && source.equalsIgnoreCase(PropertyDetailFragment.class.getName())){
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.connectNow);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickPropertyCallConnect);
+            }
+
             mLeadFormPresenter.showThankYouScreenFragment(false, false);
             setResult(RESULT_OK);
         }

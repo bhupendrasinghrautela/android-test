@@ -25,10 +25,16 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
 import com.makaan.R;
+import com.makaan.activity.listing.PropertyActivity;
+import com.makaan.activity.locality.LocalityActivity;
+import com.makaan.activity.project.ProjectActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.amenity.Amenity;
 import com.makaan.response.amenity.AmenityCluster;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -292,6 +298,24 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
 
     @Override
     public void onItemClick(int position, View v) {
+        if(getActivity() instanceof PropertyActivity) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+            properties.put(MakaanEventPayload.LABEL, mAmenityClusters.get(position).name);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.mapPropertyLocality);
+        }
+        else if(getActivity() instanceof ProjectActivity) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+            properties.put(MakaanEventPayload.LABEL, mAmenityClusters.get(position).name);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.mapProjectLocality);
+        }
+        else if(getActivity() instanceof LocalityActivity) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+            properties.put(MakaanEventPayload.LABEL, mAmenityClusters.get(position).name);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.mapLocalityNeighbourhood);
+        }
         populateMarker(mAmenityClusters.get(position));
     }
 
