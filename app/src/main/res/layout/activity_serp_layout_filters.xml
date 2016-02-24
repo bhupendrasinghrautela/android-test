@@ -12,7 +12,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true">
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="@dimen/fragment_filters_filter_image_view_margin_bottom"
+            android:layout_marginEnd="@dimen/fragment_filters_applied_filter_count_text_view_margin_right"
+            android:layout_marginRight="@dimen/fragment_filters_applied_filter_count_text_view_margin_right">
 
             <ImageView
                 android:id="@+id/fragment_filters_filter_image_view"
@@ -20,7 +23,6 @@
                 android:layout_height="@dimen/fragment_filters_filter_image_view_height"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginBottom="@dimen/fragment_filters_filter_image_view_margin_bottom"
                 android:layout_marginLeft="@dimen/fragment_filters_filter_image_view_margin_left"
                 android:layout_marginStart="@dimen/fragment_filters_filter_image_view_margin_left"
                 android:layout_marginTop="@dimen/fragment_filters_filter_image_view_margin_top"
@@ -45,9 +47,7 @@
                 android:id="@+id/fragment_filters_applied_filter_count_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/fragment_filters_applied_filter_count_text_view_margin_right"
                 android:layout_marginLeft="@dimen/fragment_filters_applied_filter_count_text_view_margin_left"
-                android:layout_marginRight="@dimen/fragment_filters_applied_filter_count_text_view_margin_right"
                 android:layout_marginStart="@dimen/fragment_filters_applied_filter_count_text_view_margin_left"
                 android:layout_marginTop="@dimen/fragment_filters_applied_filter_count_text_view_margin_top"
                 android:layout_toEndOf="@id/fragment_filters_filter_text_view"
@@ -67,7 +67,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@id/fragment_filters_filter_relative_layout"
-            android:layout_toRightOf="@id/fragment_filters_filter_relative_layout">
+            android:layout_toRightOf="@id/fragment_filters_filter_relative_layout"
+            android:layout_marginLeft="@dimen/fragment_filters_relevance_image_view_margin_left"
+            android:layout_marginStart="@dimen/fragment_filters_relevance_image_view_margin_left">
 
             <ImageView
                 android:id="@+id/fragment_filters_relevance_image_view"
@@ -75,9 +77,6 @@
                 android:layout_height="@dimen/fragment_filters_relevance_image_view_height"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginBottom="@dimen/fragment_filters_relevance_image_view_margin_bottom"
-                android:layout_marginLeft="@dimen/fragment_filters_relevance_image_view_margin_left"
-                android:layout_marginStart="@dimen/fragment_filters_relevance_image_view_margin_left"
                 android:layout_marginTop="@dimen/fragment_filters_relevance_image_view_margin_top"
                 android:src="@drawable/sort_by" />
 
@@ -86,9 +85,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="100dp"
+                android:layout_marginTop="@dimen/fragment_filters_relevance_text_view_margin_top"
                 android:layout_marginLeft="@dimen/fragment_filters_relevance_text_view_margin_left"
                 android:layout_marginStart="@dimen/fragment_filters_relevance_text_view_margin_left"
-                android:layout_centerVertical="true"
                 android:text="relevance"
                 android:layout_toEndOf="@id/fragment_filters_relevance_image_view"
                 android:layout_toRightOf="@id/fragment_filters_relevance_image_view"
@@ -103,16 +102,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true">
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/fragment_filters_map_image_view_margin_right"
+            android:layout_marginEnd="@dimen/fragment_filters_map_image_view_margin_right">
 
             <ImageView
                 android:id="@+id/fragment_filters_map_image_view"
                 android:layout_width="@dimen/fragment_filters_map_image_view_width"
                 android:layout_height="@dimen/fragment_filters_map_image_view_height"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginRight="@dimen/fragment_filters_map_image_view_margin_right"
-                android:layout_marginEnd="@dimen/fragment_filters_map_image_view_margin_right"
                 android:layout_marginTop="@dimen/fragment_filters_map_image_view_margin_top"
                 android:src="@drawable/map_icon"
                 android:scaleType="centerCrop"/>

@@ -54,6 +54,7 @@ public class SerpMapFragment extends MakaanBaseFragment {
     @Bind(R.id.serp_map_view)
     MapView mMapView;
     private SerpRequestCallback mCallback;
+    private boolean mGooglePlayServicesAvailable = false;
 
     @Override
     protected int getContentViewId() {
@@ -71,6 +72,7 @@ public class SerpMapFragment extends MakaanBaseFragment {
         super.onActivityCreated(savedInstanceState);
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
         if (status == ConnectionResult.SUCCESS) {
+            mGooglePlayServicesAvailable = true;
             try {
                 initMap(savedInstanceState);
             }catch(Exception e){
@@ -86,7 +88,7 @@ public class SerpMapFragment extends MakaanBaseFragment {
 //                adapter.setSelectedMarkerPosition(0, true);
             }
         } else {
-            GooglePlayServicesUtil.getErrorDialog(status, getActivity(), status);
+            GooglePlayServicesUtil.getErrorDialog(status, getActivity(), status).show();
         }
 
     }
@@ -122,7 +124,7 @@ public class SerpMapFragment extends MakaanBaseFragment {
         mCallback = callback;
         mListings.addAll(listings);
 
-        if (mProjectViewPager != null) {
+        if (mProjectViewPager != null && mGooglePlayServicesAvailable) {
             adapter.populateMarker(mListings);
 
             mProjectViewPager.setData(adapter.listings, mTotalCount > mListings.size(), callback);
