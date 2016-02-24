@@ -7,6 +7,8 @@ import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.locality.LocalityByIdEvent;
 import com.makaan.event.project.OnSeeOnMapClicked;
 import com.makaan.fragment.locality.LocalityFragment;
@@ -14,6 +16,7 @@ import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.PageTag;
 import com.makaan.util.KeyUtil;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 /**
@@ -81,6 +84,10 @@ public class LocalityActivity extends MakaanFragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.backToHome);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickLocality);
                 finish();
                 break;
         }
@@ -98,5 +105,14 @@ public class LocalityActivity extends MakaanFragmentActivity {
                     localityByIdEvent.locality.latitude,
                     localityByIdEvent.locality.latitude);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Properties properties = MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.backToHome);
+        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickCity);
+        super.onBackPressed();
     }
 }

@@ -302,5 +302,10 @@
     <string name="blog_content_home_booking_action">home booking guidance</string>
     <string name="blog_content_home_possession_action">home possession advice</string>
     <string name="blog_content_home_registration_action">home registration guidance</string>
+
+    <!--analytics-->
+    <string name="similar_project_clicked_position">similar project clicked position</string>
+    <string name="adapter_position">adapter position</string>
+
 </resources>
 

@@ -10,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.response.search.SearchResponseHelper;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.SearchSuggestionType;
+import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,6 +167,12 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         @Override
         public void onClick(View v) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.SUGGESTION_NAME, searchResponseItem.displayText);
+            properties.put(MakaanEventPayload.SUGGESTION_POSITION, getAdapterPosition()+1);
+            properties.put(MakaanEventPayload.SUGGESTION_TYPE, searchResponseItem.type);
+            properties.put(MakaanEventPayload.SUGGESTION_STRING, searchResponseItem.displayText+"_"+
+                            String.valueOf(getAdapterPosition()+1)+"_"+searchResponseItem.type);
             mCallbacks.onSearchItemClick(searchResponseItem);
 
         }

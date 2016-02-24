@@ -30,6 +30,8 @@ import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.pyr.PyrPageActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.event.city.CityByIdEvent;
 import com.makaan.event.city.CityTopLocalityEvent;
@@ -57,6 +59,7 @@ import com.makaan.ui.PriceTrendView;
 import com.makaan.ui.city.TopLocalityView;
 import com.makaan.util.Blur;
 import com.makaan.util.StringUtil;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -124,9 +127,18 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     public void onBuyRentSwitched(){
         if(mBuyRentSwitch.isChecked()){
             isRent = true;
+            Properties properties= MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerCity);
+            properties.put(MakaanEventPayload.LABEL, "rent");
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.selectCityPropertyRange);
+
             mPropertyTypeSpinner.setItems(MasterDataCache.getInstance().getRentPropertyTypes());
         }
         else{
+            Properties properties= MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerCity);
+            properties.put(MakaanEventPayload.LABEL, "buy");
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.selectCityPropertyRange);
             mPropertyTypeSpinner.setItems(MasterDataCache.getInstance().getBuyPropertyTypes());
             isRent = false;
         }
@@ -251,6 +263,29 @@ public class CityOverViewFragment extends MakaanBaseFragment{
             @Override
             public void onSelectionChanged() {
                 mSelectedPropertyTypes = (ArrayList<Integer>) mPropertyTypeSpinner.getSelectedIds();
+                StringBuilder builder =new StringBuilder();
+                String append="";
+                if(isRent){
+                    builder =new StringBuilder();
+                    for(int id:mSelectedPropertyTypes){
+                        builder.append(append);
+                        builder.append(MasterDataCache.getInstance().getRentPropertyType(id).name);
+                        append="_";
+                    }
+                }
+                else{
+                    builder =new StringBuilder();
+                    for(int id:mSelectedPropertyTypes){
+                        builder.append(append);
+                        builder.append(MasterDataCache.getInstance().getBuyPropertyType(id).name);
+                        append="_";
+                    }
+                }
+                Properties properties= MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerCity);
+                properties.put(MakaanEventPayload.LABEL, builder);
+                MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.selectCityPropertyRange);
+
                 makeBarGraphRequest();
             }
         });
@@ -258,6 +293,10 @@ public class CityOverViewFragment extends MakaanBaseFragment{
             @Override
             public void onSelectionChanged() {
                 mSelectedBedroomTypes = (ArrayList<Integer>) mBhkSpinner.getSelectedIds();
+                Properties properties= MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerCity);
+                properties.put(MakaanEventPayload.LABEL, mSelectedBedroomTypes.toString()+"Bhk");
+                MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.selectCityPropertyRange);
                 makeBarGraphRequest();
             }
         });

@@ -26,6 +26,8 @@ import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.project.ProjectActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.image.ImagesGetEvent;
 import com.makaan.event.listing.ListingByIdGetEvent;
@@ -58,6 +60,7 @@ import com.makaan.ui.property.AmenitiesViewScroll;
 import com.makaan.ui.property.PropertyImageViewPager;
 import com.makaan.ui.view.FontTextView;
 import com.makaan.util.RecentPropertyProjectManager;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -144,6 +147,7 @@ public class ProjectFragment extends MakaanBaseFragment{
                 }
                 intent.putExtra("phone",sellerCard.contactNo);//todo: not available in pojo
                 intent.putExtra("id", sellerCard.sellerId.toString());
+                intent.putExtra("source",ProjectFragment.class.getName());
                 getActivity().startActivity(intent);
             } catch (NullPointerException e) {
             }
@@ -176,6 +180,12 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResults(OnViewAllPropertiesClicked onViewAllPropertiesClicked) {
+
+        Properties properties= MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.viewAllPropertiesToBuyIn+String.valueOf(project.projectId));
+        MakaanEventPayload.endBatch(getActivity(),MakaanTrackerConstants.Action.clickProjectConfiguration);
+
         SerpRequest request = new SerpRequest(SerpActivity.TYPE_PROJECT);
         request.setCityId(project.locality.cityId);
         request.setLocalityId(project.localityId);
@@ -202,6 +212,11 @@ public class ProjectFragment extends MakaanBaseFragment{
                 if(sellerCards.size()>0) {
                     FragmentTransaction ft = this.getFragmentManager().beginTransaction();
                     ViewSellersDialogFragment viewSellersDialogFragment = new ViewSellersDialogFragment();
+
+                    Bundle bundle=new Bundle();
+                    bundle.putString(MakaanEventPayload.PROJECT_ID, String.valueOf(project.projectId));
+                    viewSellersDialogFragment.setArguments(bundle);
+
                     viewSellersDialogFragment.bindView(sellerCards);
                     viewSellersDialogFragment.show(ft, "allSellers");
                 }
@@ -386,6 +401,12 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResult(OnSimilarProjectClickedEvent onSimilarProjectClickedEvent){
+
+        Properties properties = MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+        properties.put(MakaanEventPayload.LABEL, onSimilarProjectClickedEvent.id+"_"+onSimilarProjectClickedEvent.clickedPosition);
+        MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectSimilarProjects);
+
         Intent i = new Intent(getActivity(),ProjectActivity.class);
         i.putExtra(ProjectActivity.PROJECT_ID, onSimilarProjectClickedEvent.id);
         startActivity(i);
@@ -397,8 +418,10 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     private void addPriceTrendsFragment(ArrayList<Locality> nearbyLocalities) {
         ArrayList<Long> localities = new ArrayList<>();
-        for(int i = 0;i< nearbyLocalities.size() && i<3;i++){
-            localities.add(nearbyLocalities.get(i).localityId);
+        if(localities.size()>0) {
+            for (int i = 0; i < nearbyLocalities.size() && i < 3; i++) {
+                localities.add(nearbyLocalities.get(i).localityId);
+            }
         }
         ProjectPriceTrendsFragment fragment = new ProjectPriceTrendsFragment();
         Bundle bundle = new Bundle();
@@ -433,9 +456,11 @@ public class ProjectFragment extends MakaanBaseFragment{
     private void addProjectAboutLocalityFragment(List<AmenityCluster> amenityClusterList) {
 
         List<AmenityCluster> mAmenityClusters = new ArrayList<>();
-        for(AmenityCluster cluster : amenityClusterList){
-            if(null!=cluster && null!=cluster.cluster && cluster.cluster.size()>0){
-                mAmenityClusters.add(cluster);
+        if(mAmenityClusters.size()>0) {
+            for (AmenityCluster cluster : amenityClusterList) {
+                if (null != cluster && null != cluster.cluster && cluster.cluster.size() > 0) {
+                    mAmenityClusters.add(cluster);
+                }
             }
         }
 

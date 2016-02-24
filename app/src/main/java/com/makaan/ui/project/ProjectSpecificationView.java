@@ -9,13 +9,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.LinearLayout;
 
 import com.makaan.R;
+import com.makaan.activity.project.ProjectActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.fragment.project.ProjectSpecificationPagerFragment;
 import com.makaan.pojo.SpecificaitonsUI;
 import com.makaan.ui.view.WrapContentViewPager;
 import com.makaan.util.CommonUtil;
+import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -73,8 +78,10 @@ public class ProjectSpecificationView extends LinearLayout{
     private void setupViewPager(final WrapContentViewPager viewPager, FragmentActivity compatActivity) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(compatActivity.getSupportFragmentManager());
         int max = 0;
+        final ArrayList<String> tabNames=new ArrayList<String>();
         for(String tab:map.keySet()) {
             ArrayList<SpecificaitonsUI> specificaitonsUIs = map.get(tab);
+            tabNames.add(tab);
             if(specificaitonsUIs.size()>max)
                 max = specificaitonsUIs.size();
 
@@ -93,6 +100,14 @@ public class ProjectSpecificationView extends LinearLayout{
 
             @Override
             public void onPageSelected(int position) {
+                if(tabNames.size()>0) {
+                    if(mContext instanceof ProjectActivity) {
+                        Properties properties = MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.specifications+"_"+tabNames.get(position));
+                        MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickProjectOverView);
+                    }
+                }
                 viewPager.reMeasureCurrentPage(position);
             }
 

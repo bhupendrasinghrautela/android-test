@@ -9,9 +9,14 @@ import android.view.View;
 import android.widget.Button;
 
 import com.makaan.R;
+import com.makaan.activity.city.CityActivity;
 import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.locality.LocalityActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.response.trend.LocalityPriceTrendDto;
+import com.segment.analytics.Properties;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -73,6 +78,18 @@ public class PriceTrendView extends BaseLinearLayout<LocalityPriceTrendDto> {
         mPriceRangeTabs.setOnTabSelectedListener(new OnTabSelectedListener() {
             @Override
             public void onTabSelected(Tab tab) {
+                if (getContext() instanceof LocalityActivity) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+                    properties.put(MakaanEventPayload.LABEL,TRENDS_MONTH.values()[tab.getPosition()].toString().replace("\n","") );
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickLocalityPriceTrends);
+                }
+                else if (getContext() instanceof CityActivity) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerCity);
+                    properties.put(MakaanEventPayload.LABEL,TRENDS_MONTH.values()[tab.getPosition()].toString().replace("\n","") );
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickCityPriceTrends);
+                }
                 mTrendsChart.changeDataBasedOnTime(
                         TRENDS_MONTH.values()[tab.getPosition()].getValue());
             }
