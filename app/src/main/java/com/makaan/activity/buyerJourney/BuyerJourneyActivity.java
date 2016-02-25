@@ -32,13 +32,12 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.user.UserResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.user.UserLogoutService;
-import com.makaan.util.ImageUtils;
-import com.pkmmte.view.CircularImageView;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class BuyerJourneyActivity extends MakaanFragmentActivity {
@@ -55,7 +54,7 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
     ViewPager mViewPager;
 
     @Bind(R.id.iv_profile_image)
-    CircularImageView mProfileImage;
+    CircleImageView mProfileImage;
 
     @Bind(R.id.tv_username)
     TextView mUserName;
@@ -224,7 +223,9 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
 
                                     @Override
                                     public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                                        mProfileImage.setImageBitmap(imageContainer.getBitmap());
+                                        if(mProfileImage != null) {
+                                            mProfileImage.setImageBitmap(imageContainer.getBitmap());
+                                        }
                                     }
                                 }
                         );

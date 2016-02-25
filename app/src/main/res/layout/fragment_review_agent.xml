@@ -25,14 +25,13 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/round_red" />
 
-    <com.pkmmte.view.CircularImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/fragment_review_agent_image_view"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:visibility="invisible"
-        android:scaleType="centerCrop"
         android:src="@drawable/map"/>
 
     <TextView

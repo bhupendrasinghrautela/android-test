@@ -20,7 +20,7 @@
         android:layout_gravity="center"
         android:textSize="16sp"/>
 
-    <com.pkmmte.view.CircularImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/agent_image"
         android:layout_width="@dimen/jarvis_seller_card_profile_pic_dimen"
         android:layout_height="@dimen/jarvis_seller_card_profile_pic_dimen"
@@ -28,10 +28,8 @@
         android:tint="@color/white"
         android:layout_gravity="center"
         android:src="@drawable/jarvis"
-        app:border="true"
-        app:border_color="@color/light_gray"
-        app:border_width="@dimen/border_width"
-        app:shadow="true"/>
+        app:civ_border_color="@color/light_gray"
+        app:civ_border_width="@dimen/border_width"/>
 
 
     <com.makaan.ui.view.CustomRatingBar

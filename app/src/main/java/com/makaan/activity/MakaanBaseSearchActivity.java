@@ -256,10 +256,12 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     public boolean getLocationAvailabilty() {
+        return false;
+        /*
         if(mLocationManager == null) {
             mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         }
-        return mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        return mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);*/
     }
 
     /**

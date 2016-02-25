@@ -8,7 +8,8 @@ import android.widget.TextView;
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.ui.view.CustomRatingBar;
-import com.pkmmte.view.CircularImageView;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by makaanuser on 2/2/16.
@@ -19,7 +20,7 @@ public class ShortListEnquiredViewHolder extends RecyclerView.ViewHolder {
     public TextView mName;
     public TextView mSellerText;
     public CustomRatingBar mRating;
-    public CircularImageView mSellerImage;
+    public CircleImageView mSellerImage;
     public TextView mRequestSiteVisit;
     private int position;
     private ScheduleSiteVisit listener;
@@ -32,7 +33,7 @@ public class ShortListEnquiredViewHolder extends RecyclerView.ViewHolder {
         mMainImage = (FadeInNetworkImageView) itemView.findViewById(R.id.iv_content);
         mAddress = (TextView) itemView.findViewById(R.id.address);
         mName = (TextView) itemView.findViewById(R.id.name);
-        mSellerImage = (CircularImageView) itemView.findViewById(R.id.seller_image_view);
+        mSellerImage = (CircleImageView) itemView.findViewById(R.id.seller_image_view);
         mSellerText = (TextView) itemView.findViewById(R.id.seller_logo_text_view);
         mRating = (CustomRatingBar) itemView.findViewById(R.id.seller_rating);
         mRequestSiteVisit = (TextView) itemView.findViewById(R.id.txt_content);

@@ -33,7 +33,6 @@ import com.makaan.pojo.SellerCard;
 import com.makaan.ui.view.CustomRatingBar;
 import com.makaan.util.AppBus;
 import com.makaan.util.ImageUtils;
-import com.pkmmte.view.CircularImageView;
 import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
@@ -45,6 +44,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import lecho.lib.hellocharts.util.ChartUtils;
 
 /**
@@ -212,7 +212,7 @@ public class ViewSellersDialogFragment extends DialogFragment {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             // each data item is just a string in this case
-            CircularImageView mSellerImageView;
+            CircleImageView mSellerImageView;
             TextView mSellerLogoTextView;
             TextView mSellerTotalProperty;
             TextView mSellerName;
@@ -220,7 +220,7 @@ public class ViewSellersDialogFragment extends DialogFragment {
             CheckBox mSellerCheckBox;
             public ViewHolder(View v) {
                 super(v);
-                mSellerImageView = (CircularImageView) v.findViewById(R.id.seller_image_view);
+                mSellerImageView = (CircleImageView) v.findViewById(R.id.seller_image_view);
                 mSellerName = (TextView) v.findViewById(R.id.seller_name_text_view);
                 mSellerLogoTextView = (TextView) v.findViewById(R.id.seller_logo_text_view);
                 mSellerTotalProperty = (TextView) v.findViewById(R.id.seller_total_property_text_view);

@@ -9,7 +9,7 @@
     android:paddingStart="@dimen/header_margin"
     android:clipToPadding="false">
 
-    <com.pkmmte.view.CircularImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_profile_image"
         android:layout_width="80dp"
         android:layout_height="80dp"

@@ -21,7 +21,6 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -71,7 +70,6 @@ import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
-import com.pkmmte.view.CircularImageView;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
@@ -82,6 +80,7 @@ import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by sunil on 18/01/16.
@@ -117,7 +116,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
     CustomRatingBar mSellerRating;
 
     @Bind(R.id.seller_image_view)
-    CircularImageView mSellerImageView;
+    CircleImageView mSellerImageView;
 
     @Bind(R.id.seller_logo_text_view)
     TextView mSellerLogoTextView;

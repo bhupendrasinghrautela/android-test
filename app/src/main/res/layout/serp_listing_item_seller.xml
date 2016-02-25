@@ -26,17 +26,13 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <com.pkmmte.view.CircularImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/serp_listing_item_seller_image_view"
             android:layout_width="@dimen/serp_listing_item_seller_image_view_width"
             android:layout_height="@dimen/serp_listing_item_seller_image_view_height"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/serp_listing_item_seller_image_view_margin_top"
-            android:scaleType="centerCrop"
             android:src="@drawable/builder"
-            app:border="true"
-            app:border_color="@color/white"
-            app:border_width="1px"
             />
 
         <TextView

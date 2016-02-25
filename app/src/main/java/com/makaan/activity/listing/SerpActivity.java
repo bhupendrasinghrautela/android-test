@@ -619,17 +619,17 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                     @Override
                     public void sortSelected(String sort, String fieldName, String value, int i) {
                         Properties properties = MakaanEventPayload.beginBatch();
-                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
-                        if(fieldName.equalsIgnoreCase(MakaanEventPayload.PRICE)){
-                            properties.put(MakaanEventPayload.LABEL, sort);
+                        if(!TextUtils.isEmpty(fieldName)) {
+                            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                            if (fieldName.equalsIgnoreCase(MakaanEventPayload.PRICE)) {
+                                properties.put(MakaanEventPayload.LABEL, sort);
+                            } else if (sort.equalsIgnoreCase(MakaanEventPayload.SELLER_RATING)) {
+                                properties.put(MakaanEventPayload.LABEL, sort);
+                            } else if (sort.equalsIgnoreCase(MakaanEventPayload.DATE_POSTED)) {
+                                properties.put(MakaanEventPayload.LABEL, sort);
+                            }
+                            MakaanEventPayload.endBatch(context, MakaanTrackerConstants.Action.sortProperty);
                         }
-                        else if(sort.equalsIgnoreCase(MakaanEventPayload.SELLER_RATING)){
-                            properties.put(MakaanEventPayload.LABEL, sort);
-                        }
-                        else if(sort.equalsIgnoreCase(MakaanEventPayload.DATE_POSTED)){
-                            properties.put(MakaanEventPayload.LABEL, sort);
-                        }
-                        MakaanEventPayload.endBatch(context, MakaanTrackerConstants.Action.sortProperty);
 
                         mSortTextView.setText(sort);
                         mSerpSelector.sort(fieldName, value);

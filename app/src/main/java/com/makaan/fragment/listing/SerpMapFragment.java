@@ -32,6 +32,7 @@ import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.listing.Listing;
 import com.makaan.ui.listing.ListingViewPager;
 import com.makaan.ui.listing.OnListingPagerChangeListener;
+import com.makaan.util.RecentPropertyProjectManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,6 +97,7 @@ public class SerpMapFragment extends MakaanBaseFragment {
     @Override
     public void onResume() {
         mMapView.onResume();
+        mProjectViewPager.notifyDataSetChanged();
         super.onResume();
     }
 
@@ -128,6 +130,9 @@ public class SerpMapFragment extends MakaanBaseFragment {
             adapter.populateMarker(mListings);
 
             mProjectViewPager.setData(adapter.listings, mTotalCount > mListings.size(), callback);
+
+            mProjectViewPager.setCurrentItem(0);
+
             adapter.displayProject();
         }
     }
@@ -318,7 +323,7 @@ public class SerpMapFragment extends MakaanBaseFragment {
             }
             Bitmap markerBitmap =
                     iconGenerator.makeIcon(String.valueOf(listing.bedrooms));*/
-            Bitmap mapIcon = generateMapPointer(listing.bedrooms);
+            Bitmap mapIcon = generateMapPointer(false, listing);
 
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(new LatLng(lat, lng))
@@ -335,13 +340,24 @@ public class SerpMapFragment extends MakaanBaseFragment {
             markers.add(newMarker);
         }
 
-        private Bitmap generateMapPointer(Integer bedrooms) {
+        private Bitmap generateMapPointer(boolean isSelected, Listing listing) {
             ViewGroup container = (ViewGroup)LayoutInflater.from(getContext()).inflate(R.layout.map_pointer, (ViewGroup)null);
-            ((TextView)container.findViewById(R.id.map_pointer_text)).setText(String.valueOf(bedrooms));
+            if(listing.id != null) {
+                if (RecentPropertyProjectManager.getInstance(getActivity()).containsProperty(listing.id)) {
+                    container.setBackgroundResource(R.drawable.map_2);
+                } else {
+                    container.setBackgroundResource(R.drawable.map_1);
+                }
+            }
+            float multiplier = 0.9f;
+            if(isSelected) {
+                multiplier = 1.0f;
+            }
+            ((TextView)container.findViewById(R.id.map_pointer_text)).setText(String.valueOf(listing.bedrooms));
             int measureSpec = View.MeasureSpec.makeMeasureSpec(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             container.measure(measureSpec, measureSpec);
-            int measuredWidth = container.getMeasuredWidth();
-            int measuredHeight = container.getMeasuredHeight();
+            int measuredWidth = (int) (container.getMeasuredWidth() * multiplier);
+            int measuredHeight = (int) (container.getMeasuredHeight() * multiplier);
             container.layout(0, 0, measuredWidth, measuredHeight);
 
             Bitmap r = Bitmap.createBitmap(measuredWidth, measuredHeight, Bitmap.Config.ARGB_8888);
@@ -448,7 +464,7 @@ public class SerpMapFragment extends MakaanBaseFragment {
             /*IconGenerator iconGenerator = new IconGenerator(getActivity());
             iconGenerator.setStyle(isSelected ? IconGenerator.STYLE_ORANGE : IconGenerator.STYLE_RED);
             Bitmap markerBitmap = iconGenerator.makeIcon(String.valueOf(listing.bedrooms));*/
-            return generateMapPointer(listing.bedrooms);
+            return generateMapPointer(isSelected, listing);
         }
 
 
