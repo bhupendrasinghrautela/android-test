@@ -24,14 +24,13 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/serp_listing_card_seller_image_view_top_margin">
 
-            <com.pkmmte.view.CircularImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/seller_image_view"
                 android:layout_width="@dimen/serp_listing_card_seller_image_view_width"
                 android:layout_height="@dimen/serp_listing_card_seller_image_view_height"
                 android:visibility="gone"
-                app:border="true"
-                app:border_color="@color/serp_listing_card_seller_mask_color"
-                app:border_width="@dimen/border_width" />
+                app:civ_border_color="@color/serp_listing_card_seller_mask_color"
+                app:civ_border_width="@dimen/border_width" />
 
             <TextView
                 android:id="@+id/seller_logo_text_view"

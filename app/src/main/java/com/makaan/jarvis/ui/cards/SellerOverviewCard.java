@@ -1,7 +1,6 @@
 package com.makaan.jarvis.ui.cards;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
@@ -12,22 +11,18 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
-import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.jarvis.message.Message;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.ui.view.BaseView;
 import com.makaan.ui.view.CustomRatingBar;
-import com.pkmmte.view.CircularImageView;
-
-import org.w3c.dom.Text;
 
 import java.util.Random;
 
 import butterknife.Bind;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by sunil on 16/01/16.
@@ -43,7 +38,7 @@ public class SellerOverviewCard extends BaseView<Message> {
     TextView locations;
 
     @Bind(R.id.seller_image_view)
-    CircularImageView mSellerImageView;
+    CircleImageView mSellerImageView;
 
     @Bind(R.id.seller_logo_text_view)
     TextView mSellerLogoTextView;

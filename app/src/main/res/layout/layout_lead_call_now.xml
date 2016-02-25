@@ -67,7 +67,7 @@
             android:id="@+id/tv_get_callback"
             android:text="@string/get_callback"
             android:textColor="@color/appThemeRed"
-            android:textSize="@dimen/seller_name_text_size"
+            android:textSize="@dimen/get_callback_text_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

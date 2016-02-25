@@ -65,6 +65,7 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         mNextButton.setEnabled(false);
+        showProgress();
 
         Bundle bundle = getArguments();
         if(bundle != null) {
@@ -108,11 +109,13 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
     public void onResults(ListingByIdsGetEvent listingByIdsGetEvent) {
         if(listingByIdsGetEvent == null || listingByIdsGetEvent.error != null) {
             // TODO
+            showNoResults();
             return;
         }
         mItems = listingByIdsGetEvent.items;
         mAdapter.setData(listingByIdsGetEvent.items);
         mNextButton.setEnabled(true);
+        showContent();
     }
 
     public void setData(Object obj) {

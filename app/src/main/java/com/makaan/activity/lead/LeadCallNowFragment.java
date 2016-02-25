@@ -56,7 +56,8 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
             mButtonCall.setText("call +91" + PhoneNumberUtils.formatNumber(mLeadFormPresenter.getPhone()));
         }
         else{
-            mButtonCall.setVisibility(View.GONE);
+            mButtonCall.setText("NA");
+            mButtonCall.setClickable(false);
         }
     }
 

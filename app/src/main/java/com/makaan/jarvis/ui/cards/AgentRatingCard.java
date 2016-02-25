@@ -14,10 +14,10 @@ import com.makaan.jarvis.JarvisClient;
 import com.makaan.jarvis.message.Message;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.ui.view.BaseView;
-import com.pkmmte.view.CircularImageView;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by sunil on 31/01/16.
@@ -28,7 +28,7 @@ public class AgentRatingCard extends BaseView<Message> {
     RatingBar mRatingBar;
 
     @Bind(R.id.agent_image)
-    CircularImageView mAgentImage;
+    CircleImageView mAgentImage;
 
     @Bind(R.id.btn_submit)
     Button mSubmitButton;

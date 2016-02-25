@@ -54,6 +54,19 @@
 
                     <include layout="@layout/activity_search_base_layout_search_results" />
                 </FrameLayout>
+
+
+                <ImageView
+                    android:id="@+id/activity_search_base_search_no_result_image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+                <ProgressBar
+                    android:id="@+id/activity_search_base_search_loading_progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
             </FrameLayout>
 
         </android.support.design.widget.CoordinatorLayout>

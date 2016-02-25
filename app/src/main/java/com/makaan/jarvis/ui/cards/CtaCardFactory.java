@@ -34,7 +34,7 @@ public class CtaCardFactory {
             multiPropertyCard.bindView(context, message);
             return multiPropertyCard;
 
-        }else if (CtaType.contentPyr == message.properties.ctaType) {
+        }else if (CtaType.contentPyr == message.properties.ctaType || CtaType.childSerp == message.properties.ctaType) {
             PyrPopupCard pyrPopupCard =
                     (PyrPopupCard) LayoutInflater.from(context).inflate(
                             R.layout.jarvis_card_pyr, null);

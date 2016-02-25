@@ -38,7 +38,6 @@ import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
-import com.pkmmte.view.CircularImageView;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
@@ -47,6 +46,7 @@ import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by rohitgarg on 1/7/16.
@@ -71,7 +71,7 @@ public class DefaultListingView extends AbstractListingView {
     ImageView mBathroomImageView;
 
     @Bind(R.id.serp_default_listing_seller_image_view)
-    CircularImageView mSellerImageView;
+    CircleImageView mSellerImageView;
 
     @Bind(R.id.serp_default_listing_seller_logo_text_view)
     TextView mSellerLogoTextView;
@@ -119,6 +119,9 @@ public class DefaultListingView extends AbstractListingView {
 
     @Bind(R.id.serp_default_listing_property_seller_info_relative_layout)
     RelativeLayout mSellerInfoRelativeLayout;
+
+    @Bind(R.id.serp_default_listing_empty_view)
+    View mEmptyView;
 
     private SharedPreferences mPreferences;
     private Listing mListing;
@@ -456,6 +459,11 @@ public class DefaultListingView extends AbstractListingView {
                 j++;
             }
         }
+        if(j == 0) {
+            mEmptyView.setVisibility(View.GONE);
+        } else {
+            mEmptyView.setVisibility(View.VISIBLE);
+        }
         while(j < mPropertyInfoImageViews.size()) {
             mPropertyInfoImageViews.get(j).setVisibility(View.GONE);
             mPropertyInfoTextViews.get(j).setVisibility(View.GONE);
@@ -479,9 +487,13 @@ public class DefaultListingView extends AbstractListingView {
                 if(mListing.isReadyToMove && mListing.age >= 0) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     if(mListing.age <= 1) {
-                        mPropertyInfoTextViews.get(j).setText(String.format("%d yr", mListing.age));
+                        mPropertyInfoTextViews.get(j).setText(String.format("%d - %d yr", mListing.age, mListing.age + 1));
+                    } else if(mListing.age <= 2) {
+                        mPropertyInfoTextViews.get(j).setText(String.format("%d - %d yrs", mListing.age, mListing.age + 1));
+                    } else if(mListing.age <= 5) {
+                        mPropertyInfoTextViews.get(j).setText(String.format("%d - %d yrs", 2, 5));
                     } else {
-                        mPropertyInfoTextViews.get(j).setText(String.format("%d yrs", mListing.age));
+                        mPropertyInfoTextViews.get(j).setText(String.format(">%d yrs", 5));
                     }
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
@@ -622,7 +634,7 @@ public class DefaultListingView extends AbstractListingView {
 
         bundle.putString("name", mListing.lisitingPostedBy.name);
         bundle.putString("score", String.valueOf(mListing.lisitingPostedBy.rating));
-        bundle.putString("phone", "9090909090");//todo: not available in pojo
+        bundle.putString("phone", null);//todo: not available in pojo
         bundle.putString("id", String.valueOf(mListing.lisitingPostedBy.id));
         bundle.putInt("listingId", mListing.lisitingId);
         bundle.putString("source", SerpActivity.class.getName());

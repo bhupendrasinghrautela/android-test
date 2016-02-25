@@ -174,6 +174,7 @@ public class MakaanBuyerApplication extends Application {
             MasterDataCache.getInstance().setUserData(CookiePreferences.getUserInfo(this).getData());
         }
 
+        // TODO verify after update
 //        setPeriodicUpdateRequest();
 
     }

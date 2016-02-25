@@ -12,7 +12,7 @@ import android.support.v4.app.NotificationCompat;
  * The intent for this type of notification will launch an intermediate
  * NotificationReader activity with supplied data
  * */
-public class ActivityLauncherNotification implements MakaanNotification{
+public class ScreenLauncherNotification implements MakaanNotification{
 
 
 	@Override

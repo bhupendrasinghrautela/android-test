@@ -28,10 +28,14 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.google.android.gms.location.LocationListener;
 import com.facebook.FacebookRequestError;
 import com.makaan.R;
@@ -98,6 +102,11 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
     @Bind(R.id.activity_search_base_layout_search_bar_search_image_view)
     ImageView mSearchImageView;
+    @Bind(R.id.activity_search_base_search_no_result_image_view)
+    ImageView mNoResultsImageView;
+
+    @Bind(R.id.activity_search_base_search_loading_progress_bar)
+    ProgressBar mLoadingProgressBar;
 
     @Bind(R.id.activity_search_base_layout_search_bar_search_image_button)
     ImageButton mSearchImageButton;
@@ -247,10 +256,12 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     public boolean getLocationAvailabilty() {
+        return false;
+        /*
         if(mLocationManager == null) {
             mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         }
-        return mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        return mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);*/
     }
 
     /**
@@ -325,7 +336,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 mSearchLayoutFrameLayout.setVisibility(View.VISIBLE);
             } else {
                 mSearchLayoutFrameLayout.setVisibility(View.GONE);
-                setSearchResultFrameLayoutVisibility(false);
+                showContent();
             }
         } else {
             if(showSearchBar) {
@@ -577,8 +588,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             }
 
         }
-
-        setSearchResultFrameLayoutVisibility(false);
+        showContent();
 
         if(supportsListing()  && (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)
                 || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchResponseItem.type))) {
@@ -758,7 +768,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         // if visibility sent is false, then hide search result frame layout
         if(!searchViewVisible) {
             if (mSearchLayoutFrameLayout != null) {
-                setSearchResultFrameLayoutVisibility(false);
+                showContent();
             }
         }
 
@@ -882,13 +892,13 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(mSelectedSearches.get(0).type))) {
             LocationService service = (LocationService) MakaanServiceFactory.getInstance().getService(LocationService.class);
             service.getTopNearbyLocalitiesAsSearchResult(mSelectedSearches.get(mSelectedSearches.size() - 1));
-            setSearchResultFrameLayoutVisibility(true);
+            showSearchResults();
         } else {
             ArrayList<SearchResponseItem> searches = RecentSearchManager.getInstance(getApplicationContext()).getRecentSearches(this);
             if (searches != null && searches.size() > 0) {
 
                 mSearchResultReceived = false;
-                setSearchResultFrameLayoutVisibility(true);
+                showSearchResults();
                 if(mSearches == null) {
                     mSearches = new ArrayList<>();
                 } else {
@@ -915,10 +925,10 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                         LocationService service = (LocationService) MakaanServiceFactory.getInstance().getService(LocationService.class);
                         service.getTopLocalitiesAsSearchResult(Session.apiLocation.centerLatitude, Session.apiLocation.centerLongitude, Session.apiLocation.id);
                     }
-                    setSearchResultFrameLayoutVisibility(true);
+                    showSearchResults();
                 } else {
                     // we need empty layout even when no search results are present
-                    setSearchResultFrameLayoutVisibility(true);
+                    showSearchResults();
                 }
             }
         }
@@ -940,7 +950,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         }
     }
 
-    private void setSearchResultFrameLayoutVisibility(boolean visible) {
+    /*private void setSearchResultFrameLayoutVisibility(boolean visible) {
         mSearchResultFrameLayout.setVisibility(visible ? View.VISIBLE : View.GONE);
         if(visible) {
             if (mSelectedSearchAdapter.getItemCount() > 0) {
@@ -949,7 +959,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 mSearchResultsFlowLayout.setVisibility(View.GONE);
             }
         }
-    }
+    }*/
 
     public void onResults(SearchResultEvent searchResultEvent) {
         if(null==searchResultEvent || null!=searchResultEvent.error) {
@@ -960,7 +970,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         if(mSearchResultFrameLayout.getVisibility() == View.VISIBLE) {
 
             mSearchResultReceived = true;
-            setSearchResultFrameLayoutVisibility(true);
+            showSearchResults();
             this.mSearches = searchResultEvent.searchResponse.getData();
             clearSelectedSearches();
             if(TextUtils.isEmpty(mSearchEditText.getText())) {
@@ -1177,6 +1187,47 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         }else{
             mTextViewBuyerInitials.setVisibility(View.GONE);
             mImageViewBuyer.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    protected void showProgress() {
+        mContentFrameLayout.setVisibility(View.GONE);
+        mNoResultsImageView.setVisibility(View.GONE);
+        mLoadingProgressBar.setVisibility(View.VISIBLE);
+        mSearchResultFrameLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void showNoResults() {
+        mContentFrameLayout.setVisibility(View.GONE);
+        mNoResultsImageView.setVisibility(View.VISIBLE);
+        mLoadingProgressBar.setVisibility(View.GONE);
+        mSearchResultFrameLayout.setVisibility(View.GONE);
+
+//        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(mNoResultsImageView);
+        Glide.with(this).load(R.raw.no_result).crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mNoResultsImageView);
+
+    }
+
+    @Override
+    protected void showContent() {
+        mContentFrameLayout.setVisibility(View.VISIBLE);
+        mNoResultsImageView.setVisibility(View.GONE);
+        mLoadingProgressBar.setVisibility(View.GONE);
+        mSearchResultFrameLayout.setVisibility(View.GONE);
+    }
+
+    private void showSearchResults() {
+        mContentFrameLayout.setVisibility(View.VISIBLE);
+        mNoResultsImageView.setVisibility(View.GONE);
+        mLoadingProgressBar.setVisibility(View.GONE);
+
+        mSearchResultFrameLayout.setVisibility(View.VISIBLE);
+        if (mSelectedSearchAdapter.getItemCount() > 0) {
+            mSearchResultsFlowLayout.setVisibility(View.VISIBLE);
+        } else {
+            mSearchResultsFlowLayout.setVisibility(View.GONE);
         }
     }
 }

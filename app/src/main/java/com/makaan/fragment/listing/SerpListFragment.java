@@ -16,6 +16,7 @@ import com.makaan.adapter.listing.SerpListingAdapter;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.jarvis.analytics.AnalyticsConstants;
 import com.makaan.jarvis.analytics.AnalyticsService;
+import com.makaan.jarvis.event.JarvisTrackExtraData;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.search.SearchResponseItem;
@@ -48,7 +49,6 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
     private String mSearchedEntities = "";
 
     private boolean mIsChildSerp;
-    private boolean mIsIdentifyEventSent;
 
     int page;
     private SerpRequestCallback mSerpRequestCallback;
@@ -57,6 +57,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
     private ArrayList<Listing> mListings = new ArrayList<Listing>();
     private ArrayList<GroupListing> mGroupListings = new ArrayList<GroupListing>();
     private int mTotalCount;
+    private JarvisTrackExtraData jarvisTrackExtraData;
 
     public static SerpListFragment init(boolean isChildSerp) {
         // create listing fragment to show listing of the request we are receiving
@@ -65,7 +66,6 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         bundle.putBoolean(KEY_IS_CHILD_SERP, isChildSerp);
         fragment.setArguments(bundle);
         return fragment;
-
     }
 
     @Override
@@ -93,11 +93,18 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
                 /*if(mTotalPropertiesTextView != null) {
                     mTotalPropertiesTextView.setText(String.format("%d %s", mTotalCount, mSearchedEntities));
                 }*/
-                mListingAdapter.setData(String.format("%s %s", StringUtil.getFormattedNumber(mTotalCount), mSearchedEntities), mListings, mGroupListings, mRequestType);
+                mListingAdapter.setData(String.format("%s %s", StringUtil.getFormattedNumber(mTotalCount),
+                        mSearchedEntities), mListings, mGroupListings, mRequestType);
                 if(mTotalCount > mListings.size()) {
                     mListingRecyclerView.setHasMoreItems(true);
                 } else {
                     mListingRecyclerView.setHasMoreItems(false);
+                }
+
+                if(mTotalCount == 0) {
+                    showNoResults();
+                } else {
+                    showContent();
                 }
             } else {
                 mListingRecyclerView.setHasMoreItems(false);
@@ -107,7 +114,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
     }
 
     private void initializeRecyclerViewData() {
-        mListingAdapter = new SerpListingAdapter(getActivity(), mSerpRequestCallback, mRequestType);
+        mListingAdapter = new SerpListingAdapter(getActivity(), mSerpRequestCallback, mRequestType, jarvisTrackExtraData);
         mLayoutManager = new LinearLayoutManager(getActivity());
 
         mListingRecyclerView.setLayoutManager(mLayoutManager);
@@ -117,7 +124,6 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        identifyUser();
     }
 
     public void updateListings(ArrayList<Listing> listings, ArrayList<GroupListing> groupListings,
@@ -186,9 +192,11 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
 
             if(groupListings != null) {
                 mGroupListings.addAll(groupListings);
-                mListingAdapter.setData(String.format("%s %s", StringUtil.getFormattedNumber(listingTotalCount), mSearchedEntities), mListings, mGroupListings, mRequestType);
+                mListingAdapter.setData(String.format("%s %s", StringUtil.getFormattedNumber(listingTotalCount),
+                        mSearchedEntities), mListings, mGroupListings, mRequestType);
             } else {
-                mListingAdapter.setData(String.format("%s %s", StringUtil.getFormattedNumber(listingTotalCount), mSearchedEntities), mListings, null, mRequestType);
+                mListingAdapter.setData(String.format("%s %s", StringUtil.getFormattedNumber(listingTotalCount),
+                        mSearchedEntities), mListings, null, mRequestType);
             }
 
             if(listingTotalCount > mListings.size()) {
@@ -197,6 +205,11 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
                 mListingRecyclerView.setHasMoreItems(false);
             }
             mListingRecyclerView.setIsLoading(false);
+            if(listingTotalCount == 0) {
+                showNoResults();
+            } else {
+                showContent();
+            }
         } else {
             mListings.clear();
             mListings.addAll(listings);
@@ -212,24 +225,8 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         mSerpRequestCallback.loadMoreItems();
     }
 
-    private void identifyUser(){
-        if(mIsIdentifyEventSent){
-            return;
-        }
-
-        mIsIdentifyEventSent = true;
-
-        try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put(AnalyticsConstants.KEY_PAGE_TYPE, SerpActivity.SCREEN_NAME);
-            AnalyticsService analyticsService =
-                    (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
-            analyticsService.track(AnalyticsService.Type.identify, jsonObject);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
+    public void setJarvisTrackExtraData(JarvisTrackExtraData jarvisTrackExtraData) {
+        this.jarvisTrackExtraData = jarvisTrackExtraData;
     }
 
     @Override

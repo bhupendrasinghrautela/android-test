@@ -253,6 +253,7 @@
     <dimen name="rating_star_width">12dp</dimen>
     <dimen name="rating_star_height">12dp</dimen>
     <dimen name="seller_image_padding_top">5dp</dimen>
+    <dimen name="get_callback_text_size">16sp</dimen>
 
     <!--pyr location card-->
     <dimen name="pyr_location_card_padding">5dp</dimen>
@@ -293,15 +294,15 @@
     <dimen name="serp_listing_card_badge_width">64dp</dimen>
     <dimen name="serp_listing_card_badge_height">28dp</dimen>
     <dimen name="serp_listing_card_badge_margin_top">7dp</dimen>
-    <dimen name="serp_listing_card_badge_margin_left">2dp</dimen>
+    <dimen name="serp_listing_card_badge_margin_left">4dp</dimen>
     <dimen name="serp_listing_card_badge_text_margin_left">9dp</dimen>
     <dimen name="serp_listing_card_badge_text_height">19dp</dimen>
     <dimen name="serp_listing_card_badge_text_size">16sp</dimen>
 
     <dimen name="serp_listing_card_empty_view_height">1dp</dimen>
 
-    <dimen name="serp_listing_card_property_image_width">175dp</dimen>
-    <dimen name="serp_listing_card_property_image_height">131dp</dimen>
+    <dimen name="serp_listing_card_property_image_width">176dp</dimen>
+    <dimen name="serp_listing_card_property_image_height">132dp</dimen>
 
     <dimen name="serp_listing_card_property_price_rupee_image_left_margin">7dp</dimen>
     <dimen name="serp_listing_card_property_price_rupee_image_top_margin">28dp</dimen>
@@ -515,11 +516,11 @@
     <dimen name="fragment_dialog_filters_submit_button_text_size">18sp</dimen>
     <dimen name="fragment_dialog_filters_submit_button_empty_view_margin_bottom">5dp</dimen>
 
-    <dimen name="fragment_dialog_filters_back_button_width">36dp</dimen>
-    <dimen name="fragment_dialog_filters_back_button_height">36dp</dimen>
-    <dimen name="fragment_dialog_filters_back_button_margin_left">10dp</dimen>
-    <dimen name="fragment_dialog_filters_back_button_margin_top">6dp</dimen>
-    <dimen name="fragment_dialog_filters_back_button_margin_bottom">6dp</dimen>
+    <dimen name="fragment_dialog_filters_back_button_width">28dp</dimen>
+    <dimen name="fragment_dialog_filters_back_button_height">28dp</dimen>
+    <dimen name="fragment_dialog_filters_back_button_margin_left">12dp</dimen>
+    <dimen name="fragment_dialog_filters_back_button_margin_top">10dp</dimen>
+    <dimen name="fragment_dialog_filters_back_button_margin_bottom">10dp</dimen>
 
     <dimen name="fragment_dialog_filters_filter_text_margin_left">14dp</dimen>
     <dimen name="fragment_dialog_filters_filter_text_margin_top">16dp</dimen>
@@ -679,7 +680,7 @@
     <dimen name="listing_brief_view_layout_property_address_text_view_top_margin">12dp</dimen>
     <dimen name="listing_brief_view_layout_property_address_text_view_text_size">16sp</dimen>
 
-    <dimen name="listing_brief_view_layout_badge_margin_left">8dp</dimen>
+    <dimen name="listing_brief_view_layout_badge_margin_left">-8dp</dimen>
     <dimen name="listing_brief_view_layout_badge_margin_top">8dp</dimen>
     <dimen name="listing_brief_view_layout_badge_width">58dp</dimen>
     <dimen name="listing_brief_view_layout_badge_height">22dp</dimen>
@@ -687,7 +688,7 @@
     <dimen name="listing_brief_view_layout_text_margin_left">9dp</dimen>
     <dimen name="listing_brief_view_layout_text_size">16sp</dimen>
 
-    <dimen name="map_listing_view_pager_page_gap">14dp</dimen>
+    <dimen name="map_listing_view_pager_page_gap">7dp</dimen>
     <dimen name="map_listing_view_pager_page_left_padding">10dp</dimen>
     <dimen name="map_listing_view_pager_page_right_padding">20dp</dimen>
     <dimen name="map_listing_view_pager_page_bottom_padding">10dp</dimen>
@@ -1178,11 +1179,11 @@
     <dimen name="neighbor_category_drawable_radius">12dp</dimen>
 
     <!-- Buyer Journey Dimens -->
-    <dimen name="activity_base_buyer_journey_layout_back_button_width">32dp</dimen>
-    <dimen name="activity_base_buyer_journey_layout_back_button_height">32dp</dimen>
-    <dimen name="activity_base_buyer_journey_layout_back_button_margin_top">6dp</dimen>
-    <dimen name="activity_base_buyer_journey_layout_back_button_margin_left">15dp</dimen>
-    <dimen name="activity_base_buyer_journey_layout_back_button_margin_bottom">5dp</dimen>
+    <dimen name="activity_base_buyer_journey_layout_back_button_width">28dp</dimen>
+    <dimen name="activity_base_buyer_journey_layout_back_button_height">28dp</dimen>
+    <dimen name="activity_base_buyer_journey_layout_back_button_margin_top">8dp</dimen>
+    <dimen name="activity_base_buyer_journey_layout_back_button_margin_left">16dp</dimen>
+    <dimen name="activity_base_buyer_journey_layout_back_button_margin_bottom">7dp</dimen>
 
     <dimen name="activity_base_buyer_journey_layout_user_image_view_width">42dp</dimen>
     <dimen name="activity_base_buyer_journey_layout_user_image_view_height">42dp</dimen>
@@ -1298,8 +1299,8 @@
     <dimen name="fragment_set_alerts_stay_informed_text_size">20sp</dimen>
     <dimen name="fragment_set_alerts_stay_informed_text_margin_left">20dp</dimen>
 
-    <dimen name="fragment_set_alerts_back_button_width">36dp</dimen>
-    <dimen name="fragment_set_alerts_back_button_height">36dp</dimen>
+    <dimen name="fragment_set_alerts_back_button_width">28dp</dimen>
+    <dimen name="fragment_set_alerts_back_button_height">28dp</dimen>
 
     <dimen name="fragment_set_alerts_name_edit_text_margin_left">20dp</dimen>
     <dimen name="fragment_set_alerts_name_edit_text_margin_right">20dp</dimen>

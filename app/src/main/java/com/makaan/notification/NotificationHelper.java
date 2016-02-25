@@ -9,6 +9,12 @@ import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 
 import com.makaan.R;
+import com.makaan.activity.city.CityActivity;
+import com.makaan.activity.listing.ListingDetailActivity;
+import com.makaan.activity.listing.PropertyActivity;
+import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.locality.LocalityActivity;
+import com.makaan.activity.project.ProjectActivity;
 
 
 /**
@@ -29,14 +35,39 @@ public class NotificationHelper{
 	 * Enum for determining notification type
 	 * */
 	public enum NotificationType{
+		BROWSER(101), SCREEN_LAUNCHER(102), NONE(103);
 
+		int value;
+
+		NotificationType(int code){
+			value = code;
+		}
+
+		public int getValue() {
+			return value;
+		}
+
+		public static NotificationType fromTypeId(int typeId) {
+			for (NotificationType type : NotificationType.values()) {
+				if (typeId==type.getValue()) {
+					return type;
+				}
+			}
+			return null;
+		}
 	}
-	
+
 	/**
 	 * Enum for determining activity name
 	 * */
 	public enum ScreenType{
-		LISTING(201), ENQUIRY(202), FAQ(203), NONE(204);
+
+		FAVORITE_PROJECT(201), PROJECT_PAGE(202),
+		SERP_PAGE(301),LISTING_PAGE(302),
+		CITY_PAGE (401), LOCALITY_PAGE(402),
+		BUYER_DASHBOARD(501), BUYER_SAVED_SEARCHES(502),
+		BUYER_SHORTLIST(503),BUYER_SITE_VISIT(504),
+		BUYER_CASHBACK(505), BUYER_LOAN(506);
 
 		int value;
 
@@ -58,31 +89,7 @@ public class NotificationHelper{
 		}
 	}
 
-	/**
-	 * Enum for determining activity name
-	 * */
-	public enum SortType{
-		DATE_RECENT(301), DATE_OLDEST(302);
 
-		int value;
-
-		SortType(int code){
-			value = code;
-		}
-
-		public int getValue() {
-			return value;
-		}
-
-		public static SortType fromTypeId(int typeId) {
-			for (SortType type : SortType.values()) {
-				if (typeId==type.getValue()) {
-					return type;
-				}
-			}
-			return null;
-		}
-	}
 
 	/**
 	 * A utility for creating a NotificationCompact.Builder
@@ -186,9 +193,76 @@ public class NotificationHelper{
 			return null;
 		}
 
+		switch(screenType){
+			case PROJECT_PAGE:
+				resultIntent = getProjectPageIntent(context, attributes.getNotificationPayload());
+				break;
+			case CITY_PAGE:
+				resultIntent = getCityPageIntent(context, attributes.getNotificationPayload());
+				break;
+			case LOCALITY_PAGE:
+				resultIntent = getLocalityPageIntent(context, attributes.getNotificationPayload());
+				break;
+			case LISTING_PAGE:
+				resultIntent = getListingPageIntent(context, attributes.getNotificationPayload());
+				break;
+			case SERP_PAGE:
+				resultIntent = getSerpPageIntent(context, attributes.getNotificationPayload());
+				break;
+
+		}
+
 
 
 		return resultIntent;
+	}
+
+	private static Intent getProjectPageIntent(Context context, NotificationPayload payload){
+		if(payload==null){
+			return null;
+		}
+		long projectId = payload.getProjectId();
+		Intent intent = new Intent(context, ProjectActivity.class);
+		intent.putExtra(ProjectActivity.PROJECT_ID, projectId);
+		return intent;
+	}
+	private static Intent getCityPageIntent(Context context, NotificationPayload payload){
+		if(payload==null){
+			return null;
+		}
+		long cityId = payload.getCityId();
+		Intent intent = new Intent(context, ProjectActivity.class);
+		intent.putExtra(CityActivity.CITY_ID, cityId);
+		return intent;
+	}
+
+	private static Intent getLocalityPageIntent(Context context, NotificationPayload payload){
+		if(payload==null){
+			return null;
+		}
+		long localityId = payload.getLocalityId();
+		Intent intent = new Intent(context, ProjectActivity.class);
+		intent.putExtra(LocalityActivity.LOCALITY_ID, localityId);
+		return intent;
+	}
+
+	private static Intent getListingPageIntent(Context context, NotificationPayload payload){
+		if(payload==null){
+			return null;
+		}
+		long listingId = payload.getListingId();
+		Intent intent = new Intent(context, ProjectActivity.class);
+		intent.putExtra(PropertyActivity.LISTING_ID, listingId);
+		return intent;
+	}
+
+	private static Intent getSerpPageIntent(Context context, NotificationPayload payload){
+		if(payload==null){
+			return null;
+		}
+		String serpFilterUrl = payload.getSerpFilterUrl();
+		Intent intent = new Intent(context, SerpActivity.class);
+		return intent;
 	}
 
 

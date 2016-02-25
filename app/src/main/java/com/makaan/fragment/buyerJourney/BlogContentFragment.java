@@ -42,8 +42,6 @@ public class BlogContentFragment extends MakaanBaseFragment {
 
     @Bind(R.id.fragment_blog_content_recycler_view)
     RecyclerView mRecyclerView;
-    @Bind(R.id.fragment_blog_content_progress_bar)
-    ProgressBar mProgressBar;
 
     private BlogContentAdapter mAdapter;
 
@@ -73,6 +71,7 @@ public class BlogContentFragment extends MakaanBaseFragment {
         if(bundle!=null && !TextUtils.isEmpty(bundle.getString(TYPE))) {
             String type = bundle.getString(TYPE);
             ((BlogService) MakaanServiceFactory.getInstance().getService(BlogService.class)).getBlogs(type);
+            showProgress();
             mType = type;
 
         } else {
@@ -200,14 +199,15 @@ public class BlogContentFragment extends MakaanBaseFragment {
     public synchronized void onResults(BlogByTagEvent blogByTagGetEvent) {
         if(null== blogByTagGetEvent || null!=blogByTagGetEvent.error){
             //TODO handle error
+            showNoResults();
             return;
         }
 
-        if(blogByTagGetEvent.blogItems != null && blogByTagGetEvent.blogItems.size() > 0) {
-            mProgressBar.setVisibility(View.GONE);
+        if(blogByTagGetEvent.blogItems != null) {
+            showContent();
             mRecyclerView.setVisibility(View.VISIBLE);
 
-            if(mAdapter != null) {
+            if (mAdapter != null) {
                 mAdapter.setData(blogByTagGetEvent.blogItems);
             }
         }

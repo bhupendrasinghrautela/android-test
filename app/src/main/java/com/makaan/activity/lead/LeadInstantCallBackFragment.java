@@ -2,6 +2,7 @@ package com.makaan.activity.lead;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,7 +83,7 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
     void getInstantCallClick() {
         if (ValidationUtil.isValidPhoneNumber(mNumber.getText().toString().trim(),mCountrySpinner.getSelectedItem().toString())) {
             //TODO pass values instead of hardcoded values
-            ((LeadInstantCallbackService) MakaanServiceFactory.getInstance().getService(LeadInstantCallbackService.class)).makeInstantCallbackRequest(mNumber.getText().toString().trim(), "911166765364", mCountryId, "");
+            ((LeadInstantCallbackService) MakaanServiceFactory.getInstance().getService(LeadInstantCallbackService.class)).makeInstantCallbackRequest(mNumber.getText().toString().trim(), "911166765339", mCountryId, "");
         } else {
             Bundle bundle =getArguments();
             if(bundle!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
@@ -105,6 +106,13 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
             }
             Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.invalid_phone_no_toast),
                     Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Subscribe
+    public void getConnectNowResponse(InstantCallbackResponse response){
+        if(response.getStatusCode()==null && !response.getStatusCode().equals("2XX")){
+            Toast.makeText(getActivity(), getActivity().getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
         }
     }
 

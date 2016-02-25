@@ -3,6 +3,7 @@ package com.makaan.network;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -28,6 +29,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
@@ -40,6 +44,7 @@ import java.util.Map;
 public class MakaanNetworkClient {
 
     public static final String TAG = MakaanNetworkClient.class.getSimpleName();
+    private final Context context;
 
     private RequestQueue makaanGetRequestQueue;
     private ImageLoader mImageLoader;
@@ -53,6 +58,7 @@ public class MakaanNetworkClient {
         makaanGetRequestQueue = Volley.newRequestQueue(appContext);
 
         assetManager = appContext.getAssets();
+        context = appContext;
     }
 
     public static void init(Context appContext) {
@@ -97,12 +103,20 @@ public class MakaanNetworkClient {
 
         if (null != mockFile) {
 
-            try {
-                JSONObject mockFileResponse = readFromMockFile(mockFile);
-                //JSONObject response = mockFileResponse.getJSONObject(ResponseConstants.DATA);
-                jsonGetCallback.onSuccess(mockFileResponse);
-            } catch (Exception e) {
-                Log.e(TAG, "Exception", e);
+            JSONObject diskFileFileResponse = readFromDiskFile(mockFile);
+            if(diskFileFileResponse != null) {
+                jsonGetCallback.onSuccess(diskFileFileResponse);
+            } else {
+
+                try {
+                    JSONObject mockFileResponse = readFromMockFile(mockFile);
+                    //JSONObject response = mockFileResponse.getJSONObject(ResponseConstants.DATA);
+                    jsonGetCallback.onSuccess(mockFileResponse);
+
+                    writeMockFileToDisk(mockFileResponse, mockFile);
+                } catch (Exception e) {
+                    Log.e(TAG, "Exception", e);
+                }
             }
 
         } else {
@@ -128,6 +142,56 @@ public class MakaanNetworkClient {
             addToRequestQueue(jsonRequest, tag);
         }
 
+    }
+
+    private void writeMockFileToDisk(JSONObject mockFileResponse, String mockFile) {
+        if(context == null || mockFileResponse == null || TextUtils.isEmpty(mockFile)) {
+            return;
+        }
+        FileOutputStream outputStream;
+
+        try {
+            outputStream = context.openFileOutput(mockFile, Context.MODE_PRIVATE);
+            outputStream.write(mockFileResponse.toString().getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private JSONObject readFromDiskFile(String mockFile) {
+        if(context == null) {
+            return null;
+        }
+        File file = new File(context.getFilesDir(), mockFile);
+        if(file.exists()) {
+            //Read text from file
+            StringBuilder text = new StringBuilder();
+
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+
+                while ((line = br.readLine()) != null) {
+                    text.append(line);
+                    text.append('\n');
+                }
+                br.close();
+
+                JSONArray response = null;
+                try {
+                    JSONObject diskFileResponse = new JSONObject(text.toString());
+                    return diskFileResponse;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            catch (IOException e) {
+                //You'll need to add proper error handling here
+            }
+        }
+
+        return null;
     }
 
 

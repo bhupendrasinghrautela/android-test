@@ -28,7 +28,7 @@
                 android:layout_marginBottom="@dimen/activity_search_base_layout_search_bar_back_button_margin_bottom"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:background="@drawable/back_arrow_white" />
+                android:background="@mipmap/back_white" />
         </FrameLayout>
         <TextView
             android:id="@+id/fragment_child_serp_cluster_info_text_view"

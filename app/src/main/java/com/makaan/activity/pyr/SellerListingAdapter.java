@@ -20,10 +20,11 @@ import com.makaan.fragment.pyr.TopSellersFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.agents.Agent;
 import com.makaan.response.agents.TopAgent;
-import com.pkmmte.view.CircularImageView;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by makaanuser on 6/1/16.
@@ -64,7 +65,7 @@ public class SellerListingAdapter extends RecyclerView.Adapter<RecyclerView.View
         Random rnd = new Random();
         int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
         shapeDrawable.getPaint().setColor(color);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             mSellerViewHolder.mTextSellerImage.setBackground(shapeDrawable);
         }
         else{
@@ -117,7 +118,7 @@ public class SellerListingAdapter extends RecyclerView.Adapter<RecyclerView.View
         return topAgentsList.size();
     }
 
-    public void setAgentImage(Agent agent, final TextView mNameImage, final CircularImageView imageView){
+    public void setAgentImage(Agent agent, final TextView mNameImage, final CircleImageView imageView){
         if(agent.user.profilePictureURL!=null && agent.user.profilePictureURL.length()>0 )
         {
 

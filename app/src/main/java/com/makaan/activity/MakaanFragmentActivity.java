@@ -1,10 +1,18 @@
 package com.makaan.activity;
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.makaan.R;
 import com.makaan.jarvis.BaseJarvisActivity;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.ui.MakaanProgressDialog;
@@ -13,13 +21,16 @@ import com.makaan.util.AppBus;
 import com.makaan.util.AppUtils;
 import com.squareup.otto.Subscribe;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
  * Created by vaibhav on 23/12/15.
  */
 public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
-
+    ImageView mNoResultsImageView;
+    ProgressBar mLoadingProgressBar;
+    FrameLayout mContentFrameLayout;
 
     private MakaanProgressDialog progressDialog;
 
@@ -37,6 +48,17 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
             showNoNetworkFound();
         }
 
+    }
+
+    @Override
+    public void setContentView(@LayoutRes int layoutResID) {
+        super.setContentView(R.layout.activity_makaan_base);
+
+        mNoResultsImageView = (ImageView) findViewById(R.id.activity_makaan_base_no_result_image_view);
+        mLoadingProgressBar = (ProgressBar) findViewById(R.id.activity_makaan_base_loading_progress_bar);
+        mContentFrameLayout = (FrameLayout) findViewById(R.id.activity_makaan_base_content_frame_layout);
+
+        getLayoutInflater().inflate(layoutResID, mContentFrameLayout, true);
     }
 
     @Override
@@ -118,6 +140,27 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
         super.onDestroy();
         ButterKnife.unbind(this);
 
+    }
+
+    protected void showProgress() {
+        mContentFrameLayout.setVisibility(View.GONE);
+        mNoResultsImageView.setVisibility(View.GONE);
+        mLoadingProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    protected void showNoResults() {
+        mContentFrameLayout.setVisibility(View.GONE);
+        mNoResultsImageView.setVisibility(View.VISIBLE);
+        mLoadingProgressBar.setVisibility(View.GONE);
+
+//        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(mNoResultsImageView);
+        Glide.with(this).load(R.raw.no_result).crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mNoResultsImageView);
+    }
+
+    protected void showContent() {
+        mContentFrameLayout.setVisibility(View.VISIBLE);
+        mNoResultsImageView.setVisibility(View.GONE);
+        mLoadingProgressBar.setVisibility(View.GONE);
     }
 
 
