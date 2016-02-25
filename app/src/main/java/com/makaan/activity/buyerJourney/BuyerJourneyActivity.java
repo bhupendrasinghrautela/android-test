@@ -32,7 +32,6 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.user.UserResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.user.UserLogoutService;
-import com.makaan.util.ImageUtils;
 import com.pkmmte.view.CircularImageView;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
@@ -224,6 +223,9 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
 
                                     @Override
                                     public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
+                                        if (b && imageContainer.getBitmap() == null) {
+                                            return;
+                                        }
                                         mProfileImage.setImageBitmap(imageContainer.getBitmap());
                                     }
                                 }
@@ -335,6 +337,7 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
     public void onLogoutResult(UserLogoutEvent userLogoutEvent){
         if(null!=userLogoutEvent && userLogoutEvent.isLogoutSuccessfull()){
             CookiePreferences.setUserLoggedOut(this);
+            CookiePreferences.setUserInfo(this,null);
             //TODO also clear metadata and userinfo
             finish();
         }else{

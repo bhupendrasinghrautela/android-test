@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:id="@+id/key_detail_container"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <include layout="@layout/property_empty_view"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/property_page_amenities_margin_top"
+        android:text="key details"
+        android:typeface="sans"
+        android:textColor="@color/amenity_title_color"
+        android:textSize="@dimen/property_page_average_text_size"
+        android:layout_marginBottom="@dimen/property_page_amenities_margin_bottom"
+        android:layout_height="wrap_content"/>
+    <com.makaan.ui.FixedGridView
+        android:id="@+id/key_details_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="2" />
+</LinearLayout>

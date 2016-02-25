@@ -12,6 +12,7 @@ import com.makaan.adapter.listing.CustomAbstractHorizontalScrollViewAdapter;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.pojo.HorizontalScrollItem;
 import com.makaan.response.listing.detail.ListingDetail;
+import com.makaan.response.project.Project;
 import com.makaan.ui.BaseLinearLayout;
 import com.makaan.ui.listing.CustomHorizontalScrollView;
 import com.makaan.util.AppUtils;
@@ -33,6 +34,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
     List<HorizontalScrollItem> mOverViewItems;
     private Context mContext;
     private ListingDetail mDetail;
+    private Project mProject;
 
 
 /*    "status",
@@ -55,7 +57,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
         STATUS("status"),POSSESSION("possession"),AGE("age"),BATH("bathrooms"),FLOOR("floor"),BALCONY("balcony"),
         TOTAL_FLOOR("totalFloor"),CATEGORY("category"),BOOK_AMOUNT("bookamt"),
         OPEN_SIDES("openSides"),ENTRY_ROAD_WIDTH("entryRoadWidth"),FACING("facing"),
-        PARKING("parking"),OVERLOOK("overlook"),ADD_ROOM("addroom"),OWNER_TYPE("ownerType");
+        PARKING("parking"),OVERLOOK("overlook"),ADD_ROOM("addroom"),OWNER_TYPE("ownerType"),TYPE("type");
 
         private String value;
         OVERVIEW(String string) {
@@ -94,7 +96,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
     public void bindView(ListingDetail item) {
         mDetail = item;
         mOverViewOrder = MasterDataCache.getInstance().getDisplayOrder(item.listingCategory,item.property.unitType,"overview");
-        createAdapterData();
+        createAdapterDataForListing();
         if(mOverViewItems==null || mOverViewItems.isEmpty() ){
             this.setVisibility(GONE);
             return;
@@ -106,7 +108,46 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
         }
     }
 
-    private void createAdapterData() {
+    public void bindView(Project item) {
+        mProject = item;
+        createAdapterDataForProject();
+        if(mOverViewItems==null || mOverViewItems.isEmpty() ){
+            this.setVisibility(GONE);
+            return;
+        }
+        else {
+            this.setVisibility(VISIBLE);
+            ListingOverViewAdapter listingOverViewAdapter = new ListingOverViewAdapter(mContext, mOverViewItems);
+            mOverViewScroll.setAdapter(listingOverViewAdapter);
+        }
+    }
+
+    private void createAdapterDataForProject() {
+        mOverViewItems = new ArrayList<>();
+        if(mProject.projectStatus!=null){
+            HorizontalScrollItem overViewItem = new HorizontalScrollItem();
+            overViewItem.name = OVERVIEW.STATUS.toString();
+            overViewItem.resourceId = R.drawable.under_construction;
+            overViewItem.value = mProject.projectStatus;
+            mOverViewItems.add(overViewItem);
+        }
+        if(mProject.possessionDate!=null){
+            HorizontalScrollItem overViewItem = new HorizontalScrollItem();
+            overViewItem.name = OVERVIEW.POSSESSION.toString();
+            overViewItem.resourceId = R.drawable.possession;
+            overViewItem.value = AppUtils.getMMMYYYYDateStringFromEpoch(mProject.possessionDate);
+            mOverViewItems.add(overViewItem);
+        }
+        if(mProject.dominantUnitType !=null){
+            HorizontalScrollItem overViewItem = new HorizontalScrollItem();
+            overViewItem.name = OVERVIEW.TYPE.toString();
+            overViewItem.resourceId = R.drawable.under_construction;
+            overViewItem.value = mProject.dominantUnitType;
+            mOverViewItems.add(overViewItem);
+        }
+    }
+
+    private void createAdapterDataForListing() {
         mOverViewItems = new ArrayList<>();
         for(String string : mOverViewOrder){
             OVERVIEW overview = OVERVIEW.getEnum(string);
@@ -188,7 +229,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                         if(mDetail.facingId!=null) {
                             overViewItem.name = overview.toString();
                             overViewItem.resourceId = R.drawable.possession;
-                            overViewItem.value = String.valueOf(mDetail.facingId);
+                            overViewItem.value = MasterDataCache.getInstance().getDirection(mDetail.facingId);
                         }
                         break;
                     default:

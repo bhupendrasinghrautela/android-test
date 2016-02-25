@@ -233,7 +233,6 @@ public class PyrPageFragment extends Fragment {
     @Subscribe
     public void onResults(TopRentAgentsPyrEvent topRentAgentsPyrEvent) {
         ArrayList<TopAgent> topAgentList = topRentAgentsPyrEvent.topAgents;
-        Toast.makeText(getActivity(), "in Contact:" + topAgentList.size(), Toast.LENGTH_SHORT).show();
         if ( topAgentList.size() > 0) {
             PyrPagePresenter mPyrPagePresenter = PyrPagePresenter.getPyrPagePresenter();
             mPyrPagePresenter.setmTopAgentsDatas(topAgentList);
@@ -249,7 +248,6 @@ public class PyrPageFragment extends Fragment {
     @Subscribe
     public void onResults(TopBuyAgentsPyrEvent topBuyAgentsPyrEvent) {
         ArrayList<TopAgent> topAgentList = topBuyAgentsPyrEvent.topAgents;
-        Toast.makeText(getActivity(), "in Contact:" + topAgentList.size(), Toast.LENGTH_SHORT).show();
         if ( topAgentList.size() > 0) {
             PyrPagePresenter mPyrPagePresenter = PyrPagePresenter.getPyrPagePresenter();
             mPyrPagePresenter.setmTopAgentsDatas(topAgentList);

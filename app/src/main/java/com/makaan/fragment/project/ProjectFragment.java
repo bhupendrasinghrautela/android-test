@@ -26,6 +26,7 @@ import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.project.ProjectActivity;
+import com.makaan.adapter.project.KeyDetailsAdapter;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.amenity.AmenityGetEvent;
@@ -41,6 +42,7 @@ import com.makaan.event.project.ProjectConfigItemClickListener;
 import com.makaan.event.project.SimilarProjectGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.property.ViewSellersDialogFragment;
+import com.makaan.pojo.KeyDetail;
 import com.makaan.pojo.ProjectConfigItem;
 import com.makaan.pojo.SellerCard;
 import com.makaan.pojo.SerpRequest;
@@ -53,12 +55,15 @@ import com.makaan.service.LocalityService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.ProjectService;
 import com.makaan.ui.CompressedTextView;
+import com.makaan.ui.FixedGridView;
 import com.makaan.ui.locality.ProjectConfigView;
 import com.makaan.ui.project.ProjectSpecificationView;
 import com.makaan.ui.property.AboutBuilderExpandedLayout;
 import com.makaan.ui.property.AmenitiesViewScroll;
+import com.makaan.ui.property.ListingDataOverViewScroll;
 import com.makaan.ui.property.PropertyImageViewPager;
 import com.makaan.ui.view.FontTextView;
+import com.makaan.util.AppUtils;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
@@ -79,9 +84,14 @@ public class ProjectFragment extends MakaanBaseFragment{
     @Bind(R.id.about_builder_layout) AboutBuilderExpandedLayout aboutBuilderExpandedLayout;
     @Bind(R.id.builder_description) TextView builderDescriptionTv;
     @Bind(R.id.about_builder) TextView aboutBuilderTv;
+    @Bind(R.id.key_detail_container) LinearLayout keyDetailContainer;
+    @Bind(R.id.key_details_grid)
+    FixedGridView mKeyDetailGrid;
     @Bind(R.id.project_score_progress) ProgressBar projectScoreProgreessBar;
     @Bind(R.id.locality_score_label)
     FontTextView mScoreLabel;
+    @Bind(R.id.listing_over_view_scroll_layout)
+    ListingDataOverViewScroll mProjectDataOverViewScroll;
     @Bind(R.id.project_score_text) TextView projectScoreTv;
     @Bind(R.id.tv_project_name) TextView projectNameTv;
     @Bind(R.id.tv_project_location) TextView projectLocationTv;
@@ -286,7 +296,15 @@ public class ProjectFragment extends MakaanBaseFragment{
                 manager.addEntryToRecent(mDataObject, getContext().getApplicationContext());
             }*/
 
-            mAmenitiesViewScroll.bindView(project.projectAmenities);
+            if(project.projectAmenities !=null && !project.projectAmenities.isEmpty()) {
+                mAmenitiesViewScroll.setVisibility(View.VISIBLE);
+                mAmenitiesViewScroll.bindView(project.projectAmenities);
+            }
+            else{
+                mAmenitiesViewScroll.setVisibility(View.GONE);
+            }
+            mProjectDataOverViewScroll.bindView(project);
+            populateKeyDetails();
             if(project.getFormattedSpecifications() !=null && project.getFormattedSpecifications().size()>0) {
                 projectSpecificationView.setVisibility(View.VISIBLE);
                 projectSpecificationView.bindView(project.getFormattedSpecifications(), getActivity());
@@ -301,6 +319,69 @@ public class ProjectFragment extends MakaanBaseFragment{
             }
             addConstructionTimelineFragment();
             ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getProjectTimelineImages(project.projectId);
+        }
+    }
+
+    private void populateKeyDetails() {
+        List<KeyDetail> mKeyDetailList = new ArrayList<>();
+        if(project.isPrimary){
+            KeyDetail keyDetail = new KeyDetail();
+            keyDetail.label = mContext.getString(R.string.new_resale);
+            keyDetail.value = mContext.getString(R.string.new_);
+            mKeyDetailList.add(keyDetail);
+        }
+        else{
+            KeyDetail keyDetail = new KeyDetail();
+            keyDetail.label = mContext.getString(R.string.new_resale);
+            keyDetail.value = mContext.getString(R.string.resale);
+            mKeyDetailList.add(keyDetail);
+        }
+        if(project.minSize!=null && project.maxSize!=null){
+            KeyDetail keyDetail = new KeyDetail();
+            keyDetail.label = "size";
+            keyDetail.value = project.minSize+" - "+project.maxSize+" sq ft";
+            mKeyDetailList.add(keyDetail);
+        }
+        if(project.sizeInAcres!=null && project.sizeInAcres!=0){
+            KeyDetail keyDetail = new KeyDetail();
+            keyDetail.label = "total area";
+            keyDetail.value = project.sizeInAcres.toString();
+            mKeyDetailList.add(keyDetail);
+        }
+        if(project.projectStatus!=null && project.projectStatus.toLowerCase().equals("pre launch")) {
+            if (project.possessionDate != null) {
+                KeyDetail keyDetail = new KeyDetail();
+                keyDetail.label = mContext.getString(R.string.pre_launch_date);
+                keyDetail.value = AppUtils.getMMMYYYYDateStringFromEpoch(project.possessionDate);
+                mKeyDetailList.add(keyDetail);
+            }
+        }
+        else{
+            if(project.launchDate != null){
+                KeyDetail keyDetail = new KeyDetail();
+                keyDetail.label = mContext.getString(R.string.launch_date);
+                keyDetail.value = AppUtils.getMMMYYYYDateStringFromEpoch(project.launchDate);
+                mKeyDetailList.add(keyDetail);
+            }
+        }
+        if(project.hasTownship){
+            KeyDetail keyDetail = new KeyDetail();
+            keyDetail.label = mContext.getString(R.string.township);
+            keyDetail.value = "present";
+            mKeyDetailList.add(keyDetail);
+        }
+        else{
+            KeyDetail keyDetail = new KeyDetail();
+            keyDetail.label = mContext.getString(R.string.township);
+            keyDetail.value = "not present";
+            mKeyDetailList.add(keyDetail);
+        }
+        if(mKeyDetailList.size()==0){
+            keyDetailContainer.setVisibility(View.GONE);
+        }
+        else{
+            KeyDetailsAdapter keyDetailsAdapter = new KeyDetailsAdapter(mContext,mKeyDetailList);
+            mKeyDetailGrid.setAdapter(keyDetailsAdapter);
         }
     }
 

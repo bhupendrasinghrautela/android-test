@@ -57,7 +57,6 @@ public class PropertyTypeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mPropertyTypeRecyclerView.setLayoutManager(mLayoutManager);
-        Toast.makeText(getActivity(), "size::" + mTermFilter.size(), Toast.LENGTH_SHORT).show();
         mPropertyTypeListingAdapter= new PropertyTypeListingAdapter(getActivity(),mTermFilter, this);
         mPropertyTypeRecyclerView.setAdapter(mPropertyTypeListingAdapter);
 

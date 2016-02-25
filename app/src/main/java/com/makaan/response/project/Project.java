@@ -17,7 +17,7 @@ public class Project {
 
     private String fullName, completeProjectAddress, paymentPlanUrl;
 
-    public String address;
+    public String address,dominantUnitType;
     public String name, url, newsTag;
     public String builderName;          //used may be only in serp listing parse
     public boolean actual;

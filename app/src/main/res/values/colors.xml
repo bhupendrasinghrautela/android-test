@@ -93,7 +93,7 @@
     <color name="listing_brief_view_layout_property_price_sq_ft_text_color">#B0444444</color>
     <color name="listing_brief_view_layout_empty_view_color">#33979797</color>
 
-    <color name="property_empty_view_color">#20979797</color>
+    <color name="property_empty_view_color">#80979797</color>
     <color name="city_empty_view_color">#90979797</color>
 
     <color name="grayDivider">#e0e0e0</color>

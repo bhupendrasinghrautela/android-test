@@ -168,6 +168,7 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
                 Line line = new Line(pointValueList);
                 line.setColor(entry.getKey().colorId);
                 line.setFilled(true);
+                line.setCubic(true);
                 line.setShape(ValueShape.CIRCLE);
                 mLines.add(line);
         }
