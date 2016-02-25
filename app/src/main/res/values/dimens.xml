@@ -1328,4 +1328,7 @@
 
     <dimen name="progressbar_small">20dp</dimen>
     <dimen name="progressbar_medium">48dp</dimen>
+
+    <dimen name="map_pointer_width">32dp</dimen>
+    <dimen name="map_pointer_height">32dp</dimen>
 </resources>
