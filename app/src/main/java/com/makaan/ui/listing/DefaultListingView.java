@@ -634,7 +634,7 @@ public class DefaultListingView extends AbstractListingView {
 
         bundle.putString("name", mListing.lisitingPostedBy.name);
         bundle.putString("score", String.valueOf(mListing.lisitingPostedBy.rating));
-        bundle.putString("phone", "9090909090");//todo: not available in pojo
+        bundle.putString("phone", null);//todo: not available in pojo
         bundle.putString("id", String.valueOf(mListing.lisitingPostedBy.id));
         bundle.putInt("listingId", mListing.lisitingId);
         bundle.putString("source", SerpActivity.class.getName());
