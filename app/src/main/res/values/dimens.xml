@@ -293,7 +293,7 @@
 
     <dimen name="serp_listing_card_badge_width">64dp</dimen>
     <dimen name="serp_listing_card_badge_height">28dp</dimen>
-    <dimen name="serp_listing_card_badge_margin_top">7dp</dimen>
+    <dimen name="serp_listing_card_badge_margin_top">12dp</dimen>
     <dimen name="serp_listing_card_badge_margin_left">4dp</dimen>
     <dimen name="serp_listing_card_badge_text_margin_left">9dp</dimen>
     <dimen name="serp_listing_card_badge_text_height">19dp</dimen>
@@ -542,15 +542,15 @@
     <dimen name="fragment_dialog_filters_item_layout_image_view_height">36dp</dimen>
     <dimen name="fragment_dialog_filters_item_layout_image_view_margin_bottom">6dp</dimen>
 
-    <dimen name="fragment_dialog_filters_item_layout_content_width">95dp</dimen>
+    <dimen name="fragment_dialog_filters_item_layout_content_width">100dp</dimen>
 
     <dimen name="fragment_dialog_filters_item_layout_display_text_text_size">16sp</dimen>
 
     <dimen name="fragment_dialog_filters_toggle_button_grid_item_horizontal_padding">12dp</dimen>
     <dimen name="fragment_dialog_filters_checkbox_grid_item_vertical_padding">20dp</dimen>
-    <dimen name="fragment_dialog_filters_toggle_button_grid_item_width">40dp</dimen>
-    <dimen name="fragment_dialog_filters_toggle_button_grid_item_height">40dp</dimen>
-    <dimen name="fragment_dialog_filters_toggle_button_grid_item_text_size">18sp</dimen>
+    <dimen name="fragment_dialog_filters_toggle_button_grid_item_width">38dp</dimen>
+    <dimen name="fragment_dialog_filters_toggle_button_grid_item_height">38dp</dimen>
+    <dimen name="fragment_dialog_filters_toggle_button_grid_item_text_size">16sp</dimen>
 
     <dimen name="fragment_dialog_filters_checkbox_grid_item_text_size">16sp</dimen>
 
@@ -558,6 +558,8 @@
 
     <dimen name="fragment_dialog_filters_radio_button_grid_item_icon_width">20dp</dimen>
     <dimen name="fragment_dialog_filters_radio_button_grid_item_icon_height">20dp</dimen>
+
+    <dimen name="fragment_dialog_filters_seekbar_item_right_margin">5dp</dimen>
 
     <!---Jarvis-->
     <dimen name="jarvis_client_dimen">56dp</dimen>

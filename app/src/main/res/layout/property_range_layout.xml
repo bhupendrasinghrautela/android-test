@@ -19,6 +19,8 @@
     <Switch
         android:id="@+id/city_property_buy_rent_switch"
         android:layout_below="@+id/header"
+        android:track="@drawable/switch_track_background_selector"
+        android:thumb="@drawable/switch_thumb_background_selector"
         android:layout_marginTop="@dimen/city_property_buy_rent_top_margin"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
