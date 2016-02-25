@@ -1,5 +1,8 @@
 package com.makaan.fragment.buyerJourney;
 
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.Nullable;
@@ -26,6 +29,7 @@ import com.makaan.util.JsonBuilder;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -43,6 +47,8 @@ public class ReviewAgentFragment extends MakaanBaseFragment {
     TextView mAgentTypeTextView;
     @Bind(R.id.fragment_review_agent_review_text_view)
     TextView mAgentReviewTextView;
+    @Bind(R.id.fragment_review_agent_logo_text_view)
+    TextView mLogoTextView;
 
     @Bind(R.id.fragment_review_agent_listed_property_toggle_button)
     ToggleButton mListedPropertyToggleButton;
@@ -77,6 +83,24 @@ public class ReviewAgentFragment extends MakaanBaseFragment {
             return null;
         }
         mAgentNameTextView.setText(mObj.clientLeadObject.company.name);
+        mAgentImageView.setVisibility(View.GONE);
+
+        if(mObj.clientLeadObject.company.name != null) {
+            mLogoTextView.setText(String.valueOf(mObj.clientLeadObject.company.name.charAt(0)));
+
+            mLogoTextView.setVisibility(View.VISIBLE);
+
+            int[] bgColorArray = getResources().getIntArray(R.array.bg_colors);
+
+            Random random = new Random();
+            ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+            drawable.getPaint().setColor(bgColorArray[random.nextInt(bgColorArray.length)]);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                mLogoTextView.setBackground(drawable);
+            } else {
+                mLogoTextView.setBackgroundDrawable(drawable);
+            }
+        }
 
         mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -205,7 +229,7 @@ public class ReviewAgentFragment extends MakaanBaseFragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    ((BuyerDashboardCallbacks)getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_UPLOAD_DOCUMENTS, true, null, null, null);
+                    ((BuyerDashboardCallbacks)getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_UPLOAD_DOCUMENTS, true, null, null, mObj);
                 }
             }
         }

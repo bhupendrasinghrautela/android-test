@@ -10,9 +10,11 @@ import com.makaan.event.buyerjourney.ClientEventsByGetEvent;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.StringRequestCallback;
+import com.makaan.request.buyerjourney.PhaseChange;
 import com.makaan.response.ResponseError;
 import com.makaan.util.AppBus;
 import com.makaan.util.CommonUtil;
+import com.makaan.util.JsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,7 +68,7 @@ public class ClientEventsService implements MakaanService {
     }
 
     public static void postSiteVisitSchedule(JSONObject jsonObject,Long id) {
-        String url = ApiConstants.REQUEST_SITE_VISIT.concat(String.valueOf(id));
+        String url = ApiConstants.SITE_VISIT_CLIENT_EVENTS.concat(String.valueOf(id));
         MakaanNetworkClient.getInstance().post(url, jsonObject, new StringRequestCallback() {
 
             @Override
@@ -79,5 +81,25 @@ public class ClientEventsService implements MakaanService {
                 CommonUtil.TLog("success");
             }
         }, TAG);
+    }
+
+    public void changePhase(Long leadId, PhaseChange phaseChange) {
+        String url = ApiConstants.SITE_VISIT_CLIENT_EVENTS.concat(String.valueOf(leadId));
+        try {
+            MakaanNetworkClient.getInstance().put(url, JsonBuilder.toJson(phaseChange), new StringRequestCallback() {
+                @Override
+                public void onSuccess(String response) {
+
+                }
+
+                @Override
+                public void onError(ResponseError error) {
+
+                }
+            }, TAG);
+            ;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

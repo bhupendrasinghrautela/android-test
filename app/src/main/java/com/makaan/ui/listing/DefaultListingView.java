@@ -277,7 +277,7 @@ public class DefaultListingView extends AbstractListingView {
         }
 
         // set property address info {project_name},{localityName}_{cityName}
-        if(mListing.project.name != null) {
+        if(!TextUtils.isEmpty(mListing.project.name) && !"project".equalsIgnoreCase(mListing.project.name)) {
             mPropertyAddressTextView.setText(String.format("%s, %s, %s", mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase());
         } else {
             mPropertyAddressTextView.setText(String.format("%s, %s", mListing.localityName, mListing.cityName).toLowerCase());
@@ -302,7 +302,11 @@ public class DefaultListingView extends AbstractListingView {
 
             // TODO check seller name
             if(mListing.lisitingPostedBy != null) {
-                mPropertySellerNameTextView.setText(String.format("%s (%s)",mListing.lisitingPostedBy.name, mListing.lisitingPostedBy.type).toLowerCase());
+                if("broker".equalsIgnoreCase(mListing.lisitingPostedBy.type)) {
+                    mPropertySellerNameTextView.setText(String.format("%s (%s)", mListing.lisitingPostedBy.name, "agent").toLowerCase());
+                } else {
+                    mPropertySellerNameTextView.setText(String.format("%s (%s)", mListing.lisitingPostedBy.name, mListing.lisitingPostedBy.type).toLowerCase());
+                }
             } else {
                 mPropertySellerNameTextView.setText(mListing.project.builderName.toLowerCase());
             }
@@ -516,7 +520,7 @@ public class DefaultListingView extends AbstractListingView {
                 }
                 break;
             case "floor,totalFloors":
-                if(mListing.floor != null && mListing.totalFloors != null && mListing.floor != 0 && mListing.totalFloors != 0) {
+                if(mListing.floor != null && mListing.totalFloors != null && mListing.floor >= 0 && mListing.totalFloors != 0) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     if(mListing.floor == 1) {
                         mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup>st</sup> of %d", mListing.floor, mListing.totalFloors).toLowerCase()));
@@ -616,10 +620,12 @@ public class DefaultListingView extends AbstractListingView {
 
     @OnClick(R.id.serp_default_listing_property_address_frame_layout)
     public void onProjectClicked(View view) {
-        if(mListing.projectId != null && mListing.projectId != 0) {
-            Bundle bundle = new Bundle();
-            bundle.putLong(ProjectActivity.PROJECT_ID, mListing.projectId);
-            mCallback.requestDetailPage(SerpActivity.REQUEST_PROJECT_PAGE, bundle);
+        if(!TextUtils.isEmpty(mListing.project.name) && !"project".equalsIgnoreCase(mListing.project.name)) {
+            if (mListing.projectId != null && mListing.projectId != 0) {
+                Bundle bundle = new Bundle();
+                bundle.putLong(ProjectActivity.PROJECT_ID, mListing.projectId);
+                mCallback.requestDetailPage(SerpActivity.REQUEST_PROJECT_PAGE, bundle);
+            }
         }
     }
 
