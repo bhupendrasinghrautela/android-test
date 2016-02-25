@@ -8,6 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:font="http://schemas.android.com/apk/res-auto">
+    <include layout="@layout/project_seperator"/>
     <com.makaan.ui.view.FontTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

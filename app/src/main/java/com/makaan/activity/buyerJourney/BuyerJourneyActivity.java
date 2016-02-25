@@ -223,6 +223,9 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
 
                                     @Override
                                     public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
+                                        if (b && imageContainer.getBitmap() == null) {
+                                            return;
+                                        }
                                         if(mProfileImage != null) {
                                             mProfileImage.setImageBitmap(imageContainer.getBitmap());
                                         }
@@ -336,6 +339,7 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
     public void onLogoutResult(UserLogoutEvent userLogoutEvent){
         if(null!=userLogoutEvent && userLogoutEvent.isLogoutSuccessfull()){
             CookiePreferences.setUserLoggedOut(this);
+            CookiePreferences.setUserInfo(this,null);
             //TODO also clear metadata and userinfo
             finish();
         }else{

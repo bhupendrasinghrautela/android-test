@@ -194,6 +194,13 @@
     <string name="home_loan">home loan</string>
     <string name="booking">booking</string>
     <string name="possession">possession</string>
+    <string name="pre_launch_date">pre-launch date</string>
+    <string name="date_added">date added</string>
+    <string name="launch_date">launch date</string>
+    <string name="new_resale">new/resale</string>
+    <string name="new_">new</string>
+    <string name="township">township</string>
+    <string name="resale">resale</string>
     <string name="registration">registration</string>
     <string name="make_home_yours">make the home all yours</string>
     <string name="moving_in">moving in or renting? get help</string>

@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -117,6 +118,9 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
 
     @Bind(R.id.seller_image_view)
     CircleImageView mSellerImageView;
+
+    @Bind(R.id.container_similar_properties)
+    FrameLayout mSimilarPropertyContainer;
 
     @Bind(R.id.seller_logo_text_view)
     TextView mSellerLogoTextView;
@@ -520,6 +524,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
         Bundle bundle = new Bundle();
         bundle.putString("title", getResources().getString(R.string.similar_properties));
         newFragment.setArguments(bundle);
+        mSimilarPropertyContainer.setVisibility(View.VISIBLE);
         initFragment(R.id.container_similar_properties, newFragment, false);
         newFragment.setData(listingDetailList);
     }

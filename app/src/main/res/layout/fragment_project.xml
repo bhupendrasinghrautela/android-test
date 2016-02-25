@@ -29,11 +29,11 @@
             android:layout_height="@dimen/property_page_stack_like_pager_height" />
 
         <include layout="@layout/project_builder_basic_details"/>
-        <include layout="@layout/project_seperator"/>
         <include layout="@layout/builder_brief_layout"/>
+        <include layout="@layout/listing_over_view_scroll_layout"/>
         <include layout="@layout/project_configuration"/>
         <include layout="@layout/project_description" />
-        <include layout="@layout/project_seperator"/>
+        <include layout="@layout/key_detail_layout"/>
         <include layout="@layout/project_amenties_view_scroll_layout"/>
         <include layout="@layout/project_specification"/>
 

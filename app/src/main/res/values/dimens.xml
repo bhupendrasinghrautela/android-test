@@ -778,6 +778,7 @@
     <dimen name="city_show_property_margin_bottom">50dp</dimen>
     <dimen name="city_legends_height">30dp</dimen>
     <dimen name="city_very_small_text">14sp</dimen>
+    <dimen name="key_detail_small_text">16sp</dimen>
     <dimen name="city_normal_text">20sp</dimen>
     <dimen name="city_big_text">28sp</dimen>
     <dimen name="city_collapse_bar_height">228dp</dimen>

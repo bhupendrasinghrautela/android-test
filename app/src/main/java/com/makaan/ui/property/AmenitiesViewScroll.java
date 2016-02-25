@@ -81,10 +81,6 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
         mAmenityItems = new ArrayList<>();
         for(ProjectAmenity projectAmenity : projectAmenities){
             try {
-                if(projectAmenity.amenityMaster.amenityName!=null &&
-                        projectAmenity.amenityMaster.amenityName.toLowerCase().equals(mContext.getString(R.string.others))){
-                    continue;
-                }
                 HorizontalScrollItem amenityItem = new HorizontalScrollItem();
                 amenityItem.resourceId = R.drawable.possession;
                 amenityItem.value = MasterDataCache.getInstance().getPropertyAmenityById(projectAmenity.amenityMaster.amenityId).amenityName;
