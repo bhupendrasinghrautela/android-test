@@ -6,6 +6,7 @@
     android:id="@+id/card_view_nearby_locality"
     android:layout_marginLeft="20dp"
     android:layout_height="wrap_content"
+    app:cardPreventCornerOverlap="false"
     app:cardCornerRadius="10dp">
     <RelativeLayout
         android:layout_width="match_parent"
