@@ -1,5 +1,6 @@
 package com.makaan.jarvis.message;
 
+import com.makaan.jarvis.event.JarvisTrackExtraData;
 import com.makaan.jarvis.ui.pager.Property;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class ExposeMessage {
         public String type;
         public List<Property> content;
         public CtaType ctaType;
+        //public JarvisTrackExtraData extra;
     }
 
 }

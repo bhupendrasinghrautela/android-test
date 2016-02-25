@@ -13,6 +13,7 @@ import com.makaan.adapter.PaginatedBaseAdapter;
 import com.makaan.adapter.RecycleViewMode;
 import com.makaan.jarvis.analytics.AnalyticsConstants;
 import com.makaan.jarvis.analytics.AnalyticsService;
+import com.makaan.jarvis.event.JarvisTrackExtraData;
 import com.makaan.pojo.GroupCluster;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.response.listing.GroupListing;
@@ -40,24 +41,29 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
     private boolean mBuilderSellerPopulated = false;
     private boolean mEventSent;
 
-    public SerpListingAdapter(Context context, SerpRequestCallback callbacks) {
+    private JarvisTrackExtraData jarvisTrackExtraData = new JarvisTrackExtraData();
+
+    public SerpListingAdapter(Context context, SerpRequestCallback callbacks, JarvisTrackExtraData jarvisTrackExtraData) {
         mContext = context;
         mCallback = callbacks;
         recycleViewMode = RecycleViewMode.DATA;
+        this.jarvisTrackExtraData = jarvisTrackExtraData;
     }
 
-    public SerpListingAdapter(Context context, SerpRequestCallback callbacks, List<Listing> listings, int requestType) {
+    public SerpListingAdapter(Context context, SerpRequestCallback callbacks, List<Listing> listings, int requestType, JarvisTrackExtraData jarvisTrackExtraData) {
         mContext = context;
         mCallback = callbacks;
         setData((ArrayList<Listing>) listings, requestType);
         recycleViewMode = RecycleViewMode.DATA;
+        this.jarvisTrackExtraData = jarvisTrackExtraData;
     }
 
-    public SerpListingAdapter(Context context, SerpRequestCallback callbacks, int requestType) {
+    public SerpListingAdapter(Context context, SerpRequestCallback callbacks, int requestType, JarvisTrackExtraData jarvisTrackExtraData) {
         mContext = context;
         mCallback = callbacks;
         recycleViewMode = RecycleViewMode.DATA;
         this.mRequestType = requestType & SerpActivity.MASK_LISTING_TYPE;
+        this.jarvisTrackExtraData = jarvisTrackExtraData;
     }
 
     @Override
@@ -218,12 +224,18 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
     }
 
     private void trackScroll(int position){
+        if(null==jarvisTrackExtraData){
+            return;
+        }
 
         if(mRequestType == SerpActivity.TYPE_CLUSTER) {
             try {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put(AnalyticsConstants.KEY_PAGE_TYPE, "child serp");
+
+                jarvisTrackExtraData.setPageType("child serp");
                 jsonObject.put(AnalyticsConstants.KEY_EVENT_NAME, AnalyticsConstants.CHILD_SERP);
+                jsonObject.put(AnalyticsConstants.KEY_EXTRA, jarvisTrackExtraData);
+
                 AnalyticsService analyticsService =
                         (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
                 analyticsService.track(AnalyticsService.Type.track, jsonObject);
@@ -234,7 +246,8 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
         }else {
             AnalyticsService analyticsService =
                     (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
-            analyticsService.trackSerpScroll(SerpObjects.getSelectedFilterNames(mContext), position);
+            jarvisTrackExtraData.setPageType(SerpActivity.SCREEN_NAME);
+            analyticsService.trackSerpScroll(SerpObjects.getSelectedFilterNames(mContext), position, jarvisTrackExtraData);
         }
     }
 }

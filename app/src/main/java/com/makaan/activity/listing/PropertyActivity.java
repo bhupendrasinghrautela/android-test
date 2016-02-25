@@ -28,7 +28,7 @@ import com.squareup.otto.Subscribe;
  */
 public class PropertyActivity extends MakaanBaseSearchActivity implements ShowMapCallBack ,TotalImagesCount{
 
-
+    public static final String LISTING_ID = "listingId";
 
     private PropertyDetailFragment mPropertyDeatilFragment;
     private NeighborhoodMapFragment mNeighborhoodMapFragment;

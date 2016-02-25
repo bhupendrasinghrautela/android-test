@@ -4,6 +4,7 @@ import com.makaan.activity.listing.SerpActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ApiConstants;
 import com.makaan.jarvis.JarvisConstants;
+import com.makaan.jarvis.event.JarvisTrackExtraData;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.service.MakaanService;
@@ -28,12 +29,12 @@ public class AnalyticsService implements MakaanService {
         identify, track;
     }
 
-    public void trackSerpScroll(Set<String> selectedFiltersName, int position){
+    public void trackSerpScroll(Set<String> selectedFiltersName, int position, JarvisTrackExtraData jarvisTrackExtraData){
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put(AnalyticsConstants.KEY_PAGE_TYPE, SerpActivity.SCREEN_NAME);
             jsonObject.put(AnalyticsConstants.KEY_SERP_VISIBLE_ITEM, position);
             jsonObject.put(AnalyticsConstants.KEY_EVENT_NAME, AnalyticsConstants.SERP_SCROLL);
+            jsonObject.put(AnalyticsConstants.KEY_EXTRA, jarvisTrackExtraData);
 
             Map<String, SerpFilterMessageMap> filterMessageMapMap = MasterDataCache.getInstance().getSerpFilterMessageMap();
             Iterator iterator = filterMessageMapMap.entrySet().iterator();
@@ -88,7 +89,7 @@ public class AnalyticsService implements MakaanService {
 
 
     private String getUrl(){
-        return "https://beta.makaan-ws.com/apis/mpAnalytics";
+        return "https://marketplace-qa.makaan-ws.com/apis/mpAnalytics";
     }
 
 }

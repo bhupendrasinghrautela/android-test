@@ -16,7 +16,9 @@ public class NotificationPayload {
     // Default priority 30 in case not available
     private int priority = DEFAULT_PRIORITY;
 
-    //ActivityLauncherNotification :
+    private int notificationTypeId;
+
+    //ScreenLauncherNotification :
     //Activity to launched as pending intent; corresponding to ActivityType
     private int screenTypeId;
 
@@ -26,8 +28,15 @@ public class NotificationPayload {
     //target url for browser notification
     private String targetUrl;
 
-    //Sorting order
-    private int sortOrder;
+    private long cityId;
+
+    private long localityId;
+
+    private long projectId;
+
+    private long listingId;
+
+    private String serpFilterUrl;
 
     public int getNotificationId() {
         return notificationId;
@@ -78,11 +87,51 @@ public class NotificationPayload {
         this.targetUrl = targetUrl;
     }
 
-    public int getSortOrder() {
-        return sortOrder;
+    public int getNotificationTypeId() {
+        return notificationTypeId;
     }
 
-    public void setSortOrder(int sortOrder) {
-        this.sortOrder = sortOrder;
+    public void setNotificationTypeId(int notificationTypeId) {
+        this.notificationTypeId = notificationTypeId;
+    }
+
+    public long getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(long cityId) {
+        this.cityId = cityId;
+    }
+
+    public long getLocalityId() {
+        return localityId;
+    }
+
+    public void setLocalityId(long localityId) {
+        this.localityId = localityId;
+    }
+
+    public long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(long projectId) {
+        this.projectId = projectId;
+    }
+
+    public long getListingId() {
+        return listingId;
+    }
+
+    public void setListingId(long listingId) {
+        this.listingId = listingId;
+    }
+
+    public String getSerpFilterUrl() {
+        return serpFilterUrl;
+    }
+
+    public void setSerpFilterUrl(String serpFilterUrl) {
+        this.serpFilterUrl = serpFilterUrl;
     }
 }

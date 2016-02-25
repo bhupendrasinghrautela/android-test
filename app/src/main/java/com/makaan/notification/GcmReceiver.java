@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response.ErrorListener;
@@ -29,9 +30,11 @@ public class GcmReceiver extends WakefulBroadcastReceiver {
 		try {
 			
 			//if(!Preferences.isPushNotificationsOn(context)) return;
+			Log.e("Gcm","receive");
 			
 			if (intent.getAction().equals("com.google.android.c2dm.intent.REGISTRATION")) {
 				// Registration complete
+
 				
 			}else if(intent.getAction().equals("com.google.android.c2dm.intent.RECEIVE")){
 				//message received
