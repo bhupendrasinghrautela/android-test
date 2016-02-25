@@ -25,14 +25,33 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/round_red" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/fragment_review_agent_image_view"
+    <FrameLayout
+        android:id="@+id/fragment_review_agent_image_frame_layout"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:visibility="invisible"
-        android:src="@drawable/map"/>
+        android:layout_alignParentTop="true">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/fragment_review_agent_image_view"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/map"
+            android:visibility="gone"
+            app:civ_border_color="@color/serp_listing_card_seller_mask_color"
+            app:civ_border_width="@dimen/border_width" />
+
+        <TextView
+            android:id="@+id/fragment_review_agent_logo_text_view"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:text="R"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/fragment_review_agent_name_text_view"
@@ -40,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="6dp"
-        android:layout_below="@id/fragment_review_agent_image_view"
+        android:layout_below="@id/fragment_review_agent_image_frame_layout"
         android:text="sunil chowdhary"
         android:textColor="@color/listingBlack"
         android:textSize="16sp"

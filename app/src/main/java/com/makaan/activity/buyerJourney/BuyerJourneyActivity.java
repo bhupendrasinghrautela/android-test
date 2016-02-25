@@ -306,10 +306,10 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.item_settings:
+            /*case R.id.item_settings:
                 Intent intent = new Intent(this, BuyerAccountSettingActivity.class);
                 startActivity(intent);
-                break;
+                break;*/
             case R.id.item_logout:
                 try{
                     onLogoutClick();

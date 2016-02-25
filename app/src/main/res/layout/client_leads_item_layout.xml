@@ -3,54 +3,71 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="20dp"
-    android:paddingStart="20dp"
-    android:paddingRight="20dp"
-    android:paddingEnd="20dp"
+    android:layout_marginBottom="13dp"
     android:layout_marginTop="13dp"
-    android:layout_marginBottom="13dp">
+    android:paddingEnd="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingStart="20dp">
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/client_leads_item_layout_image_view"
+    <FrameLayout
+        android:id="@+id/client_leads_item_layout_image_frame_layout"
         android:layout_width="54dp"
         android:layout_height="54dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:visibility="invisible"
-        app:civ_border_color="@color/serp_listing_card_seller_mask_color"
-        app:civ_border_width="@dimen/border_width"
-        android:scaleType="centerCrop"
-        android:src="@drawable/map"/>
+        android:layout_alignParentTop="true">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/client_leads_item_layout_image_view"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/map"
+            android:visibility="gone"
+            app:civ_border_color="@color/serp_listing_card_seller_mask_color"
+            app:civ_border_width="@dimen/border_width" />
+
+        <TextView
+            android:id="@+id/client_leads_item_layout_logo_text_view"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:gravity="center"
+            android:text="R"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+    </FrameLayout>
+
     <RadioButton
         android:id="@+id/client_leads_item_layout_radio_button"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginTop="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
         android:background="@android:color/transparent"
-        android:button="@drawable/fragment_dialog_filters_radio_button_selector"/>
+        android:button="@drawable/fragment_dialog_filters_radio_button_selector" />
 
     <TextView
         android:id="@+id/client_leads_item_layout_name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/client_leads_item_layout_image_view"
-        android:layout_toEndOf="@id/client_leads_item_layout_image_view"
-        android:layout_toLeftOf="@id/client_leads_item_layout_radio_button"
-        android:layout_toStartOf="@id/client_leads_item_layout_radio_button"
         android:layout_marginLeft="24dp"
         android:layout_marginStart="24dp"
-        android:textSize="16sp"
-        android:textColor="@color/listingBlack"
-        android:typeface="sans"
-        android:textAllCaps="false"
+        android:layout_toEndOf="@id/client_leads_item_layout_image_frame_layout"
+        android:layout_toLeftOf="@id/client_leads_item_layout_radio_button"
+        android:layout_toRightOf="@id/client_leads_item_layout_image_frame_layout"
+        android:layout_toStartOf="@id/client_leads_item_layout_radio_button"
+        android:ellipsize="end"
         android:singleLine="true"
-        android:ellipsize="end"/>
+        android:textAllCaps="false"
+        android:textColor="@color/listingBlack"
+        android:textSize="16sp"
+        android:typeface="sans" />
 
     <TextView
         android:id="@+id/client_leads_item_layout_company_text_view"
@@ -58,14 +75,14 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/client_leads_item_layout_name_text_view"
         android:layout_alignStart="@id/client_leads_item_layout_name_text_view"
-        android:layout_toLeftOf="@id/client_leads_item_layout_radio_button"
-        android:layout_toStartOf="@id/client_leads_item_layout_radio_button"
         android:layout_below="@id/client_leads_item_layout_name_text_view"
         android:layout_marginTop="2dp"
-        android:textSize="15sp"
-        android:textColor="#555555"
-        android:typeface="serif"
-        android:textAllCaps="false"
+        android:layout_toLeftOf="@id/client_leads_item_layout_radio_button"
+        android:layout_toStartOf="@id/client_leads_item_layout_radio_button"
+        android:ellipsize="end"
         android:singleLine="true"
-        android:ellipsize="end" />
+        android:textAllCaps="false"
+        android:textColor="#555555"
+        android:textSize="15sp"
+        android:typeface="serif" />
 </RelativeLayout>

@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/fragment_dialog_filters_item_layout_padding_left"
     android:paddingStart="@dimen/fragment_dialog_filters_item_layout_padding_left"
+    android:paddingRight="@dimen/fragment_dialog_filters_item_layout_padding_right"
+    android:paddingEnd="@dimen/fragment_dialog_filters_item_layout_padding_right"
     android:paddingTop="@dimen/fragment_dialog_filters_item_layout_padding_top"
     android:orientation="vertical">
 

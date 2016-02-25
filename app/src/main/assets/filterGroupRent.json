@@ -223,7 +223,7 @@
         "type": "",
         "termFilterValues": [
           {
-            "displayName": "seller",
+            "displayName": "agent",
             "displayOrder": "1",
             "fieldName": "listingSellerCompanyType",
             "value": "Broker",

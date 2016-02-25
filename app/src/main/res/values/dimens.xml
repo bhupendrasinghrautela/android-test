@@ -534,7 +534,8 @@
 
     <dimen name="fragment_dialog_filters_item_layout_padding_top">35dp</dimen>
     <dimen name="fragment_dialog_filters_item_layout_padding_bottom">24dp</dimen>
-    <dimen name="fragment_dialog_filters_item_layout_padding_left">22dp</dimen>
+    <dimen name="fragment_dialog_filters_item_layout_padding_left">20dp</dimen>>
+    <dimen name="fragment_dialog_filters_item_layout_padding_right">20dp</dimen>
     <dimen name="fragment_dialog_filters_toggle_button_layout_padding_right">15dp</dimen>
 
     <dimen name="fragment_dialog_filters_item_layout_image_view_width">36dp</dimen>
@@ -545,7 +546,7 @@
 
     <dimen name="fragment_dialog_filters_item_layout_display_text_text_size">16sp</dimen>
 
-    <dimen name="fragment_dialog_filters_toggle_button_grid_item_horizontal_padding">17dp</dimen>
+    <dimen name="fragment_dialog_filters_toggle_button_grid_item_horizontal_padding">12dp</dimen>
     <dimen name="fragment_dialog_filters_checkbox_grid_item_vertical_padding">20dp</dimen>
     <dimen name="fragment_dialog_filters_toggle_button_grid_item_width">40dp</dimen>
     <dimen name="fragment_dialog_filters_toggle_button_grid_item_height">40dp</dimen>
@@ -1327,4 +1328,7 @@
 
     <dimen name="progressbar_small">20dp</dimen>
     <dimen name="progressbar_medium">48dp</dimen>
+
+    <dimen name="map_pointer_width">32dp</dimen>
+    <dimen name="map_pointer_height">32dp</dimen>
 </resources>

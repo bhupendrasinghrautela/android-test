@@ -1,5 +1,8 @@
 package com.makaan.fragment.buyerJourney;
 
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,6 +31,7 @@ import com.squareup.otto.Subscribe;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -183,6 +187,7 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+            private final TextView logoTextView;
             ImageView imageView;
             TextView nameTextView;
             TextView companyNameTextView;
@@ -195,6 +200,7 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
                 /*itemView.setOnTouchListener(this);*/
 
                 imageView = (ImageView)itemView.findViewById(R.id.client_leads_item_layout_image_view);
+                logoTextView = (TextView)itemView.findViewById(R.id.client_leads_item_layout_logo_text_view);
                 nameTextView = (TextView)itemView.findViewById(R.id.client_leads_item_layout_name_text_view);
                 companyNameTextView = (TextView)itemView.findViewById(R.id.client_leads_item_layout_company_text_view);
                 radioButton = (RadioButton)itemView.findViewById(R.id.client_leads_item_layout_radio_button);
@@ -218,11 +224,28 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
             }
 
             public void bindData(ClientLeadsObject clientLeadsObject, int position) {
+                imageView.setVisibility(View.GONE);
                 nameTextView.setText(clientLeadsObject.company.name);
                 companyNameTextView.setText(AppUtils.getDDMMMYYDateStringFromEpoch(String.valueOf(clientLeadsObject.clientLead.createdAt)));
                 radioButton.setOnCheckedChangeListener(null);
                 radioButton.setChecked(position == mSelected);
                 radioButton.setOnCheckedChangeListener(this);
+
+                if(clientLeadsObject.company.name != null) {
+                    logoTextView.setText(String.valueOf(clientLeadsObject.company.name.charAt(0)));
+                    logoTextView.setVisibility(View.VISIBLE);
+
+                    int[] bgColorArray = getResources().getIntArray(R.array.bg_colors);
+
+                    Random random = new Random();
+                    ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+                    drawable.getPaint().setColor(bgColorArray[random.nextInt(bgColorArray.length)]);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        logoTextView.setBackground(drawable);
+                    } else {
+                        logoTextView.setBackgroundDrawable(drawable);
+                    }
+                }
             }
 
             @Override
