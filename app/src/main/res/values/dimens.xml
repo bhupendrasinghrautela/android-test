@@ -253,6 +253,7 @@
     <dimen name="rating_star_width">12dp</dimen>
     <dimen name="rating_star_height">12dp</dimen>
     <dimen name="seller_image_padding_top">5dp</dimen>
+    <dimen name="get_callback_text_size">16sp</dimen>
 
     <!--pyr location card-->
     <dimen name="pyr_location_card_padding">5dp</dimen>
