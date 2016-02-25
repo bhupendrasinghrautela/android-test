@@ -51,7 +51,7 @@ public class CityActivity extends MakaanFragmentActivity {
 
     @Override
     public String getScreenName() {
-        return "City";
+        return "CITY_URLS";
     }
 
     private void fetchData() {

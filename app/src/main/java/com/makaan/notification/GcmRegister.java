@@ -86,9 +86,6 @@ public class GcmRegister{
         return registrationId;
     }
 
-
-
-
     /**
      * Registers the application with GCM servers asynchronously.
      * Stores the registration ID and app versionCode in the application's

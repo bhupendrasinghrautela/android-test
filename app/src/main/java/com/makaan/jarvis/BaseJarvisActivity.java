@@ -28,6 +28,7 @@ import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.jarvis.analytics.AnalyticsConstants;
 import com.makaan.jarvis.analytics.AnalyticsService;
+import com.makaan.jarvis.event.JarvisTrackExtraData;
 import com.makaan.jarvis.event.PageTag;
 import com.makaan.jarvis.message.CtaType;
 import com.makaan.jarvis.message.ExposeMessage;
@@ -78,6 +79,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     private static Handler mUserActivityTrackerRenewHandler =new Handler();
 
     private PageTag currentPageTag;
+    private JarvisTrackExtraData jarvisTrackExtraData;
     private static boolean isUserActivenessTrackEnabled;
 
     @Override
@@ -86,8 +88,11 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         SerpObjects.putSerpObject(this, getSerpObjects());
 
         currentPageTag = new PageTag();
+        jarvisTrackExtraData = new JarvisTrackExtraData();
+        jarvisTrackExtraData.setPageTimeStamp(System.currentTimeMillis());
 
         setupActivityTimer();
+        identifyUser();
     }
 
     @Override
@@ -154,6 +159,15 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
                 }
             }
+        }
+    }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+
+        if(null!=currentPageTag) {
+            renewUserActivityTimer();
         }
     }
 
@@ -292,31 +306,39 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mJarvisPopupCard.removeAllViews();
-                BaseCtaView card = CtaCardFactory.createCard(BaseJarvisActivity.this, message);
-                mJarvisPopupCard.addView(card);
-                showPopupWithAnim();
+                try {
+                    /*if (jarvisTrackExtraData.pageTimestamp != message.properties.extra.pageTimestamp) {
+                        return;
+                    }*/
+
+                    mJarvisPopupCard.removeAllViews();
+                    BaseCtaView card = CtaCardFactory.createCard(BaseJarvisActivity.this, message);
+                    mJarvisPopupCard.addView(card);
+                    showPopupWithAnim();
 
 
-                if(CtaType.serpScroll == message.properties.ctaType) {
-                    card.setOnApplyClickListener(new SerpFilterCard.OnApplyClickListener() {
-                        @Override
-                        public void onApplyClick() {
-                            dismissPopupWithAnim();
-                        }
-                    });
-                }else if (CtaType.contentPyr == message.properties.ctaType) {
-                    card.setOnApplyClickListener(new SerpFilterCard.OnApplyClickListener() {
-                        @Override
-                        public void onApplyClick() {
-                            dismissPopupWithAnim();
-                        }
-                    });
+                    if (CtaType.serpScroll == message.properties.ctaType) {
+                        card.setOnApplyClickListener(new SerpFilterCard.OnApplyClickListener() {
+                            @Override
+                            public void onApplyClick() {
+                                dismissPopupWithAnim();
+                            }
+                        });
+                    } else if (CtaType.contentPyr == message.properties.ctaType) {
+                        card.setOnApplyClickListener(new SerpFilterCard.OnApplyClickListener() {
+                            @Override
+                            public void onApplyClick() {
+                                dismissPopupWithAnim();
+                            }
+                        });
 
+                    }
+
+                    mPopupDismissHandler.postDelayed(mPopupDismissRunnable,
+                            JarvisConstants.JARVIS_ACTION_DISMISS_TIMEOUT);
+                }catch (Exception e){
+                    //Some error with jarvis payload data, don't do anything
                 }
-
-                mPopupDismissHandler.postDelayed(mPopupDismissRunnable,
-                        JarvisConstants.JARVIS_ACTION_DISMISS_TIMEOUT);
             }
         });
     }
@@ -329,6 +351,11 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         }else {
             super.onBackPressed();
         }
+    }
+
+
+    public JarvisTrackExtraData getJarvisExtraData(){
+        return jarvisTrackExtraData;
     }
 
     private void showPopupWithAnim(){
@@ -376,15 +403,53 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                 return;
             }
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put(AnalyticsConstants.KEY_PAGE_TYPE, getScreenName());
             jsonObject.put(AnalyticsConstants.KEY_EVENT_NAME, AnalyticsConstants.CONTENT_PYR);
-            jsonObject.put(AnalyticsConstants.KEY_CURRENT_PAGE_TAG, JsonBuilder.toJson(currentPageTag));
+            //jsonObject.put(AnalyticsConstants.KEY_CURRENT_PAGE_TAG, JsonBuilder.toJson(currentPageTag));
+
+            JSONObject pageTagObject = new JSONObject();
+            if(null!=currentPageTag.city && !currentPageTag.city.isEmpty()){
+                pageTagObject.put("city",currentPageTag.city);
+            }
+
+            if(null!=currentPageTag.locality && !currentPageTag.locality.isEmpty()){
+                pageTagObject.put("locality",currentPageTag.locality);
+            }
+
+            if(null!=currentPageTag.project && !currentPageTag.project.isEmpty()){
+                pageTagObject.put("project",currentPageTag.project);
+            }
+
+            if(null!=currentPageTag.suburb && !currentPageTag.suburb.isEmpty()){
+                pageTagObject.put("suburb",currentPageTag.suburb);
+            }
+
+            jsonObject.put(AnalyticsConstants.KEY_CURRENT_PAGE_TAG, pageTagObject);
+
+            jarvisTrackExtraData.setPageType(getScreenName());
+            jsonObject.put(AnalyticsConstants.KEY_EXTRA, JsonBuilder.toJson(jarvisTrackExtraData));
+
             AnalyticsService analyticsService =
                     (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
             analyticsService.track(AnalyticsService.Type.track, jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+
+
+    private void identifyUser(){
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put(AnalyticsConstants.KEY_PAGE_TYPE, getScreenName());
+            AnalyticsService analyticsService =
+                    (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
+            analyticsService.track(AnalyticsService.Type.identify, jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 }

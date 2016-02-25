@@ -7,10 +7,10 @@ import java.util.List;
  * Created by sunil on 23/02/16.
  */
 public class PageTag {
-    private List<String> city;
-    private List<String> locality;
-    private List<String> project;
-    private List<String> suburb;
+    public List<String> city;
+    public List<String> locality;
+    public List<String> project;
+    public List<String> suburb;
 
     public void addCity(String cityName){
         if(null==city){
