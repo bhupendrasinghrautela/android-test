@@ -3,15 +3,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:clipToPadding="false">
 
     <com.makaan.ui.pyr.RangeSeekBar
         android:id="@+id/fragment_dialog_filter_seekbar_item_view_seekbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|center"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="@dimen/fragment_dialog_filters_seekbar_item_right_margin"
         android:orientation="horizontal" />
     <TextView
         android:id="@+id/fragment_dialog_filter_seekbar_item_view_textview"

@@ -179,7 +179,8 @@
                     android:text="buy"
                     android:textColor="@color/white"
                     android:textSize="16sp"
-                    android:typeface="sans" />
+                    android:typeface="sans"
+                    android:textStyle="bold"/>
 
                 <RadioButton
                     android:id="@+id/activity_home_property_rent_radio_button"
@@ -192,7 +193,8 @@
                     android:text="rent"
                     android:textColor="@color/white"
                     android:textSize="16sp"
-                    android:typeface="sans" />
+                    android:typeface="sans"
+                    android:textStyle="bold" />
             </RadioGroup>
         </RelativeLayout>
     </FrameLayout>

@@ -64,6 +64,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
     Long citId,localitId;
     CardType cardType;
     private List<NearByLocalities> nearByLocalities;
+    private boolean isRentSelected;
 
 
     @Override
@@ -99,10 +100,11 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         switchPrimarySecondary.setOnCheckedChangeListener(
                 new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
                 ((AgentService) MakaanServiceFactory.getInstance().getService(AgentService.class)).getTopAgentsForLocality(citId, localitId, 10, isChecked, new TopAgentsCallback() {
                     @Override
                     public void onTopAgentsRcvd(ArrayList<TopAgent> topAgents) {
+                        isRentSelected = isChecked;
                         setData(getDarForAgents(topAgents));
                     }
                 });
@@ -313,7 +315,10 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                     break;
                 case TOPAGENTS:
                     holder.localityIv.setImageResource(R.drawable.agent_image_placeholder);
-                    holder.primarySaleLabelTv.setText("properties for sale");
+                    if(isRentSelected)
+                        holder.primarySaleLabelTv.setText("properties for rent");
+                    else
+                        holder.primarySaleLabelTv.setText("properties for sale");
                     holder.rentLl.setVisibility(View.GONE);
                     break;
                 case TOPBUILDERS:

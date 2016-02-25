@@ -2,8 +2,8 @@
 <resources>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#E71C28</color>
+    <color name="colorPrimaryDark">#691717</color>
     <color name="colorAccent">#E71C28</color>
     <color name="listingBgColor">#f1f1f1</color>
     <color name="listingGray">#666666</color>
@@ -15,9 +15,12 @@
 
     <color name="app_grey">#80000000</color>
     <color name="app_pink">#E72989</color>
+    <color name="status_bar_color">#B82929</color>
 
     <!--Pyr-->
     <color name="appThemeRed">#E71C28  </color>
+    <color name="appThemeRedHalf">#80E71C28  </color>
+
     <color name="pyr_light_grey">#e0e0e0</color>
     <color name="pyr_grey">#666666</color>
     <color name="selected_list_view_background">#F2F2F2</color>
