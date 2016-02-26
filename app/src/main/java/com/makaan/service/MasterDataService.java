@@ -7,6 +7,7 @@ import com.makaan.MakaanBuyerApplication;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ApiConstants;
 import com.makaan.constants.ResponseConstants;
+import com.makaan.jarvis.analytics.BuyerJourneyMessage;
 import com.makaan.jarvis.analytics.SerpFilterMessageMap;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.network.MakaanNetworkClient;
@@ -495,6 +496,24 @@ public class MasterDataService implements MakaanService {
                 MasterDataCache.getInstance().addJarvisSerpFilterMessageMap(serpFilterMessageMap);
             }
         }, "jarvisSerpFilterType.json");
+    }
+
+    public void populateBuyerJourneyMessageMap() {
+        Type jarvisMessageType = new TypeToken<HashMap<String, BuyerJourneyMessage>>() {
+        }.getType();
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.JARVIS_SERP_FILTER_MESSAGE_MAP, jarvisMessageType, new ObjectGetCallback() {
+            @Override
+            public void onError(ResponseError error) {}
+
+            @Override
+            @SuppressWarnings("unchecked")
+            public void onSuccess(Object responseObject) {
+                HashMap<String, BuyerJourneyMessage> buyerJourneyMessageMap = (HashMap<String, BuyerJourneyMessage>) responseObject;
+
+                MasterDataCache.getInstance().addJarvisBuyerJourneyMessageMap(buyerJourneyMessageMap);
+            }
+        }, "jarvisBuyerJourneyMessageType.json");
     }
 
 

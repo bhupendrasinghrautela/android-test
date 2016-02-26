@@ -1,0 +1,21 @@
+{
+  "data": {
+    "bj_sitevisit" : {
+      "phaseId":1,
+      "message":" Have you done Site Visit ?? Please Provide Feedback."
+    },
+    "bj_book" : {
+      "phaseId":2,
+      "message":"Have you booked the Home ? Inform us and get up to 15000 cashback."
+    },
+    "bj_register" : {
+      "phaseId":3,
+      "message":"Have you got the possession of the Home ?"
+    },
+    "bj_posses" : {
+      "phaseId":4,
+      "message":"Have you done the registration of the Home ?"
+    }
+
+  }
+}

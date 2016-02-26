@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 
 import com.makaan.R;
+import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
 import com.makaan.activity.city.CityActivity;
 import com.makaan.activity.listing.ListingDetailActivity;
 import com.makaan.activity.listing.PropertyActivity;
@@ -99,14 +100,14 @@ public class NotificationHelper{
 	 * */
 	public static NotificationCompat.Builder getNotificationBuilder(Context context, String title, String plainText){
 
-		Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.seek_thumb_normal);
+		Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.makaan_logo);
 		int height = (int) context.getResources().getDimension(R.dimen.notification_large_icon_height);
 		int width = (int) context.getResources().getDimension(R.dimen.notification_large_icon_width);
 		Bitmap icon = Bitmap.createScaledBitmap(largeIcon, height, width, false);
 		largeIcon.recycle();
 
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-				.setSmallIcon(R.drawable.seek_thumb_normal).setContentTitle(title)
+				.setSmallIcon(R.drawable.makaan_logo).setContentTitle(title)
 				.setContentText(plainText).setWhen(System.currentTimeMillis()).setTicker(title)
 				.setLargeIcon(icon)
 				.setAutoCancel(true);
@@ -262,6 +263,14 @@ public class NotificationHelper{
 		}
 		String serpFilterUrl = payload.getSerpFilterUrl();
 		Intent intent = new Intent(context, SerpActivity.class);
+		return intent;
+	}
+
+	private static Intent getBuyerJourneyIntent(Context context, NotificationPayload payload){
+		if(payload==null){
+			return null;
+		}
+		Intent intent = new Intent(context, BuyerJourneyActivity.class);
 		return intent;
 	}
 

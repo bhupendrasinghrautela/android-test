@@ -15,6 +15,7 @@ import com.makaan.event.project.ProjectByIdEvent;
 import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
 import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.jarvis.event.IncomingMessageEvent;
+import com.makaan.jarvis.event.PageTag;
 import com.makaan.response.project.Project;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.segment.analytics.Properties;
@@ -106,6 +107,10 @@ public class ProjectActivity extends MakaanBaseSearchActivity implements TotalIm
                 mEntityInfo = new NeighborhoodMapFragment.EntityInfo(project.name,
                         project.latitude, project.longitude);
             }
+
+            PageTag pageTag = new PageTag();
+            pageTag.addCity(project.name);
+            super.setCurrentPageTag(pageTag);
         }
     }
 

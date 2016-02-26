@@ -33,6 +33,8 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
     @Bind(R.id.activity_base_buyer_journey_layout_type_text_view)
     TextView mTitleTextView;
 
+    public static final String KEY_PHASE_ID = "phaseId";
+
     public static final String TYPE = "type";
     public static final String DATA = "data";
     public static final int LOAD_FRAGMENT_WEB_VIEW = 1;

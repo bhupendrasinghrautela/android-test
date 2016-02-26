@@ -21,6 +21,7 @@ import com.makaan.response.listing.Listing;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.ui.listing.ListingViewHolderFactory;
 import com.makaan.ui.listing.BaseListingAdapterViewHolder;
+import com.makaan.util.JsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -234,7 +235,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
 
                 jarvisTrackExtraData.setPageType("child serp");
                 jsonObject.put(AnalyticsConstants.KEY_EVENT_NAME, AnalyticsConstants.CHILD_SERP);
-                jsonObject.put(AnalyticsConstants.KEY_EXTRA, jarvisTrackExtraData);
+                jsonObject.put(AnalyticsConstants.KEY_EXTRA, JsonBuilder.toJson(jarvisTrackExtraData));
 
                 AnalyticsService analyticsService =
                         (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);

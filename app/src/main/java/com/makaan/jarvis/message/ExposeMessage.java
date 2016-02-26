@@ -18,9 +18,10 @@ public class ExposeMessage {
     public static class Properties{
         public String suggest_filter;
         public String type;
-        public List<Property> content;
+        public String message_type;
+        public Object content;
         public CtaType ctaType;
-        //public JarvisTrackExtraData extra;
+        public JarvisTrackExtraData extra;
     }
 
 }

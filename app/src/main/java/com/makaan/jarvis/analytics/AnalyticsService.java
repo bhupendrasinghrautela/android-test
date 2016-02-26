@@ -9,6 +9,7 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.service.MakaanService;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.util.JsonBuilder;
 import com.segment.analytics.Analytics;
 
 import org.json.JSONException;
@@ -34,7 +35,7 @@ public class AnalyticsService implements MakaanService {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put(AnalyticsConstants.KEY_SERP_VISIBLE_ITEM, position);
             jsonObject.put(AnalyticsConstants.KEY_EVENT_NAME, AnalyticsConstants.SERP_SCROLL);
-            jsonObject.put(AnalyticsConstants.KEY_EXTRA, jarvisTrackExtraData);
+            jsonObject.put(AnalyticsConstants.KEY_EXTRA, JsonBuilder.toJson(jarvisTrackExtraData));
 
             Map<String, SerpFilterMessageMap> filterMessageMapMap = MasterDataCache.getInstance().getSerpFilterMessageMap();
             Iterator iterator = filterMessageMapMap.entrySet().iterator();
@@ -59,8 +60,14 @@ public class AnalyticsService implements MakaanService {
         }
     }
 
-    public void trackBuyerJourney(){
+    public void trackBuyerJourney(String eventName, JarvisTrackExtraData jarvisTrackExtraData){
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put(AnalyticsConstants.KEY_EVENT_NAME, eventName);
+            jsonObject.put(AnalyticsConstants.KEY_EXTRA, JsonBuilder.toJson(jarvisTrackExtraData));
 
+            track(AnalyticsService.Type.track, jsonObject);
+        }catch (Exception e){}
     }
 
     public synchronized void track(Type type, JSONObject object){

@@ -1,52 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.makaan.jarvis.ui.cards.RichContentCard xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@android:drawable/alert_light_frame"
+    android:background="@drawable/jarvis_popup_bg"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="10dp">
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="200dp">
+        android:layout_height="@dimen/jarvis_card_brief_height">
 
         <com.android.volley.toolbox.FadeInNetworkImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/property" />
+            android:background="@drawable/chat_card_rounded_corner_gray_bg"
+            android:layout_margin="4dp"/>
 
-        <TextView
-            android:id="@+id/txt_heading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/txt_details"
-            android:background="#80000000"
-            android:maxLines="2"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:text="Project Of The Week Ozone Promenade"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txt_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_margin="6dp"
+            android:padding="8dp"
             android:background="#80000000"
             android:maxLines="2"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:text="The IT hub of India, Bengaluru, has witnessed a rising demand for real estate"
             android:textColor="@android:color/white"
-            android:textSize="16sp" />
+            android:textSize="@dimen/jarvis_chat_card_subtitle_text_size" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -55,25 +38,5 @@
             android:padding="10dp" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:padding="10dp">
 
-
-        <Button
-            android:id="@+id/btn_no"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_red"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:text="Cancel"
-            android:textColor="@color/app_red"
-            android:textSize="20dp" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</com.makaan.jarvis.ui.cards.RichContentCard>

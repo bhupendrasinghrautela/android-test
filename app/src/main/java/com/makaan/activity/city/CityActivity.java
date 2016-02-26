@@ -2,6 +2,7 @@ package com.makaan.activity.city;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -11,7 +12,9 @@ import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.city.CityByIdEvent;
 import com.makaan.jarvis.event.IncomingMessageEvent;
+import com.makaan.jarvis.event.OnExposeEvent;
 import com.makaan.jarvis.event.PageTag;
+import com.makaan.response.listing.Listing;
 import com.makaan.service.CityService;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
@@ -24,6 +27,7 @@ public class CityActivity extends MakaanFragmentActivity {
 
     private CityOverViewFragment mCityOverViewFragment;
     private long mCityId;
+    private String cityName;
 
     @Override
     protected int getContentViewId() {
@@ -82,12 +86,25 @@ public class CityActivity extends MakaanFragmentActivity {
             PageTag pageTag = new PageTag();
             pageTag.addCity(cityByIdEvent.city.label);
             super.setCurrentPageTag(pageTag);
+
+            cityName = cityByIdEvent.city.label;
         }
     }
 
     @Subscribe
     public void onIncomingMessage(IncomingMessageEvent event){
         animateJarvisHead();
+    }
+
+    @Subscribe
+    public void onExposeMessage(OnExposeEvent event) {
+        if(null==event.message){
+            return;
+        }
+        if(!TextUtils.isEmpty(cityName)) {
+            event.message.city = cityName;
+        }
+        displayPopupWindow(event.message);
     }
 
     @Override

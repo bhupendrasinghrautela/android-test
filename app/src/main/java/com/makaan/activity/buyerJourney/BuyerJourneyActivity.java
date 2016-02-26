@@ -27,11 +27,17 @@ import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cookie.CookiePreferences;
+import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
 import com.makaan.event.user.UserLogoutEvent;
+import com.makaan.jarvis.analytics.AnalyticsService;
+import com.makaan.jarvis.event.IncomingMessageEvent;
+import com.makaan.jarvis.event.OnExposeEvent;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.response.listing.Listing;
 import com.makaan.response.user.UserResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.user.UserLogoutService;
+import com.segment.analytics.Analytics;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
@@ -153,6 +159,8 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
 
             }
         });
+
+
     }
 
     @Override
@@ -346,6 +354,33 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
             Toast.makeText(this,getResources().getString(R.string.generic_error),
                     Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Subscribe
+    public void onResults(ClientLeadsByGetEvent clientLeadsByGetEvent){
+        if(null == clientLeadsByGetEvent || null != clientLeadsByGetEvent.error){
+            return;
+        }
+        if(clientLeadsByGetEvent.results != null && clientLeadsByGetEvent.results.size() > 0) {
+            if(clientLeadsByGetEvent.results.get(0).clientActivity != null) {
+                trackBuyerJourney(clientLeadsByGetEvent.results.get(0).clientActivity.phaseId);
+            }
+        }
+
+    }
+
+    @Subscribe
+    public void onIncomingMessage(IncomingMessageEvent event){
+        animateJarvisHead();
+    }
+
+    @Subscribe
+    public void onExposeMessage(OnExposeEvent event) {
+        if(null==event.message){
+            return;
+        }
+
+        displayPopupWindow(event.message);
     }
 
 }
