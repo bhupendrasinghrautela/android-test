@@ -170,7 +170,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/listing_brief_view_layout_property_image_view"
                     android:paddingBottom="@dimen/listing_brief_view_layout_map_image_bottom_margin"
-                    android:layout_marginTop="@dimen/listing_brief_view_layout_map_image_top_margin">
+                    android:paddingTop="@dimen/listing_brief_view_layout_map_image_top_margin">
 
                     <ImageView
                         android:id="@+id/listing_brief_view_layout_map_image_view"
