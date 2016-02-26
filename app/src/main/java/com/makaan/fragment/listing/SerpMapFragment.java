@@ -257,7 +257,9 @@ public class SerpMapFragment extends MakaanBaseFragment {
             }
             mapClubbedMarkers();
 
-            animateToLocation(mLatLngBoundsBuilder);
+            if(markers.size() > 0) {
+                animateToLocation(mLatLngBoundsBuilder);
+            }
         }
 
         private void mapClubbedMarkers() {

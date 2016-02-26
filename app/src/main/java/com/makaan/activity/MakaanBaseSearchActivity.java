@@ -36,6 +36,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.location.LocationListener;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
+import com.makaan.activity.listing.SerpActivity;
 import com.makaan.adapter.listing.SearchAdapter;
 import com.makaan.adapter.listing.SelectedSearchAdapter;
 import com.makaan.analytics.MakaanEventPayload;
@@ -889,7 +890,15 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             }
         }
 
-        setJarvisVisibility(!searchViewVisible);
+        if(!searchViewVisible && this instanceof SerpActivity) {
+            setJarvisVisibility(needJarvis());
+        } else {
+            setJarvisVisibility(!searchViewVisible);
+        }
+    }
+
+    protected boolean needJarvis() {
+        return true;
     }
 
     private void showEmptySearchResults() {
@@ -936,6 +945,11 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                     showSearchResults();
                 }
             }
+        }
+        if(mSerpContext == SERP_CONTEXT_BUY) {
+            mSearchEditText.setHint(this.getResources().getString(R.string.search_default_hint));
+        } else {
+            mSearchEditText.setHint(this.getResources().getString(R.string.search_default_rent_hint));
         }
     }
 
