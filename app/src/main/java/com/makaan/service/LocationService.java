@@ -1,5 +1,7 @@
 package com.makaan.service;
 
+import android.text.TextUtils;
+
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ApiConstants;
@@ -23,6 +25,7 @@ import com.makaan.util.AppBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -133,6 +136,19 @@ public class LocationService implements MakaanService {
                         item.type = SearchSuggestionType.HEADER_TEXT.getValue();
                         item.displayText = "top localities";
                         items.add(0, item);
+
+                        if(Session.apiLocation != null) {
+                            if(!TextUtils.isEmpty(Session.apiLocation.label)) {
+                                item = new SearchResponseItem();
+                                item.cityId = Session.apiLocation.id;
+                                item.entityId = String.valueOf(Session.apiLocation.id);
+                                item.displayText = "know more about " + Session.apiLocation.label.toLowerCase();
+                                item.entityName = Session.apiLocation.label;
+                                item.type = SearchSuggestionType.CITY_OVERVIEW.getValue();
+                                item.id = String.format("TYPEAHEAD-CITY-OVERVIEW-%s", item.entityId);
+                                items.add(item);
+                            }
+                        }
 
                         SearchResponse response = new SearchResponse();
                         response.setTotalCount(items.size());

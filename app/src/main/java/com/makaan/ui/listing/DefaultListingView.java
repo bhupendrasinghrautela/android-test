@@ -278,7 +278,12 @@ public class DefaultListingView extends AbstractListingView {
 
         // set property address info {project_name},{localityName}_{cityName}
         if(!TextUtils.isEmpty(mListing.project.name) && !"project".equalsIgnoreCase(mListing.project.name)) {
-            mPropertyAddressTextView.setText(String.format("%s, %s, %s", mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase());
+            if(!TextUtils.isEmpty(mListing.project.builderName)) {
+                mPropertyAddressTextView.setText(String.format("%s %s, %s, %s", mListing.project.builderName,
+                        mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase());
+            } else {
+                mPropertyAddressTextView.setText(String.format("%s, %s, %s", mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase());
+            }
         } else {
             mPropertyAddressTextView.setText(String.format("%s, %s", mListing.localityName, mListing.cityName).toLowerCase());
         }
@@ -523,13 +528,13 @@ public class DefaultListingView extends AbstractListingView {
                 if(mListing.floor != null && mListing.totalFloors != null && mListing.floor >= 0 && mListing.totalFloors != 0) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     if(mListing.floor == 1) {
-                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup>st</sup> of %d", mListing.floor, mListing.totalFloors).toLowerCase()));
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>st</small></sup> of %d", mListing.floor, mListing.totalFloors).toLowerCase()));
                     } else if(mListing.floor == 2) {
-                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup>nd</sup> of %d", mListing.floor, mListing.totalFloors).toLowerCase()));
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>nd</small></sup> of %d", mListing.floor, mListing.totalFloors).toLowerCase()));
                     } else if(mListing.floor == 3) {
-                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup>rd</sup> of %d", mListing.floor, mListing.totalFloors).toLowerCase()));
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>rd</small></sup> of %d", mListing.floor, mListing.totalFloors).toLowerCase()));
                     } else {
-                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup>th</sup> of %d", mListing.floor, mListing.totalFloors).toLowerCase()));
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>th</small></sup> of %d", mListing.floor, mListing.totalFloors).toLowerCase()));
                     }
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
