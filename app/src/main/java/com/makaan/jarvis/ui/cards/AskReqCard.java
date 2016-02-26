@@ -3,8 +3,10 @@ package com.makaan.jarvis.ui.cards;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
+import android.util.StringBuilderPrinter;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,17 +16,21 @@ import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.adapter.listing.FiltersViewAdapter;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.jarvis.JarvisClient;
 import com.makaan.jarvis.event.SendRequirementEvent;
 import com.makaan.jarvis.message.ChatObject;
 import com.makaan.jarvis.message.Message;
+import com.makaan.jarvis.message.MessageType;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.response.serp.FilterGroup;
+import com.makaan.response.serp.TermFilter;
 import com.makaan.ui.view.BaseView;
 import com.makaan.ui.view.ExpandableHeightGridView;
 import com.makaan.util.AppBus;
 
 import java.util.ArrayList;
 
+import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
@@ -32,7 +38,17 @@ import butterknife.OnClick;
  */
 public class AskReqCard extends BaseView<Message> {
 
+    @Bind(R.id.et_type)
+    EditText mPropertyType;
+
+    @Bind(R.id.et_price)
+    EditText mPrice;
+
+    @Bind(R.id.et_locality)
+    EditText mLocality;
+
     private Context mContext;
+    private ArrayList<FilterGroup> filterGroups;
 
     public AskReqCard(Context context) {
         super(context);
@@ -54,12 +70,12 @@ public class AskReqCard extends BaseView<Message> {
 
         try {
             if (SerpObjects.isBuyContext(getContext())) {
-                ArrayList<FilterGroup> filterGroups = MasterDataCache.getInstance().getAllBuyFilterGroups();
-                populateFilters(getClonedFilterGroups(filterGroups));
+                filterGroups = MasterDataCache.getInstance().getAllBuyFilterGroups();
             } else {
-                ArrayList<FilterGroup> filterGroups = MasterDataCache.getInstance().getAllRentFilterGroups();
-                populateFilters(getClonedFilterGroups(filterGroups));
+                filterGroups = MasterDataCache.getInstance().getAllRentFilterGroups();
             }
+            filterGroups = getClonedFilterGroups(filterGroups);
+            populateFilters(filterGroups);
         } catch (CloneNotSupportedException ex) {
             ex.printStackTrace();
         }
@@ -86,6 +102,44 @@ public class AskReqCard extends BaseView<Message> {
         }
     }
 
+
+    private String getBedroomText(ArrayList<FilterGroup> filterGroups) {
+        if (filterGroups != null && filterGroups.size() > 0) {
+            for (FilterGroup filterGroup : filterGroups) {
+                if(filterGroup.displayOrder < 0) {
+                    continue;
+                }
+
+                if("bedroom".equalsIgnoreCase(filterGroup.displayName)){
+                    if(null!=filterGroup.termFilterValues || !filterGroup.termFilterValues.isEmpty()){
+                        StringBuilder bhkBuilder = new StringBuilder();
+                        int i=0;
+                        for(TermFilter termFilter : filterGroup.termFilterValues){
+                            if(!termFilter.selected){
+                                continue;
+                            }
+                            if(i>0){
+                                bhkBuilder.append(",");
+                            }
+                            bhkBuilder.append(termFilter.displayName);
+                            i++;
+                        }
+
+                        if(!bhkBuilder.toString().isEmpty()){
+                            return bhkBuilder.append("BHK").toString();
+                        }
+                    }
+
+                    break;
+                }
+
+            }
+        }
+
+        return  "";
+    }
+
+
     private ArrayList<FilterGroup> getClonedFilterGroups(ArrayList<FilterGroup> filterGroups) throws CloneNotSupportedException {
         ArrayList<FilterGroup> group = new ArrayList<>(filterGroups.size());
         for(FilterGroup filter : filterGroups) {
@@ -96,17 +150,28 @@ public class AskReqCard extends BaseView<Message> {
 
     @OnClick(R.id.btn_apply)
     public void onFilterApply(){
+
+        StringBuilder messageBuilder = new StringBuilder();
+        messageBuilder.append(getBedroomText(filterGroups));
+
+        if(!mPropertyType.getText().toString().isEmpty()) {
+            messageBuilder.append(messageBuilder.toString().isEmpty() ? "" : ", " + mPropertyType.getText().toString());
+        }
+
+        if(!mLocality.getText().toString().isEmpty()) {
+            messageBuilder.append(messageBuilder.toString().isEmpty() ? "" : ", " + mLocality.getText().toString());
+        }
+
+        if(messageBuilder.toString().isEmpty()){
+            return;
+        }
+
         AppBus.getInstance().register(this);
-        Message sendReqMessage = new Message();
-        sendReqMessage.appliedFilter = true;
-        sendReqMessage.filtered = "plainLink";
-        sendReqMessage.chatObj = new ChatObject();
-        sendReqMessage.chatObj.beds = "3";
-        sendReqMessage.chatObj.propertyType = "Apartment";
-        sendReqMessage.chatObj.budget = 100000;
-        sendReqMessage.chatObj.locality = "Whitefield";
+        Message message = new Message();
+        message.messageType = MessageType.outText;
+        message.message = "you suggested " + messageBuilder.toString();
         SendRequirementEvent sendRequirementEvent = new SendRequirementEvent();
-        sendRequirementEvent.message = sendReqMessage;
+        sendRequirementEvent.message = message;
         AppBus.getInstance().post(sendRequirementEvent);
     }
 

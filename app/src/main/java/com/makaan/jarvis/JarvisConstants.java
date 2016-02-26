@@ -18,5 +18,5 @@ public class JarvisConstants {
     public static final int CHAT_CARD_DEFAULT_TOP_BOTTOM_MARGIN=20;
 
     public static int JARVIS_ACTION_DISMISS_TIMEOUT = 10000;
-    public static int JARVIS_USER_ACTIVITY_TIMEOUT = 5000;
+    public static int JARVIS_USER_ACTIVITY_TIMEOUT = 20000;
 }

@@ -25,6 +25,7 @@ import butterknife.OnClick;
  * Created by makaanuser on 23/1/16.
  */
 public class LeadFormActivity extends MakaanFragmentActivity implements LeadFormReplaceFragment {
+    public static final String LISTING_ID = "listingId";
     public static final int LEAD_DROP_REQUEST = 3001;
     private FragmentTransaction mFragmentTransaction;
     private LeadFormPresenter mLeadFormPresenter;
@@ -136,7 +137,7 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
                 MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickPropertyCallConnect);
             }
             mLeadFormPresenter.showThankYouScreenFragment(false, false);
-            setResult(RESULT_OK,new Intent().putExtra("listingId", mListingId));
+            setResult(RESULT_OK,new Intent().putExtra(LISTING_ID, mListingId));
         }
     }
 
@@ -167,7 +168,7 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
             }
 
             mLeadFormPresenter.showThankYouScreenFragment(false, false);
-            setResult(RESULT_OK);
+            setResult(RESULT_OK, new Intent().putExtra(LISTING_ID, mListingId));
         }
     }
 

@@ -1,6 +1,5 @@
 package com.makaan.util;
 
-import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
 
 /**
@@ -8,9 +7,12 @@ import com.squareup.otto.ThreadEnforcer;
  */
 public class AppBus {
 
-    private static final Bus BUS = new Bus(ThreadEnforcer.ANY);
+    private static final MakaanBus BUS = new MakaanBus(ThreadEnforcer.ANY);
 
-    public static Bus getInstance() {
+
+    public static MakaanBus getInstance() {
+
+
         return BUS;
     }
 }

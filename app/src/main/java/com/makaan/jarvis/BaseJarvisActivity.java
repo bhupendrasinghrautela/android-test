@@ -89,7 +89,9 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     private JarvisTrackExtraData jarvisTrackExtraData;
     private boolean isUserActivenessTrackEnabled;
 
-    private boolean isActivenessTrackSent = false;
+    private boolean isPyrContentPopupDisplayed = false;
+
+    private boolean isJarvisHeadVisible;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -122,6 +124,12 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     }
 
     @Override
+    protected void onStop() {
+        dismissPopupWithAnim();
+        super.onStop();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         SerpObjects.removeSerpObject(this);
@@ -138,6 +146,8 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
             return;
         }
 
+        isJarvisHeadVisible = true;
+
         View baseView = getLayoutInflater().inflate(R.layout.base_jarvis_activity, null);
         mActivityContent = (FrameLayout) baseView.findViewById(R.id.activity_content);
         getLayoutInflater().inflate(layoutResID, mActivityContent, true);
@@ -152,13 +162,15 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == LeadFormActivity.LEAD_DROP_REQUEST && resultCode==RESULT_OK){
             if(null!=data){
-                int listingId = data.getIntExtra("listingId",-1);
+                int listingId = data.getIntExtra(LeadFormActivity.LISTING_ID,-1);
                 if(listingId>0){
                     try {
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put(AnalyticsConstants.KEY_PAGE_TYPE, getScreenName());
                         jsonObject.put(AnalyticsConstants.KEY_EVENT_NAME, AnalyticsConstants.ENQUIRY_DROPPED);
                         jsonObject.put(AnalyticsConstants.KEY_LISTING_ID, listingId);
+                        jarvisTrackExtraData.setPageType(getScreenName());
+                        jsonObject.put(AnalyticsConstants.KEY_EXTRA, JsonBuilder.toJson(jarvisTrackExtraData));
                         AnalyticsService analyticsService =
                                 (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
                         analyticsService.track(AnalyticsService.Type.track, jsonObject);
@@ -316,9 +328,9 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
             @Override
             public void run() {
                 try {
-                    /*if (jarvisTrackExtraData.pageTimestamp != message.properties.extra.pageTimestamp) {
+                    if (jarvisTrackExtraData.pageTimestamp != message.properties.extra.pageTimestamp || !isJarvisHeadVisible) {
                         return;
-                    }*/
+                    }
 
 
                     mJarvisPopupCard.removeAllViews();
@@ -336,6 +348,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                         });
                     } else if (CtaType.contentPyr == message.properties.ctaType ||
                             CtaType.childSerp == message.properties.ctaType) {
+                        isPyrContentPopupDisplayed = true;
                         card.setOnApplyClickListener(new SerpFilterCard.OnApplyClickListener() {
                             @Override
                             public void onApplyClick() {
@@ -390,19 +403,23 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         //mJarvisPopupCard.setAnimation(zoomin);
     }
 
-    private void dismissPopupWithAnim(){
+    public void dismissPopupWithAnim(){
         if(this==null || isFinishing() || mJarvisPopupCard ==null){
             return;
         }
 
-        mJarvisPopupCard.removeAllViews();
-        mJarvisPopupCard.setVisibility(View.GONE);
+        if(mJarvisPopupCard !=null && mJarvisPopupCard.getVisibility()==View.VISIBLE){
+            mJarvisPopupCard.removeAllViews();
+            mJarvisPopupCard.setVisibility(View.GONE);
+        }
+
         //mJarvisContainer.invalidate();
         //Animation zoomout = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoom_out);
         //mJarvisPopupCard.setAnimation(zoomout);
     }
 
-    protected void setIsJarvisVisible(boolean visible) {
+    protected void setJarvisVisibility(boolean visible) {
+        isJarvisHeadVisible = visible;
         if(mJarvisHead != null) {
             mJarvisHead.setVisibility(visible ? View.VISIBLE : View.GONE);
         }
@@ -423,9 +440,6 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     }
 
     public void trackBuyerJourney(int phaseId){
-        if(isActivenessTrackSent){
-            return;
-        }
 
         AnalyticsService analyticsService =
                 (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
@@ -445,14 +459,14 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
             }
         }
 
-        //analyticsService.trackBuyerJourney("bj_shortlist", jarvisTrackExtraData);
     }
 
     private void trackUserActiveness(){
         try {
-            if(!shouldTrackUserActiveness()){
+            if(!shouldTrackUserActiveness() || isPyrContentPopupDisplayed){
                 return;
             }
+
             JSONObject jsonObject = new JSONObject();
             jsonObject.put(AnalyticsConstants.KEY_EVENT_NAME, AnalyticsConstants.CONTENT_PYR);
             //jsonObject.put(AnalyticsConstants.KEY_CURRENT_PAGE_TAG, JsonBuilder.toJson(currentPageTag));
@@ -482,7 +496,6 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
             AnalyticsService analyticsService =
                     (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
             analyticsService.track(AnalyticsService.Type.track, jsonObject);
-            isActivenessTrackSent = true;
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -504,4 +517,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
     }
 
+    protected boolean needBackProcessing() {
+        return (mJarvisPopupCard !=null && mJarvisPopupCard.getVisibility()==View.VISIBLE);
+    }
 }

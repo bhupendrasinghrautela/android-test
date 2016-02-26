@@ -21,7 +21,7 @@
     <string name="jarvis_apply_button_string">OK</string>
     <string name="jarvis_apply_filter_string">Would you like to apply filter?</string>
     <string name="bhk_string">BHK</string>
-    <string name="et_type_hint">type</string>
+    <string name="et_type_hint">property type</string>
     <string name="et_price_hint">\u20B9 price</string>
     <string name="et_locality_hint">locality</string>
     <string name="btn_apply_string">apply</string>

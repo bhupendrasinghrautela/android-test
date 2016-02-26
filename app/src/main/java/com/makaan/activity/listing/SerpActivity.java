@@ -717,7 +717,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 mIsMapFragment = true;
                 mMapImageView.setImageResource(R.drawable.list);
                 setSearchBarCollapsible(false);
-                setIsJarvisVisible(false);
+                setJarvisVisibility(false);
             }
         }
     }
@@ -828,6 +828,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             mGroupReceived = true;
             mSerpReceived = false;
         }
+        dismissPopupWithAnim();
         showProgress();
     }
 
@@ -1028,8 +1029,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         Listing listing = mListings.get(0);
         if(!TextUtils.isEmpty(listing.cityName)) {
             event.message.city = listing.cityName;
+            displayPopupWindow(event.message);
         }
-        displayPopupWindow(event.message);
     }
 
     private void parseAndApplyFilter(String json) {
