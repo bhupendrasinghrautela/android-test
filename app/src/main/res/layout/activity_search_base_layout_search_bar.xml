@@ -20,7 +20,7 @@
                 android:layout_height="@dimen/activity_search_base_layout_search_bar_back_button_height"
                 android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_back_button_margin_top"
                 android:layout_marginBottom="@dimen/activity_search_base_layout_search_bar_back_button_margin_bottom"
-                android:background="@mipmap/back_white" />
+                android:background="@drawable/back_arrow_white" />
         </FrameLayout>
 
         <RelativeLayout

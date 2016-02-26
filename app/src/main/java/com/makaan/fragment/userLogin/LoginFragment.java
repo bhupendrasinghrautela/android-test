@@ -33,6 +33,8 @@ import com.makaan.util.CommonUtil;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
+import java.util.prefs.Preferences;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
@@ -59,6 +61,8 @@ public class LoginFragment extends Fragment {
     TextView mSignUptext;
     private OnSignUpSelectedListener mSignUpSelectedListener;
     boolean mBound = false;
+    private boolean isRemember=false;
+
 
     @Nullable
     @Override
@@ -105,6 +109,14 @@ public class LoginFragment extends Fragment {
            ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
             ))).loginWithMakaanAccount(email,pwd);
             mOnUserLoginListener.onUserLoginBegin();
+            //remember me functionality
+            if(isRemember) {
+                CookiePreferences.setUserName(getActivity(), email);
+                CookiePreferences.setPassword(getActivity(), pwd);
+            }else{
+                CookiePreferences.setUserName(getActivity(), "");
+                CookiePreferences.setPassword(getActivity(),"");
+            }
         }
     }
 
@@ -124,9 +136,9 @@ public class LoginFragment extends Fragment {
     public void onRememberMeCheckedChanged( boolean isChecked) {
         // checkbox status is changed from uncheck to checked.
         if (!isChecked) {
-
+            isRemember=false;
         } else {
-
+            isRemember=true;
         }
     }
 

@@ -21,7 +21,8 @@
             android:layout_height="@dimen/seller_image_width_height"
             android:visibility="invisible"
             app:civ_border_color="@color/light_gray"
-            app:civ_border_width="@dimen/border_width" />
+            app:civ_border_width="@dimen/border_width"
+            android:scaleType="fitXY"/>
 
         <TextView
             android:id="@+id/iv_seller_image"

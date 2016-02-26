@@ -145,7 +145,7 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
 
     @Override
     public void onGoogleTokenFail() {
-        Toast.makeText(getActivity(), getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getActivity(), getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -161,7 +161,7 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
 
     @Override
     public void onFacebookTokenFail() {
-        Toast.makeText(getActivity(), getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
     }
 
     private void parseLoginType(int loginType){

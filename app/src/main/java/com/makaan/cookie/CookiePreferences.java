@@ -32,6 +32,8 @@ public class CookiePreferences {
     private static final String PREF_IS_USER_LOGGED_IN = "isLoggedIn";
     private static final String PREF_COOKIE = "makaan_cookies";
 
+    private static final String PREF_USER_NAME = "user_name";
+    private static final String PREF_PASSWORD = "password";
     /**
      * A static method for saving user info
      *
@@ -210,4 +212,51 @@ public class CookiePreferences {
             editor.putStringSet(key, stringSet);
         }
     }
+
+    /**
+     * A static method for getting username for remember me
+     *
+     * @param context the Context of activity
+     * @return selected Index from server
+     * */
+    public static String getUserName(Context context) {
+        return getSharedPref(context).getString(PREF_USER_NAME, "");
+    }
+
+
+    /**
+     * A static method for saving username of user for remember me
+     *
+     * @param context the Context of activity
+     * @param name selected Index
+     * */
+    public static void setUserName(Context context, String name) {
+        SharedPreferences.Editor edit = getSharedPref(context).edit();
+        edit.putString(PREF_USER_NAME, name);
+        edit.commit();
+    }
+
+    /**
+     * A static method for getting password of user remember me
+     *
+     * @param context the Context of activity
+     * @return selected Index from server
+     * */
+    public static String getPassword(Context context) {
+        return getSharedPref(context).getString(PREF_PASSWORD, "");
+    }
+
+
+    /**
+     * A static method for saving password for user remember me
+     *
+     * @param context the Context of activity
+     * @param password selected Index
+     * */
+    public static void setPassword(Context context, String password) {
+        SharedPreferences.Editor edit = getSharedPref(context).edit();
+        edit.putString(PREF_PASSWORD, password);
+        edit.commit();
+    }
+
 }
