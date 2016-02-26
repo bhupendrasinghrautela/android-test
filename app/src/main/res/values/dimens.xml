@@ -1337,4 +1337,6 @@
     <dimen name="default_error_message_text_size">24sp</dimen>
     <dimen name="default_error_message_left_margin">40dp</dimen>
     <dimen name="default_error_message_right_margin">40dp</dimen>
+
+    <dimen name="serp_map_layout_view_pager_height">200dp</dimen>
 </resources>

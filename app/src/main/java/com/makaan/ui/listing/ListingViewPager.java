@@ -80,6 +80,8 @@ public class ListingViewPager extends ViewPager implements ListingPagerAdapter.P
     }
 
     public void notifyDataSetChanged() {
-        mListingPagerAdapter.notifyDataSetChanged();
+        if(mListingPagerAdapter != null) {
+            mListingPagerAdapter.notifyDataSetChanged();
+        }
     }
 }

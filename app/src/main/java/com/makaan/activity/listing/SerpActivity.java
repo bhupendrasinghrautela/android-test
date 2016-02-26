@@ -313,20 +313,24 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                         setSearchBarCollapsible(false);
                         mIsMapFragment = true;
                         mMapImageView.setImageResource(R.drawable.list);
+                        setJarvisVisibility(false);
                     } else {
                         setSearchBarCollapsible(true);
                         mIsMapFragment = false;
                         mMapImageView.setImageResource(R.drawable.map_icon);
+                        setJarvisVisibility(true);
                     }
                 } else {
                     if (mSerpBackStack.peekType() == SerpBackStack.TYPE_DEFAULT) {
                         setSearchBarCollapsible(true);
                         mIsMapFragment = false;
                         mMapImageView.setImageResource(R.drawable.map_icon);
+                        setJarvisVisibility(true);
                     } else {
                         setSearchBarCollapsible(false);
                         mIsMapFragment = true;
                         mMapImageView.setImageResource(R.drawable.list);
+                        setJarvisVisibility(false);
                     }
                 }
 
@@ -701,6 +705,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             }
             mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE), mListingCount);
             initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
+            setJarvisVisibility(true);
         } else {
             Properties properties =MakaanEventPayload.beginBatch();
             properties.putValue(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.map);
@@ -1091,6 +1096,10 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
         super.setCurrentPageTag(pageTag);
 
+    }
+
+    protected boolean needJarvis() {
+        return !mIsMapFragment;
     }
 
 }

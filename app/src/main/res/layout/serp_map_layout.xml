@@ -13,7 +13,7 @@
     <com.makaan.ui.listing.ListingViewPager
         android:id="@+id/serp_map_listing_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="187dp"
+        android:layout_height="@dimen/serp_map_layout_view_pager_height"
         android:background="@color/transparent"
         android:layout_gravity="bottom"/>
 
