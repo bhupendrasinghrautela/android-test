@@ -11,10 +11,15 @@ import android.widget.TextView;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.constants.LeadPhaseConstants;
 import com.makaan.jarvis.analytics.BuyerJourneyMessage;
 import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.jarvis.message.PageVisitType;
+import com.makaan.request.buyerjourney.PhaseChange;
+import com.makaan.service.ClientEventsService;
+import com.makaan.service.MakaanServiceFactory;
 
+import java.util.Date;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -55,7 +60,7 @@ public class SimpleCtaCard extends BaseCtaView<ExposeMessage> {
     }
 
     @Override
-    public void bindView(final Context context, ExposeMessage item) {
+    public void bindView(final Context context, final ExposeMessage item) {
         if(TextUtils.isEmpty(item.properties.message_type)){
             setVisibility(View.GONE);
         }
@@ -74,14 +79,30 @@ public class SimpleCtaCard extends BaseCtaView<ExposeMessage> {
         mApplyButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, BuyerDashboardActivity.class);
-                intent.putExtra(BuyerDashboardActivity.KEY_PHASE_ID, buyerJourneyMessage.phaseId);
-                context.startActivity(intent);
+                if(buyerJourneyMessage.phaseId < LeadPhaseConstants.LEAD_PHASE_BOOKING) {
+                    Intent intent = new Intent(context, BuyerDashboardActivity.class);
+                    intent.putExtra(BuyerDashboardActivity.KEY_PHASE_ID, buyerJourneyMessage.phaseId);
+                    context.startActivity(intent);
 
-                if(null!=mOnApplyClickListener){
-                    mOnApplyClickListener.onApplyClick();
+                    if (null != mOnApplyClickListener) {
+                        mOnApplyClickListener.onApplyClick();
+                    }
+                } else {
+                    if(item.properties != null && item.properties.agentId != null && item.properties.leadId != null) {
+                        PhaseChange change = new PhaseChange();
+                        change.agentId = item.properties.agentId;
+                        change.performTime = new Date().getTime();
+                        if(buyerJourneyMessage.phaseId == LeadPhaseConstants.LEAD_PHASE_BOOKING) {
+                            change.eventTypeId = LeadPhaseConstants.LEAD_EVENT_POSSESSION;
+                        } else if(buyerJourneyMessage.phaseId == LeadPhaseConstants.LEAD_PHASE_POSSESSION) {
+                            change.eventTypeId = LeadPhaseConstants.LEAD_EVENT_REGISTRATION;
+                        }
+                        ((ClientEventsService) (MakaanServiceFactory.getInstance().getService(ClientEventsService.class))).changePhase(item.properties.leadId, change);
+                    }
+                    if (null != mOnApplyClickListener) {
+                        mOnApplyClickListener.onApplyClick();
+                    }
                 }
-
             }
         });
 

@@ -315,5 +315,6 @@
     <string name="similar_project_clicked_position">similar project clicked position</string>
     <string name="adapter_position">adapter position</string>
 
+    <string name="default_error_message">some exception has occurred</string>
 </resources>
 

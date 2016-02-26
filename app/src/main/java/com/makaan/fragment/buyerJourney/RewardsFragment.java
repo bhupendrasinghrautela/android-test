@@ -33,7 +33,7 @@ public class RewardsFragment extends MakaanBaseFragment {
     void onGetRewardsClicked(View view) {
         if(CookiePreferences.isUserLoggedIn(getActivity())) {
             if (getActivity() instanceof BuyerDashboardCallbacks) {
-                ((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_CLIENT_LEADS, true, null, "cashback request", null);
+                ((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_CLIENT_LEADS, true, null, null, null);
             }
         }
     }

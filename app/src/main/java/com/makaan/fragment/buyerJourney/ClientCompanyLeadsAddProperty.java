@@ -50,7 +50,7 @@ public class ClientCompanyLeadsAddProperty extends MakaanBaseFragment {
         if(getActivity() instanceof BuyerDashboardCallbacks) {
             if(mObj != null) {
                 ((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_REVIEW_AGENT,
-                        true, null, "cashback request", mObj);
+                        true, null, null, mObj);
             }
         }
     }

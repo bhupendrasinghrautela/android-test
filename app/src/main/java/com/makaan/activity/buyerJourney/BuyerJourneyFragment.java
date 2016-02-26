@@ -14,6 +14,7 @@ import com.makaan.constants.LeadPhaseConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.buyerjourney.ClientEventsByGetEvent;
 import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
+import com.makaan.event.buyerjourney.NewMatchesGetEvent;
 import com.makaan.event.saveSearch.SaveSearchGetEvent;
 import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.fragment.MakaanBaseFragment;
@@ -170,7 +171,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             ((ClientEventsService) MakaanServiceFactory.getInstance().getService(ClientEventsService.class)).getClientEvents(1);
             ((WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class)).get();
 
-            mNewSearchesReceived = true; // TODO need to implement this
+            mNewSearchesReceived = false;
             mClientEventsReceived = false;
             mClientLeadsReceived = false;
             mWishListsReceived = false;
@@ -193,6 +194,19 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
         }
         mSavedSearchesCount = saveSearchGetEvent.saveSearchArrayList.size();
         mSavedSearchesReceived = true;
+        updateUi();
+    }
+
+
+    @Subscribe
+    public void onResults(NewMatchesGetEvent newMatchesGetEvent){
+        if(null == newMatchesGetEvent || null != newMatchesGetEvent.error){
+            //TODO handle error
+            showNoResults();
+            return;
+        }
+        mNewMatchesCount = newMatchesGetEvent.totalCount;
+        mNewSearchesReceived = true;
         updateUi();
     }
 

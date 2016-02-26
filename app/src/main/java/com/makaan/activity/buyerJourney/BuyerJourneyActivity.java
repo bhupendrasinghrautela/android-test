@@ -26,13 +26,16 @@ import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.LeadPhaseConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
 import com.makaan.event.user.UserLogoutEvent;
 import com.makaan.jarvis.analytics.AnalyticsService;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.OnExposeEvent;
+import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.request.buyerjourney.PhaseChange;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.user.UserResponse;
 import com.makaan.service.MakaanServiceFactory;
@@ -40,6 +43,8 @@ import com.makaan.service.user.UserLogoutService;
 import com.segment.analytics.Analytics;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
+
+import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -76,6 +81,8 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
     CollapsingToolbarLayout mCollapsingToolbar;
     @Bind(R.id.app_bar)
     AppBarLayout mAppBarLayout;
+    private Long mAgentId;
+    private Long mLeadId;
 
     enum TabType {
         Journey("journey"),
@@ -362,6 +369,8 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
             return;
         }
         if(clientLeadsByGetEvent.results != null && clientLeadsByGetEvent.results.size() > 0) {
+            mAgentId = clientLeadsByGetEvent.results.get(0).companyId;
+            mLeadId = clientLeadsByGetEvent.results.get(0).id;
             if(clientLeadsByGetEvent.results.get(0).clientActivity != null) {
                 trackBuyerJourney(clientLeadsByGetEvent.results.get(0).clientActivity.phaseId);
             }
@@ -380,6 +389,14 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
             return;
         }
 
+        if(event.message.properties == null) {
+            event.message.properties = new ExposeMessage.Properties();
+            event.message.properties.leadId = mLeadId;
+            event.message.properties.agentId = mAgentId;
+        } else {
+            event.message.properties.leadId = mLeadId;
+            event.message.properties.agentId = mAgentId;
+        }
         displayPopupWindow(event.message);
     }
 

@@ -27,7 +27,7 @@ import java.lang.reflect.Type;
 public class ClientEventsService implements MakaanService {
     public static final String TAG = ClientEventsService.class.getSimpleName();
     public void getClientEvents(int rows) {
-        String url = ApiConstants.SITE_VISIT_CLIENT_EVENTS.concat("?fields=leadId&sort=-performTime");
+        String url = ApiConstants.SITE_VISIT_CLIENT_EVENTS.concat("?sort=-performTime");
         if(rows > 0) {
             url = url.concat("&rows=1");
         }

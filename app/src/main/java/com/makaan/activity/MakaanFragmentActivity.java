@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -33,6 +34,8 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
     FrameLayout mContentFrameLayout;
 
     private MakaanProgressDialog progressDialog;
+    private TextView mNoResultsTextView;
+    private View mNoResultsLayout;
 
 
     protected abstract int getContentViewId();
@@ -55,6 +58,8 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
         super.setContentView(R.layout.activity_makaan_base);
 
         mNoResultsImageView = (ImageView) findViewById(R.id.activity_makaan_base_no_result_image_view);
+        mNoResultsTextView = (TextView) findViewById(R.id.activity_makaan_base_no_result_text_view);
+        mNoResultsLayout = findViewById(R.id.activity_makaan_base_no_result_layout);
         mLoadingProgressBar = (ProgressBar) findViewById(R.id.activity_makaan_base_loading_progress_bar);
         mContentFrameLayout = (FrameLayout) findViewById(R.id.activity_makaan_base_content_frame_layout);
 
@@ -144,22 +149,30 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
 
     protected void showProgress() {
         mContentFrameLayout.setVisibility(View.GONE);
-        mNoResultsImageView.setVisibility(View.GONE);
+        mNoResultsLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.VISIBLE);
     }
-
     protected void showNoResults() {
+        showNoResults(null);
+    }
+
+    protected void showNoResults(String message) {
         mContentFrameLayout.setVisibility(View.GONE);
-        mNoResultsImageView.setVisibility(View.VISIBLE);
+        mNoResultsLayout.setVisibility(View.VISIBLE);
         mLoadingProgressBar.setVisibility(View.GONE);
 
+        if(message == null) {
+            mNoResultsTextView.setText(R.string.default_error_message);
+        } else {
+            mNoResultsTextView.setText(message);
+        }
 //        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(mNoResultsImageView);
         Glide.with(this).load(R.raw.no_result).crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mNoResultsImageView);
     }
 
     protected void showContent() {
         mContentFrameLayout.setVisibility(View.VISIBLE);
-        mNoResultsImageView.setVisibility(View.GONE);
+        mNoResultsLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.GONE);
     }
 

@@ -87,8 +87,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
             public void onClick(View v) {
                 if(savedSearches != null && savedSearches.size() > position) {
                     SerpRequest request = new SerpRequest(SerpActivity.TYPE_SUGGESTION);
-                    SelectorParser.parse(savedSearches.get(position).searchQuery, request);
-                    request.launchSerp(getActivity());
+                    request.launchSerp(getActivity(), savedSearches.get(position).searchQuery);
                 }
             }
         }

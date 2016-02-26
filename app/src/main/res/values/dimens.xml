@@ -1333,4 +1333,8 @@
 
     <dimen name="map_pointer_width">32dp</dimen>
     <dimen name="map_pointer_height">32dp</dimen>
+
+    <dimen name="default_error_message_text_size">24sp</dimen>
+    <dimen name="default_error_message_left_margin">40dp</dimen>
+    <dimen name="default_error_message_right_margin">40dp</dimen>
 </resources>
