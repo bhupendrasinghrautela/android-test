@@ -11,6 +11,7 @@ import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.shortlist.ShortListFragment;
 import com.makaan.activity.sitevisit.SiteVisitFragment;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.constants.LeadPhaseConstants;
 import com.makaan.fragment.WebViewFragment;
 import com.makaan.fragment.buyerJourney.BlogContentFragment;
 import com.makaan.fragment.buyerJourney.ClientCompanyLeadFragment;
@@ -20,8 +21,12 @@ import com.makaan.fragment.buyerJourney.ReviewAgentFragment;
 import com.makaan.fragment.buyerJourney.RewardsFragment;
 import com.makaan.fragment.buyerJourney.SaveSearchFragment;
 import com.makaan.fragment.buyerJourney.UploadDocumentsFragment;
+import com.makaan.request.buyerjourney.PhaseChange;
+import com.makaan.service.ClientEventsService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
+
+import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -37,6 +42,7 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
 
     public static final String TYPE = "type";
     public static final String DATA = "data";
+
     public static final int LOAD_FRAGMENT_WEB_VIEW = 1;
     public static final int LOAD_FRAGMENT_CONTENT = 2;
     public static final int LOAD_FRAGMENT_SHORTLIST = 3;
@@ -48,6 +54,7 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
     public static final int LOAD_FRAGMENT_REVIEW_AGENT = 9;
     public static final int LOAD_FRAGMENT_UPLOAD_DOCUMENTS = 10;
     public static final int LOAD_FRAGMENT_SITE_VISIT = 11;
+    private boolean mOnlySellerRating;
 
 
     @Override
@@ -92,7 +99,7 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
                     setTitle("save searches");
                     break;
                 case LOAD_FRAGMENT_REWARDS:
-                    initFragment(R.id.activity_base_buyer_journey_content_frame_layout, new RewardsFragment(), false);
+                    initFragment(R.id.activity_base_buyer_journey_content_frame_layout, new ClientLeadsFragment(), false);
                     setTitle("cashback request");
                     break;
                 case LOAD_FRAGMENT_SITE_VISIT:
@@ -100,6 +107,20 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
                     setTitle("site visits");
                     break;
                 default:
+                    break;
+            }
+        } else if(intent.hasExtra(KEY_PHASE_ID)) {
+            int phaseId = intent.getIntExtra(KEY_PHASE_ID, 0);
+            switch (phaseId) {
+                case 1:
+                    mOnlySellerRating = true;
+                    initFragment(R.id.activity_base_buyer_journey_content_frame_layout, new ClientLeadsFragment(), false);
+                    setTitle("seller feedback");
+                    break;
+                case 2:
+                    mOnlySellerRating = false;
+                    initFragment(R.id.activity_base_buyer_journey_content_frame_layout, new RewardsFragment(), false);
+                    setTitle("cashback request");
                     break;
             }
         }
@@ -161,14 +182,30 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
                 break;
             }
             case LOAD_FRAGMENT_UPLOAD_DOCUMENTS: {
-                UploadDocumentsFragment fragment = new UploadDocumentsFragment();
-                if (data != null) {
-                    fragment.setArguments(data);
+                if(!mOnlySellerRating) {
+                    UploadDocumentsFragment fragment = new UploadDocumentsFragment();
+                    if (data != null) {
+                        fragment.setArguments(data);
+                    }
+                    if (obj != null) {
+                        fragment.setData(obj);
+                    }
+                    initFragment(R.id.activity_base_buyer_journey_content_frame_layout, fragment, shouldAddToBackStack);
+                } else {
+                    if(obj != null) {
+                        ClientCompanyLeadFragment.ClientCompanyLeadsObject leadsObject = (ClientCompanyLeadFragment.ClientCompanyLeadsObject)obj;
+                        if(leadsObject.clientLeadObject != null && leadsObject.clientLeadObject.clientLead != null
+                                && leadsObject.clientLeadObject.clientLead.id != null
+                                && leadsObject.listingDetail.id != null) {
+                            PhaseChange change = new PhaseChange();
+                            change.agentId = leadsObject.clientLeadObject.clientLead.companyId;
+                            change.eventTypeId = LeadPhaseConstants.LEAD_EVENT_SITE_VIST_DONE;
+                            change.performTime = new Date().getTime();
+                            ((ClientEventsService) (MakaanServiceFactory.getInstance().getService(ClientEventsService.class))).changePhase(leadsObject.clientLeadObject.clientLead.id, change);
+                        }
+                    }
+                    finish();
                 }
-                if(obj != null) {
-                    fragment.setData(obj);
-                }
-                initFragment(R.id.activity_base_buyer_journey_content_frame_layout, fragment, shouldAddToBackStack);
                 break;
             }
         }

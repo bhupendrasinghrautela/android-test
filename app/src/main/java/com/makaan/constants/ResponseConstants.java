@@ -20,6 +20,7 @@ public class ResponseConstants {
     public static final String LOCALITY = "locality";
     public static final String SUBURB = "suburb";
     public static final String CITY = "city";
+    public static final String CITY_ID = "cityId";
     public static final String COMPANY_SELLER = "companySeller";
     public static final String COMPANY = "company";
     public static final String USER = "user";

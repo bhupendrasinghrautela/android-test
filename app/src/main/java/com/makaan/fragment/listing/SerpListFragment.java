@@ -102,7 +102,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
                 }
 
                 if(mTotalCount == 0) {
-                    showNoResults();
+                    showNoResults("no results found");
                 } else {
                     showContent();
                 }
@@ -206,7 +206,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
             }
             mListingRecyclerView.setIsLoading(false);
             if(listingTotalCount == 0) {
-                showNoResults();
+                showNoResults("no results found");
             } else {
                 showContent();
             }

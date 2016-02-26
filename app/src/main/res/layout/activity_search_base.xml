@@ -56,17 +56,46 @@
                 </FrameLayout>
 
 
-                <ImageView
-                    android:id="@+id/activity_search_base_search_no_result_image_view"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="gone" />
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:id="@+id/activity_search_base_search_no_result_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_gravity="center">
+
+                        <ImageView
+                            android:id="@+id/activity_search_base_search_no_result_image_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true" />
+
+                        <TextView
+                            android:id="@+id/activity_search_base_search_no_result_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/default_error_message_left_margin"
+                            android:layout_marginStart="@dimen/default_error_message_left_margin"
+                            android:layout_marginRight="@dimen/default_error_message_right_margin"
+                            android:layout_marginEnd="@dimen/default_error_message_right_margin"
+                            android:layout_below="@id/activity_search_base_search_no_result_image_view"
+                            android:layout_centerHorizontal="true"
+                            android:textSize="@dimen/default_error_message_text_size"
+                            android:textColor="@color/app_red"
+                            android:typeface="serif"
+                            android:gravity="center"/>
+                    </RelativeLayout>
+                </LinearLayout>
+
                 <ProgressBar
                     android:id="@+id/activity_search_base_search_loading_progress_bar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </FrameLayout>
 
         </android.support.design.widget.CoordinatorLayout>

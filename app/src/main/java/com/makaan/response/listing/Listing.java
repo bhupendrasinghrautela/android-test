@@ -29,6 +29,7 @@ public class Listing {
     public String postedDate, mainImageUrl;
     public Integer lisitingId,propertyId,projectId;
     public Long sellerId;
+    public Long cityId;
     public String description;
     public Integer bedrooms, bathrooms, balcony,storeRoom, halls,studyRoom,servantRoom, poojaRoom;
 

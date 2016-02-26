@@ -475,9 +475,7 @@ public class SetAlertsDialogFragment extends DialogFragment {
             isAfterLoginInitiated = false;
             isSubmitInitiatedFromWishList = false;
 
-            SaveSearchService saveSearchService =
-                    (SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class);
-            saveSearchService.getSavedSearches();
+            MasterDataCache.getInstance().clearSavedSearches();
 
             dismissAllowingStateLoss();
         }

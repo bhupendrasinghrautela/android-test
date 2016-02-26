@@ -94,15 +94,15 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
                 if(mObj != null) {
                     mObj.listingDetail = mItems.get(mSelected).listing;
                     ((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_REVIEW_AGENT,
-                            true, null, "cashback request", mObj);
+                            true, null, null, mObj);
                 }
             }
         }
     }
 
-    class ClientCompanyLeadsObject {
-        ClientLeadsFragment.ClientLeadsObject clientLeadObject;
-        ListingDetail listingDetail;
+    public class ClientCompanyLeadsObject {
+        public ClientLeadsFragment.ClientLeadsObject clientLeadObject;
+        public ListingDetail listingDetail;
     }
 
     @Subscribe

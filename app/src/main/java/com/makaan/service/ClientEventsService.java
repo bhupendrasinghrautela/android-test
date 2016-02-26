@@ -86,7 +86,7 @@ public class ClientEventsService implements MakaanService {
     public void changePhase(Long leadId, PhaseChange phaseChange) {
         String url = ApiConstants.SITE_VISIT_CLIENT_EVENTS.concat(String.valueOf(leadId));
         try {
-            MakaanNetworkClient.getInstance().put(url, JsonBuilder.toJson(phaseChange), new StringRequestCallback() {
+            MakaanNetworkClient.getInstance().post(url, JsonBuilder.toJson(phaseChange), new StringRequestCallback() {
                 @Override
                 public void onSuccess(String response) {
 
