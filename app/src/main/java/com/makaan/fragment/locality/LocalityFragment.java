@@ -127,6 +127,7 @@ public class LocalityFragment extends MakaanBaseFragment {
         mMainCityImage.setDefaultImageResId(R.drawable.locality_hero);
         initToolbar();
         setLocalityId();
+        showProgress();
         fetchData();
         initListeners();
     }
@@ -154,10 +155,11 @@ public class LocalityFragment extends MakaanBaseFragment {
     @Subscribe
     public void onResults(LocalityByIdEvent localityByIdEvent) {
         if (null == localityByIdEvent || null != localityByIdEvent.error) {
-            getActivity().finish();
+            showNoResults();
             Toast.makeText(getActivity(), "locality details could not be loaded at this time. please try later.", Toast.LENGTH_LONG).show();
         } else {
             locality = localityByIdEvent.locality;
+            showContent();
             populateLocalityData();
             frame.setVisibility(View.VISIBLE);
             fetchHero();

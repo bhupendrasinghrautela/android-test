@@ -176,6 +176,7 @@ public class ProjectFragment extends MakaanBaseFragment{
         Bundle args = getArguments();
         if(args!=null)
             this.projectId = args.getLong(ProjectActivity.PROJECT_ID);
+        showProgress();
         fetchData();
         return view;
     }
@@ -281,10 +282,11 @@ public class ProjectFragment extends MakaanBaseFragment{
     public void onResult(ProjectByIdEvent projectByIdEvent) {
         if (null == projectByIdEvent || null != projectByIdEvent.error) {
             //getActivity().finish();
+            showNoResults();
             Toast.makeText(getActivity(), "project details could not be loaded at this time. please try later.", Toast.LENGTH_LONG).show();
         } else {
             project = projectByIdEvent.project;
-
+            showContent();
             /*if(mConfigReceived) {
                 // add project to recent
                 RecentPropertyProjectManager manager = RecentPropertyProjectManager.getInstance(getContext().getApplicationContext());

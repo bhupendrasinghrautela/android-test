@@ -172,6 +172,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         initToolbar();
         initView();
         initListeners();
+        showProgress();
     }
 
     private void initToolbar() {
@@ -337,11 +338,12 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     public void onResults(CityByIdEvent cityByIdEvent){
         if (null == cityByIdEvent || null != cityByIdEvent.error) {
             Toast.makeText(getActivity(), "city details could not be loaded at this time. please try later.", Toast.LENGTH_LONG).show();
-            getActivity().finish();
+            showNoResults();
         }
         else {
             mCity = cityByIdEvent.city;
             if(mCity!=null) {
+                showContent();
                 initUiUsingCityDetails();
             }
         }
@@ -402,11 +404,11 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         new PriceTrendService().getPriceTrendForLocalities(localityIds, 60, new LocalityTrendCallback() {
             @Override
             public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
-                new PriceTrendService().getCityPriceTrendForCity(mCity.id,60);
                 if (localityPriceTrendDto.data != null && localityPriceTrendDto.data.size() != 0) {
                     mPriceTrendView.setVisibility(View.VISIBLE);
                     mPriceTrendView.bindView(localityPriceTrendDto);
                     mLocalityPriceTrendDto = localityPriceTrendDto;
+                    new PriceTrendService().getCityPriceTrendForCity(mCity.id,60);
                 } else
                     mPriceTrendView.setVisibility(View.GONE);
             }
