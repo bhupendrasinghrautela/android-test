@@ -100,6 +100,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
 
             PageTag pageTag = new PageTag();
             pageTag.addLocality(localityByIdEvent.locality.label);
+            super.setCurrentPageTag(pageTag);
 
             mEntityInfo = new NeighborhoodMapFragment.EntityInfo(localityByIdEvent.locality.label,
                     localityByIdEvent.locality.latitude,

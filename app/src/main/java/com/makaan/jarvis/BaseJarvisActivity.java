@@ -26,8 +26,10 @@ import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.cache.MasterDataCache;
 import com.makaan.jarvis.analytics.AnalyticsConstants;
 import com.makaan.jarvis.analytics.AnalyticsService;
+import com.makaan.jarvis.analytics.BuyerJourneyMessage;
 import com.makaan.jarvis.event.JarvisTrackExtraData;
 import com.makaan.jarvis.event.PageTag;
 import com.makaan.jarvis.message.CtaType;
@@ -45,6 +47,9 @@ import com.segment.analytics.Properties;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Iterator;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -75,12 +80,14 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     private Runnable mPopupDismissRunnable;
     private Handler mPopupDismissHandler =new Handler();
 
-    private static Runnable mUserActivityTrackerRunnable;
-    private static Handler mUserActivityTrackerRenewHandler =new Handler();
+    private Runnable mUserActivityTrackerRunnable;
+    private Handler mUserActivityTrackerRenewHandler =new Handler();
 
     private PageTag currentPageTag;
     private JarvisTrackExtraData jarvisTrackExtraData;
-    private static boolean isUserActivenessTrackEnabled;
+    private boolean isUserActivenessTrackEnabled;
+
+    private boolean isActivenessTrackSent = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -187,7 +194,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         }
     }
 
-    public static void renewUserActivityTimer(){
+    private void renewUserActivityTimer(){
         if(!isUserActivenessTrackEnabled){
             return;
         }
@@ -311,6 +318,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                         return;
                     }*/
 
+
                     mJarvisPopupCard.removeAllViews();
                     BaseCtaView card = CtaCardFactory.createCard(BaseJarvisActivity.this, message);
                     mJarvisPopupCard.addView(card);
@@ -324,20 +332,35 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                                 dismissPopupWithAnim();
                             }
                         });
-                    } else if (CtaType.contentPyr == message.properties.ctaType) {
+                    } else if (CtaType.contentPyr == message.properties.ctaType ||
+                            CtaType.childSerp == message.properties.ctaType) {
                         card.setOnApplyClickListener(new SerpFilterCard.OnApplyClickListener() {
                             @Override
                             public void onApplyClick() {
                                 dismissPopupWithAnim();
                             }
                         });
-
+                    } else if (CtaType.pageVisits == message.properties.ctaType ) {
+                        card.setOnApplyClickListener(new SerpFilterCard.OnApplyClickListener() {
+                            @Override
+                            public void onApplyClick() {
+                                dismissPopupWithAnim();
+                            }
+                        });
                     }
+
+                    card.setOnCancelClickListener(new SerpFilterCard.OnCancelClickListener() {
+                        @Override
+                        public void onCancelClick() {
+                            dismissPopupWithAnim();
+                        }
+                    });
 
                     mPopupDismissHandler.postDelayed(mPopupDismissRunnable,
                             JarvisConstants.JARVIS_ACTION_DISMISS_TIMEOUT);
                 }catch (Exception e){
                     //Some error with jarvis payload data, don't do anything
+                    e.printStackTrace();
                 }
             }
         });
@@ -397,6 +420,32 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         return false;
     }
 
+    public void trackBuyerJourney(int phaseId){
+        if(isActivenessTrackSent){
+            return;
+        }
+
+        AnalyticsService analyticsService =
+                (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
+        jarvisTrackExtraData.setPageType(getScreenName());
+
+        Map<String, BuyerJourneyMessage> map =  MasterDataCache.getInstance().getJarvisBuyerJourneyMessageMap();
+
+        Iterator it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            BuyerJourneyMessage message = (BuyerJourneyMessage) pair.getValue();
+            if(phaseId==message.phaseId){
+                String eventName = (String) pair.getKey();
+                if(!TextUtils.isEmpty(eventName)) {
+                    //analyticsService.trackBuyerJourney(eventName, jarvisTrackExtraData);
+                }
+            }
+        }
+
+        analyticsService.trackBuyerJourney("bj_shortlist", jarvisTrackExtraData);
+    }
+
     private void trackUserActiveness(){
         try {
             if(!shouldTrackUserActiveness()){
@@ -408,19 +457,19 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
             JSONObject pageTagObject = new JSONObject();
             if(null!=currentPageTag.city && !currentPageTag.city.isEmpty()){
-                pageTagObject.put("city",currentPageTag.city);
+                pageTagObject.accumulate("city",JsonBuilder.toJsonArray(currentPageTag.city));
             }
 
             if(null!=currentPageTag.locality && !currentPageTag.locality.isEmpty()){
-                pageTagObject.put("locality",currentPageTag.locality);
+                pageTagObject.accumulate("locality",JsonBuilder.toJsonArray(currentPageTag.locality));
             }
 
             if(null!=currentPageTag.project && !currentPageTag.project.isEmpty()){
-                pageTagObject.put("project",currentPageTag.project);
+                pageTagObject.accumulate("project",JsonBuilder.toJsonArray(currentPageTag.project));
             }
 
             if(null!=currentPageTag.suburb && !currentPageTag.suburb.isEmpty()){
-                pageTagObject.put("suburb",currentPageTag.suburb);
+                pageTagObject.accumulate("suburb",JsonBuilder.toJsonArray(currentPageTag.suburb));
             }
 
             jsonObject.put(AnalyticsConstants.KEY_CURRENT_PAGE_TAG, pageTagObject);
@@ -431,6 +480,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
             AnalyticsService analyticsService =
                     (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
             analyticsService.track(AnalyticsService.Type.track, jsonObject);
+            isActivenessTrackSent = true;
         } catch (JSONException e) {
             e.printStackTrace();
         }

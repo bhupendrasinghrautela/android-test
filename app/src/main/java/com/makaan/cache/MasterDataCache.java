@@ -3,6 +3,7 @@ package com.makaan.cache;
 
 import android.util.SparseArray;
 
+import com.makaan.jarvis.analytics.BuyerJourneyMessage;
 import com.makaan.jarvis.analytics.SerpFilterMessageMap;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.master.ApiIntLabel;
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +56,7 @@ public class MasterDataCache {
     private Map<String, Integer> jarvisMessageTypeMap = new HashMap<>();
     private Map<String, Integer> jarvisCtaMessageTypeMap = new HashMap<>();
     private Map<String, SerpFilterMessageMap> jarvisSerpFilterMessageMap = new HashMap<>();
+    private Map<String, BuyerJourneyMessage> jarvisBuyerJourneyMessageMap = new HashMap<>();
 
     private HashMap<Long, Long> userWishListMap;
     private ArrayList<SaveSearch> userSavedSearches;
@@ -216,6 +217,10 @@ public class MasterDataCache {
         jarvisSerpFilterMessageMap = map;
     }
 
+    public void addJarvisBuyerJourneyMessageMap(Map<String, BuyerJourneyMessage> map) {
+        jarvisBuyerJourneyMessageMap = map;
+    }
+
     public ArrayList<ApiIntLabel> getBuyPropertyTypes() {
         ArrayList<ApiIntLabel> propertyTypes = new ArrayList<>();
         propertyTypes.addAll(idToBuyPropertyType.values());
@@ -276,6 +281,7 @@ public class MasterDataCache {
     }
 
     public Map<String, SerpFilterMessageMap> getSerpFilterMessageMap(){ return  jarvisSerpFilterMessageMap; }
+    public Map<String, BuyerJourneyMessage> getJarvisBuyerJourneyMessageMap(){ return  jarvisBuyerJourneyMessageMap; }
 
 
     public ArrayList<FilterGroup> getAllBuyPyrGroups() {

@@ -4,7 +4,8 @@
     "serp_scroll": 0,
     "enquiry_dropped": 1,
     "content_pyr": 2,
-    "child_serp": 3
+    "child_serp": 3,
+    "page_visits": 4
   }
 
 }

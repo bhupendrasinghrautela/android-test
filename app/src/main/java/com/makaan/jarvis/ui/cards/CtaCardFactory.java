@@ -23,7 +23,8 @@ public class CtaCardFactory {
 
         if(CtaType.serpScroll == message.properties.ctaType){
             SerpFilterCard serpFilterCard =
-                    (SerpFilterCard) LayoutInflater.from(context).inflate(R.layout.jarvis_card_serp_filter, null);
+                    (SerpFilterCard) LayoutInflater.from(context).inflate(
+                            R.layout.jarvis_card_serp_filter, null);
             serpFilterCard.bindView(context, message);
             return serpFilterCard;
 
@@ -34,12 +35,37 @@ public class CtaCardFactory {
             multiPropertyCard.bindView(context, message);
             return multiPropertyCard;
 
-        }else if (CtaType.contentPyr == message.properties.ctaType || CtaType.childSerp == message.properties.ctaType) {
+        }else if (CtaType.childSerp == message.properties.ctaType) {
             PyrPopupCard pyrPopupCard =
                     (PyrPopupCard) LayoutInflater.from(context).inflate(
                             R.layout.jarvis_card_pyr, null);
             pyrPopupCard.bindView(context, message);
             return pyrPopupCard;
+
+        }else if (CtaType.contentPyr == message.properties.ctaType) {
+            if(message.properties.content==null) {
+                PyrPopupCard pyrPopupCard =
+                        (PyrPopupCard) LayoutInflater.from(context).inflate(
+                                R.layout.jarvis_card_pyr, null);
+                pyrPopupCard.bindView(context, message);
+                return pyrPopupCard;
+
+            }else{
+
+                RichContentCard richContentCard =
+                        (RichContentCard) LayoutInflater.from(context).inflate(
+                                R.layout.jarvis_card_content_cancel, null);
+                richContentCard.bindView(context, message);
+                return richContentCard;
+
+            }
+
+        }else if (CtaType.pageVisits == message.properties.ctaType) {
+            SimpleCtaCard simpleCtaCard =
+                    (SimpleCtaCard) LayoutInflater.from(context).inflate(
+                            R.layout.jarvis_card_cta, null);
+            simpleCtaCard.bindView(context, message);
+            return simpleCtaCard;
 
         }else{
             return null;

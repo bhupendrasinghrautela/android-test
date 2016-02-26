@@ -167,6 +167,10 @@ public class JarvisSocket {
                 Map<String, Integer> jarvisCtaMessageTypeMap =
                         MasterDataCache.getInstance().getJarvisCtaMessageTypeMap();
                 ExposeMessage message = parseExposeMessage((JSONObject) args[0]);
+
+                if(null==message){
+                    return;
+                }
                 Integer type = jarvisCtaMessageTypeMap.get(message.properties.type);
 
                 if(null!=type) {

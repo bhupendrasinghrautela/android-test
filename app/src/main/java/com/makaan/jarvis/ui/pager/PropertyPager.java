@@ -3,13 +3,19 @@ package com.makaan.jarvis.ui.pager;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.View;
 
+import com.google.gson.reflect.TypeToken;
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.adapter.listing.ListingPagerAdapter;
 import com.makaan.jarvis.message.ChatObject;
 import com.makaan.jarvis.message.Message;
 import com.makaan.jarvis.message.MessageType;
 import com.makaan.response.listing.Listing;
+import com.makaan.util.JsonBuilder;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +37,24 @@ public class PropertyPager extends ViewPager {
     }
 
 
-    public void bindView(Context context, List<Property> listings){
+    public void bindView(Context context, Object content){
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = JsonBuilder.toJsonArray(content);
+        }catch (Exception e){}
+
+        if (jsonArray==null) {
+            setVisibility(View.GONE);
+            return;
+        }
+
+        List<Property> listings = MakaanBuyerApplication.gson.fromJson(jsonArray.toString(), new TypeToken<List<Property>>() {
+        }.getType());
+
+        if (listings == null || listings.isEmpty()) {
+            setVisibility(View.GONE);
+            return;
+        }
         mPropertyPagerAdapter = new PropertyPagerAdapter(context);
         setAdapter(mPropertyPagerAdapter);
         setClipToPadding(false);
@@ -41,6 +64,7 @@ public class PropertyPager extends ViewPager {
                 context.getResources().getDimensionPixelSize(R.dimen.map_listing_view_pager_page_bottom_padding));
         setOffscreenPageLimit(2);
         mPropertyPagerAdapter.setData(getTranslatedData(listings));
+
     }
 
     private List<Message> getTranslatedData(List<Property> listings){

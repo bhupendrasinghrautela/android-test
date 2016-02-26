@@ -1,10 +1,14 @@
 package com.makaan.jarvis.ui.cards;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.jarvis.message.Message;
 import com.makaan.ui.view.BaseView;
@@ -25,6 +29,8 @@ public class PyrPopupCard extends BaseCtaView<ExposeMessage> {
     @Bind(R.id.message)
     TextView mMessage;
 
+    @Bind(R.id.btn_yes)
+    Button mApplyButton;
 
     @OnClick(R.id.btn_no)
     public void OnCancelClick(){
@@ -34,12 +40,6 @@ public class PyrPopupCard extends BaseCtaView<ExposeMessage> {
 
     }
 
-    @OnClick(R.id.btn_yes)
-    public void OnApplyClick(){
-        if(null!=mOnApplyClickListener){
-            mOnApplyClickListener.onApplyClick();
-        }
-    }
 
     public PyrPopupCard(Context context) {
         super(context);
@@ -54,8 +54,21 @@ public class PyrPopupCard extends BaseCtaView<ExposeMessage> {
     }
 
     @Override
-    public void bindView(Context context, ExposeMessage item) {
+    public void bindView(final Context context, ExposeMessage item) {
         mTitle.setText("interested in " + item.city);
+
+        mApplyButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent pyrIntent = new Intent(context, PyrPageActivity.class);
+                context.startActivity(pyrIntent);
+
+                if(null!=mOnApplyClickListener){
+                    mOnApplyClickListener.onApplyClick();
+                }
+            }
+        });
     }
 
 

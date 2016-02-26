@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.makaan.jarvis.ui.cards.SimpleCtaCard xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@android:drawable/alert_light_frame"
+    android:background="@drawable/jarvis_popup_bg"
     android:orientation="vertical">
 
     <TextView
@@ -12,7 +12,6 @@
         android:layout_gravity="center"
         android:gravity="center_horizontal"
         android:layout_margin="20dp"
-        android:text="Do you want to drop an enquiry for the shortlisted properties"
         android:textColor="@color/jarvis_card_subtitle_color"
         android:textSize="@dimen/jarvis_chat_card_subtitle_text_size" />
 
@@ -50,4 +49,4 @@
             android:textSize="@dimen/jarvis_chat_card_button_text_size" />
     </LinearLayout>
 
-</LinearLayout>
+</com.makaan.jarvis.ui.cards.SimpleCtaCard>
