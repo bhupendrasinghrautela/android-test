@@ -101,18 +101,40 @@ public class ViewSellersDialogFragment extends DialogFragment {
     @OnClick(R.id.fragment_dialog_contact_sellers_submit_button)
     public void openLeadForm(){
         Intent intent = new Intent(getActivity(), LeadFormActivity.class);
+        boolean assist=false;
+        ArrayList<Integer> ids = new ArrayList<>();
+        for(SellerCard sellerCard:mSellerCards){
+            if(sellerCard.isChecked){
+                ids.add(sellerCard.sellerId.intValue());
+            }
+            if(sellerCard.assist){
+                assist=true;
+            }
+        }
         try {
             //Todo add new multi lead fragment
-            SellerCard sellerCard = mSellerCards.get(3);
-            intent.putExtra("name", sellerCard.name);
+            Bundle bundle=getArguments();
+            //SellerCard sellerCard = mSellerCards.get(3);
+            /*intent.putExtra("name", sellerCard.name);
             if(sellerCard.rating != null) {
                 intent.putExtra("score", sellerCard.rating.toString());
             }
             else{
                 intent.putExtra("score","0");
+            }*/
+            //intent.putExtra("phone",sellerCard.contactNo);//todo: not available in pojo
+            //intent.putExtra("id", sellerCard.sellerId.toString());
+            intent.putIntegerArrayListExtra("multipleSellerIds", ids);
+            if(bundle!=null){
+                intent.putExtra("cityId", bundle.getLong("cityId"));
+                intent.putExtra("listingId", bundle.getLong("listingId"));
+                intent.putExtra("locality", bundle.getString("locality"));
+                intent.putExtra("area", bundle.getString("area"));
+                intent.putExtra("bhkAndUnitType", bundle.getString("bhkAndUnitType"));
+                if(assist){
+                    intent.putExtra("assist", assist);
+                }
             }
-            intent.putExtra("phone",sellerCard.contactNo);//todo: not available in pojo
-            intent.putExtra("id", sellerCard.sellerId.toString());
             getActivity().startActivity(intent);
         }
         catch (NullPointerException e){

@@ -201,6 +201,8 @@
     <dimen name="pyr_locality_value_width">175dp</dimen>
     <dimen name="pyr_locality_value_left_margin">18dp</dimen>
     <dimen name="pyr_locality_value_text_size">18sp</dimen>
+    <dimen name="no_matching_results_padding">10dp</dimen>
+    <dimen name="no_matchin_results_text_size">16sp</dimen>
 
     <!--Pyr Otp-->
     <dimen name="otp_name_and_phone_margin_top">50dp</dimen>
@@ -1133,7 +1135,7 @@
 
     <!--Lead Form UI dimensions-->
     <dimen name="lead_form_seller_image_width">64dp</dimen>
-    <dimen name="lead_form_seller_image_margin_bottom">10dp</dimen>
+    <dimen name="lead_form_seller_image_margin_bottom">5dp</dimen>
     <dimen name="lead_form_later_margin_bottom">10dp</dimen>
     <dimen name="button_padding">40dp</dimen>
     <dimen name="button_text_size">16sp</dimen>
@@ -1337,6 +1339,21 @@
     <dimen name="default_error_message_text_size">24sp</dimen>
     <dimen name="default_error_message_left_margin">40dp</dimen>
     <dimen name="default_error_message_right_margin">40dp</dimen>
+
+    <!--lead form multiple sellers-->
+    <dimen name="multiple_lead_form_area_locality_text_size">14sp</dimen>
+    <dimen name="multiple_lead_form_bhk_text_size">20sp</dimen>
+    <dimen name="multiple_lead_form_bhk_margin_bottom">5dp</dimen>
+    <dimen name="multiple_lead_form_area_margin_bottom">5dp</dimen>
+    <dimen name="multiple_lead_form_name_margin_bottom">20dp</dimen>
+    <dimen name="multiple_lead_form_email_margin_bottom">20dp</dimen>
+    <dimen name="multiple_lead_form_call_button_orange_background">140dp</dimen>
+    <dimen name="multiple_lead_form_call_button_orange_background_margin_end">18dp</dimen>
+    
+    <!--country spinner -->
+    <dimen name="country_text_padding_top_bottom">4dp</dimen>
+    <dimen name="country_text_text_size">16sp</dimen>
+    <dimen name="country_bottom_arrow_height">50dp</dimen>
 
     <dimen name="serp_map_layout_view_pager_height">200dp</dimen>
 </resources>

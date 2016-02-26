@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.lead.LeadFormActivity;
+import com.makaan.activity.lead.LeadFormPresenter;
 import com.makaan.fragment.pyr.PyrPagePresenter;
 import com.makaan.request.pyr.PyrRequest;
 import com.makaan.response.pyr.OnOtpVerificationListener;
@@ -65,7 +67,7 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
     }
 
     private SmsReceiver mSmsReceiver;
-    private PyrPagePresenter mPyrPagePresenter = PyrPagePresenter.getPyrPagePresenter();
+    private PyrPagePresenter mPyrPagePresenter ;
     private OnOtpVerificationListener mOnOtpVerificationListener;
     private String mUserId;
     private String mOtp;
@@ -87,8 +89,15 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         AppBus.getInstance().register(this);
-        mUserName.setText(mPyrPagePresenter.getName()!=null?mPyrPagePresenter.getName():"");
-        mPhoneNo.setText(mPyrPagePresenter.getPhonNumber()!=null?mPyrPagePresenter.getPhonNumber():"");
+        if(getActivity() instanceof PyrPageActivity) {
+            mPyrPagePresenter= PyrPagePresenter.getPyrPagePresenter();
+            mUserName.setText(mPyrPagePresenter.getName() != null ? mPyrPagePresenter.getName() : "");
+            mPhoneNo.setText(mPyrPagePresenter.getPhonNumber() != null ? mPyrPagePresenter.getPhonNumber() : "");
+        }
+        else if(getActivity() instanceof LeadFormActivity) {
+            mUserName.setText(LeadFormPresenter.getLeadFormPresenter().getName() != null ? LeadFormPresenter.getLeadFormPresenter().getName() : "");
+            mPhoneNo.setText(LeadFormPresenter.getLeadFormPresenter().getPhone() != null ? LeadFormPresenter.getLeadFormPresenter().getPhone() : "");
+        }
         mSmsReceiver = new SmsReceiver();
         mSmsReceiver.setOnVerificationListener(this);
         IntentFilter smsFilter = new IntentFilter();
@@ -145,7 +154,13 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
                     mEditTextThirdDigit.getText().toString()+mEditTextFourthDigit.getText().toString();
         }
 
-        PyrRequest pyrRequest=mPyrPagePresenter.getPyrRequestObject();
+        PyrRequest pyrRequest=null;
+        if(getActivity() instanceof PyrPageActivity) {
+            pyrRequest = mPyrPagePresenter.getPyrRequestObject();
+        }
+        else if(getActivity() instanceof LeadFormActivity) {
+            pyrRequest = LeadFormPresenter.getLeadFormPresenter().getPyrRequest();
+        }
         if(pyrRequest!=null && pyrData!=null && mOtp!=null) {
             ((OtpVerificationService) (MakaanServiceFactory.getInstance().getService(OtpVerificationService.class))).makeOtpVerificationRequest(
                     pyrData.getEnquiryIds()[0], mOtp, pyrRequest.getPhone(), String.valueOf(pyrData.getUserId()));
@@ -155,7 +170,13 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
     @OnClick(R.id.tv_resend)
     public void resendClicked()
     {
-        PyrRequest pyrRequest=mPyrPagePresenter.getPyrRequestObject();
+        PyrRequest pyrRequest=null;
+        if(getActivity() instanceof PyrPageActivity) {
+            pyrRequest = mPyrPagePresenter.getPyrRequestObject();
+        }
+        else if(getActivity() instanceof LeadFormActivity) {
+            pyrRequest = LeadFormPresenter.getLeadFormPresenter().getPyrRequest();
+        }
         if(pyrRequest!=null && pyrData!=null) {
             ((OtpVerificationService) (MakaanServiceFactory.getInstance().getService(OtpVerificationService.class))).makeOtpResendRequest(
                     pyrData.getEnquiryIds()[0], pyrRequest.getPhone(), String.valueOf(pyrData.getUserId()));
@@ -164,13 +185,19 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
 
     @OnClick(R.id.otp_screen_skip)
     public void skip(){
-        if (mPyrPagePresenter.isMakkanAssist()) {
+        if (mPyrPagePresenter!=null && mPyrPagePresenter.isMakkanAssist()) {
             PyrPagePresenter mPyrPagePresenter = PyrPagePresenter.getPyrPagePresenter();
             mPyrPagePresenter.showThankYouScreenFragment(true, true, false);
         }
-        else {
+        else if(mPyrPagePresenter!=null){
             PyrPagePresenter mPyrPagePresenter = PyrPagePresenter.getPyrPagePresenter();
             mPyrPagePresenter.showThankYouScreenFragment(false, true, false);
+        }else {
+            if (LeadFormPresenter.getLeadFormPresenter().isAssist()) {
+                LeadFormPresenter.getLeadFormPresenter().showThankYouScreenFragment(true, false,3);
+            } else {
+                LeadFormPresenter.getLeadFormPresenter().showThankYouScreenFragment(false, false,3);
+            }
         }
     }
 
@@ -253,13 +280,19 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
     @Subscribe
     public void otpResponse(OtpVerificationResponse verificationResponse){
         if(verificationResponse.getData().isOtpValidationSuccess()) {
-            if (mPyrPagePresenter.isMakkanAssist()) {
+            if ((mPyrPagePresenter!=null && mPyrPagePresenter.isMakkanAssist())) {
                 PyrPagePresenter mPyrPagePresenter = PyrPagePresenter.getPyrPagePresenter();
                 mPyrPagePresenter.showThankYouScreenFragment(true, true, false);
             }
-            else {
+            else if(mPyrPagePresenter!=null){
                 PyrPagePresenter mPyrPagePresenter = PyrPagePresenter.getPyrPagePresenter();
                 mPyrPagePresenter.showThankYouScreenFragment(false, true, false);
+            }else {
+                if (LeadFormPresenter.getLeadFormPresenter().isAssist()) {
+                    LeadFormPresenter.getLeadFormPresenter().showThankYouScreenFragment(true, false,3);
+                } else {
+                    LeadFormPresenter.getLeadFormPresenter().showThankYouScreenFragment(false, false,3);
+                }
             }
         }
     }

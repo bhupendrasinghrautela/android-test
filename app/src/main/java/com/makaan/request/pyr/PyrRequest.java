@@ -20,9 +20,11 @@ public class PyrRequest {
     private ArrayList<Integer> bhk;
     private int cityId;
     private boolean sendOtp;
-    private Long[] multipleSellerIds;
+    private Long[] multipleCompanyIds;
     private int[] localityIds;
     private PyrEnquiryType enquiryType;
+    private String applicationType;
+    private String pageType;
 
     public ArrayList<Integer> getBhk() {
         return bhk;
@@ -104,12 +106,12 @@ public class PyrRequest {
         this.minBudget = minBudget;
     }
 
-    public Long[] getMultipleSellerIds() {
-        return multipleSellerIds;
+    public Long[] getMultipleCompanyIds() {
+        return multipleCompanyIds;
     }
 
-    public void setMultipleSellerIds(Long[] multipleSellerIds) {
-        this.multipleSellerIds = multipleSellerIds;
+    public void setMultipleCompanyIds(Long[] multipleCompanyIds) {
+        this.multipleCompanyIds = multipleCompanyIds;
     }
 
     public String getName() {
@@ -151,4 +153,21 @@ public class PyrRequest {
     public void setSendOtp(boolean sendOtp) {
         this.sendOtp = sendOtp;
     }
+
+    public String getApplicationType() {
+        return applicationType;
+    }
+
+    public void setApplicationType(String applicationType) {
+        this.applicationType = applicationType;
+    }
+
+    public String getPageType() {
+        return pageType;
+    }
+
+    public void setPageType(String pageType) {
+        this.pageType = pageType;
+    }
+
 }

@@ -10,14 +10,18 @@ import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.listing.PropertyDetailFragment;
 import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.pyr.PyrOtpVerification;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.fragment.project.ProjectFragment;
+import com.makaan.fragment.pyr.PyrPagePresenter;
 import com.makaan.network.VolleyErrorParser;
 import com.makaan.response.leadForm.InstantCallbackResponse;
 import com.makaan.response.pyr.PyrPostResponse;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
+
+import java.util.ArrayList;
 
 import butterknife.OnClick;
 
@@ -31,6 +35,7 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
     private LeadFormPresenter mLeadFormPresenter;
     private int mListingId = -1;
     public String source;
+    private boolean multipleSellers=false;
     @Override
     protected int getContentViewId() {
         return R.layout.activity_lead_form;
@@ -49,19 +54,63 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
         super.onCreate(savedInstanceState);
         String name=this.getIntent().getExtras().getString("name");
         String id=this.getIntent().getExtras().getString("id");
+        ArrayList<Integer> multipleSellerids=this.getIntent().getExtras().getIntegerArrayList("multipleSellerIds");
         String score=this.getIntent().getExtras().getString("score");
         String phone=this.getIntent().getExtras().getString("phone");
+        String area=this.getIntent().getExtras().getString("area");
+        String bhk=this.getIntent().getExtras().getString("bhkAndUnitType");
+        String locality=this.getIntent().getExtras().getString("locality");
+        boolean assist=this.getIntent().getExtras().getBoolean("assist");
         source=this.getIntent().getExtras().getString("source");
+        int cityId= (int) this.getIntent().getExtras().getLong("cityId");
+        Long projectOrListingId=this.getIntent().getExtras().getLong("listingId");
         mLeadFormPresenter = LeadFormPresenter.getLeadFormPresenter();
         mLeadFormPresenter.setId(id);
         mLeadFormPresenter.setName(name);
         mLeadFormPresenter.setPhone(phone);
         mLeadFormPresenter.setScore(score);
         mLeadFormPresenter.setReplaceFragment(this);
-        mLeadFormPresenter.showLeadCallNowFragment();
 
+        if(null!=area){
+            mLeadFormPresenter.setArea(area);
+        }
 
-        try {
+        if(null!=bhk){
+            mLeadFormPresenter.setBhkAndUnitType(bhk);
+        }
+
+        if(null!=locality){
+            mLeadFormPresenter.setLocality(locality);
+        }
+
+        if(assist){
+            mLeadFormPresenter.setAssist(assist);
+        }
+
+        if(null!=multipleSellerids && multipleSellerids.size()>0) {
+            mLeadFormPresenter.showMultipleLeadsFragment();
+        }else {
+            mLeadFormPresenter.showLeadCallNowFragment();
+            multipleSellers=false;
+        }
+        mLeadFormPresenter.setSource(source);
+        if(null!=multipleSellerids && multipleSellerids.size()>0){
+            mLeadFormPresenter.setMultipleSellerIds(multipleSellerids);
+            multipleSellers=true;
+        }
+        Bundle bundle=this.getIntent().getExtras();
+        if (bundle != null && bundle.getString("source")!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
+            if(bundle.get("listingId")!=null) {
+                mLeadFormPresenter.setProjectOrListingId((Long) bundle.get("listingId"));
+            }
+            if(bundle.get("cityId")!=null) {
+                mLeadFormPresenter.setCityId((int) bundle.get("cityId"));
+            }
+        }else {
+            mLeadFormPresenter.setCityId(cityId);
+            mLeadFormPresenter.setProjectOrListingId(projectOrListingId);
+        }
+            try {
             mListingId = getIntent().getExtras().getInt("listingId");
         }catch (Exception e){}
 
@@ -136,7 +185,12 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBack);
                 MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickPropertyCallConnect);
             }
-            mLeadFormPresenter.showThankYouScreenFragment(false, false);
+            if(multipleSellers && !pyrPostResponse.getData().isOtpVerified()) {
+                mLeadFormPresenter.showPyrOtpFragment(pyrPostResponse.getData());
+                //fragment.setData(pyrPostResponse.getData());
+            }else {
+                mLeadFormPresenter.showThankYouScreenFragment(false, false,2);
+            }
             setResult(RESULT_OK,new Intent().putExtra(LISTING_ID, mListingId));
         }
     }
@@ -167,7 +221,7 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
                 MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickPropertyCallConnect);
             }
 
-            mLeadFormPresenter.showThankYouScreenFragment(false, false);
+            mLeadFormPresenter.showThankYouScreenFragment(false, false,2);
             setResult(RESULT_OK, new Intent().putExtra(LISTING_ID, mListingId));
         }
     }

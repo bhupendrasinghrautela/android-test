@@ -111,6 +111,17 @@
             android:layout_height="match_parent"
             android:choiceMode="multipleChoice"
             android:fadeScrollbars="false" />
+
+        <TextView
+            android:id="@+id/no_results"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_matching_results"
+            android:gravity="center"
+            android:padding="@dimen/no_matching_results_padding"
+            android:textSize="@dimen/no_matchin_results_text_size"
+            android:visibility="gone"/>
+
     </android.support.v7.widget.CardView>
 
     <LinearLayout

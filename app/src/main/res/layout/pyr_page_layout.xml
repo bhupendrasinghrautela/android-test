@@ -105,13 +105,10 @@
         android:layout_marginTop="1dp"
         android:orientation="horizontal"
         android:layout_weight="1">
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent">
             <Spinner
                 android:id="@+id/select_country_spinner"
-                android:layout_width="@dimen/country_spinner_width"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:background="@drawable/edittext_bg_bottom_border"
@@ -119,7 +116,6 @@
                 android:paddingBottom="@dimen/country_padding_bottom"
                 android:textSize="@dimen/country_code_text_size"
                 android:typeface="sans" />
-        </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="2"

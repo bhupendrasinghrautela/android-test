@@ -1,117 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:weightSum="2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/white"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:weightSum="2">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_weight="1"
         android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/iv_seller_image"
-            android:src="@drawable/edit_avatar"
-            android:layout_marginBottom="@dimen/lead_form_seller_image_margin_bottom"
             android:layout_width="@dimen/lead_form_seller_image_width"
-            android:layout_height="@dimen/lead_form_seller_image_width" />
+            android:layout_height="@dimen/lead_form_seller_image_width"
+            android:layout_marginBottom="@dimen/lead_form_seller_image_margin_bottom"
+            android:src="@drawable/edit_avatar" />
 
         <TextView
             android:id="@+id/tv_seller_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/lead_form_seller_image_margin_bottom"
             android:text="John Doe"
             android:textColor="@color/seller_name_text_color"
-            android:textSize="@dimen/seller_name_text_size"
-            android:layout_marginBottom="@dimen/lead_form_seller_image_margin_bottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/seller_name_text_size" />
 
         <com.makaan.ui.view.CustomRatingBar
             android:id="@+id/seller_ratingbar"
+            style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/lead_rating_bar_padding_left"
-            android:layout_marginTop="@dimen/serp_listing_card_seller_rating_margin_top"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/serp_listing_card_seller_rating_margin_top"
             android:isIndicator="true"
+            android:paddingLeft="@dimen/lead_rating_bar_padding_left"
             app:itemHeight="@dimen/serp_listing_card_seller_rating_item_height"
-            app:itemWidth="@dimen/serp_listing_card_seller_rating_item_width"
             app:itemMarginLeft="@dimen/serp_listing_card_seller_rating_item_margin_left"
             app:itemMarginRight="@dimen/serp_listing_card_seller_rating_item_margin_right"
             app:itemProgressIcon="@drawable/star_selected"
             app:itemSecondaryProgressIcon="@drawable/star_unselected"
-            style="?android:attr/ratingBarStyleSmall"/>
+            app:itemWidth="@dimen/serp_listing_card_seller_rating_item_width" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center_horizontal"
-        android:layout_height="0dp"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="@dimen/pyr_page_edit_text_width"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/lead_form_seller_image_margin_bottom"
             android:orientation="horizontal"
-            android:weightSum="3"
-            >
-            <LinearLayout
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <Spinner
+                android:id="@+id/select_country_spinner"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
                 android:layout_weight="1"
-                android:layout_height="wrap_content">
-                <Spinner
-                    android:id="@+id/select_country_spinner"
-                    android:layout_width="@dimen/country_spinner_width"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/edittext_bg_bottom_border"
-                    android:paddingTop="@dimen/lead_form_seller_image_margin_bottom"
-                    android:textSize="@dimen/button_text_size"
-                     />
-            </LinearLayout>
+                android:background="@drawable/edittext_bg_bottom_border"
+                android:paddingTop="@dimen/lead_form_seller_image_margin_bottom"
+                android:textSize="@dimen/button_text_size" />
+
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="2"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/lead_form_seller_image_margin_bottom"
-                android:weightSum="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:orientation="horizontal"
-                >
+                android:weightSum="1">
+
                 <TextView
                     android:id="@+id/leadform_country_code_textview"
                     android:layout_width="0dp"
-                    android:layout_weight="0.3"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:layout_weight="0.3"
                     android:gravity="center"
-                    android:paddingTop="@dimen/lead_form_seller_image_margin_bottom"
                     android:paddingBottom="@dimen/lead_form_seller_image_margin_bottom"
+                    android:paddingTop="@dimen/lead_form_seller_image_margin_bottom"
                     android:text="+91-"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/button_text_size"
 
-                    android:layout_height="match_parent" />
+                    android:textSize="@dimen/button_text_size" />
+
                 <EditText
                     android:id="@+id/leadform_mobileno_edittext"
                     android:layout_width="0dp"
-                    android:layout_weight="0.7"
                     android:layout_height="match_parent"
                     android:layout_gravity="left|center"
-                    android:inputType="number"
-                    android:maxLength="12"
-                    android:paddingTop="@dimen/lead_form_seller_image_margin_bottom"
-                    android:paddingBottom="@dimen/lead_form_seller_image_margin_bottom"
+                    android:layout_weight="0.7"
                     android:background="@drawable/edittext_bg_bottom_border"
                     android:hint="@string/pyr_mobile"
+                    android:inputType="number"
+                    android:maxLength="12"
+                    android:paddingBottom="@dimen/lead_form_seller_image_margin_bottom"
+                    android:paddingTop="@dimen/lead_form_seller_image_margin_bottom"
                     android:singleLine="true"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/button_text_size"
-                     />
+                    android:textSize="@dimen/button_text_size" />
             </LinearLayout>
         </LinearLayout>
 
@@ -119,22 +119,23 @@
             android:id="@+id/btn_get_instant_call"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_background_selector"
             android:layout_marginTop="@dimen/button_padding"
+            android:background="@drawable/button_background_selector"
             android:paddingLeft="@dimen/button_padding"
             android:paddingRight="@dimen/button_padding"
-            android:textAllCaps="false"
             android:text="@string/connect_now"
-            android:textSize="@dimen/button_text_size"
-            android:textColor="@android:color/white" />
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_text_size" />
+
         <TextView
-            android:layout_marginTop="@dimen/button_padding"
             android:id="@+id/tv_get_callback_later"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_padding"
             android:text="@string/or_later"
             android:textColor="@color/appThemeRed"
-            android:textSize="@dimen/seller_name_text_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/seller_name_text_size" />
     </LinearLayout>
 
 

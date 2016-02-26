@@ -1,5 +1,6 @@
 package com.makaan.activity.lead;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -32,6 +33,9 @@ import com.makaan.util.StringUtil;
 import com.makaan.util.ValidationUtil;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +87,26 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
     void getInstantCallClick() {
         if (ValidationUtil.isValidPhoneNumber(mNumber.getText().toString().trim(),mCountrySpinner.getSelectedItem().toString())) {
             //TODO pass values instead of hardcoded values
-            ((LeadInstantCallbackService) MakaanServiceFactory.getInstance().getService(LeadInstantCallbackService.class)).makeInstantCallbackRequest(mNumber.getText().toString().trim(), "911166765339", mCountryId, "");
+            JSONObject jsonObject=new JSONObject();
+            try {
+                Bundle bundle =getArguments();
+                if(bundle!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
+                    jsonObject.put("listingId", mLeadFormPresenter.getProjectOrListingId());
+
+                }
+                else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName())) {
+                    jsonObject.put("projectId", mLeadFormPresenter.getProjectOrListingId());
+
+                }
+                else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName())) {
+                    jsonObject.put("listingId", mLeadFormPresenter.getProjectOrListingId());
+                }
+                jsonObject.put("applicationType", "MobileAndroidApp");
+                jsonObject.put("cityId", mLeadFormPresenter.getCityId());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            ((LeadInstantCallbackService) MakaanServiceFactory.getInstance().getService(LeadInstantCallbackService.class)).makeInstantCallbackRequest(mNumber.getText().toString().trim(), "911166765339", mCountryId, jsonObject);
         } else {
             Bundle bundle =getArguments();
             if(bundle!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
@@ -137,6 +160,17 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
         }
         mCountryAdapter = new ArrayAdapter<String>(getActivity(), R.layout.simple_spinner_item, mCountryNames) {
             @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+
+                LayoutInflater inflater = (LayoutInflater) getActivity()
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View rowView = inflater.inflate(R.layout.simple_spinner_item, parent, false);
+                TextView textView = (TextView) rowView.findViewById(R.id.country_text_view);
+                textView.setText(mCountryNames.get(position));
+                return rowView;
+
+            }
+            @Override
             public boolean isEnabled(int position) {
                 return position != MOSTLY_USED_COUNTRIES;
                 //to make it non selectable
@@ -147,7 +181,9 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
                 return false;
             }
         };
+        mCountryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mCountrySpinner.setAdapter(mCountryAdapter);
+        mCountrySpinner.setDropDownWidth(400);
         mCountrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

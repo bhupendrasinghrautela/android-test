@@ -9,7 +9,6 @@ import com.makaan.R;
 import com.makaan.activity.pyr.PyrOtpVerification;
 
 import com.makaan.response.agents.TopAgent;
-import com.makaan.response.search.SearchResponse;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.request.pyr.PyrRequest;
 import com.makaan.response.serp.FilterGroup;
@@ -467,7 +466,7 @@ public class PyrPagePresenter {
            }
             pyrRequest.setLocalityIds(localId);
         }
-
+        pyrRequest.setApplicationType("MobileAndroidApp");
         mPyrRequest=pyrRequest;
         return true;
     }
@@ -488,7 +487,7 @@ public class PyrPagePresenter {
                 i++;
             }
         }
-        pyrRequest.setMultipleSellerIds(sellerIds);
+        pyrRequest.setMultipleCompanyIds(sellerIds);
         pyrRequest.setDomainId(1);
         pyrRequest.setSendOtp(true);
     }

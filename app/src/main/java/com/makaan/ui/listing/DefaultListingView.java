@@ -638,7 +638,7 @@ public class DefaultListingView extends AbstractListingView {
     public void onCallClicked(View view) {
         Properties properties = MakaanEventPayload.beginBatch();
         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
-        properties.put(MakaanEventPayload.LABEL, mListing.lisitingId+"_"+(mPosition+1));
+        properties.put(MakaanEventPayload.LABEL, mListing.lisitingId + "_" + (mPosition + 1));
         MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.callSerpProperty);
 
         Bundle bundle = new Bundle();
@@ -647,7 +647,11 @@ public class DefaultListingView extends AbstractListingView {
         bundle.putString("score", String.valueOf(mListing.lisitingPostedBy.rating));
         bundle.putString("phone", null);//todo: not available in pojo
         bundle.putString("id", String.valueOf(mListing.lisitingPostedBy.id));
-        bundle.putInt("listingId", mListing.lisitingId);
+        bundle.putLong("listingId", mListing.lisitingId);
+        if(mListing!=null && mListing.project!=null && mListing.project.locality!=null &&
+                mListing.project.locality.cityId!=null) {
+            bundle.putLong("cityId", mListing.cityId);
+        }
         bundle.putString("source", SerpActivity.class.getName());
 
         mCallback.requestDetailPage(SerpActivity.REQUEST_LEAD_FORM, bundle);

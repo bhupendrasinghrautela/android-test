@@ -17,11 +17,9 @@ import com.google.gson.Gson;
 import com.makaan.R;
 import com.makaan.activity.pyr.PyrOtpVerification;
 import com.makaan.activity.pyr.SellerListingAdapter;
-import com.makaan.fragment.pyr.PyrPagePresenter;
 import com.makaan.request.pyr.PyrEnquiryType;
 import com.makaan.request.pyr.PyrRequest;
 import com.makaan.response.agents.TopAgent;
-import com.makaan.response.pyr.PyrData;
 import com.makaan.response.pyr.PyrPostResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PyrService;
@@ -32,7 +30,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -96,7 +93,7 @@ public class TopSellersFragment extends Fragment {
     public void ContactAdvisorsClicked() {
         PyrRequest pyrRequest = mPyrPagePresenter.getPyrRequestObject();
         mPyrPagePresenter.setSellerIdToPyrObject(pyrRequest);
-        if(pyrRequest.getMultipleSellerIds().length==0){
+        if(pyrRequest.getMultipleCompanyIds().length==0){
             Toast.makeText(getActivity(),"please select at least one advisor",Toast.LENGTH_SHORT).show();
             return;
         }

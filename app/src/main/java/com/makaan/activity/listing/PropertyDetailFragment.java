@@ -163,6 +163,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
 
     @Bind(R.id.view_on_map)
     View mViewOnMap;
+    private String bhkAndUnitType,Area,Locality;
 
 
     @OnClick(R.id.more_about_locality)
@@ -190,6 +191,24 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
             Bundle args = getArguments();
             Bundle bundle=new Bundle();
             bundle.putString(MakaanEventPayload.PROJECT_ID, String.valueOf(args.getLong(KeyUtil.LISTING_ID)));
+
+            if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.project!=null &&
+                    mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.cityId!=null) {
+                bundle.putLong("cityId", mListingDetail.property.project.locality.cityId);
+            }
+            if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.propertyId!=null ) {
+                bundle.putLong("listingId", mListingDetail.property.propertyId);
+            }
+            if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.project!=null &&
+                    mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.label!=null) {
+                bundle.putString("locality", String.valueOf(mListingDetail.property.project.locality.label));
+            }
+            if(Area!=null){
+                bundle.putString("area", Area);
+            }
+            if(bhkAndUnitType!=null){
+                bundle.putString("bhkAndUnitType", bhkAndUnitType);
+            }
             viewSellersDialogFragment.setArguments(bundle);
             viewSellersDialogFragment.bindView(mSellerCards);
             viewSellersDialogFragment.show(ft, "allSellers");
@@ -220,7 +239,25 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
                     intent.putExtra("phone", user.contactNumbers.get(0).contactNumber);
                 }
                 intent.putExtra("source",PropertyDetailFragment.class.getName());
-                intent.putExtra("id",user.id);
+                intent.putExtra("id",String.valueOf(company.id));
+                if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.project!=null &&
+                        mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.cityId!=null) {
+                    intent.putExtra("cityId", mListingDetail.property.project.locality.cityId);
+                }
+                if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.propertyId!=null) {
+                    intent.putExtra("listingId", mListingDetail.property.propertyId);
+                }
+                if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.project!=null &&
+                        mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.label!=null) {
+                    intent.putExtra("locality", mListingDetail.property.project.locality.cityId);
+                }
+                if(Area!=null){
+                    intent.putExtra("area",Area);
+                }
+                if(bhkAndUnitType!=null){
+                    intent.putExtra("bhkAndUnitType", bhkAndUnitType);
+                }
+
                 getActivity().startActivity(intent);
             } catch (NullPointerException e) {
             }
@@ -393,13 +430,18 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
             } else {
                 bhkInfo.append(property.bedrooms > 0 ? property.bedrooms.toString()+" bhk ": "");
                 bhkInfo.append(property.unitType != null ? property.unitType.toLowerCase():"");
+
             }
             mUnitName.setText(bhkInfo.toString()+ " - ");
+            bhkAndUnitType=(listingDetail.property.bedrooms + "bhk " +
+                    (property.unitType != null ? property.unitType : "")).toLowerCase();
 
             if(getActivity() instanceof MakaanBaseSearchActivity) {
                 getActivity().setTitle((listingDetail.property.bedrooms + " bhk " +
                         (property.unitType != null ? property.unitType : "")).toLowerCase());
             }
+            Area=(property.size != null ? StringUtil.getFormattedNumber(property.size) : "") + " " +
+                    (property.measure != null ? property.measure : "");
 
             mUnitArea.setText(
                     (property.size != null ? StringUtil.getFormattedNumber(property.size) : "") + " " +

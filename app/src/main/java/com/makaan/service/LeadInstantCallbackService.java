@@ -1,5 +1,7 @@
 package com.makaan.service;
 
+import android.util.Log;
+
 import com.makaan.event.lead.LeadInstantCallback;
 import com.makaan.network.MakaanNetworkClient;
 
@@ -14,14 +16,15 @@ public class LeadInstantCallbackService implements MakaanService {
 
     private String TAG= LeadInstantCallbackService.class.getSimpleName();
 
-    public void makeInstantCallbackRequest(String buyerNumber , String sellerNumber , int countryId , String jsonDump){
+    public void makeInstantCallbackRequest(String buyerNumber , String sellerNumber , int countryId , JSONObject jsonDump){
 
         JSONObject mJsonObject = new JSONObject();
         try {
             mJsonObject.put("fromNo",buyerNumber);
             mJsonObject.put("clientCountryId",countryId);
             mJsonObject.put("toNo",sellerNumber);
-            mJsonObject.put("jsonDump",jsonDump);
+            mJsonObject.put("jsonDump", jsonDump.toString());
+            Log.e("json ","Dump "+jsonDump.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
