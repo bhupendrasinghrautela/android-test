@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="serp_listing_card_badge_margin_left">3dp</dimen>
+    <dimen name="serp_map_layout_view_pager_height">188dp</dimen>
 </resources>

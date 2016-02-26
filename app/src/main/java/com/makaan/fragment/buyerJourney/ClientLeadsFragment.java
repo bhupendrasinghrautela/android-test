@@ -107,12 +107,16 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
 
         mClientLeadsObjects = new ArrayList<>();
         ArrayList<Long> ids = new ArrayList<>();
-        for(ClientLead lead : clientLeadsByGetEvent.results) {
-            mClientLeadsObjects.add(new ClientLeadsObject(lead));
-            ids.add(lead.companyId);
-        }
+        if(clientLeadsByGetEvent.results != null && clientLeadsByGetEvent.results.size() > 0) {
+            for (ClientLead lead : clientLeadsByGetEvent.results) {
+                mClientLeadsObjects.add(new ClientLeadsObject(lead));
+                ids.add(lead.companyId);
+            }
 
-        ((ClientLeadsService)MakaanServiceFactory.getInstance().getService(ClientLeadsService.class)).requestClientLeadCompanies(ids);
+            ((ClientLeadsService) MakaanServiceFactory.getInstance().getService(ClientLeadsService.class)).requestClientLeadCompanies(ids);
+        } else {
+            showNoResults("no leads present");
+        }
     }
 
     @Subscribe
@@ -144,10 +148,12 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
         }
 
         public void selectAndAddCompany(ArrayList<Company> companies) {
-            for(Company company : companies) {
-                if(company.id.equals(clientLead.companyId)) {
-                    this.company = company;
-                    return;
+            if(companies != null) {
+                for (Company company : companies) {
+                    if (company.id.equals(clientLead.companyId)) {
+                        this.company = company;
+                        return;
+                    }
                 }
             }
         }
