@@ -140,8 +140,8 @@ public class ProjectFragment extends MakaanBaseFragment{
                 else if(sellerCard.noOfProperties<projectConfigItem.topSellerCard.noOfProperties){
                     sellerCard = projectConfigItem.topSellerCard;
                 }
-                else if(sellerCard.noOfProperties == projectConfigItem.topSellerCard.noOfProperties
-                        && sellerCard.rating<projectConfigItem.topSellerCard.rating){
+                else if(sellerCard.noOfProperties==projectConfigItem.topSellerCard.noOfProperties
+                        && sellerCard.rating!=null && projectConfigItem.topSellerCard.rating!=null &&  sellerCard.rating<projectConfigItem.topSellerCard.rating){
                     sellerCard = projectConfigItem.topSellerCard;
                 }
             }
@@ -158,6 +158,10 @@ public class ProjectFragment extends MakaanBaseFragment{
                 intent.putExtra("phone",sellerCard.contactNo);//todo: not available in pojo
                 intent.putExtra("id", sellerCard.sellerId.toString());
                 intent.putExtra("source",ProjectFragment.class.getName());
+                intent.putExtra("listingId",project.projectId);
+                if(project!=null && project.locality!=null && project.locality.cityId!=null) {
+                    intent.putExtra("cityId", project.locality.cityId);
+                }
                 getActivity().startActivity(intent);
             } catch (NullPointerException e) {
             }
@@ -226,8 +230,16 @@ public class ProjectFragment extends MakaanBaseFragment{
 
                     Bundle bundle=new Bundle();
                     bundle.putString(MakaanEventPayload.PROJECT_ID, String.valueOf(project.projectId));
+                    if(project!=null && project.locality!=null && project.locality.cityId!=null) {
+                        bundle.putLong("cityId", project.locality.cityId);
+                    }
+                    if(project!=null && project.projectId!=null) {
+                        bundle.putLong("listingId", project.projectId);
+                    }
+                    if(project!=null && project.locality!=null && project.locality.label!=null) {
+                        bundle.putString("locality", String.valueOf(project.locality.label));
+                    }
                     viewSellersDialogFragment.setArguments(bundle);
-
                     viewSellersDialogFragment.bindView(sellerCards);
                     viewSellersDialogFragment.show(ft, "allSellers");
                 }

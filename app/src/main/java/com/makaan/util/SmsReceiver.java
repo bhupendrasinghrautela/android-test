@@ -19,7 +19,7 @@ public class SmsReceiver extends BroadcastReceiver {
     public static final String SMS_EXTRA_NAME ="pdus";
     private String message="";
     private String OTP ;
-    private static final String OTP_ADDRESS = "PTIGER";
+    private static final String OTP_ADDRESS = "MAKAAN";
     private OnVerificationListener listener;
     public void setOnVerificationListener(OnVerificationListener listener){
         this.listener = listener;

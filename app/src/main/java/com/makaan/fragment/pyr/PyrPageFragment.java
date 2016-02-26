@@ -1,6 +1,7 @@
 package com.makaan.fragment.pyr;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -354,6 +355,16 @@ public class PyrPageFragment extends Fragment {
         }
         mCountryAdapter = new ArrayAdapter<String>(getActivity(), R.layout.simple_spinner_item, mCountryNames) {
             @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+
+                LayoutInflater inflater = (LayoutInflater) getActivity()
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View rowView = inflater.inflate(R.layout.simple_spinner_item, parent, false);
+                TextView textView = (TextView) rowView.findViewById(R.id.country_text_view);
+                textView.setText(mCountryNames.get(position));
+                return rowView;
+            }
+            @Override
             public boolean isEnabled(int position) {
                 return position != MOSTLY_USED_COUNTRIES;
                 //to make it non selectable
@@ -364,7 +375,10 @@ public class PyrPageFragment extends Fragment {
                 return false;
             }
         };
+
+        mCountryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mCountrySpinner.setAdapter(mCountryAdapter);
+        mCountrySpinner.setDropDownWidth(400);
         mCountrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

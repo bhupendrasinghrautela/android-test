@@ -58,6 +58,7 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 	@Bind(R.id.empty_selection)TextView mEmptySelectedItemsTextView;
 	@Bind(R.id.selected_items_view)LinearLayout mSelectedItemsLayout;
 	@Bind(R.id.selected_locality_count)TextView mLocalityCount;
+	@Bind(R.id.no_results)TextView mNoResultsTextView;
 	//@Bind(R.id.locality_circular_tick)ImageView mLocalityTick;
 
 	private boolean[] mSelectedItemsFlag;
@@ -281,12 +282,17 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 		if(searchResultEvent!=null && searchResultEvent.searchResponse!=null) {
 			mOriginalList = searchResultEvent.searchResponse.getData();
 			if(mOriginalList == null){
+				mNoResultsTextView.setVisibility(View.VISIBLE);
 				return;
 			}
 			mSelectedItemsFlag = new boolean[mOriginalList.size()];
 
 			if (mOriginalList.size() > 0) {
+				mNoResultsTextView.setVisibility(View.GONE);
 				mMultiChoiceCardView.setVisibility(View.VISIBLE);
+			}
+			else if(mOriginalList.size()==0){
+				mNoResultsTextView.setVisibility(View.VISIBLE);
 			}
 
 			for (int i = 0; i < mOriginalList.size(); i++) {

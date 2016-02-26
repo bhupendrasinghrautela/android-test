@@ -9,66 +9,63 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:gravity="center"
-        android:layout_weight="1"
+        android:layout_weight="0.6"
         android:layout_height="0dp"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_seller_image"
+        <TextView
+            android:id="@+id/multiple_lead_forn_bhk_apartment"
             android:src="@drawable/edit_avatar"
-            android:layout_marginBottom="@dimen/lead_form_seller_image_margin_bottom"
-            android:layout_width="@dimen/lead_form_seller_image_width"
-            android:layout_height="@dimen/lead_form_seller_image_width" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/multiple_lead_form_bhk_margin_bottom"
+            android:textSize="@dimen/multiple_lead_form_bhk_text_size"
+            android:textColor="@color/listingGray"/>
 
         <TextView
-            android:id="@+id/tv_seller_name"
-            android:text="John Doe"
+            android:id="@+id/mutltiple_lead_form_area"
             android:textColor="@color/seller_name_text_color"
-            android:textSize="@dimen/seller_name_text_size"
-            android:layout_marginBottom="@dimen/lead_form_seller_image_margin_bottom"
+            android:textSize="@dimen/multiple_lead_form_area_locality_text_size"
+            android:layout_marginBottom="@dimen/multiple_lead_form_area_margin_bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <com.makaan.ui.view.CustomRatingBar
-            android:id="@+id/seller_ratingbar"
+        <TextView
+            android:id="@+id/mutltiple_lead_form_locality"
+            android:textColor="@color/seller_name_text_color"
+            android:textSize="@dimen/multiple_lead_form_area_locality_text_size"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/serp_listing_card_seller_rating_margin_top"
-            android:paddingLeft="@dimen/lead_rating_bar_padding_left"
-            android:isIndicator="true"
-            app:itemHeight="@dimen/serp_listing_card_seller_rating_item_height"
-            app:itemWidth="@dimen/serp_listing_card_seller_rating_item_width"
-            app:itemMarginLeft="@dimen/serp_listing_card_seller_rating_item_margin_left"
-            app:itemMarginRight="@dimen/serp_listing_card_seller_rating_item_margin_right"
-            app:itemProgressIcon="@drawable/star_selected"
-            app:itemSecondaryProgressIcon="@drawable/star_unselected"
-            style="?android:attr/ratingBarStyleSmall"/>
+            android:layout_height="wrap_content" />
+
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="0.8"
         android:gravity="center_horizontal"
         android:layout_height="0dp"
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/leadform_name"
+            android:id="@+id/multiple_leadform_name"
             android:layout_width="@dimen/pyr_page_edit_text_width"
             android:layout_height="@dimen/pyr_page_edit_text_height"
             android:background="@drawable/edittext_bg_bottom_border"
+            android:layout_marginBottom="@dimen/multiple_lead_form_name_margin_bottom"
             android:inputType="text"
             android:hint="@string/pyr_name"
             android:textColorHint="@color/pyr_grey"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="@dimen/pyr_page_edit_text_text_size"
-          />
+            />
 
         <EditText
-            android:id="@+id/leadform_email"
+            android:id="@+id/multiple_leadform_email"
             android:layout_width="@dimen/pyr_page_edit_text_width"
             android:layout_height="@dimen/pyr_page_edit_text_height"
+            android:layout_marginBottom="@dimen/multiple_lead_form_email_margin_bottom"
             android:inputType="textEmailAddress"
             android:hint="@string/pyr_email"
             android:textColorHint="@color/pyr_grey"
@@ -84,19 +81,16 @@
             android:layout_height="@dimen/pyr_page_edit_text_height"
             android:layout_marginTop="@dimen/lead_form_seller_image_margin_bottom"
             android:orientation="horizontal">
-
                 <Spinner
-                    android:id="@+id/select_country_spinner"
+                    android:id="@+id/multiple_lead_form_country_spinner"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:minWidth="190dp"
                     android:background="@drawable/edittext_bg_bottom_border"
                     android:textSize="@dimen/spinner_text_size"
                     />
-
-            <LinearLayout
+           <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="2"
                 android:layout_height="match_parent"
@@ -107,7 +101,7 @@
                 android:orientation="horizontal"
                 >
                 <TextView
-                    android:id="@+id/leadform_country_code_textview"
+                    android:id="@+id/multiple_leadform_country_code_textview"
                     android:layout_width="0dp"
                     android:layout_weight="0.3"
                     android:layout_gravity="center"
@@ -117,13 +111,13 @@
                     android:textSize="@dimen/button_text_size"
                     android:layout_height="match_parent" />
                 <EditText
-                    android:id="@+id/leadform_mobileno_edittext"
+                    android:id="@+id/multiple_leadform_mobileno_edittext"
                     android:layout_width="0dp"
                     android:layout_weight="0.7"
                     android:layout_height="match_parent"
                     android:layout_gravity="left|center"
                     android:inputType="number"
-                    android:maxLength="12"
+                    android:maxLength="10"
                     android:background="@drawable/edittext_bg_bottom_border"
                     android:hint="@string/pyr_mobile"
                     android:singleLine="true"
@@ -133,27 +127,39 @@
             </LinearLayout>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_call_later"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_background_selector"
-            android:paddingLeft="@dimen/button_padding"
-            android:paddingRight="@dimen/button_padding"
-            android:textAllCaps="false"
-            android:text="@string/get_call_later"
-            android:textSize="@dimen/button_text_size"
-            android:layout_marginTop="@dimen/lead_form_later_margin_bottom"
-            android:textColor="@android:color/white" />
-
-        <TextView
-            android:id="@+id/tv_do_call_now"
-            android:text="@string/or_now"
-            android:layout_marginTop="@dimen/lead_form_later_margin_bottom"
-            android:textColor="@color/appThemeRed"
-            android:textSize="@dimen/seller_name_text_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_weight="0.6"
+        android:layout_height="0dp"
+        android:gravity="center">
+
+        <View
+            android:layout_width="@dimen/multiple_lead_form_call_button_orange_background"
+            android:layout_height="@dimen/serp_listing_card_call_button_height"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/multiple_lead_form_call_button_orange_background_margin_end"
+            android:layout_marginRight="@dimen/multiple_lead_form_call_button_orange_background_margin_end"
+            android:layout_marginTop="@dimen/serp_listing_card_call_button_top_margin"
+            android:background="@drawable/serp_listing_call_button_left_background" />
+
+        <Button
+            android:id="@+id/multiple_lead_form_get_call_back"
+            android:layout_width="@dimen/serp_listing_card_call_button_width"
+            android:layout_height="@dimen/serp_listing_card_call_button_height"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/serp_listing_card_call_button_right_margin"
+            android:layout_marginRight="@dimen/serp_listing_card_call_button_right_margin"
+            android:layout_marginTop="@dimen/serp_listing_card_call_button_top_margin"
+            android:background="@drawable/lead_form_multiple_seller_drawable"
+            android:text="@string/get_callback"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/serp_listing_card_call_button_text_size"
+            android:typeface="serif" />
+    </RelativeLayout>
 
 </LinearLayout>

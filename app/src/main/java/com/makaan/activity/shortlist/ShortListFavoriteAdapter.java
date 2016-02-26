@@ -83,6 +83,12 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
                     intent.putExtra("score", wishList.get(position).listing.companySeller.company.score.toString());
                     intent.putExtra("phone", "9090909090");//todo: not available in pojo
                     intent.putExtra("id", wishList.get(position).listing.companySeller.company.id.toString());
+                    if(wishList.get(position).project.locality!=null && wishList.get(position).project.locality.cityId!=null) {
+                        intent.putExtra("cityId", wishList.get(position).project.locality.cityId);
+                    }
+                    if(wishList.get(position).project.locality!=null && wishList.get(position).project.projectId!=null) {
+                        intent.putExtra("localityId", wishList.get(position).project.projectId);
+                    }
                     mContext.startActivity(intent);
                 }catch (NullPointerException npe){
                     Toast.makeText(mContext, "Seller data not available", Toast.LENGTH_SHORT).show();

@@ -1,9 +1,9 @@
 package com.makaan.activity.lead;
 
 import android.app.FragmentManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,15 +26,12 @@ import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.request.pyr.PyrEnquiryType;
 import com.makaan.request.pyr.PyrRequest;
 import com.makaan.response.country.CountryCodeResponse;
-import com.makaan.response.pyr.PyrPostResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PyrService;
-import com.makaan.util.AppBus;
 import com.makaan.util.JsonParser;
 import com.makaan.util.StringUtil;
 import com.makaan.util.ValidationUtil;
 import com.segment.analytics.Properties;
-import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,7 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
@@ -176,9 +172,13 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
             mPyrRequest.setName(mName.getText().toString().trim());
             mPyrRequest.setEmail(mEmail.getText().toString().trim());
             mPyrRequest.setPhone(mNumber.getText().toString().trim());
-            mPyrRequest.setMultipleSellerIds(new Long[]{Long.valueOf( mLeadFormPresenter.getId())});
+            mPyrRequest.setMultipleCompanyIds(new Long[]{Long.valueOf(mLeadFormPresenter.getId())});
             mPyrRequest.setDomainId(1);
             mPyrRequest.setCountryId(mCountryId);
+            mPyrRequest.setApplicationType("MobileAndroidApp");
+            mPyrRequest.setCityId(mLeadFormPresenter.getCityId());
+            mPyrRequest.setPageType(null);
+            mPyrRequest.setSendOtp(false);
 
             String str = new Gson().toJson(mPyrRequest);
          //   Log.e("string==>> ", str);
@@ -208,6 +208,18 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
             }
         }
         mCountryAdapter = new ArrayAdapter<String>(getActivity(), R.layout.simple_spinner_item, mCountryNames) {
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+
+                LayoutInflater inflater = (LayoutInflater) getActivity()
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View rowView = inflater.inflate(R.layout.simple_spinner_item, parent, false);
+                TextView textView = (TextView) rowView.findViewById(R.id.country_text_view);
+                textView.setText(mCountryNames.get(position));
+                return rowView;
+            }
+
             @Override
             public boolean isEnabled(int position) {
                 return position != MOSTLY_USED_COUNTRIES;
@@ -219,7 +231,9 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
                 return false;
             }
         };
+        mCountryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mCountrySpinner.setAdapter(mCountryAdapter);
+        mCountrySpinner.setDropDownWidth(400);
         mCountrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

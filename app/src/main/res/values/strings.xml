@@ -12,6 +12,7 @@
     <dimen name= "pyr_medium_text">14sp</dimen>
     <dimen name= "pyr_small_text">10sp</dimen>
     <dimen name= "pyr_very_small_text">5sp</dimen>
+    <string name="no_matching_results">sorry, no matching results found</string>
     
     <!-- jarvis strings-->
     <string name="sign_up">sign up</string>
@@ -28,6 +29,7 @@
     <string name="give_you_call_back_string">We\'ll give you a call back</string>
 
     <string name="call_now">call now</string>
+    <string name="get_callback">get callBack</string>
     <string name="pyr_buy">buy</string>
     <string name="pyr_rent">rent</string>
     <string name="pyr_name">name</string>
@@ -222,7 +224,6 @@
 
     <!--Lead Form Strings-->
     <string name="call">call</string>
-    <string name="get_callback">get callback from seller</string>
     <string name="connect_now">connect now</string>
     <string name="or_later">or later</string>
     <string name="get_call_later">get call later</string>
@@ -316,5 +317,6 @@
     <string name="adapter_position">adapter position</string>
 
     <string name="default_error_message">some exception has occurred</string>
+
 </resources>
 
