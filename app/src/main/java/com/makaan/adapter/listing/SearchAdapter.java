@@ -122,7 +122,6 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             } else {
 
                 // TODO need to check which kind of data we should map
-                ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setText(searchResponseItem.displayText);
                 if (TextUtils.isEmpty(SearchResponseHelper.getType(searchResponseItem))) {
                     view.findViewById(R.id.search_result_item_type_text_view).setVisibility(View.GONE);
                 } else {
@@ -133,8 +132,14 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 if (SearchSuggestionType.CITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)
                         || SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)) {
                     view.findViewById(R.id.search_result_item_image_view).setVisibility(View.GONE);
+                    ((TextView) view.findViewById(R.id.search_result_item_name_2_text_view)).setText(searchResponseItem.displayText);
+                    ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setVisibility(View.GONE);
+                    ((TextView) view.findViewById(R.id.search_result_item_name_2_text_view)).setVisibility(View.VISIBLE);
                 } else {
                     view.findViewById(R.id.search_result_item_image_view).setVisibility(View.VISIBLE);
+                    ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setText(searchResponseItem.displayText);
+                    ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setVisibility(View.VISIBLE);
+                    ((TextView) view.findViewById(R.id.search_result_item_name_2_text_view)).setVisibility(View.GONE);
                 }
 
                 // TODO implement lru cache
