@@ -115,7 +115,7 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
                 case 1:
                     mOnlySellerRating = true;
                     initFragment(R.id.activity_base_buyer_journey_content_frame_layout, new ClientLeadsFragment(), false);
-                    setTitle("cashback request");
+                    setTitle("seller feedback");
                     break;
                 case 2:
                     mOnlySellerRating = false;
