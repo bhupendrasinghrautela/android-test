@@ -8,9 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.locality.LocalityActivity;
@@ -18,11 +16,12 @@ import com.makaan.pojo.SerpRequest;
 import com.makaan.response.locality.Locality;
 import com.makaan.ui.BaseLinearLayout;
 import com.makaan.util.CommonUtil;
+import com.makaan.util.LocalityUtil;
+import com.makaan.util.StringUtil;
 
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.OnClick;
 
 /**
  * Created by aishwarya on 18/01/16.
@@ -69,7 +68,7 @@ public class TopLocalityView extends BaseLinearLayout<List<Locality>> {
             localityLabel.setText(locality.label);
             //TODO calculate avg price from aggregation
             if(locality.avgPricePerUnitArea!=null) {
-                localityAvgPrice.setText(mContext.getString(R.string.avg_price_prefix) + " " + String.valueOf(locality.avgPricePerUnitArea) +
+                localityAvgPrice.setText(mContext.getString(R.string.avg_price_prefix) + " " + StringUtil.getFormattedNumber(LocalityUtil.calculateAveragePrice(locality.listingAggregations).intValue()) +
                         mContext.getString(R.string.avg_price_postfix));
             }else{
                 localityAvgPrice.setText(mContext.getString(R.string.avg_price_prefix) + " - not available");

@@ -86,8 +86,21 @@ public class MakaanBarChartView extends BaseLinearLayout<List<CityTrendData>>{
         mAxisXLabels.clear();
         mAxisXValues.clear();
         List<SubcolumnValue> values;
-        float id =0;
         mMaxListings = 0l;
+        int len = 0;
+        if(mChartData.size()<20){
+            len = 20-mChartData.size();
+            len/=2;
+        }
+        float id =0;
+        for(id= 0;id<len;id++){
+            values = new ArrayList<>();
+            values.add(new SubcolumnValue(0));
+            mAxisXValues.add(id);
+            mAxisXLabels.add("");
+            Column column = new Column(values);
+            mColumns.add(column);
+        }
         for(CityTrendData cityTrendData:mChartData){
             values = new ArrayList<>();
             values.add(new SubcolumnValue(cityTrendData.noOfListings, Color.parseColor("#FBA511")));
@@ -96,6 +109,14 @@ public class MakaanBarChartView extends BaseLinearLayout<List<CityTrendData>>{
             }
             mAxisXValues.add(id++);
             mAxisXLabels.add(StringUtil.getDisplayPrice(cityTrendData.minPrice));
+            Column column = new Column(values);
+            mColumns.add(column);
+        }
+        for(;id<20;id++){
+            values = new ArrayList<>();
+            values.add(new SubcolumnValue(0));
+            mAxisXValues.add(id);
+            mAxisXLabels.add("");
             Column column = new Column(values);
             mColumns.add(column);
         }

@@ -36,6 +36,7 @@ import com.makaan.cache.MasterDataCache;
 import com.makaan.event.city.CityByIdEvent;
 import com.makaan.event.city.CityTopLocalityEvent;
 import com.makaan.event.city.CityTrendEvent;
+import com.makaan.event.trend.CityPriceTrendEvent;
 import com.makaan.event.trend.callback.LocalityTrendCallback;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.locality.LocalityLifestyleFragment;
@@ -48,6 +49,7 @@ import com.makaan.response.city.CityTrendData;
 import com.makaan.response.city.EntityDesc;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.trend.LocalityPriceTrendDto;
+import com.makaan.response.trend.PriceTrendKey;
 import com.makaan.service.CityService;
 import com.makaan.service.PriceTrendService;
 import com.makaan.service.TaxonomyService;
@@ -64,6 +66,7 @@ import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.OnCheckedChanged;
@@ -155,6 +158,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     private String PREFIX_PROPERTY_SPINNER = "property type :";
     private String POSTFIX_BHK_SPINNER = "bhk :";
     private ArrayList<Locality> mCityTopLocalities;
+    private LocalityPriceTrendDto mLocalityPriceTrendDto;
 
     @Override
     protected int getContentViewId() {
@@ -184,6 +188,8 @@ public class CityOverViewFragment extends MakaanBaseFragment{
 
     private void initUiUsingCityDetails() {
         mMainCityImage.setImageUrl(mCity.cityHeroshotImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
+        new CityService().getPropertyRangeInCity(mCity.id,null,null,false,mCity.cityBuyMinPrice.intValue(),mCity.cityBuyMaxPrice.intValue(),
+                (mCity.cityBuyMaxPrice.intValue()-mCity.cityBuyMinPrice.intValue())/20);
         if(mCity.label!=null) {
             mCityCollapseToolbar.setTitle(mCity.label.toLowerCase());
             mCityCollapseToolbar.setCollapsedTitleTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/comforta.ttf"));
@@ -306,7 +312,14 @@ public class CityOverViewFragment extends MakaanBaseFragment{
 
     private void makeBarGraphRequest() {
         if(mCity!=null) {
-            new CityService().getPropertyRangeInCity(mCity.id, mSelectedBedroomTypes, mSelectedPropertyTypes, isRent, 10000, 500000, 50000);
+            if(isRent) {
+                new CityService().getPropertyRangeInCity(mCity.id,mSelectedBedroomTypes,mSelectedPropertyTypes,isRent,mCity.cityRentMinPrice.intValue(),mCity.cityRentMaxPrice.intValue(),
+                        (mCity.cityRentMaxPrice.intValue()-mCity.cityRentMinPrice.intValue())/20);
+            }
+            else{
+                new CityService().getPropertyRangeInCity(mCity.id,mSelectedBedroomTypes,mSelectedPropertyTypes,isRent,mCity.cityBuyMinPrice.intValue(),mCity.cityBuyMaxPrice.intValue(),
+                        (mCity.cityBuyMaxPrice.intValue()-mCity.cityBuyMinPrice.intValue())/20);
+            }
         }
     }
 
@@ -389,13 +402,26 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         new PriceTrendService().getPriceTrendForLocalities(localityIds, 60, new LocalityTrendCallback() {
             @Override
             public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
+                new PriceTrendService().getCityPriceTrendForCity(mCity.id,60);
                 if (localityPriceTrendDto.data != null && localityPriceTrendDto.data.size() != 0) {
                     mPriceTrendView.setVisibility(View.VISIBLE);
                     mPriceTrendView.bindView(localityPriceTrendDto);
+                    mLocalityPriceTrendDto = localityPriceTrendDto;
                 } else
                     mPriceTrendView.setVisibility(View.GONE);
             }
         });
+    }
+
+    @Subscribe
+    public void onCityPrice(CityPriceTrendEvent cityPriceTrendEvent){
+        if(cityPriceTrendEvent!=null && cityPriceTrendEvent.cityPriceTrendDto!=null && mLocalityPriceTrendDto.data!=null){
+            Set<PriceTrendKey> priceTrendKeySet = cityPriceTrendEvent.cityPriceTrendDto.data.keySet();
+            for (PriceTrendKey key : priceTrendKeySet) {
+                mLocalityPriceTrendDto.data.put(key, cityPriceTrendEvent.cityPriceTrendDto.data.get(key));
+            }
+            mPriceTrendView.bindView(mLocalityPriceTrendDto);
+        }
     }
 
     private void addLocalitiesLifestyleFragment(ArrayList<EntityDesc> entityDescriptions) {

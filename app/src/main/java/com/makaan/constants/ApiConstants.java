@@ -6,9 +6,9 @@ package com.makaan.constants;
 public class ApiConstants {
 
 
-//    public static final String BASE_URL = "http://mp-qa2.makaan-ws.com";
+    public static final String BASE_URL = "http://mp-qa2.makaan-ws.com";
     //public static final String BASE_URL = "https://marketplace-qa.proptiger-ws.com";
-    public static final String BASE_URL = "https://marketplace-qa.makaan-ws.com";
+    //public static final String BASE_URL = "https://marketplace-qa.makaan-ws.com";
     //public static final String BASE_URL = "http://beta.makaan-ws.com";
     //public static final String BASE_URL = "http://mp-qa1.makaan-ws.com/";
     public static final String FILTER_GROUP = BASE_URL.concat("/data/v1/entity/filter-group");           //TODO: need to implement this on server side
@@ -45,6 +45,7 @@ public class ApiConstants {
 
     public static final String TREND_URL = BASE_URL.concat("/data/v1/trend/hitherto");
     public static final String LOCALITY_TREND_URL = TREND_URL.concat("?fields=minPricePerUnitArea,localityName,projectName&group=localityId,month");
+    public static final String CITY_TREND_URL = TREND_URL.concat("?fields=avgBuyPricePerUnitArea,localityName,projectName,cityName&group=cityId,month");
     public static final String PROJECT_TREND_URL = TREND_URL.concat("?fields=minBuyPricePerUnitArea,localityName,projectName&group=projectId,month");
 
     public static final String SAVED_SEARCH_URL = BASE_URL.concat("/data/v1/entity/user/saved-searches");

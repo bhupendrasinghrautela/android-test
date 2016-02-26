@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
@@ -61,7 +60,6 @@ public class CityActivity extends MakaanFragmentActivity {
     private void fetchData() {
         new CityService().getCityById(mCityId);
         new CityService().getTopLocalitiesInCity(mCityId, 4);
-        new CityService().getPropertyRangeInCity(mCityId,null,null,false,10000,500000,50000);
     }
 
 

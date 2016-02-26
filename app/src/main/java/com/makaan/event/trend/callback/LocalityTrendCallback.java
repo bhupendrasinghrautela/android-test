@@ -52,9 +52,9 @@ public abstract class LocalityTrendCallback extends JSONGetCallback {
                             List<ApiPriceTrendData> apiPriceTrendList = trendEntry.getValue();
                             if (null != apiPriceTrendList && apiPriceTrendList.size() > 0) {
                                 ApiPriceTrendData apiPriceTrendData = apiPriceTrendList.get(0);
-                                Long minPricePerUnitArea = apiPriceTrendData.extraAttributes.get(MIN_PRICE_PER_UNIT_AREA);
+                                Double minPricePerUnitArea = apiPriceTrendData.extraAttributes.get(MIN_PRICE_PER_UNIT_AREA);
                                 if (null != minPricePerUnitArea) {
-                                    localityPriceTrendDto.addPriceTrendData(localityId, apiPriceTrendData.localityName,epochDataDate, minPricePerUnitArea);
+                                    localityPriceTrendDto.addPriceTrendData(localityId, apiPriceTrendData.localityName,epochDataDate, minPricePerUnitArea.longValue());
                                 }
                             }
 

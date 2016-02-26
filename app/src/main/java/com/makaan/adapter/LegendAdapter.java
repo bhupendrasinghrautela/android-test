@@ -61,7 +61,7 @@ public class LegendAdapter extends AbstractBaseAdapter<PriceTrendKey> {
         greyedDrawable.getPaint().setStyle(Style.FILL_AND_STROKE);
         greyedDrawable.setPadding(1, 1, 1, 1);
         greyedDrawable.getPaint().setPathEffect(
-                new CornerPathEffect(30));
+                new CornerPathEffect(CommonUtil.pixelToDp(mContext,30)));
         h.mLegendsHolder.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

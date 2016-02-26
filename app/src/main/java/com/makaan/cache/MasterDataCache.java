@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 /**
@@ -33,8 +34,8 @@ public class MasterDataCache {
 
     private static MasterDataCache instance = new MasterDataCache();
 
-    private HashMap<Integer, ApiIntLabel> idToBuyPropertyType = new HashMap<>();
-    private HashMap<Integer, ApiIntLabel> idToRentPropertyType = new HashMap<>();
+    private SortedMap<Integer, ApiIntLabel> idToBuyPropertyType = new TreeMap<>();
+    private SortedMap<Integer, ApiIntLabel> idToRentPropertyType = new TreeMap<>();
 
     private HashMap<Integer, ApiIntLabel> idToPropertyStatus = new HashMap<>();
     private Map<Integer, ApiIntLabel> idToBhk = new TreeMap<>();

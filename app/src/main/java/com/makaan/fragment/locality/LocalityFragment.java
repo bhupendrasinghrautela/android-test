@@ -28,7 +28,6 @@ import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.pyr.PyrPageActivity;
-import com.makaan.constants.RequestConstants;
 import com.makaan.event.agents.callback.TopAgentsCallback;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.locality.LocalityByIdEvent;
@@ -54,6 +53,7 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.TaxonomyService;
 import com.makaan.ui.CompressedTextView;
 import com.makaan.util.Blur;
+import com.makaan.util.LocalityUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -341,6 +341,9 @@ public class LocalityFragment extends MakaanBaseFragment {
 
     private void addPriceTrendFragment(ArrayList<Locality> nearbyLocalities) {
 
+        if(locality == null){
+            return;
+        }
         ArrayList<Long> localities = new ArrayList<>();
         for(int i = 0;i< nearbyLocalities.size() && i<4;i++){
             localities.add(nearbyLocalities.get(i).localityId);
@@ -436,19 +439,7 @@ public class LocalityFragment extends MakaanBaseFragment {
 
 
     private void calculateMedian(ArrayList<ListingAggregation> listingAggregations) {
-        double saleMedian = 0;
-        int countsSales = 0;
-        for (ListingAggregation ListingAggregation:listingAggregations) {
-            if (ListingAggregation.listingCategory.equalsIgnoreCase(RequestConstants.PRIMARY) ||
-                    ListingAggregation.listingCategory.equalsIgnoreCase(RequestConstants.RESALE)) {
-                saleMedian = saleMedian + ListingAggregation.avgPricePerUnitArea;
-                countsSales++;
-            }
-        }
-            if(countsSales!=0)
-                saleMedian = saleMedian / countsSales;
-
-            meadianSale = (int) saleMedian;
+            meadianSale = LocalityUtil.calculateMedian(listingAggregations).intValue();
             meadianRental = locality.averageRentPerMonth == null? null : locality.averageRentPerMonth.intValue();
 
     }
