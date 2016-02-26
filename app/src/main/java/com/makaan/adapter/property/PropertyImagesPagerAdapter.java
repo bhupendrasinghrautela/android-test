@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +31,7 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
     private int mCount = 0;
     private ViewPager pager;
     private Double price;
+    private boolean hasIncreased;
     private Double size;
     private PropertyImageCardView mCurrentPropertyImageCardView;
     private int previousPosition=-1;
@@ -109,13 +109,14 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
         });
     }
 
-    public void setData(List<Image> list, Double price, Double size){
+    public void setData(List<Image> list, Double price, Double size,boolean hasIncreased){
         if(list == null || list.isEmpty()){
             return;
         }
         mItems.clear();
         this.price = price;
         this.size = size;
+        this.hasIncreased = hasIncreased;
         if(list.size()>1) {
             mItems.add(list.get(list.size() - 1));
             mItems.addAll(list);
@@ -153,10 +154,10 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
                 (PropertyImageCardView) mLayoutInflater.inflate(R.layout.property_images_viewpager_item, null);
 
         if(mCount == 1) {
-            mCurrentPropertyImageCardView.bindView(mContext, mItems.get(position),1, price,size);
+            mCurrentPropertyImageCardView.bindView(mContext, mItems.get(position),1, price,size,hasIncreased);
         }
         else {
-            mCurrentPropertyImageCardView.bindView(mContext, mItems.get(position), position, price,size);
+            mCurrentPropertyImageCardView.bindView(mContext, mItems.get(position), position, price,size,hasIncreased);
         }
         container.addView(mCurrentPropertyImageCardView,0);
         return mCurrentPropertyImageCardView;

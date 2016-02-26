@@ -3,6 +3,7 @@ package com.makaan.ui.property;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,6 +30,8 @@ public class PropertyImageCardView extends CardView {
     TextView priceText;
     @Bind(R.id.price_unit)
     TextView priceUnitText;
+    @Bind(R.id.price_change)
+    ImageView priceChange;
     @Bind(R.id.area_text)
     TextView sizeText;
     @Bind(R.id.emi_text)
@@ -46,7 +49,7 @@ public class PropertyImageCardView extends CardView {
         super(context, attrs, defStyleAttr);
     }
 
-    public void bindView(Context mContext, Image listingDetailImage, int position, Double price, Double size) {
+    public void bindView(Context mContext, Image listingDetailImage, int position, Double price, Double size,boolean hasIncreased) {
         ButterKnife.bind(this);
         if(position != 1){
             mPropertyImageDetailLayout.setVisibility(GONE);
@@ -76,6 +79,12 @@ public class PropertyImageCardView extends CardView {
         }
         mPropertyImageView.setDefaultImageResId(R.drawable.luxury_project);
         mPropertyImageView.setImageUrl(listingDetailImage.absolutePath, MakaanNetworkClient.getInstance().getImageLoader());
+        if(hasIncreased){
+            priceChange.setImageResource(R.drawable.bottom_arrow_circle);
+        }
+        else{
+            priceChange.setImageResource(R.drawable.bottom_arrow_circle_green);
+        }
     }
 
     public Long calculateEmi(Double principal,Double ratePerAnuminFraction,Integer tenure) {

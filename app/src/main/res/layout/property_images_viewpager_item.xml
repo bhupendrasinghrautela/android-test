@@ -69,6 +69,7 @@
             android:textSize="13sp"
             android:layout_height="wrap_content"/>
         <ImageView
+            android:id="@+id/price_change"
             android:background="@drawable/bottom_arrow_circle_green"
             android:layout_marginLeft="8dp"
             android:layout_alignBottom="@id/area_text"
