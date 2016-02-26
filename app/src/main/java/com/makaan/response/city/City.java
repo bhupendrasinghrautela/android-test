@@ -18,6 +18,7 @@ public class City {
 
     public String cityHeroshotImageUrl;
     public Double avgPricePerUnitArea, averageRentPerMonth;
+    public Double cityBuyMinPrice,cityBuyMaxPrice,cityRentMinPrice,cityRentMaxPrice;
 
 
     public ArrayList<ListingAggregation> listingAggregations = new ArrayList<>();

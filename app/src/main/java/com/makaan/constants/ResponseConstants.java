@@ -79,6 +79,7 @@ public class ResponseConstants {
     public static final String UNIT_TYPE = "unitType";
     public static final String LISTING = "listing";
     public static final String MIN_PRICE_PER_UNIT_AREA = "minPricePerUnitArea";
+    public static final String AVG_BUY_PRICE_PER_UNIT_AREA = "avgBuyPricePerUnitArea";
     public static final String MIN_CONST_COMPLETION_DATE = "minConstructionCompletionDate";
     public static final String MAX_CONST_COMPLETION_DATE = "maxConstructionCompletionDate";
     public static final String NO_OPEN_SIDES = "noOfOpenSides";

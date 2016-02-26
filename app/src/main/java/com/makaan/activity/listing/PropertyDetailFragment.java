@@ -263,6 +263,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
         super.onActivityCreated(savedInstanceState);
         mContext = getActivity();
         Bundle args = getArguments();
+        showProgress();
         listingId = args.getLong(KeyUtil.LISTING_ID);
         listingMainUrl = args.getString(KeyUtil.LISTING_Image);
     }
@@ -290,13 +291,15 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
     @Subscribe
     public void onResults(ListingByIdGetEvent listingByIdGetEvent) {
         if(listingByIdGetEvent.listingDetail ==null){
+            showNoResults();
             return;
         }
         else if(null != listingByIdGetEvent.error){
-            getActivity().finish();
+           showNoResults();
         }
         else {
             mListingDetail = listingByIdGetEvent.listingDetail;
+            showContent();
             // adding property to recent manager
             RecentPropertyProjectManager manager = RecentPropertyProjectManager.getInstance(getActivity().getApplicationContext());
             manager.addEntryToRecent(manager.new DataObject(mListingDetail), getActivity().getApplicationContext());

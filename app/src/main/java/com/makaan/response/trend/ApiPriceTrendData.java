@@ -7,7 +7,7 @@ import java.util.HashMap;
  */
 public class ApiPriceTrendData {
 
-    public HashMap<String, Long> extraAttributes;
-    public Long localityId,projectId;
-    public String localityName,projectName;
+    public HashMap<String, Double> extraAttributes;
+    public Long localityId,projectId,cityId;
+    public String localityName,projectName,cityName;
 }

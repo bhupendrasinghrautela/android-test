@@ -10,37 +10,21 @@ import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.ResponseError;
 import com.makaan.response.city.City;
+import com.makaan.response.locality.ListingAggregation;
 import com.makaan.response.locality.Locality;
 import com.makaan.util.AppBus;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import static com.makaan.constants.RequestConstants.ANNUAL_GROWTH;
 import static com.makaan.constants.RequestConstants.BEDROOMS;
-import static com.makaan.constants.RequestConstants.CENTER_LAT;
-import static com.makaan.constants.RequestConstants.CENTER_LONG;
-import static com.makaan.constants.RequestConstants.CITY_HEROSHOT_IMAGE_URL;
 import static com.makaan.constants.RequestConstants.CITY_ID;
-import static com.makaan.constants.RequestConstants.CITY_TAG_LINE;
-import static com.makaan.constants.RequestConstants.DEMAND_RATE;
-import static com.makaan.constants.RequestConstants.DESCRIPTION;
-import static com.makaan.constants.RequestConstants.ENTITY_DESCRIPTIONS;
-import static com.makaan.constants.RequestConstants.ENTITY_DESCRIPTION_CATEGORIES;
-import static com.makaan.constants.RequestConstants.ID;
-import static com.makaan.constants.RequestConstants.LABEL;
 import static com.makaan.constants.RequestConstants.LISTING_CATEGORY;
 import static com.makaan.constants.RequestConstants.LOCALITY_LIVABILITY_SCORE;
-import static com.makaan.constants.RequestConstants.MASTER_DESCRIPTION_CATEGORIES;
-import static com.makaan.constants.RequestConstants.MASTER_DESCRIPTION_PARENT_CATEGORIES;
-import static com.makaan.constants.RequestConstants.NAME;
-import static com.makaan.constants.RequestConstants.PARENT_CATEGORY;
 import static com.makaan.constants.RequestConstants.PRIMARY;
 import static com.makaan.constants.RequestConstants.RENTAL;
-import static com.makaan.constants.RequestConstants.RENTAL_YIELD;
 import static com.makaan.constants.RequestConstants.RESALE;
 import static com.makaan.constants.RequestConstants.SORT_DESC;
-import static com.makaan.constants.RequestConstants.SUPPLY_RATE;
 import static com.makaan.constants.RequestConstants.UNIT_TYPE_ID;
 
 
@@ -60,8 +44,7 @@ public class CityService implements MakaanService {
 
             //citySelector.fields(new String[]{ID, ENTITY_DESCRIPTIONS, CITY_TAG_LINE, CENTER_LAT, CENTER_LONG, DESCRIPTION, CITY_HEROSHOT_IMAGE_URL, ANNUAL_GROWTH, RENTAL_YIELD, DEMAND_RATE, SUPPLY_RATE, LABEL});
 
-            citySelector.fields(new String[]{ENTITY_DESCRIPTION_CATEGORIES,MASTER_DESCRIPTION_CATEGORIES,MASTER_DESCRIPTION_PARENT_CATEGORIES,PARENT_CATEGORY,NAME,ENTITY_DESCRIPTIONS,ID,CITY_TAG_LINE, CENTER_LAT, CENTER_LONG, DESCRIPTION, CITY_HEROSHOT_IMAGE_URL,
-                    ANNUAL_GROWTH, RENTAL_YIELD, DEMAND_RATE, SUPPLY_RATE, LABEL});
+            citySelector.fields(new String[]{"id","centerLatitude","centerLongitude","description","cityHeroshotImageUrl","annualGrowth","rentalYield","demandRate","supplyRate","label","listingAggregations","buyUrl","rentUrl","entityDescriptions","description","entityDescriptionCategories","masterDescriptionCategory","name","images","imageType","absolutePath","displayName","masterDescriptionParentCategories","parentCategory","cityTagLine"});
 
 
             String cityUrl = ApiConstants.CITY.concat(cityId.toString()).concat("?").concat(citySelector.build());
@@ -81,12 +64,52 @@ public class CityService implements MakaanService {
                 public void onSuccess(Object responseObject) {
                     City city = (City) responseObject;
                     //city.description = AppUtils.stripHtml(city.description);
+                    getMinMaxPrice(city);
                     AppBus.getInstance().post(new CityByIdEvent(city));
                 }
             });
         }
 
 
+    }
+
+    private void getMinMaxPrice(City city) {
+        ArrayList<ListingAggregation> listingAggregations = city.listingAggregations;
+        if(listingAggregations!=null && listingAggregations.size()>0){
+            for(ListingAggregation listingAggregation:listingAggregations){
+                if(listingAggregation.listingCategory!=null) {
+                    if (listingAggregation.listingCategory.toLowerCase().equals("primary")
+                            || listingAggregation.listingCategory.toLowerCase().equals("resale")) {
+                        if (city.cityBuyMinPrice == null && listingAggregation.minPrice>0) {
+                            city.cityBuyMinPrice = listingAggregation.minPrice;
+                        } else if (city.cityBuyMinPrice > listingAggregation.minPrice && listingAggregation.minPrice>0) {
+                            city.cityBuyMinPrice = listingAggregation.minPrice;
+                        }
+                        if (city.cityBuyMaxPrice == null) {
+                            city.cityBuyMaxPrice = listingAggregation.maxPrice;
+                        } else if (city.cityBuyMaxPrice < listingAggregation.maxPrice) {
+                            city.cityBuyMaxPrice = listingAggregation.maxPrice;
+                        }
+                    } else {
+                        if (city.cityRentMinPrice == null && listingAggregation.minPrice>0) {
+                            city.cityRentMinPrice = listingAggregation.minPrice;
+                        } else if (city.cityRentMinPrice > listingAggregation.minPrice && listingAggregation.minPrice>0) {
+                            city.cityRentMinPrice = listingAggregation.minPrice;
+                        }
+                        if (city.cityRentMaxPrice == null) {
+                            city.cityRentMaxPrice = listingAggregation.maxPrice;
+                        } else if (city.cityRentMaxPrice < listingAggregation.maxPrice) {
+                            city.cityRentMaxPrice = listingAggregation.maxPrice;
+                        }
+                    }
+                }
+            }
+        }
+        //Hardcoded values for bar as per site
+        city.cityBuyMaxPrice = city.cityBuyMaxPrice == null?20000000d:(city.cityBuyMaxPrice>20000000d?20000000d:city.cityBuyMaxPrice);
+        city.cityBuyMinPrice = city.cityBuyMinPrice == null?1500000d:(city.cityBuyMinPrice<1500000d?1500000d:city.cityBuyMinPrice);
+        city.cityRentMaxPrice = city.cityRentMaxPrice == null?1500000d:(city.cityRentMaxPrice>1500000d?1500000d:city.cityRentMaxPrice);
+        city.cityRentMinPrice = city.cityRentMinPrice == null?2000d:(city.cityRentMinPrice<2000d?2000d:city.cityRentMinPrice);
     }
 
     /**

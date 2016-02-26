@@ -13,12 +13,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.util.AppBus;
 import com.makaan.util.AppUtils;
-import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
