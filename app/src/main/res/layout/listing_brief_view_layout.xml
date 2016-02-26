@@ -120,7 +120,8 @@
                     android:layout_toEndOf="@+id/listing_brief_view_layout_property_price_sq_ft_text_view"
                     android:layout_toRightOf="@+id/listing_brief_view_layout_property_price_sq_ft_text_view"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/bottom_arrow_circle_green" />
+                    android:src="@drawable/bottom_arrow_circle_green"
+                    android:visibility="invisible"/>
 
                 <TextView
                     android:id="@+id/listing_brief_view_layout_property_bhk_info_text_view"
