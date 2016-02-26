@@ -22,6 +22,8 @@ public class ExposeMessage {
         public Object content;
         public CtaType ctaType;
         public JarvisTrackExtraData extra;
+        public Long leadId;
+        public Long agentId;
     }
 
 }

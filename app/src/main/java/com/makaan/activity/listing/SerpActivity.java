@@ -309,7 +309,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
             if((type & MASK_LISTING_TYPE) > 0) {
                 if (!request.isFromBackstack()) {
-                    if (type == SerpActivity.TYPE_GPID) {
+                    if (type == SerpActivity.TYPE_GPID || type == SerpActivity.TYPE_NEARBY) {
                         setSearchBarCollapsible(false);
                         mIsMapFragment = true;
                         mMapImageView.setImageResource(R.drawable.list);

@@ -2,10 +2,14 @@ package com.makaan.service;
 
 import android.text.TextUtils;
 
+import com.android.volley.VolleyError;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ApiConstants;
+import com.makaan.constants.ResponseConstants;
+import com.makaan.event.buyerjourney.NewMatchesGetEvent;
 import com.makaan.event.saveSearch.SaveSearchGetEvent;
+import com.makaan.network.JSONGetCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.request.saveSearch.SaveNewSearch;
@@ -66,24 +70,32 @@ public class SaveSearchService implements MakaanService {
      **/
     public void getSavedSearchesNewMatches() {
         String getSavedSearchUrl = ApiConstants.SAVED_SEARCH_NEW_MATCHES_URL;
-        // TODO
-        /*Type saveSearchType = new TypeToken<ArrayList<SaveSearch>>() {
-        }.getType();
 
-        MakaanNetworkClient.getInstance().get(getSavedSearchUrl, saveSearchType, new ObjectGetCallback() {
+        MakaanNetworkClient.getInstance().get(getSavedSearchUrl, new JSONGetCallback() {
+            @Override
+            public void onSuccess(JSONObject responseObject) {
+                try {
+                    int data = responseObject.getInt(ResponseConstants.DATA);
+                    NewMatchesGetEvent event = new NewMatchesGetEvent();
+                    event.totalCount = data;
+                    AppBus.getInstance().post(event);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    NewMatchesGetEvent event = new NewMatchesGetEvent();
+                    ResponseError error = new ResponseError();
+                    error.error = new VolleyError(e);
+                    event.error = error;
+                    AppBus.getInstance().post(event);
+                }
+            }
+
             @Override
             public void onError(ResponseError error) {
-                SaveSearchGetEvent saveSearchGetEvent = new SaveSearchGetEvent();
-                saveSearchGetEvent.error = error;
-                AppBus.getInstance().post(saveSearchGetEvent);
+                NewMatchesGetEvent event = new NewMatchesGetEvent();
+                event.error = error;
+                AppBus.getInstance().post(event);
             }
-
-            @Override
-            public void onSuccess(Object responseObject) {
-                ArrayList<SaveSearch> saveSearchList = (ArrayList<SaveSearch>) responseObject;
-                AppBus.getInstance().post(new SaveSearchGetEvent(saveSearchList));
-            }
-        }, true);*/
+        });
     }
 
     /**

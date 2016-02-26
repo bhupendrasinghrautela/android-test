@@ -27,6 +27,7 @@ import com.makaan.activity.project.ProjectActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.constants.LeadPhaseConstants;
 import com.makaan.jarvis.analytics.AnalyticsConstants;
 import com.makaan.jarvis.analytics.AnalyticsService;
 import com.makaan.jarvis.analytics.BuyerJourneyMessage;
@@ -39,6 +40,7 @@ import com.makaan.jarvis.ui.cards.CtaCardFactory;
 import com.makaan.jarvis.ui.cards.PyrPopupCard;
 import com.makaan.jarvis.ui.cards.SerpFilterCard;
 import com.makaan.pojo.SerpObjects;
+import com.makaan.request.buyerjourney.PhaseChange;
 import com.makaan.response.project.Project;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.JsonBuilder;
@@ -438,12 +440,12 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
             if(phaseId==message.phaseId){
                 String eventName = (String) pair.getKey();
                 if(!TextUtils.isEmpty(eventName)) {
-                    //analyticsService.trackBuyerJourney(eventName, jarvisTrackExtraData);
+                    analyticsService.trackBuyerJourney(eventName, jarvisTrackExtraData);
                 }
             }
         }
 
-        analyticsService.trackBuyerJourney("bj_shortlist", jarvisTrackExtraData);
+        //analyticsService.trackBuyerJourney("bj_shortlist", jarvisTrackExtraData);
     }
 
     private void trackUserActiveness(){

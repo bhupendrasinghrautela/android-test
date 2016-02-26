@@ -82,7 +82,9 @@ public class ClientLeadsService implements MakaanService {
     public void requestClientLeadCompanies(ArrayList<Long> ids) {
         String detailsURL = ApiConstants.USER_SERVICE_ENTITY_COMPANIES;
         for(Long id : ids) {
-            detailsURL = detailsURL.concat(String.format(ApiConstants.USER_SERVICE_ENTITY_COMPANIES_FILTER, id.intValue()));
+            if(id != null) {
+                detailsURL = detailsURL.concat(String.format(ApiConstants.USER_SERVICE_ENTITY_COMPANIES_FILTER, id.intValue()));
+            }
         }
         if(ids.size() > 0 && detailsURL.length() > 0) {
             detailsURL = detailsURL.substring(0, detailsURL.length() - 1);

@@ -1166,6 +1166,24 @@ public class SerpRequest implements Parcelable, Cloneable {
 
     }
 
+    public void launchSerp(Context context, String selector) {
+        SelectorParser.parse(selector, this);
+
+        Intent intent = new Intent(context, SerpActivity.class);
+        intent.putExtra(SerpActivity.REQUEST_TYPE, type);
+        intent.putExtra(SerpActivity.REQUEST_DATA, this);
+
+        if(this.serpContext != UNEXPECTED_VALUE) {
+            if((this.serpContext & CONTEXT_RENT) > 0) {
+                intent.putExtra(SerpActivity.REQUEST_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_RENT);
+            } else {
+                intent.putExtra(SerpActivity.REQUEST_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_BUY);
+            }
+        }
+        context.startActivity(intent);
+
+    }
+
     @Override
     protected SerpRequest clone() throws CloneNotSupportedException {
         return new SerpRequest(this);

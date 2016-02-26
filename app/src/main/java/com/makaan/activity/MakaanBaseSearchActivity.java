@@ -105,6 +105,9 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     @Bind(R.id.activity_search_base_search_no_result_image_view)
     ImageView mNoResultsImageView;
 
+    @Bind(R.id.activity_search_base_search_no_result_layout)
+    View mNoResultLayout;
+
     @Bind(R.id.activity_search_base_search_loading_progress_bar)
     ProgressBar mLoadingProgressBar;
 
@@ -115,6 +118,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
     @Bind(R.id.activity_search_base_layout_search_bar_search_text_view)
     TextView mSearchPropertiesTextView;
+    @Bind(R.id.activity_search_base_search_no_result_text_view)
+    TextView mNoResultsTextView;
 
     @Bind(R.id.fragment_search_results_recycler_view)
     RecyclerView mSearchRecyclerView;
@@ -1193,18 +1198,28 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     @Override
     protected void showProgress() {
         mContentFrameLayout.setVisibility(View.GONE);
-        mNoResultsImageView.setVisibility(View.GONE);
+        mNoResultLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.VISIBLE);
         mSearchResultFrameLayout.setVisibility(View.GONE);
     }
 
     @Override
     protected void showNoResults() {
+        showNoResults(null);
+    }
+
+    @Override
+    protected void showNoResults(String message) {
         mContentFrameLayout.setVisibility(View.GONE);
-        mNoResultsImageView.setVisibility(View.VISIBLE);
+        mNoResultLayout.setVisibility(View.VISIBLE);
         mLoadingProgressBar.setVisibility(View.GONE);
         mSearchResultFrameLayout.setVisibility(View.GONE);
 
+        if(message == null) {
+            mNoResultsTextView.setText(R.string.default_error_message);
+        } else {
+            mNoResultsTextView.setText(message);
+        }
 //        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(mNoResultsImageView);
         Glide.with(this).load(R.raw.no_result).crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mNoResultsImageView);
 
@@ -1213,14 +1228,14 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     @Override
     protected void showContent() {
         mContentFrameLayout.setVisibility(View.VISIBLE);
-        mNoResultsImageView.setVisibility(View.GONE);
+        mNoResultLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.GONE);
         mSearchResultFrameLayout.setVisibility(View.GONE);
     }
 
     private void showSearchResults() {
         mContentFrameLayout.setVisibility(View.VISIBLE);
-        mNoResultsImageView.setVisibility(View.GONE);
+        mNoResultLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.GONE);
 
         mSearchResultFrameLayout.setVisibility(View.VISIBLE);

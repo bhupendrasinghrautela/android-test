@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.constants.LeadPhaseConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.buyerjourney.ClientEventsByGetEvent;
 import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
+import com.makaan.event.buyerjourney.NewMatchesGetEvent;
 import com.makaan.event.saveSearch.SaveSearchGetEvent;
 import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.fragment.MakaanBaseFragment;
@@ -46,6 +48,11 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
 
     @Bind(R.id.tv_site_visit_subtitle)
     TextView mSiteVisitSubTitle;
+
+    @Bind(R.id.iv_find_joy)
+    ImageView mJoyImageView;
+    @Bind(R.id.iv_booking)
+    ImageView mBookingImageView;
 
     private int mSavedSearchesCount;
     private int mNewMatchesCount;
@@ -151,7 +158,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
         isUserLoggedIn = CookiePreferences.isUserLoggedIn(getActivity());
         if(isUserLoggedIn) {
             savedSearches = MasterDataCache.getInstance().getSavedSearch();
-            if(savedSearches != null) {
+            if(savedSearches != null && savedSearches.size() > 0) {
                 mSavedSearchesCount = savedSearches.size();
                 mSavedSearchesReceived = true;
             } else {
@@ -164,7 +171,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             ((ClientEventsService) MakaanServiceFactory.getInstance().getService(ClientEventsService.class)).getClientEvents(1);
             ((WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class)).get();
 
-            mNewSearchesReceived = true; // TODO need to implement this
+            mNewSearchesReceived = false;
             mClientEventsReceived = false;
             mClientLeadsReceived = false;
             mWishListsReceived = false;
@@ -187,6 +194,19 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
         }
         mSavedSearchesCount = saveSearchGetEvent.saveSearchArrayList.size();
         mSavedSearchesReceived = true;
+        updateUi();
+    }
+
+
+    @Subscribe
+    public void onResults(NewMatchesGetEvent newMatchesGetEvent){
+        if(null == newMatchesGetEvent || null != newMatchesGetEvent.error){
+            //TODO handle error
+            showNoResults();
+            return;
+        }
+        mNewMatchesCount = newMatchesGetEvent.totalCount;
+        mNewSearchesReceived = true;
         updateUi();
     }
 
@@ -215,8 +235,8 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
                 mPhaseId = clientLeadsByGetEvent.results.get(0).clientActivity.phaseId;
             }
         }
-        if(mPhaseId > 0) {
-            updateStage(mPhaseId - 1);
+        if(mPhaseId >= 0) {
+            updateStage(mPhaseId);
         }
         mClientLeadsReceived = true;
         updateUi();
@@ -228,7 +248,14 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             mViews[i].findViewById(R.id.iv_stage).setVisibility(View.INVISIBLE);
         }
 
-        for(int j = 0; j < i; j++) {
+        if(i <= LeadPhaseConstants.LEAD_PHASE_POSSESSION) {
+            mJoyImageView.setImageResource(R.drawable.journey_makaan);
+        } else if(i == LeadPhaseConstants.LEAD_PHASE_REGISTRATION) {
+            mJoyImageView.setImageResource(R.drawable.journey_makaan);
+            mBookingImageView.setImageResource(R.drawable.journey_makaan);
+        }
+
+        for(int j = 0; j < i && j < mViews.length; j++) {
             mViews[j].findViewById(R.id.iv_view).setVisibility(View.INVISIBLE);
             mViews[j].findViewById(R.id.iv_stage).setVisibility(View.VISIBLE);
             ((ImageView)mViews[j].findViewById(R.id.iv_stage)).setImageResource(R.drawable.check_tick_red);

@@ -72,13 +72,15 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
         Enquiry enquiry = mEnquiries.get(position);
 
         shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.locality_hero);
-        Date date = new Date(enquiry.time);
+        if(enquiry.time != null) {
+            Date date = new Date(enquiry.time);
 
-        // S is the millisecond
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM, yyyy");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("h.mm a");
-        shortListEnquiredViewHolder.mSiteVisitDate.setText(simpleDateFormat.format(enquiry.time));
-        shortListEnquiredViewHolder.mSiteVisitTime.setText(timeFormat.format(enquiry.time));
+            // S is the millisecond
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM, yyyy");
+            SimpleDateFormat timeFormat = new SimpleDateFormat("h.mm a");
+            shortListEnquiredViewHolder.mSiteVisitDate.setText(simpleDateFormat.format(enquiry.time));
+            shortListEnquiredViewHolder.mSiteVisitTime.setText(timeFormat.format(enquiry.time));
+        }
         if(enquiry.type == EnquiryType.LISTING){
             if(enquiry.listingDetail!=null){
                 populateListingDetail(enquiry.listingDetail, shortListEnquiredViewHolder);
