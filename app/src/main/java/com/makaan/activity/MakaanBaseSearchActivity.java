@@ -946,6 +946,11 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 }
             }
         }
+        if(mSerpContext == SERP_CONTEXT_BUY) {
+            mSearchEditText.setHint(this.getResources().getString(R.string.search_default_hint));
+        } else {
+            mSearchEditText.setHint(this.getResources().getString(R.string.search_default_rent_hint));
+        }
     }
 
     private void addNearbyPropertiesSearchItem() {

@@ -322,7 +322,7 @@
     <dimen name="serp_listing_card_property_shortlist_checkbox_width">20dp</dimen>
     <dimen name="serp_listing_card_property_shortlist_checkbox_height">20dp</dimen>
 
-    <dimen name="serp_listing_card_property_area_sq_ft_text_view_left_margin">0dp</dimen>
+    <dimen name="serp_listing_card_property_area_sq_ft_text_view_left_margin">2dp</dimen>
     <dimen name="serp_listing_card_property_area_sq_ft_text_view_top_margin">0dp</dimen>
     <dimen name="serp_listing_card_property_area_sq_ft_text_view_text_size">16sp</dimen>
 
@@ -332,7 +332,7 @@
     <dimen name="serp_listing_card_property_price_difference_image_view_height">16dp</dimen>
 
     <!-- TODO serp_listing_card_property_info_text_view_left_margin should be 27 as per GUI-->
-    <dimen name="serp_listing_card_property_info_text_view_left_margin">0dp</dimen>
+    <dimen name="serp_listing_card_property_info_text_view_left_margin">2dp</dimen>
     <dimen name="serp_listing_card_property_info_text_view_top_margin">10dp</dimen>
     <dimen name="serp_listing_card_property_info_text_view_text_size">16sp</dimen>
 
@@ -542,7 +542,7 @@
     <dimen name="fragment_dialog_filters_item_layout_image_view_height">36dp</dimen>
     <dimen name="fragment_dialog_filters_item_layout_image_view_margin_bottom">6dp</dimen>
 
-    <dimen name="fragment_dialog_filters_item_layout_content_width">100dp</dimen>
+    <dimen name="fragment_dialog_filters_item_layout_content_width">104dp</dimen>
 
     <dimen name="fragment_dialog_filters_item_layout_display_text_text_size">16sp</dimen>
 
@@ -654,7 +654,7 @@
     <dimen name="shortlist_card_seller_image_view_width">56dp</dimen>
     <dimen name="shortlist_card_seller_image_view_height">56dp</dimen>
 
-    <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_left_margin">0dp</dimen>
+    <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_left_margin">2dp</dimen>
     <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_top_margin">0dp</dimen>
     <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_text_size">16sp</dimen>
 
@@ -664,7 +664,7 @@
     <dimen name="listing_brief_view_layout_property_price_difference_image_view_top_margin">3dp</dimen>
 
     <!-- following value must be 28dp as per Zeplin UI -->
-    <dimen name="listing_brief_view_layout_property_info_text_view_left_margin">0dp</dimen>
+    <dimen name="listing_brief_view_layout_property_info_text_view_left_margin">2dp</dimen>
     <dimen name="listing_brief_view_layout_property_info_text_view_top_margin">10dp</dimen>
     <dimen name="listing_brief_view_layout_property_info_text_view_text_size">16sp</dimen>
 
