@@ -11,7 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center_horizontal"
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:textColor="@color/jarvis_card_title_color"
         android:textSize="@dimen/jarvis_chat_card_title_text_size" />
 
@@ -22,7 +24,9 @@
         android:layout_gravity="center"
         android:gravity="center_horizontal"
         android:text="tell us your requirements and get in touch with top sellers"
-        android:layout_margin="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:textColor="@color/jarvis_card_subtitle_color"
         android:textSize="@dimen/jarvis_chat_card_subtitle_text_size" />
 

@@ -2,6 +2,7 @@ package com.makaan.activity.locality;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import com.makaan.event.project.OnSeeOnMapClicked;
 import com.makaan.fragment.locality.LocalityFragment;
 import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
 import com.makaan.jarvis.event.IncomingMessageEvent;
+import com.makaan.jarvis.event.OnExposeEvent;
 import com.makaan.jarvis.event.PageTag;
 import com.makaan.util.KeyUtil;
 import com.segment.analytics.Properties;
@@ -28,6 +30,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
     private LocalityFragment localityFragment;
     private NeighborhoodMapFragment mNeighborhoodMapFragment;
     private NeighborhoodMapFragment.EntityInfo mEntityInfo;
+    private String mLocalityName;
 
     @Override
     protected int getContentViewId() {
@@ -80,6 +83,17 @@ public class LocalityActivity extends MakaanFragmentActivity {
         animateJarvisHead();
     }
 
+    @Subscribe
+    public void onExposeMessage(OnExposeEvent event) {
+        if(null==event.message){
+            return;
+        }
+        if(!TextUtils.isEmpty(mLocalityName)) {
+            event.message.city = mLocalityName;
+            displayPopupWindow(event.message);
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -105,6 +119,8 @@ public class LocalityActivity extends MakaanFragmentActivity {
             mEntityInfo = new NeighborhoodMapFragment.EntityInfo(localityByIdEvent.locality.label,
                     localityByIdEvent.locality.latitude,
                     localityByIdEvent.locality.latitude);
+
+            mLocalityName = localityByIdEvent.locality.label;
         }
     }
 

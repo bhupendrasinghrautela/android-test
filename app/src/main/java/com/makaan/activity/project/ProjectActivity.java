@@ -2,6 +2,7 @@ package com.makaan.activity.project;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -15,6 +16,7 @@ import com.makaan.event.project.ProjectByIdEvent;
 import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
 import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.jarvis.event.IncomingMessageEvent;
+import com.makaan.jarvis.event.OnExposeEvent;
 import com.makaan.jarvis.event.PageTag;
 import com.makaan.response.project.Project;
 import com.makaan.response.search.event.SearchResultEvent;
@@ -32,6 +34,7 @@ public class ProjectActivity extends MakaanBaseSearchActivity implements TotalIm
     private NeighborhoodMapFragment mNeighborhoodMapFragment;
     private NeighborhoodMapFragment.EntityInfo mEntityInfo;
     private int mTotalImagesSeen=0;
+    private String mProjectName;
 
 
     @Override
@@ -106,6 +109,7 @@ public class ProjectActivity extends MakaanBaseSearchActivity implements TotalIm
             if(null!=project && project.latitude!=null && project.longitude!=null) {
                 mEntityInfo = new NeighborhoodMapFragment.EntityInfo(project.name,
                         project.latitude, project.longitude);
+                mProjectName = project.name;
             }
 
             PageTag pageTag = new PageTag();
@@ -117,6 +121,17 @@ public class ProjectActivity extends MakaanBaseSearchActivity implements TotalIm
     @Subscribe
     public void onIncomingMessage(IncomingMessageEvent event){
         animateJarvisHead();
+    }
+
+    @Subscribe
+    public void onExposeMessage(OnExposeEvent event) {
+        if(null==event.message){
+            return;
+        }
+        if(!TextUtils.isEmpty(mProjectName)) {
+            event.message.city = mProjectName;
+            displayPopupWindow(event.message);
+        }
     }
 
     @Override

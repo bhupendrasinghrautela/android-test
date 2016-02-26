@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.makaan.jarvis.ui.cards.RichContentCard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/jarvis_card_brief_height"
     android:background="@drawable/jarvis_popup_bg"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/jarvis_card_brief_height">
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/jarvis_card_brief_height"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="18dp">
 
         <com.android.volley.toolbox.FadeInNetworkImageView
             android:id="@+id/image"

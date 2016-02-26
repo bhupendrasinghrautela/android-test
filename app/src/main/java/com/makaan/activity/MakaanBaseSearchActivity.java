@@ -3,7 +3,6 @@ package com.makaan.activity;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.location.Location;
@@ -30,20 +29,16 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.google.android.gms.location.LocationListener;
-import com.facebook.FacebookRequestError;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
 import com.makaan.adapter.listing.SearchAdapter;
 import com.makaan.adapter.listing.SelectedSearchAdapter;
 import com.makaan.analytics.MakaanEventPayload;
-import com.makaan.analytics.MakaanEventTracker;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.Session;
@@ -61,7 +56,6 @@ import com.makaan.service.SearchService;
 
 import com.makaan.ui.listing.CustomFlowLayout;
 import com.makaan.util.RecentSearchManager;
-import com.segment.analytics.Analytics;
 import com.segment.analytics.Properties;
 
 
@@ -747,8 +741,14 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         }
     }
 
+    @Override
     protected boolean needBackProcessing() {
-        return mSearchRelativeView.getVisibility() == View.VISIBLE;
+        boolean visible = mSearchRelativeView.getVisibility() == View.VISIBLE;
+        if(visible) {
+            return true;
+        } else {
+            return super.needBackProcessing();
+        }
     }
 
     protected boolean areListingsAvailable() {
@@ -889,7 +889,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             }
         }
 
-        setIsJarvisVisible(!searchViewVisible);
+        setJarvisVisibility(!searchViewVisible);
     }
 
     private void showEmptySearchResults() {
