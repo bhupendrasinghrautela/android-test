@@ -269,7 +269,17 @@ public class ProjectFragment extends MakaanBaseFragment{
             if (imagesGetEvent.images.size() > 0) {
                 mPropertyImageViewPager.setVisibility(View.VISIBLE);
                 mPropertyImageViewPager.bindView();
-                mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice, null);
+                if(project.locality.avgPricePerUnitArea!=null) {
+                    if(project.locality.avgPricePerUnitArea>project.minPricePerUnitArea) {
+                        mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice, project.minPricePerUnitArea, false);
+                    }
+                    else{
+                        mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice, project.minPricePerUnitArea, true);
+                    }
+                }
+                else{
+                    mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice, project.minPricePerUnitArea, false);
+                }
             } else {
                 mPropertyImageViewPager.setVisibility(View.GONE);
             }
@@ -512,8 +522,14 @@ public class ProjectFragment extends MakaanBaseFragment{
         bundle.putLong("localityId", project.localityId);
         bundle.putLong("projectId", project.projectId);
         bundle.putSerializable("localities", localities);
-        if(project.locality.avgPricePerUnitArea != null)
-        bundle.putInt("price", project.locality.avgPricePerUnitArea.intValue());
+        if(project.minPricePerUnitArea != null) {
+            bundle.putInt("price", project.minPricePerUnitArea.intValue());
+            if (project.locality != null && project.locality.avgPricePerUnitArea < project.minPricePerUnitArea) {
+                bundle.putBoolean("increased",true);
+            } else {
+                bundle.putBoolean("increased",false);
+            }
+        }
         fragment.setArguments(bundle);
         initFragment(R.id.container_price_trends, fragment, false);
     }

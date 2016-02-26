@@ -2,6 +2,7 @@ package com.makaan.fragment.project;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,12 +32,15 @@ import butterknife.Bind;
 public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
     private String title;
     private Long localityId;
+    private Boolean hasIncreased;
     private Integer pricePerUnit;
 
     @Bind(R.id.line_chart_layout)
     public MakaanLineChartView priceTrendView;
     @Bind(R.id.header_text)
     public TextView titleTv;
+    @Bind(R.id.price_change)
+    ImageView priceChange;
     @Bind(R.id.tv_price_trend_price)
     public TextView priceTv;
     @Bind(R.id.price_trend_view)
@@ -102,8 +106,15 @@ public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
         title = getArguments().getString("title");
         localities = (ArrayList<Long>) getArguments().getSerializable("localities");
         pricePerUnit = getArguments().getInt("price");
+        hasIncreased = getArguments().getBoolean("increased");
         titleTv.setText(title);
         priceTv.setText(pricePerUnit == null ? "" : "\u20B9 " + pricePerUnit + " / sq ft");
+        if(hasIncreased!=null&& hasIncreased){
+            priceChange.setImageResource(R.drawable.bottom_arrow_circle);
+        }
+        else{
+            priceChange.setImageResource(R.drawable.bottom_arrow_circle_green);
+        }
     }
 
 }

@@ -323,12 +323,26 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
         if(imagesGetEvent.imageType == null) {
             if (imagesGetEvent.images.size() > 0) {
                 mPropertyImageViewPager.setVisibility(View.VISIBLE);
+                if(mListingDetail.currentListingPrice.price!=0 && mListingDetail.currentListingPrice.pricePerUnitArea!=0) {
+                    mPropertyImageViewPager.bindView();
+                    if (mListingDetail.property != null && mListingDetail.property.project != null && mListingDetail.property.project.locality != null) {
+                        if (mListingDetail.property.project.locality.avgPricePerUnitArea != null &&
+                                mListingDetail.property.project.locality.avgPricePerUnitArea < mListingDetail.currentListingPrice.pricePerUnitArea) {
+                            mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, true);
+                        } else {
+                            mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false);
+                        }
+                    } else {
+                        mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false);
+                    }
+                }
+                else {
+                    mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false);
+                }
             }
             else{
                 mPropertyImageViewPager.setVisibility(View.GONE);
             }
-            mPropertyImageViewPager.bindView();
-            mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea);
         }
         else if(imagesGetEvent.images!= null && imagesGetEvent.images.size()>0){
             mFloorPlanLayout.bindFloorPlan(imagesGetEvent);

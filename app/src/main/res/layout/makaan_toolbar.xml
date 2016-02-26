@@ -28,11 +28,12 @@
         android:id="@+id/linear_layout_makaan_toolbar_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/makaan_toolbar_logo_image_view"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginTop="20dp"
         android:clickable="true"
-        android:gravity="center">
+        android:gravity="end">
 
         <TextView
             android:id="@+id/makaan_toolbar_login_text_view"
@@ -40,6 +41,7 @@
             android:layout_height="wrap_content"
             android:clickable="false"
             android:text="@string/login"
+            android:layout_gravity="center"
             android:textColor="@color/login_text_color"
             android:textSize="@dimen/makaan_toolbar_login_text_view_text_size"
             android:typeface="monospace"/>
