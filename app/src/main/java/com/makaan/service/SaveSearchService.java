@@ -136,6 +136,9 @@ public class SaveSearchService implements MakaanService {
 
         SaveNewSearch saveNewSearch = new SaveNewSearch();
         saveNewSearch.searchQuery = selector.build();
+        if(saveNewSearch.searchQuery != null && saveNewSearch.searchQuery.contains("selector=")) {
+            saveNewSearch.searchQuery = saveNewSearch.searchQuery.replace("selector=", "");
+        }
         if (TextUtils.isEmpty(name)) {
             saveNewSearch.name = selector.getUniqueName();
         } else {

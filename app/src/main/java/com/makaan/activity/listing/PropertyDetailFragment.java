@@ -377,13 +377,13 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
             if(property.unitType != null && "plot".equalsIgnoreCase(property.unitType)) {
                 bhkInfo.append("residential plot");
             } else {
-                bhkInfo.append(property.bedrooms > 0 ? property.bedrooms.toString()+"bhk ": "");
-                bhkInfo.append(property.unitType != null ? property.unitType:"");
+                bhkInfo.append(property.bedrooms > 0 ? property.bedrooms.toString()+" bhk ": "");
+                bhkInfo.append(property.unitType != null ? property.unitType.toLowerCase():"");
             }
             mUnitName.setText(bhkInfo.toString()+ " - ");
 
             if(getActivity() instanceof MakaanBaseSearchActivity) {
-                getActivity().setTitle((listingDetail.property.bedrooms + "bhk " +
+                getActivity().setTitle((listingDetail.property.bedrooms + " bhk " +
                         (property.unitType != null ? property.unitType : "")).toLowerCase());
             }
 
