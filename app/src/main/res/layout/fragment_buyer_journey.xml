@@ -231,6 +231,7 @@
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
+                android:id="@+id/iv_find_joy"
                 android:layout_width="24dp"
                 android:layout_marginLeft="7dp"
                 android:layout_height="wrap_content"
@@ -319,6 +320,7 @@
             android:paddingTop="@dimen/padding_layout">
 
             <ImageView
+                android:id="@+id/iv_booking"
                 android:layout_width="24dp"
                 android:layout_marginLeft="7dp"
                 android:layout_height="wrap_content"

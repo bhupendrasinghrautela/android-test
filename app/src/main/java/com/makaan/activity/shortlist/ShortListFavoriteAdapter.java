@@ -63,13 +63,17 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
         }else{
             shortListFavoriteViewHolder.mTextViewArea.setVisibility(View.GONE);
         }
-        String imageUrl=wishList.get(position).project.imageURL;
-        if(!wishList.get(position).project.imageURL.contains("https")){
+        String imageUrl=wishList.get(position).project != null ? wishList.get(position).project.imageURL : null;
+        if(imageUrl != null && !imageUrl.contains("https")){
             imageUrl=imageUrl.replace("http","https");//TODO : handle it in volley
         }
-        shortListFavoriteViewHolder.mImageViewBackground.setImageUrl(imageUrl, MakaanNetworkClient.getInstance().getImageLoader());
+        if(imageUrl != null) {
+            shortListFavoriteViewHolder.mImageViewBackground.setImageUrl(imageUrl, MakaanNetworkClient.getInstance().getImageLoader());
+        }
 
-        shortListFavoriteViewHolder.mTextViewLocality.setText(wishList.get(position).project.address);
+        if(wishList.get(position).project != null) {
+            shortListFavoriteViewHolder.mTextViewLocality.setText(wishList.get(position).project.address);
+        }
         shortListFavoriteViewHolder.mTextViewGetCallBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

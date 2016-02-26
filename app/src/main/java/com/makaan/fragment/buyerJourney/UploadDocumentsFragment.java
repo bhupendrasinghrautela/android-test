@@ -51,7 +51,7 @@ public class UploadDocumentsFragment extends MakaanBaseFragment {
                     && mObj.listingDetail.id != null) {
                 PhaseChange change = new PhaseChange();
                 change.agentId = mObj.clientLeadObject.clientLead.companyId;
-                change.eventTypeId = LeadPhaseConstants.LEAD_EVENT_CASHBACK_REQUESTED;
+                change.eventTypeId = LeadPhaseConstants.LEAD_EVENT_BOOKING_DONE;
                 change.performTime = new Date().getTime();
                 ((ClientEventsService) (MakaanServiceFactory.getInstance().getService(ClientEventsService.class))).changePhase(mObj.clientLeadObject.clientLead.id, change);
             }

@@ -145,6 +145,7 @@ public class ListingParser {
                     listing.localityName = locality.optString(LABEL);
                     listing.suburbName = suburb.optString(LABEL);
                     listing.cityName = city.optString(LABEL);
+                    listing.cityId = locality.optLong(CITY_ID);
 
 
                     listing.lisitingPostedBy = new LisitingPostedBy();

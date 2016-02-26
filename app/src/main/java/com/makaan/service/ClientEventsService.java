@@ -27,7 +27,7 @@ import java.lang.reflect.Type;
 public class ClientEventsService implements MakaanService {
     public static final String TAG = ClientEventsService.class.getSimpleName();
     public void getClientEvents(int rows) {
-        String url = ApiConstants.SITE_VISIT_CLIENT_EVENTS.concat("?sort=-performTime");
+        String url = ApiConstants.SITE_VISIT_CLIENT_EVENTS.concat("?fields=leadId&sort=-performTime");
         if(rows > 0) {
             url = url.concat("&rows=1");
         }
@@ -86,7 +86,7 @@ public class ClientEventsService implements MakaanService {
     public void changePhase(Long leadId, PhaseChange phaseChange) {
         String url = ApiConstants.SITE_VISIT_CLIENT_EVENTS.concat(String.valueOf(leadId));
         try {
-            MakaanNetworkClient.getInstance().put(url, JsonBuilder.toJson(phaseChange), new StringRequestCallback() {
+            MakaanNetworkClient.getInstance().post(url, JsonBuilder.toJson(phaseChange), new StringRequestCallback() {
                 @Override
                 public void onSuccess(String response) {
 
