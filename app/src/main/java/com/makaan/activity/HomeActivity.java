@@ -150,11 +150,13 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     private void setUserData() {
         UserResponse info=CookiePreferences.getUserInfo(this);
         if(null!=info && null!=info.getData()) {
-            tvUserName.setText(info.getData().getFirstName());
+            tvUserName.setVisibility(View.GONE);
+            //tvUserName.setText(info.getData().getFirstName());
             mTextViewBuyerInitials.setText(info.getData().getFirstName());
             mTextViewBuyerInitials.setVisibility(View.VISIBLE);
             mImageViewBuyer.setVisibility(View.GONE);
         }else{
+            tvUserName.setVisibility(View.VISIBLE);
             tvUserName.setText(R.string.login);
             mTextViewBuyerInitials.setVisibility(View.GONE);
             mImageViewBuyer.setVisibility(View.VISIBLE);
