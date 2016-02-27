@@ -1240,6 +1240,21 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     @Override
+    protected void showNoResults(int stringId) {
+        mContentFrameLayout.setVisibility(View.GONE);
+        mNoResultLayout.setVisibility(View.VISIBLE);
+        mLoadingProgressBar.setVisibility(View.GONE);
+        mSearchResultFrameLayout.setVisibility(View.GONE);
+
+        if(stringId <= 0) {
+            mNoResultsTextView.setText(R.string.default_error_message);
+        } else {
+            mNoResultsTextView.setText(stringId);
+        }
+        Glide.with(this).load(R.raw.no_result).crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mNoResultsImageView);
+    }
+
+    @Override
     protected void showContent() {
         mContentFrameLayout.setVisibility(View.VISIBLE);
         mNoResultLayout.setVisibility(View.GONE);

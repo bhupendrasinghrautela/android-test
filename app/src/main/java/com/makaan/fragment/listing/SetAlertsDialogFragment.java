@@ -20,6 +20,7 @@ import com.makaan.cache.MasterDataCache;
 import com.makaan.event.saveSearch.SaveSearchGetEvent;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.event.user.UserLoginEvent;
+import com.makaan.fragment.MakaanBaseDialogFragment;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.saveSearch.SaveSearch;
@@ -59,7 +60,7 @@ import static com.makaan.adapter.listing.FiltersViewAdapter.UNEXPECTED_VALUE;
 /**
  * Created by rohitgarg on 2/11/16.
  */
-public class SetAlertsDialogFragment extends DialogFragment {
+public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
     public static final String SEPARATOR_FILTER = "/";
     @Bind(R.id.fragment_set_alerts_content_linear_layout)
     LinearLayout mContentLinearLayout;
@@ -92,21 +93,33 @@ public class SetAlertsDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_set_alert, container, false);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
 
         if(MasterDataCache.getInstance().getSavedSearch() == null) {
             SaveSearchService saveSearchService =
                     (SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class);
             saveSearchService.getSavedSearches();
+
+            showContent();
+
+            populateData();
+            handleSearchName();
+        } else {
+            // get saved searches
+            SaveSearchService saveSearchService =
+                    (SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class);
+            saveSearchService.getSavedSearches();
+
+            showProgress();
         }
 
-        AppBus.getInstance().register(this); //TODO: move to base fragment
-        ButterKnife.bind(this, view);
-
-        populateData();
-        handleSearchName();
 
         return view;
+    }
+
+    @Override
+    protected int getContentViewId() {
+        return R.layout.fragment_set_alert;
     }
 
     private void handleSearchName() {
@@ -471,11 +484,12 @@ public class SetAlertsDialogFragment extends DialogFragment {
                     }
                 }
             }
+
+            MasterDataCache.getInstance().clearSavedSearches();
+
             ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).saveNewSearch(createSelector(), getSearchName());
             isAfterLoginInitiated = false;
             isSubmitInitiatedFromWishList = false;
-
-            MasterDataCache.getInstance().clearSavedSearches();
 
             dismissAllowingStateLoss();
         }
@@ -491,7 +505,8 @@ public class SetAlertsDialogFragment extends DialogFragment {
     @Subscribe
     public void loginResults(UserLoginEvent userLoginEvent){
         if(null==userLoginEvent || null!=userLoginEvent.error){
-            Toast.makeText(mContext, R.string.generic_error, Toast.LENGTH_SHORT).show();
+            showNoResults(R.string.generic_error);
+
         }
 
         SaveSearchService saveSearchService =
@@ -513,17 +528,16 @@ public class SetAlertsDialogFragment extends DialogFragment {
     public void onResult(SaveSearchGetEvent event) {
         if(event == null || event.error != null) {
             // TODO
+            //showNoResults();
             return;
         } else {
             if(isAfterLoginInitiated && isSubmitInitiatedFromWishList) {
                 onSubmitClicked(null);
             }
-        }
-    }
+            showContent();
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        AppBus.getInstance().unregister(this);
+            populateData();
+            handleSearchName();
+        }
     }
 }

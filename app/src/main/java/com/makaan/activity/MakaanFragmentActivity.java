@@ -166,7 +166,19 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
         } else {
             mNoResultsTextView.setText(message);
         }
-//        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(mNoResultsImageView);
+        Glide.with(this).load(R.raw.no_result).crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mNoResultsImageView);
+    }
+
+    protected void showNoResults(int stringId) {
+        mContentFrameLayout.setVisibility(View.GONE);
+        mNoResultsLayout.setVisibility(View.VISIBLE);
+        mLoadingProgressBar.setVisibility(View.GONE);
+
+        if(stringId <= 0) {
+            mNoResultsTextView.setText(R.string.default_error_message);
+        } else {
+            mNoResultsTextView.setText(stringId);
+        }
         Glide.with(this).load(R.raw.no_result).crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mNoResultsImageView);
     }
 

@@ -1,8 +1,7 @@
 package com.makaan.fragment;
 
+import android.app.DialogFragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,40 +20,33 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by rohitgarg on 1/9/16.
+ * Created by rohitgarg on 2/27/16.
  */
-public abstract class MakaanBaseFragment extends Fragment {
-    @Bind(R.id.fragment_makaan_base_no_result_image_view)
+public abstract class MakaanBaseDialogFragment extends DialogFragment {
+    @Bind(R.id.dialog_fragment_makaan_base_no_result_image_view)
     ImageView mNoResultsImageView;
-    @Bind(R.id.fragment_makaan_base_no_result_layout)
+    @Bind(R.id.dialog_fragment_makaan_base_no_result_layout)
     View mNoResultsLayout;
-    @Bind(R.id.fragment_makaan_base_no_result_text_view)
+    @Bind(R.id.dialog_fragment_makaan_base_no_result_text_view)
     TextView mNoResultsTextView;
-    @Bind(R.id.fragment_makaan_base_loading_progress_bar)
+    @Bind(R.id.dialog_fragment_makaan_base_loading_progress_bar)
     ProgressBar mLoadingProgressBar;
-    @Bind(R.id.fragment_makaan_base_content_frame_layout)
+    @Bind(R.id.dialog_fragment_makaan_base_content_frame_layout)
     FrameLayout mContentFrameLayout;
 
-    protected abstract int getContentViewId();
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_makaan_base, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.dialog_fragment_makaan_base, container, false);
 
         View childView = inflater.inflate(getContentViewId(), container, false);
 
-        ((FrameLayout)view.findViewById(R.id.fragment_makaan_base_content_frame_layout)).addView(childView);
+        ((FrameLayout)view.findViewById(R.id.dialog_fragment_makaan_base_content_frame_layout)).addView(childView);
 
         // bind view to ButterKnife
         ButterKnife.bind(this, view);
-        // register for event bus callbacks
-//        try {
-            AppBus.getInstance().register(this);
-        /*} catch(IllegalArgumentException ex) {
-            AppBus.getInstance().unregister(this);
-            AppBus.getInstance().register(this);
-        }*/
+        AppBus.getInstance().register(this);
 
         if (!AppUtils.haveNetworkConnection(getActivity())) {
             showNoNetworkFound();
@@ -62,25 +54,8 @@ public abstract class MakaanBaseFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
-        AppBus.getInstance().unregister(this);
-
-    }
-
     private void showNoNetworkFound() {
         //TODO: implement
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        /*RefWatcher refWatcher = MakaanBuyerApplication.getRefWatcher(getActivity());
-        if(refWatcher != null) {
-            refWatcher.watch(this);
-        }*/
     }
 
     protected void showProgress() {
@@ -125,4 +100,12 @@ public abstract class MakaanBaseFragment extends Fragment {
         mNoResultsLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.GONE);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        AppBus.getInstance().unregister(this);
+    }
+
+    protected abstract int getContentViewId();
 }
