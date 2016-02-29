@@ -64,12 +64,19 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
         source=this.getIntent().getExtras().getString("source");
         int cityId= (int) this.getIntent().getExtras().getLong("cityId");
         Long projectOrListingId=this.getIntent().getExtras().getLong("listingId");
+        Long localityId=this.getIntent().getExtras().getLong("localityId");
+        String sellerImgUrl=this.getIntent().getExtras().getString("sellerImageUrl");
         mLeadFormPresenter = LeadFormPresenter.getLeadFormPresenter();
         mLeadFormPresenter.setId(id);
         mLeadFormPresenter.setName(name);
         mLeadFormPresenter.setPhone(phone);
         mLeadFormPresenter.setScore(score);
         mLeadFormPresenter.setReplaceFragment(this);
+        mLeadFormPresenter.setLocalityId(localityId);
+
+        if(null!=sellerImgUrl){
+            mLeadFormPresenter.setSellerImageUrl(sellerImgUrl);
+        }
 
         if(null!=area){
             mLeadFormPresenter.setArea(area);
@@ -87,24 +94,21 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
             mLeadFormPresenter.setAssist(assist);
         }
 
-        if(null!=multipleSellerids && multipleSellerids.size()>0) {
-            mLeadFormPresenter.showMultipleLeadsFragment();
-        }else {
-            mLeadFormPresenter.showLeadCallNowFragment();
-            multipleSellers=false;
-        }
-        mLeadFormPresenter.setSource(source);
         if(null!=multipleSellerids && multipleSellerids.size()>0){
             mLeadFormPresenter.setMultipleSellerIds(multipleSellerids);
             multipleSellers=true;
         }
+
+        mLeadFormPresenter.setSource(source);
+
         Bundle bundle=this.getIntent().getExtras();
         if (bundle != null && bundle.getString("source")!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
             if(bundle.get("listingId")!=null) {
                 mLeadFormPresenter.setProjectOrListingId((Long) bundle.get("listingId"));
             }
             if(bundle.get("cityId")!=null) {
-                mLeadFormPresenter.setCityId((int) bundle.get("cityId"));
+                Long value=(Long)bundle.get("cityId");
+                mLeadFormPresenter.setCityId(value.intValue());
             }
         }else {
             mLeadFormPresenter.setCityId(cityId);
@@ -114,6 +118,13 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
             mListingId = this.getIntent().getExtras().getLong(KeyUtil.LISTING_ID);
         }catch (Exception e){}
 
+        if(null!=multipleSellerids && multipleSellerids.size()>0) {
+            mLeadFormPresenter.showMultipleLeadsFragment();
+        }
+        else {
+            mLeadFormPresenter.showLeadCallNowFragment();
+            multipleSellers=false;
+        }
     }
 
     @Override

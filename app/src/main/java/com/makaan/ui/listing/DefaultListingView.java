@@ -648,10 +648,21 @@ public class DefaultListingView extends AbstractListingView {
         bundle.putString("phone", null);//todo: not available in pojo
         bundle.putString("id", String.valueOf(mListing.lisitingPostedBy.id));
         bundle.putLong("listingId", mListing.lisitingId);
-        if(mListing!=null && mListing.project!=null && mListing.project.locality!=null &&
-                mListing.project.locality.cityId!=null) {
+        if(mListing!=null && mListing.cityId!=null) {
             bundle.putLong("cityId", mListing.cityId);
         }
+
+        if(mListing!=null && mListing.project!=null && mListing.project.locality!=null && mListing.project.locality.localityId!=null) {
+            bundle.putLong("localityId", mListing.project.locality.localityId);
+        }
+
+        if(!TextUtils.isEmpty(mListing.lisitingPostedBy.logo)) {
+            bundle.putString("sellerImageUrl",mListing.lisitingPostedBy.logo);
+        }
+        else if(!TextUtils.isEmpty(mListing.lisitingPostedBy.profilePictureURL)) {
+            bundle.putString("sellerImageUrl", mListing.lisitingPostedBy.profilePictureURL);
+        }
+
         bundle.putString("source", SerpActivity.class.getName());
 
         mCallback.requestDetailPage(SerpActivity.REQUEST_LEAD_FORM, bundle);

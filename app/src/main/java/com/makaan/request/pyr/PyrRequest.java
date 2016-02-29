@@ -25,6 +25,25 @@ public class PyrRequest {
     private PyrEnquiryType enquiryType;
     private String applicationType;
     private String pageType;
+    private Long projectId;
+    private Long listingId;
+
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+
+    public Long getListingId() {
+        return listingId;
+    }
+
+    public void setListingId(Long listingId) {
+        this.listingId = listingId;
+    }
 
     public ArrayList<Integer> getBhk() {
         return bhk;

@@ -14,7 +14,6 @@
         android:ellipsize="end"
         android:singleLine="true"
         android:paddingTop="@dimen/country_text_padding_top_bottom"
-        android:paddingBottom="@dimen/country_text_padding_top_bottom"
         android:textSize="@dimen/country_text_text_size">
 
     </TextView>

@@ -10,11 +10,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.listing.PropertyDetailFragment;
 import com.makaan.activity.listing.SerpActivity;
@@ -23,11 +26,13 @@ import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.MakaanEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.project.ProjectFragment;
+import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.country.CountryCodeResponse;
 import com.makaan.response.leadForm.InstantCallbackResponse;
 import com.makaan.service.LeadInstantCallbackService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.AppBus;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.JsonParser;
 import com.makaan.util.StringUtil;
 import com.makaan.util.ValidationUtil;
@@ -44,6 +49,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by makaanuser on 23/1/16.
@@ -61,6 +67,11 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
     TextView mTextViewSellerName;
     @Bind(R.id.seller_ratingbar)
     RatingBar mRatingBarSeller;
+    @Bind(R.id.iv_seller_name)
+    TextView mSellerNameProfileText;
+    @Bind(R.id.iv_seller_image_instant_call_back)
+    CircleImageView mSellerImage;
+
     private Integer mCountryId;
     private ArrayAdapter<String> mCountryAdapter;
     private List<String> mCountryNames;
@@ -80,7 +91,7 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
         mLeadFormPresenter= LeadFormPresenter.getLeadFormPresenter();
         mTextViewSellerName.setText(mLeadFormPresenter.getName());
         mRatingBarSeller.setRating(Float.valueOf(mLeadFormPresenter.getScore()));
-
+        setSellerImage();
     }
 
     @OnClick(R.id.btn_get_instant_call)
@@ -127,8 +138,14 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
                 properties.put(MakaanEventPayload.LABEL, getActivity().getResources().getString(R.string.invalid_phone_no_toast));
                 MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickPropertyCallConnect);
             }
-            Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.invalid_phone_no_toast),
-                    Toast.LENGTH_SHORT).show();
+            if(mNumber.getText().toString().trim().length()>0) {
+                Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.invalid_phone_no_toast),
+                        Toast.LENGTH_SHORT).show();
+            }
+            else if(mNumber.getText().toString().trim().length()==0){
+                Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.please_enter_phone_no),
+                        Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -194,15 +211,13 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
                     properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.country);
                     MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillSerpCall);
 
-                }
-                else if (bundle != null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName())) {
+                } else if (bundle != null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName())) {
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProjectCall);
                     properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.country);
                     MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillProjectCall);
 
-                }
-                else if (bundle != null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName())) {
+                } else if (bundle != null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName())) {
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                     properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.country);
@@ -249,5 +264,37 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
 
 
         }
+    }
+
+    public void setSellerImage() {
+        mSellerNameProfileText.setVisibility(View.GONE);
+        mSellerImage.setVisibility(View.VISIBLE);
+        int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_width);
+        int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_height);
+        if (null != mLeadFormPresenter.getSellerImageUrl()) {
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(mLeadFormPresenter.getSellerImageUrl(),
+                    width, height, false), new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
+                    if (b && imageContainer.getBitmap() == null) {
+                        return;
+                    }
+                    mSellerImage.setImageBitmap(imageContainer.getBitmap());
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    mSellerImage.setVisibility(View.INVISIBLE);
+                    mSellerNameProfileText.setVisibility(View.VISIBLE);
+                    mSellerNameProfileText.setText(mLeadFormPresenter.getName());
+                }
+            });
+        }
+        else {
+            mSellerImage.setVisibility(View.INVISIBLE);
+            mSellerNameProfileText.setVisibility(View.VISIBLE);
+            mSellerNameProfileText.setText(mLeadFormPresenter.getName());
+        }
+
     }
 }

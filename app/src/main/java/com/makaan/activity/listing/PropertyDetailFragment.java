@@ -191,7 +191,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
             Bundle args = getArguments();
             Bundle bundle=new Bundle();
             bundle.putString(MakaanEventPayload.PROJECT_ID, String.valueOf(args.getLong(KeyUtil.LISTING_ID)));
-
+            bundle.putString("source", PropertyDetailFragment.class.getName());
             if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.project!=null &&
                     mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.cityId!=null) {
                 bundle.putLong("cityId", mListingDetail.property.project.locality.cityId);
@@ -203,11 +203,19 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
                     mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.label!=null) {
                 bundle.putString("locality", String.valueOf(mListingDetail.property.project.locality.label));
             }
+            if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.project!=null &&
+                    mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.localityId != null) {
+                bundle.putLong("localityId", mListingDetail.property.project.locality.localityId);
+            }
             if(Area!=null){
                 bundle.putString("area", Area);
             }
             if(bhkAndUnitType!=null){
                 bundle.putString("bhkAndUnitType", bhkAndUnitType);
+            }
+            if(mListingDetail!=null && mListingDetail.companySeller!=null && mListingDetail.companySeller.company!=null
+                    && mListingDetail.companySeller.company.logo != null) {
+                bundle.putString("sellerImageUrl", mListingDetail.companySeller.company.logo);
             }
             viewSellersDialogFragment.setArguments(bundle);
             viewSellersDialogFragment.bindView(mSellerCards);
@@ -251,11 +259,18 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
                         mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.label!=null) {
                     intent.putExtra("locality", mListingDetail.property.project.locality.cityId);
                 }
+                if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.project!=null &&
+                        mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.localityId!=null) {
+                    intent.putExtra("localityId", mListingDetail.property.project.locality.localityId);
+                }
                 if(Area!=null){
                     intent.putExtra("area",Area);
                 }
                 if(bhkAndUnitType!=null){
                     intent.putExtra("bhkAndUnitType", bhkAndUnitType);
+                }
+                if(!TextUtils.isEmpty(company.logo)){
+                    intent.putExtra("sellerImageUrl", company.logo);
                 }
 
                 getActivity().startActivity(intent);

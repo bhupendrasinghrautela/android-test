@@ -53,6 +53,7 @@
                     layout="@layout/wishlist_button_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginEnd="@dimen/serp_listing_card_property_shortlist_checkbox_right_margin"

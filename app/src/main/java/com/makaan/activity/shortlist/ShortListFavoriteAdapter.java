@@ -89,6 +89,10 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
                     if(wishList.get(position).project.locality!=null && wishList.get(position).project.projectId!=null) {
                         intent.putExtra("localityId", wishList.get(position).project.projectId);
                     }
+                    if(wishList.get(position).listing!=null && wishList.get(position).listing.companySeller!=null &&
+                            wishList.get(position).listing.companySeller.company!=null && wishList.get(position).listing.companySeller.company.logo!=null) {
+                        intent.putExtra("sellerImageUrl", wishList.get(position).listing.companySeller.company.logo);
+                    }
                     mContext.startActivity(intent);
                 }catch (NullPointerException npe){
                     Toast.makeText(mContext, "Seller data not available", Toast.LENGTH_SHORT).show();
