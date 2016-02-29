@@ -99,7 +99,7 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
                     setTitle("save searches");
                     break;
                 case LOAD_FRAGMENT_REWARDS:
-                    initFragment(R.id.activity_base_buyer_journey_content_frame_layout, new ClientLeadsFragment(), false);
+                    initFragment(R.id.activity_base_buyer_journey_content_frame_layout, new RewardsFragment(), false);
                     setTitle("cashback request");
                     break;
                 case LOAD_FRAGMENT_SITE_VISIT:
