@@ -392,6 +392,21 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             if(needBackProcessing()) {
                 super.onBackPressed();
             } else if(mSerpBackStack.popFromBackstack(this)) {
+                if(mIsMapFragment && mSerpBackStack.peekType() != SerpBackStack.TYPE_MAP) {
+                    if (mListingFragment == null) {
+                        mListingFragment = SerpListFragment.init(false);
+                        initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
+                    } else {
+                        initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
+                    }
+                } else if(!mIsMapFragment && mSerpBackStack.peekType() != SerpBackStack.TYPE_DEFAULT) {
+                    if (mMapFragment == null) {
+                        mMapFragment = new SerpMapFragment();
+                        initFragment(R.id.activity_serp_content_frame_layout, mMapFragment, false);
+                    } else {
+                        initFragment(R.id.activity_serp_content_frame_layout, mMapFragment, false);
+                    }
+                }
                 return;
             } else {
                 super.onBackPressed();

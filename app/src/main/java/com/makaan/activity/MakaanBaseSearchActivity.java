@@ -947,7 +947,10 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                     }
                     showSearchResults();
                 } else {
+                    clearSelectedSearches();
+                    addNearbyPropertiesSearchItem();
                     // we need empty layout even when no search results are present
+                    mSearchAdapter.setData(mAvailableSearches, false);
                     showSearchResults();
                 }
             }
@@ -975,6 +978,18 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         }
     }
 
+    private void addErrorSearchItem(String message) {
+        SearchResponseItem item = new SearchResponseItem();
+        item.type = SearchSuggestionType.ERROR.getValue();
+        if(TextUtils.isEmpty(message)) {
+            item.displayText = this.getResources().getString(R.string.default_error_message);
+        } else {
+            item.displayText = message;
+        }
+        mAvailableSearches.clear();
+        mAvailableSearches.add(0, item);
+    }
+
     /*private void setSearchResultFrameLayoutVisibility(boolean visible) {
         mSearchResultFrameLayout.setVisibility(visible ? View.VISIBLE : View.GONE);
         if(visible) {
@@ -989,6 +1004,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     public void onResults(SearchResultEvent searchResultEvent) {
         if(null==searchResultEvent || null!=searchResultEvent.error) {
             //TODO handle error
+            addErrorSearchItem(this.getResources().getString(R.string.default_error_message));
             return;
         }
         
@@ -1000,6 +1016,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             clearSelectedSearches();
             if(TextUtils.isEmpty(mSearchEditText.getText())) {
                 addNearbyPropertiesSearchItem();
+            } else if(this.mSearches.size() == 0) {
+                addErrorSearchItem(this.getResources().getString(R.string.default_no_results_error_message));
             }
             mSearchAdapter.setData(mAvailableSearches, false);
         }
@@ -1062,6 +1080,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         } else {
 //            mSearchResultFrameLayout.setVisibility(View.GONE);
             // show recent searches as there is no text in the search view
+            mSearches.clear();
             showEmptySearchResults();
 
             mDeleteButton.setBackgroundResource(R.drawable.search_white);
@@ -1103,8 +1122,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 }
             }
 
-            clearSelectedSearches();
-            mSearchAdapter.setData(mAvailableSearches, !mSearchResultReceived);
+            showEmptySearchResults();
         }
     }
 

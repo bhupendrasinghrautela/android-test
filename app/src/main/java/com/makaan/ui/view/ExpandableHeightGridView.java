@@ -5,6 +5,8 @@ import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
+import com.makaan.R;
+
 /**
  * Created by root on 5/1/16.
  */
@@ -38,7 +40,7 @@ public class ExpandableHeightGridView extends GridView {
             super.onMeasure(widthMeasureSpec, expandSpec);
 
             ViewGroup.LayoutParams params = getLayoutParams();
-            params.height = getMeasuredHeight();
+            params.height = getMeasuredHeight() + getResources().getDimensionPixelSize(R.dimen.fragment_dialog_filters_item_layout_padding_bottom);
         } else {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }

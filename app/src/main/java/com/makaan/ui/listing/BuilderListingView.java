@@ -116,8 +116,16 @@ public class BuilderListingView extends AbstractCardListingView {
             ex.printStackTrace();
         }
 
-        mOngoingProjectsTextView.setText(String.valueOf(builder.projectStatusCount.underConstruction));
-        mBuilderPastProjectsTextView.setText(String.valueOf(builder.projectStatusCount.completed));
+        if(builder.projectStatusCount.underConstruction == 0) {
+            mOngoingProjectsTextView.setText("na");
+        } else {
+            mOngoingProjectsTextView.setText(String.valueOf(builder.projectStatusCount.underConstruction));
+        }
+        if(builder.projectStatusCount.completed == 0) {
+            mBuilderPastProjectsTextView.setText("na");
+        } else {
+            mBuilderPastProjectsTextView.setText(String.valueOf(builder.projectStatusCount.completed));
+        }
         // TODO check for avg delay
         mBuilderAvgDelayTextView.setText(String.format("%d%s", builder.projectStatusCount.cancelled, "%"));
 

@@ -165,7 +165,7 @@
             android:id="@+id/ll_site_visit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_shortlist"
+            android:layout_below="@id/ll_shortlist"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/padding_layout"
             android:paddingLeft="@dimen/view_left_padding_layout"

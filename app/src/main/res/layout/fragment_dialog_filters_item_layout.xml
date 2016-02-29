@@ -12,8 +12,7 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/fragment_dialog_filters_item_layout_padding_bottom">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/fragment_dialog_filters_item_layout_left_linear_layout"
@@ -55,5 +54,6 @@
         android:id="@+id/fragment_dialog_filters_item_layout_empty_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fragment_dialog_filters_toggle_button_empty_view_height"
+        android:layout_marginTop="@dimen/fragment_dialog_filters_item_layout_padding_bottom"
         android:background="@color/fragment_dialog_filters_item_empty_view_background_color" />
 </LinearLayout>

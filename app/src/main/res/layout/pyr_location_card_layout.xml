@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
@@ -8,58 +9,58 @@
     android:padding="@dimen/pyr_location_card_padding">
 
     <com.makaan.ui.pyr.PyrLocationCardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:background="@color/white">
+        app:cardPreventCornerOverlap="false">
 
         <LinearLayout
-            android:layout_width="@dimen/pyr_locality_icon_layout_width"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="@dimen/pyr_locality_icon_width"
-                android:layout_height="@dimen/pyr_locality_icon_height"
-                android:layout_marginLeft="@dimen/pyr_locality_icon_left_margin"
-                android:src="@drawable/location_icon" />
+            <LinearLayout
+                android:layout_width="@dimen/pyr_locality_icon_layout_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/pyr_locality_icon_width"
+                    android:layout_height="@dimen/pyr_locality_icon_height"
+                    android:layout_marginLeft="@dimen/pyr_locality_icon_left_margin"
+                    android:src="@drawable/location_icon" />
+
+                <TextView
+                    android:layout_width="@dimen/pyr_locality_text_width"
+                    android:layout_height="@dimen/pyr_locality_text_height"
+                    android:layout_marginLeft="@dimen/pyr_locality_text_left_margin"
+                    android:text="@string/pyr_location_string"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/pyr_locality_text_text_size" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/pyr_light_grey" />
 
             <TextView
-                android:layout_width="@dimen/pyr_locality_text_width"
-                android:layout_height="@dimen/pyr_locality_text_height"
+                android:id="@+id/location_value"
+                android:layout_width="@dimen/pyr_locality_value_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/pyr_locality_value_left_margin"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:text="@string/pyr_locality_value_string"
                 android:textColor="@color/black"
-                android:text="@string/pyr_location_string"
-                android:textSize="@dimen/pyr_locality_text_text_size"
-                android:layout_marginLeft="@dimen/pyr_locality_text_left_margin"/>
+                android:textSize="@dimen/pyr_locality_value_text_size" />
+
         </LinearLayout>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/pyr_light_grey"/>
-
-        <TextView
-            android:id="@+id/location_value"
-            android:layout_width="@dimen/pyr_locality_value_width"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/pyr_locality_value_left_margin"
-            android:orientation="horizontal"
-            android:text="@string/pyr_locality_value_string"
-            android:textSize="@dimen/pyr_locality_value_text_size"
-            android:textColor="@color/black"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_horizontal"/>
-
-    </LinearLayout>
-
-</com.makaan.ui.pyr.PyrLocationCardView>
+    </com.makaan.ui.pyr.PyrLocationCardView>
 
     <TextView
         android:id="@+id/pyr_selected_locality_count"

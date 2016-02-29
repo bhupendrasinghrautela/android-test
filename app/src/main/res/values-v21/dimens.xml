@@ -3,4 +3,5 @@
     <dimen name="serp_listing_card_badge_margin_left">3dp</dimen>
     <dimen name="serp_map_layout_view_pager_height">188dp</dimen>
     <dimen name="project_config_pager_height">320dp</dimen>
+    <dimen name="serp_listing_card_badge_margin_top">12dp</dimen>
 </resources>

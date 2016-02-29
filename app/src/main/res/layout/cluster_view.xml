@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cluster_view_card_view"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/serp_listing_card_margin_bottom"
     android:layout_marginEnd="@dimen/serp_listing_cluster_card_margin_right"
     android:layout_marginRight="@dimen/serp_listing_cluster_card_margin_right"
@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
+        android:padding="0dp"
         android:background="@drawable/cluster_texture_bg">
 
         <FrameLayout
@@ -27,25 +28,25 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:background="@color/serp_listing_cluster_card_group_background"
-            android:layout_margin="0dp" >
+            android:layout_margin="0dp"
+            android:paddingLeft="@dimen/serp_listing_cluster_card_group_text_view_margin_left"
+            android:paddingStart="@dimen/serp_listing_cluster_card_group_text_view_margin_left"
+            android:paddingRight="@dimen/serp_listing_cluster_card_group_text_view_margin_right"
+            android:paddingEnd="@dimen/serp_listing_cluster_card_group_text_view_margin_right"
+            android:paddingTop="@dimen/serp_listing_cluster_card_group_text_view_margin_top"
+            android:paddingBottom="@dimen/serp_listing_cluster_card_group_text_view_margin_bottom" >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/serp_listing_cluster_card_group_text_view_margin_left"
-                android:layout_marginStart="@dimen/serp_listing_cluster_card_group_text_view_margin_left"
-                android:layout_marginRight="@dimen/serp_listing_cluster_card_group_text_view_margin_right"
-                android:layout_marginEnd="@dimen/serp_listing_cluster_card_group_text_view_margin_right"
-                android:layout_marginTop="@dimen/serp_listing_cluster_card_group_text_view_margin_top"
-                android:layout_marginBottom="@dimen/serp_listing_cluster_card_group_text_view_margin_bottom"
                 android:text="@string/cluster_item_group_text"
                 android:textColor="@color/white"
-                android:textSize="@dimen/serp_listing_cluster_card_group_text_view_text_size" />
+                android:textSize="@dimen/serp_listing_cluster_card_group_text_view_text_size"
+                android:singleLine="true"/>
         </FrameLayout>
         <com.makaan.ui.view.CustomViewPager
             android:id="@+id/cluster_view_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content"
             android:layout_below="@id/serp_listing_cluster_group_frame_layout"/>
     </RelativeLayout>
 

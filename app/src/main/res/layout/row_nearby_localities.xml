@@ -1,117 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="299dp"
     xmlns:font="http://schemas.android.com/tools"
     android:id="@+id/card_view_nearby_locality"
-    android:layout_marginLeft="20dp"
+    android:layout_width="299dp"
     android:layout_height="wrap_content"
-    app:cardPreventCornerOverlap="false"
-    app:cardCornerRadius="10dp">
+    android:layout_marginLeft="20dp"
+    app:cardCornerRadius="10dp"
+    app:cardPreventCornerOverlap="false">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <ImageView
-        android:layout_width="match_parent"
-        android:scaleType="fitCenter"
-        android:id="@+id/iv_nearby_locality"
-        android:layout_height="229dp" />
+
+        <ImageView
+            android:id="@+id/iv_nearby_locality"
+            android:layout_width="match_parent"
+            android:layout_height="229dp"
+            android:scaleType="fitCenter" />
 
         <com.makaan.ui.view.FontTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Koramangala"
-            android:textSize="24sp"
-            font:fontName="proxima.otf"
-            android:singleLine="true"
-            android:layout_below="@id/iv_nearby_locality"
-            android:textColor="#444444"
             android:id="@+id/tv_nearby_localities_name"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="24dp"
-            />
-        <com.makaan.ui.view.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="median price 24,000 sq ft"
-            android:textSize="16sp"
+            android:layout_below="@id/iv_nearby_locality"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="10dp"
+            android:singleLine="true"
+            android:text="Koramangala"
             android:textColor="#444444"
-            font:fontName="proxima-light.otf"
+            android:textSize="24sp"
+            font:fontName="proxima.otf" />
+
+        <com.makaan.ui.view.FontTextView
             android:id="@+id/tv_nearby_localities_median"
-            android:layout_below="@id/tv_nearby_localities_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignLeft="@id/tv_nearby_localities_name"
-            />
+            android:layout_below="@id/tv_nearby_localities_name"
+            android:text="median price 24,000 sq ft"
+            android:textColor="#444444"
+            android:textSize="16sp"
+            font:fontName="proxima-light.otf" />
+
         <View
+            android:id="@+id/nearby_locality_seperator"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_marginTop="10dp"
-            android:id="@+id/nearby_locality_seperator"
             android:layout_below="@id/tv_nearby_localities_median"
-            android:background="@color/project_item_seperator"
-            android:layout_marginLeft="25dp"/>
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/project_item_seperator" />
+
         <LinearLayout
+            android:id="@+id/ll_locality_counts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/ll_locality_counts"
-            android:weightSum="2"
-            android:layout_marginTop="10dp"
             android:layout_alignLeft="@id/tv_nearby_localities_name"
             android:layout_below="@id/nearby_locality_seperator"
             android:layout_marginBottom="30dp"
-            >
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
             <LinearLayout
                 android:layout_width="0dp"
-                android:orientation="vertical"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
-        <com.makaan.ui.view.FontTextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="190 + "
-            android:textSize="24sp"
-            font:fontName="proxima.otf"
-            android:paddingRight="10dp"
-            android:id="@+id/tv_nearby_localities_sale"
-            android:textColor="#444444"
-            />
                 <com.makaan.ui.view.FontTextView
+                    android:id="@+id/tv_nearby_localities_sale"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
+                    android:text="190 + "
+                    android:textColor="#444444"
+                    android:textSize="24sp"
+                    font:fontName="proxima.otf" />
+
+                <com.makaan.ui.view.FontTextView
+                    android:id="@+id/tv_nearby_localities_sale_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="properties for sale"
-                    font:fontName="proxima-light.otf"
-                    android:textSize="14sp"
                     android:textColor="#444444"
-                    android:id="@+id/tv_nearby_localities_sale_label"
-                    />
+                    android:textSize="14sp"
+                    font:fontName="proxima-light.otf" />
 
 
             </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:id="@+id/ll_nearby_locality_rent"
-            android:layout_height="wrap_content">
-            <com.makaan.ui.view.FontTextView
-                android:layout_width="100dp"
+
+            <LinearLayout
+                android:id="@+id/ll_nearby_locality_rent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="1498 + "
-                android:textSize="24sp"
-                font:fontName="proxima.otf"
-                android:textColor="#444444"
-                android:id="@+id/tv_nearby_localities_rent"
-                />
-        <com.makaan.ui.view.FontTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="properties for rent"
-            font:fontName="proxima-light.otf"
-            android:textSize="14sp"
-            android:id="@+id/tv_nearby_localities_secondary_sale_label"
-            android:textColor="#444444"
-            />
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <com.makaan.ui.view.FontTextView
+                    android:id="@+id/tv_nearby_localities_rent"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="1498 + "
+                    android:textColor="#444444"
+                    android:textSize="24sp"
+                    font:fontName="proxima.otf" />
+
+                <com.makaan.ui.view.FontTextView
+                    android:id="@+id/tv_nearby_localities_secondary_sale_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="properties for rent"
+                    android:textColor="#444444"
+                    android:textSize="14sp"
+                    font:fontName="proxima-light.otf" />
 
             </LinearLayout>
 
