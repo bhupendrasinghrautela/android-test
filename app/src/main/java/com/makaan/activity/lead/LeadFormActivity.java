@@ -18,6 +18,7 @@ import com.makaan.fragment.pyr.PyrPagePresenter;
 import com.makaan.network.VolleyErrorParser;
 import com.makaan.response.leadForm.InstantCallbackResponse;
 import com.makaan.response.pyr.PyrPostResponse;
+import com.makaan.util.KeyUtil;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
@@ -29,11 +30,10 @@ import butterknife.OnClick;
  * Created by makaanuser on 23/1/16.
  */
 public class LeadFormActivity extends MakaanFragmentActivity implements LeadFormReplaceFragment {
-    public static final String LISTING_ID = "listingId";
     public static final int LEAD_DROP_REQUEST = 3001;
     private FragmentTransaction mFragmentTransaction;
     private LeadFormPresenter mLeadFormPresenter;
-    private int mListingId = -1;
+    private long mListingId = -1;
     public String source;
     private boolean multipleSellers=false;
     @Override
@@ -111,7 +111,7 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
             mLeadFormPresenter.setProjectOrListingId(projectOrListingId);
         }
             try {
-            mListingId = getIntent().getExtras().getInt("listingId");
+            mListingId = this.getIntent().getExtras().getLong(KeyUtil.LISTING_ID);
         }catch (Exception e){}
 
     }
@@ -191,7 +191,7 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
             }else {
                 mLeadFormPresenter.showThankYouScreenFragment(false, false,2);
             }
-            setResult(RESULT_OK,new Intent().putExtra(LISTING_ID, mListingId));
+            setResult(RESULT_OK,new Intent().putExtra(KeyUtil.LISTING_ID, mListingId));
         }
     }
 
@@ -222,7 +222,7 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
             }
 
             mLeadFormPresenter.showThankYouScreenFragment(false, false,2);
-            setResult(RESULT_OK, new Intent().putExtra(LISTING_ID, mListingId));
+            setResult(RESULT_OK, new Intent().putExtra(KeyUtil.LISTING_ID, mListingId));
         }
     }
 

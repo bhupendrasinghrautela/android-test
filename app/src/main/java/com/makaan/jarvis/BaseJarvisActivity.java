@@ -45,6 +45,7 @@ import com.makaan.response.project.Project;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.JsonBuilder;
 import com.makaan.util.JsonParser;
+import com.makaan.util.KeyUtil;
 import com.segment.analytics.Properties;
 
 import org.json.JSONException;
@@ -162,7 +163,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == LeadFormActivity.LEAD_DROP_REQUEST && resultCode==RESULT_OK){
             if(null!=data){
-                int listingId = data.getIntExtra(LeadFormActivity.LISTING_ID,-1);
+                long listingId = data.getLongExtra(KeyUtil.LISTING_ID,-1);
                 if(listingId>0){
                     try {
                         JSONObject jsonObject = new JSONObject();
