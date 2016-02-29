@@ -51,6 +51,7 @@
     <string name="pyr_four_bhk_text">4</string>
     <string name="pyr_property_string">property</string>
     <string name="pyr_property_value_string">residential property apartment</string>
+
     <string name="pyr_budget_string">budget</string>
     <string name="cluster_item_group_text">we’ve grouped properties</string>
     <string name="search_by_property">search by property</string>
@@ -317,6 +318,10 @@
     <string name="adapter_position">adapter position</string>
 
     <string name="default_error_message">some exception has occurred</string>
+
+    <string name="search_residential_plot_string">residential plot</string>
+
+
 
 </resources>
 
