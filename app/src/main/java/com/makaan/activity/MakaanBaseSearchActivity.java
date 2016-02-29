@@ -1,9 +1,12 @@
 package com.makaan.activity;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationManager;
@@ -56,6 +59,7 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SearchService;
 
 import com.makaan.ui.listing.CustomFlowLayout;
+import com.makaan.util.PermissionManager;
 import com.makaan.util.RecentSearchManager;
 import com.segment.analytics.Properties;
 
@@ -256,12 +260,14 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     public boolean getLocationAvailabilty() {
-        return false;
-        /*
-        if(mLocationManager == null) {
-            mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        if(!PermissionManager.isPermissionRequestRequired(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            if (mLocationManager == null) {
+                mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            }
+            return mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } else {
+            return false;
         }
-        return mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);*/
     }
 
     /**
@@ -1240,6 +1246,21 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     @Override
+    protected void showNoResults(int stringId) {
+        mContentFrameLayout.setVisibility(View.GONE);
+        mNoResultLayout.setVisibility(View.VISIBLE);
+        mLoadingProgressBar.setVisibility(View.GONE);
+        mSearchResultFrameLayout.setVisibility(View.GONE);
+
+        if(stringId <= 0) {
+            mNoResultsTextView.setText(R.string.default_error_message);
+        } else {
+            mNoResultsTextView.setText(stringId);
+        }
+        Glide.with(this).load(R.raw.no_result).crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mNoResultsImageView);
+    }
+
+    @Override
     protected void showContent() {
         mContentFrameLayout.setVisibility(View.VISIBLE);
         mNoResultLayout.setVisibility(View.GONE);
@@ -1257,6 +1278,20 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             mSearchResultsFlowLayout.setVisibility(View.VISIBLE);
         } else {
             mSearchResultsFlowLayout.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        if ((requestCode & PermissionManager.FINE_LOCATION_REQUEST)
+                == PermissionManager.FINE_LOCATION_REQUEST) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if(getLocationAvailabilty()) {
+                    connectLocationApiClient(MakaanLocationManager.LocationUpdateMode.ONCE);
+                }
+            }
         }
     }
 }
