@@ -27,6 +27,7 @@ import com.makaan.service.LocationService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
 import com.makaan.service.WishListService;
+import com.makaan.util.PermissionManager;
 import com.makaan.util.Preference;
 import com.squareup.otto.Subscribe;
 
@@ -53,6 +54,8 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        PermissionManager.begin().addRequest(PermissionManager.FINE_LOCATION_REQUEST).request(this);
 
         LocationService service = (LocationService) MakaanServiceFactory.getInstance().getService(LocationService.class);
         service.getUserLocation();
@@ -139,6 +142,12 @@ public class HomeActivity extends MakaanBaseSearchActivity {
 
         initUi(false);
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override

@@ -125,7 +125,12 @@ public class ListingCardView extends AbstractListingView {
 
         // set property address info {project_name},{localityName}_{cityName}
         if(mListing.project.name != null) {
-            mPropertyAddressTextView.setText(String.format("%s, %s, %s", mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase());
+            if(!TextUtils.isEmpty(mListing.project.builderName)) {
+                mPropertyAddressTextView.setText(String.format("%s %s, %s, %s", mListing.project.builderName,
+                        mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase());
+            } else {
+                mPropertyAddressTextView.setText(String.format("%s, %s, %s", mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase());
+            }
         } else {
             mPropertyAddressTextView.setText(String.format("%s, %s", mListing.localityName, mListing.cityName).toLowerCase());
         }
