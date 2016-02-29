@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="@dimen/pyr_bedroom_icon_layout_width"
@@ -53,7 +54,8 @@
                 android:horizontalSpacing="@dimen/bedroom_grid_view_horizontal_spacing"
                 android:isScrollContainer="false"
                 android:numColumns="4"
-                android:verticalSpacing="@dimen/fragment_dialog_filters_checkbox_grid_item_vertical_padding"  />
+                android:verticalSpacing="@dimen/fragment_dialog_filters_checkbox_grid_item_vertical_padding"
+                android:clipToPadding="false"/>
 
          </LinearLayout>
 
