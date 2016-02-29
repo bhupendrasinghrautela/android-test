@@ -124,7 +124,7 @@ public class ListingCardView extends AbstractListingView {
         }
 
         // set property address info {project_name},{localityName}_{cityName}
-        if(mListing.project.name != null) {
+        if(!TextUtils.isEmpty(mListing.project.name) && !"project".equalsIgnoreCase(mListing.project.name)) {
             if(!TextUtils.isEmpty(mListing.project.builderName)) {
                 mPropertyAddressTextView.setText(String.format("%s %s, %s, %s", mListing.project.builderName,
                         mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase());
@@ -169,13 +169,15 @@ public class ListingCardView extends AbstractListingView {
 
     @OnClick(R.id.listing_brief_view_layout_address_relative_view)
     public void onProjectClicked(View view) {
-        if(mListing.projectId != null && mListing.projectId != 0) {
-            Bundle bundle = new Bundle();
-            bundle.putLong(ProjectActivity.PROJECT_ID, mListing.projectId);
+        if(!TextUtils.isEmpty(mListing.project.name) && !"project".equalsIgnoreCase(mListing.project.name)) {
+            if (mListing.projectId != null && mListing.projectId != 0) {
+                Bundle bundle = new Bundle();
+                bundle.putLong(ProjectActivity.PROJECT_ID, mListing.projectId);
 
-            Intent intent = new Intent(getContext(), ProjectActivity.class);
-            intent.putExtras(bundle);
-            getContext().startActivity(intent);
+                Intent intent = new Intent(getContext(), ProjectActivity.class);
+                intent.putExtras(bundle);
+                getContext().startActivity(intent);
+            }
         }
     }
 }

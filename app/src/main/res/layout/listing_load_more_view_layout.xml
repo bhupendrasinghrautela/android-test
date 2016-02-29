@@ -20,5 +20,11 @@
         android:textAllCaps="false"
         android:singleLine="true"
         android:ellipsize="end"/>
+    <ProgressBar
+        android:id="@+id/listing_load_more_view_layout_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
 
 </com.makaan.ui.listing.LoadMoreListingCardView>
