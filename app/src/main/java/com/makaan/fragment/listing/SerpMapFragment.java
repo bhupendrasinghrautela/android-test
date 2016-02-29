@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
 import com.makaan.R;
+import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.listing.Listing;
@@ -115,7 +116,7 @@ public class SerpMapFragment extends MakaanBaseFragment {
         mMapView.onLowMemory();
     }
 
-    public void setData(ArrayList<Listing> listings, int count, SerpRequestCallback callback) {
+    public void setData(ArrayList<Listing> listings, int count, SerpRequestCallback callback, int requestType) {
         if (mListings == null) {
             mListings = new ArrayList<Listing>();
         } else {
@@ -131,7 +132,9 @@ public class SerpMapFragment extends MakaanBaseFragment {
 
             mProjectViewPager.setData(adapter.listings, mTotalCount > mListings.size(), callback);
 
-            mProjectViewPager.setCurrentItem(0);
+            if((requestType & SerpActivity.MASK_LISTING_UPDATE_TYPE) != SerpActivity.TYPE_LOAD_MORE) {
+                mProjectViewPager.setCurrentItem(0);
+            }
 
             adapter.displayProject();
         }

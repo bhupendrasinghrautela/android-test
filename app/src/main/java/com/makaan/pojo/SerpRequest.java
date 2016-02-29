@@ -927,6 +927,23 @@ public class SerpRequest implements Parcelable, Cloneable {
                                     selector.term(key, value);
                                 }
                             }
+                            if(KeyUtil.LISTING_CATEGORY.equalsIgnoreCase(key)) {
+                                boolean allSelected = true;
+                                for(TermFilter filter : grp.termFilterValues) {
+                                    if(filter.selected) {
+                                        continue;
+                                    }
+                                    allSelected = false;
+                                }
+                                if(allSelected) {
+                                    grp.isSelected = false;
+                                    for(TermFilter filter : grp.termFilterValues) {
+                                        if(!FiltersViewAdapter.RADIO_BUTTON_BOTH_SELECTED.equals(filter.value)) {
+                                            filter.selected = false;
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
