@@ -302,6 +302,7 @@
     <dimen name="serp_listing_card_badge_text_size">16sp</dimen>
 
     <dimen name="serp_listing_card_empty_view_height">1dp</dimen>
+    <dimen name="serp_listing_card_padding_right">10dp</dimen>
 
     <dimen name="serp_listing_card_property_image_width">176dp</dimen>
     <dimen name="serp_listing_card_property_image_height">132dp</dimen>
@@ -316,7 +317,7 @@
     <dimen name="serp_listing_card_property_price_text_size">32sp</dimen>
 
     <dimen name="serp_listing_card_property_price_unit_left_margin">5dp</dimen>
-    <dimen name="serp_listing_card_property_price_unit_top_margin">24dp</dimen>
+    <dimen name="serp_listing_card_property_price_unit_top_margin">18dp</dimen>
     <dimen name="serp_listing_card_property_price_unit_text_size">18sp</dimen>
 
     <dimen name="serp_listing_card_property_shortlist_checkbox_right_margin">14dp</dimen>
@@ -630,6 +631,8 @@
 
     <!-- map listing view dimens -->
     <dimen name="listing_brief_view_layout_card_view_radius">25dp</dimen>
+    <dimen name="listing_brief_view_layout_padding_rights">10dp</dimen>
+    <dimen name="listing_brief_view_layout_padding_left">2dp</dimen>
 
     <dimen name="listing_brief_view_layout_image_view_width">160dp</dimen>
     <dimen name="listing_brief_view_layout_image_view_height">120dp</dimen>
@@ -686,7 +689,7 @@
     <dimen name="listing_brief_view_layout_property_address_text_view_text_size">16sp</dimen>
 
     <dimen name="listing_brief_view_layout_badge_margin_left">-8dp</dimen>
-    <dimen name="listing_brief_view_layout_badge_margin_top">8dp</dimen>
+    <dimen name="listing_brief_view_layout_badge_margin_top">12dp</dimen>
     <dimen name="listing_brief_view_layout_badge_width">58dp</dimen>
     <dimen name="listing_brief_view_layout_badge_height">22dp</dimen>
     <dimen name="listing_brief_view_layout_text_height">19dp</dimen>

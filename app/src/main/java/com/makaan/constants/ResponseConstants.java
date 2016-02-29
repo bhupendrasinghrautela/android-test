@@ -84,6 +84,7 @@ public class ResponseConstants {
     public static final String MAX_CONST_COMPLETION_DATE = "maxConstructionCompletionDate";
     public static final String NO_OPEN_SIDES = "noOfOpenSides";
     public static final String SECURITY_DEPOSIT = "securityDeposit";
+    public static final String ACTIVE_STATUS = "activeStatus";
 
     public static final String TERM_FILTER_VALUES = "termFilterValues";
     public static final String RANGE_FILTER_VALUES = "rangeFilterValues";
@@ -95,5 +96,6 @@ public class ResponseConstants {
     public static final String FILTER_RANGE_MIN_VALUE = "minValue";
     public static final String FILTER_RANGE_MAX_VALUE = "maxValue";
     public static final String FILTER_SELECTED = "selected";
+
 
 }

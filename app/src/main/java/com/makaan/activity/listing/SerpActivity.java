@@ -12,7 +12,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
@@ -428,7 +427,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         if(null==listingGetEvent|| null!=listingGetEvent.error){
             //TODO handle error
             mSerpReceived = true;
-            Toast.makeText(this, "An error occurred while fetching results", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "An error occurred while fetching results", Toast.LENGTH_SHORT).show();
             showNoResults();
             return;
         }
