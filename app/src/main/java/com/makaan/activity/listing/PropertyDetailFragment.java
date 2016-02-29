@@ -436,9 +436,12 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
             bhkAndUnitType=(listingDetail.property.bedrooms + "bhk " +
                     (property.unitType != null ? property.unitType : "")).toLowerCase();
 
-            if(getActivity() instanceof MakaanBaseSearchActivity) {
-                getActivity().setTitle((listingDetail.property.bedrooms + " bhk " +
-                        (property.unitType != null ? property.unitType : "")).toLowerCase());
+            if (getActivity() instanceof MakaanBaseSearchActivity) {
+                if (listingDetail.property.bedrooms == 0)
+                    getActivity().setTitle(getActivity().getString(R.string.search_residential_plot_string));
+                else
+                    getActivity().setTitle((listingDetail.property.bedrooms + " bhk " +
+                            (property.unitType != null ? property.unitType : "")).toLowerCase());
             }
             Area=(property.size != null ? StringUtil.getFormattedNumber(property.size) : "") + " " +
                     (property.measure != null ? property.measure : "");

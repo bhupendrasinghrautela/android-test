@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:font="http://schemas.android.com/tools"
     android:id="@+id/project_config_view"
-                                          android:visibility="gone"
+    android:visibility="gone"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -45,7 +45,7 @@
         android:layout_marginRight="@dimen/project_specification_tab_layout_margins"
         android:id="@+id/project_config_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="@dimen/project_config_pager_height"
         android:overScrollMode="never"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
 
