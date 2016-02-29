@@ -77,6 +77,9 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
         if(null!=sellerImgUrl){
             mLeadFormPresenter.setSellerImageUrl(sellerImgUrl);
         }
+        else {
+            mLeadFormPresenter.setSellerImageUrl(null);
+        }
 
         if(null!=area){
             mLeadFormPresenter.setArea(area);
