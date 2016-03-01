@@ -114,7 +114,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
     }
 
     private void initializeRecyclerViewData() {
-        mListingAdapter = new SerpListingAdapter(getActivity(), mSerpRequestCallback, mRequestType, jarvisTrackExtraData);
+        mListingAdapter = new SerpListingAdapter(getActivity(), mSerpRequestCallback, mRequestType);
         mLayoutManager = new LinearLayoutManager(getActivity());
 
         mListingRecyclerView.setLayoutManager(mLayoutManager);

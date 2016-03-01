@@ -45,9 +45,14 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
 
         ShortListFavoriteViewHolder shortListFavoriteViewHolder = (ShortListFavoriteViewHolder)holder;
         if(null!=wishList.get(position).listingId){
-            shortListFavoriteViewHolder.mLinearLayoutDetails.setVisibility(View.VISIBLE);
-            String price = StringUtil.getDisplayPrice(wishList.get(position).listing.currentListingPrice.price);
-            shortListFavoriteViewHolder.mTextViewPriceValue.setText(price);
+
+            if(null!=wishList.get(position).listing && null!=wishList.get(position).listing.currentListingPrice ){
+                if(wishList.get(position).listing.currentListingPrice.price>0) {
+                    shortListFavoriteViewHolder.mLinearLayoutDetails.setVisibility(View.VISIBLE);
+                    String price = StringUtil.getDisplayPrice(wishList.get(position).listing.currentListingPrice.price);
+                    shortListFavoriteViewHolder.mTextViewPriceValue.setText(price);
+                }
+            }
 
         }else if(null!=wishList.get(position).project.minResaleOrPrimaryPrice) {
             shortListFavoriteViewHolder.mLinearLayoutDetails.setVisibility(View.VISIBLE);

@@ -126,7 +126,9 @@ public class PyrPageFragment extends Fragment {
             UserResponse userResponse = CookiePreferences.getLastUserInfo(getContext());
             mUserName.setText(userResponse.getData().firstName);
             mUserEmail.setText(userResponse.getData().email);
-        }catch (Exception e){}
+        }catch (Exception e){
+            //No impact don't do anything
+        }
 
         try {
             boolean newGroups = false;

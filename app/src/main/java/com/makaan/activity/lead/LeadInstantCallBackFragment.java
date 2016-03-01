@@ -1,6 +1,7 @@
 package com.makaan.activity.lead;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -20,14 +21,17 @@ import com.makaan.activity.listing.PropertyDetailFragment;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.MakaanEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.response.country.CountryCodeResponse;
 import com.makaan.response.leadForm.InstantCallbackResponse;
+import com.makaan.response.user.UserResponse;
 import com.makaan.service.LeadInstantCallbackService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.AppBus;
+import com.makaan.util.JsonBuilder;
 import com.makaan.util.JsonParser;
 import com.makaan.util.StringUtil;
 import com.makaan.util.ValidationUtil;
@@ -81,6 +85,14 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
         mTextViewSellerName.setText(mLeadFormPresenter.getName());
         mRatingBarSeller.setRating(Float.valueOf(mLeadFormPresenter.getScore()));
 
+        //User data prefill
+        try{
+            UserResponse userResponse = CookiePreferences.getLastUserInfo(getContext());
+            mNumber.setText(userResponse.getData().contactNumber);
+        }catch (Exception e){
+            //No impact don't do anything
+        }
+
     }
 
     @OnClick(R.id.btn_get_instant_call)
@@ -105,6 +117,15 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
                 jsonObject.put("cityId", mLeadFormPresenter.getCityId());
             } catch (JSONException e) {
                 e.printStackTrace();
+            }
+
+            //User data prefill
+            try{
+                UserResponse userResponse = CookiePreferences.getLastUserInfo(getContext());
+                userResponse.getData().contactNumber = mNumber.getText().toString().trim();
+                CookiePreferences.setLastUserInfo(getActivity(), JsonBuilder.toJson(userResponse).toString());
+            }catch (Exception e){
+                //No impact don't do anything
             }
             ((LeadInstantCallbackService) MakaanServiceFactory.getInstance().getService(LeadInstantCallbackService.class)).makeInstantCallbackRequest(mNumber.getText().toString().trim(), "911166765339", mCountryId, jsonObject);
         } else {
@@ -183,7 +204,10 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
         };
         mCountryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mCountrySpinner.setAdapter(mCountryAdapter);
-        mCountrySpinner.setDropDownWidth(400);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mCountrySpinner.setDropDownWidth(400);
+        }
         mCountrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

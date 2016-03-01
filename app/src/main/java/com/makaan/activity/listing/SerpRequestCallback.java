@@ -26,4 +26,6 @@ public interface SerpRequestCallback {
     String getOverviewText();
 
     void requestOverviewPage();
+
+    void trackScroll(int request, int position);
 }

@@ -40,6 +40,7 @@ import com.makaan.jarvis.ui.cards.CtaCardFactory;
 import com.makaan.jarvis.ui.cards.PyrPopupCard;
 import com.makaan.jarvis.ui.cards.SerpFilterCard;
 import com.makaan.pojo.SerpObjects;
+import com.makaan.pojo.SerpRequest;
 import com.makaan.request.buyerjourney.PhaseChange;
 import com.makaan.response.project.Project;
 import com.makaan.service.MakaanServiceFactory;
@@ -51,6 +52,8 @@ import com.segment.analytics.Properties;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -94,14 +97,16 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
     private boolean isJarvisHeadVisible;
 
+    private Map<SerpRequest, Boolean> serpRequestTrackMap = new HashMap<>();
+    private SerpRequest currentSerpRequest = null;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SerpObjects.putSerpObject(this, getSerpObjects());
 
         currentPageTag = new PageTag();
-        jarvisTrackExtraData = new JarvisTrackExtraData();
-        jarvisTrackExtraData.setPageTimeStamp(System.currentTimeMillis());
+        initExtraData();
 
         setupActivityTimer();
         identifyUser();
@@ -191,6 +196,11 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         if(null!=currentPageTag) {
             renewUserActivityTimer();
         }
+    }
+
+    private void initExtraData(){
+        jarvisTrackExtraData = new JarvisTrackExtraData();
+        jarvisTrackExtraData.setPageTimeStamp(System.currentTimeMillis());
     }
 
     private void setupActivityTimer(){
@@ -344,6 +354,9 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                         card.setOnApplyClickListener(new SerpFilterCard.OnApplyClickListener() {
                             @Override
                             public void onApplyClick() {
+                                if(null!=currentSerpRequest) {
+                                    serpRequestTrackMap.put(currentSerpRequest, false);
+                                }
                                 dismissPopupWithAnim();
                             }
                         });
@@ -440,6 +453,48 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         return false;
     }
 
+    public void addSerpScrollTrackStatus(SerpRequest request){
+        if(null==request){
+            return;
+        }
+        serpRequestTrackMap.put(request,false);
+    }
+
+    public void trackScroll(SerpRequest request, int requestType, int position){
+        if (request==null || serpRequestTrackMap.get(request)){
+            return;
+        }
+
+        if(null==jarvisTrackExtraData){
+            return;
+        }
+
+        currentSerpRequest = request;
+
+        if(requestType == SerpActivity.TYPE_CLUSTER) {
+            try {
+                JSONObject jsonObject = new JSONObject();
+
+                jarvisTrackExtraData.setPageType("child serp");
+                jsonObject.put(AnalyticsConstants.KEY_EVENT_NAME, AnalyticsConstants.CHILD_SERP);
+                jsonObject.put(AnalyticsConstants.KEY_EXTRA, JsonBuilder.toJson(jarvisTrackExtraData));
+
+                AnalyticsService analyticsService =
+                        (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
+                analyticsService.track(AnalyticsService.Type.track, jsonObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }else {
+            AnalyticsService analyticsService =
+                    (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
+            jarvisTrackExtraData.setPageType(SerpActivity.SCREEN_NAME);
+            analyticsService.trackSerpScroll(SerpObjects.getSelectedFilterNames(this), position, jarvisTrackExtraData);
+        }
+
+        serpRequestTrackMap.put(request, true);
+    }
     public void trackBuyerJourney(int phaseId){
 
         AnalyticsService analyticsService =

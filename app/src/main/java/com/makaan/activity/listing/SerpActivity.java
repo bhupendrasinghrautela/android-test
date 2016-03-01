@@ -334,7 +334,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                     }
                 }
 
-                mSerpBackStack.addToBackstack(request, mIsMapFragment ? SerpBackStack.TYPE_MAP : SerpBackStack.TYPE_DEFAULT);
+                SerpRequest clonedRequest = mSerpBackStack.addToBackstack(request, mIsMapFragment ? SerpBackStack.TYPE_MAP : SerpBackStack.TYPE_DEFAULT);
+                addSerpScrollTrackStatus(clonedRequest);
                 if(request.getSearches() != null && request.getSearches().size() > 0) {
                     applySearch(request.getSearches());
                 }
@@ -1003,6 +1004,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 startActivity(projectIntent);
                 break;
         }
+    }
+
+    @Override
+    public void trackScroll(int requestType, int position) {
+        super.trackScroll(mSerpBackStack.peek(), requestType, position);
     }
 
     /*private void showProgress() {
