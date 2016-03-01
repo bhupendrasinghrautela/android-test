@@ -95,7 +95,7 @@ public class LocalityLifestyleFragment extends MakaanBaseFragment{
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             final EntityDesc nearByLocalitu = entityDescs.get(position);
-            holder.descriptionTv.setText(nearByLocalitu.name);
+            holder.descriptionTv.setText(nearByLocalitu.entityDescriptionCategories.masterDescriptionCategory.name);
             holder.descriptionFullTv.setText(nearByLocalitu.description);
             holder.localityIv.setImageResource(R.drawable.placeholder_localities_props);
         }

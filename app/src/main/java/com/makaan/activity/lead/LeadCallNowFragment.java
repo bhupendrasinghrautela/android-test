@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -22,7 +21,6 @@ import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.util.ImageUtils;
 import com.segment.analytics.Properties;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -100,7 +98,7 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
         startActivity(intent);
     }
 
-    @OnClick(R.id.tv_get_callback)
+    @OnClick(R.id.tv_share_your_deatils)
     void getCallBackClick(){
         Bundle bundle =getArguments();
         if(bundle!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
@@ -121,7 +119,7 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBackFromSeller);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickPropertyCallConnect);
         }
-        LeadFormPresenter.getLeadFormPresenter().showLeadInstantCallBackFragment();
+        LeadFormPresenter.getLeadFormPresenter().showLeadLaterCallBAckFragment();
     }
 
     public void setSellerImage() {

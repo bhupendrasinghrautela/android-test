@@ -16,12 +16,15 @@ import com.makaan.response.project.Project;
 import com.makaan.ui.BaseLinearLayout;
 import com.makaan.ui.listing.CustomHorizontalScrollView;
 import com.makaan.util.AppUtils;
+import com.makaan.util.ListingUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+import static com.makaan.util.AppUtils.getElapsedYearsFromNow;
 
 /**
  * Created by aishwarya on 25/01/16.
@@ -131,12 +134,22 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
             overViewItem.value = mProject.projectStatus;
             mOverViewItems.add(overViewItem);
         }
-        if(mProject.possessionDate!=null){
+        if(mProject.locality!=null && !ListingUtil.isReadyToMove(mProject.locality.constructionStatusId) &&mProject.possessionDate!=null){
             HorizontalScrollItem overViewItem = new HorizontalScrollItem();
             overViewItem.name = OVERVIEW.POSSESSION.toString();
             overViewItem.resourceId = R.drawable.possession;
             overViewItem.value = AppUtils.getMMMYYYYDateStringFromEpoch(mProject.possessionDate);
             mOverViewItems.add(overViewItem);
+        }
+        else{
+            try {
+                Long age = Long.getLong(mProject.possessionDate);
+                String ageYrs = String.valueOf((age > 0 ? getElapsedYearsFromNow(age) : 0));
+                HorizontalScrollItem overViewItem = new HorizontalScrollItem();
+                overViewItem.name = "age";
+                overViewItem.resourceId = R.drawable.possession;
+                overViewItem.value = ageYrs.concat(" yrs");
+            }catch (NumberFormatException e){}
         }
         if(mProject.dominantUnitType !=null){
             HorizontalScrollItem overViewItem = new HorizontalScrollItem();
@@ -162,10 +175,17 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                         }
                         break;
                     case POSSESSION:
-                        if(mDetail.possessionDate!=null) {
+                        if(!ListingUtil.isReadyToMove(mDetail.constructionStatusId)&& mDetail.possessionDate!=null) {
                             overViewItem.name = overview.toString();
                             overViewItem.resourceId = R.drawable.possession;
                             overViewItem.value = AppUtils.getMMMYYYYDateStringFromEpoch(mDetail.possessionDate);
+                        }
+                        else if(mDetail.minConstructionCompletionDate!=null){
+                            Long age = mDetail.minConstructionCompletionDate;
+                            String ageYrs = String.valueOf((age > 0 ? getElapsedYearsFromNow(age) : 0));
+                            overViewItem.name ="age";
+                            overViewItem.resourceId = R.drawable.possession;
+                            overViewItem.value =ageYrs.concat(" yrs");
                         }
                         break;
                     case BATH:
@@ -193,21 +213,21 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                     case OWNER_TYPE:
                         if(mDetail.ownershipTypeId!=null) {
                             overViewItem.name = overview.toString();
-                            overViewItem.resourceId = R.drawable.possession;
+                            overViewItem.resourceId = R.drawable.ownership;
                             overViewItem.value = MasterDataCache.getInstance().getOwnershipType(mDetail.ownershipTypeId);
                         }
                         break;
                     case OPEN_SIDES:
                         if(mDetail.noOfOpenSides!=null) {
                             overViewItem.name = overview.toString();
-                            overViewItem.resourceId = R.drawable.possession;
+                            overViewItem.resourceId = R.drawable.open_sides;
                             overViewItem.value = String.valueOf(mDetail.noOfOpenSides);
                         }
                         break;
                     case BALCONY:
                         if(mDetail.balcony!=null) {
                             overViewItem.name = overview.toString();
-                            overViewItem.resourceId = R.drawable.possession;
+                            overViewItem.resourceId = R.drawable.balcony;
                             overViewItem.value = String.valueOf(mDetail.balcony);
                         }
                         break;
@@ -228,7 +248,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                     case FACING:
                         if(mDetail.facingId!=null) {
                             overViewItem.name = overview.toString();
-                            overViewItem.resourceId = R.drawable.possession;
+                            overViewItem.resourceId = R.drawable.facing;
                             overViewItem.value = MasterDataCache.getInstance().getDirection(mDetail.facingId);
                         }
                         break;
@@ -271,7 +291,9 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
             ButterKnife.bind(this,view);
             imageView.setDefaultImageResId(dataItem.resourceId);
             nameText.setText(dataItem.name);
-            valueText.setText(Html.fromHtml(dataItem.value));
+            if(dataItem.value!=null) {
+                valueText.setText(Html.fromHtml(dataItem.value.toLowerCase()));
+            }
             return view;
         }
     }

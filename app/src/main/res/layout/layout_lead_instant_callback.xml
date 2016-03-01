@@ -153,13 +153,13 @@
             android:textSize="@dimen/button_text_size" />
 
         <TextView
-            android:id="@+id/tv_get_callback_later"
+            android:id="@+id/tv_get_call_now"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/button_padding"
-            android:text="@string/or_later"
+            android:text="@string/call_now"
             android:textColor="@color/appThemeRed"
-            android:textSize="@dimen/seller_name_text_size" />
+            android:textSize="18sp" />
     </LinearLayout>
 
 

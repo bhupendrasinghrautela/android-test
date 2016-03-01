@@ -9,13 +9,11 @@ import android.widget.TextView;
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.activity.listing.PropertyActivity;
-import com.makaan.activity.listing.PropertyDetailFragment;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.project.Builder;
-import com.makaan.response.project.Project;
 import com.makaan.response.project.ProjectStatusCount;
 import com.makaan.ui.BaseLinearLayout;
 import com.makaan.ui.ExpandableLinearLayout;
@@ -114,14 +112,17 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
     @Override
     public void bindView(Builder item) {
         if(item != null) {
+            boolean isDataPresent = false;
             mAboutBuilderTv.setText(getResources().getString(R.string.more_about_builder));
             if(item.imageURL!=null) {
                 mBuilderLogo.setVisibility(VISIBLE);
                 mBuilderLogo.setImageUrl(item.imageURL, MakaanNetworkClient.getInstance().getImageLoader());
+                isDataPresent = true;
             }
             if(item.establishedDate!=null){
                 try {
                     mBuilderExperience.setText(DateUtil.getDiffUsingTimeStamp(mContext,Long.parseLong(item.establishedDate)));
+                    isDataPresent = true;
                 }
                 catch (NumberFormatException e){
                     mBuilderExperienceLayout.setVisibility(GONE);
@@ -134,6 +135,7 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
                 ProjectStatusCount projectStatusCount = item.projectStatusCount;
                     setProject(mBuilderCompleted, projectStatusCount.completed);
                     setProject(mBuilderOngoing, projectStatusCount.underConstruction);
+                isDataPresent = true;
             }
             else{
                 mBuilderCompletedLayout.setVisibility(GONE);
@@ -141,6 +143,10 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
             }
             if(item.description!=null) {
                 mBuilderDescription.setText(Html.fromHtml(item.description));
+                isDataPresent = true;
+            }
+            if(!isDataPresent){
+                this.setVisibility(GONE);
             }
         }
         else{

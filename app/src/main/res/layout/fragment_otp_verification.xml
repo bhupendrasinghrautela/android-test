@@ -9,16 +9,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:orientation="vertical"
-        android:layout_marginTop="@dimen/otp_name_and_phone_margin_top">
+        android:layout_marginTop="@dimen/otp_name_and_phone_margin_top"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/pyr_user_email_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="atanu.dutta@proptiger.com"
             android:layout_gravity="center_horizontal"
+            android:text="atanu.dutta@proptiger.com"
             android:textSize="16sp" />
+
         <TextView
             android:id="@+id/pyr_user_phone_no"
             android:layout_width="wrap_content"
@@ -33,15 +34,15 @@
         android:id="@+id/ll_middle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/otp_icon_layout_margin_top"
-        android:orientation="vertical"
-        android:layout_centerHorizontal="true">
+        android:orientation="vertical">
 
         <ImageView
-            android:layout_gravity="center_horizontal"
             android:layout_width="@dimen/otp_icon_width_height"
             android:layout_height="@dimen/otp_icon_width_height"
-            android:src="@drawable/otp"/>
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/otp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,16 +61,16 @@
 
         <View
             android:layout_width="match_parent"
-            android:background="@android:color/darker_gray"
-            android:layout_height="1dp"/>
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
 
         <TextView
             android:id="@+id/tv_verification_code"
-            android:layout_marginTop="@dimen/verification_code_layout_margin_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/verification_code_string"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/verification_code_layout_margin_top"
+            android:text="@string/verification_code_string"
             android:textSize="@dimen/verification_code_string_text_size" />
 
         <LinearLayout
@@ -77,55 +78,57 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/verification_input_layout_margin_top"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/et_first_digit"
                 android:layout_width="wrap_content"
-                android:padding="@dimen/verification_edit_text_padding"
-                android:layout_marginRight="@dimen/verification_edit_text_margin_right"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/verification_edit_text_margin_right"
                 android:background="@drawable/edittext_bg_bottom_border"
                 android:inputType="number"
-                android:maxLength="1"/>
+                android:maxLength="1"
+                android:padding="@dimen/verification_edit_text_padding" />
+
             <EditText
                 android:id="@+id/et_second_digit"
                 android:layout_width="wrap_content"
-                android:padding="@dimen/verification_edit_text_padding"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/verification_edit_text_margin_right"
                 android:background="@drawable/edittext_bg_bottom_border"
-                android:layout_height="wrap_content"
                 android:inputType="number"
-                android:maxLength="1"/>
+                android:maxLength="1"
+                android:padding="@dimen/verification_edit_text_padding" />
+
             <EditText
                 android:id="@+id/et_third_digit"
                 android:layout_width="wrap_content"
-                android:layout_marginRight="@dimen/verification_edit_text_margin_right"
-                android:padding="@dimen/verification_edit_text_padding"
-                android:background="@drawable/edittext_bg_bottom_border"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/verification_edit_text_margin_right"
+                android:background="@drawable/edittext_bg_bottom_border"
                 android:inputType="number"
-                android:maxLength="1"/>
+                android:maxLength="1"
+                android:padding="@dimen/verification_edit_text_padding" />
+
             <EditText
                 android:id="@+id/et_fourth_digit"
                 android:layout_width="wrap_content"
-                android:padding="@dimen/verification_edit_text_padding"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/verification_edit_text_margin_right"
                 android:background="@drawable/edittext_bg_bottom_border"
-                android:layout_height="wrap_content"
                 android:inputType="number"
-                android:maxLength="1"/>
+                android:maxLength="1"
+                android:padding="@dimen/verification_edit_text_padding" />
 
         </LinearLayout>
 
         <ImageView
             android:id="@+id/iv_verify"
-            android:layout_gravity="center_horizontal"
             android:layout_width="@dimen/verify_icon_width_height"
             android:layout_height="@dimen/verify_icon_width_height"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/verify_icon_margin_top"
-            android:src="@drawable/check_tick"/>
+            android:src="@drawable/check_tick" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -138,23 +141,23 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
+                android:gravity="end"
                 android:text="@string/resend_string"
                 android:textColor="@color/appThemeRed"
-                android:gravity="end"
                 android:textSize="@dimen/resend_text_size" />
 
             <TextView
                 android:id="@+id/otp_screen_skip"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
+                android:layout_gravity="end"
                 android:layout_marginLeft="@dimen/skip_text_margin_left"
+                android:layout_weight="0.2"
+                android:clickable="false"
                 android:text="@string/skip_string"
                 android:textColor="@color/appThemeRed"
-                android:layout_gravity="end"
                 android:textSize="@dimen/resend_text_size"
-                android:clickable="false"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
         </LinearLayout>
 
     </LinearLayout>

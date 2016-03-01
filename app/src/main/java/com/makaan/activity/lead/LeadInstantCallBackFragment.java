@@ -1,17 +1,16 @@
 package com.makaan.activity.lead;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -50,7 +49,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -178,9 +176,10 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
         }
     }
 
-    @OnClick(R.id.tv_get_callback_later)
+    @OnClick(R.id.tv_get_call_now)
     void getCallBackLaterClick() {
-        LeadFormPresenter.getLeadFormPresenter().showLeadLaterCallBAckFragment();
+        getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        LeadFormPresenter.getLeadFormPresenter().showLeadCallNowFragment();
     }
 
     void initializeCountrySpinner() {

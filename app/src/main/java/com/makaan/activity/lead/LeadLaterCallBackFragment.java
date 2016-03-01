@@ -1,6 +1,5 @@
 package com.makaan.activity.lead;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -110,10 +108,10 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
         setSellerImage();
     }
 
-    @OnClick(R.id.tv_do_call_now)
+    @OnClick(R.id.tv_do_connect_now)
     void doNowClicked(){
-        getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        LeadFormPresenter.getLeadFormPresenter().showLeadCallNowFragment();
+        //getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        LeadFormPresenter.getLeadFormPresenter().showLeadInstantCallBackFragment();
     }
 
     @OnClick(R.id.btn_call_later)

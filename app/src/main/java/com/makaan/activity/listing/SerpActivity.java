@@ -688,13 +688,17 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             return;
         }
 
-        if(mSerpBackStack.peek().getType() == TYPE_GPID) {
+        if(mSerpBackStack.peek() != null && mSerpBackStack.peek().getType() == TYPE_GPID) {
             mSerpBackStack.peek().setCityId(gpIdResultEvent.gpDetail.cityid);
+            mSerpRequestType = TYPE_GPID;
+        } else {
             mSerpRequestType = TYPE_GPID;
         }
 
         mSerpSelector.page(0, MAX_ITEMS_TO_REQUEST);
-        mGroupSelector.reset();
+        if(mGroupSelector != null) {
+            mGroupSelector.reset();
+        }
         generateGroupSelector();
 
         mSerpSelector.term("cityId", String.valueOf(gpIdResultEvent.gpDetail.cityid));

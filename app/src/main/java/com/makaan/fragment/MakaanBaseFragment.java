@@ -89,6 +89,12 @@ public abstract class MakaanBaseFragment extends Fragment {
         mLoadingProgressBar.setVisibility(View.VISIBLE);
     }
 
+    protected void showProgressWithContent() {
+        mContentFrameLayout.setVisibility(View.VISIBLE);
+        mNoResultsLayout.setVisibility(View.GONE);
+        mLoadingProgressBar.setVisibility(View.VISIBLE);
+    }
+
     protected void showNoResults() {
         showNoResults(null);
     }

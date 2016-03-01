@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -14,7 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -168,11 +171,18 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mMainCityImage.setDefaultImageResId(R.drawable.locality_hero);
         mContext = getActivity();
         initToolbar();
         initView();
         initListeners();
         showProgress();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     private void initToolbar() {
@@ -331,7 +341,6 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         mPropertyTypeSpinner.setItems(MasterDataCache.getInstance().getBuyPropertyTypes());
         mBhkSpinner.setMessage(null, POSTFIX_BHK_SPINNER);
         mBhkSpinner.setItems(MasterDataCache.getInstance().getBhkList());
-        mMainCityImage.setDefaultImageResId(R.drawable.locality_hero);
     }
 
     @Subscribe

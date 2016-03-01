@@ -14,9 +14,10 @@
     <TextView
         android:id="@+id/tv_no_shortlist"
         android:textSize="@dimen/button_text_size"
-        android:text="@string/no_shortlisting"
+        android:text="@string/no_favorite_available"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:typeface="monospace"/>
 
     <ProgressBar
         android:id="@+id/loading_progress"

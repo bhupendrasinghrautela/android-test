@@ -46,7 +46,7 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
      */
     @OnClick(R.id.btn_back_toolbar)
     public void onToolbarBack(){
-        this.onBackPressed();
+        finish();
     }
 
     @Override
