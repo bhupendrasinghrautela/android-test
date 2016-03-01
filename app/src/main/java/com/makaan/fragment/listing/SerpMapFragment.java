@@ -288,11 +288,11 @@ public class SerpMapFragment extends MakaanBaseFragment {
 
                 for(int i = 0; i < length; i++) {
                     Marker marker = clubbedMarker.markers.get(i);
-                    marker.setRotation((360.0f / length) * i);
+//                    marker.setRotation((360.0f / length) * i);
                     if(i == 0) {
                         marker.setAlpha(1);
                     } else {
-                        marker.setAlpha(0.1f);
+                        marker.setAlpha(0.0f);
                     }
                 }
             }
@@ -309,7 +309,7 @@ public class SerpMapFragment extends MakaanBaseFragment {
                         if(currentMarker == marker) {
                             currentMarker.setAlpha(1);
                         } else {
-                            currentMarker.setAlpha(0.1f);
+                            currentMarker.setAlpha(0.0f);
                         }
                     }
                 }
@@ -382,8 +382,8 @@ public class SerpMapFragment extends MakaanBaseFragment {
             ((TextView)container.findViewById(R.id.map_pointer_text)).setText(String.valueOf(listing.bedrooms));
             int measureSpec = View.MeasureSpec.makeMeasureSpec(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             container.measure(measureSpec, measureSpec);
-            int measuredWidth = (int) (container.getMeasuredWidth() * multiplier);
-            int measuredHeight = (int) (container.getMeasuredHeight() * multiplier);
+            int measuredWidth = getResources().getDimensionPixelSize(R.dimen.map_pointer_width);
+            int measuredHeight = getResources().getDimensionPixelSize(R.dimen.map_pointer_height);
             container.layout(0, 0, measuredWidth, measuredHeight);
 
             Bitmap r = Bitmap.createBitmap(measuredWidth, measuredHeight, Bitmap.Config.ARGB_8888);
