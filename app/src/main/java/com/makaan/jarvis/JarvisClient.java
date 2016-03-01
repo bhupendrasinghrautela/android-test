@@ -46,11 +46,16 @@ public class JarvisClient {
 
     @Subscribe
     public void onOutgoingMessage(OutgoingMessageEvent event){
+        refreshJarvisSocket();
         jarvisSocket.sendMessage(event.message);
     }
 
     public void rateAgent(float rating){
         jarvisSocket.rateAgent(rating);
+    }
+
+    public void refreshJarvisSocket(){
+        jarvisSocket.refresh();
     }
 
 }

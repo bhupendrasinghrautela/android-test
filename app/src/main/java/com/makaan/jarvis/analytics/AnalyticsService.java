@@ -3,6 +3,7 @@ package com.makaan.jarvis.analytics;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ApiConstants;
+import com.makaan.jarvis.JarvisClient;
 import com.makaan.jarvis.JarvisConstants;
 import com.makaan.jarvis.event.JarvisTrackExtraData;
 import com.makaan.network.MakaanNetworkClient;
@@ -91,6 +92,8 @@ public class AnalyticsService implements MakaanService {
             data.put(AnalyticsConstants.KEY_TRAITS, object);
 
             MakaanNetworkClient.getInstance().postTrack(getUrl(), data, null, TAG);
+
+            JarvisClient.getInstance().refreshJarvisSocket();
         }catch (Exception e){}
     }
 

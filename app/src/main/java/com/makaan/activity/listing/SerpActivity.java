@@ -333,7 +333,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                     }
                 }
 
-                mSerpBackStack.addToBackstack(request, mIsMapFragment ? SerpBackStack.TYPE_MAP : SerpBackStack.TYPE_DEFAULT);
+                SerpRequest clonedRequest = mSerpBackStack.addToBackstack(request, mIsMapFragment ? SerpBackStack.TYPE_MAP : SerpBackStack.TYPE_DEFAULT);
+                addSerpScrollTrackStatus(clonedRequest);
                 if(request.getSearches() != null && request.getSearches().size() > 0) {
                     applySearch(request.getSearches());
                 }
@@ -458,7 +459,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 childSerpClusterFragment.setData(mGroupListings, mChildSerpId, this, mChildListingId);
                 // create new listing fragment to show the listings
                 mSellerSerpListFragment = SerpListFragment.init(true);
-                mSellerSerpListFragment.setJarvisTrackExtraData(getJarvisExtraData());
                 updateListings(listingGetEvent, null);
                 mSellerSerpListFragment.updateListings(mListings, null, getSelectedSearches(), this, mSerpRequestType, mListingCount);
 
@@ -479,7 +479,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 childSerpClusterFragment.setData(mGroupListings, mChildSerpId, this, mChildListingId);
                 // create new listing fragment to show the listings
                 mChildSerpListFragment = SerpListFragment.init(true);
-                mChildSerpListFragment.setJarvisTrackExtraData(getJarvisExtraData());
                 updateListings(listingGetEvent, null);
                 mChildSerpListFragment.updateListings(mChildListings, null, getSelectedSearches(), this, mSerpRequestType, mChildListingCount);
 
@@ -503,7 +502,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                     mListingFragment = SerpListFragment.init(false);
 
                     updateListings(listingGetEvent, mGroupListingGetEvent);
-                    mListingFragment.setJarvisTrackExtraData(getJarvisExtraData());
                     mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, mSerpRequestType, mListingCount);
                     initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
                 } else {
@@ -1021,6 +1019,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 startActivity(projectIntent);
                 break;
         }
+    }
+
+    @Override
+    public void trackScroll(int requestType, int position) {
+        super.trackScroll(mSerpBackStack.peek(), requestType, position);
     }
 
     /*private void showProgress() {

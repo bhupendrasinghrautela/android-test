@@ -2,6 +2,7 @@ package com.makaan.fragment.pyr;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -382,7 +383,9 @@ public class PyrPageFragment extends Fragment {
 
         mCountryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mCountrySpinner.setAdapter(mCountryAdapter);
-        mCountrySpinner.setDropDownWidth(400);
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN) {
+            mCountrySpinner.setDropDownWidth(400);
+        }
         mCountrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

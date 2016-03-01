@@ -95,18 +95,15 @@ public class HomeActivity extends MakaanBaseSearchActivity {
             }
         });
 
-        try{
-            if(CookiePreferences.isUserLoggedIn(this)){
-                setUserData();
-                WishListService wishListService =
-                        (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
-                wishListService.get();
-            }else{
-
-            }
-        }catch (Exception e){
+        if(CookiePreferences.isUserLoggedIn(this)){
+            setUserData();
+            WishListService wishListService =
+                    (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
+            wishListService.get();
+        }else{
 
         }
+
         // get saved searches
         SaveSearchService saveSearchService =
                 (SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class);

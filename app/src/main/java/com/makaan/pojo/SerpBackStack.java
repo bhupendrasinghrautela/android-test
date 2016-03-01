@@ -12,22 +12,23 @@ public class SerpBackStack {
     public static final int TYPE_MAP = 2;
     Stack<SingleSerpBackstack> singleSerpBackstacks = new Stack<>();
 
-    public void addToBackstack(SerpRequest request, int type) {
+    public SerpRequest addToBackstack(SerpRequest request, int type) {
         if(singleSerpBackstacks.size() > 0) {
             if(singleSerpBackstacks.peek().type == type) {
                 try {
-                    singleSerpBackstacks.peek().addToBackstack(request.clone());
+                    return singleSerpBackstacks.peek().addToBackstack(request.clone());
                 } catch (CloneNotSupportedException e) {
                     // TODO
                     e.printStackTrace();
+                    return null;
                 }
             } else {
                 singleSerpBackstacks.add(new SingleSerpBackstack(type));
-                addToBackstack(request, type);
+                return addToBackstack(request, type);
             }
         } else {
             singleSerpBackstacks.add(new SingleSerpBackstack(type));
-            addToBackstack(request, type);
+            return addToBackstack(request, type);
         }
     }
 
@@ -77,15 +78,17 @@ public class SerpBackStack {
             this.type = type;
         }
 
-        public void addToBackstack(SerpRequest request) {
+        public SerpRequest addToBackstack(SerpRequest request) {
             if(request == null) {
-                return;
+                return null;
             }
             if(!request.isFromBackstack() || request.getBackStackType() != type) {
                 request.setBackStackType(type);
                 request.setIsFromBackstack(false);
                 serpRequests.add(request);
+                return request;
             }
+            return null;
         }
 
         public boolean popFromBackstack(Context context) {
