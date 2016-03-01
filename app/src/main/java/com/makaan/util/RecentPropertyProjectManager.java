@@ -109,6 +109,8 @@ public class RecentPropertyProjectManager {
         public String phoneNo;
         public double rating;
         public long sellerId;
+        public long cityId;
+        public long localityId;
 
         public DataObject() {}
 
@@ -168,6 +170,12 @@ public class RecentPropertyProjectManager {
                         if(listingDetail.property.project.locality != null) {
                             if(!TextUtils.isEmpty(listingDetail.property.project.locality.label)) {
                                 this.addressLine2 = listingDetail.property.project.locality.label;
+                                if(listingDetail.property.project.locality.localityId != null) {
+                                    this.localityId = listingDetail.property.project.locality.localityId;
+                                }
+                                if(listingDetail.property.project.locality.cityId != null) {
+                                    this.localityId = listingDetail.property.project.locality.cityId;
+                                }
                             }
                             if(listingDetail.property.project.locality.suburb != null) {
                                 if(listingDetail.property.project.locality.suburb.city != null) {

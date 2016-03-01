@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.makaan.ui.pyr.PyrBedroomCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:orientation="vertical"
+    app:cardPreventCornerOverlap="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:clipToPadding="false"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="@dimen/pyr_bedroom_icon_layout_width"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical">
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="@dimen/pyr_bedroom_icon_width"
@@ -26,36 +28,37 @@
             <TextView
                 android:layout_width="@dimen/pyr_bedroom_text_width"
                 android:layout_height="@dimen/pyr_bedroom_text_height"
-                android:textColor="@color/black"
+                android:layout_marginLeft="@dimen/pyr_bedroom_text_left_margin"
                 android:text="@string/pyr_bedroom_string"
-                android:textSize="@dimen/pyr_bedroom_text_text_size"
-                android:layout_marginLeft="@dimen/pyr_bedroom_text_left_margin"/>
+                android:textColor="@color/black"
+                android:textSize="@dimen/pyr_bedroom_text_text_size" />
         </LinearLayout>
 
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/pyr_light_grey"/>
+            android:background="@color/pyr_light_grey" />
 
         <LinearLayout
             android:layout_width="@dimen/pyr_bedroom_circular_icon_width"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center_vertical"
+            android:clipToPadding="false"
             android:gravity="center_horizontal"
-            android:clipToPadding="false">
+            android:orientation="horizontal">
 
             <com.makaan.ui.view.ExpandableHeightGridView
                 android:id="@+id/pyr_bedroom_grid_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/bedroom_grid_view_margin_left"
+                android:clipToPadding="false"
                 android:horizontalSpacing="@dimen/bedroom_grid_view_horizontal_spacing"
                 android:isScrollContainer="false"
                 android:numColumns="4"
-                android:verticalSpacing="@dimen/fragment_dialog_filters_checkbox_grid_item_vertical_padding"  />
+                android:verticalSpacing="@dimen/fragment_dialog_filters_checkbox_grid_item_vertical_padding" />
 
-         </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

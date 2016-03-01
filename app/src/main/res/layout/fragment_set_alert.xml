@@ -9,42 +9,42 @@
         android:id="@+id/fragment_set_alerts_submit_button"
         android:layout_width="@dimen/fragment_set_alerts_button_width"
         android:layout_height="@dimen/fragment_set_alerts_button_height"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/fragment_set_alerts_button_bottom_margin"
         android:background="@drawable/btn_find_your_home"
         android:text="@string/set_alerts"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="@dimen/fragment_set_alerts_button_text_size"
-        android:layout_alignParentBottom="true"
-        android:typeface="serif"
-        android:layout_centerHorizontal="true"/>
+        android:typeface="serif" />
 
     <EditText
         android:id="@+id/fragment_set_alerts_name_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/fragment_set_alerts_name_edit_text_margin_left"
-        android:layout_marginStart="@dimen/fragment_set_alerts_name_edit_text_margin_left"
-        android:layout_marginRight="@dimen/fragment_set_alerts_name_edit_text_margin_right"
-        android:layout_marginEnd="@dimen/fragment_set_alerts_name_edit_text_margin_right"
         android:layout_above="@id/fragment_set_alerts_submit_button"
-        android:textSize="@dimen/fragment_set_alerts_name_edit_text_text_size"
+        android:layout_marginEnd="@dimen/fragment_set_alerts_name_edit_text_margin_right"
+        android:layout_marginLeft="@dimen/fragment_set_alerts_name_edit_text_margin_left"
+        android:layout_marginRight="@dimen/fragment_set_alerts_name_edit_text_margin_right"
+        android:layout_marginStart="@dimen/fragment_set_alerts_name_edit_text_margin_left"
         android:text="2,3 bhk - 1.5 to 1.9 cr"
         android:textColor="@color/listingBlack"
-        android:typeface="serif"/>
+        android:textSize="@dimen/fragment_set_alerts_name_edit_text_text_size"
+        android:typeface="serif" />
 
     <TextView
         android:id="@+id/fragment_set_alerts_save_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/fragment_set_alerts_name_edit_text_margin_left"
-        android:layout_marginStart="@dimen/fragment_set_alerts_name_edit_text_margin_left"
-        android:layout_marginRight="@dimen/fragment_set_alerts_name_edit_text_margin_right"
-        android:layout_marginEnd="@dimen/fragment_set_alerts_name_edit_text_margin_right"
         android:layout_above="@id/fragment_set_alerts_name_edit_text"
-        android:textSize="@dimen/fragment_set_alerts_save_text_view_text_size"
+        android:layout_marginEnd="@dimen/fragment_set_alerts_name_edit_text_margin_right"
+        android:layout_marginLeft="@dimen/fragment_set_alerts_name_edit_text_margin_left"
+        android:layout_marginRight="@dimen/fragment_set_alerts_name_edit_text_margin_right"
+        android:layout_marginStart="@dimen/fragment_set_alerts_name_edit_text_margin_left"
         android:text="@string/save_your_requirement_as"
         android:textColor="@color/listingBlack"
+        android:textSize="@dimen/fragment_set_alerts_save_text_view_text_size"
         android:typeface="serif" />
 
     <RelativeLayout
@@ -52,30 +52,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/app_red"
+        android:paddingBottom="@dimen/fragment_set_alerts_top_bar_padding_bottom"
         android:paddingLeft="@dimen/fragment_set_alerts_top_bar_padding_left"
         android:paddingStart="@dimen/fragment_set_alerts_top_bar_padding_left"
-        android:paddingTop="@dimen/fragment_set_alerts_top_bar_padding_top"
-        android:paddingBottom="@dimen/fragment_set_alerts_top_bar_padding_bottom">
+        android:paddingTop="@dimen/fragment_set_alerts_top_bar_padding_top">
+
         <Button
             android:id="@+id/fragment_set_alerts_back_button"
             android:layout_width="@dimen/fragment_set_alerts_back_button_width"
             android:layout_height="@dimen/fragment_set_alerts_back_button_height"
-            android:background="@mipmap/back_white"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+            android:layout_alignParentStart="true"
+            android:background="@mipmap/back_white" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/fragment_set_alerts_stay_informed_text_margin_left"
             android:layout_marginStart="@dimen/fragment_set_alerts_stay_informed_text_margin_left"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/fragment_set_alerts_back_button"
             android:layout_toEndOf="@id/fragment_set_alerts_back_button"
+            android:layout_toRightOf="@id/fragment_set_alerts_back_button"
             android:text="@string/stay_informed"
             android:textColor="@color/white"
             android:textSize="@dimen/fragment_set_alerts_stay_informed_text_size"
-            android:typeface="serif"/>
+            android:typeface="serif" />
     </RelativeLayout>
+
     <View
         android:id="@+id/fragment_set_alerts_top_bar_empty_view"
         android:layout_width="match_parent"
@@ -88,31 +91,34 @@
         android:id="@+id/fragment_set_alerts_content_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/fragment_set_alerts_content_card_view_margin_left"
-        android:layout_marginStart="@dimen/fragment_set_alerts_content_card_view_margin_left"
-        android:layout_marginRight="@dimen/fragment_set_alerts_content_card_view_margin_right"
-        android:layout_marginEnd="@dimen/fragment_set_alerts_content_card_view_margin_right"
-        android:layout_marginTop="@dimen/fragment_set_alerts_content_card_view_margin_top"
-        android:layout_marginBottom="@dimen/fragment_set_alerts_content_card_view_margin_bottom"
         android:layout_above="@id/fragment_set_alerts_save_text_view"
         android:layout_below="@id/fragment_set_alerts_top_bar_empty_view"
+        android:layout_marginBottom="@dimen/fragment_set_alerts_content_card_view_margin_bottom"
+        android:layout_marginEnd="@dimen/fragment_set_alerts_content_card_view_margin_right"
+        android:layout_marginLeft="@dimen/fragment_set_alerts_content_card_view_margin_left"
+        android:layout_marginRight="@dimen/fragment_set_alerts_content_card_view_margin_right"
+        android:layout_marginStart="@dimen/fragment_set_alerts_content_card_view_margin_left"
+        android:layout_marginTop="@dimen/fragment_set_alerts_content_card_view_margin_top"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="6dp"
+        app:cardPreventCornerOverlap="false"
         app:elevation="2dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp"
+                android:background="#fbfbfb"
                 android:gravity="center"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp"
                 android:text="get new properties directly in your inbox"
                 android:textColor="@color/listingBlack"
-                android:textSize="16sp"
-                android:background="#fbfbfb"/>
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -123,8 +129,9 @@
                 android:id="@+id/fragment_set_alerts_content_scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
                 <LinearLayout
                     android:id="@+id/fragment_set_alerts_content_linear_layout"
                     android:layout_width="match_parent"

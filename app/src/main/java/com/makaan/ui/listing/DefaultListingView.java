@@ -277,7 +277,8 @@ public class DefaultListingView extends AbstractListingView {
         }
 
         // set property address info {project_name},{localityName}_{cityName}
-        if(!TextUtils.isEmpty(mListing.project.name) && !"project".equalsIgnoreCase(mListing.project.name)) {
+        if(!TextUtils.isEmpty(mListing.project.name)
+                && (mListing.project.activeStatus == null || !"dummy".equalsIgnoreCase(mListing.project.activeStatus))) {
             if(!TextUtils.isEmpty(mListing.project.builderName)) {
                 mPropertyAddressTextView.setText(String.format("%s %s, %s, %s", mListing.project.builderName,
                         mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase());
@@ -625,7 +626,8 @@ public class DefaultListingView extends AbstractListingView {
 
     @OnClick(R.id.serp_default_listing_property_address_frame_layout)
     public void onProjectClicked(View view) {
-        if(!TextUtils.isEmpty(mListing.project.name) && !"project".equalsIgnoreCase(mListing.project.name)) {
+        if(!TextUtils.isEmpty(mListing.project.name)
+                && (mListing.project.activeStatus == null || !"dummy".equalsIgnoreCase(mListing.project.activeStatus))) {
             if (mListing.projectId != null && mListing.projectId != 0) {
                 Bundle bundle = new Bundle();
                 bundle.putLong(ProjectActivity.PROJECT_ID, mListing.projectId);
@@ -648,10 +650,21 @@ public class DefaultListingView extends AbstractListingView {
         bundle.putString("phone", null);//todo: not available in pojo
         bundle.putString("id", String.valueOf(mListing.lisitingPostedBy.id));
         bundle.putLong("listingId", mListing.lisitingId);
-        if(mListing!=null && mListing.project!=null && mListing.project.locality!=null &&
-                mListing.project.locality.cityId!=null) {
+        if(mListing!=null && mListing.cityId!=null) {
             bundle.putLong("cityId", mListing.cityId);
         }
+
+        if(mListing!=null && mListing.project!=null && mListing.project.locality!=null && mListing.project.locality.localityId!=null) {
+            bundle.putLong("localityId", mListing.project.locality.localityId);
+        }
+
+        if(!TextUtils.isEmpty(mListing.lisitingPostedBy.logo)) {
+            bundle.putString("sellerImageUrl",mListing.lisitingPostedBy.logo);
+        }
+        else if(!TextUtils.isEmpty(mListing.lisitingPostedBy.profilePictureURL)) {
+            bundle.putString("sellerImageUrl", mListing.lisitingPostedBy.profilePictureURL);
+        }
+
         bundle.putString("source", SerpActivity.class.getName());
 
         mCallback.requestDetailPage(SerpActivity.REQUEST_LEAD_FORM, bundle);

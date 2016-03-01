@@ -3,7 +3,7 @@
 <ToggleButton xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/fragment_dialog_filters_toggle_button_grid_item_width"
     android:layout_height="@dimen/fragment_dialog_filters_toggle_button_grid_item_height"
-    android:background="@drawable/fragment_dialog_filters_toggle_button_background_selector"
+    android:background="@drawable/bedroom_toggle_button_background_selector"
     android:textColor="@color/fragment_dialog_filters_toggle_button_text_color_selector"
     android:textSize="@dimen/fragment_dialog_filters_toggle_button_grid_item_text_size"
     android:typeface="monospace"

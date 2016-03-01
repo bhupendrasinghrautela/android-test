@@ -35,7 +35,24 @@ public class LeadFormPresenter {
     Long projectOrListingId;
     Long multipleSellerIds[];
     PyrRequest pyrRequest;
-    String sellerIds;
+    String sellerImageUrl;
+    Long localityId;
+
+    public Long getLocalityId() {
+        return localityId;
+    }
+
+    public void setLocalityId(Long localityId) {
+        this.localityId = localityId;
+    }
+
+    public String getSellerImageUrl() {
+        return sellerImageUrl;
+    }
+
+    public void setSellerImageUrl(String sellerImageUrl) {
+        this.sellerImageUrl = sellerImageUrl;
+    }
 
     public PyrRequest getPyrRequest() {
         return pyrRequest;
@@ -146,6 +163,7 @@ public class LeadFormPresenter {
         int i=0;
         for(Integer value:multipleSellerIdsArray){
             arr[i]=Long.valueOf(value);
+            i++;
         }
         multipleSellerIds=arr;
         return arr;
@@ -197,7 +215,7 @@ public class LeadFormPresenter {
         bundle.putBoolean(MAKAAN_ASSIST_VALUE, makaanAssist);
         bundle.putBoolean(NO_SELLERS_FRAGMENT, throughNoSellers);
         mThankYouFragment.setArguments(bundle);
-        mLeadFormReplaceFragment.popFromBackstack(popcount);
+        mLeadFormReplaceFragment.popFromBackstack(popcount+1);
         mLeadFormReplaceFragment.replaceFragment(mThankYouFragment, false);
     }
 

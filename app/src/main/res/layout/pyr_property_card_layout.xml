@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
@@ -8,58 +9,59 @@
     android:padding="@dimen/pyr_propert_card_padding">
 
     <com.makaan.ui.pyr.PyrPropertyCardView
-        android:orientation="vertical"
+        android:id="@+id/select_property_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/select_property_layout">
+        android:orientation="vertical"
+        app:cardPreventCornerOverlap="false">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="@dimen/pyr_property_icon_layout_width"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical">
+            <LinearLayout
+                android:layout_width="@dimen/pyr_property_icon_layout_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="@dimen/pyr_property_icon_width"
-                android:layout_height="@dimen/pyr_property_icon_height"
-                android:layout_marginLeft="@dimen/pyr_property_icon_left_margin"
-                android:src="@drawable/house_icon" />
+                <ImageView
+                    android:layout_width="@dimen/pyr_property_icon_width"
+                    android:layout_height="@dimen/pyr_property_icon_height"
+                    android:layout_marginLeft="@dimen/pyr_property_icon_left_margin"
+                    android:src="@drawable/house_icon" />
+
+                <TextView
+                    android:layout_width="@dimen/pyr_property_text_width"
+                    android:layout_height="@dimen/pyr_property_text_height"
+                    android:layout_marginLeft="@dimen/pyr_property_text_left_margin"
+                    android:text="@string/pyr_property_string"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/pyr_propert_text_text_size" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/pyr_light_grey" />
 
             <TextView
-                android:layout_width="@dimen/pyr_property_text_width"
-                android:layout_height="@dimen/pyr_property_text_height"
-                android:textColor="@color/black"
-                android:text="@string/pyr_property_string"
-                android:textSize="@dimen/pyr_propert_text_text_size"
-                android:layout_marginLeft="@dimen/pyr_property_text_left_margin"/>
+                android:id="@+id/property_value"
+                android:layout_width="@dimen/pyr_property_value_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/pyr_property_value_left_margin"
+                android:clickable="false"
+                android:orientation="horizontal"
+                android:text="@string/pyr_property_value_string"
+                android:textColor="@color/pyr_grey"
+                android:textSize="@dimen/pyr_property_value_text_size" />
+
         </LinearLayout>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/pyr_light_grey"/>
-
-        <TextView
-            android:id="@+id/property_value"
-            android:layout_width="@dimen/pyr_property_value_width"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/pyr_property_value_left_margin"
-            android:orientation="horizontal"
-            android:clickable="false"
-            android:text="@string/pyr_property_value_string"
-            android:textSize="@dimen/pyr_property_value_text_size"
-            android:textColor="@color/pyr_grey"
-            android:layout_gravity="center_vertical" />
-
-    </LinearLayout>
-
-</com.makaan.ui.pyr.PyrPropertyCardView>
+    </com.makaan.ui.pyr.PyrPropertyCardView>
 
     <TextView
         android:id="@+id/pyr_selected_propertyt_type_count"
@@ -68,10 +70,10 @@
         android:layout_marginLeft="@dimen/pyr_propert_card_badge_margin_left_right"
         android:layout_marginTop="@dimen/pyr_propert_card_badge_margin_left_right"
         android:background="@drawable/badge_circle"
+        android:elevation="@dimen/property_card_badge_elevation"
         android:text="6"
-        android:visibility="visible"
         android:textColor="@color/white"
         android:textSize="@dimen/property_card_badge_text_size"
-        android:elevation="@dimen/property_card_badge_elevation"/>
+        android:visibility="visible" />
 
 </RelativeLayout>

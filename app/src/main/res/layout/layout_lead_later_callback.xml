@@ -13,12 +13,35 @@
         android:layout_height="0dp"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_seller_image"
-            android:src="@drawable/edit_avatar"
-            android:layout_marginBottom="@dimen/lead_form_seller_image_margin_bottom"
-            android:layout_width="@dimen/lead_form_seller_image_width"
-            android:layout_height="@dimen/lead_form_seller_image_width" />
+        <FrameLayout
+            android:clickable="true"
+            android:id="@+id/frame_profile_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_seller_image_lead_later_Call_back"
+                android:src="@drawable/edit_avatar"
+                android:layout_marginBottom="@dimen/lead_form_seller_image_margin_bottom"
+                android:layout_width="@dimen/lead_form_seller_image_width"
+                android:layout_height="@dimen/lead_form_seller_image_width" />
+
+            <TextView
+                android:id="@+id/iv_seller_name"
+                android:layout_width="@dimen/lead_form_seller_image_width"
+                android:layout_height="@dimen/lead_form_seller_image_width"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:background="@drawable/profile_image_drawable"
+                android:layout_marginBottom="@dimen/lead_call_now_seller_name_margin_bottom"
+                android:gravity="center"
+                android:text="Ab"
+                android:textAllCaps="true"
+                android:maxLength="1"
+                android:textSize="@dimen/lead_call_now_seller_name_text_size"
+                android:textColor="@color/white"/>
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/tv_seller_name"

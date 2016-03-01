@@ -23,8 +23,7 @@
         android:id="@+id/serp_listing_item_seller_content_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/serp_listing_item_seller_image_view"
@@ -144,7 +143,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/serp_listing_item_seller_add_image_view_margin_right"
                 android:layout_marginRight="@dimen/serp_listing_item_seller_add_image_view_margin_right"
-                android:src="@drawable/add_white" />
+                android:src="@drawable/add_white"
+                android:visibility="gone"/>
         </RelativeLayout>
 
         <View
@@ -156,6 +156,82 @@
             android:layout_marginStart="@dimen/serp_listing_item_seller_empty_view_margin_left"
             android:layout_marginTop="@dimen/serp_listing_item_seller_empty_view_margin_top2"
             android:background="@color/serp_listing_item_seller_empty_view_background_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/serp_listing_item_seller_info_margin_bottom"
+            android:layout_marginTop="@dimen/serp_listing_item_seller_info_margin_top"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/serp_listing_item_seller_info_image_view_width"
+                    android:layout_height="@dimen/serp_listing_item_seller_info_image_view_height"
+                    android:src="@drawable/property_white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/serp_listing_item_seller_info_image_view_width"
+                    android:layout_height="@dimen/serp_listing_item_seller_info_image_view_height"
+                    android:src="@drawable/projects" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/serp_listing_item_seller_info_margin_bottom2"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/serp_listing_item_seller_properties_count_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="500 properties"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/serp_listing_item_seller_text_text_size"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:typeface="serif" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/serp_listing_item_seller_project_count_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="500 projects"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/serp_listing_item_seller_text_text_size"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:typeface="serif" />
+            </LinearLayout>
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -225,84 +301,10 @@
                 android:gravity="center">
 
                 <TextView
+                    android:id="@+id/serp_listing_item_seller_experience_label_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="experience"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/serp_listing_item_seller_text_text_size"
-                    android:singleLine="true"
-                    android:ellipsize="end"
-                    android:typeface="serif" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/serp_listing_item_seller_info_margin_bottom"
-            android:layout_marginTop="@dimen/serp_listing_item_seller_info_margin_top"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="@dimen/serp_listing_item_seller_info_image_view_width"
-                    android:layout_height="@dimen/serp_listing_item_seller_info_image_view_height"
-                    android:src="@drawable/property_white" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="@dimen/serp_listing_item_seller_info_image_view_width"
-                    android:layout_height="@dimen/serp_listing_item_seller_info_image_view_height"
-                    android:src="@drawable/projects" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/serp_listing_item_seller_info_margin_bottom2"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/serp_listing_item_seller_properties_count_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="500 properties"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/serp_listing_item_seller_text_text_size"
-                    android:singleLine="true"
-                    android:ellipsize="end"
-                    android:typeface="serif" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/serp_listing_item_seller_project_count_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="500 projects"
                     android:textColor="@color/white"
                     android:textSize="@dimen/serp_listing_item_seller_text_text_size"
                     android:singleLine="true"

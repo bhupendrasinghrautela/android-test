@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -11,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -131,6 +135,10 @@ public class ViewSellersDialogFragment extends DialogFragment {
                 intent.putExtra("locality", bundle.getString("locality"));
                 intent.putExtra("area", bundle.getString("area"));
                 intent.putExtra("bhkAndUnitType", bundle.getString("bhkAndUnitType"));
+                intent.putExtra("localityID", bundle.getLong("localityId"));
+                intent.putExtra("source", bundle.getString("source"));
+                //intent.putExtra("sellerImageUrl", bundle.getString("sellerImageUrl"));
+
                 if(assist){
                     intent.putExtra("assist", assist);
                 }
@@ -232,7 +240,7 @@ public class ViewSellersDialogFragment extends DialogFragment {
         int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_width);
         int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_height);
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        public class ViewHolder extends RecyclerView.ViewHolder{
             // each data item is just a string in this case
             CircleImageView mSellerImageView;
             TextView mSellerLogoTextView;
@@ -240,6 +248,7 @@ public class ViewSellersDialogFragment extends DialogFragment {
             TextView mSellerName;
             CustomRatingBar  mSellerRating;
             CheckBox mSellerCheckBox;
+            ImageView mCallIcon;
             public ViewHolder(View v) {
                 super(v);
                 mSellerImageView = (CircleImageView) v.findViewById(R.id.seller_image_view);
@@ -248,7 +257,9 @@ public class ViewSellersDialogFragment extends DialogFragment {
                 mSellerTotalProperty = (TextView) v.findViewById(R.id.seller_total_property_text_view);
                 mSellerRating = (CustomRatingBar)v.findViewById(R.id.seller_rating);
                 mSellerCheckBox = (CheckBox)v.findViewById(R.id.fragment_dialog_contact_sellers_select_item_checkbox);
+                mCallIcon=(ImageView)v.findViewById(R.id.fragment_dialog_contact_sellers_contact_text_view);
             }
+
         }
 
         public AllSellersAdapter(List<SellerCard> sellerCards) {
@@ -299,29 +310,43 @@ public class ViewSellersDialogFragment extends DialogFragment {
             }
             holder.mSellerCheckBox.setOnCheckedChangeListener(null);
             holder.mSellerCheckBox.setChecked(sellerCard.isChecked);
-            holder.mSellerCheckBox.setTag(position +1);
+            holder.mSellerCheckBox.setTag(position + 1);
+            holder.mCallIcon.setTag(position);
             holder.mSellerCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked && getActivity() instanceof ProjectActivity){
-                        Bundle bundle=getArguments();
+                    if (isChecked && getActivity() instanceof ProjectActivity) {
+                        Bundle bundle = getArguments();
                         Properties properties = MakaanEventPayload.beginBatch();
                         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
-                        properties.put(MakaanEventPayload.LABEL, bundle.get(MakaanEventPayload.PROJECT_ID)+"_"+
-                                mSellerCards.get((int)buttonView.getTag()-1).sellerId+"_"+(int)buttonView.getTag()+"_"+ MakaanTrackerConstants.Label.checked);
+                        properties.put(MakaanEventPayload.LABEL, bundle.get(MakaanEventPayload.PROJECT_ID) + "_" +
+                                mSellerCards.get((int) buttonView.getTag() - 1).sellerId + "_" + (int) buttonView.getTag() + "_" + MakaanTrackerConstants.Label.checked);
                         MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectViewOtherSellers);
-                    }
-                    else if(getActivity() instanceof PropertyActivity){
-                        Bundle bundle=getArguments();
+                    } else if (getActivity() instanceof PropertyActivity) {
+                        Bundle bundle = getArguments();
                         Properties properties = MakaanEventPayload.beginBatch();
                         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
-                        properties.put(MakaanEventPayload.LABEL, bundle.get(MakaanEventPayload.PROJECT_ID)+"_"+
-                                mSellerCards.get((int)buttonView.getTag()-1).sellerId+"_"+(int)buttonView.getTag()+"_"+ MakaanTrackerConstants.Label.unChecked);
+                        properties.put(MakaanEventPayload.LABEL, bundle.get(MakaanEventPayload.PROJECT_ID) + "_" +
+                                mSellerCards.get((int) buttonView.getTag() - 1).sellerId + "_" + (int) buttonView.getTag() + "_" + MakaanTrackerConstants.Label.unChecked);
                         MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickPropertyViewOtherSellers);
                     }
 
                     onItemClicked(isChecked);
                     sellerCard.isChecked = isChecked;
+                }
+            });
+
+            holder.mCallIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(null!=mSellerCards.get((int)view.getTag()).contactNo){
+                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
+                                +  mSellerCards.get((int) view.getTag()).contactNo));
+                        startActivity(intent);
+                    }
+                    else {
+                        Toast.makeText(getContext(),getResources().getString(R.string.seller_not_available),Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }

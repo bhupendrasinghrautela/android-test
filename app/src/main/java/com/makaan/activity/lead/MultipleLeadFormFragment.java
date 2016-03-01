@@ -14,7 +14,10 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.makaan.R;
+import com.makaan.activity.listing.PropertyDetailFragment;
+import com.makaan.activity.listing.SerpActivity;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.request.pyr.PyrEnquiryType;
 import com.makaan.request.pyr.PyrRequest;
 import com.makaan.response.country.CountryCodeResponse;
@@ -92,11 +95,24 @@ public class MultipleLeadFormFragment extends MakaanBaseFragment {
             mPyrRequest.setCountryId(mCountryId);
             mPyrRequest.setApplicationType("MobileAndroidApp");
             mPyrRequest.setCityId(mLeadFormPresenter.getCityId());
-            mPyrRequest.setPageType(mLeadFormPresenter.getSource());
+            mPyrRequest.setPageType(null);
             mPyrRequest.setSendOtp(true);
-            mLeadFormPresenter.setPyrRequest(mPyrRequest);
+            mPyrRequest.setLocalityIds(new int[]{mLeadFormPresenter.getLocalityId().intValue()});
+            Bundle bundle =getArguments();
+            if(bundle!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
+                mPyrRequest.setListingId(mLeadFormPresenter.getProjectOrListingId());
+
+            }
+            else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName())) {
+                mPyrRequest.setProjectId(mLeadFormPresenter.getProjectOrListingId());
+
+            }
+            else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName())) {
+                mPyrRequest.setListingId(mLeadFormPresenter.getProjectOrListingId());
+            }
             mLeadFormPresenter.setName(mName.getText().toString().trim());
             mLeadFormPresenter.setPhone(mNumber.getText().toString().trim());
+            mLeadFormPresenter.setPyrRequest(mPyrRequest);
 
             String str = new Gson().toJson(mPyrRequest);
             //   Log.e("string==>> ", str);

@@ -9,8 +9,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="7dp"
-        android:layout_marginStart="7dp">
+        android:layout_marginLeft="@dimen/listing_brief_view_layout_padding_left"
+        android:layout_marginStart="@dimen/listing_brief_view_layout_padding_left">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -24,7 +24,9 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingRight="@dimen/listing_brief_view_layout_padding_rights"
+                android:paddingEnd="@dimen/listing_brief_view_layout_padding_rights">
 
                 <com.android.volley.toolbox.FadeInNetworkImageView
                     android:id="@+id/listing_brief_view_layout_property_image_view"
@@ -53,11 +55,10 @@
                     layout="@layout/wishlist_button_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginEnd="@dimen/serp_listing_card_property_shortlist_checkbox_right_margin"
                     android:layout_marginLeft="2dp"
-                    android:layout_marginRight="@dimen/serp_listing_card_property_shortlist_checkbox_right_margin"
                     android:layout_marginStart="2dp"
                     android:layout_marginTop="@dimen/serp_listing_card_property_shortlist_checkbox_top_margin" />
 

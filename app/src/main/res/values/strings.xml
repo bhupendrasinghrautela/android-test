@@ -51,6 +51,7 @@
     <string name="pyr_four_bhk_text">4</string>
     <string name="pyr_property_string">property</string>
     <string name="pyr_property_value_string">residential property apartment</string>
+
     <string name="pyr_budget_string">budget</string>
     <string name="cluster_item_group_text">we’ve grouped properties</string>
     <string name="search_by_property">search by property</string>
@@ -229,6 +230,8 @@
     <string name="get_call_later">get call later</string>
     <string name="or_now">or now</string>
     <string name="instant_call">instant call back request successful</string>
+    <string name="seller_not_available">seller number not available</string>
+    <string name="please_enter_phone_no">please enter phone no.</string>
 
     <!--Shortlist strings -->
     <string name="request_site_visit">request site visit</string>
@@ -317,6 +320,11 @@
     <string name="adapter_position">adapter position</string>
 
     <string name="default_error_message">some exception has occurred</string>
+    <string name="default_no_results_error_message">sorry, no matching results found</string>
+
+    <string name="search_residential_plot_string">residential plot</string>
+
+
 
 </resources>
 

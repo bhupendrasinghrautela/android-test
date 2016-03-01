@@ -155,8 +155,8 @@ public class LocalityFragment extends MakaanBaseFragment {
     @Subscribe
     public void onResults(LocalityByIdEvent localityByIdEvent) {
         if (null == localityByIdEvent || null != localityByIdEvent.error) {
-            showNoResults();
-            Toast.makeText(getActivity(), "locality details could not be loaded at this time. please try later.", Toast.LENGTH_LONG).show();
+            showNoResults("locality details could not be loaded at this time. please try later.");
+//            Toast.makeText(getActivity(), "locality details could not be loaded at this time. please try later.", Toast.LENGTH_LONG).show();
         } else {
             locality = localityByIdEvent.locality;
             showContent();

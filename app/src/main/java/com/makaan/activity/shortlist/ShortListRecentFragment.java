@@ -139,7 +139,9 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
                 ((TextView)view.findViewById(R.id.tv_price_value)).setText(StringUtil.getDisplayPrice(dataObject.price));
                 ((TextView)view.findViewById(R.id.tv_area)).setText(dataObject.addressLine1);
                 ((TextView)view.findViewById(R.id.tv_locality)).setText(dataObject.addressLine2);
-                if(!TextUtils.isEmpty(dataObject.phoneNo)) {
+                // TODO check below statement
+//                if(!TextUtils.isEmpty(dataObject.phoneNo)) {
+                if(!TextUtils.isEmpty(dataObject.sellerName)) {
                     view.findViewById(R.id.txt_get_call_back).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -149,6 +151,9 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
                                 intent.putExtra("score", String.valueOf(dataObject.rating));
                                 intent.putExtra("phone", "9090909090");//todo: not available in pojo
                                 intent.putExtra("id", String.valueOf(dataObject.sellerId));
+                                if(dataObject.cityId != 0) {
+                                    intent.putExtra("cityId", dataObject.cityId);
+                                }
                                 getActivity().startActivity(intent);
                             } catch (NullPointerException npe) {
                                 Toast.makeText(getActivity(), "Seller data not available", Toast.LENGTH_SHORT).show();
@@ -158,6 +163,7 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
                         }
                     });
                 }
+//                }
             }
         }
     }

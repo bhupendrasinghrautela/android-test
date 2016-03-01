@@ -4,19 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/card_margin"
-    card_view:cardCornerRadius="@dimen/card_radius">
+    card_view:cardCornerRadius="@dimen/card_radius"
+    card_view:cardPreventCornerOverlap="false">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/layout_padding">
 
         <com.android.volley.toolbox.FadeInNetworkImageView
             android:id="@+id/iv_content"
             android:layout_width="match_parent"
             android:layout_height="@dimen/fav_card_height"
-            android:scaleType="centerCrop"
             android:background="@color/Gray"
-            android:tint="@color/app_grey"/>
+            android:scaleType="centerCrop"
+            android:tint="@color/app_grey" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -73,9 +75,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_content"
             android:layout_centerHorizontal="true"
-            android:layout_margin="@dimen/layout_padding"
-            android:text="@string/get_call_back"
+            android:layout_marginTop="@dimen/layout_padding"
             android:clickable="true"
+            android:text="@string/get_call_back"
             android:textColor="@color/appThemeRed"
             android:textSize="@dimen/title_text_size" />
 

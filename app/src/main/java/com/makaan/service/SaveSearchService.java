@@ -103,6 +103,9 @@ public class SaveSearchService implements MakaanService {
      * Posts list of remaining saved searches
      **/
     public void removeSavedSearch(Long savedSearchId) {
+        if(savedSearchId == null) {
+            return;
+        }
         String getSavedSearchUrl = ApiConstants.SAVED_SEARCH_URL.concat(savedSearchId.toString());
         Type saveSearchType = new TypeToken<ArrayList<SaveSearch>>() {
         }.getType();

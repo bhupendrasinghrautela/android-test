@@ -26,6 +26,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private static final int TYPE_HEADER = 1;
     private static final int TYPE_SEARCH_ITEM = 2;
+    private static final int TYPE_ERROR = 3;
 
     List<SearchResponseItem> mSearches;
     private final Context mContext;
@@ -58,6 +59,8 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if(mSearches != null && mSearches.size() > position) {
             if(SearchSuggestionType.HEADER_TEXT.getValue().equalsIgnoreCase(mSearches.get(position).type)) {
                 return TYPE_HEADER;
+            } else if(SearchSuggestionType.ERROR.getValue().equalsIgnoreCase(mSearches.get(position).type)) {
+                return TYPE_ERROR;
             } else {
                 return TYPE_SEARCH_ITEM;
             }
@@ -67,7 +70,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType == TYPE_HEADER) {
+        if(viewType == TYPE_HEADER || viewType == TYPE_ERROR) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.search_result_header_item, parent, false);
             ViewHolder holder = new ViewHolder(view, viewType);
             return holder;
@@ -116,8 +119,8 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public void bindData(SearchResponseItem searchResponseItem) {
             this.searchResponseItem = searchResponseItem;
 
-            if(SearchSuggestionType.HEADER_TEXT.getValue().equalsIgnoreCase(searchResponseItem.type)
-                    && viewType == TYPE_HEADER) {
+            if((SearchSuggestionType.HEADER_TEXT.getValue().equalsIgnoreCase(searchResponseItem.type) && viewType == TYPE_HEADER)
+                    || (SearchSuggestionType.ERROR.getValue().equalsIgnoreCase(searchResponseItem.type) && viewType == TYPE_ERROR)) {
                 ((TextView)view.findViewById(R.id.search_result_item_name_text_view)).setText(searchResponseItem.displayText);
             } else {
 

@@ -1,45 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.makaan.ui.pyr.PyrBudgetCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/pyr_budget_card_view"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    >
+    android:orientation="vertical"
+    app:cardPreventCornerOverlap="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:orientation="horizontal">
 
 
         <LinearLayout
             android:layout_width="@dimen/pyr_budget_icon_layout_width"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical">
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="@dimen/pyr_budget_icon_width"
                 android:layout_height="@dimen/pyr_budget_icon_height"
                 android:layout_marginLeft="@dimen/pyr_budget_icon_left_margin"
-                android:src="@drawable/money_icon"/>
+                android:src="@drawable/money_icon" />
 
             <TextView
                 android:layout_width="@dimen/pyr_budget_text_width"
                 android:layout_height="@dimen/pyr_budget_text_height"
-                android:textColor="@color/black"
-                android:text="@string/pyr_budget_string"
-                android:textSize="@dimen/location_text_size"
+                android:layout_marginLeft="@dimen/pyr_budget_text_left_margin"
                 android:gravity="center_horizontal"
-                android:layout_marginLeft="@dimen/pyr_budget_text_left_margin"/>
+                android:text="@string/pyr_budget_string"
+                android:textColor="@color/black"
+                android:textSize="@dimen/location_text_size" />
         </LinearLayout>
 
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/pyr_light_grey"/>
+            android:background="@color/pyr_light_grey" />
 
         <LinearLayout
             android:id="@+id/budget_layout"
@@ -52,10 +53,10 @@
                 android:id="@+id/budget_range_seek_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/pyr_budget_seekbar_margin_right"
+                android:layout_gravity="center_vertical|center"
                 android:layout_marginLeft="@dimen/pyr_budget_seekbar_margin_left"
-                android:orientation="horizontal"
-                android:layout_gravity="center_vertical|center"/>
+                android:layout_marginRight="@dimen/pyr_budget_seekbar_margin_right"
+                android:orientation="horizontal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -64,25 +65,25 @@
                 <TextView
                     android:id="@+id/min_budget"
                     android:layout_width="0dp"
-                    android:layout_weight="0.45"
                     android:layout_height="wrap_content"
+                    android:layout_weight="0.45"
                     android:gravity="right"
-                    android:textSize="@dimen/min_budget_text_size"/>
+                    android:textSize="@dimen/min_budget_text_size" />
 
                 <View
                     android:layout_width="5dp"
                     android:layout_height="1dp"
-                    android:background="@color/listingGray"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginTop="1dp"
-                    android:layout_gravity="center_vertical"/>
+                    android:background="@color/listingGray" />
 
                 <TextView
                     android:id="@+id/max_budget"
                     android:layout_width="0dp"
-                    android:layout_weight="0.45"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:textSize="@dimen/max_budget_text_size"/>
+                    android:layout_weight="0.45"
+                    android:textSize="@dimen/max_budget_text_size" />
 
             </LinearLayout>
 

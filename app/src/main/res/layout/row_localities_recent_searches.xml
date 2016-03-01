@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="110dp"
     xmlns:font="http://schemas.android.com/tools"
-    android:layout_marginLeft="10dp"
+    android:layout_width="110dp"
     android:layout_height="100dp"
-    app:cardCornerRadius="10dp">
+    android:layout_marginLeft="10dp"
+    app:cardCornerRadius="10dp"
+    app:cardPreventCornerOverlap="false">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-       <ImageView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_alignParentRight="true"
-           android:src="@drawable/icon_recent_searches"
-           />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/icon_recent_searches" />
 
-       <com.makaan.ui.view.FontTextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_centerInParent="true"
-           android:text="Ready to move in"
-           android:id="@+id/tv_localities_recent_searches_desc"
-           android:textSize="@dimen/locality_text_v_small"
-           font:fontName="proxima.otf"
-           android:layout_marginLeft="10dp"
-           android:layout_marginRight="10dp"
-           android:gravity="center_horizontal"
-           android:textColor="@color/project_text_default"
-           android:layout_gravity="center_horizontal"
-           />
+        <com.makaan.ui.view.FontTextView
+            android:id="@+id/tv_localities_recent_searches_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_horizontal"
+            android:text="Ready to move in"
+            android:textColor="@color/project_text_default"
+            android:textSize="@dimen/locality_text_v_small"
+            font:fontName="proxima.otf" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>
