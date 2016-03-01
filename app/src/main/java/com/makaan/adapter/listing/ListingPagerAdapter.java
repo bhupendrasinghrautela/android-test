@@ -77,8 +77,8 @@ public class ListingPagerAdapter extends PagerAdapter {
             final View view =
                     mLayoutInflater.inflate(R.layout.listing_load_more_view_layout, null);
 
-            LoadMoreListingCardView listingCardView = (LoadMoreListingCardView) view;
-            listingCardView.bindView(mContext, mListener);
+//            LoadMoreListingCardView listingCardView = (LoadMoreListingCardView) view;
+//            listingCardView.bindView(mContext, mListener);
             container.addView(view);
             return view;
         } else {

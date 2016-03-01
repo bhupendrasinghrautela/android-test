@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
@@ -21,6 +22,8 @@ import com.makaan.fragment.listing.SetAlertsDialogFragment;
 import com.makaan.pojo.SelectorParser;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.response.saveSearch.SaveSearch;
+import com.makaan.service.MakaanServiceFactory;
+import com.makaan.service.SaveSearchService;
 import com.squareup.otto.Subscribe;
 
 import java.util.List;
@@ -70,10 +73,12 @@ public class SaveSearchFragment extends MakaanBaseFragment {
         private int position;
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+            private final ImageView deleteImageView;
             // each data item is just a string in this case
             public TextView saveSearchName;
             public TextView saveSearchFilter;
             public TextView saveSearchPlace;
+            public Long searchId;
 
             public ViewHolder(View v) {
                 super(v);
@@ -81,11 +86,17 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                 saveSearchName = (TextView) v.findViewById(R.id.search_name);
                 saveSearchFilter = (TextView) v.findViewById(R.id.filter_name);
                 saveSearchPlace = (TextView) v.findViewById(R.id.place_name);
+                deleteImageView = (ImageView) v.findViewById(R.id.iv_cancel);
+                deleteImageView.setOnClickListener(this);
             }
 
             @Override
             public void onClick(View v) {
-                if(savedSearches != null && savedSearches.size() > position) {
+                if(v instanceof ImageView) {
+                    if(searchId != null) {
+                        ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).removeSavedSearch(searchId);
+                    }
+                } else if(savedSearches != null && savedSearches.size() > position) {
                     SerpRequest request = new SerpRequest(SerpActivity.TYPE_SUGGESTION);
                     request.launchSerp(getActivity(), savedSearches.get(position).searchQuery);
                 }
@@ -109,6 +120,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
         public void onBindViewHolder(ViewHolder holder, int position) {
             this.position = position;
             String name = savedSearches.get(position).name;
+            holder.searchId = savedSearches.get(position).id;
             if(!TextUtils.isEmpty(name)) {
                 int semiIndex = name.indexOf(";");
                 String finalName = name;

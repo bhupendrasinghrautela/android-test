@@ -730,7 +730,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
 
         }
-        onBackPressed();
+//        onBackPressed();
+        finish();
     }
 
     @Override
@@ -762,7 +763,9 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         return false;
     }
 
-    @OnClick({R.id.activity_search_base_layout_search_bar_search_image_button, R.id.activity_search_base_layout_search_bar_search_text_view})
+    @OnClick({R.id.activity_search_base_layout_search_bar_search_image_button,
+            R.id.activity_search_base_layout_search_bar_search_text_view,
+            R.id.activity_search_base_layout_search_bar_description_relative_view})
     public void onSearchPressed(View view) {
         setSearchViewVisibility(true);
     }
@@ -870,10 +873,10 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
                             @Override
                             public void onAnimationEnd(Animator animation) {
-                                if(mSearchDescriptionRelativeView != null) {
+                                if (mSearchDescriptionRelativeView != null) {
                                     mSearchDescriptionRelativeView.setVisibility(View.VISIBLE);
                                 }
-                                if(mSearchRelativeView != null) {
+                                if (mSearchRelativeView != null) {
                                     mSearchRelativeView.setVisibility(View.GONE);
                                 }
                             }
@@ -947,7 +950,10 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                     }
                     showSearchResults();
                 } else {
+                    clearSelectedSearches();
+                    addNearbyPropertiesSearchItem();
                     // we need empty layout even when no search results are present
+                    mSearchAdapter.setData(mAvailableSearches, false);
                     showSearchResults();
                 }
             }
@@ -975,6 +981,18 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         }
     }
 
+    private void addErrorSearchItem(String message) {
+        SearchResponseItem item = new SearchResponseItem();
+        item.type = SearchSuggestionType.ERROR.getValue();
+        if(TextUtils.isEmpty(message)) {
+            item.displayText = this.getResources().getString(R.string.default_error_message);
+        } else {
+            item.displayText = message;
+        }
+        mAvailableSearches.clear();
+        mAvailableSearches.add(0, item);
+    }
+
     /*private void setSearchResultFrameLayoutVisibility(boolean visible) {
         mSearchResultFrameLayout.setVisibility(visible ? View.VISIBLE : View.GONE);
         if(visible) {
@@ -989,6 +1007,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     public void onResults(SearchResultEvent searchResultEvent) {
         if(null==searchResultEvent || null!=searchResultEvent.error) {
             //TODO handle error
+            addErrorSearchItem(this.getResources().getString(R.string.default_error_message));
+            mSearchAdapter.setData(mAvailableSearches, true);
             return;
         }
         
@@ -1000,6 +1020,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             clearSelectedSearches();
             if(TextUtils.isEmpty(mSearchEditText.getText())) {
                 addNearbyPropertiesSearchItem();
+            } else if(this.mSearches.size() == 0) {
+                addErrorSearchItem(this.getResources().getString(R.string.default_no_results_error_message));
             }
             mSearchAdapter.setData(mAvailableSearches, false);
         }
@@ -1046,13 +1068,17 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 Log.d("DEBUG", editable.toString());
                 // if selected search adapter has items already, then it means there is some locality already selected
                 // so we need to search for localities only in the selected city
-                if(mSelectedSearchAdapter.getItemCount() > 0) {
-                    service.getSearchResults(editable.toString(), (mSerpContext == SERP_CONTEXT_BUY ? "buy" : "rent"),
-                            mSelectedSearches.get(0).city, new SearchType[] {SearchType.LOCALITY, SearchType.SUBURB}, false);
-                } else {
-                    // search for everything everywhere
-                    service.getSearchResults(editable.toString(), (mSerpContext == SERP_CONTEXT_BUY ? "buy" : "rent"),
-                            null, SearchType.ALL, true);
+                if(mSelectedSearchAdapter != null) {
+                    if (mSelectedSearchAdapter.getItemCount() > 0) {
+                        if(mSelectedSearches != null) {
+                            service.getSearchResults(editable.toString(), (mSerpContext == SERP_CONTEXT_BUY ? "buy" : "rent"),
+                                    mSelectedSearches.get(0).city, new SearchType[]{SearchType.LOCALITY, SearchType.SUBURB}, false);
+                        }
+                    } else {
+                        // search for everything everywhere
+                        service.getSearchResults(editable.toString(), (mSerpContext == SERP_CONTEXT_BUY ? "buy" : "rent"),
+                                null, SearchType.ALL, true);
+                    }
                 }
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
@@ -1062,6 +1088,9 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         } else {
 //            mSearchResultFrameLayout.setVisibility(View.GONE);
             // show recent searches as there is no text in the search view
+            if(mSearches != null) {
+                mSearches.clear();
+            }
             showEmptySearchResults();
 
             mDeleteButton.setBackgroundResource(R.drawable.search_white);
@@ -1103,8 +1132,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 }
             }
 
-            clearSelectedSearches();
-            mSearchAdapter.setData(mAvailableSearches, !mSearchResultReceived);
+            showEmptySearchResults();
         }
     }
 

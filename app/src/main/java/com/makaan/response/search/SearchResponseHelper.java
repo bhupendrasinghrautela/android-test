@@ -194,6 +194,9 @@ public class SearchResponseHelper {
         } else if (SearchSuggestionType.HEADER_TEXT.getValue().equalsIgnoreCase(searchResponseItem.type)) {
             return "header";
 
+        } else if (SearchSuggestionType.ERROR.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+            return "error";
+
         }
 
         Map<String,ApiLabel> searchResultType = MasterDataCache.getInstance().getSearchTypeMap();

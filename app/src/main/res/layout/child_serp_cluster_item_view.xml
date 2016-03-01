@@ -2,7 +2,7 @@
 <com.makaan.ui.listing.ChildSerpGroupListingItemView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/child_serp_cluster_card_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_gravity="center">
 
     <RelativeLayout
@@ -17,7 +17,8 @@
             android:layout_marginTop="@dimen/child_serp_cluster_card_price_margin_top"
             android:text="40 | 45 L"
             android:textColor="@color/black"
-            android:textSize="@dimen/child_serp_cluster_card_price_text_size"/>
+            android:textSize="@dimen/child_serp_cluster_card_price_text_size"
+            android:layout_alignParentTop="true"/>
 
         <TextView
             android:id="@+id/child_serp_cluster_card_address_text_view"

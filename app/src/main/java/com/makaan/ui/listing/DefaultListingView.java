@@ -277,7 +277,8 @@ public class DefaultListingView extends AbstractListingView {
         }
 
         // set property address info {project_name},{localityName}_{cityName}
-        if(!TextUtils.isEmpty(mListing.project.name) && !"project".equalsIgnoreCase(mListing.project.name)) {
+        if(!TextUtils.isEmpty(mListing.project.name)
+                && (mListing.project.activeStatus == null || !"dummy".equalsIgnoreCase(mListing.project.activeStatus))) {
             if(!TextUtils.isEmpty(mListing.project.builderName)) {
                 mPropertyAddressTextView.setText(String.format("%s %s, %s, %s", mListing.project.builderName,
                         mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase());
@@ -625,7 +626,8 @@ public class DefaultListingView extends AbstractListingView {
 
     @OnClick(R.id.serp_default_listing_property_address_frame_layout)
     public void onProjectClicked(View view) {
-        if(!TextUtils.isEmpty(mListing.project.name) && !"project".equalsIgnoreCase(mListing.project.name)) {
+        if(!TextUtils.isEmpty(mListing.project.name)
+                && (mListing.project.activeStatus == null || !"dummy".equalsIgnoreCase(mListing.project.activeStatus))) {
             if (mListing.projectId != null && mListing.projectId != 0) {
                 Bundle bundle = new Bundle();
                 bundle.putLong(ProjectActivity.PROJECT_ID, mListing.projectId);

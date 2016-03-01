@@ -6,4 +6,5 @@
         android:color="@color/bedroom_circular_stroke" />
     <size android:height="@dimen/bedroom_toggle_button_width_height"
         android:width="@dimen/bedroom_toggle_button_width_height"/>
+    <solid android:color="@android:color/transparent" />
 </shape>

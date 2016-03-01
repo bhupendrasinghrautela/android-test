@@ -89,9 +89,9 @@ public class ListingParser {
                     listing.size = property.optDouble(SIZE);
                     listing.measure = property.optString(MEASURE);
                     if ((listing.size == Math.floor(listing.size)) && !Double.isInfinite(listing.size)) {
-                        listing.sizeInfo = listing.size > 0 ? String.valueOf(listing.size.intValue()).concat(" ").concat(listing.measure) : null;
+                        listing.sizeInfo = listing.size > 0 ? String.valueOf(StringUtil.getFormattedNumber(listing.size.intValue())).concat(" ").concat(listing.measure) : null;
                     } else {
-                        listing.sizeInfo = listing.size > 0 ? listing.size.toString().concat(" ").concat(listing.measure) : null;
+                        listing.sizeInfo = listing.size > 0 ? StringUtil.getFormattedNumber(listing.size).concat(" ").concat(listing.measure) : null;
                     }
 
 
@@ -134,6 +134,7 @@ public class ListingParser {
                     //if (null != propertyStatus && propertyStatus.equalsIgnoreCase(ACTUAL_PROPERTY_STATUS)) {
                     listing.project.actual = true;
                     listing.project.name = project.optString(NAME);
+                    listing.project.activeStatus = project.optString(ACTIVE_STATUS);
                     //listing.project.fullName = project.optString(NAME);
                     listing.project.url = project.optString(URL);
                     if (null != builder) {

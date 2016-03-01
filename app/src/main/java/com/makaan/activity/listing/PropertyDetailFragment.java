@@ -528,11 +528,19 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
         int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_width);
         int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_height);
         mAllSellerLayout.setVisibility(View.VISIBLE);
-        mSellerLogoTextView.setText(String.valueOf(company.name.charAt(0)));
         mSellerName.setText(String.format("%s(%s)", company.name, company.type));
         User user = mListingDetail.companySeller!=null?mListingDetail.companySeller.user:null;
         if(!company.assist){
             mSellerAssistButton.setVisibility(View.GONE);
+        }
+        if(!TextUtils.isEmpty(company.name)) {
+            mSellerLogoTextView.setText(String.valueOf(company.name.charAt(0)));
+        } else if(user != null) {
+            if(!TextUtils.isEmpty(user.fullName)) {
+                mSellerLogoTextView.setText(String.valueOf(user.fullName.charAt(0)));
+            } else if(!TextUtils.isEmpty(user.name)) {
+                mSellerLogoTextView.setText(String.valueOf(user.name.charAt(0)));
+            }
         }
         if(!TextUtils.isEmpty(company.logo)) {
             mSellerLogoTextView.setVisibility(View.GONE);

@@ -320,6 +320,7 @@
     <string name="adapter_position">adapter position</string>
 
     <string name="default_error_message">some exception has occurred</string>
+    <string name="default_no_results_error_message">sorry, no matching results found</string>
 
     <string name="search_residential_plot_string">residential plot</string>
 
