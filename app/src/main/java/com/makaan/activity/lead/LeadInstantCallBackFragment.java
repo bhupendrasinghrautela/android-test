@@ -1,16 +1,15 @@
 package com.makaan.activity.lead;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,7 +22,6 @@ import com.makaan.activity.listing.PropertyDetailFragment;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
-import com.makaan.event.MakaanEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.network.MakaanNetworkClient;
@@ -31,7 +29,6 @@ import com.makaan.response.country.CountryCodeResponse;
 import com.makaan.response.leadForm.InstantCallbackResponse;
 import com.makaan.service.LeadInstantCallbackService;
 import com.makaan.service.MakaanServiceFactory;
-import com.makaan.util.AppBus;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.JsonParser;
 import com.makaan.util.StringUtil;
@@ -46,7 +43,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -156,9 +152,10 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
         }
     }
 
-    @OnClick(R.id.tv_get_callback_later)
+    @OnClick(R.id.tv_get_call_now)
     void getCallBackLaterClick() {
-        LeadFormPresenter.getLeadFormPresenter().showLeadLaterCallBAckFragment();
+        getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        LeadFormPresenter.getLeadFormPresenter().showLeadCallNowFragment();
     }
 
     void initializeCountrySpinner() {

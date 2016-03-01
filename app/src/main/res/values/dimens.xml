@@ -451,6 +451,8 @@
     <dimen name="serp_listing_cluster_card_home_image_view_margin_top">-12dp</dimen>
     <dimen name="serp_listing_cluster_card_home_image_view_width">95dp</dimen>
     <dimen name="serp_listing_cluster_card_home_image_view_height">76dp</dimen>
+    <dimen name="serp_set_alert_button_left_right_padding">3dp</dimen>
+    <dimen name="serp_set_alert_button_top_bottom_padding">-5dp</dimen>
 
     <dimen name="fragment_listing_total_properties_text_view_margin_left">20dp</dimen>
     <dimen name="fragment_listing_total_properties_text_view_margin_right">20dp</dimen>
@@ -1154,6 +1156,7 @@
     <dimen name="lead_call_now_seller_name_margin_bottom">2dp</dimen>
     <dimen name="lead_call_now_seller_name_text_size">22sp</dimen>
     <dimen name="lead_instant_call_left_right_padding">15dp</dimen>
+    <dimen name="share_your_details_text_size">18sp</dimen>
 
     <!--Shortlist card dimensions-->
     <dimen name="fav_card_height">220dp</dimen>

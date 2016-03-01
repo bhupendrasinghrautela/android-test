@@ -170,11 +170,11 @@
             android:textColor="@android:color/white" />
 
         <TextView
-            android:id="@+id/tv_do_call_now"
-            android:text="@string/or_now"
+            android:id="@+id/tv_do_connect_now"
+            android:text="@string/connect_now"
             android:layout_marginTop="@dimen/lead_form_later_margin_bottom"
             android:textColor="@color/appThemeRed"
-            android:textSize="@dimen/seller_name_text_size"
+            android:textSize="@dimen/share_your_details_text_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
