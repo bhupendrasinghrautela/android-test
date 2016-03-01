@@ -76,7 +76,10 @@ public class LoginFragment extends Fragment {
         mSignUptext=(TextView) view.findViewById(R.id.tv_signup);
         String text = "<font color=#000000>new to makaan?</font><font color=#e71c28> sign up!</font>";
         mSignUptext.setText(Html.fromHtml(text), TextView.BufferType.SPANNABLE);
-
+        if(CookiePreferences.getUserName(getActivity()).length()>0 && CookiePreferences.getPassword(getActivity()).length()>0){
+            mEditTextEmail.setText(CookiePreferences.getUserName(getActivity()));
+            mEditTextPassword.setText(CookiePreferences.getPassword(getActivity()));
+        }
         return view;
     }
 

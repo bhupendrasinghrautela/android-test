@@ -82,6 +82,7 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
         mEditTextFirstDigit.addTextChangedListener(firstDigitWatcher);
         mEditTextSecondDigit.addTextChangedListener(secondDigitWatcher);
         mEditTextThirdDigit.addTextChangedListener(thirdDigitWatcher);
+        mEditTextFourthDigit.addTextChangedListener(fourthDigitWatcher);
         return view;
     }
 
@@ -236,6 +237,8 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
             if(s.toString().length()>0)
             {
                 mEditTextThirdDigit.requestFocus();
+            }else {
+                mEditTextFirstDigit.requestFocus();
             }
         }
 
@@ -244,6 +247,7 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
 
         }
     };
+
 
     private final TextWatcher thirdDigitWatcher = new TextWatcher() {
 
@@ -257,12 +261,38 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
             if(s.length()>0)
             {
                 mEditTextFourthDigit.requestFocus();
+            }else{
+                mEditTextSecondDigit.requestFocus();
             }
         }
 
         @Override
         public void afterTextChanged(Editable s) {
 
+        }
+    };
+
+    private final TextWatcher fourthDigitWatcher = new TextWatcher() {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if(s.length()==0)
+            {
+                mEditTextThirdDigit.requestFocus();
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if(s.length()==0)
+            {
+                mEditTextThirdDigit.requestFocus();
+            }
         }
     };
 

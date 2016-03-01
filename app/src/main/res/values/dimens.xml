@@ -920,7 +920,7 @@
     <dimen name="locality_seperator_left_margin">20dp</dimen>
     <dimen name="locality_seperator_height">1dp</dimen>
     <dimen name="locality_about_median_rent_top_margin">22dp</dimen>
-    <dimen name="locality_kyn_recycler_height">340dp</dimen>
+    <dimen name="locality_kyn_recycler_height">360dp</dimen>
     <dimen name="locality_text_big">20sp</dimen>
     <dimen name="locality_kyn_margin_bottom">15dp</dimen>
     <dimen name="locality_kyn_margin_top">20dp</dimen>
@@ -1087,9 +1087,11 @@
     <dimen name="plain_link_card_message_padding_left_right">10dp</dimen>
     <dimen name="plain_link_card_message_text_size">16sp</dimen>
     <dimen name="project_config_item_margin">10dp</dimen>
-    <dimen name="project_config_item_stroke_width">0.5dp</dimen>
+    <dimen name="project_config_item_stroke_width">1px</dimen>
     <dimen name="project_config_label_margin">15dp</dimen>
     <dimen name="project_config_pager_height">340dp</dimen>
+    <dimen name="project_config_item_corners">5dp</dimen>
+
 
 
     <dimen name="project_basic_detail_top_margin">20dp</dimen>
@@ -1374,6 +1376,8 @@
     <dimen name="fragment_child_serp_cluster_relative_view_padding_bottom">8dp</dimen>
 
     <dimen name="fragment_child_serp_cluster_view_pager_height">48dp</dimen>
+    <dimen name="project_timeline_bottom_margin">10dp</dimen>
+
 
     <dimen name="temporary_card_view_radius">1px</dimen>
     <dimen name="temporary_card_view_elevation">1px</dimen>
