@@ -17,9 +17,9 @@ import butterknife.OnClick;
  * Created by rohitgarg on 2/10/16.
  */
 public class LoadMoreListingCardView extends BaseCardView<ListingPagerAdapter.PaginationListener> {
-    @Bind(R.id.listing_load_more_view_layout_button)
+//    @Bind(R.id.listing_load_more_view_layout_button)
     Button mLoadMoreButton;
-    @Bind(R.id.listing_load_more_view_layout_progress_bar)
+//    @Bind(R.id.listing_load_more_view_layout_progress_bar)
     ProgressBar mProgressBar;
 
     private ListingPagerAdapter.PaginationListener mListener;
@@ -49,7 +49,7 @@ public class LoadMoreListingCardView extends BaseCardView<ListingPagerAdapter.Pa
         mLoadMoreButton.setVisibility(View.VISIBLE);
     }
 
-    @OnClick(R.id.listing_load_more_view_layout_button)
+//    @OnClick(R.id.listing_load_more_view_layout_button)
     public void onLoadMoreClicked(View view) {
         if(mListener != null) {
             mListener.onLoadMoreItems();

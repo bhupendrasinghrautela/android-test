@@ -96,7 +96,7 @@ public class AnalyticsService implements MakaanService {
 
 
     private String getUrl(){
-        return "https://marketplace-qa.makaan-ws.com/apis/mpAnalytics";
+        return ApiConstants.BASE_URL+"/apis/mpAnalytics";
     }
 
 }

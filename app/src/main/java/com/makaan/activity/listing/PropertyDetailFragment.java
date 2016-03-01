@@ -191,7 +191,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
             Bundle args = getArguments();
             Bundle bundle=new Bundle();
             bundle.putString(MakaanEventPayload.PROJECT_ID, String.valueOf(args.getLong(KeyUtil.LISTING_ID)));
-
+            bundle.putString("source", PropertyDetailFragment.class.getName());
             if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.project!=null &&
                     mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.cityId!=null) {
                 bundle.putLong("cityId", mListingDetail.property.project.locality.cityId);
@@ -203,11 +203,19 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
                     mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.label!=null) {
                 bundle.putString("locality", String.valueOf(mListingDetail.property.project.locality.label));
             }
+            if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.project!=null &&
+                    mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.localityId != null) {
+                bundle.putLong("localityId", mListingDetail.property.project.locality.localityId);
+            }
             if(Area!=null){
                 bundle.putString("area", Area);
             }
             if(bhkAndUnitType!=null){
                 bundle.putString("bhkAndUnitType", bhkAndUnitType);
+            }
+            if(mListingDetail!=null && mListingDetail.companySeller!=null && mListingDetail.companySeller.company!=null
+                    && mListingDetail.companySeller.company.logo != null) {
+                bundle.putString("sellerImageUrl", mListingDetail.companySeller.company.logo);
             }
             viewSellersDialogFragment.setArguments(bundle);
             viewSellersDialogFragment.bindView(mSellerCards);
@@ -251,11 +259,18 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
                         mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.label!=null) {
                     intent.putExtra("locality", mListingDetail.property.project.locality.cityId);
                 }
+                if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.project!=null &&
+                        mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.localityId!=null) {
+                    intent.putExtra("localityId", mListingDetail.property.project.locality.localityId);
+                }
                 if(Area!=null){
                     intent.putExtra("area",Area);
                 }
                 if(bhkAndUnitType!=null){
                     intent.putExtra("bhkAndUnitType", bhkAndUnitType);
+                }
+                if(!TextUtils.isEmpty(company.logo)){
+                    intent.putExtra("sellerImageUrl", company.logo);
                 }
 
                 getActivity().startActivity(intent);
@@ -441,9 +456,12 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
             bhkAndUnitType=(listingDetail.property.bedrooms + "bhk " +
                     (property.unitType != null ? property.unitType : "")).toLowerCase();
 
-            if(getActivity() instanceof MakaanBaseSearchActivity) {
-                getActivity().setTitle((listingDetail.property.bedrooms + " bhk " +
-                        (property.unitType != null ? property.unitType : "")).toLowerCase());
+            if (getActivity() instanceof MakaanBaseSearchActivity) {
+                if (listingDetail.property.bedrooms == 0)
+                    getActivity().setTitle(getActivity().getString(R.string.search_residential_plot_string));
+                else
+                    getActivity().setTitle((listingDetail.property.bedrooms + " bhk " +
+                            (property.unitType != null ? property.unitType : "")).toLowerCase());
             }
             Area=(property.size != null ? StringUtil.getFormattedNumber(property.size) : "") + " " +
                     (property.measure != null ? property.measure : "");
@@ -515,11 +533,19 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
         int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_width);
         int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_height);
         mAllSellerLayout.setVisibility(View.VISIBLE);
-        mSellerLogoTextView.setText(String.valueOf(company.name.charAt(0)));
         mSellerName.setText(String.format("%s(%s)", company.name, company.type));
         User user = mListingDetail.companySeller!=null?mListingDetail.companySeller.user:null;
         if(!company.assist){
             mSellerAssistButton.setVisibility(View.GONE);
+        }
+        if(!TextUtils.isEmpty(company.name)) {
+            mSellerLogoTextView.setText(String.valueOf(company.name.charAt(0)));
+        } else if(user != null) {
+            if(!TextUtils.isEmpty(user.fullName)) {
+                mSellerLogoTextView.setText(String.valueOf(user.fullName.charAt(0)));
+            } else if(!TextUtils.isEmpty(user.name)) {
+                mSellerLogoTextView.setText(String.valueOf(user.name.charAt(0)));
+            }
         }
         if(!TextUtils.isEmpty(company.logo)) {
             mSellerLogoTextView.setVisibility(View.GONE);

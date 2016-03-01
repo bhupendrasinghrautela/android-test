@@ -14,7 +14,8 @@
         android:background="@color/cardview_light_background"
         app:cardCornerRadius="0dp"
         app:cardElevation="@dimen/card_elevation_small"
-        android:padding="6dp">
+        android:padding="6dp"
+        app:cardPreventCornerOverlap="false">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

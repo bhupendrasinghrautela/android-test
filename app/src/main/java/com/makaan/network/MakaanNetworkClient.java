@@ -241,8 +241,11 @@ public class MakaanNetworkClient {
 
                                     objectGetCallback.onSuccess(objResponse);
 
-                                } catch (JSONException e) {
-                                    Log.e(TAG, "JSONException", e);
+                                } catch (JSONException | JsonSyntaxException | IllegalArgumentException e) {
+//                                    Log.e(TAG, "JSONException", e);
+                                    Crashlytics.log(inputUrl);
+                                    Crashlytics.logException(e);
+                                    objectGetCallback.onError(getResponseError(new VolleyError()));
                                 }
                             }
                         }
@@ -378,7 +381,8 @@ public class MakaanNetworkClient {
                                 objectGetCallback.onSuccess(objResponse);
 
                             } catch (JSONException | JsonSyntaxException | IllegalArgumentException e) {
-                                Log.e(TAG, "JSONException", e);
+//                                Log.e(TAG, "JSONException", e);
+                                Crashlytics.log(url);
                                 Crashlytics.logException(e);
                                 objectGetCallback.onError(getResponseError(new VolleyError()));
                             }

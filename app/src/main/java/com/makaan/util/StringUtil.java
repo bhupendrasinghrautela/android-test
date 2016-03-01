@@ -21,7 +21,7 @@ import java.util.Locale;
  */
 public class StringUtil {
 
-    private static NumberFormat numberFormatter = NumberFormat.getNumberInstance(new Locale("hi", "IN"));
+    private static NumberFormat numberFormatter = NumberFormat.getNumberInstance(new Locale("en", "IN"));
 
     public static String convertStringArrayToSingleString(List<String >stringList,String delimiter){
         if(stringList == null || stringList.isEmpty() || delimiter == null){

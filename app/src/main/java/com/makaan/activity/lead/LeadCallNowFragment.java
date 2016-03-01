@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.listing.PropertyDetailFragment;
 import com.makaan.activity.listing.SerpActivity;
@@ -16,6 +18,8 @@ import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.project.ProjectFragment;
+import com.makaan.network.MakaanNetworkClient;
+import com.makaan.util.ImageUtils;
 import com.segment.analytics.Properties;
 
 import butterknife.Bind;
@@ -33,6 +37,11 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
     RatingBar mRatingBarSeller;
     @Bind(R.id.btn_call)
     Button mButtonCall;
+    @Bind(R.id.iv_seller_name)
+    TextView mSellerNameProfileText;
+    @Bind(R.id.iv_seller_image_call_now)
+    de.hdodenhof.circleimageview.CircleImageView mSellerImage;
+
     @Override
     protected int getContentViewId() {
         return R.layout.layout_lead_call_now;
@@ -59,6 +68,7 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
             mButtonCall.setText("NA");
             mButtonCall.setClickable(false);
         }
+        setSellerImage();
     }
 
     @OnClick(R.id.btn_call)
@@ -88,7 +98,7 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
         startActivity(intent);
     }
 
-    @OnClick(R.id.tv_get_callback)
+    @OnClick(R.id.tv_share_your_deatils)
     void getCallBackClick(){
         Bundle bundle =getArguments();
         if(bundle!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
@@ -109,6 +119,38 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBackFromSeller);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickPropertyCallConnect);
         }
-        LeadFormPresenter.getLeadFormPresenter().showLeadInstantCallBackFragment();
+        LeadFormPresenter.getLeadFormPresenter().showLeadLaterCallBAckFragment();
     }
+
+    public void setSellerImage() {
+        mSellerNameProfileText.setVisibility(View.GONE);
+        mSellerImage.setVisibility(View.VISIBLE);
+        int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_width);
+        int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_height);
+        if (null != mLeadFormPresenter.getSellerImageUrl()) {
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(mLeadFormPresenter.getSellerImageUrl(),
+                    width, height, false), new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
+                    if (b && imageContainer.getBitmap() == null) {
+                        return;
+                    }
+                    mSellerImage.setImageBitmap(imageContainer.getBitmap());
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    mSellerImage.setVisibility(View.INVISIBLE);
+                    mSellerNameProfileText.setVisibility(View.VISIBLE);
+                    mSellerNameProfileText.setText(mLeadFormPresenter.getName());
+                }
+            });
+        }
+        else {
+            mSellerImage.setVisibility(View.INVISIBLE);
+            mSellerNameProfileText.setVisibility(View.VISIBLE);
+            mSellerNameProfileText.setText(mLeadFormPresenter.getName());
+        }
+    }
+
 }

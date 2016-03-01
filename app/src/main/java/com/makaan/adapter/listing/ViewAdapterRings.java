@@ -66,7 +66,6 @@ public class ViewAdapterRings extends BaseAdapter implements CompoundButton.OnCh
             holder.view = convertView;
             holder.pos = position;
             convertView.setTag(holder);
-
             ((ToggleButton)holder.view).setOnCheckedChangeListener(null);
             ((ToggleButton) holder.view).setTextOn(String.valueOf(this.getItem(position).displayName));
             ((ToggleButton) holder.view).setTextOff(String.valueOf(this.getItem(position).displayName));

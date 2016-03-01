@@ -50,6 +50,7 @@ public class Project {
     //public ArrayList<ProjectSpecification> resiProjectSpecifications;
 
     public HashMap<String, Object> specifications;
+    public String activeStatus;
 
 
     public HashMap<String, ArrayList<SpecificaitonsUI>> getFormattedSpecifications() {

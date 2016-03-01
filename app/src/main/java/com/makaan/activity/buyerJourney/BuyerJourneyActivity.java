@@ -26,6 +26,7 @@ import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.LeadPhaseConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
@@ -354,7 +355,8 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
     public void onLogoutResult(UserLogoutEvent userLogoutEvent){
         if(null!=userLogoutEvent && userLogoutEvent.isLogoutSuccessfull()){
             CookiePreferences.setUserLoggedOut(this);
-            CookiePreferences.setUserInfo(this,null);
+            CookiePreferences.setUserInfo(this, null);
+            MasterDataCache.getInstance().clearSavedSearches();
             //TODO also clear metadata and userinfo
             finish();
         }else{

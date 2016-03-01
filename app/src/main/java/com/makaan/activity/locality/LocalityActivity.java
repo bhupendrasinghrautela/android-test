@@ -110,7 +110,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
 
     @Subscribe
     public void onResults(LocalityByIdEvent localityByIdEvent) {
-        if (null != localityByIdEvent || null != localityByIdEvent.locality) {
+        if (null != localityByIdEvent && null != localityByIdEvent.locality) {
 
             PageTag pageTag = new PageTag();
             pageTag.addLocality(localityByIdEvent.locality.label);

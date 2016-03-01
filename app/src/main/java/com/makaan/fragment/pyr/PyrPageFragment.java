@@ -122,10 +122,12 @@ public class PyrPageFragment extends Fragment {
 
 
         //User data prefill
-        try{
-            UserResponse userResponse = CookiePreferences.getLastUserInfo(getContext());
-            mUserName.setText(userResponse.getData().firstName);
-            mUserEmail.setText(userResponse.getData().email);
+        try {
+            if (CookiePreferences.isUserLoggedIn(getContext())) {
+                UserResponse userResponse = CookiePreferences.getLastUserInfo(getContext());
+                mUserName.setText(userResponse.getData().firstName);
+                mUserEmail.setText(userResponse.getData().email);
+            }
         }catch (Exception e){}
 
         try {
@@ -277,7 +279,9 @@ public class PyrPageFragment extends Fragment {
         super.onResume();
         setPropertyCount();
         setLocaityInfo();
-        setUserInfo();
+        if (CookiePreferences.isUserLoggedIn(getContext())) {
+            setUserInfo();
+        }
     }
 
     @OnTextChanged(R.id.pyr_page_name)

@@ -67,6 +67,9 @@ public class SellerListingView extends AbstractCardListingView {
     @Bind(R.id.serp_listing_item_seller_content_linear_layout)
     LinearLayout mSellerContentLinearLayout;
 
+    @Bind(R.id.serp_listing_item_seller_experience_label_text_view)
+    View mExperienceLabelView;
+
     private Listing mListing;
 
     public SellerListingView(Context context) {
@@ -131,18 +134,28 @@ public class SellerListingView extends AbstractCardListingView {
                     builder.append(categoryWiseCount.listingCategoryType.toLowerCase());
                     amp = " & ";
                 }
-                mSellerPropertiesCountTextView.setText(String.format("%d properties", properties));
+                if(properties != 0) {
+                    mSellerPropertiesCountTextView.setText(String.format("%d properties", properties));
+                } else {
+                    mSellerPropertiesCountTextView.setText("na");
+                }
                 mSellerTypeTextView.setText(builder.toString());
             }
-            mSellerProjectCountTextView.setText(String.format("%d projects", seller.sellers.get(0).companyUser.sellerListingData.projectCount));
+            if(seller.sellers.get(0).companyUser.sellerListingData.projectCount != 0) {
+                mSellerProjectCountTextView.setText(String.format("%d projects", seller.sellers.get(0).companyUser.sellerListingData.projectCount));
+            } else {
+                mSellerProjectCountTextView.setText("na");
+            }
         }
 
         mSellerCompanyNameTextView.setText(seller.name);
 
-        if(seller.activeSince != null) {
+        if(seller.activeSince != null && seller.activeSince != 0) {
+            mExperienceLabelView.setVisibility(View.VISIBLE);
             mSellerExperienceTextView.setVisibility(View.VISIBLE);
             mSellerExperienceTextView.setText(StringUtil.getAgeFromTimeStamp(seller.activeSince, Calendar.YEAR));
         } else {
+            mExperienceLabelView.setVisibility(View.INVISIBLE);
             mSellerExperienceTextView.setVisibility(View.INVISIBLE);
         }
 

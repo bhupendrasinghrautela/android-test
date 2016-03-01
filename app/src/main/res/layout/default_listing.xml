@@ -30,7 +30,9 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/serp_listing_card_padding_right"
+                    android:paddingEnd="@dimen/serp_listing_card_padding_right">
 
                     <com.android.volley.toolbox.FadeInNetworkImageView
                         android:id="@+id/serp_default_listing_property_image_image_view"
@@ -61,14 +63,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:layout_marginEnd="@dimen/serp_listing_card_property_shortlist_checkbox_right_margin"
                         android:layout_marginLeft="2dp"
-                        android:layout_marginRight="@dimen/serp_listing_card_property_shortlist_checkbox_right_margin"
                         android:layout_marginStart="2dp"
-                        android:layout_marginTop="@dimen/serp_listing_card_property_shortlist_checkbox_top_margin"
-                        android:background="@drawable/shortlist_checkbox_selector"
-                        android:button="@null"
-                        android:padding="4dp" />
+                        android:layout_marginTop="@dimen/serp_listing_card_property_shortlist_checkbox_top_margin" />
 
                     <TextView
                         android:id="@+id/serp_default_listing_property_price_text_view"

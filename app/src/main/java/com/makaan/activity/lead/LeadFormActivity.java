@@ -18,6 +18,7 @@ import com.makaan.fragment.pyr.PyrPagePresenter;
 import com.makaan.network.VolleyErrorParser;
 import com.makaan.response.leadForm.InstantCallbackResponse;
 import com.makaan.response.pyr.PyrPostResponse;
+import com.makaan.util.KeyUtil;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
@@ -29,11 +30,10 @@ import butterknife.OnClick;
  * Created by makaanuser on 23/1/16.
  */
 public class LeadFormActivity extends MakaanFragmentActivity implements LeadFormReplaceFragment {
-    public static final String LISTING_ID = "listingId";
     public static final int LEAD_DROP_REQUEST = 3001;
     private FragmentTransaction mFragmentTransaction;
     private LeadFormPresenter mLeadFormPresenter;
-    private int mListingId = -1;
+    private long mListingId = -1;
     public String source;
     private boolean multipleSellers=false;
     @Override
@@ -46,7 +46,7 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
      */
     @OnClick(R.id.btn_back_toolbar)
     public void onToolbarBack(){
-        this.onBackPressed();
+        finish();
     }
 
     @Override
@@ -64,12 +64,22 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
         source=this.getIntent().getExtras().getString("source");
         int cityId= (int) this.getIntent().getExtras().getLong("cityId");
         Long projectOrListingId=this.getIntent().getExtras().getLong("listingId");
+        Long localityId=this.getIntent().getExtras().getLong("localityId");
+        String sellerImgUrl=this.getIntent().getExtras().getString("sellerImageUrl");
         mLeadFormPresenter = LeadFormPresenter.getLeadFormPresenter();
         mLeadFormPresenter.setId(id);
         mLeadFormPresenter.setName(name);
         mLeadFormPresenter.setPhone(phone);
         mLeadFormPresenter.setScore(score);
         mLeadFormPresenter.setReplaceFragment(this);
+        mLeadFormPresenter.setLocalityId(localityId);
+
+        if(null!=sellerImgUrl){
+            mLeadFormPresenter.setSellerImageUrl(sellerImgUrl);
+        }
+        else {
+            mLeadFormPresenter.setSellerImageUrl(null);
+        }
 
         if(null!=area){
             mLeadFormPresenter.setArea(area);
@@ -87,33 +97,37 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
             mLeadFormPresenter.setAssist(assist);
         }
 
-        if(null!=multipleSellerids && multipleSellerids.size()>0) {
-            mLeadFormPresenter.showMultipleLeadsFragment();
-        }else {
-            mLeadFormPresenter.showLeadCallNowFragment();
-            multipleSellers=false;
-        }
-        mLeadFormPresenter.setSource(source);
         if(null!=multipleSellerids && multipleSellerids.size()>0){
             mLeadFormPresenter.setMultipleSellerIds(multipleSellerids);
             multipleSellers=true;
         }
+
+        mLeadFormPresenter.setSource(source);
+
         Bundle bundle=this.getIntent().getExtras();
         if (bundle != null && bundle.getString("source")!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
             if(bundle.get("listingId")!=null) {
                 mLeadFormPresenter.setProjectOrListingId((Long) bundle.get("listingId"));
             }
             if(bundle.get("cityId")!=null) {
-                mLeadFormPresenter.setCityId((int) bundle.get("cityId"));
+                Long value=(Long)bundle.get("cityId");
+                mLeadFormPresenter.setCityId(value.intValue());
             }
         }else {
             mLeadFormPresenter.setCityId(cityId);
             mLeadFormPresenter.setProjectOrListingId(projectOrListingId);
         }
             try {
-            mListingId = getIntent().getExtras().getInt("listingId");
+            mListingId = this.getIntent().getExtras().getLong(KeyUtil.LISTING_ID);
         }catch (Exception e){}
 
+        if(null!=multipleSellerids && multipleSellerids.size()>0) {
+            mLeadFormPresenter.showMultipleLeadsFragment();
+        }
+        else {
+            mLeadFormPresenter.showLeadCallNowFragment();
+            multipleSellers=false;
+        }
     }
 
     @Override
@@ -191,7 +205,7 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
             }else {
                 mLeadFormPresenter.showThankYouScreenFragment(false, false,2);
             }
-            setResult(RESULT_OK,new Intent().putExtra(LISTING_ID, mListingId));
+            setResult(RESULT_OK,new Intent().putExtra(KeyUtil.LISTING_ID, mListingId));
         }
     }
 
@@ -222,7 +236,7 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
             }
 
             mLeadFormPresenter.showThankYouScreenFragment(false, false,2);
-            setResult(RESULT_OK, new Intent().putExtra(LISTING_ID, mListingId));
+            setResult(RESULT_OK, new Intent().putExtra(KeyUtil.LISTING_ID, mListingId));
         }
     }
 

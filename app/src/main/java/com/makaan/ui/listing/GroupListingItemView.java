@@ -100,8 +100,8 @@ public class GroupListingItemView extends RelativeLayout implements View.OnClick
                 break;
             }
         }
-//        mPropertyCountTextView.setText(String.format(LISTING_SIZE_STRING, String.valueOf(item.groupedListings.size() + 1)));
-        mPropertyCountTextView.setText("view properties");
+        mPropertyCountTextView.setText(String.format(LISTING_SIZE_STRING, String.valueOf(item.groupedListings.size() + 1)));
+//        mPropertyCountTextView.setText("view properties");
 
         setOnClickListener(this);
     }

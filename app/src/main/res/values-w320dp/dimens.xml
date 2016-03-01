@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="serp_map_layout_view_pager_height">172dp</dimen>
 
-    <!--<dimen name="serp_listing_card_property_image_width">148dp</dimen>
+    <dimen name="serp_listing_card_property_image_width">148dp</dimen>
     <dimen name="serp_listing_card_property_image_height">111dp</dimen>
 
     <dimen name="serp_listing_card_property_price_text_size">28sp</dimen>
@@ -19,9 +20,8 @@
     <dimen name="serp_listing_card_seller_name_text_view_text_size">14sp</dimen>
     <dimen name="serp_listing_card_assist_button_text_size">12sp</dimen>
     <dimen name="serp_listing_card_call_button_text_size">14sp</dimen>
-    <dimen name="serp_listing_cluster_card_group_text_view_text_size">23sp</dimen>
     <dimen name="serp_listing_cluster_card_properties_info_text_size">28sp</dimen>
-    <dimen name="serp_listing_cluster_card_total_properties_text_size">27sp</dimen>
+    <dimen name="serp_listing_cluster_card_total_properties_text_size">26sp</dimen>
     <dimen name="fragment_listing_total_properties_text_view_text_size">12sp</dimen>
 
     <dimen name="activity_search_base_layout_search_bar_search_text_view_text_size">14sp</dimen>
@@ -32,5 +32,44 @@
     <dimen name="fragment_dialog_filters_submit_button_text_size">16sp</dimen>
     <dimen name="fragment_dialog_filters_filter_text_text_size">14sp</dimen>
     <dimen name="fragment_dialog_filters_item_layout_display_text_text_size">14sp</dimen>
-    <dimen name="fragment_dialog_filters_toggle_button_grid_item_text_size">16sp</dimen>-->
+    <dimen name="fragment_dialog_filters_toggle_button_grid_item_text_size">14sp</dimen>
+
+    <dimen name="serp_listing_cluster_card_group_text_view_text_size">20sp</dimen>
+    <dimen name="serp_listing_cluster_card_group_text_view_margin_left">28dp</dimen>
+    <dimen name="serp_listing_cluster_card_group_text_view_margin_right">14dp</dimen>
+    <dimen name="serp_listing_cluster_card_group_text_view_margin_top">12dp</dimen>
+    <dimen name="serp_listing_cluster_card_group_text_view_margin_bottom">12dp</dimen>
+
+    <dimen name="child_serp_cluster_card_price_text_size">14sp</dimen>
+    <dimen name="child_serp_cluster_card_price_margin_top">2dp</dimen>
+
+    <dimen name="child_serp_cluster_card_address_text_size">12sp</dimen>
+    <dimen name="child_serp_cluster_card_address_margin_top">2dp</dimen>
+    <dimen name="child_serp_cluster_card_address_margin_bottom">2dp</dimen>
+
+    <dimen name="fragment_child_serp_cluster_relative_view_padding_left">6dp</dimen>
+    <dimen name="fragment_child_serp_cluster_relative_view_padding_right">6dp</dimen>
+    <dimen name="fragment_child_serp_cluster_relative_view_padding_top">6dp</dimen>
+    <dimen name="fragment_child_serp_cluster_relative_view_padding_bottom">6dp</dimen>
+
+    <dimen name="listing_brief_view_layout_image_view_width">138dp</dimen>
+    <dimen name="listing_brief_view_layout_image_view_height">103dp</dimen>
+
+    <dimen name="listing_brief_view_layout_rupee_image_width">14dp</dimen>
+    <dimen name="listing_brief_view_layout_rupee_image_height">14dp</dimen>
+    <dimen name="serp_listing_card_property_price_rupee_image_width">14dp</dimen>
+    <dimen name="serp_listing_card_property_price_rupee_image_height">14dp</dimen>
+    <dimen name="listing_brief_view_layout_property_info_text_view_top_margin">8dp</dimen>
+
+    <dimen name="serp_listing_card_property_price_rupee_image_top_margin">22dp</dimen>
+    <dimen name="serp_listing_card_property_price_top_margin">10dp</dimen>
+    <dimen name="listing_brief_view_layout_property_price_unit_top_margin">18dp</dimen>
+    <dimen name="listing_brief_view_layout_property_price_top_margin">10dp</dimen>
+    <dimen name="listing_brief_view_layout_rupee_image_top_margin">22dp</dimen>
+    <dimen name="serp_listing_card_property_shortlist_checkbox_top_margin">10dp</dimen>
+    <dimen name="listing_brief_view_layout_property_price_text_size">28sp</dimen>
+    <dimen name="listing_brief_view_layout_property_price_unit_text_size">16sp</dimen>
+    <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_text_size">14sp</dimen>
+    <dimen name="listing_brief_view_layout_property_info_text_view_text_size">14sp</dimen>
+    <dimen name="listing_brief_view_layout_property_address_text_view_text_size">14sp</dimen>
 </resources>

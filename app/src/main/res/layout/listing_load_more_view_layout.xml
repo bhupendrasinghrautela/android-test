@@ -6,25 +6,27 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     card_view:cardCornerRadius="@dimen/listing_brief_view_layout_card_view_radius"
-    card_view:cardElevation="6dp">
+    card_view:cardElevation="6dp"
+    card_view:cardPreventCornerOverlap="false">
 
     <Button
         android:id="@+id/listing_load_more_view_layout_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:singleLine="true"
         android:text="load more"
+        android:textAllCaps="false"
         android:textColor="@color/black"
         android:textSize="32sp"
         android:typeface="sans"
-        android:gravity="center"
-        android:textAllCaps="false"
-        android:singleLine="true"
-        android:ellipsize="end"/>
-    <ProgressBar
+        android:visibility="gone" />
+
+    <ProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/listing_load_more_view_layout_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone"/>
+        android:layout_gravity="center" />
 
 </com.makaan.ui.listing.LoadMoreListingCardView>

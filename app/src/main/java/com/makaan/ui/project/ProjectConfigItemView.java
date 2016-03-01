@@ -47,7 +47,6 @@ public class ProjectConfigItemView extends LinearLayout implements View.OnClickL
         this.isRent = isRent;
         mLayoutInflater =
                 (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         for (int i = 0; i < items.size() && i<4; i++) {
             addViews(items.get(i), i);
         }

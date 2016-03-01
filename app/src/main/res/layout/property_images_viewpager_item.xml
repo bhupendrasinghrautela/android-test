@@ -9,10 +9,10 @@
     app:cardElevation="@dimen/card_elevation_small"
     android:layout_height="match_parent">
     <com.android.volley.toolbox.FadeInNetworkImageView
-    android:id="@+id/property_imageview"
-    android:layout_width="match_parent"
-    android:scaleType="centerCrop"
-    android:layout_height="match_parent"/>
+        android:id="@+id/property_imageview"
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_height="match_parent"/>
     <RelativeLayout
         android:id="@+id/property_image_detail"
         android:layout_gravity="bottom"
@@ -65,6 +65,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="14dp"
             android:layout_marginTop="30dp"
+            android:text="emi 92,394"
             android:textSize="13sp"
             android:layout_height="wrap_content"/>
         <ImageView

@@ -9,7 +9,9 @@
     android:typeface="monospace"
     android:button="@drawable/square_checkbox_selector"
     android:drawableLeft="@null"
+    android:drawableStart="@null"
     android:paddingLeft="10dp"
+    android:paddingStart="10dp"
     />
     <!--android:background="@android:color/transparent"
     android:button="@drawable/check_tick_fill_red"

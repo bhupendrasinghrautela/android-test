@@ -201,7 +201,15 @@ public class SerpMapFragment extends MakaanBaseFragment {
 
                 mSelectedObject.marker = marker;
                 mSelectedObject.listing = listing;*/
-                adapter.setSelectedMarkerPosition(position, false);
+                if(adapter != null && adapter.markers != null && position == adapter.markers.size()) {
+                    if(mCallback != null) {
+                        mCallback.loadMoreItems();
+                    }
+                } else {
+                    if(adapter != null) {
+                        adapter.setSelectedMarkerPosition(position, false);
+                    }
+                }
             }
         });
     }

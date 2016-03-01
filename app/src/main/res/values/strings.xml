@@ -30,6 +30,7 @@
 
     <string name="call_now">call now</string>
     <string name="get_callback">get callBack</string>
+    <string name="share_your_details">share your details</string>
     <string name="pyr_buy">buy</string>
     <string name="pyr_rent">rent</string>
     <string name="pyr_name">name</string>
@@ -51,6 +52,7 @@
     <string name="pyr_four_bhk_text">4</string>
     <string name="pyr_property_string">property</string>
     <string name="pyr_property_value_string">residential property apartment</string>
+
     <string name="pyr_budget_string">budget</string>
     <string name="cluster_item_group_text">we’ve grouped properties</string>
     <string name="search_by_property">search by property</string>
@@ -73,6 +75,8 @@
     <string name="new_listings">new listings are added daily..</string>
     <string name="alerts_msg">set alerts to get the latest in your inbox</string>
     <string name="set_alerts">set alerts</string>
+    <string name="set_alert">set alert</string>
+    <string name="or_text">"or "</string>
     <string name="select_sellers">select sellers</string>
     <string name="contact_top_advisors">contact 4 advisors</string>
     <string name="contact_string">contact </string>
@@ -229,6 +233,8 @@
     <string name="get_call_later">get call later</string>
     <string name="or_now">or now</string>
     <string name="instant_call">instant call back request successful</string>
+    <string name="seller_not_available">seller number not available</string>
+    <string name="please_enter_phone_no">please enter phone no.</string>
 
     <!--Shortlist strings -->
     <string name="request_site_visit">request site visit</string>
@@ -276,6 +282,10 @@
     <!-- shortlist strings -->
     <string name="rupee">\u20B9</string>
     <string name="no_shortlisting">no shortlisted available</string>
+
+    <string name="no_enquiries_available">no enquiries available</string>
+    <string name="no_favorite_available">no favorites available</string>
+
     <string name="no_notifications">You do not have any notifications</string>
 
     <!-- get rewards strings -->
@@ -311,12 +321,21 @@
     <string name="blog_content_home_booking_action">home booking guidance</string>
     <string name="blog_content_home_possession_action">home possession advice</string>
     <string name="blog_content_home_registration_action">home registration guidance</string>
+    <string name="no_site_visits">no site visit available</string>
+
 
     <!--analytics-->
     <string name="similar_project_clicked_position">similar project clicked position</string>
     <string name="adapter_position">adapter position</string>
 
     <string name="default_error_message">some exception has occurred</string>
+    <string name="default_no_results_error_message">sorry, no matching results found</string>
+
+    <string name="search_residential_plot_string">residential plot</string>
+
+    <string name="call_sellers">call sellers</string>
+
+
 
 </resources>
 

@@ -13,12 +13,35 @@
         android:layout_height="0dp"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_seller_image"
-            android:src="@drawable/edit_avatar"
-            android:layout_marginBottom="@dimen/lead_form_seller_image_margin_bottom"
-            android:layout_width="@dimen/lead_form_seller_image_width"
-            android:layout_height="@dimen/lead_form_seller_image_width" />
+        <FrameLayout
+            android:clickable="true"
+            android:id="@+id/frame_profile_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_seller_image_call_now"
+                android:src="@drawable/edit_avatar"
+                android:layout_marginBottom="@dimen/lead_form_seller_image_margin_bottom"
+                android:layout_width="@dimen/lead_form_seller_image_width"
+                android:layout_height="@dimen/lead_form_seller_image_width"/>
+
+            <TextView
+                android:id="@+id/iv_seller_name"
+                android:layout_width="@dimen/lead_form_seller_image_width"
+                android:layout_height="@dimen/lead_form_seller_image_width"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:background="@drawable/profile_image_drawable"
+                android:layout_marginBottom="@dimen/lead_call_now_seller_name_margin_bottom"
+                android:gravity="center"
+                android:text="Ab"
+                android:textAllCaps="true"
+                android:maxLength="1"
+                android:textSize="@dimen/lead_call_now_seller_name_text_size"
+                android:textColor="@color/white"/>
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/tv_seller_name"
@@ -62,14 +85,31 @@
             android:textSize="@dimen/button_text_size"
             android:textAllCaps="false"
             android:textColor="@android:color/white" />
-        <TextView
-            android:layout_marginTop="@dimen/button_padding"
-            android:id="@+id/tv_get_callback"
-            android:text="@string/get_callback"
-            android:textColor="@color/appThemeRed"
-            android:textSize="@dimen/get_callback_text_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_marginTop="@dimen/button_padding"
+                android:text="@string/or_text"
+                android:textSize="@dimen/share_your_details_text_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_marginTop="@dimen/button_padding"
+                android:id="@+id/tv_share_your_deatils"
+                android:text="@string/share_your_details"
+                android:textColor="@color/appThemeRed"
+                android:textSize="@dimen/share_your_details_text_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
