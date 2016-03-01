@@ -106,6 +106,7 @@ public class ProjectFragment extends MakaanBaseFragment{
     private Context mContext;
     private Project project;
     private long projectId;
+    private String sellerImgUrl;
     private boolean isRent = false;
     private ProjectConfigEvent mProjectConfigEvent;
     private RecentPropertyProjectManager.DataObject mDataObject;
@@ -161,6 +162,12 @@ public class ProjectFragment extends MakaanBaseFragment{
                 intent.putExtra("listingId",project.projectId);
                 if(project!=null && project.locality!=null && project.locality.cityId!=null) {
                     intent.putExtra("cityId", project.locality.cityId);
+                }
+                if(project!=null && project.locality!=null && project.locality.localityId!=null) {
+                    intent.putExtra("localityId", project.locality.localityId);
+                }
+                if(sellerCard.imageUrl!=null){
+                    intent.putExtra("sellerImageUrl", sellerCard.imageUrl);
                 }
                 getActivity().startActivity(intent);
             } catch (NullPointerException e) {
@@ -230,6 +237,7 @@ public class ProjectFragment extends MakaanBaseFragment{
 
                     Bundle bundle=new Bundle();
                     bundle.putString(MakaanEventPayload.PROJECT_ID, String.valueOf(project.projectId));
+                    bundle.putString("source", ProjectFragment.class.getName());
                     if(project!=null && project.locality!=null && project.locality.cityId!=null) {
                         bundle.putLong("cityId", project.locality.cityId);
                     }
@@ -238,6 +246,9 @@ public class ProjectFragment extends MakaanBaseFragment{
                     }
                     if(project!=null && project.locality!=null && project.locality.label!=null) {
                         bundle.putString("locality", String.valueOf(project.locality.label));
+                    }
+                    if(project!=null && project.locality!=null && project.locality.localityId != null) {
+                        bundle.putLong("localityId", project.locality.localityId);
                     }
                     viewSellersDialogFragment.setArguments(bundle);
                     viewSellersDialogFragment.bindView(sellerCards);
