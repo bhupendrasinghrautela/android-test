@@ -10,13 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.makaan.R;
 import com.makaan.activity.listing.PropertyDetailFragment;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.fragment.MakaanMessageDialogFragment;
 import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.request.pyr.PyrEnquiryType;
 import com.makaan.request.pyr.PyrRequest;
@@ -69,18 +69,30 @@ public class MultipleLeadFormFragment extends MakaanBaseFragment {
     @OnClick(R.id.multiple_lead_form_get_call_back)
     void callLaterClicked() {
         if ((mName.getText().toString().trim().length() == 0)) {
-            Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.add_user_name_toast),
-                    Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.add_user_name_toast),
+                    Toast.LENGTH_SHORT).show();*/
+            if(getActivity() != null) {
+                MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
+                        getActivity().getResources().getString(R.string.add_user_name_toast), "ok");
+            }
 
         }
         else if (!ValidationUtil.isValidEmail(mEmail.getText().toString().trim())) {
-            Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.invalid_email_toast),
-                    Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.invalid_email_toast),
+                    Toast.LENGTH_SHORT).show();*/
+            if(getActivity() != null) {
+                MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
+                        getActivity().getResources().getString(R.string.invalid_email_toast), "ok");
+            }
 
         }
         else if (!ValidationUtil.isValidPhoneNumber(mNumber.getText().toString().trim(), mCountrySpinner.getSelectedItem().toString())) {
-            Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.invalid_phone_no_toast),
-                    Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.invalid_phone_no_toast),
+                    Toast.LENGTH_SHORT).show();*/
+            if(getActivity() != null) {
+                MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
+                        getActivity().getResources().getString(R.string.invalid_phone_no_toast), "ok");
+            }
         }
         else{
             PyrRequest mPyrRequest = new PyrRequest();

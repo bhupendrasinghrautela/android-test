@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.userLogin.UserLoginActivity;
@@ -21,20 +20,18 @@ import com.makaan.event.saveSearch.SaveSearchGetEvent;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.event.user.UserLoginEvent;
 import com.makaan.fragment.MakaanBaseDialogFragment;
+import com.makaan.fragment.MakaanMessageDialogFragment;
+import com.makaan.network.VolleyErrorParser;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.saveSearch.SaveSearch;
-import com.makaan.response.search.SearchResponse;
 import com.makaan.response.search.SearchResponseItem;
-import com.makaan.response.search.SearchSuggestionType;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.response.serp.RangeFilter;
 import com.makaan.response.serp.RangeMinMaxFilter;
 import com.makaan.response.serp.TermFilter;
 import com.makaan.service.MakaanServiceFactory;
-import com.makaan.service.MasterDataService;
 import com.makaan.service.SaveSearchService;
-import com.makaan.util.AppBus;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
 import com.squareup.otto.Subscribe;
@@ -43,18 +40,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.makaan.adapter.listing.FiltersViewAdapter.INFINITE_SELECTOR;
-import static com.makaan.adapter.listing.FiltersViewAdapter.MIN_MAX_SEPARATOR;
 import static com.makaan.adapter.listing.FiltersViewAdapter.RADIO_BUTTON;
-import static com.makaan.adapter.listing.FiltersViewAdapter.RADIO_BUTTON_BOTH_SELECTED;
 import static com.makaan.adapter.listing.FiltersViewAdapter.RADIO_BUTTON_MIN_MAX;
 import static com.makaan.adapter.listing.FiltersViewAdapter.RADIO_BUTTON_RANGE;
 import static com.makaan.adapter.listing.FiltersViewAdapter.SEEKBAR;
-import static com.makaan.adapter.listing.FiltersViewAdapter.TYPE_DAY;
-import static com.makaan.adapter.listing.FiltersViewAdapter.TYPE_YEAR;
 import static com.makaan.adapter.listing.FiltersViewAdapter.UNEXPECTED_VALUE;
 
 /**
@@ -73,8 +64,9 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
     private boolean mIsBuyContext;
     private SerpRequest mSerpRequest;
     private Context mContext;
-    private boolean isSubmitInitiatedFromWishList;
+    private boolean isLoginInitiated;
     private boolean isAfterLoginInitiated;
+    private boolean isSubmitInitiated;
 
     public void setData(ArrayList<FilterGroup> grps, SerpGetEvent listingGetEvent, boolean serpContext, Context context) {
         mGroups = grps;
@@ -463,7 +455,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
     @OnClick(R.id.fragment_set_alerts_submit_button)
     public void onSubmitClicked (View view) {
         if(null == MasterDataCache.getInstance().getUserData()) {
-            isSubmitInitiatedFromWishList = true;
+            isLoginInitiated = true;
             Intent intent = new Intent(mContext, UserLoginActivity.class);
             mContext.startActivity(intent);
         } else {
@@ -478,20 +470,20 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                             name = name.substring(0, semiIndex);
                         }
                         if (name.equalsIgnoreCase(mSetAlertsNameEditText.getText().toString())) {
-                            Toast.makeText(mContext, "name already exists", Toast.LENGTH_SHORT).show();
+                            /*Toast.makeText(mContext, "name already exists", Toast.LENGTH_SHORT).show();*/
+                            MakaanMessageDialogFragment.showMessage(getFragmentManager(),
+                                    "name already exists", "ok");
                             return;
                         }
                     }
                 }
             }
 
-            MasterDataCache.getInstance().clearSavedSearches();
-
             ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).saveNewSearch(createSelector(), getSearchName());
             isAfterLoginInitiated = false;
-            isSubmitInitiatedFromWishList = false;
+            isLoginInitiated = false;
 
-            dismissAllowingStateLoss();
+            isSubmitInitiated = true;
         }
     }
 
@@ -513,31 +505,52 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 (SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class);
         saveSearchService.getSavedSearches();
 
-        if(!isSubmitInitiatedFromWishList){
+        if(!isLoginInitiated){
             return;
         }
 
         isAfterLoginInitiated = true;
-
-        if(userLoginEvent.error != null){
-            Toast.makeText(mContext, R.string.generic_error, Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Subscribe
     public void onResult(SaveSearchGetEvent event) {
         if(event == null || event.error != null) {
-            // TODO
-            //showNoResults();
-            return;
+            MakaanMessageDialogFragment.showMessage(getFragmentManager(),
+                    event.error != null ? VolleyErrorParser.getMessage(event.error) : getString(R.string.generic_error), "ok");
         } else {
-            if(isAfterLoginInitiated && isSubmitInitiatedFromWishList) {
-                onSubmitClicked(null);
-            }
-            showContent();
+            if(isSubmitInitiated) {
+                if(event.saveSearchArrayList != null && event.saveSearchArrayList.size() > 0) {
+                    if(!TextUtils.isEmpty(event.saveSearchArrayList.get(0).name)
+                            && event.saveSearchArrayList.get(0).name.equalsIgnoreCase(mSetAlertsNameEditText.getText().toString())) {
 
-            populateData();
-            handleSearchName();
+                        MasterDataCache.getInstance().clearSavedSearches();
+
+                        MakaanMessageDialogFragment.showMessage(getFragmentManager(),
+                                "successfully saved", "ok", new MakaanMessageDialogFragment.MessageDialogCallbacks() {
+                                    @Override
+                                    public void onPositiveClicked() {
+                                        dismissAllowingStateLoss();
+                                    }
+
+                                    @Override
+                                    public void onNegativeClicked() {
+
+                                    }
+                                });
+                    } else if(!TextUtils.isEmpty(event.saveSearchArrayList.get(0).name)) {
+                        MakaanMessageDialogFragment.showMessage(getFragmentManager(),
+                                "search query already exists", "ok");
+                    }
+                }
+            } else {
+                if (isAfterLoginInitiated && isLoginInitiated) {
+                    onSubmitClicked(null);
+                }
+                showContent();
+
+                populateData();
+                handleSearchName();
+            }
         }
     }
 }

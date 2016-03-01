@@ -431,7 +431,7 @@ public class ProjectFragment extends MakaanBaseFragment{
         if(!TextUtils.isEmpty(project.description)) {
             mProjectDescriptionLayout.setVisibility(View.VISIBLE);
             descriptionTv.setTextColor(getResources().getColor(R.color.listingBlack));
-            descriptionTv.setText((project.description != null ? Html.fromHtml(project.description) : ""));
+            descriptionTv.setText((project.description != null ? Html.fromHtml(project.description.toLowerCase()) : ""));
             ViewTreeObserver vto = descriptionTv.getViewTreeObserver();
             vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
                 @Override
@@ -456,20 +456,22 @@ public class ProjectFragment extends MakaanBaseFragment{
             mProjectDescriptionLayout.setVisibility(View.GONE);
         }
         aboutBuilderExpandedLayout.bindView(project.builder);
-        builderDescriptionTv.setText(Html.fromHtml(project.builder.description));
+        if(!TextUtils.isEmpty(project.builder.description)) {
+            builderDescriptionTv.setText(Html.fromHtml(project.builder.description.toLowerCase()));
+        }
 
         if(project.livabilityScore !=null && project.livabilityScore!=0) {
             projectScoreProgreessBar.setProgress(project.livabilityScore.intValue() * 10);
-            projectScoreTv.setText("" + project.livabilityScore);
+            projectScoreTv.setText(String.valueOf(project.livabilityScore).toLowerCase());
         } else {
             scoreFrameLayout.setVisibility(View.GONE);
             mScoreLabel.setVisibility(View.GONE);
         }
-        projectNameTv.setText(project.name);
+        projectNameTv.setText(project.name.toLowerCase());
         if(getActivity() instanceof MakaanBaseSearchActivity) {
             getActivity().setTitle(project.name.toLowerCase());
         }
-        projectLocationTv.setText(project.address);
+        projectLocationTv.setText(project.address.toLowerCase());
     }
 
 

@@ -313,11 +313,11 @@
     <dimen name="serp_listing_card_property_price_rupee_image_height">16dp</dimen>
 
     <dimen name="serp_listing_card_property_price_left_margin">5dp</dimen>
-    <dimen name="serp_listing_card_property_price_top_margin">15dp</dimen>
+    <dimen name="serp_listing_card_property_price_top_margin">14dp</dimen>
     <dimen name="serp_listing_card_property_price_text_size">32sp</dimen>
 
     <dimen name="serp_listing_card_property_price_unit_left_margin">5dp</dimen>
-    <dimen name="serp_listing_card_property_price_unit_top_margin">18dp</dimen>
+    <dimen name="serp_listing_card_property_price_unit_top_margin">24dp</dimen>
     <dimen name="serp_listing_card_property_price_unit_text_size">18sp</dimen>
 
     <dimen name="serp_listing_card_property_shortlist_checkbox_right_margin">10dp</dimen>

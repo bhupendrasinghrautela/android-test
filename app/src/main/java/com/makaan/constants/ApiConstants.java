@@ -50,7 +50,7 @@ public class ApiConstants {
     public static final String CITY_TREND_URL = TREND_URL.concat("?fields=avgBuyPricePerUnitArea,localityName,projectName,cityName&group=cityId,month");
     public static final String PROJECT_TREND_URL = TREND_URL.concat("?fields=minBuyPricePerUnitArea,localityName,projectName&group=projectId,month");
 
-    public static final String SAVED_SEARCH_URL = BASE_URL.concat("/data/v1/entity/user/saved-searches");
+    public static final String SAVED_SEARCH_URL = BASE_URL.concat("/data/v1/entity/user/saved-searches/");
     public static final String SAVE_NEW_SEARCH_URL = BASE_URL.concat("/data/v1/entity/saved-searches");
     public static final String SAVED_SEARCH_NEW_MATCHES_URL = BASE_URL.concat("/data/v1/entity/user/saved-searches/new-matches");
     public static final String TOP_AGENTS_CITY = BASE_URL.concat("/data/v1/entity/city/");

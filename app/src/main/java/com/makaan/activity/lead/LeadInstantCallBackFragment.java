@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -24,8 +23,8 @@ import com.makaan.activity.listing.SerpActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cookie.CookiePreferences;
-import com.makaan.event.MakaanEvent;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.fragment.MakaanMessageDialogFragment;
 import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.country.CountryCodeResponse;
@@ -33,9 +32,8 @@ import com.makaan.response.leadForm.InstantCallbackResponse;
 import com.makaan.response.user.UserResponse;
 import com.makaan.service.LeadInstantCallbackService;
 import com.makaan.service.MakaanServiceFactory;
-import com.makaan.util.AppBus;
-import com.makaan.util.JsonBuilder;
 import com.makaan.util.ImageUtils;
+import com.makaan.util.JsonBuilder;
 import com.makaan.util.JsonParser;
 import com.makaan.util.StringUtil;
 import com.makaan.util.ValidationUtil;
@@ -159,12 +157,21 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
                 MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickPropertyCallConnect);
             }
             if(mNumber.getText().toString().trim().length()>0) {
-                Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.invalid_phone_no_toast),
-                        Toast.LENGTH_SHORT).show();
+                /*Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.invalid_phone_no_toast),
+                        Toast.LENGTH_SHORT).show();*/
+
+                if(getActivity() != null) {
+                    MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
+                            getActivity().getString(R.string.invalid_phone_no_toast), "ok");
+                }
             }
             else if(mNumber.getText().toString().trim().length()==0){
-                Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.please_enter_phone_no),
-                        Toast.LENGTH_SHORT).show();
+                /*Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.please_enter_phone_no),
+                        Toast.LENGTH_SHORT).show();*/
+                if(getActivity() != null) {
+                    MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
+                            getActivity().getString(R.string.please_enter_phone_no), "ok");
+                }
             }
         }
     }
@@ -172,7 +179,12 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
     @Subscribe
     public void getConnectNowResponse(InstantCallbackResponse response){
         if(response.getStatusCode()==null && !response.getStatusCode().equals("2XX")){
-            Toast.makeText(getActivity(), getActivity().getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(getActivity(), getActivity().getString(R.string.generic_error), Toast.LENGTH_SHORT).show();*/
+
+            if(getActivity() != null) {
+                MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
+                        getActivity().getString(R.string.generic_error), "ok");
+            }
         }
     }
 

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_gravity="center"
+    android:layout_marginEnd="30dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginStart="30dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="4dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardElevation="2dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:paddingBottom="12dp"
+        android:paddingEnd="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingStart="10dp"
+        android:paddingTop="12dp">
+
+        <TextView
+            android:id="@+id/fragment_dialog_makaan_message_message_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:maxLines="3"
+            android:text="are you sure you want to cancel ?"
+            android:textColor="#444444"
+            android:textSize="16sp"
+            android:typeface="serif"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/fragment_dialog_makaan_message_positive_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="24dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginStart="16dp"
+            android:background="@null"
+            android:text="yes"
+            android:textColor="#e71c28"
+            android:textSize="16sp"
+            android:typeface="serif"
+            android:textAllCaps="false"
+            android:minWidth="0dp"
+            android:minHeight="0dp"/>
+
+        <Button
+            android:id="@+id/fragment_dialog_makaan_message_negative_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_toLeftOf="@id/fragment_dialog_makaan_message_positive_button"
+            android:layout_toStartOf="@id/fragment_dialog_makaan_message_positive_button"
+            android:background="@null"
+            android:text="no"
+            android:textColor="#999999"
+            android:textSize="16sp"
+            android:typeface="serif"
+            android:textAllCaps="false"
+            android:minWidth="0dp"
+            android:minHeight="0dp" />
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

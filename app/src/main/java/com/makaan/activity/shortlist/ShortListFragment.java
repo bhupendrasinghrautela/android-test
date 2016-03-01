@@ -90,7 +90,7 @@ public class ShortListFragment extends MakaanBaseFragment {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                mViewPager.setCurrentItem(tab.getPosition());
             }
         });
     }

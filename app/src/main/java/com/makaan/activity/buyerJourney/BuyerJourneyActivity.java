@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -27,25 +26,19 @@ import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
-import com.makaan.constants.LeadPhaseConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
 import com.makaan.event.user.UserLogoutEvent;
-import com.makaan.jarvis.analytics.AnalyticsService;
+import com.makaan.fragment.MakaanMessageDialogFragment;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.OnExposeEvent;
 import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.network.MakaanNetworkClient;
-import com.makaan.request.buyerjourney.PhaseChange;
-import com.makaan.response.listing.Listing;
 import com.makaan.response.user.UserResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.user.UserLogoutService;
-import com.segment.analytics.Analytics;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
-
-import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -215,8 +208,12 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
             try {
                 onLogoutClick();
             } catch (Exception e) {
-                Toast.makeText(BuyerJourneyActivity.this,
-                        getResources().getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
+                /*Toast.makeText(BuyerJourneyActivity.this,
+                        getResources().getString(R.string.generic_error), Toast.LENGTH_SHORT).show();*/
+                if(!isFinishing()) {
+                    MakaanMessageDialogFragment.showMessage(getFragmentManager(),
+                            getString(R.string.generic_error), "ok");
+                }
             }
         }
     }
@@ -330,8 +327,13 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
                 try{
                     onLogoutClick();
                 }catch (Exception e){
-                    Toast.makeText(BuyerJourneyActivity.this,getResources()
-                            .getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
+                    /*Toast.makeText(BuyerJourneyActivity.this,getResources()
+                            .getString(R.string.generic_error), Toast.LENGTH_SHORT).show();*/
+
+                    if(!isFinishing()) {
+                        MakaanMessageDialogFragment.showMessage(getFragmentManager(),
+                                getString(R.string.generic_error), "ok");
+                    }
                 }
                 break;
             case android.R.id.home:
@@ -360,8 +362,12 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
             //TODO also clear metadata and userinfo
             finish();
         }else{
-            Toast.makeText(this,getResources().getString(R.string.generic_error),
-                    Toast.LENGTH_LONG).show();
+            /*Toast.makeText(this,getResources().getString(R.string.generic_error),
+                    Toast.LENGTH_LONG).show();*/
+            if(!isFinishing()) {
+                MakaanMessageDialogFragment.showMessage(getFragmentManager(),
+                        getString(R.string.generic_error), "ok");
+            }
         }
     }
 

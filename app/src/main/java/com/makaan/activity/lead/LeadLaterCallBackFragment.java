@@ -1,6 +1,7 @@
 package com.makaan.activity.lead;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,7 +13,6 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -24,6 +24,7 @@ import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.fragment.MakaanMessageDialogFragment;
 import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.request.pyr.PyrEnquiryType;
@@ -32,8 +33,8 @@ import com.makaan.response.country.CountryCodeResponse;
 import com.makaan.response.user.UserResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PyrService;
-import com.makaan.util.JsonBuilder;
 import com.makaan.util.ImageUtils;
+import com.makaan.util.JsonBuilder;
 import com.makaan.util.JsonParser;
 import com.makaan.util.StringUtil;
 import com.makaan.util.ValidationUtil;
@@ -137,8 +138,11 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
                 properties.put(MakaanEventPayload.LABEL, getActivity().getResources().getString(R.string.add_user_name_toast));
                 MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickPropertyCallConnect);
             }
-            Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.add_user_name_toast),
-                    Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.add_user_name_toast),
+                    Toast.LENGTH_SHORT).show();*/
+
+            MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
+                    getActivity().getResources().getString(R.string.add_user_name_toast), "ok");
         }
         else if(!ValidationUtil.isValidEmail(mEmail.getText().toString().trim())){
             Bundle bundle =getArguments();
@@ -160,8 +164,11 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
                 properties.put(MakaanEventPayload.LABEL, getActivity().getResources().getString(R.string.invalid_email_toast));
                 MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickPropertyCallConnect);
             }
-            Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.invalid_email_toast),
-                    Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.invalid_email_toast),
+                    Toast.LENGTH_SHORT).show();*/
+
+            MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
+                    getActivity().getResources().getString(R.string.invalid_email_toast), "ok");
         }
         else if(!ValidationUtil.isValidPhoneNumber(mNumber.getText().toString().trim(),mCountrySpinner.getSelectedItem().toString())){
             Bundle bundle =getArguments();
@@ -183,8 +190,10 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
                 properties.put(MakaanEventPayload.LABEL, getActivity().getResources().getString(R.string.invalid_phone_no_toast));
                 MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickPropertyCallConnect);
             }
-            Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.invalid_phone_no_toast),
-                    Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.invalid_phone_no_toast),
+                    Toast.LENGTH_SHORT).show();*/
+            MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
+                    getActivity().getResources().getString(R.string.invalid_phone_no_toast), "ok");
         }
         else {
 
@@ -278,7 +287,9 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
         };
         mCountryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mCountrySpinner.setAdapter(mCountryAdapter);
-        mCountrySpinner.setDropDownWidth(400);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mCountrySpinner.setDropDownWidth(400);
+        }
         mCountrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

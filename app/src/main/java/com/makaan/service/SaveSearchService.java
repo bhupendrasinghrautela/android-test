@@ -137,7 +137,7 @@ public class SaveSearchService implements MakaanService {
         Type saveSearchType = new TypeToken<SaveSearch>() {
         }.getType();
 
-        SaveNewSearch saveNewSearch = new SaveNewSearch();
+        final SaveNewSearch saveNewSearch = new SaveNewSearch();
         saveNewSearch.searchQuery = selector.build();
         if(saveNewSearch.searchQuery != null && saveNewSearch.searchQuery.contains("selector=")) {
             saveNewSearch.searchQuery = saveNewSearch.searchQuery.replace("selector=", "");
@@ -154,12 +154,22 @@ public class SaveSearchService implements MakaanService {
 
                 @Override
                 public void onSuccess(Object responseObject) {
-                    SaveSearch saveSearch = (SaveSearch) responseObject;
+                    if(responseObject != null) {
+                        SaveSearchGetEvent event = new SaveSearchGetEvent();
+                        event.saveSearchArrayList = new ArrayList<>();
+                        event.saveSearchArrayList.add((SaveSearch) responseObject);
+                        AppBus.getInstance().post(event);
+                    } else {
+                        AppBus.getInstance().post((SaveSearchGetEvent)null);
+                    }
                 }
 
                 @Override
                 public void onError(ResponseError error) {
                     //TODO handle error
+                    SaveSearchGetEvent event = new SaveSearchGetEvent();
+                    event.error = error;
+                    AppBus.getInstance().post(event);
                 }
             }, TAG, false);
         } catch (JSONException e) {
