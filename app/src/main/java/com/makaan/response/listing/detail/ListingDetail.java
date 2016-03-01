@@ -6,7 +6,6 @@ import com.makaan.response.user.CompanySeller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by vaibhav on 17/01/16.
@@ -19,9 +18,10 @@ public class ListingDetail {
     public CurrentListingPrice currentListingPrice;
     public String description, listingCategory;
     public String expiryAt, possessionDate;
+    public Long minConstructionCompletionDate;
     public Integer facingId,noOfOpenSides;
     public boolean status;
-    public int noOfCarParks;
+    public int noOfCarParks,constructionStatusId;
     public Long propertyId, projectId;
     public String unitType, unitName, measure;
     public Integer bedrooms, bathrooms, balcony, storeRoom, halls, studyRoom, servantRoom, poojaRoom;
@@ -46,15 +46,14 @@ public class ListingDetail {
 
     public ArrayList<HashMap<String, String>> viewDirections;
 
-    public HashMap<String, Object> specifications;
+    public ArrayList<Object> specifications;
 
 
     public HashMap<String, ArrayList<SpecificaitonsUI>> getFormattedSpecifications() {
         HashMap<String, ArrayList<SpecificaitonsUI>> result = new HashMap<>();
 
-        for (Map.Entry<String, Object> specificationEntry : specifications.entrySet()) {
-            String key = specificationEntry.getKey();
-            Object value = specificationEntry.getValue();
+        /*for (Object specificationEntry : specifications) {
+            Object value = specificationEntry;
 
             ArrayList<SpecificaitonsUI> specificaitons = new ArrayList<>();
             if (value instanceof Map) {
@@ -72,8 +71,8 @@ public class ListingDetail {
                 specificaitonsUI.label1 = (String) value;
                 specificaitons.add(specificaitonsUI);
             }
-            result.put(key, specificaitons);
-        }
+            result.put(sp, specificaitons);
+        }*/
 
         return result;
     }

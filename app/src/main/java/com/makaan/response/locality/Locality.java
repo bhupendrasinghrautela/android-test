@@ -2,7 +2,6 @@ package com.makaan.response.locality;
 
 import com.makaan.constants.StringConstants;
 import com.makaan.response.city.EntityDesc;
-import com.makaan.util.AppUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +23,7 @@ public class Locality {
     public Double avgRentalDemandRisePercentage,priceRise6Months;
     public String localityHeroshotImageUrl, cityHeroshotImageUrl,dominantUnitType;
     public Suburb suburb;
+    public int constructionStatusId;
     public Integer projectCount;
 
 

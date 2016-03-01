@@ -72,7 +72,6 @@ import com.makaan.util.KeyUtil;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
-import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -86,7 +85,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by sunil on 18/01/16.
  */
-public class PropertyDetailFragment extends MakaanBaseFragment {
+public class PropertyDetailFragment extends MakaanBaseFragment implements OpenListingListener {
 
     @Bind(R.id.amenity_viewpager)
     AmenityViewPager mAmenityViewPager;
@@ -164,6 +163,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
     @Bind(R.id.view_on_map)
     View mViewOnMap;
     private String bhkAndUnitType,Area,Locality;
+    private Long mListingId;
 
 
     @OnClick(R.id.more_about_locality)
@@ -279,11 +279,6 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
         }
     }
 
-    @Produce
-    public ListingByIdGetEvent produceListing(){
-        return new ListingByIdGetEvent(mListingDetail);
-    }
-
     @OnClick(R.id.amenity_see_on_map)
     public void showMap(){
         mShowMapCallback.showMapFragment();
@@ -307,7 +302,17 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mListingId = getArguments().getLong(KeyUtil.LISTING_ID);
+        fetchPropertytDetail();
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    private void fetchPropertytDetail(){
+        //Intent intent = getIntent();
+        //long listingId = intent.getExtras().getLong("listingId");
+        ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getListingDetail(mListingId);
+        //TODO correct similar listing
+        ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getSimilarListingDetail(mListingId);
     }
 
     @Override
@@ -361,8 +366,8 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
             }
             TestUi(mListingDetail);
             ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getOtherSellersOnListingDetail(
-                    mListingDetail.projectId, mListingDetail.bedrooms, mListingDetail.bathrooms, mListingDetail.studyRoom
-                    , mListingDetail.poojaRoom, mListingDetail.servantRoom, 5
+                    mListingDetail.property.projectId, mListingDetail.property.bedrooms, mListingDetail.property.bathrooms, mListingDetail.property.studyRoom
+                    , mListingDetail.property.poojaRoom, mListingDetail.property.servantRoom, 5
             );
             ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId);
             ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId, ImageConstants.THREED_FLOOR_PLAN);
@@ -380,16 +385,16 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
                     if (mListingDetail.property != null && mListingDetail.property.project != null && mListingDetail.property.project.locality != null) {
                         if (mListingDetail.property.project.locality.avgPricePerUnitArea != null &&
                                 mListingDetail.property.project.locality.avgPricePerUnitArea < mListingDetail.currentListingPrice.pricePerUnitArea) {
-                            mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, true);
+                            mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, true,mListingDetail.listingCategory);
                         } else {
-                            mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false);
+                            mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false,mListingDetail.listingCategory);
                         }
                     } else {
-                        mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false);
+                        mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false,mListingDetail.listingCategory);
                     }
                 }
                 else {
-                    mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false);
+                    mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false,mListingDetail.listingCategory);
                 }
             }
             else{
@@ -609,6 +614,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
         Bundle bundle = new Bundle();
         bundle.putString("title", getResources().getString(R.string.similar_properties));
         newFragment.setArguments(bundle);
+        newFragment.setListener(this);
         mSimilarPropertyContainer.setVisibility(View.VISIBLE);
         initFragment(R.id.container_similar_properties, newFragment, false);
         newFragment.setData(listingDetailList);
@@ -627,5 +633,12 @@ public class PropertyDetailFragment extends MakaanBaseFragment {
 
     public void bindView(ShowMapCallBack showMapCallBack) {
         mShowMapCallback = showMapCallBack;
+    }
+
+    @Override
+    public void openPropertyPage(Long listingId, Double longitude, Double latitude) {
+        Intent intent = new Intent(getActivity(), PropertyActivity.class);
+        intent.putExtra(KeyUtil.LISTING_ID, listingId);
+        startActivity(intent);
     }
 }

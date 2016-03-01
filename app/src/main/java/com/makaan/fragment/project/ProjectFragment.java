@@ -294,14 +294,14 @@ public class ProjectFragment extends MakaanBaseFragment{
                 mPropertyImageViewPager.bindView();
                 if(project.locality.avgPricePerUnitArea!=null) {
                     if(project.locality.avgPricePerUnitArea>project.minPricePerUnitArea) {
-                        mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice, project.minPricePerUnitArea, false);
+                        mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice, project.minPricePerUnitArea, false,null);
                     }
                     else{
-                        mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice, project.minPricePerUnitArea, true);
+                        mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice, project.minPricePerUnitArea, true,null);
                     }
                 }
                 else{
-                    mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice, project.minPricePerUnitArea, false);
+                    mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice, project.minPricePerUnitArea, false,null);
                 }
             } else {
                 mPropertyImageViewPager.setVisibility(View.GONE);

@@ -123,7 +123,7 @@
     <string name="contact_sellers">contact sellers</string>
     <string name="contact">contact</string>
     <string name="more_about">more about</string>
-    <string name="more_about_locality">more about locality</string>
+    <string name="more_about_locality">read more about locality</string>
     <string name="read_less">less</string>
     <string name="intrested_in">interested in</string>
     <string name="know_more">know more about</string>
@@ -146,7 +146,7 @@
     <string name="avg_price_prefix">avg. price</string>
     <string name="avg_price_postfix">/ sq ft</string>
     <string name="property_range">property range</string>
-    <string name="emi_rs">emi \u20B9</string>
+    <string name="emi_rs">emi  \u20B9</string>
     <string name="floor_plan">floor plan</string>
     <string name="top_localities">top localities</string>
     <string name="view_properties">view properties</string>

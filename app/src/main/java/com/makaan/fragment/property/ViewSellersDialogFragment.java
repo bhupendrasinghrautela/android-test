@@ -177,6 +177,9 @@ public class ViewSellersDialogFragment extends DialogFragment {
         mRecyclerView.setAdapter(mAdapter);
         mSubmitButton.setText(getString(R.string.contact_top_sellers));
         mSubmitButton.setEnabled(true);
+        if(mSellerCards.size()<=3){
+            selectSeller.setChecked(true);
+        }
     }
 
     @Override

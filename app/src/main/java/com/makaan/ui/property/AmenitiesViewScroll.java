@@ -175,7 +175,9 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
                 valueText.setTextColor(mContext.getResources().getColor(R.color.pyr_light_grey));
             }
             nameText.setVisibility(GONE);
-            valueText.setText(dataItem.value);
+            if(dataItem.value!=null) {
+                valueText.setText(dataItem.value.toLowerCase());
+            }
             return view;
         }
     }

@@ -41,8 +41,8 @@ public class PropertyImageViewPager extends ViewPager {
         setPageTransformer(true, new StackLikePagerTransform());
     }
 
-    public void setData(List<Image> listingDetailImageList, Double price, Double size,boolean hasIncreased){
-        mPropertyImagesPagerAdapter.setData(listingDetailImageList,price,size,hasIncreased);
+    public void setData(List<Image> listingDetailImageList, Double price, Double size,boolean hasIncreased,String category){
+        mPropertyImagesPagerAdapter.setData(listingDetailImageList,price,size,hasIncreased,category);
         setCurrentItem(1, false);
     }
 }

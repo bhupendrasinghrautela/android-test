@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
+import com.makaan.activity.listing.OpenListingListener;
 import com.makaan.event.listing.SimilarListingGetEvent.ListingItems;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
@@ -37,6 +38,7 @@ public class SimilarPropertyFragment extends MakaanBaseFragment implements View.
     public TextView titleTv;
     @Bind(R.id.rv_similar_projects)
     public RecyclerView mRecyclerView;
+    private OpenListingListener listener;
 
 
     @Override
@@ -67,7 +69,13 @@ public class SimilarPropertyFragment extends MakaanBaseFragment implements View.
 
     @Override
     public void onClick(View v) {
+        if(listener!=null){
+            listener.openPropertyPage((Long) v.getTag(),null,null);
+        }
+    }
 
+    public void setListener(OpenListingListener listener) {
+        this.listener = listener;
     }
 
 
@@ -85,6 +93,7 @@ public class SimilarPropertyFragment extends MakaanBaseFragment implements View.
             public TextView pricePostTv;
             public ImageView projectIv;
             public CardView cardView;
+            private int position;
 
             public ViewHolder(View v) {
                 super(v);
@@ -135,8 +144,7 @@ public class SimilarPropertyFragment extends MakaanBaseFragment implements View.
                     bhkInfo.append(property.bedrooms > 0 ? property.bedrooms.toString() + "bhk " : "");
                     bhkInfo.append(property.unitType != null ? property.unitType : "");
                 }
-                bhkInfo.append((property.size != null ? "-" +StringUtil.getFormattedNumber(property.size) : "") + " " +
-                        (property.measure != null ? property.measure : ""));
+                bhkInfo.append((property.size != null ? "- " +StringUtil.getFormattedNumber(property.size)+" sq ft" : ""));
                 holder.nameTv.setText(bhkInfo.toString());
 
             }

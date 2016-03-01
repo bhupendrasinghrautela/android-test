@@ -2,12 +2,9 @@ package com.makaan.activity.listing;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
-import com.makaan.adapter.property.PropertyImagesPagerAdapter;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.amenity.AmenityGetEvent;
@@ -16,11 +13,8 @@ import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.search.event.SearchResultEvent;
-import com.makaan.service.ListingService;
-import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.KeyUtil;
 import com.segment.analytics.Properties;
-import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
 
 /**
@@ -59,21 +53,9 @@ public class PropertyActivity extends MakaanBaseSearchActivity implements ShowMa
             mPropertyDeatilFragment.bindView(this);
             initFragment(R.id.container, mPropertyDeatilFragment, false);
         }
-
-        fetchProjectDetail();
         initUi(true);
 
     }
-
-    private void fetchProjectDetail(){
-        //Intent intent = getIntent();
-        //long listingId = intent.getExtras().getLong("listingId");
-        ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getListingDetail(mListingId);
-        //TODO correct similar listing
-        ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getSimilarListingDetail(mListingId);
-    }
-
-
 
     @Override
     public boolean isJarvisSupported() {
@@ -106,11 +88,6 @@ public class PropertyActivity extends MakaanBaseSearchActivity implements ShowMa
             return;
         }
         mAmenityGetEvent = amenityGetEvent;
-    }
-
-    @Produce
-    public AmenityGetEvent produceAmenityEvent(){
-        return mAmenityGetEvent;
     }
 
     @Override
