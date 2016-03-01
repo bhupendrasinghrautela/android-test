@@ -279,6 +279,10 @@
     <!-- shortlist strings -->
     <string name="rupee">\u20B9</string>
     <string name="no_shortlisting">no shortlisted available</string>
+
+    <string name="no_enquiries_available">no enquiries available</string>
+    <string name="no_favorite_available">no favorites available</string>
+
     <string name="no_notifications">You do not have any notifications</string>
 
     <!-- get rewards strings -->
@@ -314,6 +318,8 @@
     <string name="blog_content_home_booking_action">home booking guidance</string>
     <string name="blog_content_home_possession_action">home possession advice</string>
     <string name="blog_content_home_registration_action">home registration guidance</string>
+    <string name="no_site_visits">no site visit available</string>
+
 
     <!--analytics-->
     <string name="similar_project_clicked_position">similar project clicked position</string>
@@ -323,6 +329,8 @@
     <string name="default_no_results_error_message">sorry, no matching results found</string>
 
     <string name="search_residential_plot_string">residential plot</string>
+
+    <string name="call_sellers">call sellers</string>
 
 
 

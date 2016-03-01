@@ -1,69 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:font="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/project_config_item_seperator"
-        />
-<LinearLayout
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:weightSum="2"
-    android:layout_margin="@dimen/project_config_item_margin"
-    android:layout_height="match_parent">
-<LinearLayout
-    android:layout_width="0dp"
-    android:layout_weight="1"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_height="wrap_content"
-        android:id="@+id/iv_project_config_item_properties"
-        android:src="@drawable/icon_properties"
-        />
-    <com.makaan.ui.view.FontTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/tv_project_config_item_properties"
-        android:textColor="@color/project_text_red"
-        font:fontName="proxima.otf"
-        android:text="view properties"
-        android:textSize="@dimen/project_text_v_small"
-        />
+        android:layout_height="1px"
+        android:background="@color/project_config_item_seperator" />
 
-
-</LinearLayout>
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_call_sellers"
-            android:id="@+id/iv_project_config_item_seller"
-            android:layout_gravity="center_horizontal"
-            />
-        <com.makaan.ui.view.FontTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_project_config_item_seller"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/project_text_red"
-            android:text="view properties"
-            android:textSize="@dimen/project_text_v_small"
-            font:fontName="proxima.otf"
-            />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/project_config_item_margin"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:gravity="center_vertical">
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_project_config_item_properties"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/icon_properties" />
+
+            <com.makaan.ui.view.FontTextView
+                android:id="@+id/tv_project_config_item_properties"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="view properties"
+                android:textColor="@color/project_text_red"
+                android:textSize="@dimen/project_text_v_small"
+                font:fontName="proxima.otf" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/project_config_item_seperator" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_project_config_item_seller"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/icon_call_sellers" />
+
+            <com.makaan.ui.view.FontTextView
+                android:id="@+id/tv_project_config_item_seller"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/call_sellers"
+                android:textColor="@color/project_text_red"
+                android:textSize="@dimen/project_text_v_small"
+                font:fontName="proxima.otf" />
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 </LinearLayout>

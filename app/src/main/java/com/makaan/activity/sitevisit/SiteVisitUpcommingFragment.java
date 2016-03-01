@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.activity.shortlist.ShortListCallback;
@@ -40,6 +41,8 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
     private int position;
     private ShortListCallback callback;
     private ArrayList<Long> mSellerIds;
+    @Bind(R.id.tv_no_shortlist)
+    TextView statusMessage;
 
     @Override
     protected int getContentViewId() {
@@ -69,6 +72,7 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
             mEnquiryHashMap = new HashMap<>();
         }
         if(clientEventsByGetEvent.results!=null && clientEventsByGetEvent.results.size()>0) {
+            statusMessage.setVisibility(View.GONE);
             mAdapter = new SiteVisitUpcommingAdapter(getActivity());
             mSellerIds = new ArrayList<>();
             for (ClientEvent clientEvent : clientEventsByGetEvent.results) {
@@ -105,6 +109,10 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
             mAdapter.setData(mEnquiryHashMap);
             enquiredRecyclerView.setVisibility(View.VISIBLE);
             enquiredRecyclerView.setAdapter(mAdapter);
+        }else{
+
+            statusMessage.setVisibility(View.VISIBLE);
+            statusMessage.setText(getActivity().getString(R.string.no_site_visits));
         }
     }
 

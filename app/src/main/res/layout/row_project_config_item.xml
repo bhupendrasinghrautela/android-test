@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:font="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:font="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
         android:id="@+id/project_config_row_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/project_config_item_margin"
         android:background="@drawable/project_config_item_bg"
-        android:layout_height="match_parent">
+        android:orientation="vertical">
 
-<LinearLayout
-    android:orientation="horizontal"
-    android:weightSum="3"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:gravity="center_vertical">
 
-    <com.makaan.ui.view.FontTextView
-        android:layout_width="0dp"
-        android:layout_weight="2"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:layout_margin="@dimen/project_text_medium"
-        android:gravity="left|center_vertical"
-        android:id="@+id/tv_project_config_item_labe_one"
-        android:textSize="@dimen/project_text_medium"
-        android:textColor="@color/project_text_default"
-        font:fontName="bangla.ttf"
-        />
+            <com.makaan.ui.view.FontTextView
+                android:id="@+id/tv_project_config_item_labe_one"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/project_text_medium"
+                android:layout_weight="2"
+                android:gravity="left|center_vertical"
+                android:singleLine="true"
+                android:textColor="@color/project_text_default"
+                android:textSize="@dimen/project_text_medium"
+                font:fontName="bangla.ttf" />
 
-    <com.makaan.ui.view.FontTextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:gravity="right|center_vertical"
-        android:layout_margin="@dimen/project_config_label_margin"
-        font:fontName="proxima.otf"
-        android:id="@+id/tv_project_config_item_labe_two"
-        android:textSize="@dimen/project_text_medium"
-        android:textColor="@color/project_light_text" />
+            <com.makaan.ui.view.FontTextView
+                android:id="@+id/tv_project_config_item_labe_two"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/project_config_label_margin"
+                android:layout_weight="1"
+                android:gravity="right|center_vertical"
+                android:singleLine="true"
+                android:textColor="@color/project_light_text"
+                android:textSize="@dimen/project_text_medium"
+                font:fontName="proxima.otf" />
 
-</LinearLayout>
-</LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
