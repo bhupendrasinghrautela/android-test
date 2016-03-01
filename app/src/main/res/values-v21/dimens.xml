@@ -8,4 +8,8 @@
     <dimen name="listing_brief_view_layout_badge_margin_top">8dp</dimen>
     <dimen name="locality_kyn_recycler_height">340dp</dimen>
 
+
+    <dimen name="temporary_card_view_radius">0dp</dimen>
+    <dimen name="temporary_card_view_elevation">0dp</dimen>
+    <dimen name="temporary_card_view_max_elevation">0dp</dimen>
 </resources>

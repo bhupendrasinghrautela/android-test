@@ -1378,4 +1378,8 @@
     <dimen name="fragment_child_serp_cluster_view_pager_height">48dp</dimen>
     <dimen name="project_timeline_bottom_margin">10dp</dimen>
 
+
+    <dimen name="temporary_card_view_radius">1px</dimen>
+    <dimen name="temporary_card_view_elevation">1px</dimen>
+    <dimen name="temporary_card_view_max_elevation">1px</dimen>
 </resources>
