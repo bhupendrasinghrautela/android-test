@@ -30,6 +30,7 @@
 
     <string name="call_now">call now</string>
     <string name="get_callback">get callBack</string>
+    <string name="share_your_details">share your details</string>
     <string name="pyr_buy">buy</string>
     <string name="pyr_rent">rent</string>
     <string name="pyr_name">name</string>
@@ -74,6 +75,8 @@
     <string name="new_listings">new listings are added daily..</string>
     <string name="alerts_msg">set alerts to get the latest in your inbox</string>
     <string name="set_alerts">set alerts</string>
+    <string name="set_alert">set alert</string>
+    <string name="or_text">"or "</string>
     <string name="select_sellers">select sellers</string>
     <string name="contact_top_advisors">contact 4 advisors</string>
     <string name="contact_string">contact </string>
