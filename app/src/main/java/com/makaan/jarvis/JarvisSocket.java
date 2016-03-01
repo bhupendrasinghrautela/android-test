@@ -33,6 +33,7 @@ public class JarvisSocket {
 
     private boolean mTyping = false;
     private static int index = 0;
+    private boolean isConnectionError = false;
 
     public Socket mSocket; {
         try {
@@ -66,9 +67,19 @@ public class JarvisSocket {
         mSocket.off("agent-confirms-user", onAgentConfirmUser);
     }
 
-    private void leave() {
-        mSocket.disconnect();
-        mSocket.connect();
+    public void refresh() {
+        if(isConnectionError){
+            isConnectionError=false;
+            if(null==mSocket || !mSocket.connected()){
+                try {
+                    mSocket = IO.socket(JarvisConstants.CHAT_SERVER_URL);
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+            }
+            close();
+            open();
+        }
     }
 
     private void joinUser(){
@@ -104,9 +115,10 @@ public class JarvisSocket {
     public void userConfirmsAgent(Object data){
 
         try {
-            mSocket.emit("user-confirms-agent", JsonBuilder.toJson(data), new Ack() {
+            mSocket.emit("user-confirms-agent", data, new Ack() {
                 @Override
                 public void call(Object... args) {
+
                 }
             });
         } catch (Exception e) {
@@ -125,6 +137,7 @@ public class JarvisSocket {
             mSocket.emit("done-rating", data, new Ack() {
                 @Override
                 public void call(Object... args) {
+
                 }
             });
         } catch (Exception e) {
@@ -136,6 +149,7 @@ public class JarvisSocket {
     private Emitter.Listener onConnectError = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
+            isConnectionError = true;
             handleMessage(args);
         }
     };
@@ -152,10 +166,9 @@ public class JarvisSocket {
         @Override
         public void call(final Object... args) {
             if(null!=args || args.length>0) {
-
+                userConfirmsAgent(args[0]);
                 SocketMessage message = parseMessage((JSONObject) args[0]);
                 JarvisClient.getInstance().getChatMessages().add((Message) message);
-                userConfirmsAgent(args[0]);
             }
         }
     };
@@ -194,6 +207,7 @@ public class JarvisSocket {
 
 
     private void handleMessage(Object... args)  {
+        Log.e("Handle message : " , args.toString());
     }
 
     private SocketMessage parseMessage(JSONObject object){

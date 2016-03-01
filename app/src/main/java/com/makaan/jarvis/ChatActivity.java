@@ -3,6 +3,7 @@ package com.makaan.jarvis;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,7 @@ import com.makaan.jarvis.message.Message;
 import com.makaan.jarvis.ui.ConversationAdapter;
 import com.makaan.jarvis.message.*;
 import com.makaan.util.AppBus;
+import com.makaan.util.NetworkUtil;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -65,6 +67,8 @@ public class ChatActivity extends AppCompatActivity {
 
         eventBus = AppBus.getInstance();
         eventBus.register(ChatActivity.this);
+
+        JarvisClient.getInstance().refreshJarvisSocket();
     }
 
 
@@ -148,6 +152,10 @@ public class ChatActivity extends AppCompatActivity {
         if(TextUtils.isEmpty(text)){
             finish();
         }else{
+            if(!NetworkUtil.isNetworkAvailable(this)){
+                showError(getResources().getString(R.string.no_network_connection));
+                return;
+            }
             Message message = new Message();
             message.messageType = MessageType.outText;
             message.message = text;
@@ -199,6 +207,13 @@ public class ChatActivity extends AppCompatActivity {
         for(Message message : messages){
             addChatMessage(message);
         }
+    }
+
+    private void showError(String message){
+        final Snackbar snackbar = Snackbar
+                .make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT);
+
+        snackbar.show();
     }
 
     @OnClick(R.id.close)

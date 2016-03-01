@@ -57,7 +57,6 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
     private ArrayList<Listing> mListings = new ArrayList<Listing>();
     private ArrayList<GroupListing> mGroupListings = new ArrayList<GroupListing>();
     private int mTotalCount;
-    private JarvisTrackExtraData jarvisTrackExtraData;
 
     public static SerpListFragment init(boolean isChildSerp) {
         // create listing fragment to show listing of the request we are receiving
@@ -223,10 +222,6 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
     @Override
     public void onLoadMoreItems() {
         mSerpRequestCallback.loadMoreItems();
-    }
-
-    public void setJarvisTrackExtraData(JarvisTrackExtraData jarvisTrackExtraData) {
-        this.jarvisTrackExtraData = jarvisTrackExtraData;
     }
 
     @Override

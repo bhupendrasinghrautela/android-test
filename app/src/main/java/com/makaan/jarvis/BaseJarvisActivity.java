@@ -122,6 +122,17 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        if(isJarvisHeadVisible && mJarvisHead != null) {
+            mJarvisHead.setVisibility(View.VISIBLE);
+        }
+
+        JarvisClient.getInstance().refreshJarvisSocket();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         if(shouldTrackUserActiveness()){
@@ -317,6 +328,10 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         Intent intent = new Intent(this, ChatActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
+
+        if(mJarvisHead != null) {
+            mJarvisHead.setVisibility(View.VISIBLE);
+        }
 
     }
 
