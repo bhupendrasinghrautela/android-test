@@ -4,9 +4,9 @@
     android:id="@+id/serp_listing_item_builder_card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="0dp"
-    app:cardElevation="0dp"
-    app:cardMaxElevation="0dp"
+    app:cardCornerRadius="@dimen/temporary_card_view_radius"
+    app:cardElevation="@dimen/temporary_card_view_elevation"
+    app:cardMaxElevation="@dimen/temporary_card_view_max_elevation"
     app:cardPreventCornerOverlap="false">
 
     <ImageView
