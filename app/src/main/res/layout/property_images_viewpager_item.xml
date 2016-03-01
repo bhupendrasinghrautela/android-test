@@ -65,12 +65,10 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="14dp"
             android:layout_marginTop="30dp"
-            android:text="emi 92,394"
             android:textSize="13sp"
             android:layout_height="wrap_content"/>
         <ImageView
             android:id="@+id/price_change"
-            android:background="@drawable/bottom_arrow_circle_green"
             android:layout_marginLeft="8dp"
             android:layout_alignBottom="@id/area_text"
             android:layout_toRightOf="@id/area_text"

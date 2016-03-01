@@ -2,6 +2,7 @@ package com.makaan.ui.property;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -49,7 +50,7 @@ public class PropertyImageCardView extends CardView {
         super(context, attrs, defStyleAttr);
     }
 
-    public void bindView(Context mContext, Image listingDetailImage, int position, Double price, Double size,boolean hasIncreased) {
+    public void bindView(Context mContext, Image listingDetailImage, int position, Double price, Double size, boolean hasIncreased, String category) {
         ButterKnife.bind(this);
         if(position != 1){
             mPropertyImageDetailLayout.setVisibility(GONE);
@@ -70,20 +71,22 @@ public class PropertyImageCardView extends CardView {
             priceText.setText(String.valueOf(priceString));
             priceUnitText.setText(priceUnit);
         }
-        if(size != null){
-            sizeText.setText(StringUtil.getFormattedNumber(size)+" "+mContext.getString(R.string.avg_price_postfix));
-        }
-        if(price!=null) {
-            String formatted = new DecimalFormat("##,##,##0").format(calculateEmi(price, 9.55 / 100, 20));
-            emiText.setText(mContext.getString(R.string.emi_rs) + " " + formatted);
-        }
+
         mPropertyImageView.setDefaultImageResId(R.drawable.luxury_project);
         mPropertyImageView.setImageUrl(listingDetailImage.absolutePath, MakaanNetworkClient.getInstance().getImageLoader());
-        if(hasIncreased){
-            priceChange.setImageResource(R.drawable.bottom_arrow_circle);
-        }
-        else{
-            priceChange.setImageResource(R.drawable.bottom_arrow_circle_green);
+        if(!TextUtils.isEmpty(category) && !category.equals("Rental")) {
+            if (size != null) {
+                sizeText.setText(StringUtil.getFormattedNumber(size) + " " + mContext.getString(R.string.avg_price_postfix));
+            }
+            if (price != null) {
+                String formatted = new DecimalFormat("##,##,##0").format(calculateEmi(price, 9.55 / 100, 20));
+                emiText.setText(mContext.getString(R.string.emi_rs) + " " + formatted);
+            }
+            if (hasIncreased) {
+                priceChange.setImageResource(R.drawable.bottom_arrow_circle);
+            } else {
+                priceChange.setImageResource(R.drawable.bottom_arrow_circle_green);
+            }
         }
     }
 

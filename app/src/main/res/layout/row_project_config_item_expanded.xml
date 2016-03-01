@@ -21,9 +21,9 @@
     android:orientation="vertical"
     >
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="30dp"
         android:layout_gravity="center_horizontal"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:id="@+id/iv_project_config_item_properties"
         android:src="@drawable/icon_properties"
         />
@@ -47,8 +47,8 @@
         android:orientation="vertical"
         >
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/icon_call_sellers"
             android:id="@+id/iv_project_config_item_seller"
             android:layout_gravity="center_horizontal"

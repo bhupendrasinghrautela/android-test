@@ -34,6 +34,7 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
     private boolean hasIncreased;
     private Double size;
     private PropertyImageCardView mCurrentPropertyImageCardView;
+    private String category;
     private int previousPosition=-1;
     private int mTotalCount=0;
 
@@ -109,7 +110,7 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
         });
     }
 
-    public void setData(List<Image> list, Double price, Double size,boolean hasIncreased){
+    public void setData(List<Image> list, Double price, Double size,boolean hasIncreased,String category){
         if(list == null || list.isEmpty()){
             return;
         }
@@ -117,6 +118,7 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
         this.price = price;
         this.size = size;
         this.hasIncreased = hasIncreased;
+        this.category = category;
         if(list.size()>1) {
             mItems.add(list.get(list.size() - 1));
             mItems.addAll(list);
@@ -154,10 +156,10 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
                 (PropertyImageCardView) mLayoutInflater.inflate(R.layout.property_images_viewpager_item, null);
 
         if(mCount == 1) {
-            mCurrentPropertyImageCardView.bindView(mContext, mItems.get(position),1, price,size,hasIncreased);
+            mCurrentPropertyImageCardView.bindView(mContext, mItems.get(position),1, price,size,hasIncreased,category);
         }
         else {
-            mCurrentPropertyImageCardView.bindView(mContext, mItems.get(position), position, price,size,hasIncreased);
+            mCurrentPropertyImageCardView.bindView(mContext, mItems.get(position), position, price,size,hasIncreased,category);
         }
         container.addView(mCurrentPropertyImageCardView,0);
         return mCurrentPropertyImageCardView;
