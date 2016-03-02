@@ -27,11 +27,11 @@ public class AgentService implements MakaanService{
     public void getTopAgentsForLocality(Long cityId, Long localityId, int noOfAgents, boolean isRental,TopAgentsCallback topAgentsCallback) {
         ArrayList<String> localityIds = new ArrayList<>();
         localityIds.add(localityId.toString());
-        getTopAgentsForLocality(cityId, localityIds, null, null, noOfAgents, isRental, topAgentsCallback);
+        getTopAgentsForLocality(cityId, localityIds, null, null, noOfAgents, null, topAgentsCallback);
     }
 
 
-    public void getTopAgentsForLocality(Long cityId, ArrayList<String> localityIdList, ArrayList<String> bedrooms, ArrayList<String> unitType, Integer noOfAgents, boolean isRental, TopAgentsCallback topAgentsCallback) {
+    public void getTopAgentsForLocality(Long cityId, ArrayList<String> localityIdList, ArrayList<String> bedrooms, ArrayList<String> unitType, Integer noOfAgents, Boolean isRental, TopAgentsCallback topAgentsCallback) {
 
         if (null != cityId) {
             StringBuilder topAgentsUrl = new StringBuilder(TOP_AGENTS_CITY);
@@ -45,10 +45,12 @@ public class AgentService implements MakaanService{
             if (null != bedrooms && bedrooms.size()>0) {
                 topAgentsSelector.term(BEDROOMS, bedrooms);
             }
-            if (isRental) {
-                topAgentsSelector.term(LISTING_CATEGORY, RENTAL);
-            } else {
-                topAgentsSelector.term(LISTING_CATEGORY, new String[]{RESALE, PRIMARY});
+            if(isRental != null) {
+                if (isRental) {
+                    topAgentsSelector.term(LISTING_CATEGORY, RENTAL);
+                } else {
+                    topAgentsSelector.term(LISTING_CATEGORY, new String[]{RESALE, PRIMARY});
+                }
             }
 
             if (null != unitType && unitType.size()>0) {

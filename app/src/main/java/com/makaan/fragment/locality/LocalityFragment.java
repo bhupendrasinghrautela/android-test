@@ -2,6 +2,7 @@ package com.makaan.fragment.locality;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -53,6 +54,7 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.TaxonomyService;
 import com.makaan.ui.CompressedTextView;
 import com.makaan.util.Blur;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.LocalityUtil;
 import com.squareup.otto.Subscribe;
 
@@ -324,6 +326,7 @@ public class LocalityFragment extends MakaanBaseFragment {
             Bundle bundle = new Bundle();
             bundle.putString("title", getResources().getString(R.string.locality_nearby_localities_title));
             bundle.putInt("placeholder", R.drawable.placeholder_localities_nearby);
+            bundle.putString("action", "view details");
             newFragment.setArguments(bundle);
             initFragment(R.id.container_nearby_localities, newFragment, false);
             newFragment.setNearByLocalityData(nearbyLocalities);
@@ -381,6 +384,7 @@ public class LocalityFragment extends MakaanBaseFragment {
             Bundle bundle = new Bundle();
             bundle.putString("title", getResources().getString(R.string.locality_top_agents_label));
             bundle.putInt("placeholder", R.drawable.placeholder_agent);
+            bundle.putString("action", "view seller details");
             newFragment.setArguments(bundle);
             initFragment(R.id.container_nearby_localities_top_agents, newFragment, false);
             newFragment.setDataForTopAgents(locality.cityId, locality.localityId, topAgents);
@@ -392,8 +396,9 @@ public class LocalityFragment extends MakaanBaseFragment {
         if(builders != null && builders.size()>0) {
             NearByLocalitiesFragment newFragment = new NearByLocalitiesFragment();
             Bundle bundle = new Bundle();
-            bundle.putString("title", getResources().getString(R.string.locality_top_builders_label));
+            bundle.putString("title", String.format(getResources().getString(R.string.locality_top_builders_label), locality.label));
             bundle.putInt("placeholder", R.drawable.placeholder_localities_builders);
+            bundle.putString("action", "view projects");
             newFragment.setArguments(bundle);
             initFragment(R.id.container_nearby_localities_top_builders, newFragment, false);
             newFragment.setDataForTopBuilders(builders);
@@ -413,7 +418,10 @@ public class LocalityFragment extends MakaanBaseFragment {
     private void fetchHero()
     {
         if(locality.localityHeroshotImageUrl!=null){
-            MakaanNetworkClient.getInstance().getImageLoader().get(locality.localityHeroshotImageUrl, new ImageLoader.ImageListener() {
+            Configuration config = getResources().getConfiguration();
+            int width = config.screenWidthDp;
+            int height = config.screenHeightDp;
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(locality.localityHeroshotImageUrl, width, height, true), new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
 
@@ -431,7 +439,7 @@ public class LocalityFragment extends MakaanBaseFragment {
 
                 }
             });
-            mMainCityImage.setImageUrl(locality.localityHeroshotImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
+            mMainCityImage.setImageUrl(ImageUtils.getImageRequestUrl(locality.localityHeroshotImageUrl, width, height, true), MakaanNetworkClient.getInstance().getImageLoader());
         }else{
             Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.locality_hero);
             final Bitmap newImg = Blur.fastblur(mContext, image, 25);

@@ -1385,4 +1385,7 @@
     <dimen name="temporary_card_view_radius">1px</dimen>
     <dimen name="temporary_card_view_elevation">1px</dimen>
     <dimen name="temporary_card_view_max_elevation">1px</dimen>
+
+    <dimen name="row_nearby_localities_left_margin">20dp</dimen>
+    <dimen name="row_nearby_localities_right_margin">20dp</dimen>
 </resources>
