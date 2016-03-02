@@ -12,4 +12,9 @@
     <dimen name="temporary_card_view_radius">0dp</dimen>
     <dimen name="temporary_card_view_elevation">0dp</dimen>
     <dimen name="temporary_card_view_max_elevation">0dp</dimen>
+
+    <dimen name="switch_view_radius">10dp</dimen>
+    <dimen name="switch_view_thumb_height_width">20dp</dimen>
+    <dimen name="switch_view_track_height">20dp</dimen>
+    <dimen name="switch_view_track_width">50dp</dimen>
 </resources>

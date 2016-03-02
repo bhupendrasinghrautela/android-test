@@ -195,17 +195,14 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
 
     @Subscribe
     public void loginResults(UserLoginEvent userLoginEvent){
-        if(null==userLoginEvent || null!=userLoginEvent.error){
-            Toast.makeText(mContext, R.string.generic_error, Toast.LENGTH_SHORT).show();
-        }
         if(!isLoginInitiatedFromWishList){
             return;
         }
 
         isLoginInitiatedFromWishList = false;
 
-        if(userLoginEvent.error!=null){
-            Toast.makeText(mContext, R.string.generic_error, Toast.LENGTH_SHORT).show();
+        if(userLoginEvent.error.msg!=null){
+            Toast.makeText(mContext, userLoginEvent.error.msg, Toast.LENGTH_SHORT).show();
         } else {
             onCheckedChanged(null, !mShortlistCheckBox.isChecked());
         }

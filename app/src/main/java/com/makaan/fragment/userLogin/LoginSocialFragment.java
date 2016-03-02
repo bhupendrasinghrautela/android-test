@@ -214,6 +214,11 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
             mOnUserLoginListener.onUserLoginSuccess(userLoginEvent.userResponse , str);
         }
     }
+
+    @OnClick(R.id.iv_back)
+    public void onBackPressed(){
+        getActivity().onBackPressed();
+    }
 }
 
 

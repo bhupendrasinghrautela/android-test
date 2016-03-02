@@ -154,7 +154,7 @@ public class LoginFragment extends Fragment {
     @Subscribe
     public void loginResults(UserLoginEvent userLoginEvent){
         Properties properties= MakaanEventPayload.beginBatch();
-        properties.put(MakaanEventPayload.CATEGORY , MakaanTrackerConstants.Category.userLogin);
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.userLogin);
         if(userLoginEvent.error!=null){
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.loginWithEmailFail);
             MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.login);
@@ -166,5 +166,10 @@ public class LoginFragment extends Fragment {
             String str = new Gson().toJson(userLoginEvent.userResponse);
             mOnUserLoginListener.onUserLoginSuccess(userLoginEvent.userResponse , str);
         }
+    }
+
+    @OnClick(R.id.iv_back)
+    public void onBackPressed(){
+        getActivity().onBackPressed();
     }
 }
