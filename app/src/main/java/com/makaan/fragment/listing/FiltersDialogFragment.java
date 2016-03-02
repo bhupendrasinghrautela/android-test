@@ -16,6 +16,7 @@ import com.makaan.activity.listing.SerpActivity;
 import com.makaan.adapter.listing.FiltersViewAdapter;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.fragment.MakaanBaseDialogFragment;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.request.selector.Selector;
@@ -34,7 +35,7 @@ import butterknife.OnClick;
 /**
  * Created by rohitgarg on 1/8/16.
  */
-public class FiltersDialogFragment extends DialogFragment {
+public class FiltersDialogFragment extends MakaanBaseDialogFragment {
     List<ExpandableHeightGridView> mFilterGridViews = new ArrayList<>();
 
     @Bind(R.id.fragment_dialog_filters_filter_linear_layout)
@@ -48,11 +49,7 @@ public class FiltersDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dialog_filters, container, false);
-
-        AppBus.getInstance().register(this); //TODO: move to base fragment
-        ButterKnife.bind(this, view);
-
+        View view = super.onCreateView(inflater, container, savedInstanceState);
 
         try {
             ArrayList<FilterGroup> filterGroups = SerpObjects.getFilterGroups(getActivity());
@@ -60,7 +57,6 @@ public class FiltersDialogFragment extends DialogFragment {
         } catch (CloneNotSupportedException ex) {
             ex.printStackTrace();
         }
-
 
         return view;
     }
@@ -183,6 +179,11 @@ public class FiltersDialogFragment extends DialogFragment {
         if (getActivity() instanceof FilterDialogFragmentCallback) {
             ((FilterDialogFragmentCallback) getActivity()).dialogDismissed();
         }
+    }
+
+    @Override
+    protected int getContentViewId() {
+        return R.layout.fragment_dialog_filters;
     }
 
     @OnClick(R.id.fragment_dialog_filters_back_button)

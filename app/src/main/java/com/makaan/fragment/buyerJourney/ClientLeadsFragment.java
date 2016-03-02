@@ -1,5 +1,6 @@
 package com.makaan.fragment.buyerJourney;
 
+import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
+import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.buyerjourney.ClientLead;
@@ -28,9 +30,7 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.AppUtils;
 import com.squareup.otto.Subscribe;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Random;
 
 import butterknife.Bind;
@@ -45,6 +45,11 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
 
     @Bind(R.id.fragment_client_leads_next_button)
     Button mNextButton;
+
+    @Bind(R.id.fragment_client_leads_get_best_sellers_layout)
+    View mGetBestSellersLayout;
+    @Bind(R.id.fragment_client_leads_with_agent_layout)
+    View mWithAgentLayout;
 
     ArrayList<ClientLeadsObject> mClientLeadsObjects;
     private ClientLeadsAdapter mAdapter;
@@ -71,6 +76,12 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mAdapter);
         return view;
+    }
+
+    @OnClick(R.id.fragment_client_leads_get_best_sellers_button)
+    void onBestSellerClicked(View view) {
+        Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
+        getActivity().startActivity(pyrIntent);
     }
 
     @OnClick(R.id.fragment_client_leads_next_button)
@@ -261,4 +272,19 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
             }
         }
     }
+
+    @Override
+    protected void showNoResults(String message) {
+        super.showContent();
+        mWithAgentLayout.setVisibility(View.GONE);
+        mGetBestSellersLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void showContent() {
+        super.showContent();
+        mWithAgentLayout.setVisibility(View.VISIBLE);
+        mGetBestSellersLayout.setVisibility(View.GONE);
+    }
+
 }

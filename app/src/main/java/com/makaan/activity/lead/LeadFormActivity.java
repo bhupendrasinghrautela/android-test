@@ -4,17 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.listing.PropertyDetailFragment;
 import com.makaan.activity.listing.SerpActivity;
-import com.makaan.activity.pyr.PyrOtpVerification;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.fragment.MakaanMessageDialogFragment;
 import com.makaan.fragment.project.ProjectFragment;
-import com.makaan.fragment.pyr.PyrPagePresenter;
 import com.makaan.network.VolleyErrorParser;
 import com.makaan.response.leadForm.InstantCallbackResponse;
 import com.makaan.response.pyr.PyrPostResponse;
@@ -178,7 +176,11 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
     @Subscribe
     public void pyrResponse(PyrPostResponse pyrPostResponse){
         if(null!=pyrPostResponse.getError()){
-            Toast.makeText(this, VolleyErrorParser.getMessage(pyrPostResponse.getError()),Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(this, VolleyErrorParser.getMessage(pyrPostResponse.getError()),Toast.LENGTH_SHORT).show();*/
+            if(!isFinishing()) {
+                MakaanMessageDialogFragment.showMessage(getFragmentManager(),
+                        VolleyErrorParser.getMessage(pyrPostResponse.getError()), "ok");
+            }
         }
         if(pyrPostResponse.getStatusCode().equals("2XX")) {
             if(source!=null && source.equalsIgnoreCase(SerpActivity.class.getName())) {
@@ -212,7 +214,11 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
     @Subscribe
     public void instantResponse(InstantCallbackResponse instantCallbackResponse) {
         if(null!=instantCallbackResponse.getError()){
-            Toast.makeText(this, VolleyErrorParser.getMessage(instantCallbackResponse.getError()),Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(this, VolleyErrorParser.getMessage(instantCallbackResponse.getError()),Toast.LENGTH_SHORT).show();*/
+            if(!isFinishing()) {
+                MakaanMessageDialogFragment.showMessage(getFragmentManager(),
+                        VolleyErrorParser.getMessage(instantCallbackResponse.getError()), "ok");
+            }
         }
         if(instantCallbackResponse.getStatusCode().equals("2XX")){
 

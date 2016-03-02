@@ -12,10 +12,7 @@ import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
@@ -74,8 +71,6 @@ public class BlogContentFragment extends MakaanBaseFragment {
             showProgress();
             mType = type;
 
-        } else {
-            Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
         }
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);

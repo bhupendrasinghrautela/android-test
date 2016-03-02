@@ -55,8 +55,6 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        PermissionManager.begin().addRequest(PermissionManager.FINE_LOCATION_REQUEST).request(this);
-
         LocationService service = (LocationService) MakaanServiceFactory.getInstance().getService(LocationService.class);
         service.getUserLocation();
 

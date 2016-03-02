@@ -96,7 +96,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     public void onSiteVisitClick() {
         //TODO
 
-        if (isUserLoggedIn) {
+        if (isUserLoggedIn && mClientEventsReceived && mClientEventsCount > 0) {
             onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_SITE_VISIT);
         } else {
             intent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.SITE_VISIT);
@@ -248,7 +248,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             mViews[i].findViewById(R.id.iv_stage).setVisibility(View.INVISIBLE);
         }
 
-        if(i <= LeadPhaseConstants.LEAD_PHASE_POSSESSION) {
+        if(i == LeadPhaseConstants.LEAD_PHASE_POSSESSION || i == LeadPhaseConstants.LEAD_PHASE_BOOKING) {
             mJoyImageView.setImageResource(R.drawable.journey_makaan);
         } else if(i == LeadPhaseConstants.LEAD_PHASE_REGISTRATION) {
             mJoyImageView.setImageResource(R.drawable.journey_makaan);

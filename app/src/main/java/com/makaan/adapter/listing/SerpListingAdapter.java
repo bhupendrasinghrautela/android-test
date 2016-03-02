@@ -157,10 +157,10 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
                 int extraCount = 0;
                 int tens = position / 10;
                 int digit = position % 10;
-                if (tens > mGroupClusterListings.size()) {
+                if (tens >= mGroupClusterListings.size()) {
                     extraCount = mGroupClusterListings.size();
                 } else {
-                    if (digit > GroupCluster.CLUSTER_POS_IN_SERP_PER_TEN) {
+                    if (digit > GroupCluster.CLUSTER_POS_IN_SERP_PER_TEN && tens < mGroupClusterListings.size()) {
                         extraCount = tens + 1;
                     } else {
                         extraCount = tens;

@@ -594,6 +594,22 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             }
 
         }
+
+        if(SearchSuggestionType.NEARBY_PROPERTIES.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+            // if we don't have phone location
+            if(Session.phoneLocation == null) {
+                // check we need to request permission for gps
+                if (PermissionManager.isPermissionRequestRequired(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    // if yes, then request for permission and cancel current search request
+                    PermissionManager.begin().addRequest(PermissionManager.FINE_LOCATION_REQUEST).request(this);
+                    return;
+                } else if(Session.apiLocation == null) {
+                    // if we don't need to request permission for gps
+                    // and api location is also not available, then reject
+                    return;
+                }
+            }
+        }
         showContent();
 
         if(supportsListing()  && (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)
@@ -966,7 +982,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }
 
     private void addNearbyPropertiesSearchItem() {
-        if(Session.apiLocation != null || Session.phoneLocation != null) {
+//        if(Session.apiLocation != null || Session.phoneLocation != null) {
             SearchResponseItem item = new SearchResponseItem();
             item.type = SearchSuggestionType.NEARBY_PROPERTIES.getValue();
             item.displayText = "properties near my location";
@@ -978,7 +994,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 item.longitude = Session.apiLocation.centerLongitude;
             }
             mAvailableSearches.add(0, item);
-        }
+//        }
     }
 
     private void addErrorSearchItem(String message) {
@@ -1319,6 +1335,9 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 if(getLocationAvailabilty()) {
                     connectLocationApiClient(MakaanLocationManager.LocationUpdateMode.ONCE);
                 }
+            } else if(grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                // TODO show message or something
             }
         }
     }
