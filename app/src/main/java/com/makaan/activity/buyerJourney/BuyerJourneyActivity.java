@@ -177,28 +177,30 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
     @OnClick(R.id.button_login)
     public void onLoginClick() {
         if("login".equals(mLoginButton.getText().toString())) {
-            String screenName=this.getIntent().getExtras().getString("screenName");
-            switch(screenName){
-                case "Project":{
-                    Properties properties= MakaanEventPayload.beginBatch();
-                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
-                    properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
-                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProject);
-                    break;
-                }
-                case "Listing detail":{
-                    Properties properties=MakaanEventPayload.beginBatch();
-                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
-                    properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
-                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProperty);
-                    break;
-                }
-                case "serp":{
-                    Properties properties=MakaanEventPayload.beginBatch();
-                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
-                    properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
-                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickSerp);
-                    break;
+            if(getIntent() != null && getIntent().getExtras() != null) {
+                String screenName = this.getIntent().getExtras().getString("screenName");
+                switch (screenName) {
+                    case "Project": {
+                        Properties properties = MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
+                        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProject);
+                        break;
+                    }
+                    case "Listing detail": {
+                        Properties properties = MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
+                        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProperty);
+                        break;
+                    }
+                    case "serp": {
+                        Properties properties = MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+                        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
+                        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickSerp);
+                        break;
+                    }
                 }
             }
 
@@ -216,6 +218,13 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUserData();
+        invalidateOptionsMenu();
     }
 
     private void setUserData() {

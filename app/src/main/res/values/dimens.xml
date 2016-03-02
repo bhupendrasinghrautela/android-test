@@ -406,7 +406,7 @@
     <dimen name="serp_listing_card_seller_name_text_view_top_margin">3dp</dimen>
     <dimen name="serp_listing_card_seller_name_text_view_text_size">16sp</dimen>
 
-    <dimen name="serp_listing_card_assist_button_width">79dp</dimen>
+    <dimen name="serp_listing_card_assist_button_width">91dp</dimen>
     <dimen name="serp_listing_card_assist_button_height">30dp</dimen>
     <dimen name="serp_listing_card_assist_button_right_margin">20dp</dimen>
     <dimen name="serp_listing_card_assist_button_top_margin">12dp</dimen>

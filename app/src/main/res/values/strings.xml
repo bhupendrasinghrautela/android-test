@@ -312,7 +312,7 @@
     <string name="blog_content_search_sub_title">to save a search, click the \u0022set alerts\u0022 button on the search result page</string>
     <string name="blog_content_search_action">advice for best home buying experience</string>
     <string name="blog_content_shortlist_title">find shortlists here</string>
-    <string name="blog_content_shortlist_sub_title">to shortlist a property, click {img=makaan_logo} on the search results page</string>
+    <string name="blog_content_shortlist_sub_title">to shortlist a property, click {img=shortlist_unselected} on the search results page</string>
     <string name="blog_content_shortlist_action">shortlist the right properties</string>
     <string name="blog_content_site_visit_title">find site visits here</string>
     <string name="blog_content_site_visit_sub_title">to plan for your site visits, get in touch with any seller on makaan.com</string>
