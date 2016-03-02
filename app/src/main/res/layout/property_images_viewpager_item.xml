@@ -30,28 +30,20 @@
             android:id="@+id/price_text"
             android:layout_marginTop="11dp"
             android:layout_toRightOf="@+id/rupee_icon"
-<<<<<<< Updated upstream
             android:layout_width="wrap_content"
-=======
->>>>>>> Stashed changes
             android:textSize="32sp"
-            android:text="82.2"
             android:typeface="serif"
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/price_unit"
             android:layout_alignBaseline="@id/price_text"
             android:layout_toRightOf="@+id/price_text"
-<<<<<<< Updated upstream
             android:layout_marginLeft="5dp"
             android:layout_width="wrap_content"
             android:textSize="16sp"
-            android:text="L"
             android:layout_height="wrap_content"/>
-=======
             android:textSize="16sp" />
 
->>>>>>> Stashed changes
         <TextView
             android:id="@+id/area_text"
             android:layout_toRightOf="@id/rupee_icon"
@@ -73,28 +65,15 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="14dp"
             android:layout_marginTop="30dp"
-<<<<<<< Updated upstream
-            android:text="emi 92,394"
-=======
-            android:clickable="true"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:textColor="@color/emi_text_color_selector"
->>>>>>> Stashed changes
             android:textSize="13sp"
             android:layout_height="wrap_content"/>
         <ImageView
             android:id="@+id/price_change"
             android:layout_marginLeft="8dp"
-<<<<<<< Updated upstream
             android:layout_alignBottom="@id/area_text"
             android:layout_toRightOf="@id/area_text"
             android:layout_width="16dp"
             android:layout_height="16dp"/>
-=======
             android:layout_toRightOf="@id/area_text"/>
->>>>>>> Stashed changes
     </RelativeLayout>
 </com.makaan.ui.property.PropertyImageCardView>
