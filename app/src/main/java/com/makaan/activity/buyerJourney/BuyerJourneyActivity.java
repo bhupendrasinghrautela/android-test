@@ -127,12 +127,12 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
                     }
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         mAppBarLayout.setBackgroundColor(getResources().getColor(R.color.app_red, null));
-                        mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white, null));
-                        mTabLayout.setTabTextColors(getResources().getColor(R.color.white, null), getResources().getColor(R.color.white, null));
+//                        mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white, null));
+//                        mTabLayout.setTabTextColors(getResources().getColor(R.color.white, null), getResources().getColor(R.color.white, null));
                     } else {
                         mAppBarLayout.setBackgroundColor(getResources().getColor(R.color.app_red));
-                        mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white));
-                        mTabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources().getColor(R.color.white));
+//                        mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white));
+//                        mTabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources().getColor(R.color.white));
                     }
 
                 } else {
@@ -148,12 +148,12 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
                     } else {*/
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             mAppBarLayout.setBackgroundColor(getResources().getColor(R.color.buyer_dashboard_profile_background_color, null));
-                            mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red, null));
-                            mTabLayout.setTabTextColors(getResources().getColor(R.color.listingBlack, null), getResources().getColor(R.color.listingBlack, null));
+//                            mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red, null));
+//                            mTabLayout.setTabTextColors(getResources().getColor(R.color.listingBlack, null), getResources().getColor(R.color.listingBlack, null));
                         } else {
                             mAppBarLayout.setBackgroundColor(getResources().getColor(R.color.buyer_dashboard_profile_background_color));
-                            mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red));
-                            mTabLayout.setTabTextColors(getResources().getColor(R.color.listingBlack), getResources().getColor(R.color.listingBlack));
+//                            mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red));
+//                            mTabLayout.setTabTextColors(getResources().getColor(R.color.listingBlack), getResources().getColor(R.color.listingBlack));
                         }
 //                    }
                 }

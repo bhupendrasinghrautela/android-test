@@ -30,7 +30,7 @@ public abstract class MakaanBaseDialogFragment extends DialogFragment {
     @Bind(R.id.dialog_fragment_makaan_base_no_result_text_view)
     TextView mNoResultsTextView;
     @Bind(R.id.dialog_fragment_makaan_base_loading_progress_bar)
-    ProgressBar mLoadingProgressBar;
+    ImageView mLoadingProgressBar;
     @Bind(R.id.dialog_fragment_makaan_base_content_frame_layout)
     FrameLayout mContentFrameLayout;
 
@@ -62,6 +62,8 @@ public abstract class MakaanBaseDialogFragment extends DialogFragment {
         mContentFrameLayout.setVisibility(View.GONE);
         mNoResultsLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.VISIBLE);
+
+        Glide.with(this).load(R.raw.loading).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mLoadingProgressBar);
     }
 
     protected void showNoResults() {
