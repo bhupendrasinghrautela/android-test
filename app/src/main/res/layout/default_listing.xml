@@ -83,7 +83,7 @@
                         android:textColor="@color/serp_listing_card_default_text_color"
                         android:textSize="@dimen/serp_listing_card_property_price_text_size"
                         android:typeface="serif"
-                        android:maxLength="4"/>
+                        android:maxLength="5"/>
 
                     <TextView
                         android:id="@+id/serp_default_listing_property_price_unit_text_view"

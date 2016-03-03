@@ -104,52 +104,76 @@
             android:layout_below="@id/iv_content"
             android:orientation="horizontal">
 
-            <View
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="18dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="18dp"
-                android:background="@drawable/possession" />
-
-            <TextView
-                android:id="@+id/date"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="18dp"
-                android:layout_marginLeft="13.6dp"
-                android:layout_marginTop="18dp"
                 android:layout_weight="1"
-                android:text="@string/directions"
-                android:textColor="@color/appThemeRed"
-                android:textSize="@dimen/content_text_size"
-                android:typeface="serif" />
+                android:gravity="center"
+                android:paddingTop="18dp">
 
-            <View
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="18dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginTop="18dp"
-                android:background="@drawable/clock" />
 
-            <TextView
-                android:id="@+id/time"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/possession" />
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginStart="14dp"
+                        android:singleLine="true"
+                        android:text="@string/directions"
+                        android:textAllCaps="false"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/content_text_size"
+                        android:typeface="serif" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="18dp"
-                android:layout_marginLeft="13.6dp"
-                android:layout_marginRight="53dp"
-                android:layout_marginTop="18dp"
                 android:layout_weight="1"
-                android:text="call"
-                android:textColor="@color/appThemeRed"
-                android:textSize="@dimen/content_text_size"
-                android:typeface="serif" />
+                android:gravity="center"
+                android:paddingBottom="18dp"
+                android:paddingTop="18dp">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/clock" />
+
+                    <TextView
+                        android:id="@+id/time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginStart="14dp"
+                        android:singleLine="true"
+                        android:text="call"
+                        android:textAllCaps="false"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/content_text_size"
+                        android:typeface="serif" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
         <View
@@ -164,56 +188,83 @@
             android:layout_below="@id/timing"
             android:orientation="horizontal">
 
-            <View
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="28dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/direction" />
-
-            <TextView
-                android:id="@+id/direction"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/direction_layout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="13.6dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/directions"
-                android:textColor="@color/appThemeRed"
-                android:textSize="@dimen/content_text_size"
-                android:typeface="serif" />
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/direction" />
+
+                    <TextView
+                        android:id="@+id/direction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginStart="14dp"
+                        android:singleLine="true"
+                        android:text="@string/directions"
+                        android:textAllCaps="false"
+                        android:textColor="@color/appThemeRed"
+                        android:textSize="@dimen/content_text_size"
+                        android:typeface="serif" />
+                </LinearLayout>
+            </LinearLayout>
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="24dp"
                 android:background="@color/city_empty_view_color" />
 
-            <View
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="28dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/icon_call_sellers" />
-
-            <TextView
-                android:id="@+id/call_now"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/call_now_layout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="13.6dp"
-                android:layout_marginRight="53dp"
-                android:layout_marginTop="10dp"
-                android:text="call"
-                android:textColor="@color/appThemeRed"
-                android:textSize="@dimen/content_text_size"
-                android:typeface="serif" />
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/icon_call_sellers" />
+
+                    <TextView
+                        android:id="@+id/call_now"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginStart="14dp"
+                        android:singleLine="true"
+                        android:text="call"
+                        android:textAllCaps="false"
+                        android:textColor="@color/appThemeRed"
+                        android:textSize="@dimen/content_text_size"
+                        android:typeface="serif" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
     </RelativeLayout>

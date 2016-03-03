@@ -8,7 +8,7 @@ public class LisitingPostedBy {
     public String type;
     public String name;
     public String logo;
-    public int rating;
+    public double rating;
     public boolean assist;
     public long id;
 

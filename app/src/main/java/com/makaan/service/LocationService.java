@@ -137,17 +137,20 @@ public class LocationService implements MakaanService {
                         item.displayText = "top localities";
                         items.add(0, item);
 
-                        if(Session.apiLocation != null) {
-                            if(!TextUtils.isEmpty(Session.apiLocation.label)) {
-                                item = new SearchResponseItem();
-                                item.cityId = Session.apiLocation.id;
-                                item.entityId = String.valueOf(Session.apiLocation.id);
-                                item.displayText = "know more about " + Session.apiLocation.label.toLowerCase();
-                                item.entityName = Session.apiLocation.label;
-                                item.type = SearchSuggestionType.CITY_OVERVIEW.getValue();
-                                item.id = String.format("TYPEAHEAD-CITY-OVERVIEW-%s", item.entityId);
-                                items.add(item);
+                        if(items.size() > 1) {
+                            SearchResponseItem obj = items.get(1);
+                            item = new SearchResponseItem();
+                            item.cityId = obj.cityId;
+                            item.entityId = obj.entityId;
+                            if(TextUtils.isEmpty(item.city)) {
+                                item.displayText = "know more about " + obj.displayText;
+                            } else {
+                                item.displayText = "know more about " + obj.displayText + ", " + obj.city;
                             }
+                            item.entityName = item.displayText;
+                            item.type = SearchSuggestionType.LOCALITY_OVERVIEW.getValue();
+                            item.id = String.format("TYPEAHEAD-LOCALITY-OVERVIEW-%s", item.entityId);
+                            items.add(item);
                         }
 
                         SearchResponse response = new SearchResponse();

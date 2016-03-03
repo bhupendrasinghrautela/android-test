@@ -16,7 +16,7 @@
         android:textSize="18sp"
         android:textColor="@color/listingBlack"
         android:typeface="sans"
-        android:text="For Property"
+        android:text="select booked property"
         android:textAllCaps="false"
         android:singleLine="true"
         android:layout_alignParentTop="true"

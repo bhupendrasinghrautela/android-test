@@ -29,7 +29,7 @@
             android:layout_marginTop="@dimen/fragment_upload_documents_upload_text_top_margin"
             android:gravity="center"
             android:lineSpacingExtra="4dp"
-            android:text="Upload documents \u0026 initiate the process"
+            android:text="send ownership documents at\ncashback@makaan.com"
             android:textColor="@color/black"
             android:textSize="@dimen/fragment_upload_documents_upload_text_text_size"
             app:fontName="comforta.ttf" />

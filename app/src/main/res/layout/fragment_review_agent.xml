@@ -1,318 +1,340 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="20dp"
-    android:paddingStart="20dp"
-    android:paddingRight="20dp"
-    android:paddingEnd="20dp"
-    android:paddingTop="14dp"
-    android:paddingBottom="14dp"
-    android:background="@color/buyer_dashboard_background">
-    <Button
-        android:id="@+id/fragment_review_agent_next_button"
-        android:layout_width="150dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="10dp"
-        android:text="next"
-        android:textColor="@color/app_red"
-        android:textSize="16sp"
-        android:gravity="center"
-        android:textAllCaps="false"
-        android:singleLine="true"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/round_red" />
+    android:fillViewport="true">
 
-    <FrameLayout
-        android:id="@+id/fragment_review_agent_image_frame_layout"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/buyer_dashboard_background"
+        android:paddingBottom="14dp"
+        android:paddingEnd="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingStart="20dp"
+        android:paddingTop="14dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/fragment_review_agent_image_view"
+        <Button
+            android:id="@+id/fragment_review_agent_next_button"
+            android:layout_width="150dp"
+            android:layout_height="34dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_red"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="next"
+            android:textAllCaps="false"
+            android:textColor="@color/app_red"
+            android:textSize="16sp" />
+
+        <FrameLayout
+            android:id="@+id/fragment_review_agent_image_frame_layout"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/map"
-            android:visibility="gone"
-            app:civ_border_color="@color/serp_listing_card_seller_mask_color"
-            app:civ_border_width="@dimen/border_width" />
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/fragment_review_agent_image_view"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/map"
+                android:visibility="gone"
+                app:civ_border_color="@color/serp_listing_card_seller_mask_color"
+                app:civ_border_width="@dimen/border_width" />
+
+            <TextView
+                android:id="@+id/fragment_review_agent_logo_text_view"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="R"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+        </FrameLayout>
 
         <TextView
-            android:id="@+id/fragment_review_agent_logo_text_view"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:id="@+id/fragment_review_agent_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fragment_review_agent_image_frame_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="6dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="sunil chowdhary"
+            android:textAllCaps="false"
+            android:textColor="@color/listingBlack"
+            android:textSize="16sp"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/fragment_review_agent_type_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fragment_review_agent_name_text_view"
+            android:layout_centerHorizontal="true"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="grace consultant"
+            android:textAllCaps="false"
+            android:textColor="#555555"
+            android:textSize="15sp"
+            android:typeface="serif" />
+
+        <com.makaan.ui.view.CustomRatingBar
+            android:id="@+id/fragment_review_agent_rating_bar"
+            style="?android:attr/ratingBarStyle"
+            android:layout_width="150dp"
+            android:layout_height="24dp"
+            android:layout_below="@id/fragment_review_agent_type_text_view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="26dp"
             android:gravity="center"
-            android:text="R"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="24sp" />
-    </FrameLayout>
+            android:numStars="5"
+            android:stepSize="1"
+            app:itemHeight="24dp"
+            app:itemMarginLeft="3dp"
+            app:itemMarginRight="3dp"
+            app:itemProgressIcon="@drawable/m_fill"
+            app:itemSecondaryProgressIcon="@drawable/m_outline"
+            app:itemWidth="24dp" />
 
-    <TextView
-        android:id="@+id/fragment_review_agent_name_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="6dp"
-        android:layout_below="@id/fragment_review_agent_image_frame_layout"
-        android:text="sunil chowdhary"
-        android:textColor="@color/listingBlack"
-        android:textSize="16sp"
-        android:singleLine="true"
-        android:textAllCaps="false"
-        android:ellipsize="end"
-        android:typeface="sans"/>
+        <TextView
+            android:id="@+id/fragment_review_agent_review_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fragment_review_agent_rating_bar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="rate your experience"
+            android:textAllCaps="false"
+            android:textColor="#444444"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:typeface="serif" />
 
-    <TextView
-        android:id="@+id/fragment_review_agent_type_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/fragment_review_agent_name_text_view"
-        android:text="grace consultant"
-        android:textColor="#555555"
-        android:textSize="15sp"
-        android:singleLine="true"
-        android:textAllCaps="false"
-        android:ellipsize="end"
-        android:typeface="serif"/>
+        <View
+            android:id="@+id/fragment_review_agent_empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/fragment_review_agent_review_text_view"
+            android:layout_marginTop="26dp"
+            android:background="#B0979797" />
 
-    <com.makaan.ui.view.CustomRatingBar
-        android:id="@+id/fragment_review_agent_rating_bar"
-        android:layout_width="150dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="26dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/fragment_review_agent_type_text_view"
-        android:gravity="center"
-        android:numStars="5"
-        android:stepSize="1"
-        app:itemHeight="24dp"
-        app:itemWidth="24dp"
-        app:itemMarginLeft="3dp"
-        app:itemMarginRight="3dp"
-        app:itemProgressIcon="@drawable/m_fill"
-        app:itemSecondaryProgressIcon="@drawable/m_outline"
-        style="?android:attr/ratingBarStyle"/>
-
-    <TextView
-        android:id="@+id/fragment_review_agent_review_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/fragment_review_agent_rating_bar"
-        android:text="rate your experience"
-        android:textColor="#444444"
-        android:textSize="14sp"
-        android:singleLine="true"
-        android:textAllCaps="false"
-        android:ellipsize="end"
-        android:typeface="serif"/>
-    <View
-        android:id="@+id/fragment_review_agent_empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="26dp"
-        android:layout_below="@id/fragment_review_agent_review_text_view"
-        android:background="#B0979797" />
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/fragment_review_agent_empty_view"
-        android:layout_above="@id/fragment_review_agent_next_button">
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_above="@id/fragment_review_agent_next_button"
+            android:layout_below="@id/fragment_review_agent_empty_view">
 
-
-            <RelativeLayout
-                android:id="@+id/fragment_review_agent_listed_property_relative_layout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp">
-                <ToggleButton
-                    android:id="@+id/fragment_review_agent_listed_property_toggle_button"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/check_tick_selector"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:button="@null"
-                    android:text=""
-                    android:textOn=""
-                    android:textOff=""
-                    android:clickable="false"/>
-                <TextView
-                    android:layout_width="wrap_content"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:id="@+id/fragment_review_agent_listed_property_relative_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_toLeftOf="@id/fragment_review_agent_listed_property_toggle_button"
-                    android:layout_toStartOf="@id/fragment_review_agent_listed_property_toggle_button"
-                    android:layout_centerVertical="true"
-                    android:textColor="#444444"
-                    android:textSize="16sp"
-                    android:text="listed property not available"
-                    android:typeface="serif"
-                    android:singleLine="true"
-                    android:textAllCaps="false"/>
-            </RelativeLayout>
+                    android:layout_marginTop="24dp">
 
-            <RelativeLayout
-                android:id="@+id/fragment_review_agent_unreachable_relative_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp">
-                <ToggleButton
-                    android:id="@+id/fragment_review_agent_unreachable_toggle_button"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/check_tick_selector"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:button="@null"
-                    android:text=""
-                    android:textOn=""
-                    android:textOff=""
-                    android:clickable="false"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_toLeftOf="@id/fragment_review_agent_unreachable_toggle_button"
-                    android:layout_toStartOf="@id/fragment_review_agent_unreachable_toggle_button"
-                    android:layout_centerVertical="true"
-                    android:textColor="#444444"
-                    android:textSize="16sp"
-                    android:text="unreachable \u0026/or late"
-                    android:typeface="serif"
-                    android:singleLine="true"
-                    android:textAllCaps="false"/>
-            </RelativeLayout>
+                    <ToggleButton
+                        android:id="@+id/fragment_review_agent_listed_property_toggle_button"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/check_tick_selector"
+                        android:button="@null"
+                        android:clickable="false"
+                        android:text=""
+                        android:textOff=""
+                        android:textOn="" />
 
-            <RelativeLayout
-                android:id="@+id/fragment_review_agent_poor_knowledge_relative_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp">
-                <ToggleButton
-                    android:id="@+id/fragment_review_agent_poor_knowledge_toggle_button"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/check_tick_selector"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:button="@null"
-                    android:text=""
-                    android:textOn=""
-                    android:textOff=""
-                    android:clickable="false"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_toLeftOf="@id/fragment_review_agent_poor_knowledge_toggle_button"
-                    android:layout_toStartOf="@id/fragment_review_agent_poor_knowledge_toggle_button"
-                    android:layout_centerVertical="true"
-                    android:textColor="#444444"
-                    android:textSize="16sp"
-                    android:text="poor local knowledge"
-                    android:typeface="serif"
-                    android:singleLine="true"
-                    android:textAllCaps="false"/>
-            </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/fragment_review_agent_listed_property_toggle_button"
+                        android:layout_toStartOf="@id/fragment_review_agent_listed_property_toggle_button"
+                        android:singleLine="true"
+                        android:text="listed property not available"
+                        android:textAllCaps="false"
+                        android:textColor="#444444"
+                        android:textSize="16sp"
+                        android:typeface="serif" />
+                </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/fragment_review_agent_unprofessional_behaviour_relative_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp">
-                <ToggleButton
-                    android:id="@+id/fragment_review_agent_unprofessional_behaviour_toggle_button"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/check_tick_selector"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:button="@null"
-                    android:text=""
-                    android:textOn=""
-                    android:textOff=""
-                    android:clickable="false"/>
-                <TextView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/fragment_review_agent_unreachable_relative_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_toLeftOf="@id/fragment_review_agent_unprofessional_behaviour_toggle_button"
-                    android:layout_toStartOf="@id/fragment_review_agent_unprofessional_behaviour_toggle_button"
-                    android:layout_centerVertical="true"
-                    android:textColor="#444444"
-                    android:textSize="16sp"
-                    android:text="unprofessional behaviour"
-                    android:typeface="serif"
-                    android:singleLine="true"
-                    android:textAllCaps="false"/>
-            </RelativeLayout>
+                    android:layout_marginTop="24dp">
 
-            <RelativeLayout
-                android:id="@+id/fragment_review_agent_other_relative_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp">
-                <ToggleButton
-                    android:id="@+id/fragment_review_agent_other_toggle_button"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/check_tick_selector"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:button="@null"
-                    android:text=""
-                    android:textOn=""
-                    android:textOff=""
-                    android:clickable="false"/>
-                <TextView
-                    android:layout_width="wrap_content"
+                    <ToggleButton
+                        android:id="@+id/fragment_review_agent_unreachable_toggle_button"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/check_tick_selector"
+                        android:button="@null"
+                        android:clickable="false"
+                        android:text=""
+                        android:textOff=""
+                        android:textOn="" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/fragment_review_agent_unreachable_toggle_button"
+                        android:layout_toStartOf="@id/fragment_review_agent_unreachable_toggle_button"
+                        android:singleLine="true"
+                        android:text="unreachable \u0026/or late"
+                        android:textAllCaps="false"
+                        android:textColor="#444444"
+                        android:textSize="16sp"
+                        android:typeface="serif" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/fragment_review_agent_poor_knowledge_relative_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_toLeftOf="@id/fragment_review_agent_other_toggle_button"
-                    android:layout_toStartOf="@id/fragment_review_agent_other_toggle_button"
-                    android:layout_centerVertical="true"
-                    android:textColor="#444444"
+                    android:layout_marginTop="24dp">
+
+                    <ToggleButton
+                        android:id="@+id/fragment_review_agent_poor_knowledge_toggle_button"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/check_tick_selector"
+                        android:button="@null"
+                        android:clickable="false"
+                        android:text=""
+                        android:textOff=""
+                        android:textOn="" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/fragment_review_agent_poor_knowledge_toggle_button"
+                        android:layout_toStartOf="@id/fragment_review_agent_poor_knowledge_toggle_button"
+                        android:singleLine="true"
+                        android:text="poor local knowledge"
+                        android:textAllCaps="false"
+                        android:textColor="#444444"
+                        android:textSize="16sp"
+                        android:typeface="serif" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/fragment_review_agent_unprofessional_behaviour_relative_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp">
+
+                    <ToggleButton
+                        android:id="@+id/fragment_review_agent_unprofessional_behaviour_toggle_button"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/check_tick_selector"
+                        android:button="@null"
+                        android:clickable="false"
+                        android:text=""
+                        android:textOff=""
+                        android:textOn="" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/fragment_review_agent_unprofessional_behaviour_toggle_button"
+                        android:layout_toStartOf="@id/fragment_review_agent_unprofessional_behaviour_toggle_button"
+                        android:singleLine="true"
+                        android:text="unprofessional behaviour"
+                        android:textAllCaps="false"
+                        android:textColor="#444444"
+                        android:textSize="16sp"
+                        android:typeface="serif" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/fragment_review_agent_other_relative_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp">
+
+                    <ToggleButton
+                        android:id="@+id/fragment_review_agent_other_toggle_button"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/check_tick_selector"
+                        android:button="@null"
+                        android:clickable="false"
+                        android:text=""
+                        android:textOff=""
+                        android:textOn="" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/fragment_review_agent_other_toggle_button"
+                        android:layout_toStartOf="@id/fragment_review_agent_other_toggle_button"
+                        android:singleLine="true"
+                        android:text="any other"
+                        android:textAllCaps="false"
+                        android:textColor="#444444"
+                        android:textSize="16sp"
+                        android:typeface="serif" />
+                </RelativeLayout>
+
+                <EditText
+                    android:id="@+id/fragment_review_agent_comment_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_background_selector_grey"
+                    android:hint="write a review"
+                    android:minLines="3"
+                    android:singleLine="false"
+                    android:textColor="@color/listingBlack"
+                    android:textColorHint="#999999"
                     android:textSize="16sp"
-                    android:text="any other"
-                    android:typeface="serif"
-                    android:singleLine="true"
-                    android:textAllCaps="false"/>
-            </RelativeLayout>
-            <EditText
-                android:id="@+id/fragment_review_agent_comment_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minLines="3"
-                android:background="@drawable/edittext_background_selector_grey"
-                android:hint="write a review"
-                android:textColor="@color/listingBlack"
-                android:textSize="16sp"
-                android:textColorHint="#999999"
-                android:singleLine="false"
-                android:typeface="serif"/>
-        </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+                    android:typeface="serif" />
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</ScrollView>

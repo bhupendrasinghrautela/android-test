@@ -2,11 +2,15 @@ package com.makaan.fragment.buyerJourney;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.View;
 
 import com.makaan.R;
+import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
+import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
 import com.makaan.constants.LeadPhaseConstants;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.fragment.pyr.ThankYouScreenFragment;
 import com.makaan.request.buyerjourney.PhaseChange;
 import com.makaan.response.buyerjourney.ClientLead;
 import com.makaan.service.ClientEventsService;
@@ -61,6 +65,10 @@ public class UploadDocumentsFragment extends MakaanBaseFragment {
     @OnClick(R.id.fragment_upload_documents_done_button)
     void onDoneClicked(View view) {
         updatePhase();
-        getActivity().finish();
+        if(getActivity() != null && getActivity() instanceof BuyerDashboardCallbacks) {
+            ((BuyerDashboardCallbacks)getActivity()).loadFragment(BuyerDashboardActivity.LOAD_THANK_YOU_FRAGMENT, true, null, null, null);
+        } else {
+            getActivity().finish();
+        }
     }
 }

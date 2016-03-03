@@ -23,7 +23,7 @@
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@id/client_company_leads_add_item_layout_add_image_view"
         android:layout_toStartOf="@id/client_company_leads_add_item_layout_add_image_view"
-        android:text="another property"
+        android:text="add another property"
         android:textSize="16sp"
         android:textColor="@color/listingBlack"
         android:typeface="sans"

@@ -3,9 +3,11 @@ package com.makaan.fragment.buyerJourney;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
@@ -16,12 +18,20 @@ import com.makaan.service.MakaanServiceFactory;
 
 import java.util.ArrayList;
 
+import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
  * Created by rohitgarg on 2/17/16.
  */
 public class ClientCompanyLeadsAddProperty extends MakaanBaseFragment {
+    @Bind(R.id.fragment_client_company_leads_add_property_property_name_edit_text)
+    EditText mPropertyNameEditText;
+    @Bind(R.id.fragment_client_company_leads_add_property_name_edit_text)
+    EditText mLocalityNameEditText;
+    @Bind(R.id.fragment_client_company_leads_add_property_city_name_edit_text)
+    EditText mCityNameEditText;
+
     private ClientCompanyLeadFragment.ClientCompanyLeadsObject mObj;
 
     @Override
@@ -46,8 +56,13 @@ public class ClientCompanyLeadsAddProperty extends MakaanBaseFragment {
 
     @OnClick(R.id.fragment_client_leads_add_property_next_button)
     void onNextClicked(View view) {
-        // TODO we are not checking any details filled by user
-        if(getActivity() instanceof BuyerDashboardCallbacks) {
+        if(TextUtils.isEmpty(mPropertyNameEditText.getText().toString())) {
+            mPropertyNameEditText.setError("enter some data");
+        } else if(TextUtils.isEmpty(mLocalityNameEditText.getText().toString())) {
+            mLocalityNameEditText.setError("enter some data");
+        } else if(TextUtils.isEmpty(mCityNameEditText.getText().toString())) {
+            mCityNameEditText.setError("enter some data");
+        } else if(getActivity() instanceof BuyerDashboardCallbacks) {
             if(mObj != null) {
                 ((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_REVIEW_AGENT,
                         true, null, null, mObj);

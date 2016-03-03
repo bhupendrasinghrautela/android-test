@@ -234,7 +234,7 @@ public class DefaultListingView extends AbstractListingView {
         if(mListing.lisitingPostedBy == null) {
             mSellerRatingBar.setVisibility(View.GONE);
         } else {
-            mSellerRatingBar.setRating(mListing.lisitingPostedBy.rating);
+            mSellerRatingBar.setRating((float)mListing.lisitingPostedBy.rating);
         }
         mapPropertyInfo(isBuy);
 
@@ -552,7 +552,13 @@ public class DefaultListingView extends AbstractListingView {
             case "listingCategory":
                 if(!TextUtils.isEmpty(mListing.listingCategory)) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
-                    mPropertyInfoTextViews.get(j).setText(mListing.listingCategory.toLowerCase());
+                    if("primary".equalsIgnoreCase(mListing.listingCategory)) {
+                        mPropertyInfoTextViews.get(j).setText("new".toLowerCase());
+                    } else if("resale".equalsIgnoreCase(mListing.listingCategory)) {
+                        mPropertyInfoTextViews.get(j).setText("resale".toLowerCase());
+                    } else {
+                        mPropertyInfoTextViews.get(j).setText(mListing.listingCategory.toLowerCase());
+                    }
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     return true;
                 }

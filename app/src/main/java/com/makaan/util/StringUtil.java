@@ -93,18 +93,18 @@ public class StringUtil {
 
             if(displayPrice < 1) {
                 displayPrice = (double) price / 1000.00;
-                DecimalFormat df = new DecimalFormat("#.#");
+                DecimalFormat df = new DecimalFormat("#.##");
                 try {
-                    priceStringBuilder.append(String.format("%.1f",
+                    priceStringBuilder.append(String.format("%.2f",
                             Double.parseDouble(df.format(displayPrice))));
                 } catch (NumberFormatException nfe) {
                     return "Price on request";
                 }
                 priceStringBuilder.append(" K");
             } else if (displayPrice < 100.0) {
-                DecimalFormat df = new DecimalFormat("#.#");
+                DecimalFormat df = new DecimalFormat("#.##");
                 try {
-                    priceStringBuilder.append(String.format("%.1f",
+                    priceStringBuilder.append(String.format("%.2f",
                             Double.parseDouble(df.format(displayPrice))));
                 } catch (NumberFormatException nfe) {
                     return "Price on request";

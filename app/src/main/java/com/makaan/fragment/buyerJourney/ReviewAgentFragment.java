@@ -161,8 +161,9 @@ public class ReviewAgentFragment extends MakaanBaseFragment {
 
     @OnClick(R.id.fragment_review_agent_next_button)
     void onNextClicked(View view) {
-        // TODO we are not checking any details filled by user
-        if(getActivity() instanceof BuyerDashboardCallbacks) {
+        if(mOtherToggleButton.isChecked() && TextUtils.isEmpty(mCommentEditText.getText().toString())) {
+            mCommentEditText.setText("enter some data");
+        } else if(getActivity() instanceof BuyerDashboardCallbacks) {
             if(mObj != null) {
                 /*((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_REVIEW_AGENT,
                         true, null, "cashback request", mObj);*/
