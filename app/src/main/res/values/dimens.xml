@@ -410,7 +410,7 @@
     <dimen name="serp_listing_card_assist_button_height">15dp</dimen>
     <dimen name="serp_listing_card_assist_button_right_margin">20dp</dimen>
     <dimen name="serp_listing_card_assist_button_top_margin">16dp</dimen>
-    <dimen name="serp_listing_card_assist_button_left_padding">6dp</dimen>
+    <dimen name="serp_listing_card_assist_button_left_padding">20dp</dimen>
     <dimen name="serp_listing_card_assist_button_text_size">14sp</dimen>
 
     <dimen name="serp_listing_card_call_button_width">152dp</dimen>

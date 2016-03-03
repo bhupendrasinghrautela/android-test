@@ -415,7 +415,7 @@
                         android:textColor="@color/serp_listing_card_default_text_color"
                         android:textSize="@dimen/serp_listing_card_assist_button_text_size"
                         android:typeface="serif" />
-                    <View
+                    <!--<View
                         android:id="@+id/serp_default_listing_assist_divider"
                         android:layout_width="1dp"
                         android:layout_height="@dimen/serp_listing_card_assist_button_height"
@@ -424,7 +424,7 @@
                         android:layout_toLeftOf="@id/serp_default_listing_assist_button"
                         android:layout_toStartOf="@id/serp_default_listing_assist_button"
                         android:layout_marginLeft="@dimen/serp_listing_card_assist_button_left_padding"
-                        android:layout_marginStart="@dimen/serp_listing_card_assist_button_left_padding" />
+                        android:layout_marginStart="@dimen/serp_listing_card_assist_button_left_padding" />-->
 
 
                     <FrameLayout
@@ -471,8 +471,8 @@
                         android:layout_marginTop="@dimen/serp_listing_card_seller_name_text_view_top_margin"
                         android:layout_toEndOf="@id/serp_default_listing_seller_image_frame_layout"
                         android:layout_toRightOf="@id/serp_default_listing_seller_image_frame_layout"
-                        android:layout_toLeftOf="@id/serp_default_listing_assist_divider"
-                        android:layout_toStartOf="@id/serp_default_listing_assist_divider"
+                        android:layout_toLeftOf="@id/serp_default_listing_assist_button"
+                        android:layout_toStartOf="@id/serp_default_listing_assist_button"
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="d bhatia (agent)"
