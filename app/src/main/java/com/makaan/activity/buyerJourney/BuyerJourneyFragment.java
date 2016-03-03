@@ -36,9 +36,9 @@ import butterknife.OnClick;
 public class BuyerJourneyFragment extends MakaanBaseFragment {
 
 
-    private Intent intent;
+    private Intent mIntent;
 
-    private boolean isUserLoggedIn = false;
+    private boolean mIsUserLoggedIn = false;
 
     @Bind(R.id.tv_search_subtitle)
     TextView mSearchSubTitle;
@@ -74,20 +74,20 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     @OnClick(R.id.ll_search)
     public void onSearchCLick() {
 
-        if (isUserLoggedIn && (mSavedSearchesCount + mNewMatchesCount > 0)) {
+        if (mIsUserLoggedIn && (mSavedSearchesCount + mNewMatchesCount > 0)) {
             onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_SAVE_SEARCH);
         } else {
-            intent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.SEARCH);
+            mIntent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.SEARCH);
             onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);
         }
     }
 
     @OnClick(R.id.ll_shortlist)
     public void onShortlistClick() {
-        if (isUserLoggedIn && (mClientLeadsCount + mWishlistCount > 0)) {
+        if (mIsUserLoggedIn && (mClientLeadsCount + mWishlistCount > 0)) {
             onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_SHORTLIST);
         } else {
-            intent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.SHORTLIST);
+            mIntent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.SHORTLIST);
             onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);
         }
     }
@@ -96,10 +96,10 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     public void onSiteVisitClick() {
         //TODO
 
-        if (isUserLoggedIn && mClientEventsReceived && mClientEventsCount > 0) {
+        if (mIsUserLoggedIn && mClientEventsReceived && mClientEventsCount > 0) {
             onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_SITE_VISIT);
         } else {
-            intent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.SITE_VISIT);
+            mIntent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.SITE_VISIT);
             onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);
         }
     }
@@ -116,33 +116,33 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
      */
     @OnClick(R.id.ll_home_loan)
     public void onHomeLoanClick() {
-        intent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.HOME_LOAN);
+        mIntent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.HOME_LOAN);
         onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);
     }
 
     @OnClick(R.id.ll_unit_booking)
     public void onUnitBookingClick() {
-        intent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.UNIT_BOOK);
+        mIntent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.UNIT_BOOK);
         onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);
     }
 
     @OnClick(R.id.ll_possession)
     public void onPossessionClick() {
-        intent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.POSSESSION);
+        mIntent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.POSSESSION);
 
         onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);
     }
 
     @OnClick(R.id.ll_registration)
     public void onRegistrationClick() {
-        intent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.REGISTRATION);
+        mIntent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.REGISTRATION);
         onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);
     }
 
 
     private void onViewClick(int fragmentType) {
-        intent.putExtra(BuyerDashboardActivity.TYPE, fragmentType);
-        startActivity(intent);
+        mIntent.putExtra(BuyerDashboardActivity.TYPE, fragmentType);
+        startActivity(mIntent);
     }
 
     @Override
@@ -153,10 +153,19 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        intent = new Intent(getActivity(), BuyerDashboardActivity.class);
+        mIntent = new Intent(getActivity(), BuyerDashboardActivity.class);
 
-        isUserLoggedIn = CookiePreferences.isUserLoggedIn(getActivity());
-        if(isUserLoggedIn) {
+        mIsUserLoggedIn = CookiePreferences.isUserLoggedIn(getActivity());
+        setupData();
+
+        mViews[0] = view.findViewById(R.id.ll_search);
+        mViews[1] = view.findViewById(R.id.ll_shortlist);
+        mViews[2] = view.findViewById(R.id.ll_site_visit);
+        return view;
+    }
+
+    private void setupData() {
+        if(mIsUserLoggedIn) {
             savedSearches = MasterDataCache.getInstance().getSavedSearch();
             if(savedSearches != null && savedSearches.size() > 0) {
                 mSavedSearchesCount = savedSearches.size();
@@ -176,14 +185,28 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             mClientLeadsReceived = false;
             mWishListsReceived = false;
             showProgress();
-        }
+        } else {
+            mSavedSearchesCount = 0;
+            mNewMatchesCount = 0;
+            mClientLeadsCount = 0;
+            mPhaseId = 0;
+            mClientEventsCount = 0;
 
-        mViews[0] = view.findViewById(R.id.ll_search);
-        mViews[1] = view.findViewById(R.id.ll_shortlist);
-        mViews[2] = view.findViewById(R.id.ll_site_visit);
-        return view;
+            mSearchSubTitle.setText(getResources().getString(R.string.search_sub_title));
+            mShortListSubTitle.setText(getResources().getString(R.string.shortlist_sub_title));
+            mSiteVisitSubTitle.setText(getResources().getString(R.string.site_visit_sub_title));
+        }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        boolean isUserLoggedIn = CookiePreferences.isUserLoggedIn(getActivity());
+        if(isUserLoggedIn != mIsUserLoggedIn) {
+            mIsUserLoggedIn = isUserLoggedIn;
+            setupData();
+        }
+    }
 
     @Subscribe
     public void onResults(SaveSearchGetEvent saveSearchGetEvent){

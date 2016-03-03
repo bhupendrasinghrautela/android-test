@@ -42,12 +42,12 @@
                 android:typeface="serif"
                 android:gravity="center" />
         </RelativeLayout>
-    </LinearLayout>s
+    </LinearLayout>
 
-    <ProgressBar
+    <ImageView
         android:id="@+id/activity_makaan_base_loading_progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="center"
         android:visibility="gone" />
 </FrameLayout>

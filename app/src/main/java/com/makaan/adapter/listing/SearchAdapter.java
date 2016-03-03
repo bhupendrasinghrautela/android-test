@@ -150,10 +150,18 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_near_by);
                 } else if (mIsRecent) {
                     ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_recent);
+                    if (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)
+                            || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                        ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText("location");
+                    } else if (SearchSuggestionType.CITY.getValue().equalsIgnoreCase(searchResponseItem.type)
+                            || SearchSuggestionType.BUILDERCITY.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                        ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText("location");
+                    }
                 } else {
                     if (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)
                             || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchResponseItem.type)) {
                         ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_locality);
+                        ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText("location");
                     } else if (SearchSuggestionType.GOOGLE_PLACE.getValue().equalsIgnoreCase(searchResponseItem.type)) {
                         ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_google_place);
                     } else if (SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searchResponseItem.type)) {
@@ -164,6 +172,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     } else if (SearchSuggestionType.CITY.getValue().equalsIgnoreCase(searchResponseItem.type)
                             || SearchSuggestionType.BUILDERCITY.getValue().equalsIgnoreCase(searchResponseItem.type)) {
                         ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_city);
+                        ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText("location");
                     } else if (SearchSuggestionType.BUILDER.getValue().equalsIgnoreCase(searchResponseItem.type)) {
                         ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_builder);
                     }

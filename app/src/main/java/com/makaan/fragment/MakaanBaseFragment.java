@@ -31,7 +31,7 @@ public abstract class MakaanBaseFragment extends Fragment {
     @Bind(R.id.fragment_makaan_base_no_result_text_view)
     TextView mNoResultsTextView;
     @Bind(R.id.fragment_makaan_base_loading_progress_bar)
-    ProgressBar mLoadingProgressBar;
+    ImageView mLoadingProgressBar;
     @Bind(R.id.fragment_makaan_base_content_frame_layout)
     FrameLayout mContentFrameLayout;
 
@@ -87,12 +87,16 @@ public abstract class MakaanBaseFragment extends Fragment {
         mContentFrameLayout.setVisibility(View.GONE);
         mNoResultsLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.VISIBLE);
+
+        Glide.with(this).load(R.raw.loading).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mLoadingProgressBar);
     }
 
     protected void showProgressWithContent() {
         mContentFrameLayout.setVisibility(View.VISIBLE);
         mNoResultsLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.VISIBLE);
+
+        Glide.with(this).load(R.raw.loading).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mLoadingProgressBar);
     }
 
     protected void showNoResults() {

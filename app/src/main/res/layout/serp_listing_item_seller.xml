@@ -7,17 +7,20 @@
     app:cardCornerRadius="@dimen/temporary_card_view_radius"
     app:cardElevation="@dimen/temporary_card_view_elevation"
     app:cardMaxElevation="@dimen/temporary_card_view_max_elevation"
-    app:cardPreventCornerOverlap="false">
+    app:cardPreventCornerOverlap="false"
+    android:layout_marginTop="10dp">
+
     <ImageView
         android:id="@+id/serp_listing_item_seller_background_image_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/serp_listing_item_seller_max_height"
         android:scaleType="centerCrop"
-        android:src="@drawable/seller_serp_placeholder"/>
+        android:src="@drawable/seller_serp_placeholder" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#80000000"/>
+        android:background="#80000000" />
 
     <LinearLayout
         android:id="@+id/serp_listing_item_seller_content_linear_layout"
@@ -31,8 +34,7 @@
             android:layout_height="@dimen/serp_listing_item_seller_image_view_height"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/serp_listing_item_seller_image_view_margin_top"
-            android:src="@drawable/builder"
-            />
+            android:src="@drawable/builder" />
 
         <TextView
             android:id="@+id/serp_listing_item_seller_name_text_view"
@@ -40,12 +42,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/serp_listing_item_seller_name_text_view_margin_top"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:text="Rohit Kumar"
             android:textColor="@color/white"
             android:textSize="@dimen/serp_listing_item_seller_name_text_view_text_size"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:typeface="sans"/>
+            android:typeface="sans" />
 
         <TextView
             android:id="@+id/serp_listing_item_seller_company_name_text_view"
@@ -53,30 +55,30 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/serp_listing_item_seller_company_name_text_view_margin_top"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:text="xyz real estate pvt ltd"
             android:textColor="@color/white"
             android:textSize="@dimen/serp_listing_item_seller_company_name_text_view_text_size"
-            android:singleLine="true"
-            android:ellipsize="end"
             android:typeface="serif" />
 
         <com.makaan.ui.view.CustomRatingBar
             android:id="@+id/serp_listing_item_seller_rating_bar"
+            style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/serp_listing_item_seller_rating_margin_top"
+            android:isIndicator="true"
             android:numStars="5"
             android:rating="3.5"
             android:stepSize="0.1"
-            android:isIndicator="true"
             app:itemHeight="@dimen/serp_listing_item_seller_rating_bar_item_height"
-            app:itemWidth="@dimen/serp_listing_item_seller_rating_bar_item_width"
             app:itemMarginLeft="@dimen/serp_listing_item_seller_rating_bar_item_margin_left"
             app:itemMarginRight="@dimen/serp_listing_item_seller_rating_bar_item_margin_right"
             app:itemProgressIcon="@drawable/star_selected"
             app:itemSecondaryProgressIcon="@drawable/star_unselected"
-            style="?android:attr/ratingBarStyleSmall" />
+            app:itemWidth="@dimen/serp_listing_item_seller_rating_bar_item_width" />
 
         <TextView
             android:id="@+id/serp_listing_item_seller_not_rated_text_view"
@@ -84,13 +86,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/serp_listing_item_seller_rating_margin_top"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:text="not yet rated"
             android:textColor="@color/white"
             android:textSize="@dimen/serp_listing_item_seller_company_not_rated_text_size"
-            android:visibility="gone"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:typeface="serif"/>
+            android:typeface="serif"
+            android:visibility="gone" />
 
         <View
             android:layout_width="match_parent"
@@ -113,11 +115,11 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/serp_listing_item_seller_operates_in_text_view_margin_top"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:text="operates in - 10 localities"
                 android:textColor="@color/white"
                 android:textSize="@dimen/serp_listing_item_seller_operates_in_text_view_text_size"
-                android:singleLine="true"
-                android:ellipsize="end"
                 android:typeface="monospace" />
 
             <TextView
@@ -127,11 +129,11 @@
                 android:layout_below="@id/serp_listing_item_seller_operates_in_text_view"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/serp_listing_item_seller_address_text_view_margin_top"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:text="huda city center, sushantlok"
                 android:textColor="@color/white"
                 android:textSize="@dimen/serp_listing_item_seller_address_text_view_text_size"
-                android:singleLine="true"
-                android:ellipsize="end"
                 android:typeface="serif" />
 
             <ImageView
@@ -144,7 +146,7 @@
                 android:layout_marginEnd="@dimen/serp_listing_item_seller_add_image_view_margin_right"
                 android:layout_marginRight="@dimen/serp_listing_item_seller_add_image_view_margin_right"
                 android:src="@drawable/add_white"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </RelativeLayout>
 
         <View
@@ -162,6 +164,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/serp_listing_item_seller_info_margin_bottom"
             android:layout_marginTop="@dimen/serp_listing_item_seller_info_margin_top"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -193,6 +196,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/serp_listing_item_seller_info_margin_bottom2"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -205,11 +209,11 @@
                     android:id="@+id/serp_listing_item_seller_properties_count_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:text="500 properties"
                     android:textColor="@color/white"
                     android:textSize="@dimen/serp_listing_item_seller_text_text_size"
-                    android:singleLine="true"
-                    android:ellipsize="end"
                     android:typeface="serif" />
             </LinearLayout>
 
@@ -223,11 +227,11 @@
                     android:id="@+id/serp_listing_item_seller_project_count_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:text="500 projects"
                     android:textColor="@color/white"
                     android:textSize="@dimen/serp_listing_item_seller_text_text_size"
-                    android:singleLine="true"
-                    android:ellipsize="end"
                     android:typeface="serif" />
             </LinearLayout>
         </LinearLayout>
@@ -238,6 +242,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/serp_listing_item_seller_info_margin_bottom"
             android:layout_marginTop="@dimen/serp_listing_item_seller_info_margin_top"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -262,11 +267,11 @@
                     android:id="@+id/serp_listing_item_seller_experience_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:text="12"
                     android:textColor="@color/white"
                     android:textSize="@dimen/serp_listing_item_seller_info_text_size"
-                    android:singleLine="true"
-                    android:ellipsize="end"
                     android:typeface="serif" />
             </LinearLayout>
         </LinearLayout>
@@ -274,6 +279,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -286,11 +292,11 @@
                     android:id="@+id/serp_listing_item_seller_type_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:text="sale and rent"
                     android:textColor="@color/white"
                     android:textSize="@dimen/serp_listing_item_seller_text_text_size"
-                    android:singleLine="true"
-                    android:ellipsize="end"
                     android:typeface="serif" />
             </LinearLayout>
 
@@ -304,11 +310,11 @@
                     android:id="@+id/serp_listing_item_seller_experience_label_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:text="experience"
                     android:textColor="@color/white"
                     android:textSize="@dimen/serp_listing_item_seller_text_text_size"
-                    android:singleLine="true"
-                    android:ellipsize="end"
                     android:typeface="serif" />
             </LinearLayout>
         </LinearLayout>

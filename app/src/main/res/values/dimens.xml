@@ -406,11 +406,11 @@
     <dimen name="serp_listing_card_seller_name_text_view_top_margin">3dp</dimen>
     <dimen name="serp_listing_card_seller_name_text_view_text_size">16sp</dimen>
 
-    <dimen name="serp_listing_card_assist_button_width">79dp</dimen>
-    <dimen name="serp_listing_card_assist_button_height">30dp</dimen>
+    <dimen name="serp_listing_card_assist_button_width">45dp</dimen>
+    <dimen name="serp_listing_card_assist_button_height">15dp</dimen>
     <dimen name="serp_listing_card_assist_button_right_margin">20dp</dimen>
-    <dimen name="serp_listing_card_assist_button_top_margin">12dp</dimen>
-    <dimen name="serp_listing_card_assist_button_left_padding">20dp</dimen>
+    <dimen name="serp_listing_card_assist_button_top_margin">16dp</dimen>
+    <dimen name="serp_listing_card_assist_button_left_padding">6dp</dimen>
     <dimen name="serp_listing_card_assist_button_text_size">14sp</dimen>
 
     <dimen name="serp_listing_card_call_button_width">152dp</dimen>
@@ -1399,4 +1399,6 @@
     <dimen name="switch_view_track_width">50dp</dimen>
 
 
+    <dimen name="row_nearby_localities_left_margin">20dp</dimen>
+    <dimen name="row_nearby_localities_right_margin">20dp</dimen>
 </resources>

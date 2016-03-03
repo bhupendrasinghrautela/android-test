@@ -4,7 +4,7 @@
 
     <TextView
         android:id="@android:id/text1"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="@dimen/unselected_list_item_height"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/unselected_list_item_padding_left"

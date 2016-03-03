@@ -35,7 +35,7 @@
             <SeekBar
                 android:id="@+id/seekbar_budget_min"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:paddingLeft="-10dp"
                 android:paddingRight="1dp"/>
@@ -80,7 +80,7 @@
             <SeekBar
                 android:id="@+id/seekbar_budget_max"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:rotation="180"
                 android:paddingLeft="1dp"

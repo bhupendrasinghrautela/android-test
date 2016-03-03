@@ -108,7 +108,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     View mNoResultLayout;
 
     @Bind(R.id.activity_search_base_search_loading_progress_bar)
-    ProgressBar mLoadingProgressBar;
+    ImageView mLoadingProgressBar;
 
     @Bind(R.id.activity_search_base_layout_search_bar_search_image_button)
     ImageButton mSearchImageButton;
@@ -1265,6 +1265,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         mNoResultLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.VISIBLE);
         mSearchResultFrameLayout.setVisibility(View.GONE);
+
+        Glide.with(this).load(R.raw.loading).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mLoadingProgressBar);
     }
 
     @Override

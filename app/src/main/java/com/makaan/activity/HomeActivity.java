@@ -223,12 +223,12 @@ public class HomeActivity extends MakaanBaseSearchActivity {
 
     @OnClick(R.id.linear_layout_makaan_toolbar_login)
     public void onLoginCLick() {
-        if(CookiePreferences.isUserLoggedIn(this)){
-            Intent intent = new Intent(HomeActivity.this, BuyerJourneyActivity.class);
-            startActivity(intent);
-        }else{
-            Intent intent = new Intent(HomeActivity.this, UserLoginActivity.class);
-            startActivity(intent);
-        }
+//        if(CookiePreferences.isUserLoggedIn(this)){
+        Intent intent = new Intent(HomeActivity.this, BuyerJourneyActivity.class);
+        startActivity(intent);
+//        }else{
+//            Intent intent = new Intent(HomeActivity.this, UserLoginActivity.class);
+//            startActivity(intent);
+//        }
     }
 }

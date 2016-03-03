@@ -1,141 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:font="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:font="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_marginTop="10dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="vertical">
 
-    <include layout="@layout/project_seperator"/>
+    <include layout="@layout/project_seperator" />
 
     <com.makaan.ui.view.FontTextView
+        android:id="@+id/tv_localities_kyn_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/locality_kyn_margin_bottom"
         android:layout_marginLeft="@dimen/project_kyn_margin_right"
         android:layout_marginRight="@dimen/project_kyn_margin_right"
         android:layout_marginTop="@dimen/locality_kyn_margin_top"
-        android:layout_marginBottom="@dimen/locality_kyn_margin_bottom"
+        android:gravity="center_horizontal"
         android:textColor="@color/project_text_default"
         android:textSize="@dimen/project_text_big"
-        font:fontName="comforta.ttf"
-        android:gravity="center_horizontal"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/tv_localities_kyn_title"
-        />
+        font:fontName="comforta.ttf" />
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
+
         <com.makaan.ui.view.FontTextView
+            android:id="@+id/tv_localities_kyn_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:textColor="@color/project_text_default"
-            android:textSize="@dimen/project_text_medium"
-            font:fontName="proxima.otf"
-            android:text="123 anasd jand j nab dadadsasdasd"
-            android:maxLines="5"
-            android:layout_toLeftOf="@+id/rl_locality_score_container"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:id="@+id/tv_localities_kyn_description"
-            />
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@+id/rl_locality_score_container"
+            android:maxLines="5"
+            android:text="123 anasd jand j nab dadadsasdasd"
+            android:textColor="@color/project_text_default"
+            android:textSize="@dimen/project_text_medium"
+            font:fontName="proxima.otf" />
 
         <RelativeLayout
+            android:id="@+id/rl_locality_score_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:id="@+id/rl_locality_score_container"
             android:layout_alignParentLeft="false"
+            android:layout_alignParentRight="true"
             android:layout_alignWithParentIfMissing="false">
 
             <FrameLayout
-                android:layout_width="wrap_content"
                 android:id="@+id/frame_locality_score"
-                android:layout_centerHorizontal="true"
-                android:layout_height="wrap_content">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true">
+
                 <ProgressBar
+                    android:id="@+id/locality_score_progress"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="@dimen/locality_circular_progress_dimen"
                     android:layout_height="@dimen/locality_circular_progress_dimen"
-                    android:id="@+id/locality_score_progress"
-                    android:progress="78"
-                    android:secondaryProgress="100"
+                    android:layout_gravity="center_vertical"
                     android:indeterminate="false"
+                    android:progress="78"
                     android:progressDrawable="@drawable/circular_progress_drawable"
-                    android:layout_gravity="center_vertical" />
+                    android:secondaryProgress="100" />
+
                 <com.makaan.ui.view.FontTextView
                     android:id="@+id/locality_score_text"
-                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    font:fontName="proxima.otf"
+                    android:layout_gravity="center"
                     android:textColor="@color/project_text_default"
-                    android:textSize="@dimen/project_text_medium"/>
+                    android:textSize="@dimen/project_text_medium"
+                    font:fontName="proxima.otf" />
             </FrameLayout>
 
 
             <com.makaan.ui.view.FontTextView
                 android:id="@+id/locality_score_label"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/frame_locality_score"
                 android:layout_height="wrap_content"
-                android:text="locality score"
-                font:fontName="proxima.otf"
+                android:layout_below="@+id/frame_locality_score"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
                 android:layout_marginRight="10dp"
+                android:text="locality score"
                 android:textColor="@color/project_light_text"
-                android:textSize="@dimen/project_text_v_small"/>
+                android:textSize="@dimen/project_text_v_small"
+                font:fontName="proxima.otf" />
 
         </RelativeLayout>
     </RelativeLayout>
+
     <TextView
-        android:layout_below="@+id/locality_brief"
         android:id="@+id/more_about_locality"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:typeface="serif"
         android:layout_marginBottom="@dimen/property_page_locality_brief_margin_bottom"
+        android:gravity="center"
+        android:text="@string/more_about"
         android:textColor="@color/red"
-        android:text="@string/more_about"/>
+        android:typeface="serif" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_localities_kyn"
         android:layout_width="wrap_content"
-        android:visibility="gone"
+        android:layout_height="@dimen/locality_kyn_recycler_height"
         android:overScrollMode="never"
-        android:layout_height="@dimen/locality_kyn_recycler_height"/>
+        android:visibility="gone" />
 
     <LinearLayout
+        android:id="@+id/kyn_see_on_map_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:id="@+id/kyn_see_on_map_container"
         android:layout_margin="10dp"
-        >
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/placeholder_see_on_map"
-            />
+            android:src="@drawable/placeholder_see_on_map" />
 
         <com.makaan.ui.view.FontTextView
+            android:id="@+id/amenity_see_on_map"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="see on map"
-            android:textSize="@dimen/project_text_small"
-            android:id="@+id/amenity_see_on_map"
-            android:textColor="@color/project_text_red"
-            font:fontName="proxima.otf"
             android:layout_marginLeft="5dp"
-            />
+            android:text="see on map"
+            android:textColor="@color/project_text_red"
+            android:textSize="@dimen/project_text_small"
+            font:fontName="proxima.otf" />
     </LinearLayout>
 
 </LinearLayout>

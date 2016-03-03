@@ -37,14 +37,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/input_top_margin"
                 android:background="@drawable/edittext_bg_bottom_border"
+                android:enabled="false"
                 android:hint="@string/name"
                 android:paddingBottom="@dimen/edit_internal_padding"
                 android:paddingTop="@dimen/edit_internal_padding"
                 android:singleLine="true"
                 android:text="harvi"
-                android:textSize="@dimen/average_text"
                 android:textColor="@color/listingBlack"
-                android:enabled="false" />
+                android:textSize="@dimen/average_text" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -52,14 +52,13 @@
             android:id="@+id/iv_edit_name"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_gravity="bottom"
             android:layout_marginBottom="4dp"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
-            android:layout_toRightOf="@id/til_name"
             android:clickable="true"
             android:contentDescription="@string/app_name"
-            android:src="@android:drawable/ic_menu_edit"
-            android:layout_gravity="bottom"/>
+            android:src="@android:drawable/ic_menu_edit" />
 
     </LinearLayout>
 
