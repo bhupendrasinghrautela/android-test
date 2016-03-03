@@ -1,26 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- TODO WIP, hardcoded  dimen-->
+<?xml version="1.0" encoding="utf-8"?><!-- TODO WIP, hardcoded  dimen-->
 <com.makaan.jarvis.ui.cards.SellerOverviewCard xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/seller_overview_card_padding"
     android:layout_width="@dimen/seller_overview_card_width"
+    android:layout_height="wrap_content"
     android:layout_margin="@dimen/seller_overview_card_margin"
-    android:background="@drawable/chat_card_bg">
+    android:background="@drawable/chat_card_bg"
+    android:padding="@dimen/seller_overview_card_padding">
 
     <LinearLayout
         android:id="@+id/seller_pic_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginEnd="@dimen/seller_pic_rating_margin_right"
+        android:layout_marginRight="@dimen/seller_pic_rating_margin_right"
         android:gravity="center"
-        android:layout_marginRight="@dimen/seller_pic_rating_margin_right">
+        android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/serp_listing_card_seller_image_view_top_margin">
 
@@ -46,20 +44,20 @@
 
         <com.makaan.ui.view.CustomRatingBar
             android:id="@+id/seller_rating"
+            style="?android:attr/ratingBarStyleSmall"
             android:layout_width="64dp"
             android:layout_height="14dp"
-            android:layout_marginTop="6dp"
             android:layout_gravity="center"
+            android:layout_marginTop="6dp"
+            android:isIndicator="true"
             android:numStars="5"
             android:stepSize="0.1"
-            android:isIndicator="true"
             app:itemHeight="@dimen/serp_listing_card_seller_rating_item_height"
-            app:itemWidth="@dimen/serp_listing_card_seller_rating_item_width"
             app:itemMarginLeft="1dp"
             app:itemMarginRight="1dp"
             app:itemProgressIcon="@drawable/star_selected"
             app:itemSecondaryProgressIcon="@drawable/star_unselected"
-            style="?android:attr/ratingBarStyleSmall"/>
+            app:itemWidth="@dimen/serp_listing_card_seller_rating_item_width" />
 
     </LinearLayout>
 
@@ -70,23 +68,23 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/name"
-            android:textSize="@dimen/jarvis_seller_card_agent_name_text_size"/>
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/jarvis_seller_card_agent_name_text_size" />
+
+        <TextView
             android:id="@+id/properties"
-            android:layout_marginBottom="8dp"
-            android:textSize="@dimen/jarvis_seller_card_agent_detail_text_size"/>
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textSize="@dimen/jarvis_seller_card_agent_detail_text_size" />
+
+        <TextView
             android:id="@+id/locations"
-            android:textSize="@dimen/jarvis_seller_card_agent_detail_text_size"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/jarvis_seller_card_agent_detail_text_size" />
 
     </LinearLayout>
 

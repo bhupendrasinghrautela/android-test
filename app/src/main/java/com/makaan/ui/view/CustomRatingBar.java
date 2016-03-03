@@ -38,6 +38,8 @@ public class CustomRatingBar extends RatingBar {
     private Bitmap mScaledProgressBitmap;
     private Bitmap mIntermediateProgressBitmap;
     private Bitmap mScaledIntermediateProgressBitmap;
+    private Paint mFilterBitmapPaint;
+    private Paint mEmptyPaint;
 
     public CustomRatingBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -50,6 +52,11 @@ public class CustomRatingBar extends RatingBar {
     }
 
     private void init(Context context, AttributeSet attrs) {
+
+        mFilterBitmapPaint = new Paint();
+        mFilterBitmapPaint.setFilterBitmap(true);
+        mEmptyPaint = new Paint();
+
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs, R.styleable.RatingBar, 0, 0);
 
@@ -85,21 +92,17 @@ public class CustomRatingBar extends RatingBar {
         for (int i = 1; i <= stars; i++) {
             Bitmap bitmap = null;
             Resources res = getResources();
-            Paint paint = new Paint();
             canvas.translate(mItemHorizontalMarginLeft, 0);
 
             if (i <= Math.floor(rating)) {
-                canvas.drawBitmap(mScaledProgressBitmap, 0, 0, paint);
+                canvas.drawBitmap(mScaledProgressBitmap, 0, 0, mEmptyPaint);
                 canvas.save();
             } else if(i > Math.ceil(rating)) {
-                canvas.drawBitmap(mScaledIntermediateProgressBitmap, 0, 0, paint);
+                canvas.drawBitmap(mScaledIntermediateProgressBitmap, 0, 0, mEmptyPaint);
                 canvas.save();
             } else {
                 // calculate filled drawable width
                 int right = (int) (mItemWidth * (rating - (i - 1)));
-
-                Paint p = new Paint();
-                paint.setFilterBitmap(true);
 
                 // width and height of single item
                 int targetWidth  = mItemWidth;
@@ -119,7 +122,7 @@ public class CustomRatingBar extends RatingBar {
 
                 // draw bitmap with required height and width
                 c.drawBitmap(mProgressBitmap, new Rect(0, 0, mProgressBitmap.getWidth(), mProgressBitmap.getHeight()),
-                        new Rect(0, 0, targetWidth, targetHeight), paint);
+                        new Rect(0, 0, targetWidth, targetHeight), mFilterBitmapPaint);
 
                 // use matrix with 100% width and height scale
                 Matrix matrix = new Matrix();
@@ -128,7 +131,7 @@ public class CustomRatingBar extends RatingBar {
                 Bitmap resizedBitmap = Bitmap.createBitmap(targetBitmap, 0, 0, targetWidth, targetHeight, matrix, true);
 
                 // draw on rating bar's canvas
-                canvas.drawBitmap(resizedBitmap, 0, 0, p);
+                canvas.drawBitmap(resizedBitmap, 0, 0, mEmptyPaint);
 
                 // no need to translate canvas, because clipping will handle it
 //                canvas.translate(right, 0);
@@ -147,7 +150,7 @@ public class CustomRatingBar extends RatingBar {
 
                 // draw bitmap with required height and width
                 c.drawBitmap(mIntermediateProgressBitmap, new Rect(0, 0, mIntermediateProgressBitmap.getWidth(), mIntermediateProgressBitmap.getHeight()),
-                        new Rect(0, 0, targetWidth, targetHeight), paint);
+                        new Rect(0, 0, targetWidth, targetHeight), mFilterBitmapPaint);
 
 
                 // use matrix with 100% width and height scale
@@ -157,7 +160,7 @@ public class CustomRatingBar extends RatingBar {
                 resizedBitmap = Bitmap.createBitmap(targetBitmap, 0, 0, targetWidth, targetHeight, matrix, true);
 
                 // draw on rating bar's canvas
-                canvas.drawBitmap(resizedBitmap, 0, 0, p);
+                canvas.drawBitmap(resizedBitmap, 0, 0, mEmptyPaint);
 
                 canvas.save();
             }

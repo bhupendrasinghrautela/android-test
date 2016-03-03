@@ -127,12 +127,12 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
                     }
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         mAppBarLayout.setBackgroundColor(getResources().getColor(R.color.app_red, null));
-                        mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white, null));
-                        mTabLayout.setTabTextColors(getResources().getColor(R.color.white, null), getResources().getColor(R.color.white, null));
+//                        mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white, null));
+//                        mTabLayout.setTabTextColors(getResources().getColor(R.color.white, null), getResources().getColor(R.color.white, null));
                     } else {
                         mAppBarLayout.setBackgroundColor(getResources().getColor(R.color.app_red));
-                        mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white));
-                        mTabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources().getColor(R.color.white));
+//                        mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white));
+//                        mTabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources().getColor(R.color.white));
                     }
 
                 } else {
@@ -148,12 +148,12 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
                     } else {*/
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             mAppBarLayout.setBackgroundColor(getResources().getColor(R.color.buyer_dashboard_profile_background_color, null));
-                            mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red, null));
-                            mTabLayout.setTabTextColors(getResources().getColor(R.color.listingBlack, null), getResources().getColor(R.color.listingBlack, null));
+//                            mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red, null));
+//                            mTabLayout.setTabTextColors(getResources().getColor(R.color.listingBlack, null), getResources().getColor(R.color.listingBlack, null));
                         } else {
                             mAppBarLayout.setBackgroundColor(getResources().getColor(R.color.buyer_dashboard_profile_background_color));
-                            mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red));
-                            mTabLayout.setTabTextColors(getResources().getColor(R.color.listingBlack), getResources().getColor(R.color.listingBlack));
+//                            mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red));
+//                            mTabLayout.setTabTextColors(getResources().getColor(R.color.listingBlack), getResources().getColor(R.color.listingBlack));
                         }
 //                    }
                 }
@@ -177,28 +177,30 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
     @OnClick(R.id.button_login)
     public void onLoginClick() {
         if("login".equals(mLoginButton.getText().toString())) {
-            String screenName=this.getIntent().getExtras().getString("screenName");
-            switch(screenName){
-                case "Project":{
-                    Properties properties= MakaanEventPayload.beginBatch();
-                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
-                    properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
-                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProject);
-                    break;
-                }
-                case "Listing detail":{
-                    Properties properties=MakaanEventPayload.beginBatch();
-                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
-                    properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
-                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProperty);
-                    break;
-                }
-                case "serp":{
-                    Properties properties=MakaanEventPayload.beginBatch();
-                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
-                    properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
-                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickSerp);
-                    break;
+            if(getIntent() != null && getIntent().getExtras() != null) {
+                String screenName = this.getIntent().getExtras().getString("screenName");
+                switch (screenName) {
+                    case "Project": {
+                        Properties properties = MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
+                        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProject);
+                        break;
+                    }
+                    case "Listing detail": {
+                        Properties properties = MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
+                        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProperty);
+                        break;
+                    }
+                    case "serp": {
+                        Properties properties = MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+                        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
+                        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickSerp);
+                        break;
+                    }
                 }
             }
 
@@ -216,6 +218,13 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUserData();
+        invalidateOptionsMenu();
     }
 
     private void setUserData() {

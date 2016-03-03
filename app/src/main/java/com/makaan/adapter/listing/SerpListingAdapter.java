@@ -67,12 +67,14 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
         int superItemViewType = super.getItemViewType(position);
         if(superItemViewType == RecycleViewMode.DATA.getValue()) {
             if(mRequestType == SerpActivity.TYPE_BUILDER || mRequestType == SerpActivity.TYPE_SELLER) {
-                if(position == 0) {
+                if(position == 1) {
                     if(mRequestType == SerpActivity.TYPE_BUILDER) {
                         superItemViewType = RecycleViewMode.DATA_TYPE_BUILDER.getValue();
                     } else {
                         superItemViewType = RecycleViewMode.DATA_TYPE_SELLER.getValue();
                     }
+                } else if(position == 0) {
+                    superItemViewType = RecycleViewMode.DATA_TYPE_COUNT.getValue();
                 } else {
                     superItemViewType = RecycleViewMode.DATA_TYPE_LISTING.getValue();
                 }
@@ -104,7 +106,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
             if(mItems == null) {
                 return 1;
             }
-            return (mItems.size() + 1);
+            return (mItems.size() + 2);
         } else {
             if (mItems == null && mGroupClusterListings == null) {
                 return 0;
@@ -154,6 +156,9 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
                 viewHolder.populateData(mCount, mCallback, position);
             } else {
                 position--;
+                if(mRequestType == SerpActivity.TYPE_BUILDER || mRequestType == SerpActivity.TYPE_SELLER) {
+                    position--;
+                }
                 int extraCount = 0;
                 int tens = position / 10;
                 int digit = position % 10;

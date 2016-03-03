@@ -7,7 +7,8 @@
     app:cardCornerRadius="@dimen/temporary_card_view_radius"
     app:cardElevation="@dimen/temporary_card_view_elevation"
     app:cardMaxElevation="@dimen/temporary_card_view_max_elevation"
-    app:cardPreventCornerOverlap="false">
+    app:cardPreventCornerOverlap="false"
+    android:layout_marginTop="10dp">
 
     <ImageView
         android:id="@+id/serp_listing_item_builder_background_image_view"
@@ -81,6 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/serp_listing_item_builder_info_margin_bottom"
             android:layout_marginTop="@dimen/serp_listing_item_builder_info_margin_top"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -123,6 +125,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -165,6 +168,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/serp_listing_item_builder_info_margin_bottom"
             android:layout_marginTop="@dimen/serp_listing_item_builder_info_margin_top"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -209,6 +213,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/serp_listing_item_builder_info_margin_bottom2"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <LinearLayout

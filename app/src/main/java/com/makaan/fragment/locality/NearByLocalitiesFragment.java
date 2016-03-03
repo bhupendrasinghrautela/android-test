@@ -6,10 +6,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -61,10 +63,13 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
     public TextView titleTv ;
     @Bind(R.id.seperator_view)
     View seperatorView;
+
+
     Long citId,localitId;
     CardType cardType;
     private List<NearByLocalities> nearByLocalities;
     private boolean isRentSelected;
+    private String viewDetailText;
 
 
     @Override
@@ -83,7 +88,8 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
     private void initView() {
         title = getArguments().getString("title");
         placeholderResource = getArguments().getInt("placeholder");
-        switchLl.setVisibility(R.drawable.placeholder_agent == placeholderResource ? View.VISIBLE : View.GONE);
+        viewDetailText = getArguments().getString("action");
+//        switchLl.setVisibility(R.drawable.placeholder_agent == placeholderResource ? View.VISIBLE : View.GONE);
         titleTv.setText(title);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
@@ -128,7 +134,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         for(Locality locality:nearbyLocalities){
             int[] counts = getCountOfNumberOfListingsBasedOnType(locality.listingAggregations);
             int[] medians = calculateMedianForListings(locality.listingAggregations);
-                nearByLocalities.add(new NearByLocalitiesFragment.NearByLocalities(""+locality.localityHeroshotImageUrl,""+(counts[1] == 0?"0":counts[1]+" +"),""+(counts[0] == 0?"0":counts[0]+" +"),medians[0] == 0?"":"median price: "+medians[0]+"/ sq ft",locality.label, locality.localityId));
+                nearByLocalities.add(new NearByLocalitiesFragment.NearByLocalities(""+locality.localityHeroshotImageUrl,"" + counts[1],"" + counts[0],medians[0] == 0?"":"median price: "+medians[0]+"/ sq ft",locality.label, locality.localityId));
         }
         return nearByLocalities;
     }
@@ -139,9 +145,9 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         for(ListingAggregation listingAggregation: listingAggregations){
             if(listingAggregation.listingCategory.equalsIgnoreCase("primary") ||
                     listingAggregation.listingCategory.equalsIgnoreCase("resale")){
-                countPrimary++;
+                countPrimary += listingAggregation.count;
             }else{
-                countRent++;
+                countRent += listingAggregation.count;
             }
         }
         counts[0] = countPrimary;
@@ -185,7 +191,17 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         List<NearByLocalities> nearByLocalities = new ArrayList<>();
         this.cardType = CardType.TOPAGENTS;
         for(TopAgent agent:topAgents){
-            nearByLocalities.add(new NearByLocalities("","0",""+agent.listingCount,""+agent.agent.company.type,""+agent.agent.user.fullName,(long) agent.agent.company.id));
+            if(agent.agent != null && agent.agent.company != null && agent.agent.user != null) {
+                if (!TextUtils.isEmpty(agent.agent.company.logo)) {
+                    nearByLocalities.add(new NearByLocalities(agent.agent.company.logo, "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, (long) agent.agent.company.id));
+                } else if (!TextUtils.isEmpty(agent.agent.user.profilePictureURL)) {
+                    nearByLocalities.add(new NearByLocalities(agent.agent.user.profilePictureURL, "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, (long) agent.agent.company.id));
+                } else {
+                    nearByLocalities.add(new NearByLocalities("", "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, (long) agent.agent.company.id));
+                }
+            } else {
+                nearByLocalities.add(new NearByLocalities("", "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, (long) agent.agent.company.id));
+            }
         }
         return nearByLocalities;
     }
@@ -262,6 +278,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             // each data item is just a string in this case
+            public View view;
             public TextView nameTv;
             public TextView medianTv;
             public TextView numberOfPropsForSaleTv;
@@ -271,8 +288,10 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
             public CardView cardView;
             public TextView primarySaleLabelTv;
             public TextView secondarySaleLabelTv;
+            public TextView viewDetails;
             public ViewHolder(View v) {
                 super(v);
+                this.view = v;
                 nameTv = (TextView) v.findViewById(R.id.tv_nearby_localities_name);
                 medianTv = (TextView) v.findViewById(R.id.tv_nearby_localities_median);
                 numberOfPropsForSaleTv = (TextView) v.findViewById(R.id.tv_nearby_localities_sale);
@@ -281,6 +300,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                 rentLl = (LinearLayout) v.findViewById(R.id.ll_nearby_locality_rent);
                 primarySaleLabelTv = (TextView) v.findViewById(R.id.tv_nearby_localities_sale_label);
                 secondarySaleLabelTv = (TextView) v.findViewById(R.id.tv_nearby_localities_secondary_sale_label);
+                viewDetails = (TextView) v.findViewById(R.id.tv_nearby_localities_view_details);
                 cardView = (CardView) v.findViewById(R.id.card_view_nearby_locality);
                 cardView.setOnClickListener(onClickListener);
             }
@@ -303,10 +323,52 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             final NearByLocalities nearByLocality = nearByLocalitiesList.get(position);
-            holder.medianTv.setText(nearByLocality.medianPrice.equalsIgnoreCase("null")?"":nearByLocality.medianPrice);
-            holder.nameTv.setText(nearByLocality.localityName);
-            holder.numberOfPropsForSaleTv.setText(nearByLocality.numberOfPropsForSale);
-            holder.numberOfPropsForRentTv.setText(nearByLocality.numberOfPropsForRent);
+            if(!TextUtils.isEmpty(nearByLocality.medianPrice)) {
+                holder.medianTv.setText(nearByLocality.medianPrice.equalsIgnoreCase("null") ? "" : nearByLocality.medianPrice.toLowerCase());
+                holder.medianTv.setVisibility(View.VISIBLE);
+            } else {
+                holder.medianTv.setVisibility(View.INVISIBLE);
+            }
+            if(!TextUtils.isEmpty(nearByLocality.localityName)) {
+                holder.nameTv.setText(nearByLocality.localityName.toLowerCase());
+                holder.nameTv.setVisibility(View.VISIBLE);
+            } else {
+                holder.nameTv.setVisibility(View.INVISIBLE);
+            }
+            if((TextUtils.isEmpty(nearByLocality.numberOfPropsForSale) || nearByLocality.numberOfPropsForSale.equalsIgnoreCase("0"))
+                    && !TextUtils.isEmpty(nearByLocality.numberOfPropsForRent) && !nearByLocality.numberOfPropsForRent.equalsIgnoreCase("0")) {
+                holder.numberOfPropsForSaleTv.setText(nearByLocality.numberOfPropsForRent.toLowerCase());
+                holder.numberOfPropsForRentTv.setVisibility(View.INVISIBLE);
+                holder.numberOfPropsForSaleTv.setVisibility(View.VISIBLE);
+            } else {
+                if (!TextUtils.isEmpty(nearByLocality.numberOfPropsForSale) && !nearByLocality.numberOfPropsForSale.equalsIgnoreCase("0")) {
+                    holder.numberOfPropsForSaleTv.setText(nearByLocality.numberOfPropsForSale.toLowerCase());
+                    holder.numberOfPropsForSaleTv.setVisibility(View.VISIBLE);
+                } else {
+                    holder.numberOfPropsForSaleTv.setVisibility(View.INVISIBLE);
+                }
+                if (!TextUtils.isEmpty(nearByLocality.numberOfPropsForRent) && !nearByLocality.numberOfPropsForRent.equalsIgnoreCase("0")) {
+                    holder.numberOfPropsForRentTv.setText(nearByLocality.numberOfPropsForRent.toLowerCase());
+                    holder.numberOfPropsForRentTv.setVisibility(View.VISIBLE);
+                } else {
+                    holder.numberOfPropsForRentTv.setVisibility(View.INVISIBLE);
+                }
+                if (!TextUtils.isEmpty(viewDetailText)) {
+                    holder.viewDetails.setText(viewDetailText.toLowerCase());
+                    holder.viewDetails.setVisibility(View.VISIBLE);
+                } else {
+                    holder.viewDetails.setVisibility(View.INVISIBLE);
+                }
+            }
+            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.view.getLayoutParams();
+            if(params != null) {
+                if (position == getItemCount() - 1) {
+                    params.rightMargin = getResources().getDimensionPixelSize(R.dimen.row_nearby_localities_right_margin);
+                } else {
+                    params.rightMargin = 0;
+                }
+            }
+
             holder.cardView.setTag(position);
             switch (cardType){
                 case LOCALITY:
@@ -348,16 +410,25 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         }
 
         private void removeZeroData(ViewHolder holder, NearByLocalities nearByLocality) {
-            if(!nearByLocality.numberOfPropsForSale.equalsIgnoreCase("0"))
+            if (!TextUtils.isEmpty(nearByLocality.numberOfPropsForSale) && !nearByLocality.numberOfPropsForSale.equalsIgnoreCase("0")) {
                 holder.primarySaleLabelTv.setText("properties for sale");
-            else {
+                holder.primarySaleLabelTv.setVisibility(View.VISIBLE);
+            } else if (!TextUtils.isEmpty(nearByLocality.numberOfPropsForRent) && !nearByLocality.numberOfPropsForRent.equalsIgnoreCase("0")) {
+                holder.primarySaleLabelTv.setText("properties for rent");
+                holder.primarySaleLabelTv.setVisibility(View.VISIBLE);
+            } else {
                 holder.primarySaleLabelTv.setText("");
                 holder.numberOfPropsForSaleTv.setText("");
-                 }
+            }
 
-            if(!nearByLocality.numberOfPropsForRent.equalsIgnoreCase("0"))
+            if (!TextUtils.isEmpty(nearByLocality.numberOfPropsForRent)
+                    && !nearByLocality.numberOfPropsForRent.equalsIgnoreCase("0")
+                    && !TextUtils.isEmpty(nearByLocality.numberOfPropsForSale)
+                    && !nearByLocality.numberOfPropsForSale.equalsIgnoreCase("0")) {
                 holder.secondarySaleLabelTv.setText("properties for rent");
-            else {
+                holder.secondarySaleLabelTv.setVisibility(View.VISIBLE);
+            } else {
+                holder.secondarySaleLabelTv.setVisibility(View.INVISIBLE);
                 holder.secondarySaleLabelTv.setText("");
                 holder.numberOfPropsForRentTv.setText("");
             }

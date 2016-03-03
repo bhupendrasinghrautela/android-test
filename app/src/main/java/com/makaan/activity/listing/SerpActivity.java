@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
@@ -428,6 +429,14 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         if(null==listingGetEvent|| null!=listingGetEvent.error){
             //TODO handle error
             mSerpReceived = true;
+            if(listingGetEvent.error != null && listingGetEvent.error.error != null
+                    && listingGetEvent.error.error.networkResponse != null) {
+                switch (listingGetEvent.error.error.networkResponse.statusCode) {
+                    case 408:
+                        Toast.makeText(this, "the network seems to be slow", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
 //            Toast.makeText(this, "An error occurred while fetching results", Toast.LENGTH_SHORT).show();
             showNoResults();
             return;
@@ -712,7 +721,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.searchMap);
             MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickSerpViewSelection);
 
-            mSerpBackStack.addToBackstack(mSerpBackStack.peek(), SerpBackStack.TYPE_DEFAULT);
+            SerpRequest clonedRequest = mSerpBackStack.addToBackstack(mSerpBackStack.peek(), SerpBackStack.TYPE_DEFAULT);
+            addSerpScrollTrackStatus(clonedRequest);
             mMapImageView.setImageResource(R.drawable.map_icon);
             setSearchBarCollapsible(true);
             mIsMapFragment = false;
@@ -729,7 +739,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickSerpViewSelection);
 
             if (mListingGetEvent != null) {
-                mSerpBackStack.addToBackstack(mSerpBackStack.peek(), SerpBackStack.TYPE_MAP);
+                SerpRequest clonedRequest = mSerpBackStack.addToBackstack(mSerpBackStack.peek(), SerpBackStack.TYPE_MAP);
+                addSerpScrollTrackStatus(clonedRequest);
                 if(mMapFragment == null) {
                     mMapFragment = new SerpMapFragment();
                 }

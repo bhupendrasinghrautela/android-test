@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import org.apmem.tools.layouts.FlowLayout;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 /**
@@ -21,14 +22,24 @@ public class CustomFlowLayout extends FlowLayout {
     private static final int DELAY = 200;
 
     private CustomFlowLayoutAdapter mAdapter;
-    CustomFlowHandler handler = new CustomFlowHandler();
+    CustomFlowHandler handler = new CustomFlowHandler(this);
 
-    class CustomFlowHandler extends Handler {
+    static class CustomFlowHandler extends Handler {
+        private final WeakReference<CustomFlowLayout> flowLayout;
+
+        public CustomFlowHandler(CustomFlowLayout flowLayout) {
+            super();
+            this.flowLayout = new WeakReference<CustomFlowLayout>(flowLayout);
+        }
+
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_UPDATE_LAYOUT:
-                    invalidateAdapterViews();
+                    CustomFlowLayout layout = flowLayout.get();
+                    if(layout != null) {
+                        layout.invalidateAdapterViews();
+                    }
                     break;
             }
         }

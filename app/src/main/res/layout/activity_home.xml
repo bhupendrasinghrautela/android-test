@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/mobile_home"
-                android:orientation="vertical"
-                tools:context=".HomeActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/mobile_home"
+    android:orientation="vertical"
+    tools:context=".HomeActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -23,7 +23,6 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_below="@+id/top_bar"
             android:minHeight="?attr/actionBarSize">
 
             <include
@@ -102,10 +101,9 @@
             android:id="@+id/rl_footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_marginBottom="@dimen/activity_home_search_relative_view_bottom_margin"
-            android:layout_marginLeft="@dimen/activity_home_search_toggle_left_margin">
+            android:layout_marginLeft="@dimen/activity_home_search_toggle_left_margin"
+            android:layout_marginStart="@dimen/activity_home_search_toggle_left_margin">
 
             <RelativeLayout
                 android:id="@+id/activity_home_search_relative_view"
@@ -139,10 +137,10 @@
                     android:layout_toEndOf="@id/activity_home_search_image_view"
                     android:layout_toRightOf="@id/activity_home_search_image_view"
                     android:hint="@string/search_by_location"
-                    android:textColorHint="@color/listingBlack"
                     android:textColor="@color/listingBlack"
+                    android:textColorHint="@color/listingBlack"
                     android:textSize="@dimen/activity_home_search_text_text_size"
-                    android:typeface="sans"/>
+                    android:typeface="sans" />
 
                 <EditText
                     android:layout_width="2dp"
@@ -170,17 +168,17 @@
                     android:id="@+id/activity_home_property_buy_radio_button"
                     android:layout_width="50dp"
                     android:layout_height="35dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginRight="1dp"
                     android:background="@drawable/buy_radio_button_background_selector"
                     android:button="@null"
                     android:checked="true"
-                    android:layout_marginRight="1dp"
-                    android:layout_marginEnd="1dp"
                     android:gravity="center"
                     android:text="buy"
                     android:textColor="@color/white"
                     android:textSize="16sp"
-                    android:typeface="sans"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:typeface="sans" />
 
                 <RadioButton
                     android:id="@+id/activity_home_property_rent_radio_button"
@@ -193,8 +191,8 @@
                     android:text="rent"
                     android:textColor="@color/white"
                     android:textSize="16sp"
-                    android:typeface="sans"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:typeface="sans" />
             </RadioGroup>
         </RelativeLayout>
     </FrameLayout>

@@ -34,7 +34,7 @@
         android:id="@+id/fragment_blog_action_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="14dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:text="advice for best home buying experience"
@@ -42,5 +42,6 @@
         android:typeface="serif"
         android:textColor="@color/listingBlack"
         android:singleLine="true"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false"
+        android:textStyle="bold"/>
 </LinearLayout>

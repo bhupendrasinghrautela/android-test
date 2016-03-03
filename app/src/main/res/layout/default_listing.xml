@@ -162,15 +162,14 @@
                         android:textColor="@color/serp_listing_card_default_text_color"
                         android:textSize="@dimen/serp_listing_card_property_info_text_view_text_size"
                         android:typeface="serif" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/serp_listing_card_empty_view_height"
-                        android:layout_below="@id/serp_default_listing_property_image_image_view"
-                        android:layout_marginLeft="@dimen/serp_listing_card_empty_view_after_property_info_view_margin_left"
-                        android:layout_marginStart="@dimen/serp_listing_card_empty_view_after_property_info_view_margin_left"
-                        android:background="@color/serp_listing_view_empty_view_color" />
                 </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/serp_listing_card_empty_view_height"
+                    android:layout_marginLeft="@dimen/serp_listing_card_empty_view_after_address_text_view_margin_left"
+                    android:layout_marginStart="@dimen/serp_listing_card_empty_view_after_address_text_view_margin_left"
+                    android:background="@color/serp_listing_view_empty_view_color" />
 
                 <FrameLayout
                     android:id="@+id/serp_default_listing_property_address_frame_layout"
@@ -410,12 +409,23 @@
                         android:layout_marginRight="@dimen/serp_listing_card_assist_button_right_margin"
                         android:layout_marginTop="@dimen/serp_listing_card_assist_button_top_margin"
                         android:background="@drawable/m_badge"
-                        android:paddingLeft="@dimen/serp_listing_card_assist_button_left_padding"
-                        android:paddingStart="@dimen/serp_listing_card_assist_button_left_padding"
+                        android:layout_marginLeft="@dimen/serp_listing_card_assist_button_left_padding"
+                        android:layout_marginStart="@dimen/serp_listing_card_assist_button_left_padding"
                         android:textAllCaps="false"
                         android:textColor="@color/serp_listing_card_default_text_color"
                         android:textSize="@dimen/serp_listing_card_assist_button_text_size"
                         android:typeface="serif" />
+                    <View
+                        android:id="@+id/serp_default_listing_assist_divider"
+                        android:layout_width="1dp"
+                        android:layout_height="@dimen/serp_listing_card_assist_button_height"
+                        android:background="@color/serp_listing_view_empty_view_color"
+                        android:layout_alignTop="@id/serp_default_listing_assist_button"
+                        android:layout_toLeftOf="@id/serp_default_listing_assist_button"
+                        android:layout_toStartOf="@id/serp_default_listing_assist_button"
+                        android:layout_marginLeft="@dimen/serp_listing_card_assist_button_left_padding"
+                        android:layout_marginStart="@dimen/serp_listing_card_assist_button_left_padding" />
+
 
                     <FrameLayout
                         android:id="@+id/serp_default_listing_seller_image_frame_layout"
@@ -460,9 +470,9 @@
                         android:layout_marginStart="@dimen/serp_listing_card_seller_name_text_view_left_margin"
                         android:layout_marginTop="@dimen/serp_listing_card_seller_name_text_view_top_margin"
                         android:layout_toEndOf="@id/serp_default_listing_seller_image_frame_layout"
-                        android:layout_toLeftOf="@id/serp_default_listing_assist_button"
                         android:layout_toRightOf="@id/serp_default_listing_seller_image_frame_layout"
-                        android:layout_toStartOf="@id/serp_default_listing_assist_button"
+                        android:layout_toLeftOf="@id/serp_default_listing_assist_divider"
+                        android:layout_toStartOf="@id/serp_default_listing_assist_divider"
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="d bhatia (agent)"

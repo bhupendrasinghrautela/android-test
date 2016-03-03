@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
  */
 public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
     ImageView mNoResultsImageView;
-    ProgressBar mLoadingProgressBar;
+    ImageView mLoadingProgressBar;
     FrameLayout mContentFrameLayout;
 
     private MakaanProgressDialog progressDialog;
@@ -60,7 +60,7 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
         mNoResultsImageView = (ImageView) findViewById(R.id.activity_makaan_base_no_result_image_view);
         mNoResultsTextView = (TextView) findViewById(R.id.activity_makaan_base_no_result_text_view);
         mNoResultsLayout = findViewById(R.id.activity_makaan_base_no_result_layout);
-        mLoadingProgressBar = (ProgressBar) findViewById(R.id.activity_makaan_base_loading_progress_bar);
+        mLoadingProgressBar = (ImageView) findViewById(R.id.activity_makaan_base_loading_progress_bar);
         mContentFrameLayout = (FrameLayout) findViewById(R.id.activity_makaan_base_content_frame_layout);
 
         getLayoutInflater().inflate(layoutResID, mContentFrameLayout, true);
@@ -151,6 +151,8 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
         mContentFrameLayout.setVisibility(View.GONE);
         mNoResultsLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.VISIBLE);
+
+        Glide.with(this).load(R.raw.loading).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mLoadingProgressBar);
     }
     protected void showNoResults() {
         showNoResults(null);
