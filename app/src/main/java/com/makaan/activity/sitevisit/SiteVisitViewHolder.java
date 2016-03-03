@@ -28,6 +28,9 @@ public class SiteVisitViewHolder extends RecyclerView.ViewHolder {
     private int position;
     private SiteVisitCallbacks callbacks;
 
+    private View mDirectionLayout;
+    private View mCallNowLayout;
+
     public SiteVisitViewHolder(View itemView) {
         super(itemView);
         mMainImage = (FadeInNetworkImageView) itemView.findViewById(R.id.iv_content);
@@ -40,13 +43,17 @@ public class SiteVisitViewHolder extends RecyclerView.ViewHolder {
         mSellerImage = (CircleImageView) itemView.findViewById(R.id.seller_image_view);
         mSellerText = (TextView) itemView.findViewById(R.id.seller_logo_text_view);
         mRating = (CustomRatingBar) itemView.findViewById(R.id.seller_rating);
-        mDirection.setOnClickListener(new OnClickListener() {
+
+        mDirectionLayout = itemView.findViewById(R.id.direction_layout);
+        mCallNowLayout = itemView.findViewById(R.id.call_now_layout);
+
+        mDirectionLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 callbacks.openDirections(position);
             }
         });
-        mCallNow.setOnClickListener(new OnClickListener() {
+        mCallNowLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 callbacks.callNumber(position);

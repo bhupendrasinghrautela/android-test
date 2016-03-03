@@ -109,7 +109,9 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
     public void onResults(ListingByIdsGetEvent listingByIdsGetEvent) {
         if(listingByIdsGetEvent == null || listingByIdsGetEvent.error != null) {
             // TODO
-            showNoResults();
+//            showNoResults();
+            mAdapter.setData(new ArrayList<ListingByIdsGetEvent.Listing>());
+            showContent();
             return;
         }
         mItems = listingByIdsGetEvent.items;
@@ -218,7 +220,7 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
                             mObj.listingDetail = mItems.get(position).listing;
                             ((BuyerDashboardCallbacks) getActivity()).loadFragment(
                                     BuyerDashboardActivity.LOAD_FRAGMENT_CLIENT_COMPANY_LEAD_ADD_PROPERTY,
-                                    true, null, "add property", mObj);
+                                    true, null, null, mObj);
                         }
                     }
                 }

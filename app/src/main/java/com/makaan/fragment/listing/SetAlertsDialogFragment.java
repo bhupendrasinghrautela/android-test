@@ -95,7 +95,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
             showContent();
 
             populateData();
-            handleSearchName();
+            mSetAlertsNameEditText.setText(handleSearchName());
         } else {
             // get saved searches
             SaveSearchService saveSearchService =
@@ -114,7 +114,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
         return R.layout.fragment_set_alert;
     }
 
-    private void handleSearchName() {
+    private String handleSearchName() {
         String name = null;
         StringBuilder builder = new StringBuilder();
 
@@ -161,12 +161,12 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 bhk.append(" bhk");
             }
             if(!(TextUtils.isEmpty(bhk.toString()) && TextUtils.isEmpty(budget.toString()))) {
-                mSetAlertsNameEditText.setText(bhk.toString() + budget.toString());
+                return bhk.toString() + budget.toString();
             } else {
-                mSetAlertsNameEditText.setText("save search 1");
+                return "save search 1";
             }
         } else {
-            mSetAlertsNameEditText.setText(name);
+            return name;
         }
     }
 
@@ -286,7 +286,6 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 }
                 continue;
             }
-            searchNameBuilder.append(separator);
 
             int type = grp.layoutType;
 
@@ -294,10 +293,10 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 RangeFilter filter = grp.rangeFilterValues.get(0);
                 if(filter.selectedMinValue > filter.minValue || filter.selectedMaxValue < filter.maxValue) {
                     if("i_budget".equalsIgnoreCase(grp.internalName)) {
+                        searchNameBuilder.append(separator);
                         searchNameBuilder.append(StringUtil.getDisplayPrice(grp.rangeFilterValues.get(0).selectedMinValue)
                                 + "-" + StringUtil.getDisplayPrice(grp.rangeFilterValues.get(0).selectedMaxValue));
-                    } else {
-                        searchNameBuilder.append(grp.rangeFilterValues.get(0).selectedMinValue + "-" + grp.rangeFilterValues.get(0).selectedMaxValue);
+                        separator = SEPARATOR_FILTER;
                     }
 
                     selector.range(grp.rangeFilterValues.get(0).fieldName, grp.rangeFilterValues.get(0).selectedMinValue, grp.rangeFilterValues.get(0).selectedMaxValue);
@@ -306,7 +305,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 for(TermFilter filter : grp.termFilterValues) {
                     if(filter.selected) {
                         selector.term(filter.fieldName, filter.value);
-                        searchNameBuilder.append(filter.displayName);
+//                        searchNameBuilder.append(filter.displayName);
                     }
                 }
             } else if(type == RADIO_BUTTON_RANGE) {
@@ -332,7 +331,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                                 }
 
                                 selector.range(filter.fieldName, minValue, maxValue);
-                                searchNameBuilder.append(minValue + "-" + maxValue);
+//                                searchNameBuilder.append(minValue + "-" + maxValue);
                             /*} else if(grp.type.equalsIgnoreCase(TYPE_DAY)) {
                                 Calendar cal = Calendar.getInstance();
                                 if(filter.minValue != UNEXPECTED_VALUE) {
@@ -379,13 +378,13 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                             String s = "";
                             if(minValue != UNEXPECTED_VALUE) {
                                 selector.range(filter.minFieldName, minValue, null);
-                                searchNameBuilder.append(minValue);
+//                                searchNameBuilder.append(minValue);
                                 s = "-";
                             }
                             if(maxValue != UNEXPECTED_VALUE) {
                                 selector.range(filter.maxFieldName, null, maxValue);
-                                searchNameBuilder.append(s);
-                                searchNameBuilder.append(maxValue);
+//                                searchNameBuilder.append(s);
+//                                searchNameBuilder.append(maxValue);
                             }
                         /*} else {
                             String s = "";
@@ -407,20 +406,25 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 for(TermFilter filter : grp.termFilterValues) {
                     if(filter.selected) {
                         selector.term(filter.fieldName, filter.value);
-                        searchNameBuilder.append(s);
-                        searchNameBuilder.append(String.valueOf(filter.displayName));
-                        s = ",";
+                        if("i_beds".equalsIgnoreCase(grp.internalName)) {
+                            searchNameBuilder.append(s);
+                            searchNameBuilder.append(String.valueOf(filter.displayName));
+                            s = ",";
+                            separator = SEPARATOR_FILTER;
+                        }
                     }
                 }
             }
             if("i_beds".equalsIgnoreCase(grp.internalName)) {
                 searchNameBuilder.append(" bhk");
+                separator = SEPARATOR_FILTER;
             }
-            separator = SEPARATOR_FILTER;
         }
 
         if(mSerpRequest != null) {
             mSerpRequest.applySelector(selector, null, false, true);
+            searchNameBuilder.append(";");
+            searchNameBuilder.append(getSearchName());
         } else if(mListingGetEvent != null && mListingGetEvent.listingData.facets != null) {
             searchNameBuilder.append(";");
             searchNameBuilder.append(mListingGetEvent.listingData.facets.buildDisplayName());
@@ -549,7 +553,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 showContent();
 
                 populateData();
-                handleSearchName();
+                mSetAlertsNameEditText.setText(handleSearchName());
             }
         }
     }

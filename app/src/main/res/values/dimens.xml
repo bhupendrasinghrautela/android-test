@@ -1106,10 +1106,11 @@
     <dimen name="card_margin">5dp</dimen>
     <dimen name="card_radius">25dp</dimen>
     <dimen name="image_height">180dp</dimen>
-    <dimen name="cancel_image_margin">20dp</dimen>
+    <dimen name="cancel_image_margin">10dp</dimen>
     <dimen name="layout_padding">20dp</dimen>
-    <dimen name="title_text_size">22sp</dimen>
+    <dimen name="title_text_size">18sp</dimen>
     <dimen name="content_text_size">16sp</dimen>
+    <dimen name="new_text_size">16sp</dimen>
 
     <!--buyer journey -->
     <dimen name="card_elevation">5dp</dimen>
@@ -1258,7 +1259,7 @@
     <dimen name="fragment_upload_documents_upload_text_top_margin">26dp</dimen>
     <dimen name="fragment_upload_documents_upload_text_left_margin">42dp</dimen>
     <dimen name="fragment_upload_documents_upload_text_right_margin">52dp</dimen>
-    <dimen name="fragment_upload_documents_upload_text_text_size">24sp</dimen>
+    <dimen name="fragment_upload_documents_upload_text_text_size">16sp</dimen>
 
     <dimen name="fragment_upload_documents_action_button_top_margin">64dp</dimen>
     <dimen name="fragment_upload_documents_action_button_left_padding">24dp</dimen>
@@ -1268,7 +1269,7 @@
 
     <dimen name="fragment_upload_documents_submit_button_left_margin">10dp</dimen>
 
-    <dimen name="fragment_upload_documents_document_checklist_top_margin">36dp</dimen>
+    <dimen name="fragment_upload_documents_document_checklist_top_margin">24dp</dimen>
     <dimen name="fragment_upload_documents_document_checklist_left_padding">24dp</dimen>
     <dimen name="fragment_upload_documents_document_checklist_right_padding">24dp</dimen>
 

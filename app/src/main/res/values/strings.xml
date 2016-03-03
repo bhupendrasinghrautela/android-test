@@ -209,7 +209,7 @@
     <string name="resale">resale</string>
     <string name="registration">registration</string>
     <string name="make_home_yours">make the home all yours</string>
-    <string name="moving_in">moving in or renting? get help</string>
+    <string name="moving_in">moving in</string>
     <string name="prepare_to_enter">prepare to enter your home</string>
     <string name="booking_subtitle">close the deal with ease</string>
     <string name="home_loan_subtitle">access your personal finances </string>
@@ -290,7 +290,7 @@
 
     <!-- get rewards strings -->
     <string name="get_upto">get upto</string>
-    <string name="get_15000">\u20B9 15000 off</string>
+    <string name="get_15000">\u20B9 15,000 off</string>
     <string name="on_brokerage">on your brokerage</string>
     <string name="how_it_works_heading">how it works</string>
     <string name="how_it_works">1. contact makaan seller\n2. provide feedback\n3. share booking details</string>

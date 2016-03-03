@@ -21,6 +21,7 @@ import com.makaan.fragment.buyerJourney.ReviewAgentFragment;
 import com.makaan.fragment.buyerJourney.RewardsFragment;
 import com.makaan.fragment.buyerJourney.SaveSearchFragment;
 import com.makaan.fragment.buyerJourney.UploadDocumentsFragment;
+import com.makaan.fragment.pyr.ThankYouScreenFragment;
 import com.makaan.request.buyerjourney.PhaseChange;
 import com.makaan.service.ClientEventsService;
 import com.makaan.service.MakaanServiceFactory;
@@ -54,6 +55,7 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
     public static final int LOAD_FRAGMENT_REVIEW_AGENT = 9;
     public static final int LOAD_FRAGMENT_UPLOAD_DOCUMENTS = 10;
     public static final int LOAD_FRAGMENT_SITE_VISIT = 11;
+    public static final int LOAD_THANK_YOU_FRAGMENT = 12;
     private boolean mOnlySellerRating;
 
 
@@ -208,6 +210,13 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
                 }
                 break;
             }
+            case LOAD_THANK_YOU_FRAGMENT:
+                ThankYouScreenFragment fragment = new ThankYouScreenFragment();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(ThankYouScreenFragment.IS_DASHBOARD, true);
+                fragment.setArguments(bundle);
+                initFragment(R.id.activity_base_buyer_journey_content_frame_layout, fragment, shouldAddToBackStack);
+                break;
         }
         if(!TextUtils.isEmpty(title)) {
             setTitle(title);
