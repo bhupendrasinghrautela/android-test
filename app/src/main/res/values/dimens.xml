@@ -1157,6 +1157,7 @@
     <dimen name="lead_call_now_seller_name_text_size">22sp</dimen>
     <dimen name="lead_instant_call_left_right_padding">15dp</dimen>
     <dimen name="share_your_details_text_size">18sp</dimen>
+    <dimen name="lead_form_seller_name_padding">10dp</dimen>
 
     <!--Shortlist card dimensions-->
     <dimen name="fav_card_height">220dp</dimen>
@@ -1186,6 +1187,12 @@
     <dimen name="dialog_padding">10dp</dimen>
     <dimen name="normal_text">20sp</dimen>
     <dimen name="makaan_label_top_padding">66dp</dimen>
+
+    <dimen name="login_back_height">40dp</dimen>
+    <dimen name="login_back_width">40dp</dimen>
+    <dimen name="login_back_margin">10dp</dimen>
+
+
 
     <!--neighbor category view-->
     <dimen name="neighbor_category_view_width">60dp</dimen>
@@ -1385,6 +1392,12 @@
     <dimen name="temporary_card_view_radius">1px</dimen>
     <dimen name="temporary_card_view_elevation">1px</dimen>
     <dimen name="temporary_card_view_max_elevation">1px</dimen>
+
+    <dimen name="switch_view_radius">10dp</dimen>
+    <dimen name="switch_view_thumb_height_width">25dp</dimen>
+    <dimen name="switch_view_track_height">20dp</dimen>
+    <dimen name="switch_view_track_width">50dp</dimen>
+
 
     <dimen name="row_nearby_localities_left_margin">20dp</dimen>
     <dimen name="row_nearby_localities_right_margin">20dp</dimen>

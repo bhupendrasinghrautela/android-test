@@ -2,6 +2,7 @@ package com.makaan.fragment.userLogin;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.TextUtils;
@@ -16,7 +17,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.google.gson.Gson;
 import com.makaan.R;
 import com.makaan.analytics.MakaanEventPayload;
@@ -26,14 +26,11 @@ import com.makaan.event.user.UserLoginEvent;
 import com.makaan.response.login.OnSignUpSelectedListener;
 import com.makaan.response.login.OnUserLoginListener;
 import com.makaan.service.MakaanServiceFactory;
-import com.makaan.service.WishListService;
 import com.makaan.service.user.UserLoginService;
 import com.makaan.util.AppBus;
 import com.makaan.util.CommonUtil;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
-
-import java.util.prefs.Preferences;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -62,6 +59,10 @@ public class LoginFragment extends Fragment {
     private OnSignUpSelectedListener mSignUpSelectedListener;
     boolean mBound = false;
     private boolean isRemember=false;
+    @Bind(R.id.til_login_email)
+    TextInputLayout mTilEmail;
+    @Bind(R.id.til_login_password)
+    TextInputLayout mTilPassword;
 
 
     @Nullable
@@ -72,7 +73,9 @@ public class LoginFragment extends Fragment {
         if(!mBound) {
             AppBus.getInstance().register(this);
             mBound=true;
-        }
+        }/*
+        mEditTextEmail=(EditText) view.findViewById(R.id.et_email);
+        mEditTextPassword=(EditText) view.findViewById(R.id.et_password);*/
         mSignUptext=(TextView) view.findViewById(R.id.tv_signup);
         String text = "<font color=#000000>new to makaan?</font><font color=#e71c28> sign up!</font>";
         mSignUptext.setText(Html.fromHtml(text), TextView.BufferType.SPANNABLE);
@@ -112,7 +115,7 @@ public class LoginFragment extends Fragment {
            ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
             ))).loginWithMakaanAccount(email,pwd);
             mOnUserLoginListener.onUserLoginBegin();
-            //remember me functionality
+            //remember me check
             if(isRemember) {
                 CookiePreferences.setUserName(getActivity(), email);
                 CookiePreferences.setPassword(getActivity(), pwd);
@@ -154,11 +157,15 @@ public class LoginFragment extends Fragment {
     @Subscribe
     public void loginResults(UserLoginEvent userLoginEvent){
         Properties properties= MakaanEventPayload.beginBatch();
-        properties.put(MakaanEventPayload.CATEGORY , MakaanTrackerConstants.Category.userLogin);
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.userLogin);
         if(userLoginEvent.error!=null){
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.loginWithEmailFail);
             MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.login);
             mOnUserLoginListener.onUserLoginError(userLoginEvent.error);
+            //set error on login fail
+            mTilEmail.setError(getString(R.string.invalid_email_toast));
+            mTilPassword.setError(getString(R.string.invalid_password));
+
         }
         else {
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.loginWithEmailSuccess);
@@ -166,5 +173,10 @@ public class LoginFragment extends Fragment {
             String str = new Gson().toJson(userLoginEvent.userResponse);
             mOnUserLoginListener.onUserLoginSuccess(userLoginEvent.userResponse , str);
         }
+    }
+
+    @OnClick(R.id.iv_back)
+    public void onBackPressed(){
+        getActivity().onBackPressed();
     }
 }

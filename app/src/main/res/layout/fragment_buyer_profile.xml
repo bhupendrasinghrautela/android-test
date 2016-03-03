@@ -48,7 +48,6 @@
             android:layout_marginRight="@dimen/tab_margin_left_right"
             android:background="@android:color/transparent"
             android:elevation="@dimen/card_elevation"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:tabIndicatorColor="@color/app_red"
             app:tabSelectedTextColor="@color/listingBlack"
             app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"

@@ -299,7 +299,7 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
 
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                mViewPager.setCurrentItem(tab.getPosition());
+                mViewPager.setCurrentItem(tab.getPosition(),true);
             }
 
             @Override

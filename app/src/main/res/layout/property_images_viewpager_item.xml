@@ -32,7 +32,6 @@
             android:layout_toRightOf="@+id/rupee_icon"
             android:layout_width="wrap_content"
             android:textSize="32sp"
-            android:text="82.2"
             android:typeface="serif"
             android:layout_height="wrap_content"/>
         <TextView
@@ -42,7 +41,6 @@
             android:layout_marginLeft="5dp"
             android:layout_width="wrap_content"
             android:textSize="16sp"
-            android:text="L"
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/area_text"
@@ -65,7 +63,6 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="14dp"
             android:layout_marginTop="30dp"
-            android:text="emi 92,394"
             android:textSize="13sp"
             android:layout_height="wrap_content"/>
         <ImageView

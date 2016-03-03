@@ -6,6 +6,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
     <include layout="@layout/city_empty_view"/>
+
     <TextView
         android:id="@+id/header"
         android:layout_width="match_parent"
@@ -24,7 +25,10 @@
         android:layout_marginTop="@dimen/city_property_buy_rent_top_margin"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textOff=""
+        android:textOn=""
+        android:showText="false"/>
     <TextView
         android:id="@+id/buy_text"
         android:layout_alignBaseline="@id/city_property_buy_rent_switch"

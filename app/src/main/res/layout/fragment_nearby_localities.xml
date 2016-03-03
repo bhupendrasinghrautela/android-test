@@ -47,7 +47,10 @@
             android:layout_marginRight="@dimen/locality_switch_margin_left"
             android:thumb="@drawable/switch_thumb_background_selector"
             android:track="@drawable/switch_track_background_selector"
-            android:id="@+id/switch_top_agents" />
+            android:id="@+id/switch_top_agents"
+            android:textOn=""
+            android:textOff=""
+            android:showText="false"/>
         <com.makaan.ui.view.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -140,4 +140,12 @@
         <item name="android:typeface">sans</item>
     </style>
 
+    <style name="TextAppearence.App.TextInputLayout" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/seller_name_text_color</item>
+        <item name="android:textSize">@dimen/medium_text</item>
+        <item name="colorControlNormal">@color/edit_text_bottom_border</item>
+        <item name="colorControlActivated">@color/edit_text_bottom_border</item>
+        <item name="colorControlHighlight">@color/edit_text_bottom_border</item>
+    </style>
+
 </resources>

@@ -47,7 +47,7 @@
             android:id="@+id/tv_seller_name"
             android:textColor="@color/seller_name_text_color"
             android:textSize="@dimen/seller_name_text_size"
-            android:layout_marginBottom="@dimen/lead_form_seller_image_margin_bottom"
+            android:padding="@dimen/lead_form_seller_name_padding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

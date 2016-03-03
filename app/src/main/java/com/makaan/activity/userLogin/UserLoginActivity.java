@@ -12,6 +12,7 @@ import com.makaan.activity.HomeActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cookie.CookiePreferences;
+import com.makaan.fragment.userLogin.LoginFragment;
 import com.makaan.fragment.userLogin.ReplaceFragment;
 import com.makaan.response.ResponseError;
 import com.makaan.response.login.OnUserLoginListener;
@@ -77,7 +78,7 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
     public void onUserLoginError(ResponseError error) {
         if(mProgressDialog !=null)
         mProgressDialog.dismissDialog();
-        Toast.makeText(this,error.msg,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,error.msg,Toast.LENGTH_SHORT).show();
     }
 
     @Override

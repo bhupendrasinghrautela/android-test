@@ -62,7 +62,8 @@
             android:hint="@string/user_name"
             android:paddingBottom="@dimen/edit_internal_padding"
             android:paddingTop="@dimen/edit_internal_padding"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:maxLength="100"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -82,7 +83,8 @@
                 android:hint="@string/email"
                 android:paddingBottom="@dimen/edit_internal_padding"
                 android:paddingTop="@dimen/edit_internal_padding"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:maxLength="50" />
 
         </android.support.design.widget.TextInputLayout>
         <RelativeLayout
@@ -105,7 +107,8 @@
                     android:hint="@string/Password"
                     android:paddingBottom="@dimen/edit_internal_padding"
                     android:paddingTop="@dimen/edit_internal_padding"
-                    android:singleLine="true"/>
+                    android:singleLine="true"
+                    android:maxLength="32"/>
             </android.support.design.widget.TextInputLayout>
 
             <CheckBox
