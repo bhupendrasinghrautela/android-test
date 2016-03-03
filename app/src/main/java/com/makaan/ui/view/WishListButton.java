@@ -1,6 +1,8 @@
 package com.makaan.ui.view;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.View;
@@ -118,7 +120,7 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
 
 
     @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+    public void onCheckedChanged(CompoundButton compoundButton, final boolean isChecked) {
         if(mContext instanceof PropertyActivity && mWishListDto.listingId != null) {
             Properties properties = MakaanEventPayload.beginBatch();
             if(isChecked) {
@@ -164,11 +166,25 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
             mLoadingProgressBar.setVisibility(View.VISIBLE);
 
         }else{
-
-            isLoginInitiatedFromWishList = true;
-            setChecked(!isChecked);
-            Intent intent = new Intent(mContext, UserLoginActivity.class);
-            mContext.startActivity(intent);
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(mContext);
+            builder.setMessage("this will take you to login screen, are you sure!");
+            builder.setPositiveButton(mContext.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    isLoginInitiatedFromWishList = true;
+                    setChecked(!isChecked);
+                    Intent intent = new Intent(mContext, UserLoginActivity.class);
+                    mContext.startActivity(intent);
+                }
+            });
+            builder.setNegativeButton(mContext.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.show();
         }
     }
 
@@ -207,5 +223,4 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
             onCheckedChanged(null, !mShortlistCheckBox.isChecked());
         }
     }
-
 }

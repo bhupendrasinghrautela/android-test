@@ -84,6 +84,8 @@
     <string name="view_all_sellers">view all sellers</string>
     <string name="add_user_name_toast">add user name</string>
     <string name="invalid_email_toast">invalid email id</string>
+    <string name="invalid_password">invalid password</string>
+
     <string name="invalid_phone_no_toast">invalid phone no</string>
     <string name="listings_limit_toast">Only a maximum of 6 listings can be added</string>
     <string name="otp_string">OTP</string>
@@ -335,6 +337,8 @@
 
     <string name="call_sellers">call sellers</string>
 
+    <string name="ok">ok</string>
+    <string name="cancel">cancel</string>
 
 
 </resources>

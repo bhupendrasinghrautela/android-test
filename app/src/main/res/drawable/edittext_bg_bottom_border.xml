@@ -15,7 +15,7 @@
         <shape
             android:shape="rectangle">
             <stroke android:width="1dp" android:color="@color/edit_text_bottom_border" />
-            <solid android:color="@null"  />
+
         </shape>
     </item>
 

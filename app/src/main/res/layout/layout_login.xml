@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,19 +54,22 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/til_login_email"
+                app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+                >
 
                 <EditText
                     android:id="@+id/et_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/input_top_margin"
-                    android:background="@drawable/edittext_bg_bottom_border"
                     android:hint="@string/email"
                     android:paddingBottom="@dimen/edit_internal_padding"
                     android:paddingTop="@dimen/edit_internal_padding"
                     android:singleLine="true"
-                    android:textSize="@dimen/medium_text" />
+                    android:textSize="@dimen/medium_text"
+                    android:maxLength="50"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -77,20 +81,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/drawable_top_padding"
-                    android:background="@color/white">
+                    app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+                    android:id="@+id/til_login_password">
 
                     <EditText
                         android:id="@+id/et_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/input_top_margin"
-                        android:background="@drawable/edittext_bg_bottom_border"
                         android:hint="@string/Password"
                         android:inputType="textPassword"
                         android:paddingBottom="@dimen/edit_internal_padding"
                         android:paddingTop="@dimen/edit_internal_padding"
                         android:singleLine="true"
-                        android:textSize="@dimen/medium_text" />
+                        android:textSize="@dimen/medium_text"
+                        android:maxLength="32"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <CheckBox
