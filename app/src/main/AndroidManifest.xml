@@ -175,7 +175,7 @@
             android:theme="@style/Theme.NoActionBarTheme">
         </activity>
         <service android:name=".jarvis.JarvisService"/>
-        <service android:name=".service.leakcanary.TemporaryLeakUploadService"/>
+        <!--<service android:name=".service.leakcanary.TemporaryLeakUploadService"-->/>
         <service android:name=".service.download.DownloadAssetService"
             android:process=":assets"/>
 

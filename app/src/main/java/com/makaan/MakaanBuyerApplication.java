@@ -55,7 +55,7 @@ import com.makaan.service.user.UserLoginService;
 import com.makaan.util.FontTypeface;
 import com.makaan.util.RandomString;
 import com.segment.analytics.Analytics;
-import com.squareup.leakcanary.RefWatcher;
+//import com.squareup.leakcanary.RefWatcher;
 
 import io.fabric.sdk.android.Fabric;
 import java.net.CookieHandler;
@@ -75,12 +75,12 @@ public class MakaanBuyerApplication extends Application {
     public static SparseArray<SerpObjects> serpObjects = new SparseArray<>();
 
     public static Gson gson;
-    private static RefWatcher refWatcher;
+/*    private static RefWatcher refWatcher;
 
     public static RefWatcher getRefWatcher() {
         //MakaanBuyerApplication application = (MakaanBuyerApplication) context.getApplicationContext();
-        return refWatcher;
-    }
+        return refWatcher;git 
+    }*/
 
     @Override
     public void onCreate() {

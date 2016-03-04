@@ -168,7 +168,7 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
         }else{
             setChecked(!isChecked);
             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(mContext);
-            builder.setMessage("this will take you to login screen, are you sure!");
+            builder.setMessage(R.string.add_to_fav_login_prompt);
             builder.setPositiveButton(mContext.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
