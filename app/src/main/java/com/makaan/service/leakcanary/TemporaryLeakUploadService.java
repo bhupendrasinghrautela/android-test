@@ -3,14 +3,18 @@ package com.makaan.service.leakcanary;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
-import com.squareup.leakcanary.AnalysisResult;
+/*import com.squareup.leakcanary.AnalysisResult;
 import com.squareup.leakcanary.DisplayLeakService;
-import com.squareup.leakcanary.HeapDump;
+import com.squareup.leakcanary.HeapDump;*/
 
 /**
  * Created by rohitgarg on 2/9/16.
  */
-public class TemporaryLeakUploadService extends DisplayLeakService {
+
+public class TemporaryLeakUploadService{
+
+}
+/*public class TemporaryLeakUploadService extends DisplayLeakService {
     @Override protected void afterDefaultHandling(HeapDump heapDump, AnalysisResult result, String leakInfo) {
 //        Log.d("DEBUG", "leak detected 1");
         if (!result.leakFound || result.excludedLeak) {
@@ -34,4 +38,4 @@ public class TemporaryLeakUploadService extends DisplayLeakService {
         int separator = className.lastIndexOf('.');
         return separator == -1 ? className : className.substring(separator + 1);
     }
-}
+}*/

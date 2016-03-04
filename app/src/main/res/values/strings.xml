@@ -337,6 +337,7 @@
     <string name="search_residential_plot_string">residential plot</string>
 
     <string name="call_sellers">call sellers</string>
+    <string name="add_to_fav_login_prompt">please signin to be able to add this property to your wishlist </string>
 
     <string name="ok">ok</string>
     <string name="cancel">cancel</string>
