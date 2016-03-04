@@ -427,7 +427,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
         if(mSerpRequest != null) {
             mSerpRequest.applySelector(selector, null, false, true);
             searchNameBuilder.append(";");
-            searchNameBuilder.append(getSearchName());
+            searchNameBuilder.append(handleSearchName());
         } else if(mListingGetEvent != null && mListingGetEvent.listingData.facets != null) {
             searchNameBuilder.append(";");
             searchNameBuilder.append(mListingGetEvent.listingData.facets.buildDisplayName());

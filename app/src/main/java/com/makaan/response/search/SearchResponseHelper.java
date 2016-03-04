@@ -126,6 +126,7 @@ public class SearchResponseHelper {
             SerpRequest request = new SerpRequest(SerpActivity.TYPE_BUILDER);
             request.setBuilderId(Long.valueOf(searchItem.entityId));
             request.setTitle(searchItem.displayText);
+            request.setSearch(searchItem);
             request.launchSerp(context);
             return;
         } else if (SearchSuggestionType.BUILDERCITY.getValue().equalsIgnoreCase(searchItem.type)) {
@@ -133,6 +134,7 @@ public class SearchResponseHelper {
             request.setBuilderId(Long.valueOf(searchItem.builderId));
             request.setCityId(Long.valueOf(searchItem.entityId));
             request.setTitle(searchItem.displayText);
+            request.setSearch(searchItem);
             request.launchSerp(context);
             return;
         } else if (SearchSuggestionType.CITY.getValue().equalsIgnoreCase(searchItem.type)) {
@@ -147,6 +149,7 @@ public class SearchResponseHelper {
             SerpRequest request = new SerpRequest(SerpActivity.TYPE_GPID);
             request.setGpId(searchItem.googlePlaceId);
             request.setTitle(searchResponseArrayList.get(0).displayText);
+            request.setSearch(searchItem);
             request.launchSerp(context);
             return;
 

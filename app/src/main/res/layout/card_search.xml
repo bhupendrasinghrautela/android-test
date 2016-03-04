@@ -11,19 +11,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <com.android.volley.toolbox.FadeInNetworkImageView
             android:id="@+id/iv_search"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/image_height"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/property"/>
+            android:layout_height="@dimen/buyer_content_image_height"
+            android:layout_alignParentTop="true"/>
 
         <ImageView
             android:id="@+id/iv_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:layout_margin="@dimen/cancel_image_margin"
             android:background="@android:drawable/ic_menu_close_clear_cancel" />
@@ -31,7 +30,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/iv_search"
+            android:layout_below="@id/iv_search"
             android:baselineAligned="false"
             android:gravity="center_vertical"
             android:orientation="horizontal"

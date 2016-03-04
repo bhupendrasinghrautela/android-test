@@ -43,11 +43,11 @@
     <dimen name="serp_listing_cluster_card_group_text_view_margin_bottom">16dp</dimen>
 
     <dimen name="child_serp_cluster_card_price_text_size">18sp</dimen>
-    <dimen name="child_serp_cluster_card_price_margin_top">6dp</dimen>
+    <dimen name="child_serp_cluster_card_price_margin_top">4dp</dimen>
 
     <dimen name="child_serp_cluster_card_address_text_size">16sp</dimen>
     <dimen name="child_serp_cluster_card_address_margin_top">4dp</dimen>
-    <dimen name="child_serp_cluster_card_address_margin_bottom">6dp</dimen>
+    <dimen name="child_serp_cluster_card_address_margin_bottom">4dp</dimen>
 
     <dimen name="fragment_child_serp_cluster_relative_view_padding_left">8dp</dimen>
     <dimen name="fragment_child_serp_cluster_relative_view_padding_right">8dp</dimen>

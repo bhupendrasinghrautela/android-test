@@ -15,7 +15,7 @@
         <com.android.volley.toolbox.FadeInNetworkImageView
             android:id="@+id/iv_content"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/image_height"
+            android:layout_height="@dimen/buyer_content_image_height"
             android:textSize="@dimen/title_text_size"
             android:scaleType="centerCrop"/>
 

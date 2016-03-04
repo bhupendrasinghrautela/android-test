@@ -55,8 +55,10 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SellerService;
 import com.makaan.ui.listing.RelevancePopupWindowController;
 import com.makaan.ui.view.MPlusBadgePopupDialog;
+import com.makaan.util.ErrorUtil;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.Preference;
+import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
@@ -431,14 +433,10 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             mSerpReceived = true;
             if(listingGetEvent.error != null && listingGetEvent.error.error != null
                     && listingGetEvent.error.error.networkResponse != null) {
-                switch (listingGetEvent.error.error.networkResponse.statusCode) {
-                    case 408:
-                        Toast.makeText(this, "the network seems to be slow", Toast.LENGTH_SHORT).show();
-                        break;
-                }
+                showNoResults(ErrorUtil.getErrorMessageId(listingGetEvent.error.error.networkResponse.statusCode, true));
+            } else {
+                showNoResults();
             }
-//            Toast.makeText(this, "An error occurred while fetching results", Toast.LENGTH_SHORT).show();
-            showNoResults();
             return;
         }
 

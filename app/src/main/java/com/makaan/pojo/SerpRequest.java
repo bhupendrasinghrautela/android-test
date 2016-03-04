@@ -1205,4 +1205,8 @@ public class SerpRequest implements Parcelable, Cloneable {
     protected SerpRequest clone() throws CloneNotSupportedException {
         return new SerpRequest(this);
     }
+
+    public HashMap<String, ArrayList<String>> getTermMap() {
+        return this.termMap;
+    }
 }

@@ -245,7 +245,13 @@
 
 
     <!--login strings-->
-    <string name="generic_error">an unknown error occurred. please try again later.</string>
+    <string name="generic_error">oops! something went wrong. Please try again</string>
+    <string name="no_connection_error">connection trouble! seems, we are not connected by the internet</string>
+    <string name="no_content_error">found no results matching your search criteria</string>
+    <string name="no_content_serp_error">found no results matching your search criteria\nplease update your filters or set an alert so we can get back to you when something is posted</string>
+    <string name="not_found_error">such a kill joy!\nthe page you were looking for is sitting at home</string>
+    <string name="internal_server_error">the page you were looking for is chilling at server\'s home. let\'s refresh</string>
+    <string name="service_unavailable_error">makaan is overwhelmed with active users.\ntoo many happy users! please try again in a minute</string>
     <string name="enter_valid_email">enter valid email id</string>
     <string name="enter_password">enter password</string>
     <string name="personal_info">personal information</string>
@@ -330,9 +336,6 @@
     <!--analytics-->
     <string name="similar_project_clicked_position">similar project clicked position</string>
     <string name="adapter_position">adapter position</string>
-
-    <string name="default_error_message">some exception has occurred</string>
-    <string name="default_no_results_error_message">sorry, no matching results found</string>
 
     <string name="search_residential_plot_string">residential plot</string>
 

@@ -45,19 +45,19 @@ public class PermissionManager {
 
     static {
         permissions = new HashMap<>();
-        permissions.put(android.Manifest.permission.GET_ACCOUNTS, new PermissionRequest(R.string.default_error_message, ACCOUNTS_REQUEST));
-        permissions.put(android.Manifest.permission.INTERNET, new PermissionRequest(R.string.default_error_message, INTERNET_REQUEST));
-        permissions.put(android.Manifest.permission.CALL_PHONE, new PermissionRequest(R.string.default_error_message, CALL_PHONE_REQUEST));
-        permissions.put(android.Manifest.permission.ACCESS_FINE_LOCATION, new PermissionRequest(R.string.default_error_message, FINE_LOCATION_REQUEST));
-        permissions.put(android.Manifest.permission.ACCESS_NETWORK_STATE, new PermissionRequest(R.string.default_error_message, NETWORK_REQUEST));
-        permissions.put(android.Manifest.permission.READ_SMS, new PermissionRequest(R.string.default_error_message, READ_SMS_REQUEST));
-        permissions.put(android.Manifest.permission.RECEIVE_SMS, new PermissionRequest(R.string.default_error_message, RECEIVE_SMS_REQUEST));
-        permissions.put(REQUEST_GMS, new PermissionRequest(R.string.default_error_message, GMS_REQUEST));
-        permissions.put(android.Manifest.permission.WAKE_LOCK, new PermissionRequest(R.string.default_error_message, WAKE_LOCK_REQUEST));
-        permissions.put(REQUEST_MAKAAN_GMS, new PermissionRequest(R.string.default_error_message, MAKAAN_GMS_REQUEST));
-        permissions.put(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionRequest(R.string.default_error_message, WRITE_EXTERNAL_STORAGE_REQUEST));
+        permissions.put(android.Manifest.permission.GET_ACCOUNTS, new PermissionRequest(/*R.string.default_error_message, */ACCOUNTS_REQUEST));
+        permissions.put(android.Manifest.permission.INTERNET, new PermissionRequest(/*R.string.default_error_message, */INTERNET_REQUEST));
+        permissions.put(android.Manifest.permission.CALL_PHONE, new PermissionRequest(/*R.string.default_error_message, */CALL_PHONE_REQUEST));
+        permissions.put(android.Manifest.permission.ACCESS_FINE_LOCATION, new PermissionRequest(/*R.string.default_error_message, */FINE_LOCATION_REQUEST));
+        permissions.put(android.Manifest.permission.ACCESS_NETWORK_STATE, new PermissionRequest(/*R.string.default_error_message, */NETWORK_REQUEST));
+        permissions.put(android.Manifest.permission.READ_SMS, new PermissionRequest(/*R.string.default_error_message, */READ_SMS_REQUEST));
+        permissions.put(android.Manifest.permission.RECEIVE_SMS, new PermissionRequest(/*R.string.default_error_message, */RECEIVE_SMS_REQUEST));
+        permissions.put(REQUEST_GMS, new PermissionRequest(/*R.string.default_error_message, */GMS_REQUEST));
+        permissions.put(android.Manifest.permission.WAKE_LOCK, new PermissionRequest(/*R.string.default_error_message, */WAKE_LOCK_REQUEST));
+        permissions.put(REQUEST_MAKAAN_GMS, new PermissionRequest(/*R.string.default_error_message, */MAKAAN_GMS_REQUEST));
+        permissions.put(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionRequest(/*R.string.default_error_message, */WRITE_EXTERNAL_STORAGE_REQUEST));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            permissions.put(android.Manifest.permission.READ_EXTERNAL_STORAGE, new PermissionRequest(R.string.default_error_message, READ_EXTERNAL_STORAGE_REQUEST));
+            permissions.put(android.Manifest.permission.READ_EXTERNAL_STORAGE, new PermissionRequest(/*R.string.default_error_message, */READ_EXTERNAL_STORAGE_REQUEST));
         }
     }
 
@@ -176,11 +176,11 @@ public class PermissionManager {
     }
 
     static class PermissionRequest {
-        int messageResourseId;
+        /*int messageResourseId;*/
         int requestCode;
 
-        public PermissionRequest(int messageResourseId, int requestCode) {
-            this.messageResourseId = messageResourseId;
+        public PermissionRequest(/*int messageResourseId, */int requestCode) {
+            /*this.messageResourseId = messageResourseId;*/
             this.requestCode = requestCode;
         }
     }
