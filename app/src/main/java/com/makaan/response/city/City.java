@@ -1,5 +1,6 @@
 package com.makaan.response.city;
 
+import com.makaan.response.locality.LifeStyleImages;
 import com.makaan.response.locality.ListingAggregation;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class City {
 
 
     public ArrayList<ListingAggregation> listingAggregations = new ArrayList<>();
+    public ArrayList<LifeStyleImages> images;
     public ArrayList<EntityDesc> entityDescriptions = new ArrayList<>();
 
     @Override
