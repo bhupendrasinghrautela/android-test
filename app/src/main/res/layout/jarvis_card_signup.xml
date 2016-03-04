@@ -5,12 +5,17 @@
 <com.makaan.jarvis.ui.cards.SignupCard xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_width="@dimen/sign_up_card_width"
     android:layout_margin="@dimen/sign_up_card_margin"
-    android:paddingTop="@dimen/sign_up_card_padding_top"
-    android:paddingBottom="@dimen/sign_up_card_padding_bottom"
-    android:gravity="center_horizontal"
-    android:background="@drawable/chat_card_bg">
+    android:layout_width="@dimen/sign_up_card_width">
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:paddingTop="@dimen/sign_up_card_padding_top"
+        android:paddingBottom="@dimen/sign_up_card_padding_bottom"
+        android:gravity="center_horizontal"
+        android:background="@drawable/chat_card_bg">
 
     <TextView
         android:layout_width="wrap_content"
@@ -55,5 +60,7 @@
         android:text="@string/no_social_account"
         android:textColor="@color/appThemeRed"
         android:textSize="@dimen/no_social_account_text_size" />
+
+    </LinearLayout>
 
 </com.makaan.jarvis.ui.cards.SignupCard>

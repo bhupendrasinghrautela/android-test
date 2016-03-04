@@ -1005,7 +1005,7 @@
     <dimen name="facebook_login_margin_top">20dp</dimen>
     <dimen name="facebook_login_margin_bottom">6dp</dimen>
     <dimen name="no_social_account_text_size">18sp</dimen>
-    <dimen name="sign_up_card_width">250dp</dimen>
+    <dimen name="sign_up_card_width">240dp</dimen>
     <dimen name="sign_up_card_margin">18dp</dimen>
     <dimen name="sign_up_card_padding_top">10dp</dimen>
     <dimen name="sign_up_card_padding_bottom">20dp</dimen>
@@ -1050,6 +1050,7 @@
     <dimen name="btn_ok_padding_left_right">37dp</dimen>
     <dimen name="btn_ok_text_size">20sp</dimen>
     <dimen name="jarvis_card_locality_width">240dp</dimen>
+    <dimen name="jarvis_card_property_width">240dp</dimen>
     <dimen name="jarvis_card_brief_layout_margin">10dp</dimen>
     <dimen name="jarvis_card_brief_padding">8dp</dimen>
     <dimen name="jarvis_card_brief_height">150dp</dimen>

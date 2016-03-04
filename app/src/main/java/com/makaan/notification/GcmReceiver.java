@@ -17,6 +17,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.makaan.network.MakaanNetworkClient;
 import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonParser;
 
@@ -119,7 +120,7 @@ public class GcmReceiver extends WakefulBroadcastReceiver {
                 });
         
         // Adding request to request queue
-        //MakaanNetworkClient.getInstance().(newRequest, TAG);
+        MakaanNetworkClient.getInstance().getRequestQueue().add(newRequest);
     }
     
     private NotificationPayload parsePayload(Bundle params){

@@ -4,88 +4,94 @@
     android:layout_width="@dimen/seller_overview_card_width"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/seller_overview_card_margin"
-    android:background="@drawable/chat_card_bg"
-    android:padding="@dimen/seller_overview_card_padding">
+    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/seller_pic_rating"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/seller_pic_rating_margin_right"
-        android:layout_marginRight="@dimen/seller_pic_rating_margin_right"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:background="@drawable/chat_card_bg"
+        android:padding="@dimen/seller_overview_card_padding">
 
-        <FrameLayout
+        <LinearLayout
+            android:id="@+id/seller_pic_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/serp_listing_card_seller_image_view_top_margin">
+            android:layout_marginEnd="@dimen/seller_pic_rating_margin_right"
+            android:layout_marginRight="@dimen/seller_pic_rating_margin_right"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/seller_image_view"
-                android:layout_width="@dimen/serp_listing_card_seller_image_view_width"
-                android:layout_height="@dimen/serp_listing_card_seller_image_view_height"
-                android:visibility="gone"
-                app:civ_border_color="@color/serp_listing_card_seller_mask_color"
-                app:civ_border_width="@dimen/border_width" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/serp_listing_card_seller_image_view_top_margin">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/seller_image_view"
+                    android:layout_width="@dimen/serp_listing_card_seller_image_view_width"
+                    android:layout_height="@dimen/serp_listing_card_seller_image_view_height"
+                    android:visibility="gone"
+                    app:civ_border_color="@color/serp_listing_card_seller_mask_color"
+                    app:civ_border_width="@dimen/border_width" />
+
+                <TextView
+                    android:id="@+id/seller_logo_text_view"
+                    android:layout_width="@dimen/serp_listing_card_seller_image_view_width"
+                    android:layout_height="@dimen/serp_listing_card_seller_image_view_height"
+                    android:gravity="center"
+
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+            </FrameLayout>
+
+            <com.makaan.ui.view.CustomRatingBar
+                android:id="@+id/seller_rating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="64dp"
+                android:layout_height="14dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:stepSize="0.1"
+                app:itemHeight="@dimen/serp_listing_card_seller_rating_item_height"
+                app:itemMarginLeft="1dp"
+                app:itemMarginRight="1dp"
+                app:itemProgressIcon="@drawable/star_selected"
+                app:itemSecondaryProgressIcon="@drawable/star_unselected"
+                app:itemWidth="@dimen/serp_listing_card_seller_rating_item_width" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/seller_logo_text_view"
-                android:layout_width="@dimen/serp_listing_card_seller_image_view_width"
-                android:layout_height="@dimen/serp_listing_card_seller_image_view_height"
-                android:gravity="center"
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/jarvis_seller_card_agent_name_text_size" />
 
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="24sp" />
+            <TextView
+                android:id="@+id/properties"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:textSize="@dimen/jarvis_seller_card_agent_detail_text_size" />
 
-        </FrameLayout>
+            <TextView
+                android:id="@+id/locations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/jarvis_seller_card_agent_detail_text_size" />
 
-        <com.makaan.ui.view.CustomRatingBar
-            android:id="@+id/seller_rating"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="64dp"
-            android:layout_height="14dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="6dp"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:stepSize="0.1"
-            app:itemHeight="@dimen/serp_listing_card_seller_rating_item_height"
-            app:itemMarginLeft="1dp"
-            app:itemMarginRight="1dp"
-            app:itemProgressIcon="@drawable/star_selected"
-            app:itemSecondaryProgressIcon="@drawable/star_unselected"
-            app:itemWidth="@dimen/serp_listing_card_seller_rating_item_width" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/jarvis_seller_card_agent_name_text_size" />
-
-        <TextView
-            android:id="@+id/properties"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:textSize="@dimen/jarvis_seller_card_agent_detail_text_size" />
-
-        <TextView
-            android:id="@+id/locations"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/jarvis_seller_card_agent_detail_text_size" />
-
+        </LinearLayout>
     </LinearLayout>
 
 </com.makaan.jarvis.ui.cards.SellerOverviewCard>
