@@ -46,6 +46,7 @@ import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.Session;
+import com.makaan.fragment.MakaanMessageDialogFragment;
 import com.makaan.location.LocationServiceConnectionListener;
 import com.makaan.location.MakaanLocationManager;
 import com.makaan.response.search.SearchResponseHelper;
@@ -603,9 +604,15 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                     // if yes, then request for permission and cancel current search request
                     PermissionManager.begin().addRequest(PermissionManager.FINE_LOCATION_REQUEST).request(this);
                     return;
-                } else if(Session.apiLocation == null) {
+                } else if(!getLocationAvailabilty()) {
+                    // location provider is not enabled
+                    // todo get message from product team and discuss if we should use only mobile location
+                    MakaanMessageDialogFragment.showMessage(getFragmentManager(), "please enable location provider to use this option", "ok");
+                    return;
+                } else if(Session.phoneLocation == null && Session.apiLocation == null) {
                     // if we don't need to request permission for gps
                     // and api location is also not available, then reject
+                    // todo show some message
                     return;
                 }
             }

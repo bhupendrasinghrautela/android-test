@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -56,7 +57,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
     @Bind(R.id.fragment_set_alerts_content_linear_layout)
     LinearLayout mContentLinearLayout;
     @Bind(R.id.fragment_set_alerts_name_edit_text)
-    TextView mSetAlertsNameEditText;
+    EditText mSetAlertsNameEditText;
 
     private ArrayList<FilterGroup> mGroups;
     private SerpGetEvent mListingGetEvent;
@@ -96,6 +97,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
 
             populateData();
             mSetAlertsNameEditText.setText(handleSearchName());
+            mSetAlertsNameEditText.setSelection(mSetAlertsNameEditText.getText().length());
         } else {
             // get saved searches
             SaveSearchService saveSearchService =
@@ -115,6 +117,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
     }
 
     private String handleSearchName() {
+        // TODO handle builder and seller name cases
         String name = null;
         StringBuilder builder = new StringBuilder();
 
@@ -519,13 +522,17 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
     @Subscribe
     public void onResult(SaveSearchGetEvent event) {
         if(event == null || event.error != null) {
-            MakaanMessageDialogFragment.showMessage(getFragmentManager(),
-                    event.error != null ? VolleyErrorParser.getMessage(event.error) : getString(R.string.generic_error), "ok");
+            if(isSubmitInitiated) {
+                MakaanMessageDialogFragment.showMessage(getFragmentManager(),
+                        event.error != null ? VolleyErrorParser.getMessage(event.error) : getString(R.string.generic_error), "ok");
+            }
         } else {
             if(isSubmitInitiated) {
                 if(event.saveSearchArrayList != null && event.saveSearchArrayList.size() > 0) {
                     if(!TextUtils.isEmpty(event.saveSearchArrayList.get(0).name)
-                            && event.saveSearchArrayList.get(0).name.equalsIgnoreCase(mSetAlertsNameEditText.getText().toString())) {
+                            && (!event.saveSearchArrayList.get(0).name.contains(";"))
+                                || (mSetAlertsNameEditText.getText().toString().equalsIgnoreCase(
+                                        event.saveSearchArrayList.get(0).name.substring(0, event.saveSearchArrayList.get(0).name.indexOf(";"))))) {
 
                         MasterDataCache.getInstance().clearSavedSearches();
 
@@ -554,6 +561,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
 
                 populateData();
                 mSetAlertsNameEditText.setText(handleSearchName());
+                mSetAlertsNameEditText.setSelection(mSetAlertsNameEditText.getText().length());
             }
         }
     }

@@ -107,12 +107,14 @@ public class ViewSellersDialogFragment extends DialogFragment {
         Intent intent = new Intent(getActivity(), LeadFormActivity.class);
         boolean assist=false;
         ArrayList<Integer> ids = new ArrayList<>();
-        for(SellerCard sellerCard:mSellerCards){
-            if(sellerCard.isChecked){
-                ids.add(sellerCard.sellerId.intValue());
-            }
-            if(sellerCard.assist){
-                assist=true;
+        if(mSellerCards != null) {
+            for (SellerCard sellerCard : mSellerCards) {
+                if (sellerCard.isChecked) {
+                    ids.add(sellerCard.sellerId.intValue());
+                }
+                if (sellerCard.assist) {
+                    assist = true;
+                }
             }
         }
         try {
