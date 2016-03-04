@@ -1,6 +1,5 @@
 package com.makaan.fragment.locality;
 
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,9 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
-import com.makaan.activity.listing.SerpActivity;
 import com.makaan.fragment.MakaanBaseFragment;
-import com.makaan.pojo.SerpRequest;
 import com.makaan.pojo.TaxonomyCard;
 
 import java.util.List;
@@ -107,10 +104,10 @@ public class LocalityPropertiesFragment extends MakaanBaseFragment {
             holder.descriptionTv.setText(taxonomyCard.label2);
             holder.typeTv.setText(taxonomyCard.label1);
 
-            // todo handling Out of memory error, need to recheck this, jira issue id 262
+/*            // todo handling Out of memory error, need to recheck this, jira issue id 262
             if(holder.localityIv.getDrawable() != null && holder.localityIv.getDrawable() instanceof BitmapDrawable) {
                 ((BitmapDrawable)holder.localityIv.getDrawable()).getBitmap().recycle();
-            }
+            }*/
 
             holder.localityIv.setImageResource(getImage(position));
         }

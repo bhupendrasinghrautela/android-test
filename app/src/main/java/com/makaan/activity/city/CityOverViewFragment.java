@@ -63,11 +63,13 @@ import com.makaan.ui.MultiSelectionSpinner.OnSelectionChangeListener;
 import com.makaan.ui.PriceTrendView;
 import com.makaan.ui.city.TopLocalityView;
 import com.makaan.util.Blur;
+import com.makaan.util.LocalityUtil;
 import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -442,7 +444,20 @@ public class CityOverViewFragment extends MakaanBaseFragment{
             bundle.putString("title", getResources().getString(R.string.know_more) + " " + mCity.label);
             newFragment.setArguments(bundle);
             initFragment(R.id.container_nearby_localities_lifestyle, newFragment, false);
+            insertImagesinEntityDescriptions();
             newFragment.setData(entityDescriptions);
+        }
+    }
+
+    private void insertImagesinEntityDescriptions() {
+        HashMap<String,String> imagesHashMap = LocalityUtil.getImageHashMap(mCity.images);
+        if(imagesHashMap!=null && mCity.entityDescriptions!=null) {
+            for (EntityDesc entityDesc : mCity.entityDescriptions) {
+                if(entityDesc.entityDescriptionCategories!=null && entityDesc.entityDescriptionCategories.masterDescriptionCategory!=null
+                        && entityDesc.entityDescriptionCategories.masterDescriptionCategory.name!=null) {
+                    entityDesc.imageUrl = imagesHashMap.get(entityDesc.entityDescriptionCategories.masterDescriptionCategory.name.toLowerCase());
+                }
+            }
         }
     }
 
