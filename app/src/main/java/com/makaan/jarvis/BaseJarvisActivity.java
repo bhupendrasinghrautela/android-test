@@ -330,7 +330,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         startActivity(intent);
 
         if(mJarvisHead != null) {
-            mJarvisHead.setVisibility(View.VISIBLE);
+            mJarvisHead.setVisibility(View.GONE);
         }
 
     }

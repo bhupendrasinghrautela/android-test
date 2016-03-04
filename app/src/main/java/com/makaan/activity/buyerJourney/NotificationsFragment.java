@@ -38,13 +38,6 @@ public class NotificationsFragment extends Fragment {
         ButterKnife.bind(this, view);
         mLayoutManager = new LinearLayoutManager((Context) getActivity());
         list = new ArrayList<NotificationAttributes>();
-/*        int i;
-        for (i = 0; i < 5; i++) {
-            NotificationAttributes notificationAttributes = new NotificationAttributes();
-            notificationAttributes.setMessage("title");
-            notificationAttributes.setTitle("sub title ");
-            list.add(notificationAttributes);
-        }*/
 
         if (mLayoutManager != null)
             mRecyclerView.setLayoutManager(mLayoutManager);

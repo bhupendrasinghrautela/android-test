@@ -1,5 +1,6 @@
 package com.makaan.jarvis;
 
+import android.os.Handler;
 import android.util.Log;
 
 import com.github.nkzawa.emitter.Emitter;
@@ -34,6 +35,12 @@ public class JarvisSocket {
     private boolean mTyping = false;
     private static int index = 0;
     private boolean isConnectionError = false;
+    private Object agentData;
+    private boolean agentLost = false;
+    private boolean isAcquired = false;
+
+    private Runnable mTimeoutRunnable;
+    private Handler mTimeoutHandler =new Handler();
 
     public Socket mSocket; {
         try {
@@ -44,6 +51,19 @@ public class JarvisSocket {
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
+
+        mTimeoutRunnable=new Runnable() {
+
+            @Override
+            public void run() {
+                mSocket.emit("automatic-transfer",  new Ack() {
+                    @Override
+                    public void call(Object... args) {
+
+                    }
+                });
+            }
+        };
     }
 
     public void open(){
@@ -53,6 +73,8 @@ public class JarvisSocket {
         mSocket.on("new-message-for-user", onNewMessageForUser);
         mSocket.on("expose-session", onExposeSession);
         mSocket.on("agent-confirms-user", onAgentConfirmUser);
+        //mSocket.on("agent-left", onAgentLeft);
+        //mSocket.on("acquire-again", onAgentAcquireAgain);
         mSocket.connect();
         joinUser();
     }
@@ -65,6 +87,8 @@ public class JarvisSocket {
         mSocket.off("new-message-for-user", onNewMessageForUser);
         mSocket.off("expose-session", onExposeSession);
         mSocket.off("agent-confirms-user", onAgentConfirmUser);
+        //mSocket.off("agent-left", onAgentLeft);
+        //mSocket.off("acquire-again", onAgentAcquireAgain);
     }
 
     public void refresh() {
@@ -84,7 +108,7 @@ public class JarvisSocket {
 
     private void joinUser(){
         try {
-            mSocket.emit("join-user", JsonBuilder.toJson(new JoinUser()), new Ack() {
+            mSocket.emit("join-user", JsonBuilder.toJson(new JoinUser(agentData, isAcquired)), new Ack() {
                 @Override
                 public void call(Object... args) {
                     Log.e("join user", "user");
@@ -101,7 +125,6 @@ public class JarvisSocket {
         message.deliveryId = JarvisConstants.DELIVERY_ID;
         index++;
         try {
-            Log.e("Payload : ", JsonBuilder.toJson(message).toString());
             mSocket.emit("new-message-for-agent", JsonBuilder.toJson(message), new Ack() {
                 @Override
                 public void call(Object... args) {
@@ -158,6 +181,13 @@ public class JarvisSocket {
     private Emitter.Listener onUserAcquired = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
+            try {
+                isAcquired = true;
+                JSONObject jsonObject = (JSONObject) args[0];
+                agentData = jsonObject.get("userDetails");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             handleMessage(args);
         }
     };
@@ -198,10 +228,44 @@ public class JarvisSocket {
         }
     };
 
+    private Emitter.Listener onAgentLeft = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            try {
+                if(null!=agentData) {
+                    JSONObject jsonObject = (JSONObject) args[0];
+                    JSONObject serverAgent = (JSONObject) jsonObject.get("userDetails");
+                    JSONObject currentAgent = (JSONObject) agentData;
+
+                    if(null==serverAgent){
+                        return;
+                    }
+
+                    if(currentAgent.optInt("id") == serverAgent.optInt("id")) {
+                        agentLost = true;
+                        mTimeoutHandler.postDelayed(mTimeoutRunnable, 10000);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
     private Emitter.Listener onAgentConfirmUser = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
             handleMessage(args);
+        }
+    };
+
+    private Emitter.Listener onAgentAcquireAgain = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            if(agentLost) {
+                agentLost = false;
+                mTimeoutHandler.removeCallbacks(mTimeoutRunnable);
+            }
         }
     };
 
