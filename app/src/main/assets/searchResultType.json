@@ -5,7 +5,7 @@
     "BUILDER": {"key":"builderId", "value":"builder"},
     "LOCALITY": {"key":"localityId", "value":"locality"},
     "SUBURB": {"key":"suburbId", "value":"suburb"},
-    "BUILDER-CITY": {"key":"cityId", "value":"builder-city"},
+    "BUILDERCITY": {"key":"cityId", "value":"builder-city"},
     "GP": {"key":"googlePlaceId", "value":"landmark"},
     "CITY-OVERVIEW": {"key":"cityId", "value":"overview"},
     "LOCALITY-OVERVIEW": {"key":"localityId", "value":"overview"}

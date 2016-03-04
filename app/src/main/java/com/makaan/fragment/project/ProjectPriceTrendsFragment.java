@@ -1,6 +1,7 @@
 package com.makaan.fragment.project;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,6 +11,7 @@ import com.makaan.R;
 import com.makaan.event.trend.ProjectPriceTrendEvent;
 import com.makaan.event.trend.callback.LocalityTrendCallback;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.pojo.SerpObjects;
 import com.makaan.response.trend.LocalityPriceTrendDto;
 import com.makaan.response.trend.PriceTrendData;
 import com.makaan.response.trend.PriceTrendKey;
@@ -59,7 +61,7 @@ public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
-        new LocalityService().getTrendingSearchesInLocality(localityId);
+        ((LocalityService)MakaanServiceFactory.getInstance().getService(LocalityService.class)).getTrendingSearchesInLocality(SerpObjects.isBuyContext(getContext()), localityId);
         fetchData(12);
     }
 
@@ -103,13 +105,20 @@ public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
         }
     }
     private void initView() {
+        if(getArguments() == null) {
+            return;
+        }
         localityId = getArguments().getLong("localityId");
         projectId = getArguments().getLong("projectId");
         title = getArguments().getString("title");
         localities = (ArrayList<Long>) getArguments().getSerializable("localities");
         pricePerUnit = getArguments().getInt("price");
         hasIncreased = getArguments().getBoolean("increased");
-        titleTv.setText(title);
+        if(!TextUtils.isEmpty(title)) {
+            titleTv.setText(title.toLowerCase());
+        } else {
+            titleTv.setText("");
+        }
         if(pricePerUnit!=null && pricePerUnit>0) {
             priceTv.setText(pricePerUnit == null ? "" : "\u20B9 " + pricePerUnit + " / sq ft");
             if (hasIncreased != null && hasIncreased) {

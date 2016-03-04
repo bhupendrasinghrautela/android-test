@@ -9,6 +9,7 @@ import com.makaan.event.locality.TopBuilderInLocalityEvent;
 import com.makaan.event.locality.TrendingSearchLocalityEvent;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
+import com.makaan.pojo.SerpObjects;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.ResponseError;
 import com.makaan.response.locality.GpDetail;
@@ -105,10 +106,16 @@ public class LocalityService implements MakaanService {
     /**
      * http://marketplace-qa.proptiger-ws.com/columbus/app/v1/popular/suggestions?entityId=50175&sourceDomain=Makaan
      */
-    public void getTrendingSearchesInLocality(Long localityId) {
+    public void getTrendingSearchesInLocality(boolean buy, Long localityId) {
 
-        if (null != localityId) {
+        if (null != localityId && localityId != 0) {
             String localityTrendingSearch = ApiConstants.COLUMBUS_SUGGESTIONS.concat("?entityId=").concat(localityId.toString());
+            if(buy) {
+                localityTrendingSearch = localityTrendingSearch.concat("&category=buy");
+            } else {
+                localityTrendingSearch = localityTrendingSearch.concat("&category=rent");
+            }
+            localityTrendingSearch = localityTrendingSearch.concat("&view=buyer");
 
             Type searchListType = new TypeToken<ArrayList<SearchResponseItem>>() {
             }.getType();
@@ -130,6 +137,7 @@ public class LocalityService implements MakaanService {
             }, true);
 
         }
+
     }
 
     /**

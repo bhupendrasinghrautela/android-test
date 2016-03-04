@@ -1031,7 +1031,11 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
     public void onResults(SearchResultEvent searchResultEvent) {
         if(null==searchResultEvent || null!=searchResultEvent.error) {
-            addErrorSearchItem(this.getResources().getString(R.string.generic_error));
+            if(searchResultEvent.error != null && !TextUtils.isEmpty(searchResultEvent.error.msg)) {
+                addErrorSearchItem(searchResultEvent.error.msg);
+            } else {
+                addErrorSearchItem(this.getResources().getString(R.string.generic_error));
+            }
             mSearchAdapter.setData(mAvailableSearches, true);
             return;
         }
@@ -1210,12 +1214,20 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
      * @param title title to display in the toolbar*
      */
     protected void setTitle(String title) {
-        mSearchPropertiesTextView.setText(title);
+        if(!TextUtils.isEmpty(title)) {
+            mSearchPropertiesTextView.setText(title.toLowerCase());
+        } else {
+            mSearchPropertiesTextView.setText("");
+        }
     }
 
     @Override
     public void setTitle(CharSequence title) {
-        setTitle(title.toString());
+        if(!TextUtils.isEmpty(title)) {
+            mSearchPropertiesTextView.setText(title.toString().toLowerCase());
+        } else {
+            mSearchPropertiesTextView.setText("");
+        }
     }
 
     protected void setSearchBarCollapsible(boolean isCollapsible) {

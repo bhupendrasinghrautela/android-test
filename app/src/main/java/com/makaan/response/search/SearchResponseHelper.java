@@ -200,6 +200,9 @@ public class SearchResponseHelper {
         } else if (SearchSuggestionType.ERROR.getValue().equalsIgnoreCase(searchResponseItem.type)) {
             return "error";
 
+        } else if (SearchSuggestionType.SELLER.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+            return "seller";
+
         }
 
         Map<String,ApiLabel> searchResultType = MasterDataCache.getInstance().getSearchTypeMap();

@@ -124,8 +124,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     private static final int MAX_ITEMS_TO_REQUEST = 20;
     private static final int MAX_GROUP_ITEMS_TO_REQUEST = 2 * GroupCluster.MAX_CLUSTERS_IN_GROUP;
 
-    public static boolean isSellerSerp = false;
-
     private int mSelectedSortIndex = 0;
 
     private SerpListFragment mListingFragment;
@@ -257,7 +255,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
                 parseSerpRequest(intent, SerpActivity.TYPE_SEARCH);
 
-            } else if (type == SerpActivity.TYPE_BUILDER) {
+            } else if (type == SerpActivity.TYPE_BUILDER
+                    || type == SerpActivity.TYPE_BUILDER_CITY) {
                 removeAllSelectors();
 
                 parseSerpRequest(intent, SerpActivity.TYPE_BUILDER);
@@ -305,11 +304,20 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     }
 
     private void parseSerpRequest(Intent intent, int type) {
+
         if(intent.hasExtra(REQUEST_DATA)) {
 
             SerpRequest request = intent.getParcelableExtra(REQUEST_DATA);
 
             if((type & MASK_LISTING_TYPE) > 0) {
+                if(type == TYPE_SELLER) {
+                    SearchResponseItem item = new SearchResponseItem();
+                    item.type = SearchSuggestionType.SELLER.getValue();
+                    item.displayText = request.getTitle();
+                    item.entityName = request.getTitle();
+                    request.setSearch(item);
+                }
+
                 if (!request.isFromBackstack()) {
                     if (type == SerpActivity.TYPE_GPID || type == SerpActivity.TYPE_NEARBY) {
                         setSearchBarCollapsible(false);
@@ -348,7 +356,13 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             if(TextUtils.isEmpty(title)) {
                 setTitle(this.getResources().getString(R.string.search_default_hint));
             } else {
-                setTitle(title);
+                if(request.getSearches() != null && request.getSearches().size() > 0
+                        && SearchSuggestionType.GOOGLE_PLACE.getValue().equalsIgnoreCase(request.getSearches().get(0).type)) {
+
+                    setTitle("near " + title);
+                } else {
+                    setTitle(title);
+                }
             }
 
             if(type == TYPE_GPID) {
@@ -435,7 +449,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                     && listingGetEvent.error.error.networkResponse != null) {
                 showNoResults(ErrorUtil.getErrorMessageId(listingGetEvent.error.error.networkResponse.statusCode, true));
             } else {
-                showNoResults();
+                if(listingGetEvent.error != null && !TextUtils.isEmpty(listingGetEvent.error.msg)) {
+                    showNoResults(listingGetEvent.error.msg);
+                } else {
+                    showNoResults();
+                }
             }
             return;
         }
@@ -455,26 +473,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 updateListings(listingGetEvent, null);
                 mMapFragment.setData(mListings, mListingCount, this, mSerpRequestType);
                 initFragment(R.id.activity_serp_content_frame_layout, mMapFragment, false);
-            }
-        } else if (isSellerSerp) {
-            setShowSearchBar(false, false);
-            mFiltersFrameLayout.setVisibility(View.VISIBLE);
-            mSimilarPropertiesFrameLayout.setVisibility(View.GONE);
-            if (mSellerSerpListFragment == null || !mSellerSerpListFragment.isVisible()) {
-                // create new child serp cluster fragment to show the cluster items
-                ChildSerpClusterFragment childSerpClusterFragment = ChildSerpClusterFragment.init();
-                childSerpClusterFragment.setData(mGroupListings, mChildSerpId, this, mChildListingId);
-                // create new listing fragment to show the listings
-                mSellerSerpListFragment = SerpListFragment.init(true);
-                updateListings(listingGetEvent, null);
-                mSellerSerpListFragment.updateListings(mListings, null, getSelectedSearches(), this, mSerpRequestType, mListingCount);
-
-                initFragments(new int[]{R.id.activity_serp_similar_properties_frame_layout, R.id.activity_serp_content_frame_layout},
-                        new Fragment[]{childSerpClusterFragment, mChildSerpListFragment}, true);
-
-            } else {
-                updateListings(listingGetEvent, null);
-                mSellerSerpListFragment.updateListings(mListings, null, getSelectedSearches(), this, mSerpRequestType, mListingCount);
             }
         } else if ((mSerpRequestType & MASK_LISTING_TYPE) == SerpActivity.TYPE_CLUSTER) {
             setShowSearchBar(false, false);
@@ -975,6 +973,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                     && mListingGetEvent != null && mListingGetEvent.listingData != null && mListingGetEvent.listingData.facets != null) {
                 return String.format("more about %s", mListingGetEvent.listingData.facets.buildDisplayName());
             }*/
+            if((mSerpRequestType & MASK_LISTING_TYPE) == TYPE_SELLER) {
+                return null;
+            }
             ArrayList<SearchResponseItem> selectedSearches = getSelectedSearches();
 
             if(selectedSearches != null && selectedSearches.size() == 1) {
@@ -982,6 +983,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                     if(!TextUtils.isEmpty(selectedSearches.get(0).city)) {
                         return String.format("more about %s", selectedSearches.get(0).city.toLowerCase());
                     }
+                } else if(SearchSuggestionType.BUILDER.getValue().equalsIgnoreCase(selectedSearches.get(0).type)
+                        || SearchSuggestionType.BUILDERCITY.getValue().equalsIgnoreCase(selectedSearches.get(0).type)) {
+                    return null;
                 } else {
                     for(SearchResponseItem search : selectedSearches) {
                         if(!TextUtils.isEmpty(search.entityName)) {

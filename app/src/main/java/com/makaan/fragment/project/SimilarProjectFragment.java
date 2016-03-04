@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.project.Project;
 import com.makaan.ui.view.ParallexScrollview;
 import com.makaan.util.AppBus;
+import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
 
 import java.util.List;
@@ -59,7 +61,11 @@ public class SimilarProjectFragment extends MakaanBaseFragment implements View.O
 
     private void initView() {
         title = getArguments().getString("title");
-        titleTv.setText(title);
+        if(!TextUtils.isEmpty(title)) {
+            titleTv.setText(title.toLowerCase());
+        } else {
+            titleTv.setText("");
+        }
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -122,13 +128,54 @@ public class SimilarProjectFragment extends MakaanBaseFragment implements View.O
             holder.cardView.setTag(project.projectId);
             holder.cardView.setTag(R.string.similar_project_clicked_position ,position+1);
             holder.cardView.setOnClickListener(onClickListener);
-            holder.nameTv.setText(project.getFullName());
-            holder.priceTv.setText(project.getMinPriceOnwards());
-            if(project.address == null)
-                holder.addressTv.setVisibility(View.GONE);
-            else {
+            if(!TextUtils.isEmpty(project.getFullName())) {
+                holder.nameTv.setText(project.getFullName().toLowerCase());
+            } else {
+                holder.nameTv.setText("");
+            }
+            if(!TextUtils.isEmpty(project.getMinPriceOnwards())) {
+                holder.priceTv.setText(project.getMinPriceOnwards().toLowerCase());
+                holder.priceTv.setVisibility(View.VISIBLE);
+            } else {
+                if(project.minResaleOrPrimaryPrice != null && project.minResaleOrPrimaryPrice > 0) {
+                    holder.priceTv.setText(StringUtil.getDisplayPrice(project.minResaleOrPrimaryPrice) + " onwards");
+                    holder.priceTv.setVisibility(View.VISIBLE);
+                } else {
+                    holder.priceTv.setText("");
+                }
+            }
+
+            if(project.address == null) {
+                if(project.locality != null) {
+                    if(!TextUtils.isEmpty(project.locality.label)) {
+                        if(project.locality.suburb != null && project.locality.suburb.city != null) {
+                            if (!TextUtils.isEmpty(project.locality.suburb.city.label)) {
+                                holder.addressTv.setVisibility(View.VISIBLE);
+                                holder.addressTv.setText(String.format("%s, %s", project.locality.label.toLowerCase(), project.locality.suburb.city.label.toLowerCase()));
+                            } else {
+                                holder.addressTv.setVisibility(View.VISIBLE);
+                                holder.addressTv.setText(project.locality.label.toLowerCase());
+                            }
+                        } else {
+                            holder.addressTv.setVisibility(View.VISIBLE);
+                            holder.addressTv.setText(project.locality.label.toLowerCase());
+                        }
+                    } else if(project.locality.suburb != null && project.locality.suburb.city != null) {
+                        if(!TextUtils.isEmpty(project.locality.suburb.city.label)) {
+                            holder.addressTv.setVisibility(View.VISIBLE);
+                            holder.addressTv.setText(project.locality.suburb.city.label.toLowerCase());
+                        } else {
+                            holder.addressTv.setVisibility(View.GONE);
+                        }
+                    } else {
+                        holder.addressTv.setVisibility(View.GONE);
+                    }
+                } else {
+                    holder.addressTv.setVisibility(View.GONE);
+                }
+            } else {
                 holder.addressTv.setVisibility(View.VISIBLE);
-                holder.addressTv.setText(project.address);
+                holder.addressTv.setText(project.address.toLowerCase());
             }
             MakaanNetworkClient.getInstance().getImageLoader().get(project.imageURL.replace("http", "https"), new ImageLoader.ImageListener() {
                 @Override

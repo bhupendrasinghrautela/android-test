@@ -63,6 +63,8 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
 
     @Bind(R.id.tv_username)
     TextView mUserName;
+    @Bind(R.id.personalized)
+    TextView mPersonalize;
     @Bind(R.id.tv_subtitle)
     TextView mSubtitle;
 
@@ -119,43 +121,14 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 int toolbarOffset = mAppBarLayout.getTotalScrollRange();
                 if (verticalOffset + toolbarOffset == 0) {
-                    mCollapsingToolbar.setCollapsedTitleTextColor(0xFFFFFFFF);
                     if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this)) {
                         mCollapsingToolbar.setTitle(CookiePreferences.getUserInfo(BuyerJourneyActivity.this).getData().getFirstName());
                     } else {
                         mCollapsingToolbar.setTitle("guest user");
                     }
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        mAppBarLayout.setBackgroundColor(getResources().getColor(R.color.app_red, null));
-//                        mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white, null));
-//                        mTabLayout.setTabTextColors(getResources().getColor(R.color.white, null), getResources().getColor(R.color.white, null));
-                    } else {
-                        mAppBarLayout.setBackgroundColor(getResources().getColor(R.color.app_red));
-//                        mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white));
-//                        mTabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources().getColor(R.color.white));
-                    }
 
                 } else {
                     mCollapsingToolbar.setTitle("");
-                    /*if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this)) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red, null));
-                            mTabLayout.setTabTextColors(getResources().getColor(R.color.white, null), getResources().getColor(R.color.white, null));
-                        } else {
-                            mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red));
-                            mTabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources().getColor(R.color.white));
-                        }
-                    } else {*/
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            mAppBarLayout.setBackgroundColor(getResources().getColor(R.color.buyer_dashboard_profile_background_color, null));
-//                            mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red, null));
-//                            mTabLayout.setTabTextColors(getResources().getColor(R.color.listingBlack, null), getResources().getColor(R.color.listingBlack, null));
-                        } else {
-                            mAppBarLayout.setBackgroundColor(getResources().getColor(R.color.buyer_dashboard_profile_background_color));
-//                            mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.app_red));
-//                            mTabLayout.setTabTextColors(getResources().getColor(R.color.listingBlack), getResources().getColor(R.color.listingBlack));
-                        }
-//                    }
                 }
 
             }
@@ -231,6 +204,10 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
         if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this)) {
 //            mLoginButton.setVisibility(View.GONE);
             mLoginButton.setText("logout");
+            mUserName.setVisibility(View.VISIBLE);
+            mPersonalize.setVisibility(View.GONE);
+            mSubtitle.setVisibility(View.GONE);
+
             UserResponse userResponse = CookiePreferences.getUserInfo(this);
             if(userResponse != null) {
                 UserResponse.UserData userData = userResponse.getData();
@@ -255,12 +232,12 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
                                 }
                         );
                     }
-                    mSubtitle.setVisibility(View.INVISIBLE);
                 }
             }
         } else {
             mLoginButton.setText("login");
-            mLoginButton.setVisibility(View.VISIBLE);
+            mUserName.setVisibility(View.GONE);
+            mPersonalize.setVisibility(View.VISIBLE);
             mSubtitle.setVisibility(View.VISIBLE);
         }
     }
@@ -316,13 +293,14 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this)) {
+        /*if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this)) {
             getMenuInflater().inflate(R.menu.menu, menu);//Menu Resource, Menu
             mUserName.setText(CookiePreferences.getUserInfo(this).getData().getFirstName());
             return true;
         } else {
             return true;
-        }
+        }*/
+        return true;
     }
 
     @Override

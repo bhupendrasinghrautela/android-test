@@ -291,7 +291,7 @@ public class PyrPagePresenter {
                 }
             }
         }
-        return assist;
+        return true;
     }
 
     public boolean getSellerIdStatus(Long sellerId) {
