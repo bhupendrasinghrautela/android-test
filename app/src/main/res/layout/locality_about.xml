@@ -39,6 +39,12 @@
         android:visibility="invisible"
         android:id="@+id/tv_locality_per_sqr_ft_median_price"
         />
+    <ImageView
+        android:id="@+id/iv_avg_price"
+        android:layout_toRightOf="@+id/tv_locality_per_sqr_ft_median_price"
+        android:layout_width="@dimen/trend_image_height_width"
+        android:layout_height="@dimen/trend_image_height_width" />
+
     <com.makaan.ui.view.FontTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

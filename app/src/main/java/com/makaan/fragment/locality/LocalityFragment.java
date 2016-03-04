@@ -44,6 +44,7 @@ import com.makaan.pojo.TaxonomyCard;
 import com.makaan.response.agents.TopAgent;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.city.EntityDesc;
+import com.makaan.response.image.Image;
 import com.makaan.response.locality.ListingAggregation;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Builder;
@@ -109,6 +110,9 @@ public class LocalityFragment extends MakaanBaseFragment {
     View firstSectionSeperator;
     @Bind(R.id.tv_locality_interested_in)
     TextView interestedInTv;
+
+    @Bind(R.id.iv_avg_price)
+    ImageView mAvgPrice;
 
     private static final int BLUR_EFFECT_HEIGHT = 300;
     private float alpha;
@@ -246,6 +250,7 @@ public class LocalityFragment extends MakaanBaseFragment {
             salesMedianPrice.setVisibility(View.VISIBLE);
             salesMedianPriceLabel.setVisibility(View.VISIBLE);
             salesMedianPrice.setText("\u20B9 " + meadianSale + " / sq ft");
+            
         }
         else{
             salesMedianPrice.setVisibility(View.GONE);
