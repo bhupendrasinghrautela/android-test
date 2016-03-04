@@ -802,6 +802,7 @@
     <dimen name="similar_project_width">310dp</dimen>
     <dimen name="similar_project_name_size">24sp</dimen>
     <dimen name="similar_project_address_size">16sp</dimen>
+    <dimen name="trend_image_height_width">30dp</dimen>
 
 
     <!--Property page dimens-->
@@ -1404,4 +1405,11 @@
 
     <dimen name="row_nearby_localities_left_margin">20dp</dimen>
     <dimen name="row_nearby_localities_right_margin">20dp</dimen>
+
+    <dimen name="neighbourhood_map_recycler_height">80dp</dimen>
+    <dimen name="neighbourhood_map_recycler_scroll">3dp</dimen>
+    <dimen name="neighbourhood_map_text_height">24dp</dimen>
+    <dimen name="neighbourhood_map_text_marging_top">25dp</dimen>
+
+
 </resources>
