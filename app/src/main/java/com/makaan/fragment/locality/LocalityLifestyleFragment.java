@@ -7,11 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.city.EntityDesc;
 
 import java.util.ArrayList;
@@ -69,13 +70,13 @@ public class LocalityLifestyleFragment extends MakaanBaseFragment{
             // each data item is just a string in this case
             public TextView descriptionTv;
             public TextView descriptionFullTv;
-            public ImageView localityIv;
+            public FadeInNetworkImageView localityIv;
 
             public ViewHolder(View v) {
                 super(v);
                 descriptionTv = (TextView) v.findViewById(R.id.tv_localities_props_label);
                 descriptionFullTv = (TextView) v.findViewById(R.id.tv_localities_lifestyle_description);
-                localityIv = (ImageView) v.findViewById(R.id.iv_localitites_props);
+                localityIv = (FadeInNetworkImageView) v.findViewById(R.id.iv_localitites_props);
             }
         }
 
@@ -97,7 +98,12 @@ public class LocalityLifestyleFragment extends MakaanBaseFragment{
             final EntityDesc nearByLocalitu = entityDescs.get(position);
             holder.descriptionTv.setText(nearByLocalitu.entityDescriptionCategories.masterDescriptionCategory.name);
             holder.descriptionFullTv.setText(nearByLocalitu.description);
-            holder.localityIv.setImageResource(R.drawable.placeholder_localities_props);
+            if(nearByLocalitu.imageUrl!=null) {
+                holder.localityIv.setImageUrl(nearByLocalitu.imageUrl, MakaanNetworkClient.getInstance().getImageLoader());
+            }
+            else{
+                holder.localityIv.setDefaultImageResId(R.drawable.placeholder_localities_props);
+            }
         }
 
         @Override

@@ -92,9 +92,11 @@ public class PropertyActivity extends MakaanBaseSearchActivity implements ShowMa
 
     @Override
     public void showMapFragment() {
-        mNeighborhoodMapFragment = new NeighborhoodMapFragment();
-        mNeighborhoodMapFragment.setData(mEntityInfo,mAmenityGetEvent.amenityClusters);
-        initFragment(R.id.container, mNeighborhoodMapFragment, true);
+        if(mAmenityGetEvent!=null) {
+            mNeighborhoodMapFragment = new NeighborhoodMapFragment();
+            mNeighborhoodMapFragment.setData(mEntityInfo, mAmenityGetEvent.amenityClusters);
+            initFragment(R.id.container, mNeighborhoodMapFragment, true);
+        }
         //produceAmenityEvent();
     }
 

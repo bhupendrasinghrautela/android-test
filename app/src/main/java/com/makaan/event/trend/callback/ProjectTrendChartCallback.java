@@ -52,7 +52,7 @@ public class ProjectTrendChartCallback  extends JSONGetCallback {
                             List<ApiPriceTrendData> apiPriceTrendList = trendEntry.getValue();
                             if (null != apiPriceTrendList && apiPriceTrendList.size() > 0) {
                                 ApiPriceTrendData apiPriceTrendData = apiPriceTrendList.get(0);
-                                Double minPricePerUnitArea = apiPriceTrendData.extraAttributes.get("minBuyPricePerUnitArea");
+                                Double minPricePerUnitArea = apiPriceTrendData.extraAttributes.get("avgBuyPricePerUnitArea");
                                 if (null != minPricePerUnitArea) {
                                     projectPriceTrendDto.addPriceTrendData(projectId, apiPriceTrendData.projectName, epochDataDate, minPricePerUnitArea.longValue());
                                 }

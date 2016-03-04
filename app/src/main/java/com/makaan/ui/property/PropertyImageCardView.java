@@ -74,24 +74,31 @@ public class PropertyImageCardView extends CardView {
 
         mPropertyImageView.setDefaultImageResId(R.drawable.luxury_project);
         mPropertyImageView.setImageUrl(listingDetailImage.absolutePath, MakaanNetworkClient.getInstance().getImageLoader());
-        if(!TextUtils.isEmpty(category) && !category.equals("Rental")) {
-            if (size != null) {
-                sizeText.setText(StringUtil.getFormattedNumber(size) + " " + mContext.getString(R.string.avg_price_postfix));
-            }
-            if (price != null) {
-                String formatted = new DecimalFormat("##,##,##0").format(calculateEmi(price, 9.55 / 100, 20));
-                emiText.setText(mContext.getString(R.string.emi_rs) + " " + formatted);
-            }
-            if (hasIncreased) {
-                priceChange.setImageResource(R.drawable.bottom_arrow_circle);
-            } else {
-                priceChange.setImageResource(R.drawable.bottom_arrow_circle_green);
-            }
+        if(category == null){
+            initData(size,price,hasIncreased,mContext);
+        }
+        else if(!TextUtils.isEmpty(category) && !category.equals("Rental")) {
+            initData(size,price,hasIncreased,mContext);
         }
     }
 
     public Long calculateEmi(Double principal,Double ratePerAnuminFraction,Integer tenure) {
         Double emi = principal * (ratePerAnuminFraction / 12) * Math.pow(1 + ratePerAnuminFraction / 12, tenure * 12) / (Math.pow(1 + ratePerAnuminFraction / 12, tenure * 12) - 1);
         return Math.round(emi);
+    }
+
+    public void initData(Double size,Double price,boolean hasIncreased,Context mContext){
+        if (size != null) {
+            sizeText.setText(StringUtil.getFormattedNumber(size) + " " + mContext.getString(R.string.avg_price_postfix));
+        }
+        if (price != null) {
+            String formatted = new DecimalFormat("##,##,##0").format(calculateEmi(price, 9.55 / 100, 20));
+            emiText.setText(mContext.getString(R.string.emi_rs) + " " + formatted);
+        }
+        if (hasIncreased) {
+            priceChange.setImageResource(R.drawable.bottom_arrow_circle);
+        } else {
+            priceChange.setImageResource(R.drawable.bottom_arrow_circle_green);
+        }
     }
 }

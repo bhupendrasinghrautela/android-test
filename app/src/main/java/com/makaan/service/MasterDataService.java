@@ -29,6 +29,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -102,7 +103,7 @@ public class MasterDataService implements MakaanService {
     }
 
     public void populateBuyPropertyTypes() {
-        Type listType = new TypeToken<HashMap<String, String>>() {
+        Type listType = new TypeToken<LinkedHashMap<String, String>>() {
         }.getType();
 
         MakaanNetworkClient.getInstance().get(ApiConstants.UNIT_TYPE, listType, new ObjectGetCallback() {
@@ -112,7 +113,7 @@ public class MasterDataService implements MakaanService {
             @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
-                HashMap<String, String> propertyTypes = (HashMap<String, String>) responseObject;
+                LinkedHashMap<String, String> propertyTypes = (LinkedHashMap<String, String>) responseObject;
 
                 for (Map.Entry<String, String> propertyType : propertyTypes.entrySet()) {
                     MasterDataCache.getInstance().addBuyPropertyType(new ApiIntLabel(propertyType.getValue(), Integer.parseInt(propertyType.getKey())));
@@ -124,7 +125,7 @@ public class MasterDataService implements MakaanService {
     }
 
     public void populateRentPropertyTypes() {
-        Type listType = new TypeToken<HashMap<String, String>>() {
+        Type listType = new TypeToken<LinkedHashMap<String, String>>() {
         }.getType();
 
         MakaanNetworkClient.getInstance().get(ApiConstants.UNIT_TYPE, listType, new ObjectGetCallback() {
@@ -134,7 +135,7 @@ public class MasterDataService implements MakaanService {
             @Override
             @SuppressWarnings("unchecked")
             public void onSuccess(Object responseObject) {
-                HashMap<String, String> propertyTypes = (HashMap<String, String>) responseObject;
+                LinkedHashMap<String, String> propertyTypes = (LinkedHashMap<String, String>) responseObject;
 
                 for (Map.Entry<String, String> propertyType : propertyTypes.entrySet()) {
                     MasterDataCache.getInstance().addRentPropertyType(new ApiIntLabel(propertyType.getValue(), Integer.parseInt(propertyType.getKey())));

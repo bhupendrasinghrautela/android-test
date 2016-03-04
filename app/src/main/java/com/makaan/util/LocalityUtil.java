@@ -1,9 +1,11 @@
 package com.makaan.util;
 
 import com.makaan.constants.RequestConstants;
+import com.makaan.response.locality.LifeStyleImages;
 import com.makaan.response.locality.ListingAggregation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by aishwarya on 26/02/16.
@@ -38,5 +40,15 @@ public class LocalityUtil {
         if(countsSales!=0)
             saleMedian = saleMedian / countsSales;
         return saleMedian;
+    }
+
+    public static HashMap<String,String> getImageHashMap(ArrayList<LifeStyleImages> lifeStyleImagesArrayList){
+        HashMap<String,String> imagesHashMap = new HashMap<>();
+        for(LifeStyleImages lifeStyleImages:lifeStyleImagesArrayList){
+            if(lifeStyleImages.imageType!=null && lifeStyleImages.imageType.displayName!=null) {
+                imagesHashMap.put(lifeStyleImages.imageType.displayName.toLowerCase(), lifeStyleImages.absolutePath);
+            }
+        }
+        return imagesHashMap;
     }
 }

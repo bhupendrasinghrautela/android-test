@@ -21,7 +21,6 @@
         android:paddingBottom="@dimen/serp_set_alert_button_top_bottom_padding"
         android:paddingLeft="@dimen/serp_set_alert_button_left_right_padding"
         android:paddingRight="@dimen/serp_set_alert_button_left_right_padding"
-        android:background="@drawable/rounded_outline_button_red"
         android:minHeight="0dp"
         android:text="@string/set_alert"
         android:textAllCaps="false"

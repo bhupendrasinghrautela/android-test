@@ -59,6 +59,7 @@ import com.makaan.util.LocalityUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -156,7 +157,7 @@ public class LocalityFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(LocalityByIdEvent localityByIdEvent) {
-        if (null == localityByIdEvent || null != localityByIdEvent.error) {
+        if (null == localityByIdEvent || null != localityByIdEvent.error || localityByIdEvent.locality == null) {
             showNoResults("locality details could not be loaded at this time. please try later.");
 //            Toast.makeText(getActivity(), "locality details could not be loaded at this time. please try later.", Toast.LENGTH_LONG).show();
         } else {
@@ -168,7 +169,7 @@ public class LocalityFragment extends MakaanBaseFragment {
             addLocalitiesLifestyleFragment(locality.entityDescriptions);
             addProperties(new TaxonomyService().getTaxonomyCardForLocality(locality.localityId, locality.minAffordablePrice, locality.maxAffordablePrice, locality.maxAffordablePrice, locality.maxBudgetPrice));
             ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(locality.latitude, locality.longitude, 10);
-            ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(locality.latitude, locality.longitude, 10);
+            ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(locality.latitude, locality.longitude, 3);
             ((AgentService) MakaanServiceFactory.getInstance().getService(AgentService.class)).getTopAgentsForLocality(locality.cityId, locality.localityId, 10, false, new TopAgentsCallback() {
                 @Override
                 public void onTopAgentsRcvd(ArrayList<TopAgent> topAgents) {
@@ -374,7 +375,20 @@ public class LocalityFragment extends MakaanBaseFragment {
             bundle.putString("title", getResources().getString(R.string.localities_lifestyle_title) + " " + locality.label);
             newFragment.setArguments(bundle);
             initFragment(R.id.container_nearby_localities_lifestyle, newFragment, false);
+            insertImagesinEntityDescriptions();
             newFragment.setData(entityDescriptions);
+        }
+    }
+
+    private void insertImagesinEntityDescriptions() {
+        HashMap<String,String> imagesHashMap = LocalityUtil.getImageHashMap(locality.images);
+        if(imagesHashMap!=null && locality.entityDescriptions!=null) {
+            for (EntityDesc entityDesc : locality.entityDescriptions) {
+                if(entityDesc.entityDescriptionCategories!=null && entityDesc.entityDescriptionCategories.masterDescriptionCategory!=null
+                        && entityDesc.entityDescriptionCategories.masterDescriptionCategory.name!=null) {
+                    entityDesc.imageUrl = imagesHashMap.get(entityDesc.entityDescriptionCategories.masterDescriptionCategory.name.toLowerCase());
+                }
+            }
         }
     }
 

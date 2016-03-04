@@ -22,9 +22,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
 import java.util.TreeMap;
 
 /**
@@ -34,8 +34,8 @@ public class MasterDataCache {
 
     private static MasterDataCache instance = new MasterDataCache();
 
-    private SortedMap<Integer, ApiIntLabel> idToBuyPropertyType = new TreeMap<>();
-    private SortedMap<Integer, ApiIntLabel> idToRentPropertyType = new TreeMap<>();
+    private LinkedHashMap<Integer, ApiIntLabel> idToBuyPropertyType = new LinkedHashMap<>();
+    private LinkedHashMap<Integer, ApiIntLabel> idToRentPropertyType = new LinkedHashMap<>();
 
     private HashMap<Integer, ApiIntLabel> idToPropertyStatus = new HashMap<>();
     private Map<Integer, ApiIntLabel> idToBhk = new TreeMap<>();

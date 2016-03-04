@@ -110,12 +110,13 @@ public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
         pricePerUnit = getArguments().getInt("price");
         hasIncreased = getArguments().getBoolean("increased");
         titleTv.setText(title);
-        priceTv.setText(pricePerUnit == null ? "" : "\u20B9 " + pricePerUnit + " / sq ft");
-        if(hasIncreased!=null&& hasIncreased){
-            priceChange.setImageResource(R.drawable.bottom_arrow_circle);
-        }
-        else{
-            priceChange.setImageResource(R.drawable.bottom_arrow_circle_green);
+        if(pricePerUnit!=null && pricePerUnit>0) {
+            priceTv.setText(pricePerUnit == null ? "" : "\u20B9 " + pricePerUnit + " / sq ft");
+            if (hasIncreased != null && hasIncreased) {
+                priceChange.setImageResource(R.drawable.bottom_arrow_circle);
+            } else {
+                priceChange.setImageResource(R.drawable.bottom_arrow_circle_green);
+            }
         }
         priceTrendViewl.setVisibility(View.GONE);
     }
