@@ -166,6 +166,7 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
             mLoadingProgressBar.setVisibility(View.VISIBLE);
 
         }else{
+            setChecked(!isChecked);
             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(mContext);
             builder.setMessage("this will take you to login screen, are you sure!");
             builder.setPositiveButton(mContext.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
@@ -173,7 +174,6 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                     isLoginInitiatedFromWishList = true;
-                    setChecked(!isChecked);
                     Intent intent = new Intent(mContext, UserLoginActivity.class);
                     mContext.startActivity(intent);
                 }
