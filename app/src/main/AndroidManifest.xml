@@ -189,6 +189,12 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name="com.makaan.network.NetworkChangeReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyA6sKBuPzLAhe5IHBNgvWP8-jhhLeHqQ8E" />

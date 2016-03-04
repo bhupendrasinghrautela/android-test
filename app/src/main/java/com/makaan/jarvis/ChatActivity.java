@@ -153,7 +153,7 @@ public class ChatActivity extends AppCompatActivity {
             finish();
         }else{
             if(!NetworkUtil.isNetworkAvailable(this)){
-                showError(getResources().getString(R.string.no_network_connection));
+                showError(getResources().getString(R.string.no_network_connection_short));
                 return;
             }
             Message message = new Message();
@@ -211,7 +211,13 @@ public class ChatActivity extends AppCompatActivity {
 
     private void showError(String message){
         final Snackbar snackbar = Snackbar
-                .make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT);
+                .make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT)
+                .setAction("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
 
         snackbar.show();
     }

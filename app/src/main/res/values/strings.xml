@@ -256,6 +256,7 @@
     <string name="enter_username">enter username</string>
 
     <string name="no_network_connection">your network connection seems to be lost. please enable internet connection and try again.</string>
+    <string name="no_network_connection_short">your network connection seems to be lost</string>
     <string name="weak_network_connection">your network connection seems to be weak, please check and try again.</string>
     <string name= "connect_with" >connect with </string>
     <string name="forgot_paswrd_heading">forgot password</string>
