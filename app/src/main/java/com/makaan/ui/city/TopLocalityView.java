@@ -67,11 +67,12 @@ public class TopLocalityView extends BaseLinearLayout<List<Locality>> {
             ProgressBar localityScoreProgress = (ProgressBar) localityItem.findViewById(R.id.locality_score_progress);
             localityLabel.setText(locality.label);
             //TODO calculate avg price from aggregation
-            if(locality.avgPricePerUnitArea!=null) {
-                localityAvgPrice.setText(mContext.getString(R.string.avg_price_prefix) + " " + StringUtil.getFormattedNumber(LocalityUtil.calculateAveragePrice(locality.listingAggregations).intValue()) +
+            Integer avg = LocalityUtil.calculateAveragePrice(locality.listingAggregations).intValue();
+            if(avg != null && avg>0) {
+                localityAvgPrice.setText(mContext.getString(R.string.avg_price_prefix) + " " + StringUtil.getFormattedNumber(avg) +
                         mContext.getString(R.string.avg_price_postfix));
             }else{
-                localityAvgPrice.setText(mContext.getString(R.string.avg_price_prefix) + " - not available");
+                localityAvgPrice.setVisibility(GONE);
             }
             if(null!=locality.avgPriceRisePercentage && locality.avgPriceRisePercentage>0) {
                 localityAvgPriceRise.setText(String.valueOf(locality.avgPriceRisePercentage) + "%");

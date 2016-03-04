@@ -67,6 +67,7 @@
                 android:layout_marginLeft="@dimen/city_internal_padding"
                 android:layout_marginTop="@dimen/city_header_margin_top"
                 android:layout_marginRight="@dimen/city_internal_padding"
+                android:layout_marginBottom="@dimen/city_internal_padding"
                 android:layout_height="wrap_content"/>
             <include layout="@layout/compressed_text_layout_for_black"/>
             <include layout="@layout/price_trend_layout"/>

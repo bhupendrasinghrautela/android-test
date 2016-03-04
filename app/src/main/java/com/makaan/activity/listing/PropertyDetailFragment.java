@@ -377,6 +377,10 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
 
     @Subscribe
     public void onResults(ImagesGetEvent imagesGetEvent){
+        if(imagesGetEvent == null){
+            mPropertyImageViewPager.setVisibility(View.GONE);
+            return;
+        }
         if(imagesGetEvent.imageType == null) {
             if (imagesGetEvent.images.size() > 0) {
                 mPropertyImageViewPager.setVisibility(View.VISIBLE);
@@ -394,6 +398,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
                     }
                 }
                 else {
+                    mPropertyImageViewPager.bindView();
                     mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false,mListingDetail.listingCategory);
                 }
             }

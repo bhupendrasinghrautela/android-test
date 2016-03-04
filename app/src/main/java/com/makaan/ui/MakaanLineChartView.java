@@ -170,6 +170,7 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
                 line.setFilled(true);
                 line.setCubic(true);
                 line.setShape(ValueShape.CIRCLE);
+                line.setPointRadius(2);
                 mLines.add(line);
         }
         }

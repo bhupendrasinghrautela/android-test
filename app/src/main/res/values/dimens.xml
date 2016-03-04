@@ -762,6 +762,7 @@
 
     <!--city overview page dimens-->
     <dimen name="city_internal_padding">20dp</dimen>
+    <dimen name="top_locality_internal_padding">10dp</dimen>
     <dimen name="city_internal_margin">15dp</dimen>
     <dimen name="city_header_margin_top">51dp</dimen>
     <dimen name="city_internal_margin_text">30dp</dimen>

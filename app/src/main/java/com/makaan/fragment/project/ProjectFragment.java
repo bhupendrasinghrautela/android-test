@@ -271,8 +271,12 @@ public class ProjectFragment extends MakaanBaseFragment{
         request.setCityId(project.locality.cityId);
         request.setLocalityId(project.localityId);
         request.setProjectId(project.projectId);
-        request.setMinBudget(((Double) configItemClickListener.projectConfigItem.minPrice).longValue());
-        request.setMaxBudget(((Double) configItemClickListener.projectConfigItem.maxPrice).longValue());
+        if(configItemClickListener.projectConfigItem.minPrice > 0) {
+            request.setMinBudget(((Double) configItemClickListener.projectConfigItem.minPrice).longValue());
+        }
+        if(configItemClickListener.projectConfigItem.maxPrice > 0) {
+            request.setMaxBudget(((Double) configItemClickListener.projectConfigItem.maxPrice).longValue());
+        }
         if(configItemClickListener.isRent) {
             request.setSerpContext(SerpRequest.CONTEXT_RENT);
         }else {
@@ -307,7 +311,7 @@ public class ProjectFragment extends MakaanBaseFragment{
                 mPropertyImageViewPager.setVisibility(View.GONE);
             }
         }catch (Exception e){
-
+            mPropertyImageViewPager.setVisibility(View.GONE);
         }
     }
 
@@ -349,7 +353,7 @@ public class ProjectFragment extends MakaanBaseFragment{
             }
             initUi();
             if (project.locality.latitude != null && project.locality.longitude != null) {
-                ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(project.locality.latitude, project.locality.longitude, 10);
+                ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(project.locality.latitude, project.locality.longitude,3);
                 ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(project.locality.latitude, project.locality.longitude, 10);
             }
             addConstructionTimelineFragment();
@@ -583,7 +587,7 @@ public class ProjectFragment extends MakaanBaseFragment{
             return;
         }
         List<AmenityCluster> mAmenityClusters = new ArrayList<>();
-        if(mAmenityClusters.size()>0) {
+        if(amenityClusterList.size()>0) {
             for (AmenityCluster cluster : amenityClusterList) {
                 if (null != cluster && null != cluster.cluster && cluster.cluster.size() > 0) {
                     mAmenityClusters.add(cluster);

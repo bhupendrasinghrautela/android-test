@@ -31,7 +31,7 @@ public class Locality {
 
 
     public ArrayList<ListingAggregation> listingAggregations = new ArrayList<>();
-
+    public ArrayList<LifeStyleImages> images;
     public ArrayList<EntityDesc> entityDescriptions = new ArrayList<>();
 
 

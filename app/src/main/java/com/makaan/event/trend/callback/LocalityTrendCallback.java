@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.makaan.constants.ResponseConstants.MIN_PRICE_PER_UNIT_AREA;
 
 /**
  * Created by vaibhav on 13/01/16.
@@ -52,7 +51,7 @@ public abstract class LocalityTrendCallback extends JSONGetCallback {
                             List<ApiPriceTrendData> apiPriceTrendList = trendEntry.getValue();
                             if (null != apiPriceTrendList && apiPriceTrendList.size() > 0) {
                                 ApiPriceTrendData apiPriceTrendData = apiPriceTrendList.get(0);
-                                Double minPricePerUnitArea = apiPriceTrendData.extraAttributes.get(MIN_PRICE_PER_UNIT_AREA);
+                                Double minPricePerUnitArea = apiPriceTrendData.extraAttributes.get(ResponseConstants.AVG_PRICE_PER_UNIT_AREA);
                                 if (null != minPricePerUnitArea) {
                                     localityPriceTrendDto.addPriceTrendData(localityId, apiPriceTrendData.localityName,epochDataDate, minPricePerUnitArea.longValue());
                                 }

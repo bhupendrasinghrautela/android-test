@@ -13,6 +13,7 @@ public class EntityDesc {
     public HashMap<String, String> masterDescriptionCategories = new HashMap<>();
     public String description;
     public String name;
+    public String imageUrl;
     public String createdAt;
 
     public class EntityDescCategory {

@@ -47,7 +47,6 @@
         android:layout_height="wrap_content"/>
         <com.makaan.ui.view.FontTextView
             android:textSize="@dimen/project_text_small"
-            android:text="45555"
             font:fontName="proxima.otf"
             android:layout_toLeftOf="@+id/price_change"
             android:layout_alignBottom="@+id/tv_price_trend_years_text"
@@ -58,7 +57,6 @@
         <ImageView
             android:id="@+id/price_change"
             android:textSize="@dimen/project_text_small"
-            android:src="@drawable/bottom_arrow_circle_green"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="5dp"
             android:layout_alignBottom="@+id/tv_price_trend_years_text"

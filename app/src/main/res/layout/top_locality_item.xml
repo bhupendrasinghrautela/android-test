@@ -5,12 +5,17 @@
     android:background="@color/white"
     android:baselineAligned="false"
     android:orientation="horizontal"
-    android:padding="@dimen/city_internal_padding">
+    android:paddingTop="@dimen/top_locality_internal_padding"
+    android:paddingLeft="@dimen/city_internal_padding"
+    android:paddingRight="@dimen/city_internal_padding"
+    android:paddingBottom="@dimen/top_locality_internal_padding"
+>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_gravity="center"
         android:orientation="vertical">
 
         <TextView
@@ -37,8 +42,8 @@
 
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical">
 
         <ProgressBar
             android:id="@+id/locality_score_progress"
