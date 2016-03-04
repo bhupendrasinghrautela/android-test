@@ -453,6 +453,7 @@
     <dimen name="serp_listing_cluster_card_home_image_view_height">76dp</dimen>
     <dimen name="serp_set_alert_button_left_right_padding">3dp</dimen>
     <dimen name="serp_set_alert_button_top_bottom_padding">-5dp</dimen>
+    <dimen name="serp_set_alert_button_min_height">28dp</dimen>
 
     <dimen name="fragment_listing_total_properties_text_view_margin_left">20dp</dimen>
     <dimen name="fragment_listing_total_properties_text_view_margin_right">20dp</dimen>
@@ -935,11 +936,11 @@
     <dimen name="locality_nearby_localities_recycler_height">450dp</dimen>
 
     <dimen name="child_serp_cluster_card_price_text_size">18sp</dimen>
-    <dimen name="child_serp_cluster_card_price_margin_top">6dp</dimen>
+    <dimen name="child_serp_cluster_card_price_margin_top">4dp</dimen>
 
     <dimen name="child_serp_cluster_card_address_text_size">16sp</dimen>
     <dimen name="child_serp_cluster_card_address_margin_top">4dp</dimen>
-    <dimen name="child_serp_cluster_card_address_margin_bottom">6dp</dimen>
+    <dimen name="child_serp_cluster_card_address_margin_bottom">4dp</dimen>
 
 
     <!-- Home Activity dimens -->
@@ -1106,7 +1107,7 @@
     <!--content card search -->
     <dimen name="card_margin">5dp</dimen>
     <dimen name="card_radius">25dp</dimen>
-    <dimen name="image_height">180dp</dimen>
+    <dimen name="buyer_content_image_height">180dp</dimen>
     <dimen name="cancel_image_margin">10dp</dimen>
     <dimen name="layout_padding">20dp</dimen>
     <dimen name="title_text_size">18sp</dimen>
