@@ -2,6 +2,7 @@ package com.makaan.activity.buyerJourney;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -211,8 +212,11 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     @Subscribe
     public void onResults(SaveSearchGetEvent saveSearchGetEvent){
         if(null == saveSearchGetEvent || null != saveSearchGetEvent.error){
-            //TODO handle error
-            showNoResults();
+            if(saveSearchGetEvent != null && !TextUtils.isEmpty(saveSearchGetEvent.error.msg)) {
+                showNoResults(saveSearchGetEvent.error.msg);
+            } else {
+                showNoResults();
+            }
             return;
         }
         mSavedSearchesCount = saveSearchGetEvent.saveSearchArrayList.size();
@@ -224,8 +228,11 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     @Subscribe
     public void onResults(NewMatchesGetEvent newMatchesGetEvent){
         if(null == newMatchesGetEvent || null != newMatchesGetEvent.error){
-            //TODO handle error
-            showNoResults();
+            if(newMatchesGetEvent != null && !TextUtils.isEmpty(newMatchesGetEvent.error.msg)) {
+                showNoResults(newMatchesGetEvent.error.msg);
+            } else {
+                showNoResults();
+            }
             return;
         }
         mNewMatchesCount = newMatchesGetEvent.totalCount;
@@ -236,8 +243,11 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     @Subscribe
     public void wishListResponse(WishListResultEvent wishListResultEvent){
         if(wishListResultEvent == null || wishListResultEvent.error != null) {
-            // TODO handle error
-            showNoResults();
+            if(wishListResultEvent != null && !TextUtils.isEmpty(wishListResultEvent.error.msg)) {
+                showNoResults(wishListResultEvent.error.msg);
+            } else {
+                showNoResults();
+            }
             return;
         }
         mWishlistCount = wishListResultEvent.wishListResponse.totalCount;
@@ -248,8 +258,11 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     @Subscribe
     public void onResults(ClientLeadsByGetEvent clientLeadsByGetEvent){
         if(null == clientLeadsByGetEvent || null != clientLeadsByGetEvent.error){
-            //TODO handle error
-            showNoResults();
+            if(clientLeadsByGetEvent != null && !TextUtils.isEmpty(clientLeadsByGetEvent.error.msg)) {
+                showNoResults(clientLeadsByGetEvent.error.msg);
+            } else {
+                showNoResults();
+            }
             return;
         }
         mClientLeadsCount = clientLeadsByGetEvent.totalCount;
@@ -293,8 +306,11 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     @Subscribe
     public void onResults(ClientEventsByGetEvent clientEventsByGetEvent){
         if(null == clientEventsByGetEvent || null != clientEventsByGetEvent.error){
-            //TODO handle error
-            showNoResults();
+            if(clientEventsByGetEvent != null && !TextUtils.isEmpty(clientEventsByGetEvent.error.msg)) {
+                showNoResults(clientEventsByGetEvent.error.msg);
+            } else {
+                showNoResults();
+            }
             return;
         }
         mClientEventsCount = clientEventsByGetEvent.totalCount;

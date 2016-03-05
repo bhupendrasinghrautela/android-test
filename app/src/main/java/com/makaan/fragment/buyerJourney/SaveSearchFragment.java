@@ -43,6 +43,7 @@ import com.makaan.response.serp.TermFilter;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
 import com.makaan.util.AppBus;
+import com.makaan.util.ErrorUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.squareup.otto.Subscribe;
@@ -242,13 +243,22 @@ public class SaveSearchFragment extends MakaanBaseFragment {
     @Subscribe
     public void onResults(SaveSearchGetEvent saveSearchGetEvent){
         if(null== saveSearchGetEvent || null!=saveSearchGetEvent.error){
-            //TODO handle error
+            if(saveSearchGetEvent != null && !TextUtils.isEmpty(saveSearchGetEvent.error.msg)) {
+                showNoResults(saveSearchGetEvent.error.msg);
+            } else {
+                showNoResults();
+            }
             return;
         }
-        SaveSearchGetEvent saveSearchGetEvent1 = saveSearchGetEvent;
-        mAdapter = new SaveSearchAdapter(saveSearchGetEvent.saveSearchArrayList);
-        if (mRecyclerView != null)
-            mRecyclerView.setAdapter(mAdapter);
+        if(saveSearchGetEvent.saveSearchArrayList == null || saveSearchGetEvent.saveSearchArrayList.size() == 0) {
+            showNoResults(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT));
+        } else {
+            SaveSearchGetEvent saveSearchGetEvent1 = saveSearchGetEvent;
+            mAdapter = new SaveSearchAdapter(saveSearchGetEvent.saveSearchArrayList);
+            if (mRecyclerView != null) {
+                mRecyclerView.setAdapter(mAdapter);
+            }
+        }
     }
 
     class ImageObject {

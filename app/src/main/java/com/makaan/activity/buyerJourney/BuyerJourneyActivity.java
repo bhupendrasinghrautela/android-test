@@ -121,6 +121,7 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 int toolbarOffset = mAppBarLayout.getTotalScrollRange();
                 if (verticalOffset + toolbarOffset == 0) {
+                    mCollapsingToolbar.setCollapsedTitleTextColor(0xFFFFFFFF);
                     if (CookiePreferences.isUserLoggedIn(BuyerJourneyActivity.this)) {
                         mCollapsingToolbar.setTitle(CookiePreferences.getUserInfo(BuyerJourneyActivity.this).getData().getFirstName());
                     } else {

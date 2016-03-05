@@ -38,7 +38,8 @@
             android:typeface="monospace"
             android:singleLine="true"
             android:ellipsize="end"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/personalized"
@@ -51,8 +52,7 @@
             android:typeface="monospace"
             android:singleLine="true"
             android:ellipsize="end"
-            android:textAllCaps="false"
-            android:visibility="gone" />
+            android:textAllCaps="false" />
 
         <TextView
             android:id="@+id/tv_subtitle"
@@ -65,8 +65,7 @@
             android:typeface="monospace"
             android:singleLine="true"
             android:ellipsize="end"
-            android:textAllCaps="false"
-            android:visibility="gone" />
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/button_login"
