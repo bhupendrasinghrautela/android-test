@@ -97,6 +97,35 @@ public class SaveSearchService implements MakaanService {
             }
         });
     }
+    public void getSavedSearchesNewMatchesByIds(ArrayList<Long> ids) {
+        String getSavedSearchUrl = ApiConstants.SAVED_SEARCH_NEW_MATCHES_URL;
+        if(ids != null && ids.size() > 0) {
+            String separator = "";
+            getSavedSearchUrl = getSavedSearchUrl.concat("?saveSearchId=");
+            for(Long id : ids) {
+                getSavedSearchUrl = getSavedSearchUrl.concat(separator);
+                getSavedSearchUrl = getSavedSearchUrl.concat(String.valueOf(id));
+                separator = ",";
+            }
+        }
+        Type saveSearchType = new TypeToken<NewMatchesGetEvent>() {
+        }.getType();
+
+        MakaanNetworkClient.getInstance().get(getSavedSearchUrl, saveSearchType, new ObjectGetCallback() {
+            @Override
+            public void onSuccess(Object responseObject) {
+                NewMatchesGetEvent event = (NewMatchesGetEvent) responseObject;
+                AppBus.getInstance().post(event);
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+                NewMatchesGetEvent event = new NewMatchesGetEvent();
+                event.error = error;
+                AppBus.getInstance().post(event);
+            }
+        });
+    }
 
     /**
      * http:/marketplace-qa.makaan-ws.com/data/v1/entity/user/saved-searches/<savedSearchId>

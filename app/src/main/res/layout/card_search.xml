@@ -87,6 +87,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/new_matches_count"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
