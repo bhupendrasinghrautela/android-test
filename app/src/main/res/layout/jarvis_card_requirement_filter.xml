@@ -3,13 +3,18 @@
 <!-- TODO WIP, hardcoded  dimen-->
 
 <com.makaan.jarvis.ui.cards.AskReqCard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/chat_card_bg"
-    android:orientation="vertical"
     android:layout_margin="@dimen/send_req_card_margin"
-    android:gravity="center_horizontal"
-    android:padding="@dimen/send_req_card_padding">
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/chat_card_bg"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/send_req_card_padding">
 
     <TextView
         android:layout_width="match_parent"
@@ -78,5 +83,7 @@
         android:text="@string/btn_apply_string"
         android:textColor="@color/white"
         android:textSize="@dimen/btn_apply_text_size" />
+
+    </LinearLayout>
 
 </com.makaan.jarvis.ui.cards.AskReqCard>

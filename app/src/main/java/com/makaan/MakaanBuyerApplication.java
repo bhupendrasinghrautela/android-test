@@ -79,7 +79,7 @@ public class MakaanBuyerApplication extends Application {
 
     public static RefWatcher getRefWatcher() {
         //MakaanBuyerApplication application = (MakaanBuyerApplication) context.getApplicationContext();
-        return refWatcher;git 
+        return refWatcher;
     }*/
 
     @Override

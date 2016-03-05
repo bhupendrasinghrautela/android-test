@@ -73,8 +73,8 @@ public class JarvisSocket {
         mSocket.on("new-message-for-user", onNewMessageForUser);
         mSocket.on("expose-session", onExposeSession);
         mSocket.on("agent-confirms-user", onAgentConfirmUser);
-        //mSocket.on("agent-left", onAgentLeft);
-        //mSocket.on("acquire-again", onAgentAcquireAgain);
+        mSocket.on("agent-left", onAgentLeft);
+        mSocket.on("acquire-again", onAgentAcquireAgain);
         mSocket.connect();
         joinUser();
     }
@@ -87,8 +87,8 @@ public class JarvisSocket {
         mSocket.off("new-message-for-user", onNewMessageForUser);
         mSocket.off("expose-session", onExposeSession);
         mSocket.off("agent-confirms-user", onAgentConfirmUser);
-        //mSocket.off("agent-left", onAgentLeft);
-        //mSocket.off("acquire-again", onAgentAcquireAgain);
+        mSocket.off("agent-left", onAgentLeft);
+        mSocket.off("acquire-again", onAgentAcquireAgain);
     }
 
     public void refresh() {
@@ -264,7 +264,9 @@ public class JarvisSocket {
         public void call(final Object... args) {
             if(agentLost) {
                 agentLost = false;
-                mTimeoutHandler.removeCallbacks(mTimeoutRunnable);
+                if(null!=mTimeoutHandler && null!=mTimeoutRunnable) {
+                    mTimeoutHandler.removeCallbacks(mTimeoutRunnable);
+                }
             }
         }
     };
