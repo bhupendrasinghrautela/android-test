@@ -990,7 +990,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                     for(SearchResponseItem search : selectedSearches) {
                         if(!TextUtils.isEmpty(search.entityName)) {
                             if(SearchSuggestionType.GOOGLE_PLACE.getValue().equalsIgnoreCase(search.type)) {
-                                return search.entityName.toLowerCase();
+                                return null;
                             } else {
 
                                 if(!TextUtils.isEmpty(selectedSearches.get(0).city)) {

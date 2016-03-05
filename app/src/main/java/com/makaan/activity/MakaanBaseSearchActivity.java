@@ -729,7 +729,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
     @OnClick({R.id.activity_search_base_layout_search_bar_back_layout,
             R.id.activity_search_base_layout_search_bar_back_button})
-    public void onBackPressed(View view) {
+    public void onUpPressed(View view) {
         switch(getScreenName()){
             case "Project":{
                 Properties properties=MakaanEventPayload.beginBatch();
@@ -1049,7 +1049,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             if(TextUtils.isEmpty(mSearchEditText.getText())) {
                 addNearbyPropertiesSearchItem();
             } else if(this.mSearches.size() == 0) {
-                addErrorSearchItem(this.getResources().getString(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT, true)));
+                addErrorSearchItem(this.getResources().getString(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT, false)));
             }
             mSearchAdapter.setData(mAvailableSearches, false);
         }
