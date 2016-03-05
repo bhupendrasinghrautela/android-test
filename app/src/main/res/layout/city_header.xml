@@ -11,25 +11,47 @@
         android:layout_marginRight="@dimen/city_header_margin_right"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/annual_growth_text"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/city_normal_text"
-            android:typeface="monospace" />
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/rental_growth_text"
+            <TextView
+                android:id="@+id/annual_growth_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/city_normal_text"
+                android:typeface="monospace" />
+
+            <ImageView
+                android:id="@+id/iv_annual_growth"
+                android:layout_width="@dimen/trend_image_height_width"
+                android:layout_height="@dimen/trend_image_height_width"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/city_normal_text"
-            android:typeface="monospace" />
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/rental_growth_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/city_normal_text"
+                android:typeface="monospace" />
+
+            <ImageView
+                android:id="@+id/iv_rental_growth"
+                android:layout_width="@dimen/trend_image_height_width"
+                android:layout_height="@dimen/trend_image_height_width" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

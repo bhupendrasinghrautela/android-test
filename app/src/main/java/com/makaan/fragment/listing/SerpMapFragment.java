@@ -34,6 +34,7 @@ import com.makaan.response.listing.Listing;
 import com.makaan.ui.listing.ListingViewPager;
 import com.makaan.ui.listing.OnListingPagerChangeListener;
 import com.makaan.util.RecentPropertyProjectManager;
+import com.makaan.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -375,11 +376,24 @@ public class SerpMapFragment extends MakaanBaseFragment {
             } else {
                 container.setBackgroundResource(R.drawable.map_single_selected);
             }
-            float multiplier = 1.0f;
+
+            String price = StringUtil.getDisplayPrice(listing.price, 1);
+            price = price.replace("\u20B9", "");
             if(isSelected) {
-                multiplier = 1.0f;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    ((TextView) container.findViewById(R.id.map_pointer_text)).setTextColor(getResources().getColor(R.color.map_pointer_text_selected, null));
+                } else {
+                    ((TextView) container.findViewById(R.id.map_pointer_text)).setTextColor(getResources().getColor(R.color.map_pointer_text_selected));
+                }
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    ((TextView) container.findViewById(R.id.map_pointer_text)).setTextColor(getResources().getColor(R.color.map_pointer_text_un_selected, null));
+                } else {
+                    ((TextView) container.findViewById(R.id.map_pointer_text)).setTextColor(getResources().getColor(R.color.map_pointer_text_un_selected));
+                }
             }
-            ((TextView)container.findViewById(R.id.map_pointer_text)).setText(String.valueOf(listing.bedrooms));
+
+            ((TextView)container.findViewById(R.id.map_pointer_text)).setText(price);
             int measureSpec = View.MeasureSpec.makeMeasureSpec(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             container.measure(measureSpec, measureSpec);
             int measuredWidth = getResources().getDimensionPixelSize(R.dimen.map_pointer_width);

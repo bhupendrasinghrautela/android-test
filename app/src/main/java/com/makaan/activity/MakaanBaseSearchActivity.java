@@ -60,8 +60,10 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SearchService;
 
 import com.makaan.ui.listing.CustomFlowLayout;
+import com.makaan.util.ErrorUtil;
 import com.makaan.util.PermissionManager;
 import com.makaan.util.RecentSearchManager;
+import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
 
 
@@ -727,7 +729,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
     @OnClick({R.id.activity_search_base_layout_search_bar_back_layout,
             R.id.activity_search_base_layout_search_bar_back_button})
-    public void onBackPressed(View view) {
+    public void onUpPressed(View view) {
         switch(getScreenName()){
             case "Project":{
                 Properties properties=MakaanEventPayload.beginBatch();
@@ -1008,7 +1010,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         SearchResponseItem item = new SearchResponseItem();
         item.type = SearchSuggestionType.ERROR.getValue();
         if(TextUtils.isEmpty(message)) {
-            item.displayText = this.getResources().getString(R.string.default_error_message);
+            item.displayText = this.getResources().getString(R.string.generic_error);
         } else {
             item.displayText = message;
         }
@@ -1029,8 +1031,11 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
     public void onResults(SearchResultEvent searchResultEvent) {
         if(null==searchResultEvent || null!=searchResultEvent.error) {
-            //TODO handle error
-            addErrorSearchItem(this.getResources().getString(R.string.default_error_message));
+            if(searchResultEvent.error != null && !TextUtils.isEmpty(searchResultEvent.error.msg)) {
+                addErrorSearchItem(searchResultEvent.error.msg);
+            } else {
+                addErrorSearchItem(this.getResources().getString(R.string.generic_error));
+            }
             mSearchAdapter.setData(mAvailableSearches, true);
             return;
         }
@@ -1044,7 +1049,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             if(TextUtils.isEmpty(mSearchEditText.getText())) {
                 addNearbyPropertiesSearchItem();
             } else if(this.mSearches.size() == 0) {
-                addErrorSearchItem(this.getResources().getString(R.string.default_no_results_error_message));
+                addErrorSearchItem(this.getResources().getString(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT, false)));
             }
             mSearchAdapter.setData(mAvailableSearches, false);
         }
@@ -1209,12 +1214,20 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
      * @param title title to display in the toolbar*
      */
     protected void setTitle(String title) {
-        mSearchPropertiesTextView.setText(title);
+        if(!TextUtils.isEmpty(title)) {
+            mSearchPropertiesTextView.setText(title.toLowerCase());
+        } else {
+            mSearchPropertiesTextView.setText("");
+        }
     }
 
     @Override
     public void setTitle(CharSequence title) {
-        setTitle(title.toString());
+        if(!TextUtils.isEmpty(title)) {
+            mSearchPropertiesTextView.setText(title.toString().toLowerCase());
+        } else {
+            mSearchPropertiesTextView.setText("");
+        }
     }
 
     protected void setSearchBarCollapsible(boolean isCollapsible) {
@@ -1289,7 +1302,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         mSearchResultFrameLayout.setVisibility(View.GONE);
 
         if(message == null) {
-            mNoResultsTextView.setText(R.string.default_error_message);
+            mNoResultsTextView.setText(R.string.generic_error);
         } else {
             mNoResultsTextView.setText(message);
         }
@@ -1306,7 +1319,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         mSearchResultFrameLayout.setVisibility(View.GONE);
 
         if(stringId <= 0) {
-            mNoResultsTextView.setText(R.string.default_error_message);
+            mNoResultsTextView.setText(R.string.generic_error);
         } else {
             mNoResultsTextView.setText(stringId);
         }

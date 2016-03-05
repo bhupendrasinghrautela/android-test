@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f7f7f7">
+    android:background="@color/selected_search_item_view_background_color">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,15 +15,18 @@
             android:id="@+id/previous_amenity"
             android:layout_width="0dp"
             android:layout_weight="0.1"
-            android:layout_height="24dp"
-            android:layout_marginTop="25dp"
+            android:layout_height="@dimen/neighbourhood_map_text_height"
+            android:layout_marginTop="@dimen/neighbourhood_map_text_marging_top"
             android:background="@drawable/arrow_left"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/neighborhood_category"
             android:layout_width="0dp"
             android:layout_weight="0.8"
-            android:layout_height="80dp">
+            android:layout_height="@dimen/neighbourhood_map_recycler_height"
+            android:scrollbars="horizontal"
+            android:fadeScrollbars="false"
+            android:scrollbarSize="@dimen/neighbourhood_map_recycler_scroll">
 
         </android.support.v7.widget.RecyclerView>
 
@@ -31,8 +34,8 @@
             android:id="@+id/next_amenity"
             android:layout_width="0dp"
             android:layout_weight="0.1"
-            android:layout_height="24dp"
-            android:layout_marginTop="25dp"
+            android:layout_height="@dimen/neighbourhood_map_text_height"
+            android:layout_marginTop="@dimen/neighbourhood_map_text_marging_top"
             android:background="@drawable/arrow_right"/>
 
     </LinearLayout>

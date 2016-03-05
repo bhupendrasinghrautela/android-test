@@ -98,6 +98,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
             populateData();
             mSetAlertsNameEditText.setText(handleSearchName());
             mSetAlertsNameEditText.setSelection(mSetAlertsNameEditText.getText().length());
+            mSetAlertsNameEditText.requestFocus();
         } else {
             // get saved searches
             SaveSearchService saveSearchService =
@@ -427,7 +428,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
         if(mSerpRequest != null) {
             mSerpRequest.applySelector(selector, null, false, true);
             searchNameBuilder.append(";");
-            searchNameBuilder.append(getSearchName());
+            searchNameBuilder.append(handleSearchName());
         } else if(mListingGetEvent != null && mListingGetEvent.listingData.facets != null) {
             searchNameBuilder.append(";");
             searchNameBuilder.append(mListingGetEvent.listingData.facets.buildDisplayName());
@@ -562,6 +563,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 populateData();
                 mSetAlertsNameEditText.setText(handleSearchName());
                 mSetAlertsNameEditText.setSelection(mSetAlertsNameEditText.getText().length());
+                mSetAlertsNameEditText.requestFocus();
             }
         }
     }

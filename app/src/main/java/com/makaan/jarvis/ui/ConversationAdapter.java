@@ -39,6 +39,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<MessageViewHolder>
     @Override
     public void onBindViewHolder(MessageViewHolder holder, int position) {
         holder.bind(mContext, messages.get(position));
+        holder.addTimeStamp(mContext);
     }
 
     @Override

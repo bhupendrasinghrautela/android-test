@@ -118,7 +118,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
 
             mEntityInfo = new NeighborhoodMapFragment.EntityInfo(localityByIdEvent.locality.label,
                     localityByIdEvent.locality.latitude,
-                    localityByIdEvent.locality.latitude);
+                    localityByIdEvent.locality.longitude);
 
             mLocalityName = localityByIdEvent.locality.label;
         }

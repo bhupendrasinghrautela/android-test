@@ -7,7 +7,8 @@
     android:minHeight="@dimen/header_height"
     android:paddingLeft="@dimen/header_margin"
     android:paddingStart="@dimen/header_margin"
-    android:clipToPadding="false">
+    android:clipToPadding="false"
+    android:background="@color/app_red">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_profile_image"
@@ -21,6 +22,7 @@
         android:orientation="vertical"
         android:paddingBottom="@dimen/profile_layout_padding"
         android:paddingLeft="@dimen/profile_layout_padding"
+        android:paddingStart="@dimen/profile_layout_padding"
         android:paddingTop="@dimen/profile_layout_padding"
         android:clipToPadding="false">
 
@@ -28,11 +30,29 @@
             android:id="@+id/tv_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/profile_layout_padding"
+            android:maxLines="2"
+            android:text="user name"
+            android:textColor="@color/white"
+            android:textSize="@dimen/buyer_user_name_textSize"
+            android:typeface="monospace"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textAllCaps="false"/>
+
+        <TextView
+            android:id="@+id/personalized"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:maxLines="2"
             android:text="@string/personalized_assistance"
-            android:textColor="#666666"
+            android:textColor="@color/white"
             android:textSize="@dimen/buyer_name_textSize"
-            android:typeface="monospace" />
+            android:typeface="monospace"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textAllCaps="false"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_subtitle"
@@ -40,20 +60,23 @@
             android:layout_height="wrap_content"
             android:maxLines="2"
             android:text="@string/start_to_finish"
-            android:textColor="#CC666666"
+            android:textColor="@color/white"
             android:textSize="14sp"
-            android:typeface="monospace" />
+            android:typeface="monospace"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textAllCaps="false"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/button_login"
             android:layout_width="76dp"
             android:layout_height="32dp"
-            android:layout_marginBottom="@dimen/profile_layout_padding"
             android:layout_marginTop="@dimen/profile_layout_padding"
-            android:background="@drawable/filled_red"
+            android:background="@drawable/filled_white"
             android:text="@string/log_in"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/app_red"
             android:textSize="@dimen/guest_text_size"
             android:typeface="monospace"/>
 

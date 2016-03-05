@@ -518,7 +518,13 @@ public class ProjectFragment extends MakaanBaseFragment{
         }
         projectNameTv.setText(project.name.toLowerCase());
         if(getActivity() instanceof MakaanBaseSearchActivity) {
-            getActivity().setTitle(project.name.toLowerCase());
+            if(project.builder != null && !TextUtils.isEmpty(project.builder.name)) {
+                getActivity().setTitle(project.builder.name.toLowerCase() + " " + project.name.toLowerCase());
+            } else if(!TextUtils.isEmpty(project.builderName)) {
+                getActivity().setTitle(project.builderName.toLowerCase() + " " + project.name.toLowerCase());
+            } else {
+                getActivity().setTitle(project.name.toLowerCase());
+            }
         }
         projectLocationTv.setText(project.address.toLowerCase());
     }

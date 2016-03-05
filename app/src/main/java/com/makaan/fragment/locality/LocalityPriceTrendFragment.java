@@ -16,10 +16,12 @@ import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.locality.TrendingSearchLocalityEvent;
 import com.makaan.event.trend.callback.LocalityTrendCallback;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.pojo.SerpObjects;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.trend.LocalityPriceTrendDto;
 import com.makaan.service.LocalityService;
+import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PriceTrendService;
 import com.makaan.ui.PriceTrendView;
 import com.segment.analytics.Properties;
@@ -80,7 +82,7 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
-        new LocalityService().getTrendingSearchesInLocality(localityId);
+        ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getTrendingSearchesInLocality(SerpObjects.isBuyContext(getContext()), localityId);
         fetchData(60);
     }
 

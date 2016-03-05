@@ -44,6 +44,7 @@ import com.makaan.pojo.TaxonomyCard;
 import com.makaan.response.agents.TopAgent;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.city.EntityDesc;
+import com.makaan.response.image.Image;
 import com.makaan.response.locality.ListingAggregation;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Builder;
@@ -110,6 +111,9 @@ public class LocalityFragment extends MakaanBaseFragment {
     @Bind(R.id.tv_locality_interested_in)
     TextView interestedInTv;
 
+    @Bind(R.id.iv_avg_price)
+    ImageView mAvgPrice;
+
     private static final int BLUR_EFFECT_HEIGHT = 300;
     private float alpha;
     private Long localityId ;
@@ -168,8 +172,10 @@ public class LocalityFragment extends MakaanBaseFragment {
             fetchHero();
             addLocalitiesLifestyleFragment(locality.entityDescriptions);
             addProperties(new TaxonomyService().getTaxonomyCardForLocality(locality.localityId, locality.minAffordablePrice, locality.maxAffordablePrice, locality.maxAffordablePrice, locality.maxBudgetPrice));
-            ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(locality.latitude, locality.longitude, 10);
-            ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(locality.latitude, locality.longitude, 3);
+            if(locality.latitude != null && locality.longitude != null) {
+                ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(locality.latitude, locality.longitude, 10);
+                ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(locality.latitude, locality.longitude, 3);
+            }
             ((AgentService) MakaanServiceFactory.getInstance().getService(AgentService.class)).getTopAgentsForLocality(locality.cityId, locality.localityId, 10, false, new TopAgentsCallback() {
                 @Override
                 public void onTopAgentsRcvd(ArrayList<TopAgent> topAgents) {
@@ -246,6 +252,7 @@ public class LocalityFragment extends MakaanBaseFragment {
             salesMedianPrice.setVisibility(View.VISIBLE);
             salesMedianPriceLabel.setVisibility(View.VISIBLE);
             salesMedianPrice.setText("\u20B9 " + meadianSale + " / sq ft");
+            
         }
         else{
             salesMedianPrice.setVisibility(View.GONE);
@@ -357,6 +364,7 @@ public class LocalityFragment extends MakaanBaseFragment {
         LocalityPriceTrendFragment newFragment = new LocalityPriceTrendFragment();
         Bundle bundle = new Bundle();
         bundle.putString("title", getResources().getString(R.string.locality_price_trends_label));
+        bundle.putLong("localityId", localityId);
         bundle.putSerializable("locality", localities);
         bundle.putInt("primaryMedian", meadianSale == null ? 0 : meadianSale);
         bundle.putDouble("primaryRise", locality.avgPriceRisePercentage == null ? 0 : locality.avgPriceRisePercentage);

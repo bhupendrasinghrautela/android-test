@@ -131,6 +131,12 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     @Bind(R.id.city_property_buy_rent_switch)
     Switch mBuyRentSwitch;
 
+    @Bind(R.id.iv_rental_growth)
+    ImageView mIvRental;
+
+    @Bind(R.id.iv_annual_growth)
+    ImageView mIvAnnual;
+
     @OnCheckedChanged(R.id.city_property_buy_rent_switch)
     public void onBuyRentSwitched(){
         if(mBuyRentSwitch.isChecked()){
@@ -244,6 +250,10 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         if(mCity.annualGrowth!=null) {
             mAnnualGrowthRefer.setVisibility(View.VISIBLE);
             mAnnualGrowth.setText(StringUtil.getTwoDecimalPlaces(mCity.annualGrowth) + "%");
+            if(mCity.annualGrowth<0)
+                mIvAnnual.setImageResource(R.drawable.bottom_arrow_circle_down);
+            else
+                mIvAnnual.setImageResource(R.drawable.bottom_arrow_circle_green_up);
         }
         else{
             mAnnualGrowth.setVisibility(View.GONE);
@@ -252,6 +262,10 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         if(mCity.rentalYield!=null) {
             mRentalGrowthRefer.setVisibility(View.VISIBLE);
             mRentalGrowth.setText(StringUtil.getTwoDecimalPlaces(mCity.rentalYield) + "%");
+            if(mCity.rentalYield<0)
+                mIvRental.setImageResource(R.drawable.bottom_arrow_circle_down);
+            else
+                mIvRental.setImageResource(R.drawable.bottom_arrow_circle_green_up);
         }
         else{
             mRentalGrowthRefer.setVisibility(View.VISIBLE);

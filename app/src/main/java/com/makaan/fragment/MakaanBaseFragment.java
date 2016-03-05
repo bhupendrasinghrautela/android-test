@@ -63,10 +63,15 @@ public abstract class MakaanBaseFragment extends Fragment {
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        AppBus.getInstance().unregister(this);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroy();
         ButterKnife.unbind(this);
-        AppBus.getInstance().unregister(this);
 
     }
 
@@ -108,7 +113,7 @@ public abstract class MakaanBaseFragment extends Fragment {
         mLoadingProgressBar.setVisibility(View.GONE);
 
         if(message == null) {
-            mNoResultsTextView.setText(R.string.default_error_message);
+            mNoResultsTextView.setText(R.string.generic_error);
         } else {
             mNoResultsTextView.setText(message);
         }
@@ -122,7 +127,7 @@ public abstract class MakaanBaseFragment extends Fragment {
         mLoadingProgressBar.setVisibility(View.GONE);
 
         if(stringId <= 0) {
-            mNoResultsTextView.setText(R.string.default_error_message);
+            mNoResultsTextView.setText(R.string.generic_error);
         } else {
             mNoResultsTextView.setText(stringId);
         }

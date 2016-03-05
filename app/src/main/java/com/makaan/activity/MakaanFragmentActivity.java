@@ -164,7 +164,7 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
         mLoadingProgressBar.setVisibility(View.GONE);
 
         if(message == null) {
-            mNoResultsTextView.setText(R.string.default_error_message);
+            mNoResultsTextView.setText(R.string.generic_error);
         } else {
             mNoResultsTextView.setText(message);
         }
@@ -177,7 +177,7 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
         mLoadingProgressBar.setVisibility(View.GONE);
 
         if(stringId <= 0) {
-            mNoResultsTextView.setText(R.string.default_error_message);
+            mNoResultsTextView.setText(R.string.generic_error);
         } else {
             mNoResultsTextView.setText(stringId);
         }

@@ -70,6 +70,10 @@ public class MakaanNetworkClient {
         return instance;
     }
 
+    public RequestQueue getRequestQueue(){
+        return makaanGetRequestQueue;
+    }
+
     public void get(String url, final JSONGetCallback jsonGetCallback) {
         get(url, jsonGetCallback, null, null);
     }

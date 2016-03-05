@@ -47,8 +47,14 @@ public class ConstructionTimelineFragment extends MakaanBaseFragment implements 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        titleTv.setText(getArguments().getString("title"));
-        Long projectId = getArguments().getLong("projectId");
+        String title = null;
+        Long projectId = null;
+        if(getArguments() != null) {
+            title = getArguments().getString("title");
+            projectId = getArguments().getLong("projectId");
+
+            titleTv.setText(title);
+        }
         ((ImageService) MakaanServiceFactory.getInstance().getService(ImageService.class)).getProjectTimelineImages(projectId);
         return view;
     }

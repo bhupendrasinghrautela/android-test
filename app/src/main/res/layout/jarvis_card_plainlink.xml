@@ -4,11 +4,17 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    android:background="@null"
-    android:paddingBottom="@dimen/plain_link_card_padding_top_bottom"
-    android:paddingRight="@dimen/plain_link_card_padding_right"
-    android:paddingTop="@dimen/plain_link_card_padding_top_bottom" >
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:background="@null"
+        android:paddingBottom="@dimen/plain_link_card_padding_top_bottom"
+        android:paddingRight="@dimen/plain_link_card_padding_right"
+        android:paddingTop="@dimen/plain_link_card_padding_top_bottom" >
 
     <TextView
         android:id="@+id/plain_link"
@@ -22,5 +28,7 @@
         android:paddingTop="@dimen/plain_link_card_message_padding_top_bottom"
         android:textColor="@color/black"
         android:textSize="@dimen/plain_link_card_message_text_size" />
+
+    </LinearLayout>
 
 </com.makaan.jarvis.ui.cards.PlainLinkCard>

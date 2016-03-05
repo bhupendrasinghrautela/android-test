@@ -5,7 +5,7 @@
     <dimen name="serp_listing_card_property_image_width">176dp</dimen>
     <dimen name="serp_listing_card_property_image_height">132dp</dimen>
 
-    <dimen name="serp_listing_card_property_price_text_size">32sp</dimen>
+    <dimen name="serp_listing_card_property_price_text_size">30sp</dimen>
     <dimen name="serp_listing_card_property_price_unit_text_size">18sp</dimen>
     <dimen name="serp_listing_card_property_area_sq_ft_text_view_text_size">16sp</dimen>
     <dimen name="serp_listing_card_property_info_text_view_text_size">16sp</dimen>
@@ -43,11 +43,11 @@
     <dimen name="serp_listing_cluster_card_group_text_view_margin_bottom">16dp</dimen>
 
     <dimen name="child_serp_cluster_card_price_text_size">18sp</dimen>
-    <dimen name="child_serp_cluster_card_price_margin_top">6dp</dimen>
+    <dimen name="child_serp_cluster_card_price_margin_top">4dp</dimen>
 
     <dimen name="child_serp_cluster_card_address_text_size">16sp</dimen>
     <dimen name="child_serp_cluster_card_address_margin_top">4dp</dimen>
-    <dimen name="child_serp_cluster_card_address_margin_bottom">6dp</dimen>
+    <dimen name="child_serp_cluster_card_address_margin_bottom">4dp</dimen>
 
     <dimen name="fragment_child_serp_cluster_relative_view_padding_left">8dp</dimen>
     <dimen name="fragment_child_serp_cluster_relative_view_padding_right">8dp</dimen>
@@ -69,7 +69,7 @@
     <dimen name="listing_brief_view_layout_property_price_top_margin">8dp</dimen>
     <dimen name="listing_brief_view_layout_rupee_image_top_margin">22dp</dimen>
     <dimen name="serp_listing_card_property_shortlist_checkbox_top_margin">12dp</dimen>
-    <dimen name="listing_brief_view_layout_property_price_text_size">30sp</dimen>
+    <dimen name="listing_brief_view_layout_property_price_text_size">28sp</dimen>
     <dimen name="listing_brief_view_layout_property_price_unit_text_size">18sp</dimen>
     <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_text_size">15sp</dimen>
     <dimen name="listing_brief_view_layout_property_info_text_view_text_size">15sp</dimen>

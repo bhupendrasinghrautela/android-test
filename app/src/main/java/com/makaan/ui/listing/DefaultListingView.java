@@ -625,6 +625,7 @@ public class DefaultListingView extends AbstractListingView {
         // TODO discuss what should be done if listing posted by is not present
         SerpRequest request = new SerpRequest(SerpActivity.TYPE_SELLER);
         request.setSellerId(mListing.lisitingPostedBy.id);
+        request.setTitle(mListing.lisitingPostedBy.name);
         request.launchSerp(getContext());
 
 //        MakaanBuyerApplication.mSerpSelector.term("sellerId", String.valueOf(mListing.sellerId));

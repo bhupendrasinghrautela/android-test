@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.PopupOverlay"
-        android:background="@color/buyer_dashboard_profile_background_color">
+        android:background="@color/app_red">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
@@ -43,15 +43,16 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="28dp"
+            android:layout_height="36dp"
             android:layout_marginLeft="@dimen/tab_margin_left_right"
             android:layout_marginRight="@dimen/tab_margin_left_right"
             android:background="@android:color/transparent"
             android:elevation="@dimen/card_elevation"
-            app:tabIndicatorColor="@color/app_red"
-            app:tabSelectedTextColor="@color/listingBlack"
-            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-            app:tabTextColor="@color/listingBlack" />
+            app:tabIndicatorColor="#E5FFFFFF"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextAppearance="@style/TabStyle"
+            app:tabTextColor="#7FFFFFFF"
+            app:tabIndicatorHeight="3dp"/>
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout

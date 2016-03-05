@@ -121,7 +121,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             if((SearchSuggestionType.HEADER_TEXT.getValue().equalsIgnoreCase(searchResponseItem.type) && viewType == TYPE_HEADER)
                     || (SearchSuggestionType.ERROR.getValue().equalsIgnoreCase(searchResponseItem.type) && viewType == TYPE_ERROR)) {
-                ((TextView)view.findViewById(R.id.search_result_item_name_text_view)).setText(searchResponseItem.displayText);
+                ((TextView)view.findViewById(R.id.search_result_item_name_text_view)).setText(searchResponseItem.displayText.toLowerCase());
             } else {
 
                 // TODO need to check which kind of data we should map
@@ -129,18 +129,18 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     view.findViewById(R.id.search_result_item_type_text_view).setVisibility(View.GONE);
                 } else {
                     view.findViewById(R.id.search_result_item_type_text_view).setVisibility(View.VISIBLE);
-                    ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText(SearchResponseHelper.getType(searchResponseItem));
+                    ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText(SearchResponseHelper.getType(searchResponseItem).toLowerCase());
                 }
 
                 if (SearchSuggestionType.CITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)
                         || SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)) {
                     view.findViewById(R.id.search_result_item_image_view).setVisibility(View.GONE);
-                    ((TextView) view.findViewById(R.id.search_result_item_name_2_text_view)).setText(searchResponseItem.displayText);
+                    ((TextView) view.findViewById(R.id.search_result_item_name_2_text_view)).setText(searchResponseItem.displayText.toLowerCase());
                     ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setVisibility(View.GONE);
                     ((TextView) view.findViewById(R.id.search_result_item_name_2_text_view)).setVisibility(View.VISIBLE);
                 } else {
                     view.findViewById(R.id.search_result_item_image_view).setVisibility(View.VISIBLE);
-                    ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setText(searchResponseItem.displayText);
+                    ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setText(searchResponseItem.displayText.toLowerCase());
                     ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setVisibility(View.VISIBLE);
                     ((TextView) view.findViewById(R.id.search_result_item_name_2_text_view)).setVisibility(View.GONE);
                 }
@@ -152,16 +152,16 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_recent);
                     if (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)
                             || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchResponseItem.type)) {
-                        ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText("location");
+                        ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText("location".toLowerCase());
                     } else if (SearchSuggestionType.CITY.getValue().equalsIgnoreCase(searchResponseItem.type)
                             || SearchSuggestionType.BUILDERCITY.getValue().equalsIgnoreCase(searchResponseItem.type)) {
-                        ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText("location");
+                        ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText("location".toLowerCase());
                     }
                 } else {
                     if (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)
                             || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(searchResponseItem.type)) {
                         ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_locality);
-                        ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText("location");
+                        ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText("location".toLowerCase());
                     } else if (SearchSuggestionType.GOOGLE_PLACE.getValue().equalsIgnoreCase(searchResponseItem.type)) {
                         ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_google_place);
                     } else if (SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searchResponseItem.type)) {
@@ -172,7 +172,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     } else if (SearchSuggestionType.CITY.getValue().equalsIgnoreCase(searchResponseItem.type)
                             || SearchSuggestionType.BUILDERCITY.getValue().equalsIgnoreCase(searchResponseItem.type)) {
                         ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_city);
-                        ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText("location");
+                        ((TextView) view.findViewById(R.id.search_result_item_type_text_view)).setText("location".toLowerCase());
                     } else if (SearchSuggestionType.BUILDER.getValue().equalsIgnoreCase(searchResponseItem.type)) {
                         ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_builder);
                     }

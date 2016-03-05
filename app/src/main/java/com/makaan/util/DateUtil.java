@@ -20,6 +20,7 @@ public class DateUtil {
 
     private static final String MONTH_YEAR_DATE_FORMAT = "MMMM yyyy";
     private static final String MONTH_YEAR_DATE_CHART_FORMAT = "MMMyy";
+    private static final String DATE_TIME = "MMM d h:mm a";
 
     public static String getMonthYearDisplayDate(long timestamp) {
         if(timestamp == 0) {
@@ -27,6 +28,15 @@ public class DateUtil {
         }
 
         final SimpleDateFormat format = new SimpleDateFormat(MONTH_YEAR_DATE_CHART_FORMAT, Locale.ENGLISH);
+        return format.format(new Date(timestamp)).toLowerCase();
+    }
+
+    public static String getDateTime(long timestamp) {
+        if(timestamp == 0) {
+            return "";
+        }
+
+        final SimpleDateFormat format = new SimpleDateFormat(DATE_TIME, Locale.ENGLISH);
         return format.format(new Date(timestamp));
     }
 

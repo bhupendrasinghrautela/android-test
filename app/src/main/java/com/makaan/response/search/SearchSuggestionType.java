@@ -13,7 +13,8 @@ public enum SearchSuggestionType {
     PROJECT_SUGGESTION("Typeahead-Suggestion-Project"),
     SUGGESTION("Typeahead-Suggestion"), TEMPLATE("Typeahead-Template"),
     CITY_OVERVIEW("CITY-OVERVIEW"), LOCALITY_OVERVIEW("LOCALITY-OVERVIEW"),
-    NEARBY_PROPERTIES("NEARBY-PROPERTIES"), HEADER_TEXT("HEADER-TEXT"), ERROR("ERROR");
+    NEARBY_PROPERTIES("NEARBY-PROPERTIES"), HEADER_TEXT("HEADER-TEXT"),
+    ERROR("ERROR"), SELLER("SELLER");
 
     private String value;
 

@@ -76,8 +76,11 @@ public class StringUtil {
         }
         return stringList;
     }
-
     public static String getDisplayPrice(double price) {
+        return getDisplayPrice(price, 2);
+    }
+
+    public static String getDisplayPrice(double price, int decimalPositions) {
         try {
             if(Double.isNaN(price)) {
                 // TODO check for fail safe value
@@ -91,31 +94,41 @@ public class StringUtil {
             priceStringBuilder.append("\u20B9");
             double displayPrice = (double) price / 100000.00;
 
+            DecimalFormat df = null;
+            if(decimalPositions >= 2) {
+                df = new DecimalFormat("#.##");
+            } else if(decimalPositions == 1) {
+                df = new DecimalFormat("#.#");
+            }
+
             if(displayPrice < 1) {
                 displayPrice = (double) price / 1000.00;
-                DecimalFormat df = new DecimalFormat("#.##");
                 try {
-                    priceStringBuilder.append(String.format("%.2f",
-                            Double.parseDouble(df.format(displayPrice))));
+                    String convertedPrice = String.format("%.2f",
+                            Double.parseDouble(df.format(displayPrice)));
+                    convertedPrice = convertedPrice.indexOf(".") < 0 ? convertedPrice : convertedPrice.replaceAll("0*$", "").replaceAll("\\.$", "");
+                    priceStringBuilder.append(convertedPrice);
                 } catch (NumberFormatException nfe) {
                     return "Price on request";
                 }
                 priceStringBuilder.append(" K");
             } else if (displayPrice < 100.0) {
-                DecimalFormat df = new DecimalFormat("#.##");
                 try {
-                    priceStringBuilder.append(String.format("%.2f",
-                            Double.parseDouble(df.format(displayPrice))));
+                    String convertedPrice = String.format("%.2f",
+                            Double.parseDouble(df.format(displayPrice)));
+                    convertedPrice = convertedPrice.indexOf(".") < 0 ? convertedPrice : convertedPrice.replaceAll("0*$", "").replaceAll("\\.$", "");
+                    priceStringBuilder.append(convertedPrice);
                 } catch (NumberFormatException nfe) {
                     return "Price on request";
                 }
                 priceStringBuilder.append(" L");
             } else {
-                DecimalFormat df = new DecimalFormat("#.##");
                 displayPrice = displayPrice / 100;
                 try {
-                    priceStringBuilder.append(String.format("%.2f",
-                            Double.parseDouble(df.format(displayPrice))));
+                    String convertedPrice = String.format("%.2f",
+                            Double.parseDouble(df.format(displayPrice)));
+                    convertedPrice = convertedPrice.indexOf(".") < 0 ? convertedPrice : convertedPrice.replaceAll("0*$", "").replaceAll("\\.$", "");
+                    priceStringBuilder.append(convertedPrice);
                 } catch (NumberFormatException nfe) {
                     return "Price on request";
                 }
