@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.LinearLayout;
 
 import com.makaan.R;
@@ -18,8 +17,7 @@ import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.fragment.project.ProjectSpecificationPagerFragment;
 import com.makaan.pojo.SpecificaitonsUI;
-import com.makaan.ui.view.WrapContentViewPager;
-import com.makaan.util.CommonUtil;
+import com.makaan.ui.WrappingViewPager;
 import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
@@ -36,7 +34,7 @@ public class ProjectSpecificationView extends LinearLayout{
     @Bind(R.id.project_specification_tab_layout)
     TabLayout tabLayout;
     @Bind(R.id.project_specification_view_pager)
-    WrapContentViewPager viewPager;
+    WrappingViewPager viewPager;
     private Context mContext;
     private HashMap<String, ArrayList<SpecificaitonsUI>> map;
 
@@ -75,7 +73,7 @@ public class ProjectSpecificationView extends LinearLayout{
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    private void setupViewPager(final WrapContentViewPager viewPager, FragmentActivity compatActivity) {
+    private void setupViewPager(final ViewPager viewPager, FragmentActivity compatActivity) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(compatActivity.getSupportFragmentManager());
         int max = 0;
         final ArrayList<String> tabNames=new ArrayList<String>();
@@ -91,7 +89,6 @@ public class ProjectSpecificationView extends LinearLayout{
             fragment.setArguments(bundle);
             adapter.addFrag(fragment, tab);
         }
-        viewPager.setHeight(max > 4 && max > 0 ? CommonUtil.dpToPixel(mContext,4 * 105): CommonUtil.dpToPixel(mContext,max * 105));
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -108,7 +105,6 @@ public class ProjectSpecificationView extends LinearLayout{
                         MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickProjectOverView);
                     }
                 }
-                viewPager.reMeasureCurrentPage(position);
             }
 
             @Override

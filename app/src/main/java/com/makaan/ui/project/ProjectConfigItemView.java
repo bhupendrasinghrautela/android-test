@@ -17,6 +17,7 @@ import com.makaan.pojo.ProjectConfigItem;
 import com.makaan.util.AppBus;
 import com.makaan.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +31,8 @@ public class ProjectConfigItemView extends LinearLayout implements View.OnClickL
     private int currentExpandedItemPos = -1;
     private List<ProjectConfigItem> items;
     private boolean isRent;
+    private TextView moreTv;
+    private ArrayList<View> mGoneHideViews = new ArrayList<>();
 
     public ProjectConfigItemView(Context context) {
         super(context);
@@ -47,22 +50,84 @@ public class ProjectConfigItemView extends LinearLayout implements View.OnClickL
         this.isRent = isRent;
         mLayoutInflater =
                 (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        for (int i = 0; i < items.size() && i<4; i++) {
-            addViews(items.get(i), i);
+        for (int i = 0; i < items.size(); i++) {
+            if(i>3){
+                addViewsWithGone(items.get(i),i);
+            }
+            else{
+                addViews(items.get(i), i);
+            }
+        }
+        if(items.size()>3){
+            moreView =  mLayoutInflater.inflate(R.layout.row_project_specification_item_expanded, null);
+            moreTv = (TextView) moreView.findViewById(R.id.project_specification_read_more);
+            moreTv.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(moreTv.getText().equals("more")){
+                        showViews();
+                        moreTv.setText("less");
+                    }
+                    else{
+                        hideViews();
+                        moreTv.setText("more");
+                    }
+                }
+            });
+            projectConfigItemView.addView(moreView);
         }
         if(items.size()>0)
             expandView(0);
     }
 
-    private void addViews(ProjectConfigItem item, int i) {
+    private void showViews() {
+        for(View view:mGoneHideViews){
+            view.setVisibility(VISIBLE);
+        }
+    }
+
+    private void hideViews() {
+        for(View view:mGoneHideViews){
+            view.setVisibility(GONE);
+        }
+    }
+
+    private void addViewsWithGone(ProjectConfigItem item, int i) {
         final View configView =
                 mLayoutInflater.inflate(R.layout.row_project_config_item, null);
-        if(item.minPrice!= 0d && item.maxPrice != 0d)
-        ((TextView) configView.findViewById(R.id.tv_project_config_item_labe_one)).setText(String.format("%s - %s", StringUtil.getDisplayPrice(item.minPrice), StringUtil.getDisplayPrice(item.maxPrice)));
+        if(item.minPrice!= 0d && item.maxPrice != 0d) {
+            ((TextView) configView.findViewById(R.id.tv_project_config_item_labe_one)).setText(String.format("%s - %s", StringUtil.getDisplayPriceSingle(item.minPrice), StringUtil.getDisplayPrice(item.maxPrice)));
+        }
+        else if(item.minPrice!=0){
+            ((TextView) configView.findViewById(R.id.tv_project_config_item_labe_one)).setText("> "+StringUtil.getDisplayPriceSingle(item.minPrice));
+        }
+        else if(item.maxPrice!=0){
+            ((TextView) configView.findViewById(R.id.tv_project_config_item_labe_one)).setText("< "+StringUtil.getDisplayPriceSingle(item.maxPrice));
+        }
         ((TextView) configView.findViewById(R.id.tv_project_config_item_labe_two)).setText(getBedroomString(item));
         configView.setTag(i);
         configView.setOnClickListener(this);
-        projectConfigItemView.addView(configView, i);
+        configView.setVisibility(GONE);
+        mGoneHideViews.add(configView);
+        projectConfigItemView.addView(configView);
+    }
+
+    private void addViews(ProjectConfigItem item, int i) {
+        final View configView =
+                mLayoutInflater.inflate(R.layout.row_project_config_item, null);
+        if(item.minPrice!= 0d && item.maxPrice != 0d) {
+            ((TextView) configView.findViewById(R.id.tv_project_config_item_labe_one)).setText(String.format("%s - %s", StringUtil.getDisplayPriceSingle(item.minPrice), StringUtil.getDisplayPrice(item.maxPrice)));
+        }
+        else if(item.minPrice!=0){
+            ((TextView) configView.findViewById(R.id.tv_project_config_item_labe_one)).setText("> "+StringUtil.getDisplayPriceSingle(item.minPrice));
+        }
+        else if(item.maxPrice!=0){
+            ((TextView) configView.findViewById(R.id.tv_project_config_item_labe_one)).setText("< "+StringUtil.getDisplayPriceSingle(item.maxPrice));
+        }
+        ((TextView) configView.findViewById(R.id.tv_project_config_item_labe_two)).setText(getBedroomString(item));
+        configView.setTag(i);
+        configView.setOnClickListener(this);
+        projectConfigItemView.addView(configView);
     }
 
     private String getBedroomString(ProjectConfigItem item) {
@@ -87,6 +152,9 @@ public class ProjectConfigItemView extends LinearLayout implements View.OnClickL
             break;
             case R.id.iv_project_config_item_properties:
                 AppBus.getInstance().post(new ProjectConfigItemClickListener(items.get((int) v.getTag()),ConfigItemType.PROPERTIES,isRent));
+                break;
+            case R.id.open_pyr_project:
+                AppBus.getInstance().post(new ProjectConfigItemClickListener(null,ConfigItemType.PYR,isRent));
                 break;
             default:
                 expandOrShrinkLayout(v);
@@ -121,33 +189,35 @@ public class ProjectConfigItemView extends LinearLayout implements View.OnClickL
         int sellerCount = item.companies.size();
         LinearLayout containerView = (LinearLayout) projectConfigItemView.getChildAt(tag).findViewById(R.id.project_config_row_container);
         containerView.setBackground(ContextCompat.getDrawable(mContext, R.drawable.project_config_item_selected_bg));
-        View expandedView = mLayoutInflater.inflate(R.layout.row_project_config_item_expanded, null);
+        View expandedView = null;
+        if(propertyCount>0){
+        expandedView = mLayoutInflater.inflate(R.layout.row_project_config_item_expanded, null);
         TextView propTv = (TextView) expandedView.findViewById(R.id.tv_project_config_item_properties);
         TextView sellerTv = (TextView) expandedView.findViewById(R.id.tv_project_config_item_seller);
         ImageView propIv = (ImageView) expandedView.findViewById(R.id.iv_project_config_item_properties);
         ImageView sellerIv = (ImageView) expandedView.findViewById(R.id.iv_project_config_item_seller);
-        if(propertyCount>0) {
             propTv.setText("view " + propertyCount + " properties");
             propTv.setOnClickListener(this);
             propIv.setOnClickListener(this);
             propIv.setTag(tag);
             propTv.setTag(tag);
-        }else
-            propTv.setText("no property");
-
-        if(sellerCount>0) {
-            sellerTv.setText("call " + sellerCount + " sellers");
-            sellerTv.setOnClickListener(this);
-            sellerIv.setOnClickListener(this);
-            sellerIv.setTag(tag);
-            sellerTv.setTag(tag);
-        }else
-            sellerTv.setText("no seller");
-        containerView.addView(expandedView,containerView.getChildCount());
+            if(sellerCount>0) {
+                sellerTv.setText("call " + sellerCount + " sellers");
+                sellerTv.setOnClickListener(this);
+                sellerIv.setOnClickListener(this);
+                sellerIv.setTag(tag);
+                sellerTv.setTag(tag);
+            }else
+                sellerTv.setText("no seller");
+        }else {
+            expandedView = mLayoutInflater.inflate(R.layout.no_property, null);
+            TextView pyrTv = (TextView) expandedView.findViewById(R.id.open_pyr_project);
+            pyrTv.setOnClickListener(this);
+        }
+        containerView.addView(expandedView);
         currentExpandedItemPos = tag;
     }
     public enum ConfigItemType{
-         SELLER, PROPERTIES
+         SELLER, PROPERTIES,PYR
     }
-
 }

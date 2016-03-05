@@ -198,6 +198,7 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
             axisY.setHasTiltedLabels(true);
             axisY.setMaxLabelChars(5);
             axisY.setTextColor(mContext.getResources().getColor(R.color.listingBlack));
+            axisY.setName("price / sqft");
             mLineChartData.setAxisYLeft(axisY);
             mLineChartData.setBaseValue(Float.NEGATIVE_INFINITY);
             mLineChartView.setLineChartData(mLineChartData);

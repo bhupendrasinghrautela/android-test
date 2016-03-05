@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,8 +17,10 @@ import com.makaan.R;
 import com.makaan.event.project.OnRentBuyClicked;
 import com.makaan.event.project.OnViewAllPropertiesClicked;
 import com.makaan.event.project.ProjectConfigEvent;
+import com.makaan.fragment.project.NoPropertiesFragment;
 import com.makaan.fragment.project.ProjectConfigFragment;
 import com.makaan.pojo.ProjectConfigItem;
+import com.makaan.ui.WrappingViewPager;
 import com.makaan.util.AppBus;
 
 import java.util.ArrayList;
@@ -34,7 +37,7 @@ public class ProjectConfigView extends LinearLayout implements ViewPager.OnPageC
     @Bind(R.id.project_config_tab_layout)
     TabLayout tabLayout;
     @Bind(R.id.project_config_view_pager)
-    ViewPager viewPager;
+    WrappingViewPager viewPager;
     private Context mContext;
     @Bind(R.id.project_specification_view_all_props)
     TextView viewAllPropsTv;
@@ -86,6 +89,7 @@ public class ProjectConfigView extends LinearLayout implements ViewPager.OnPageC
     private void setupViewPager(final ViewPager viewPager, FragmentActivity compatActivity) {
             ViewPagerAdapter adapter = new ViewPagerAdapter(compatActivity.getSupportFragmentManager());
             viewPager.addOnPageChangeListener(this);
+        viewPager.setOffscreenPageLimit(2);
             if(projectConfigEvent.buyProjectConfigItems !=null && projectConfigEvent.buyProjectConfigItems.size()>0) {
                 //buy
                 ArrayList<ProjectConfigItem> projectConfigItems = projectConfigEvent.buyProjectConfigItems;
@@ -95,6 +99,13 @@ public class ProjectConfigView extends LinearLayout implements ViewPager.OnPageC
                 bundle.putBoolean("isRent", false);
                 fragment.setArguments(bundle);
                 adapter.addFrag(fragment, "buy");
+            }
+        else{
+                NoPropertiesFragment fragment = new NoPropertiesFragment();
+                Bundle bundlerent = new Bundle();
+                bundlerent.putBoolean("isRent",false);
+                fragment.setArguments(bundlerent);
+                adapter.addFrag(fragment,"buy");
             }
 
             if(projectConfigEvent.rentProjectConfigItems !=null && projectConfigEvent.rentProjectConfigItems.size()>0) {
@@ -106,6 +117,13 @@ public class ProjectConfigView extends LinearLayout implements ViewPager.OnPageC
                 bundlerent.putBoolean("isRent", true);
                 fragmentrent.setArguments(bundlerent);
                 adapter.addFrag(fragmentrent, "rent");
+            }
+        else{
+                NoPropertiesFragment fragment = new NoPropertiesFragment();
+                Bundle bundlerent = new Bundle();
+                bundlerent.putBoolean("isRent",true);
+                fragment.setArguments(bundlerent);
+                adapter.addFrag(fragment,"rent");
             }
 
             viewPager.setAdapter(adapter);
@@ -157,6 +175,11 @@ public class ProjectConfigView extends LinearLayout implements ViewPager.OnPageC
         @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            return super.instantiateItem(container, position);
         }
     }
 }

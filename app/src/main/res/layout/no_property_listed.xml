@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:layout_margin="10dp"
+                  android:padding="10dp"
+                  android:gravity="center"
+                  android:text="sorry, no properties listed"/>
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                  android:id="@+id/open_pyr_fragment"
+                  android:layout_weight="1"
+                  android:clickable="true"
+                  android:textColor="@color/pyr_color"
+                  android:layout_margin="10dp"
+                  android:gravity="center"
+                  android:padding="10dp"
+                  android:background="@drawable/button_reverse_background_selector"
+                  android:text="post your requirements"/>
+</LinearLayout>
