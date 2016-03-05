@@ -21,7 +21,12 @@ import com.makaan.util.JsonParser;
 public class VolleyErrorParser {
     private static final String GENERIC_ERROR = "oops! something went wrong. please try again";
     private static final String NETWORK_ERROR = "connection trouble! seems, we are not connected by the internet";
-    private static final String WEAK_NETWORK_ERROR = "your network connection seems to be weak, please check and try again.";
+    private static final String SERVER_ERROR = "the page you were looking for is chilling at server\\'s home. let\\'s refresh";
+    private static final String SERVICE_UNAVAILABLE_ERROR = "makaan is overwhelmed with active users.\\ntoo many happy users! please try again in a minute";
+    private static final String NO_CONTENT_ERROR = "found no results matching your search criteria";
+    private static final String NOT_FOUND_ERROR = "such a kill joy!\\nthe page you were looking for is sitting at home";
+    // TODO check below error
+    private static final String WEAK_NETWORK_ERROR = "connection trouble! seems, we are not connected by the internet";
 
     /**
      * Returns appropriate message which is to be displayed to the user
@@ -35,11 +40,25 @@ public class VolleyErrorParser {
             return GENERIC_ERROR;
         }
         if (error instanceof TimeoutError) {
-            return GENERIC_ERROR;
+            return WEAK_NETWORK_ERROR;
+        } else if (error instanceof ServerError) {
+            if(((VolleyError)error).networkResponse != null && ((VolleyError)error).networkResponse.statusCode == 503) {
+                return SERVICE_UNAVAILABLE_ERROR;
+            }
+            return SERVER_ERROR;
         } else if(isNoInternetConnection(error)) {
             return NETWORK_ERROR;
         } else if (isNetworkProblem(error)) {
             return WEAK_NETWORK_ERROR;
+        } else if(error instanceof VolleyError) {
+            NetworkResponse response = ((VolleyError)error).networkResponse;
+            if(response != null) {
+                if(response.statusCode == 204) {
+                    return NO_CONTENT_ERROR;
+                } else if(response.statusCode == 404) {
+                    return NOT_FOUND_ERROR;
+                }
+            }
         }
 
         try {
