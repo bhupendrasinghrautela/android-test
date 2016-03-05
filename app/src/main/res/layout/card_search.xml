@@ -51,7 +51,8 @@
                     android:textColor="#444444"
                     android:typeface="sans"
                     android:singleLine="true"
-                    android:textAllCaps="false"/>
+                    android:textAllCaps="false"
+                    android:ellipsize="end"/>
 
                 <TextView
                     android:id="@+id/filter_name"
@@ -62,7 +63,8 @@
                     android:textColor="#444444"
                     android:typeface="serif"
                     android:singleLine="true"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    android:ellipsize="end" />
 
                 <TextView
                     android:id="@+id/place_name"
@@ -73,7 +75,8 @@
                     android:textColor="#444444"
                     android:typeface="serif"
                     android:singleLine="true"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    android:ellipsize="end" />
             </LinearLayout>
 
             <LinearLayout

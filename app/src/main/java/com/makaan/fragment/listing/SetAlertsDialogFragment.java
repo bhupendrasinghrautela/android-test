@@ -525,7 +525,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
         if(event == null || event.error != null) {
             if(isSubmitInitiated) {
                 MakaanMessageDialogFragment.showMessage(getFragmentManager(),
-                        event.error != null ? VolleyErrorParser.getMessage(event.error) : getString(R.string.generic_error), "ok");
+                        (event != null && event.error != null && !TextUtils.isEmpty(event.error.msg)) ? event.error.msg : getString(R.string.generic_error), "ok");
             }
         } else {
             if(isSubmitInitiated) {
