@@ -21,6 +21,7 @@ import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.Session;
 import com.makaan.event.location.LocationGetEvent;
 import com.makaan.event.user.UserLoginEvent;
+import com.makaan.notification.GcmRegister;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.response.user.UserResponse;
 import com.makaan.service.LocationService;
@@ -54,6 +55,8 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        GcmRegister.checkAndSetGcmId(this, null);
 
         LocationService service = (LocationService) MakaanServiceFactory.getInstance().getService(LocationService.class);
         service.getUserLocation();
