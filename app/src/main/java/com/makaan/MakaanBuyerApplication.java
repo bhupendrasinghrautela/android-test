@@ -96,11 +96,13 @@ public class MakaanBuyerApplication extends Application {
         FontTypeface.setDefaultFont(this, "SERIF", "fonts/proxima-light.otf");
         FontTypeface.setDefaultFont(this, "SANS_SERIF", "fonts/comforta.ttf");
 
-        GcmRegister.checkAndSetGcmId(this, null);
+
 
         MakaanNetworkClient.init(this);
         JarvisServiceCreator.create(this);
         gson = new GsonBuilder().serializeNulls().disableHtmlEscaping().create();
+
+        //GcmRegister.checkAndSetGcmId(this, null);
 
         MakaanServiceFactory.getInstance().registerService(MasterDataService.class, new MasterDataService());
         MakaanServiceFactory.getInstance().registerService(ListingService.class, new ListingService());

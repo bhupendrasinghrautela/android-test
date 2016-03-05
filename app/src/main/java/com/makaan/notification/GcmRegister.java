@@ -11,7 +11,9 @@ import com.android.volley.Request.Method;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
 import com.makaan.constants.ApiConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.jarvis.JarvisConstants;
@@ -24,6 +26,7 @@ import com.makaan.util.JsonBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.prefs.Preferences;
 
 /**
@@ -36,6 +39,10 @@ public class GcmRegister{
     private static String sRegid;
     private static Context sContext;
     private static String sUserKey;
+    private static final String[] TOPICS = {"global"};
+    public static final String SENDER_ID = "932056553907";
+    public static final String SERVER_KEY = "AIzaSyAmIOPyinzdnppptXicSXDL79Jz1tLZrhQ";
+
 
 
     /**
@@ -52,7 +59,7 @@ public class GcmRegister{
             if (sRegid.isEmpty()) {
                 registerInBackground(context);
             }else{
-            	//sendRegistrationIdToBackend(sRegid);
+            	sendRegistrationIdToBackend(sRegid);
             }
         }
     }
@@ -107,14 +114,20 @@ public class GcmRegister{
             protected String doInBackground(Void... params) {
                 String msg = "";
                 try {
-                    if (sGcm == null) {
+                    InstanceID instanceID = InstanceID.getInstance(context);
+
+                    sRegid = instanceID.getToken(SENDER_ID,
+                            GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+
+                    /*if (sGcm == null) {
                         sGcm = GoogleCloudMessaging.getInstance(context);
                     }
-                    sRegid = sGcm.register(GcmConstants.SENDER_ID);
+                    sRegid = sGcm.register(SENDER_ID);*/
                     msg = "Device registered, registration ID = " + sRegid;
                     GcmPreferences.setGcmRegId(context, sRegid);
                     GcmPreferences.setAppVersion(context, CommonUtil.getAppVersion(context));
-                    //sendRegistrationIdToBackend(sRegid);
+                    sendRegistrationIdToBackend(sRegid);
+                    subscribeTopics(context, sRegid);
 
                 } catch (Exception ex) {
                     msg = "Error while registering for GCM:" + ex.getMessage();
@@ -141,6 +154,13 @@ public class GcmRegister{
             e.printStackTrace();
         }
 
+    }
+
+    private static void subscribeTopics(Context context, String token) throws IOException {
+        GcmPubSub pubSub = GcmPubSub.getInstance(context);
+        for (String topic : TOPICS) {
+            pubSub.subscribe(token, "/topics/" + topic, null);
+        }
     }
 
 
