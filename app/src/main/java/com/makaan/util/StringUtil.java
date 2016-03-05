@@ -142,6 +142,58 @@ public class StringUtil {
         return "Price on request";
     }
 
+    public static String getDisplayPriceSingle(double price) {
+        try {
+            if(Double.isNaN(price)) {
+                // TODO check for fail safe value
+                return String.valueOf(price);
+            }
+            if (price == 0) {
+//                return "Price on request";
+                return "0";
+            }
+            StringBuilder priceStringBuilder = new StringBuilder();
+            priceStringBuilder.append("\u20B9");
+            double displayPrice = (double) price / 100000.00;
+
+            if(displayPrice < 1) {
+                displayPrice = (double) price / 1000.00;
+                DecimalFormat df = new DecimalFormat("#.##");
+                try {
+                    priceStringBuilder.append(String.format("%.1f",
+                            Double.parseDouble(df.format(displayPrice))));
+                } catch (NumberFormatException nfe) {
+                    return "Price on request";
+                }
+                priceStringBuilder.append(" K");
+            } else if (displayPrice < 100.0) {
+                DecimalFormat df = new DecimalFormat("#.##");
+                try {
+                    priceStringBuilder.append(String.format("%.1f",
+                            Double.parseDouble(df.format(displayPrice))));
+                } catch (NumberFormatException nfe) {
+                    return "Price on request";
+                }
+                priceStringBuilder.append(" L");
+            } else {
+                DecimalFormat df = new DecimalFormat("#.##");
+                displayPrice = displayPrice / 100;
+                try {
+                    priceStringBuilder.append(String.format("%.1f",
+                            Double.parseDouble(df.format(displayPrice))));
+                } catch (NumberFormatException nfe) {
+                    return "Price on request";
+                }
+                priceStringBuilder.append(" Cr");
+            }
+
+            return priceStringBuilder.toString();
+        } catch (Exception e) {
+            //TODO: log atleast
+        }
+        return "Price on request";
+    }
+
     public static String getDisplayPriceForChart(double price) {
         try {
             if(Double.isNaN(price)) {

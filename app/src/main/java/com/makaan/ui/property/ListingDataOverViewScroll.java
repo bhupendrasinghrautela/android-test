@@ -2,6 +2,7 @@ package com.makaan.ui.property;
 
 import android.content.Context;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
@@ -143,12 +144,14 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
         }
         else{
             try {
-                Long age = Long.getLong(mProject.possessionDate);
-                String ageYrs = String.valueOf((age > 0 ? getElapsedYearsFromNow(age) : 0));
-                HorizontalScrollItem overViewItem = new HorizontalScrollItem();
-                overViewItem.name = "age";
-                overViewItem.resourceId = R.drawable.possession;
-                overViewItem.value = ageYrs.concat(" yrs");
+                if(!TextUtils.isEmpty(mProject.possessionDate)) {
+                    Long age = Long.getLong(mProject.possessionDate);
+                    String ageYrs = String.valueOf((age > 0 ? getElapsedYearsFromNow(age) : 0));
+                    HorizontalScrollItem overViewItem = new HorizontalScrollItem();
+                    overViewItem.name = "age";
+                    overViewItem.resourceId = R.drawable.possession;
+                    overViewItem.value = ageYrs.concat(" yrs");
+                }
             }catch (NumberFormatException e){}
         }
         if(mProject.dominantUnitType !=null){

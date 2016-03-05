@@ -109,12 +109,12 @@ public class ProjectConfigCallback extends JSONGetCallback {
             }
             Double price = entry.getKey();
             ArrayList<ListingDetail> listings = entry.getValue();
-            if (null != listings && listings.size() > 0) {
-                ProjectConfigItem projectConfigItem = new ProjectConfigItem();
-                projectConfigItems.add(projectConfigItem);
+            ProjectConfigItem projectConfigItem = new ProjectConfigItem();
+            projectConfigItems.add(projectConfigItem);
 
-                projectConfigItem.minPrice = minPrice;
-                lastConfigItem = projectConfigItem;
+            projectConfigItem.minPrice = minPrice;
+            lastConfigItem = projectConfigItem;
+            if (null != listings && listings.size() > 0) {
 
                 for (ListingDetail listingDetail : listings) {
                     projectConfigItem.bedrooms.add(listingDetail.property.bedrooms);

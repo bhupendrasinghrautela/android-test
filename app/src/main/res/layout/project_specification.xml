@@ -38,7 +38,7 @@
         android:layout_gravity="center_horizontal"
         app:tabGravity="fill"/>
 
-        <com.makaan.ui.view.WrapContentViewPager
+        <com.makaan.ui.WrappingViewPager
             android:layout_marginLeft="@dimen/project_specification_tab_layout_margins"
             android:layout_marginRight="@dimen/project_specification_tab_layout_margins"
         android:id="@+id/project_specification_view_pager"

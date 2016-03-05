@@ -26,16 +26,17 @@ import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.project.ProjectActivity;
+import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.adapter.project.KeyDetailsAdapter;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.image.ImagesGetEvent;
-import com.makaan.event.listing.ListingByIdGetEvent;
 import com.makaan.event.locality.NearByLocalitiesEvent;
 import com.makaan.event.project.OnRentBuyClicked;
 import com.makaan.event.project.OnSimilarProjectClickedEvent;
 import com.makaan.event.project.OnViewAllPropertiesClicked;
+import com.makaan.event.project.OpenPyrClicked;
 import com.makaan.event.project.ProjectByIdEvent;
 import com.makaan.event.project.ProjectConfigEvent;
 import com.makaan.event.project.ProjectConfigItemClickListener;
@@ -121,6 +122,9 @@ public class ProjectFragment extends MakaanBaseFragment{
         SellerCard sellerCard = null;
         if(isRent && mProjectConfigEvent.rentProjectConfigItems!=null){
             for(ProjectConfigItem projectConfigItem:mProjectConfigEvent.rentProjectConfigItems){
+                if(projectConfigItem.topSellerCard == null){
+                    continue;
+                }
                 if(sellerCard == null){
                     sellerCard = projectConfigItem.topSellerCard;
                 }
@@ -135,6 +139,9 @@ public class ProjectFragment extends MakaanBaseFragment{
         }
         else if(!isRent && mProjectConfigEvent.buyProjectConfigItems!=null){
             for(ProjectConfigItem projectConfigItem:mProjectConfigEvent.buyProjectConfigItems){
+                if(projectConfigItem.topSellerCard == null){
+                    continue;
+                }
                 if(sellerCard == null){
                     sellerCard = projectConfigItem.topSellerCard;
                 }
@@ -258,7 +265,29 @@ public class ProjectFragment extends MakaanBaseFragment{
             case PROPERTIES:
                 startSerpActivity(configItemClickListener);
                 break;
+            case PYR:
+                startPyrActivity(configItemClickListener);
+                break;
         }
+    }
+
+    private void startPyrActivity(ProjectConfigItemClickListener configItemClickListener) {
+        Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
+        pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, project.locality.suburb.city.label);
+        pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_ID, project.locality.localityId);
+        pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_NAME, project.locality.label);
+
+        getActivity().startActivity(pyrIntent);
+    }
+
+    @Subscribe
+    public  void openPyr(OpenPyrClicked openPyrClicked){
+        Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
+        pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, project.locality.suburb.city.label);
+        pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_ID, project.locality.localityId);
+        pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_NAME, project.locality.label);
+
+        getActivity().startActivity(pyrIntent);
     }
 
     @Subscribe
@@ -323,7 +352,6 @@ public class ProjectFragment extends MakaanBaseFragment{
             Toast.makeText(getActivity(), "project details could not be loaded at this time. please try later.", Toast.LENGTH_LONG).show();
         } else {
             project = projectByIdEvent.project;
-            showContent();
             /*if(mConfigReceived) {
                 // add project to recent
                 RecentPropertyProjectManager manager = RecentPropertyProjectManager.getInstance(getContext().getApplicationContext());
@@ -358,8 +386,25 @@ public class ProjectFragment extends MakaanBaseFragment{
             }
             addConstructionTimelineFragment();
             ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getProjectTimelineImages(project.projectId);
+            //handler.sendEmptyMessageDelayed(0, 500);
+            showContent();
         }
     }
+/*    class TempHandler extends android.os.Handler {
+        boolean sent = false;
+        @Override
+        public void handleMessage(Message msg) {
+            if(sent) {
+            } else {
+                showProgress();
+            }
+            if(!sent) {
+                handler.sendEmptyMessageDelayed(0, 500);
+                sent = true;
+            }
+        }
+    }
+    TempHandler handler = new TempHandler();*/
 
     private void populateKeyDetails() {
         List<KeyDetail> mKeyDetailList = new ArrayList<>();
@@ -515,6 +560,7 @@ public class ProjectFragment extends MakaanBaseFragment{
         manager.addEntryToRecent(mDataObject, getContext().getApplicationContext());*/
 
         projectConfigView.bindView(projectConfigEvent, getActivity());
+        projectConfigView.invalidate();
     }
 
     @Subscribe
@@ -538,10 +584,6 @@ public class ProjectFragment extends MakaanBaseFragment{
         Intent i = new Intent(getActivity(),ProjectActivity.class);
         i.putExtra(ProjectActivity.PROJECT_ID, onSimilarProjectClickedEvent.id);
         startActivity(i);
-    }
-
-    @Subscribe
-    public void onResults(ListingByIdGetEvent listingByIdGetEvent) {
     }
 
     private void addPriceTrendsFragment(ArrayList<Locality> nearbyLocalities) {
