@@ -63,10 +63,15 @@ public abstract class MakaanBaseFragment extends Fragment {
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        AppBus.getInstance().unregister(this);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroy();
         ButterKnife.unbind(this);
-        AppBus.getInstance().unregister(this);
 
     }
 
