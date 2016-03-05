@@ -108,8 +108,6 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
     @Subscribe
     public void onResults(ListingByIdsGetEvent listingByIdsGetEvent) {
         if(listingByIdsGetEvent == null || listingByIdsGetEvent.error != null) {
-            // TODO
-//            showNoResults();
             mAdapter.setData(new ArrayList<ListingByIdsGetEvent.Listing>());
             showContent();
             return;
