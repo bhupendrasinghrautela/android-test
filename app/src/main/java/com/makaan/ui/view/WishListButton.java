@@ -217,7 +217,9 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
 
         isLoginInitiatedFromWishList = false;
 
-        if(userLoginEvent.error.msg!=null){
+        if(userLoginEvent == null || userLoginEvent.error == null) {
+            Toast.makeText(mContext, getResources().getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
+        } else if(userLoginEvent.error.msg!=null){
             Toast.makeText(mContext, userLoginEvent.error.msg, Toast.LENGTH_SHORT).show();
         } else {
             onCheckedChanged(null, !mShortlistCheckBox.isChecked());

@@ -1,7 +1,9 @@
 package com.makaan.fragment.property;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
@@ -37,6 +39,7 @@ import com.makaan.pojo.SellerCard;
 import com.makaan.ui.view.CustomRatingBar;
 import com.makaan.util.AppBus;
 import com.makaan.util.ImageUtils;
+import com.makaan.util.PermissionManager;
 import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
@@ -345,9 +348,14 @@ public class ViewSellersDialogFragment extends DialogFragment {
                 @Override
                 public void onClick(View view) {
                     if(null!=mSellerCards.get((int)view.getTag()).contactNo){
-                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
-                                +  mSellerCards.get((int) view.getTag()).contactNo));
-                        startActivity(intent);
+
+                        if(PermissionManager.isPermissionRequestRequired(getActivity(), Manifest.permission.CALL_PHONE)) {
+                            PermissionManager.begin().addRequest(PermissionManager.CALL_PHONE_REQUEST).request(getActivity());
+                        } else {
+                            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
+                                    + mSellerCards.get((int) view.getTag()).contactNo));
+                            startActivity(intent);
+                        }
                     }
                     else {
                         Toast.makeText(getContext(),getResources().getString(R.string.seller_not_available),Toast.LENGTH_SHORT).show();
@@ -377,5 +385,21 @@ public class ViewSellersDialogFragment extends DialogFragment {
             return sellerCards.size();
         }
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if ((requestCode & PermissionManager.CALL_PHONE_REQUEST)
+                == PermissionManager.CALL_PHONE_REQUEST) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // todo add functionality if need to as call can now be requested
+            } else if(grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                // TODO show message or something
+            }
+        }
     }
 }
