@@ -28,7 +28,7 @@ public class DateUtil {
         }
 
         final SimpleDateFormat format = new SimpleDateFormat(MONTH_YEAR_DATE_CHART_FORMAT, Locale.ENGLISH);
-        return format.format(new Date(timestamp));
+        return format.format(new Date(timestamp)).toLowerCase();
     }
 
     public static String getDateTime(long timestamp) {

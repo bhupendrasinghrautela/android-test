@@ -21,14 +21,23 @@ import butterknife.OnClick;
 public class ThankYouScreenFragment extends Fragment {
     public static final String IS_DASHBOARD = "is_pyr";
 
+    @Nullable
     @Bind(R.id.hurray)
     TextView mHurrayTextView;
+
+    @Nullable
     @Bind(R.id.congratulation_message)
     TextView mCongratulationTextView;
+
+    @Nullable
     @Bind(R.id.message)
     TextView mMessageTextView;
+
+    @Nullable
     @Bind(R.id.seller_name)
     TextView mSellerNameTextView;
+
+    @Nullable
     @Bind(R.id.thank_you_continue)
     TextView mThankYouContinueButton;
 
@@ -60,11 +69,21 @@ public class ThankYouScreenFragment extends Fragment {
         }
         ButterKnife.bind(this, view);
         if(mIsDashboard) {
-            mHurrayTextView.setVisibility(View.GONE);
-            mSellerNameTextView.setVisibility(View.GONE);
-            mCongratulationTextView.setText("congratulations for finding your dream home !!");
-            mMessageTextView.setText("makaan customer support team will get in touch with you shortly for your cash back request.");
-            mThankYouContinueButton.setText("close");
+            if(mHurrayTextView != null) {
+                mHurrayTextView.setVisibility(View.GONE);
+            }
+            if(mSellerNameTextView != null) {
+                mSellerNameTextView.setVisibility(View.GONE);
+            }
+            if(mCongratulationTextView != null) {
+                mCongratulationTextView.setText("congratulations for finding your dream home !!");
+            }
+            if(mMessageTextView != null) {
+                mMessageTextView.setText("makaan customer support team will get in touch with you shortly for your cash back request.");
+            }
+            if(mThankYouContinueButton != null) {
+                mThankYouContinueButton.setText("close");
+            }
         }
         return view;
     }

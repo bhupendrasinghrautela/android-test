@@ -221,7 +221,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                         }
                     }
                 }
-                holder.backgroundImageView.setImageResource(R.drawable.locality_hero);
+                holder.backgroundImageView.setDefaultImageResId(R.drawable.locality_hero);
             } else {
                 Configuration configuration = getResources().getConfiguration();
                 int width = (int) (configuration.screenHeightDp * Resources.getSystem().getDisplayMetrics().density);

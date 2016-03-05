@@ -148,4 +148,8 @@
         <item name="colorControlHighlight">@color/edit_text_bottom_border</item>
     </style>
 
+    <style name="TabStyle" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:typeface">serif</item>
+        <item name="android:textStyle">normal</item>
+    </style>
 </resources>

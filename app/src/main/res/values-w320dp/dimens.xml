@@ -5,7 +5,7 @@
     <dimen name="serp_listing_card_property_image_width">148dp</dimen>
     <dimen name="serp_listing_card_property_image_height">111dp</dimen>
 
-    <dimen name="serp_listing_card_property_price_text_size">28sp</dimen>
+    <dimen name="serp_listing_card_property_price_text_size">26sp</dimen>
     <dimen name="serp_listing_card_property_price_unit_text_size">16sp</dimen>
     <dimen name="serp_listing_card_property_area_sq_ft_text_view_text_size">14sp</dimen>
     <dimen name="serp_listing_card_property_info_text_view_text_size">14sp</dimen>
@@ -67,7 +67,7 @@
     <dimen name="listing_brief_view_layout_property_price_top_margin">10dp</dimen>
     <dimen name="listing_brief_view_layout_rupee_image_top_margin">22dp</dimen>
     <dimen name="serp_listing_card_property_shortlist_checkbox_top_margin">10dp</dimen>
-    <dimen name="listing_brief_view_layout_property_price_text_size">28sp</dimen>
+    <dimen name="listing_brief_view_layout_property_price_text_size">24sp</dimen>
     <dimen name="listing_brief_view_layout_property_price_unit_text_size">16sp</dimen>
     <dimen name="listing_brief_view_layout_property_area_sq_ft_text_view_text_size">14sp</dimen>
     <dimen name="listing_brief_view_layout_property_info_text_view_text_size">14sp</dimen>

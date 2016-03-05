@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:font="http://schemas.android.com/tools"
     android:id="@+id/card_view_nearby_locality"
-    android:layout_width="300dp"
+    android:layout_width="@dimen/row_nearby_localities_width"
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/row_nearby_localities_left_margin"
     android:layout_marginStart="@dimen/row_nearby_localities_left_margin"
@@ -15,10 +15,10 @@
         android:layout_height="wrap_content"
         android:paddingBottom="20dp">
 
-        <ImageView
+        <com.android.volley.toolbox.FadeInNetworkImageView
             android:id="@+id/iv_nearby_locality"
             android:layout_width="match_parent"
-            android:layout_height="228dp"
+            android:layout_height="@dimen/row_nearby_localities_image_height"
             android:scaleType="fitCenter" />
 
         <com.makaan.ui.view.FontTextView

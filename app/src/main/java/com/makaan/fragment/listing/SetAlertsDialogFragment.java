@@ -98,6 +98,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
             populateData();
             mSetAlertsNameEditText.setText(handleSearchName());
             mSetAlertsNameEditText.setSelection(mSetAlertsNameEditText.getText().length());
+            mSetAlertsNameEditText.requestFocus();
         } else {
             // get saved searches
             SaveSearchService saveSearchService =
@@ -562,6 +563,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 populateData();
                 mSetAlertsNameEditText.setText(handleSearchName());
                 mSetAlertsNameEditText.setSelection(mSetAlertsNameEditText.getText().length());
+                mSetAlertsNameEditText.requestFocus();
             }
         }
     }

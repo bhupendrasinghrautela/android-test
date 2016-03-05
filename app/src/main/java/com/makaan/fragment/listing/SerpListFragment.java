@@ -144,6 +144,12 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         if(selectedSearches.size() > 0 && SearchSuggestionType.GOOGLE_PLACE.getValue()
                 .equalsIgnoreCase(selectedSearches.get(0).type)) {
             builder.append("near ");
+        } if(selectedSearches.size() > 0 && SearchSuggestionType.BUILDER.getValue()
+                .equalsIgnoreCase(selectedSearches.get(0).type)
+                || selectedSearches.size() > 0 && SearchSuggestionType.BUILDERCITY.getValue()
+                .equalsIgnoreCase(selectedSearches.get(0).type)
+                || ((mRequestType & SerpActivity.MASK_LISTING_TYPE) == SerpActivity.TYPE_SELLER)) {
+            builder.append("by ");
         } else if(selectedSearches.size() > 0) {
             builder.append("in ");
         }
@@ -152,6 +158,14 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
             if(SearchSuggestionType.CITY.getValue().equals(selectedSearches.get(0).type)) {
                 if(!TextUtils.isEmpty(selectedSearches.get(0).city)) {
                     builder.append(selectedSearches.get(0).city);
+                }
+            } else if(SearchSuggestionType.BUILDERCITY.getValue().equals(selectedSearches.get(0).type)) {
+                if(!TextUtils.isEmpty(selectedSearches.get(0).builderName)) {
+                    builder.append(selectedSearches.get(0).builderName);
+                }
+                if(!TextUtils.isEmpty(selectedSearches.get(0).entityName)) {
+                    builder.append(" in ");
+                    builder.append(selectedSearches.get(0).entityName);
                 }
             } else {
                 for(SearchResponseItem search : selectedSearches) {

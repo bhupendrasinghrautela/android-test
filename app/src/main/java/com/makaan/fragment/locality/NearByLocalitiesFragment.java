@@ -18,7 +18,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader;
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
@@ -36,6 +38,8 @@ import com.makaan.service.AgentService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.AppBus;
 import com.makaan.util.DateUtil;
+import com.makaan.util.ImageUtils;
+import com.makaan.util.MakaanBus;
 import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
@@ -283,7 +287,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
             public TextView medianTv;
             public TextView numberOfPropsForSaleTv;
             public TextView numberOfPropsForRentTv;
-            public ImageView localityIv;
+            public FadeInNetworkImageView localityIv;
             public LinearLayout rentLl;
             public CardView cardView;
             public TextView primarySaleLabelTv;
@@ -296,7 +300,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                 medianTv = (TextView) v.findViewById(R.id.tv_nearby_localities_median);
                 numberOfPropsForSaleTv = (TextView) v.findViewById(R.id.tv_nearby_localities_sale);
                 numberOfPropsForRentTv = (TextView) v.findViewById(R.id.tv_nearby_localities_rent);
-                localityIv = (ImageView) v.findViewById(R.id.iv_nearby_locality);
+                localityIv = (FadeInNetworkImageView) v.findViewById(R.id.iv_nearby_locality);
                 rentLl = (LinearLayout) v.findViewById(R.id.ll_nearby_locality_rent);
                 primarySaleLabelTv = (TextView) v.findViewById(R.id.tv_nearby_localities_sale_label);
                 secondarySaleLabelTv = (TextView) v.findViewById(R.id.tv_nearby_localities_secondary_sale_label);
@@ -376,7 +380,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                     removeZeroData(holder, nearByLocality);
                     break;
                 case TOPAGENTS:
-                    holder.localityIv.setImageResource(R.drawable.agent_image_placeholder);
+                    holder.localityIv.setDefaultImageResId(R.drawable.agent_image_placeholder);
                     if(isRentSelected)
                         holder.primarySaleLabelTv.setText("properties for rent");
                     else
@@ -384,29 +388,33 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                     holder.rentLl.setVisibility(View.GONE);
                     break;
                 case TOPBUILDERS:
-                    holder.localityIv.setImageResource(R.drawable.builder_logo_placeholder);
+                    holder.localityIv.setDefaultImageResId(R.drawable.builder_logo_placeholder);
                     holder.rentLl.setVisibility(View.VISIBLE);
                     holder.rentLl.setVisibility(View.GONE);
                     holder.primarySaleLabelTv.setText("total projects");
                     break;
             }
 
-            if(nearByLocality.imgUrl!=null)
-            MakaanNetworkClient.getInstance().getImageLoader().get(nearByLocality.imgUrl, new ImageLoader.ImageListener() {
-                @Override
-                public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
-                    if (b && imageContainer.getBitmap() == null) {
-                        return;
-                    }
-                    final Bitmap image = imageContainer.getBitmap();
+            if(nearByLocality.imgUrl!=null) {
+                int width = getResources().getDimensionPixelSize(R.dimen.row_nearby_localities_width);
+                int height = getResources().getDimensionPixelSize(R.dimen.row_nearby_localities_image_height);
+                holder.localityIv.setImageUrl(ImageUtils.getImageRequestUrl(nearByLocality.imgUrl, width, height, true), MakaanNetworkClient.getInstance().getImageLoader());
+                /*MakaanNetworkClient.getInstance().getImageLoader().get(nearByLocality.imgUrl, new ImageLoader.ImageListener() {
+                    @Override
+                    public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
+                        if (b && imageContainer.getBitmap() == null) {
+                            return;
+                        }
+                        final Bitmap image = imageContainer.getBitmap();
                         holder.localityIv.setImageBitmap(image);
-                }
+                    }
 
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
 
-                }
-            });
+                    }
+                });*/
+            }
         }
 
         private void removeZeroData(ViewHolder holder, NearByLocalities nearByLocality) {

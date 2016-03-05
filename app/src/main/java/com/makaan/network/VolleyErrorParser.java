@@ -19,8 +19,8 @@ import com.makaan.util.JsonParser;
  * Created by sunil on 03/12/15.
  */
 public class VolleyErrorParser {
-    private static final String GENERIC_ERROR = "an unknown error occurred. please try again later.";
-    private static final String NETWORK_ERROR = "your network connection seems to be lost. please enable internet connection and try again.";
+    private static final String GENERIC_ERROR = "oops! something went wrong. please try again";
+    private static final String NETWORK_ERROR = "connection trouble! seems, we are not connected by the internet";
     private static final String WEAK_NETWORK_ERROR = "your network connection seems to be weak, please check and try again.";
 
     /**

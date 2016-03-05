@@ -49,7 +49,8 @@
 
         <activity
             android:name=".activity.project.ProjectActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <!--<intent-filter>-->
                  <!--<action android:name="android.intent.action.MAIN" />-->
                  <!--<category android:name="android.intent.category.LAUNCHER" />-->
@@ -59,7 +60,8 @@
 
         <activity
             android:name=".activity.city.CityActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity
