@@ -238,7 +238,13 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                         if(mDetail.listingCategory!=null) {
                             overViewItem.name = overview.toString();
                             overViewItem.resourceId = R.drawable.new_resale;
-                            overViewItem.value = String.valueOf(mDetail.listingCategory);
+                            if("primary".equalsIgnoreCase(mDetail.listingCategory)) {
+                                overViewItem.value = "new".toLowerCase();
+                            } else if("resale".equalsIgnoreCase(mDetail.listingCategory)) {
+                                overViewItem.value = "resale".toLowerCase();
+                            } else {
+                                overViewItem.value = mDetail.listingCategory.toLowerCase();
+                            }
                         }
                         break;
                     case ENTRY_ROAD_WIDTH:

@@ -4,22 +4,21 @@ import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.TabLayout.OnTabSelectedListener;
 import android.support.design.widget.TabLayout.Tab;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.Button;
+import android.view.Gravity;
+import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.activity.city.CityActivity;
-import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
-import com.makaan.pojo.SerpRequest;
 import com.makaan.response.trend.LocalityPriceTrendDto;
 import com.segment.analytics.Properties;
 
 import butterknife.Bind;
-import butterknife.OnClick;
 
 /**
  * Created by aishwarya on 18/01/16.
@@ -35,8 +34,7 @@ public class PriceTrendView extends BaseLinearLayout<LocalityPriceTrendDto> {
     private enum TRENDS_MONTH{
         SIX("6 \n months",6),
         TWELVE("12 \n months",12),
-        THIRTY_SIX("3 \n years",36),
-        SIXTY("5 \n years",60);
+        THIRTY_SIX("3 \n years",36);
 
         private  String name;
         private int value;
@@ -113,7 +111,14 @@ public class PriceTrendView extends BaseLinearLayout<LocalityPriceTrendDto> {
 
     private void initView() {
         for(TRENDS_MONTH priceTabText:TRENDS_MONTH.values()){
-            mPriceRangeTabs.addTab(mPriceRangeTabs.newTab().setText(priceTabText.toString()));
+            TextView text = new TextView(mContext);
+            SpannableString ss1=  new SpannableString(priceTabText.toString());
+            ss1.setSpan(new RelativeSizeSpan(1.5f), 0,2, 0);
+            text.setText(ss1);
+            text.setGravity(Gravity.CENTER);
+            Tab tab = mPriceRangeTabs.newTab();
+            tab.setCustomView(text);
+            mPriceRangeTabs.addTab(tab);
         }
     }
 }

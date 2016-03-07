@@ -809,7 +809,7 @@
     <dimen name="property_page_stack_like_pager_margin">15dp</dimen>
     <dimen name="property_page_stack_like_pager_height">342dp</dimen>
     <dimen name="property_page_external_margin">24dp</dimen>
-    <dimen name="property_page_scroll_margin_bottom">50dp</dimen>
+    <dimen name="property_page_scroll_margin_bottom">60dp</dimen>
     <dimen name="property_page_about_locality_margin_top">20dp</dimen>
     <dimen name="property_page_about_locality_margin_bottom">10dp</dimen>
     <dimen name="property_page_internal_padding">24dp</dimen>
