@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,20 +13,12 @@ import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.listing.SerpListingAdapter;
 import com.makaan.fragment.MakaanBaseFragment;
-import com.makaan.jarvis.analytics.AnalyticsConstants;
-import com.makaan.jarvis.analytics.AnalyticsService;
-import com.makaan.jarvis.event.JarvisTrackExtraData;
-import com.makaan.pojo.SerpObjects;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.search.SearchResponseItem;
-import com.makaan.response.search.SearchSuggestionType;
-import com.makaan.service.MakaanServiceFactory;
 import com.makaan.ui.PaginatedListView;
+import com.makaan.util.ErrorUtil;
 import com.makaan.util.StringUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -225,7 +216,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
             }
             mListingRecyclerView.setIsLoading(false);
             if(listingTotalCount == 0) {
-                showNoResults("no results found");
+                showNoResults(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT, true));
             } else {
                 showContent();
             }

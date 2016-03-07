@@ -23,8 +23,7 @@ public class ErrorUtil {
                     return R.string.no_content_error;
                 }
             case 408:
-                // TODO change to timeout
-                return R.string.not_found_error;
+                return R.string.timeout_error;
             case 404:
                 return R.string.not_found_error;
             case 500:
