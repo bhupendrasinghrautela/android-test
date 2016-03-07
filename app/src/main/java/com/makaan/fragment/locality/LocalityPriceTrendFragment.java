@@ -27,7 +27,6 @@ import com.makaan.ui.PriceTrendView;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +82,7 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         super.onActivityCreated(savedInstanceState);
         initView();
         ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getTrendingSearchesInLocality(SerpObjects.isBuyContext(getContext()), localityId);
-        fetchData(60);
+        fetchData(36);
     }
 
     private void fetchData(int months) {

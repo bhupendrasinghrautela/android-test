@@ -1,6 +1,5 @@
 package com.makaan.fragment.locality;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
@@ -11,16 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.FadeInNetworkImageView;
-import com.android.volley.toolbox.ImageLoader;
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
@@ -39,7 +33,6 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.AppBus;
 import com.makaan.util.DateUtil;
 import com.makaan.util.ImageUtils;
-import com.makaan.util.MakaanBus;
 import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
@@ -166,11 +159,15 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         for (ListingAggregation ListingAggregation:listingAggregations) {
             if (ListingAggregation.listingCategory.equalsIgnoreCase("primary") ||
                     ListingAggregation.listingCategory.equalsIgnoreCase("resale")) {
-                saleMedian = saleMedian + ListingAggregation.avgPricePerUnitArea;
-                countsSales++;
+                if(ListingAggregation.avgPricePerUnitArea!=null) {
+                    saleMedian = saleMedian + ListingAggregation.avgPricePerUnitArea;
+                    countsSales++;
+                }
             } else {
-                rentalMedian = rentalMedian + ListingAggregation.avgPricePerUnitArea;
-                countsRental++;
+                if(ListingAggregation.avgPricePerUnitArea!=null) {
+                    rentalMedian = rentalMedian + ListingAggregation.avgPricePerUnitArea;
+                    countsRental++;
+                }
             }
         }
             if(countsSales!=0)

@@ -426,14 +426,14 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         for(Locality locality:cityTopLocalities){
             localityIds.add(locality.localityId);
         }
-        new PriceTrendService().getPriceTrendForLocalities(localityIds, 60, new LocalityTrendCallback() {
+        new PriceTrendService().getPriceTrendForLocalities(localityIds,36, new LocalityTrendCallback() {
             @Override
             public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
                 if (localityPriceTrendDto.data != null && localityPriceTrendDto.data.size() != 0) {
                     mPriceTrendView.setVisibility(View.VISIBLE);
                     mPriceTrendView.bindView(localityPriceTrendDto);
                     mLocalityPriceTrendDto = localityPriceTrendDto;
-                    new PriceTrendService().getCityPriceTrendForCity(mCity.id,60);
+                    new PriceTrendService().getCityPriceTrendForCity(mCity.id,36);
                 } else
                     mPriceTrendView.setVisibility(View.GONE);
             }

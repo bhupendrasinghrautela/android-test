@@ -37,7 +37,7 @@ public class DateUtil {
         }
 
         final SimpleDateFormat format = new SimpleDateFormat(DATE_TIME, Locale.ENGLISH);
-        return format.format(new Date(timestamp));
+        return format.format(new Date(timestamp)).toLowerCase();
     }
 
 

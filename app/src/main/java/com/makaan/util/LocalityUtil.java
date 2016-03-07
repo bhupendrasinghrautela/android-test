@@ -33,8 +33,10 @@ public class LocalityUtil {
         for (ListingAggregation ListingAggregation:listingAggregations) {
             if (ListingAggregation.listingCategory.equalsIgnoreCase(RequestConstants.PRIMARY) ||
                     ListingAggregation.listingCategory.equalsIgnoreCase(RequestConstants.RESALE)) {
-                saleMedian += ListingAggregation.avgPricePerUnitArea*ListingAggregation.count;
-                countsSales += ListingAggregation.count;
+                if(ListingAggregation.avgPricePerUnitArea!=null) {
+                    saleMedian += ListingAggregation.avgPricePerUnitArea * ListingAggregation.count;
+                    countsSales += ListingAggregation.count;
+                }
             }
         }
         if(countsSales!=0)
