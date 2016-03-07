@@ -14,7 +14,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -233,14 +232,22 @@ public class ViewSellersDialogFragment extends DialogFragment {
     private void setButtonText() {
         if(mChecked == 0){
             mSubmitButton.setEnabled(false);
+            selectSeller.setChecked(false);
             mSubmitButton.setText(getString(R.string.contact_sellers));
         }
         else if(mChecked == mSellerCards.size()){
+            selectSeller.setChecked(true);
             mSubmitButton.setText(getString(R.string.contact_all_seller));
             mSubmitButton.setEnabled(true);
         }
         else{
-            mSubmitButton.setText(getString(R.string.contact) + " " + mChecked + " " + getString(R.string.seller));
+            if(mChecked == 1){
+
+                mSubmitButton.setText(getString(R.string.contact) + " " + mChecked + " " + getString(R.string.seller));
+            }
+            else {
+                mSubmitButton.setText(getString(R.string.contact) + " " + mChecked + " " + getString(R.string.sellers));
+            }
             mSubmitButton.setEnabled(true);
         }
     }
