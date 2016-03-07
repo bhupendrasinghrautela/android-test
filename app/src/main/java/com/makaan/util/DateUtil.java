@@ -70,4 +70,11 @@ public class DateUtil {
         cal.setTime(date);
         return cal;
     }
+
+    public static Date getDateMonthsBack(int months){
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -months);
+        Date result = cal.getTime();
+        return result;
+    }
 }

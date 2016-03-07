@@ -36,7 +36,6 @@
         android:textSize="@dimen/locality_text_big"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="@dimen/locality_about_median_left_margin"
-        android:visibility="invisible"
         android:id="@+id/tv_locality_per_sqr_ft_median_price"
         />
     <ImageView
@@ -87,8 +86,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/locality_seperator_height"
-        android:layout_marginTop="@dimen/locality_seperator_top_margin"
-        android:layout_below="@id/tv_locality_annual_growth_label"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/tv_locality_per_sqr_ft_median_price_label"
         android:layout_marginLeft="@dimen/locality_seperator_left_margin"
         android:visibility="gone"
         android:id="@+id/view_locality_seperator"
@@ -112,6 +111,7 @@
         android:layout_height="wrap_content"
         android:text="@string/locality_about_median_rent"
         android:layout_marginTop="@dimen/locality_about_median_top_margin"
+        android:layout_marginBottom="@dimen/locality_about_median_top_margin"
         font:fontName="proxima.otf"
         android:visibility="invisible"
         android:id="@+id/tv_locality_per_sqr_ft_median_price_rent_label"

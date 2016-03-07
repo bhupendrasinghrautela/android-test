@@ -396,7 +396,7 @@ public class MasterDataCache {
         if(propertyDisplayOrder.get(category)==null){
             return propertyDisplayOrder.get("Primary").get("Apartment").get(card);
         }
-        if(propertyDisplayOrder.get(category).get(card)==null){
+        if(propertyDisplayOrder.get(category).get(type)==null){
             return propertyDisplayOrder.get("Primary").get("Apartment").get(card);
         }
         return propertyDisplayOrder.get(category).get(type).get(card);
