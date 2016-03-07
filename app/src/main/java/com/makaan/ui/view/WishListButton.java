@@ -1,5 +1,6 @@
 package com.makaan.ui.view;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +21,7 @@ import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.event.user.UserLoginEvent;
+import com.makaan.fragment.MakaanMessageDialogFragment;
 import com.makaan.network.VolleyErrorParser;
 import com.makaan.response.ResponseError;
 import com.makaan.response.wishlist.WishListResponse;
@@ -164,24 +166,46 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
 
         }else{
             setChecked(!isChecked);
-            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(mContext);
-            builder.setMessage(R.string.add_to_fav_login_prompt);
-            builder.setPositiveButton(mContext.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    isLoginInitiatedFromWishList = true;
-                    Intent intent = new Intent(mContext, UserLoginActivity.class);
-                    mContext.startActivity(intent);
-                }
-            });
-            builder.setNegativeButton(mContext.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            builder.show();
+
+            /*if(getContext() instanceof Activity) {
+                Activity activity = (Activity) getContext();
+                MakaanMessageDialogFragment.showMessage(activity.getFragmentManager(),
+                        activity.getResources().getString(R.string.add_to_fav_login_prompt),
+                        mContext.getResources().getString(R.string.ok),
+                        mContext.getResources().getString(R.string.cancel),
+                        new MakaanMessageDialogFragment.MessageDialogCallbacks() {
+                            @Override
+                            public void onPositiveClicked() {
+                                isLoginInitiatedFromWishList = true;
+                                Intent intent = new Intent(mContext, UserLoginActivity.class);
+                                mContext.startActivity(intent);
+                            }
+
+                            @Override
+                            public void onNegativeClicked() {
+
+                            }
+                        });
+            }else */{
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(mContext);
+                builder.setMessage(R.string.add_to_fav_login_prompt);
+                builder.setPositiveButton(mContext.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        isLoginInitiatedFromWishList = true;
+                        Intent intent = new Intent(mContext, UserLoginActivity.class);
+                        mContext.startActivity(intent);
+                    }
+                });
+                builder.setNegativeButton(mContext.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.show();
+            }
         }
     }
 
