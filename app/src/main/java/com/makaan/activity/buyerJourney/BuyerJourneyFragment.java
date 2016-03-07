@@ -26,6 +26,7 @@ import com.makaan.service.ClientLeadsService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
 import com.makaan.service.WishListService;
+import com.makaan.util.AppBus;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -81,6 +82,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             mIntent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.SEARCH);
             onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);
         }
+        AppBus.getInstance().unregister(this);
     }
 
     @OnClick(R.id.ll_shortlist)
@@ -91,6 +93,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             mIntent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.SHORTLIST);
             onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);
         }
+        AppBus.getInstance().unregister(this);
     }
 
     @OnClick(R.id.ll_site_visit)
@@ -103,12 +106,14 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             mIntent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.SITE_VISIT);
             onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);
         }
+        AppBus.getInstance().unregister(this);
     }
 
 
     @OnClick(R.id.button_get_rewards)
     public void onGetRewardsClick() {
         onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_REWARDS);
+        AppBus.getInstance().unregister(this);
     }
 
 
@@ -119,12 +124,14 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     public void onHomeLoanClick() {
         mIntent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.HOME_LOAN);
         onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);
+        AppBus.getInstance().unregister(this);
     }
 
     @OnClick(R.id.ll_unit_booking)
     public void onUnitBookingClick() {
         mIntent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.UNIT_BOOK);
         onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);
+        AppBus.getInstance().unregister(this);
     }
 
     @OnClick(R.id.ll_possession)
@@ -132,12 +139,14 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
         mIntent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.POSSESSION);
 
         onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);
+        AppBus.getInstance().unregister(this);
     }
 
     @OnClick(R.id.ll_registration)
     public void onRegistrationClick() {
         mIntent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.REGISTRATION);
         onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);
+        AppBus.getInstance().unregister(this);
     }
 
 
@@ -165,6 +174,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
         return view;
     }
 
+
     private void setupData() {
         if(mIsUserLoggedIn) {
             savedSearches = MasterDataCache.getInstance().getSavedSearch();
@@ -182,7 +192,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             ((WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class)).get();
 
             // TODO
-            mNewSearchesReceived = true;
+            mNewSearchesReceived = false;
             mClientEventsReceived = false;
             mClientLeadsReceived = false;
             mWishListsReceived = false;
@@ -201,12 +211,24 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        AppBus.getInstance().register(this);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         boolean isUserLoggedIn = CookiePreferences.isUserLoggedIn(getActivity());
         if(isUserLoggedIn != mIsUserLoggedIn) {
             mIsUserLoggedIn = isUserLoggedIn;
             setupData();
+        }
+        savedSearches = MasterDataCache.getInstance().getSavedSearch();
+        if(savedSearches != null && savedSearches.size() == 0) {
+            mSavedSearchesCount = savedSearches.size();
+            ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).getSavedSearches();
+            mSavedSearchesReceived = false;
         }
     }
 

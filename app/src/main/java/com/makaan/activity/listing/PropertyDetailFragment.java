@@ -207,6 +207,12 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
                     mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.localityId != null) {
                 bundle.putLong("localityId", mListingDetail.property.project.locality.localityId);
             }
+            if(mListingDetail!=null && mListingDetail.property != null && mListingDetail.property.project != null) {
+                if(mListingDetail.property.project.builder != null) {
+                    bundle.putString("builder", mListingDetail.property.project.builder.name);
+                }
+                bundle.putString("project", mListingDetail.property.project.name);
+            }
             if(Area!=null){
                 bundle.putString("area", Area);
             }
@@ -485,11 +491,12 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
                 }
 
                 mABoutBuilderLayout.bindView(listingDetail.property.project.builder);
+                mABoutBuilderLayout.setProjectData(listingDetail.property.project);
 
                 if(project.locality != null) {
                     Locality locality = project.locality;
-                    mAboutLocality.setText("about ".concat((locality.label != null ? locality.label : "")));
-                    mLocalityBrief.setText(Html.fromHtml((locality.description != null ? locality.description : "")));
+                    mAboutLocality.setText("about ".concat((locality.label != null ? locality.label.toLowerCase() : "")));
+                    mLocalityBrief.setText(Html.fromHtml((locality.description != null ? locality.description.toLowerCase() : "")));
                     if(locality.livabilityScore != null) {
                         mLocalityScoreProgress.setProgress((int) (locality.livabilityScore * 10));
                         mLocalityScoreText.setText(String.valueOf(locality.livabilityScore));
@@ -507,7 +514,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
             if(listingDetail.description!=null) {
                 mCompressedDescriptionLayout.setVisibility(View.VISIBLE);
                 mListingBrief.setTextColor(getResources().getColor(R.color.listingBlack));
-                mListingBrief.setText((listingDetail.description != null ? Html.fromHtml(listingDetail.description) : ""));
+                mListingBrief.setText((listingDetail.description != null ? Html.fromHtml(listingDetail.description).toString().toLowerCase() : ""));
                 ViewTreeObserver vto = mListingBrief.getViewTreeObserver();
                 vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
                     @Override
@@ -538,7 +545,11 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
         int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_width);
         int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_height);
         mAllSellerLayout.setVisibility(View.VISIBLE);
-        mSellerName.setText(String.format("%s(%s)", company.name, company.type));
+        if("broker".equalsIgnoreCase(company.type)) {
+            mSellerName.setText(String.format("%s (%s)", company.name, "agent").toLowerCase());
+        } else {
+            mSellerName.setText(String.format("%s (%s)", company.name, company.type).toLowerCase());
+        }
         User user = mListingDetail.companySeller!=null?mListingDetail.companySeller.user:null;
         if(!company.assist){
             mSellerAssistButton.setVisibility(View.GONE);

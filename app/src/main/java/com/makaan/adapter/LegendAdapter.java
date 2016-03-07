@@ -5,6 +5,7 @@ import android.graphics.CornerPathEffect;
 import android.graphics.Paint.Style;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
@@ -47,7 +48,12 @@ public class LegendAdapter extends AbstractBaseAdapter<PriceTrendKey> {
     @Override
     protected void bindView(View view, final int position, final PriceTrendKey item) {
         final ViewHolder h = (ViewHolder) view.getTag();
-        h.mLegendsLabel.setText(item.label);
+        if(!TextUtils.isEmpty(item.label)) {
+            h.mLegendsLabel.setText(item.label.toLowerCase());
+            h.mLegendsLabel.setVisibility(View.VISIBLE);
+        } else {
+            h.mLegendsLabel.setVisibility(View.INVISIBLE);
+        }
         h.mLegendsView.setBackgroundColor(item.colorId);
         final ShapeDrawable coloredDrawable = new ShapeDrawable(new RectShape());
         coloredDrawable.getPaint().setColor(item.colorId);

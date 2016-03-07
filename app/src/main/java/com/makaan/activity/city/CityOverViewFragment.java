@@ -273,7 +273,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         }
         if(!TextUtils.isEmpty(mCity.description)) {
             mCompressedTextViewLayout.setVisibility(View.VISIBLE);
-            mCityDescription.setText(Html.fromHtml(mCity.description));
+            mCityDescription.setText(Html.fromHtml(mCity.description).toString().toLowerCase());
         }
         else{
             mCompressedTextViewLayout.setVisibility(View.GONE);

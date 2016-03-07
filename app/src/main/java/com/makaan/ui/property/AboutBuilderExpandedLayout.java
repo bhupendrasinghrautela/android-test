@@ -2,7 +2,9 @@ package com.makaan.ui.property;
 
 import android.content.Context;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +16,7 @@ import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.project.Builder;
+import com.makaan.response.project.Project;
 import com.makaan.response.project.ProjectStatusCount;
 import com.makaan.ui.BaseLinearLayout;
 import com.makaan.ui.ExpandableLinearLayout;
@@ -36,6 +39,10 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
 
     @Bind(R.id.about_builder)
     TextView mAboutBuilderTv;
+    @Bind(R.id.project_name)
+    TextView projectNameTv;
+    @Bind(R.id.project_address)
+    TextView projectAddressTv;
 
     @Bind(R.id.builder_description)
     TextView mBuilderDescription;
@@ -55,11 +62,15 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
 
     private boolean isExpanded = false;
     private Context mContext;
+    private boolean mProjectNameVisible;
+    private boolean mProjectAddressVisible;
 
     @OnClick(R.id.about_builder)
     public void onChange(){
         isExpanded = !isExpanded;
         if(isExpanded){
+            mProjectNameVisible = projectNameTv.getVisibility() == VISIBLE;
+            mProjectAddressVisible = projectAddressTv.getVisibility() == VISIBLE;
 
             if(mContext instanceof PropertyActivity) {
                 Properties properties = MakaanEventPayload.beginBatch();
@@ -75,6 +86,8 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
             }
             mExpandableLayout.expand();
             mAboutBuilderTv.setText(getResources().getString(R.string.less_about_builder));
+            projectNameTv.setVisibility(View.GONE);
+            projectAddressTv.setVisibility(View.GONE);
         }
         else{
             if(mContext instanceof PropertyActivity) {
@@ -91,6 +104,16 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
             }
             mExpandableLayout.collapse();
             mAboutBuilderTv.setText(getResources().getString(R.string.more_about_builder));
+            if(mProjectNameVisible) {
+                projectNameTv.setVisibility(View.VISIBLE);
+            } else {
+                projectNameTv.setVisibility(View.GONE);
+            }
+            if(mProjectAddressVisible) {
+                projectAddressTv.setVisibility(VISIBLE);
+            } else {
+                projectAddressTv.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -142,7 +165,7 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
                 mBuilderOngoingLayout.setVisibility(GONE);
             }
             if(item.description!=null) {
-                mBuilderDescription.setText(Html.fromHtml(item.description));
+                mBuilderDescription.setText(Html.fromHtml(item.description).toString().toLowerCase());
                 isDataPresent = true;
             }
             if(!isDataPresent){
@@ -160,6 +183,34 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
         }
         else{
             v.setText(count+ " "+mContext.getString(R.string.projects));
+        }
+    }
+
+    public void setProjectData(Project project){
+        if(project != null) {
+            if(!TextUtils.isEmpty(project.name)) {
+                projectNameTv.setText(project.name.toLowerCase());
+                projectNameTv.setVisibility(View.VISIBLE);
+            }
+            if(project.locality != null) {
+                if(project.locality.suburb != null && project.locality.suburb.city != null) {
+                    if(!TextUtils.isEmpty(project.locality.suburb.city.label)) {
+                        projectAddressTv.setVisibility(View.VISIBLE);
+                        projectAddressTv.setText(String.format("%s, %s", project.locality.label, project.locality.suburb.city.label).toLowerCase());
+                    } else {
+                        projectAddressTv.setVisibility(View.VISIBLE);
+                        projectAddressTv.setText(project.locality.label.toLowerCase());
+                    }
+                } else if(!TextUtils.isEmpty(project.locality.label)) {
+                    projectAddressTv.setVisibility(View.VISIBLE);
+                    projectAddressTv.setText(project.locality.label.toLowerCase());
+                }
+            } else {
+                projectAddressTv.setVisibility(View.GONE);
+            }
+        } else {
+            projectNameTv.setVisibility(View.GONE);
+            projectAddressTv.setVisibility(View.GONE);
         }
     }
 }

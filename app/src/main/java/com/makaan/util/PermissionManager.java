@@ -20,17 +20,10 @@ import java.util.HashMap;
  */
 public class PermissionManager {
     public static final int ACCOUNTS_REQUEST = 0x01;
-    public static final int INTERNET_REQUEST = 0x02;
-    public static final int CALL_PHONE_REQUEST = 0x04;
-    public static final int FINE_LOCATION_REQUEST = 0x08;
-    public static final int NETWORK_REQUEST = 0x10;
-    public static final int READ_SMS_REQUEST = 0x20;
-    public static final int RECEIVE_SMS_REQUEST = 0x40;
-    public static final int GMS_REQUEST = 0x80;
-    public static final int WAKE_LOCK_REQUEST = 0x100;
-    public static final int MAKAAN_GMS_REQUEST = 0x200;
-    public static final int WRITE_EXTERNAL_STORAGE_REQUEST = 0x400;
-    public static final int READ_EXTERNAL_STORAGE_REQUEST = 0x800;
+    public static final int CALL_PHONE_REQUEST = 0x02;
+    public static final int FINE_LOCATION_REQUEST = 0x04;
+    public static final int READ_SMS_REQUEST = 0x08;
+    public static final int RECEIVE_SMS_REQUEST = 0x10;
 
     static HashMap<String, PermissionRequest> permissions;
     static PermissionManager manager = new PermissionManager();
@@ -46,19 +39,10 @@ public class PermissionManager {
     static {
         permissions = new HashMap<>();
         permissions.put(android.Manifest.permission.GET_ACCOUNTS, new PermissionRequest(/*R.string.default_error_message, */ACCOUNTS_REQUEST));
-        permissions.put(android.Manifest.permission.INTERNET, new PermissionRequest(/*R.string.default_error_message, */INTERNET_REQUEST));
         permissions.put(android.Manifest.permission.CALL_PHONE, new PermissionRequest(/*R.string.default_error_message, */CALL_PHONE_REQUEST));
         permissions.put(android.Manifest.permission.ACCESS_FINE_LOCATION, new PermissionRequest(/*R.string.default_error_message, */FINE_LOCATION_REQUEST));
-        permissions.put(android.Manifest.permission.ACCESS_NETWORK_STATE, new PermissionRequest(/*R.string.default_error_message, */NETWORK_REQUEST));
         permissions.put(android.Manifest.permission.READ_SMS, new PermissionRequest(/*R.string.default_error_message, */READ_SMS_REQUEST));
         permissions.put(android.Manifest.permission.RECEIVE_SMS, new PermissionRequest(/*R.string.default_error_message, */RECEIVE_SMS_REQUEST));
-        permissions.put(REQUEST_GMS, new PermissionRequest(/*R.string.default_error_message, */GMS_REQUEST));
-        permissions.put(android.Manifest.permission.WAKE_LOCK, new PermissionRequest(/*R.string.default_error_message, */WAKE_LOCK_REQUEST));
-        permissions.put(REQUEST_MAKAAN_GMS, new PermissionRequest(/*R.string.default_error_message, */MAKAAN_GMS_REQUEST));
-        permissions.put(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionRequest(/*R.string.default_error_message, */WRITE_EXTERNAL_STORAGE_REQUEST));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            permissions.put(android.Manifest.permission.READ_EXTERNAL_STORAGE, new PermissionRequest(/*R.string.default_error_message, */READ_EXTERNAL_STORAGE_REQUEST));
-        }
     }
 
     public static PermissionManager begin() {
@@ -128,40 +112,17 @@ public class PermissionManager {
             case ACCOUNTS_REQUEST:
                 permissionsToRequest.add(Manifest.permission.GET_ACCOUNTS);
                 break;
-            case INTERNET_REQUEST:
-                permissionsToRequest.add(Manifest.permission.INTERNET);
-                break;
             case CALL_PHONE_REQUEST:
                 permissionsToRequest.add(Manifest.permission.CALL_PHONE);
                 break;
             case FINE_LOCATION_REQUEST:
                 permissionsToRequest.add(Manifest.permission.ACCESS_FINE_LOCATION);
                 break;
-            case NETWORK_REQUEST:
-                permissionsToRequest.add(Manifest.permission.ACCESS_NETWORK_STATE);
-                break;
             case READ_SMS_REQUEST:
                 permissionsToRequest.add(Manifest.permission.READ_SMS);
                 break;
             case RECEIVE_SMS_REQUEST:
                 permissionsToRequest.add(Manifest.permission.RECEIVE_SMS);
-                break;
-            case GMS_REQUEST:
-                permissionsToRequest.add(REQUEST_GMS);
-                break;
-            case WAKE_LOCK_REQUEST:
-                permissionsToRequest.add(Manifest.permission.WAKE_LOCK);
-                break;
-            case MAKAAN_GMS_REQUEST:
-                permissionsToRequest.add(REQUEST_MAKAAN_GMS);
-                break;
-            case WRITE_EXTERNAL_STORAGE_REQUEST:
-                permissionsToRequest.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                break;
-            case READ_EXTERNAL_STORAGE_REQUEST:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    permissionsToRequest.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-                }
                 break;
         }
         return this;

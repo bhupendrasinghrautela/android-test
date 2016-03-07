@@ -44,7 +44,9 @@ public class LocalityPropertiesFragment extends MakaanBaseFragment {
 
     private void initView() {
         title = getArguments().getString("title");
-        titleTv.setText(title);
+        if(title != null) {
+            titleTv.setText(title.toLowerCase());
+        }
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);

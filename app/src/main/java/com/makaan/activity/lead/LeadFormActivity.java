@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
@@ -58,6 +59,8 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
         String area=this.getIntent().getExtras().getString("area");
         String bhk=this.getIntent().getExtras().getString("bhkAndUnitType");
         String locality=this.getIntent().getExtras().getString("locality");
+        String project=this.getIntent().getExtras().getString("project");
+        String builder=this.getIntent().getExtras().getString("builder");
         boolean assist=this.getIntent().getExtras().getBoolean("assist");
         source=this.getIntent().getExtras().getString("source");
         int cityId= (int) this.getIntent().getExtras().getLong("cityId");
@@ -87,8 +90,14 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
             mLeadFormPresenter.setBhkAndUnitType(bhk);
         }
 
-        if(null!=locality){
-            mLeadFormPresenter.setLocality(locality);
+        if(!TextUtils.isEmpty(project)) {
+            if(!TextUtils.isEmpty(builder)) {
+                mLeadFormPresenter.setLocality(String.format("%s %s", builder, project).toLowerCase());
+            } else {
+                mLeadFormPresenter.setLocality(project.toLowerCase());
+            }
+        } else if(!TextUtils.isEmpty(builder)) {
+            mLeadFormPresenter.setLocality(builder.toLowerCase());
         }
 
         if(assist){

@@ -3,6 +3,9 @@ package com.makaan.fragment.buyerJourney;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,12 +22,15 @@ import android.widget.TextView;
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.R;
+import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
+import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ApiConstants;
 import com.makaan.event.buyerjourney.NewMatchesGetEvent;
 import com.makaan.event.saveSearch.SaveSearchGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.fragment.MakaanMessageDialogFragment;
 import com.makaan.fragment.listing.SetAlertsDialogFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
@@ -38,6 +44,7 @@ import com.makaan.response.project.Builder;
 import com.makaan.response.saveSearch.SaveSearch;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
+import com.makaan.ui.CustomNetworkImageView;
 import com.makaan.util.ErrorUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
@@ -60,6 +67,8 @@ public class SaveSearchFragment extends MakaanBaseFragment {
 
     private SaveSearchAdapter mAdapter;
     private Context context;
+    private Bitmap mDefaultBitmap = null;
+    private BuyerDashboardCallbacks mCallback;
 
     @Override
     protected int getContentViewId() {
@@ -79,19 +88,23 @@ public class SaveSearchFragment extends MakaanBaseFragment {
             if (mRecyclerView != null) {
                 mRecyclerView.setAdapter(mAdapter);
             }
-            // todo response event is also received by BuyerJourneyFragment
             ArrayList<Long> ids = new ArrayList<>();
             for(SaveSearch search : saveSearches) {
                 ids.add(search.id);
             }
             ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).getSavedSearchesNewMatchesByIds(ids);
         }
+        mDefaultBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.locality_hero);
     }
 
     private void initView() {
         LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    public void setData(BuyerDashboardCallbacks callbacks) {
+        this.mCallback = callbacks;
     }
 
 
@@ -102,7 +115,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             private final ImageView deleteImageView;
-            private final FadeInNetworkImageView backgroundImageView;
+            private final CustomNetworkImageView backgroundImageView;
             private final TextView newMatchesCountTextView;
             // each data item is just a string in this case
             public TextView saveSearchName;
@@ -114,7 +127,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
             public ViewHolder(View v) {
                 super(v);
                 v.setOnClickListener(this);
-                backgroundImageView = (FadeInNetworkImageView) v.findViewById(R.id.iv_search);
+                backgroundImageView = (CustomNetworkImageView) v.findViewById(R.id.iv_search);
                 saveSearchName = (TextView) v.findViewById(R.id.search_name);
                 saveSearchFilter = (TextView) v.findViewById(R.id.filter_name);
                 saveSearchPlace = (TextView) v.findViewById(R.id.place_name);
@@ -127,7 +140,19 @@ public class SaveSearchFragment extends MakaanBaseFragment {
             public void onClick(View v) {
                 if(v instanceof ImageView) {
                     if(searchId != null) {
-                        ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).removeSavedSearch(searchId);
+                        MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
+                                "delete saved search " + saveSearchName.getText().toString() + "?", "delete", "cancel",
+                                new MakaanMessageDialogFragment.MessageDialogCallbacks() {
+                            @Override
+                            public void onPositiveClicked() {
+                                ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).removeSavedSearch(searchId);
+                            }
+
+                            @Override
+                            public void onNegativeClicked() {
+
+                            }
+                        });
                     }
                 } else if(savedSearches != null && savedSearches.size() > position) {
                     SerpRequest request = new SerpRequest(SerpActivity.TYPE_SUGGESTION);
@@ -241,7 +266,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                         }
                     }
                 }
-                holder.backgroundImageView.setDefaultImageResId(R.drawable.locality_hero);
+                holder.backgroundImageView.setLocalImageBitmap(mDefaultBitmap);
             } else {
                 Configuration configuration = getResources().getConfiguration();
                 int width = (int) (configuration.screenHeightDp * Resources.getSystem().getDisplayMetrics().density);
@@ -270,7 +295,12 @@ public class SaveSearchFragment extends MakaanBaseFragment {
             return;
         }
         if(saveSearchGetEvent.saveSearchArrayList == null || saveSearchGetEvent.saveSearchArrayList.size() == 0) {
-            showNoResults(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT));
+//            showNoResults(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT));
+            if(mCallback != null) {
+                Bundle bundle = new Bundle();
+                bundle.putString(BlogContentFragment.TYPE, BlogContentFragment.SEARCH);
+                mCallback.loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT, false, bundle, null, null);
+            }
         } else {
             mAdapter = new SaveSearchAdapter(saveSearchGetEvent.saveSearchArrayList);
             if (mRecyclerView != null) {
@@ -319,8 +349,10 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                 @Override
                 public void onSuccess(Object responseObject) {
                     Locality locality = (Locality) responseObject;
-                    ImageObject.this.imageUrl = locality.localityHeroshotImageUrl;
-                    mAdapter.notifyDataSetChanged();
+                    if(locality != null && locality.localityHeroshotImageUrl != null) {
+                        ImageObject.this.imageUrl = locality.localityHeroshotImageUrl;
+                        mAdapter.notifyDataSetChanged();
+                    }
                 }
             });
         }
@@ -348,8 +380,10 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                     @Override
                     public void onSuccess(Object responseObject) {
                         City city = (City) responseObject;
-                        ImageObject.this.imageUrl = city.cityHeroshotImageUrl;
-                        mAdapter.notifyDataSetChanged();
+                        if(city != null && city.cityHeroshotImageUrl != null) {
+                            ImageObject.this.imageUrl = city.cityHeroshotImageUrl;
+                            mAdapter.notifyDataSetChanged();
+                        }
                     }
                 });
             }
@@ -373,7 +407,10 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                     public void onSuccess(Object responseObject) {
                         Builder builder = (Builder) responseObject;
 
-                        ImageObject.this.imageUrl = builder.imageURL;
+                        if(builder != null && builder.imageURL != null) {
+                            ImageObject.this.imageUrl = builder.imageURL;
+                            mAdapter.notifyDataSetChanged();
+                        }
                     }
                 });
             }

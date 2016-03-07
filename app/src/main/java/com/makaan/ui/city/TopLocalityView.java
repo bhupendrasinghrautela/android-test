@@ -2,6 +2,7 @@ package com.makaan.ui.city;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,7 +66,12 @@ public class TopLocalityView extends BaseLinearLayout<List<Locality>> {
             TextView localityAvgPriceRise = (TextView) localityItem.findViewById(R.id.city_avg_percent_rise);
             TextView localityScore = (TextView) localityItem.findViewById(R.id.locality_score_text);
             ProgressBar localityScoreProgress = (ProgressBar) localityItem.findViewById(R.id.locality_score_progress);
-            localityLabel.setText(locality.label);
+            if(!TextUtils.isEmpty(locality.label)) {
+                localityLabel.setText(locality.label.toLowerCase());
+                localityLabel.setVisibility(VISIBLE);
+            } else {
+                localityLabel.setVisibility(INVISIBLE);
+            }
             //TODO calculate avg price from aggregation
             Integer avg = LocalityUtil.calculateAveragePrice(locality.listingAggregations).intValue();
             if(avg != null && avg>0) {

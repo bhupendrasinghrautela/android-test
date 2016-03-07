@@ -128,7 +128,7 @@ public class MultiSelectionSpinner extends Spinner implements  OnMultiChoiceClic
         _items = new String[items.size()];
         _ids = new Integer[items.size()];
         for(int i=0;i< items.size();i++){
-            _items[i] = items.get(i).name;
+            _items[i] = items.get(i).name.toLowerCase();
             _ids[i] = items.get(i).id;
         }
         mSelection = new boolean[_items.length];

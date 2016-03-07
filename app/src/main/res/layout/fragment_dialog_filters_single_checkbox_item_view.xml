@@ -24,7 +24,8 @@
     <ImageView
         android:id="@+id/fragment_dialog_filters_single_checkbox_item_view_image_view"
         android:layout_width="60dp"
-        android:layout_height="25dp"
+        android:layout_height="20dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:scaleType="centerCrop"/>
 </LinearLayout>

@@ -285,6 +285,10 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 new LocationServiceConnectionListener(this, mMakaanLocationManager);
 
         mMakaanLocationManager.connectLocationApiClient(this, listener, this, mode);
+        Session.locationRequested = true;
+        if(mSearchResultFrameLayout.getVisibility() == View.VISIBLE && mSearchAdapter != null) {
+            mSearchAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -295,6 +299,10 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             try {
                 stopLocationUpdate(this);
             }catch(Exception e){}
+        }
+        if(mSearchResultFrameLayout.getVisibility() == View.VISIBLE && mSearchAdapter != null) {
+            mSearchAdapter.notifyDataSetChanged();
+            Session.locationRequested = false;
         }
     }
 
@@ -609,11 +617,26 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 } else if(!getLocationAvailabilty()) {
                     // location provider is not enabled
                     // todo get message from product team and discuss if we should use only mobile location
-                    MakaanMessageDialogFragment.showMessage(getFragmentManager(), "please enable location provider to use this option", "ok");
+                    MakaanMessageDialogFragment.showMessage(getFragmentManager(), "please enable location provider to use this option", "ok",
+                            new MakaanMessageDialogFragment.MessageDialogCallbacks() {
+                        @Override
+                        public void onPositiveClicked() {
+                            Intent i = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            startActivity(i);
+                        }
+
+                        @Override
+                        public void onNegativeClicked() {
+
+                        }
+                    });
                     return;
-                } else if(Session.phoneLocation == null && Session.apiLocation == null) {
+                } else if(Session.phoneLocation == null/* && Session.apiLocation == null*/) {
                     // if we don't need to request permission for gps
                     // and api location is also not available, then reject
+                    if(getLocationAvailabilty()) {
+                        connectLocationApiClient(MakaanLocationManager.LocationUpdateMode.ONCE);
+                    }
                     // todo show some message
                     return;
                 }
@@ -964,7 +987,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 addNearbyPropertiesSearchItem();
                 mSearchAdapter.setData(mAvailableSearches, true);
             } else {
-                if(this instanceof HomeActivity) {
+                //if(this instanceof HomeActivity) {
                     // check if we have user's location
                     if(Session.phoneLocation != null) {
                         LocationService service = (LocationService) MakaanServiceFactory.getInstance().getService(LocationService.class);
@@ -974,13 +997,13 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                         service.getTopLocalitiesAsSearchResult(Session.apiLocation.centerLatitude, Session.apiLocation.centerLongitude, Session.apiLocation.id);
                     }
                     showSearchResults();
-                } else {
+                /*} else {
                     clearSelectedSearches();
                     addNearbyPropertiesSearchItem();
                     // we need empty layout even when no search results are present
                     mSearchAdapter.setData(mAvailableSearches, false);
                     showSearchResults();
-                }
+                }*/
             }
         }
         if(mSerpContext == SERP_CONTEXT_BUY) {
@@ -998,10 +1021,10 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             if(Session.phoneLocation != null) {
                 item.latitude = Session.phoneLocation.getLatitude();
                 item.longitude = Session.phoneLocation.getLongitude();
-            } else if(Session.apiLocation != null) {
+            }/* else if(Session.apiLocation != null) {
                 item.latitude = Session.apiLocation.centerLatitude;
                 item.longitude = Session.apiLocation.centerLongitude;
-            }
+            }*/
             mAvailableSearches.add(0, item);
 //        }
     }

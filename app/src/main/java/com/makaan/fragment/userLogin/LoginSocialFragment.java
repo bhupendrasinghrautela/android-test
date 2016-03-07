@@ -1,8 +1,10 @@
 package com.makaan.fragment.userLogin;
 
+import android.Manifest;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,6 +26,7 @@ import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.user.UserLoginEvent;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.notification.GcmRegister;
 import com.makaan.response.login.OnLoginWithMakaanSelectedListener;
 import com.makaan.response.login.OnUserLoginListener;
 
@@ -35,6 +38,7 @@ import com.makaan.service.user.OnFacebookTokenListener;
 import com.makaan.service.user.OnGoogleTokenListener;
 import com.makaan.service.user.UserLoginService;
 import com.makaan.util.NetworkUtil;
+import com.makaan.util.PermissionManager;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
@@ -122,13 +126,19 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
         if (!NetworkUtil.isNetworkAvailable(getActivity())) {
             return;
         }
-        loginType=UserLoginPresenter.LOGIN_GMAIL;
-        try {
-            Intent intent = AccountPicker.newChooseAccountIntent(null, null, new String[]
-                    {GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, true, null, null, null, null);
+        if(PermissionManager.isPermissionRequestRequired(getActivity(), Manifest.permission.GET_ACCOUNTS)) {
+            PermissionManager.begin().addRequest(PermissionManager.ACCOUNTS_REQUEST).request(getActivity());
+        } else {
+            loginType = UserLoginPresenter.LOGIN_GMAIL;
+            try {
+                Intent intent = AccountPicker.newChooseAccountIntent(null, null, new String[]
+                        {GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, true, null, null, null, null);
 
-            startActivityForResult(intent, GOOGLE_ACCOUNT_PICKER_CODE);
-        } catch (Exception e) {}
+                startActivityForResult(intent, GOOGLE_ACCOUNT_PICKER_CODE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @OnClick(R.id.makaan_login)
@@ -218,6 +228,23 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
     @OnClick(R.id.iv_back)
     public void onBackPressed(){
         getActivity().onBackPressed();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if ((requestCode & PermissionManager.ACCOUNTS_REQUEST)
+                == PermissionManager.ACCOUNTS_REQUEST) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                GcmRegister.checkAndSetGcmId(getActivity(), null);
+                onGoogleLoginClick();
+            } else if(grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                // TODO show message or something
+            }
+        }
     }
 }
 
