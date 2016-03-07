@@ -63,8 +63,8 @@ public class ProjectSpecificationItemView extends LinearLayout implements View.O
     private void addViews(SpecificaitonsUI item, int i) {
         final View specificationView =
                 mLayoutInflater.inflate(R.layout.row_project_specification_item, null);
-        ((TextView) specificationView.findViewById(R.id.tv_project_specification_item_labe_one)).setText(item.label1);
-        ((TextView) specificationView.findViewById(R.id.tv_project_specification_item_labe_two)).setText(item.label2);
+        ((TextView) specificationView.findViewById(R.id.tv_project_specification_item_labe_one)).setText(item.label1 != null ? item.label1.toLowerCase() : "");
+        ((TextView) specificationView.findViewById(R.id.tv_project_specification_item_labe_two)).setText(item.label2 != null ? item.label2.toLowerCase() : "");
         specifactionItemView.addView(specificationView,i);
     }
     private void removeViews(int i) {

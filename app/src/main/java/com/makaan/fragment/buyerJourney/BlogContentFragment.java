@@ -259,7 +259,9 @@ public class BlogContentFragment extends MakaanBaseFragment {
             if(holder.viewType == TYPE_ITEM) {
                 int itemPosition = position-1;
                 holder.imageView.setImageUrl(mBlogItems.get(itemPosition).primaryImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
-                holder.titleTextView.setText(mBlogItems.get(itemPosition).postTitle);
+                if(mBlogItems.get(itemPosition).postTitle != null) {
+                    holder.titleTextView.setText(mBlogItems.get(itemPosition).postTitle.toLowerCase());
+                }
                 holder.link = mBlogItems.get(itemPosition).guid;
             } else {
                 initHeaderUi(holder.view);

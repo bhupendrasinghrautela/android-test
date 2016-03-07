@@ -322,19 +322,20 @@ public class ProjectFragment extends MakaanBaseFragment{
             return;
         }
         try {
+            Double price = project.minPrice != null ? project.minPrice : project.minResaleOrPrimaryPrice;
             if (imagesGetEvent.images.size() > 0) {
                 mPropertyImageViewPager.setVisibility(View.VISIBLE);
                 mPropertyImageViewPager.bindView();
-                if(project.locality.avgPricePerUnitArea!=null) {
+                if(project.locality.avgPricePerUnitArea!=null && project.minPricePerUnitArea != null) {
                     if(project.locality.avgPricePerUnitArea>project.minPricePerUnitArea) {
-                        mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice, project.minPricePerUnitArea, false,null);
+                        mPropertyImageViewPager.setData(imagesGetEvent.images, price, project.minPricePerUnitArea, false,null);
                     }
                     else{
-                        mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice, project.minPricePerUnitArea, true,null);
+                        mPropertyImageViewPager.setData(imagesGetEvent.images, price, project.minPricePerUnitArea, true,null);
                     }
                 }
                 else{
-                    mPropertyImageViewPager.setData(imagesGetEvent.images, project.minPrice, project.minPricePerUnitArea, false,null);
+                    mPropertyImageViewPager.setData(imagesGetEvent.images, price, project.minPricePerUnitArea, false,null);
                 }
             } else {
                 mPropertyImageViewPager.setVisibility(View.GONE);

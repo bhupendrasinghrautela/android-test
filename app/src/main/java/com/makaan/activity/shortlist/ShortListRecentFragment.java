@@ -137,8 +137,12 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
             public void bindData(final RecentPropertyProjectManager.DataObject dataObject) {
                 ((FadeInNetworkImageView)view.findViewById(R.id.iv_content)).setImageUrl(dataObject.imageUrl, MakaanNetworkClient.getInstance().getImageLoader());
                 ((TextView)view.findViewById(R.id.tv_price_value)).setText(StringUtil.getDisplayPrice(dataObject.price));
-                ((TextView)view.findViewById(R.id.tv_area)).setText(dataObject.addressLine1);
-                ((TextView)view.findViewById(R.id.tv_locality)).setText(dataObject.addressLine2);
+                if(dataObject.addressLine1 != null) {
+                    ((TextView) view.findViewById(R.id.tv_area)).setText(dataObject.addressLine1.toLowerCase());
+                }
+                if(dataObject.addressLine2 != null) {
+                    ((TextView) view.findViewById(R.id.tv_locality)).setText(dataObject.addressLine2.toLowerCase());
+                }
                 // TODO check below statement
 //                if(!TextUtils.isEmpty(dataObject.phoneNo)) {
                 if(!TextUtils.isEmpty(dataObject.sellerName)) {

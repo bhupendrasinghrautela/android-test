@@ -375,7 +375,14 @@ public class ViewSellersDialogFragment extends DialogFragment {
                 holder.mSellerLogoTextView.setBackgroundDrawable(drawable);
             }
             if(mSellerCards.get(position).name!=null) {
-                holder.mSellerName.setText(mSellerCards.get(position).name + (mSellerCards.get(position).type==null?"":"("+mSellerCards.get(position).type+")"));
+                if(mSellerCards.get(position).type != null && "broker".equalsIgnoreCase(mSellerCards.get(position).type)) {
+                    holder.mSellerName.setText(String.format("%s (%s)", mSellerCards.get(position).name, "agent").toLowerCase());
+                } else if(!TextUtils.isEmpty(mSellerCards.get(position).type)) {
+                    holder.mSellerName.setText(String.format("%s (%s)", mSellerCards.get(position).name, mSellerCards.get(position).type).toLowerCase());
+                } else {
+                    holder.mSellerName.setText(mSellerCards.get(position).name);
+                }
+
                 holder.mSellerLogoTextView.setText(String.valueOf(mSellerCards.get(position).name.charAt(0)));
             }
         }
