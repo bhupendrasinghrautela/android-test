@@ -21,6 +21,7 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.project.Builder;
 import com.makaan.util.AppBus;
 import com.makaan.util.Blur;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.StringUtil;
 import com.squareup.otto.Subscribe;
 
@@ -130,8 +131,11 @@ public class BuilderListingView extends AbstractCardListingView {
         mBuilderAvgDelayTextView.setText(String.format("%d%s", builder.projectStatusCount.cancelled, "%"));
 
         if(builder.imageURL != null) {
+            int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_item_builder_image_card_view_width);
+            int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_item_builder_image_card_view_height);
             // get seller image
-            MakaanNetworkClient.getInstance().getImageLoader().get(builder.imageURL, new ImageLoader.ImageListener() {
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(builder.imageURL, width, height, false),
+                    new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {

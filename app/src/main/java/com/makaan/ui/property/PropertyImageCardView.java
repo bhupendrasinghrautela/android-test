@@ -12,6 +12,7 @@ import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.image.Image;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.StringUtil;
 
 import java.text.DecimalFormat;
@@ -81,7 +82,10 @@ public class PropertyImageCardView extends CardView {
         }
 
         mPropertyImageView.setDefaultImageResId(R.drawable.luxury_project);
-        mPropertyImageView.setImageUrl(listingDetailImage.absolutePath, MakaanNetworkClient.getInstance().getImageLoader());
+        int width = getResources().getConfiguration().screenWidthDp;
+        int height = (int)Math.ceil(getResources().getDimension(R.dimen.property_page_stack_like_pager_height));
+        mPropertyImageView.setImageUrl(ImageUtils.getImageRequestUrl(listingDetailImage.absolutePath, width, height, true),
+                MakaanNetworkClient.getInstance().getImageLoader());
         if(category == null){
             initData(size,price,hasIncreased,mContext);
         }

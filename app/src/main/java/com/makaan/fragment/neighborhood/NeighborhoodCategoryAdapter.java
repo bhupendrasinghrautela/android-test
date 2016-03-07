@@ -14,6 +14,7 @@ import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.amenity.AmenityCluster;
+import com.makaan.util.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,7 +109,8 @@ public class NeighborhoodCategoryAdapter extends RecyclerView.Adapter<RecyclerVi
             finalImageUrl.append("/");
             finalImageUrl.append(amenityCluster.amenityId);
             finalImageUrl.append(".png");
-            icon.setImageUrl(finalImageUrl.toString(), MakaanNetworkClient.getInstance().getImageLoader());
+            int width = mContext.getResources().getDimensionPixelSize(R.dimen.neighbor_category_icon_width_height);
+            icon.setImageUrl(ImageUtils.getImageRequestUrl(finalImageUrl.toString(), width, width, false), MakaanNetworkClient.getInstance().getImageLoader());
             label.setText(amenityCluster.name);
         }
 

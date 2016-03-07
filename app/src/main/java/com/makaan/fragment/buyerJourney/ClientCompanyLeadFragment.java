@@ -240,7 +240,10 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
                 }
                 if(listingDetail != null && listingDetail.listing != null) {
                     if(!TextUtils.isEmpty(listingDetail.listing.mainImageURL)) {
-                        imageView.setImageUrl(listingDetail.listing.mainImageURL, MakaanNetworkClient.getInstance().getImageLoader());
+                        int width = getResources().getConfiguration().screenWidthDp;
+                        int height = (int)Math.ceil(getResources().getDimension(R.dimen.buyer_dashboard_listing_view_height));
+                        imageView.setImageUrl(ImageUtils.getImageRequestUrl(listingDetail.listing.mainImageURL, width, height, true),
+                                MakaanNetworkClient.getInstance().getImageLoader());
                     }
 
                     if(listingDetail.listing.currentListingPrice != null) {

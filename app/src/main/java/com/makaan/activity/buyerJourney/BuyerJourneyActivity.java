@@ -37,6 +37,7 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.user.UserResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.user.UserLogoutService;
+import com.makaan.util.ImageUtils;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
@@ -215,7 +216,10 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
                 if(userData != null) {
                     mUserName.setText(userData.getFirstName());
                     if (!TextUtils.isEmpty(userData.getProfileImageUrl())) {
-                        MakaanNetworkClient.getInstance().getImageLoader().get(userData.profileImageUrl, new ImageLoader.ImageListener() {
+                        int width = getResources().getDimensionPixelSize(R.dimen.profile_image_width);
+                        int height = getResources().getDimensionPixelSize(R.dimen.profile_image_height);
+                        MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(userData.profileImageUrl, width, height, false),
+                                new ImageLoader.ImageListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError volleyError) {
 

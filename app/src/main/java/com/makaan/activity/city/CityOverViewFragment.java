@@ -63,6 +63,7 @@ import com.makaan.ui.MultiSelectionSpinner.OnSelectionChangeListener;
 import com.makaan.ui.PriceTrendView;
 import com.makaan.ui.city.TopLocalityView;
 import com.makaan.util.Blur;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.LocalityUtil;
 import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
@@ -206,7 +207,10 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     }
 
     private void initUiUsingCityDetails() {
-        mMainCityImage.setImageUrl(mCity.cityHeroshotImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
+        int width = getResources().getConfiguration().screenWidthDp;
+        int height = getResources().getConfiguration().screenHeightDp;
+        mMainCityImage.setImageUrl(ImageUtils.getImageRequestUrl(mCity.cityHeroshotImageUrl, width, height, true),
+                MakaanNetworkClient.getInstance().getImageLoader());
         new CityService().getPropertyRangeInCity(mCity.id,null,null,false,mCity.cityBuyMinPrice.intValue(),mCity.cityBuyMaxPrice.intValue(),
                 (mCity.cityBuyMaxPrice.intValue()-mCity.cityBuyMinPrice.intValue())/20);
         if(mCity.label!=null) {
@@ -220,7 +224,8 @@ public class CityOverViewFragment extends MakaanBaseFragment{
                 mCity.minLuxuryPrice, mCity.maxBudgetPrice));
         //mCityConnectHeader.setText(getString(R.string.city_connect_header_text) + " " + mCity.label);
         if(mCity.cityHeroshotImageUrl != null) {
-            MakaanNetworkClient.getInstance().getImageLoader().get(mCity.cityHeroshotImageUrl, new ImageListener() {
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(mCity.cityHeroshotImageUrl, width, height, true),
+                    new ImageListener() {
                 @Override
                 public void onResponse(final ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {
