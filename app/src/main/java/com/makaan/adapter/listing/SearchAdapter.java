@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.cookie.Session;
 import com.makaan.response.search.SearchResponseHelper;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.SearchSuggestionType;
@@ -123,6 +124,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     || (SearchSuggestionType.ERROR.getValue().equalsIgnoreCase(searchResponseItem.type) && viewType == TYPE_ERROR)) {
                 ((TextView)view.findViewById(R.id.search_result_item_name_text_view)).setText(searchResponseItem.displayText.toLowerCase());
             } else {
+                view.findViewById(R.id.search_result_item_progress_bar).setVisibility(View.GONE);
 
                 // TODO need to check which kind of data we should map
                 if (TextUtils.isEmpty(SearchResponseHelper.getType(searchResponseItem))) {
@@ -148,6 +150,9 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 // TODO implement lru cache
                 if (SearchSuggestionType.NEARBY_PROPERTIES.getValue().equalsIgnoreCase(searchResponseItem.type)) {
                     ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_near_by);
+                    if(Session.phoneLocation == null && Session.locationRequested) {
+                        view.findViewById(R.id.search_result_item_progress_bar).setVisibility(View.VISIBLE);
+                    }
                 } else if (mIsRecent) {
                     ((ImageView) view.findViewById(R.id.search_result_item_image_view)).setImageResource(R.drawable.search_recent);
                     if (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)

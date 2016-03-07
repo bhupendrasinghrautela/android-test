@@ -56,14 +56,31 @@ public class SelectorParser {
                         Iterator<String> keyIterator = equal.keys();
                         while (keyIterator.hasNext()) {
                             String key = keyIterator.next();
-                            if (key == KeyUtil.CITY_ID) {
-                                String cityId = equal.getString(key);
-                                request.addTerm(key, cityId);
-                            }
-                            JSONArray array = equal.getJSONArray(key);
-                            for (int j = 0; j < array.length(); j++) {
-                                if (request != null) {
-                                    request.addTerm(key, array.getString(j));
+                            try {
+                                JSONArray array = equal.getJSONArray(key);
+                                for (int j = 0; j < array.length(); j++) {
+                                    if (request != null) {
+                                        request.addTerm(key, array.getString(j));
+                                    }
+                                }
+                            } catch (JSONException e1) {
+                                try {
+                                    String array = equal.getString(key);
+                                    if(request != null) {
+                                        request.addTerm(key, array);
+                                    }
+                                } catch (JSONException e2) {
+                                    try {
+                                        Integer array = equal.getInt(key);
+                                        if (request != null) {
+                                            request.addTerm(key, String.valueOf(array));
+                                        }
+                                    } catch (JSONException e3) {
+                                        Long array = equal.getLong(key);
+                                        if (request != null) {
+                                            request.addTerm(key, String.valueOf(array));
+                                        }
+                                    }
                                 }
                             }
                         }

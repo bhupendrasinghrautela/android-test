@@ -17,6 +17,7 @@ import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.jarvis.analytics.AnalyticsConstants;
 import com.makaan.jarvis.analytics.AnalyticsService;
 import com.makaan.jarvis.event.JarvisTrackExtraData;
+import com.makaan.pojo.SerpObjects;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.search.SearchResponseItem;
@@ -127,7 +128,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
 
     public void updateListings(ArrayList<Listing> listings, ArrayList<GroupListing> groupListings,
                                ArrayList<SearchResponseItem> selectedSearches, SerpRequestCallback serpRequestCallback,
-                               int requestType, int listingTotalCount) {
+                               int requestType, int listingTotalCount, boolean isBuyContext) {
         this.mSerpRequestCallback = serpRequestCallback;
         this.mRequestType = requestType;
         if(groupListings == null && listings == null) {
@@ -138,7 +139,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         }
         mTotalCount = listingTotalCount;
 
-        StringBuilder builder = new StringBuilder();
+        /*StringBuilder builder = new StringBuilder();
         builder.append(" properties ");
 
         if(selectedSearches.size() > 0 && SearchSuggestionType.GOOGLE_PLACE.getValue()
@@ -157,32 +158,37 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         if(selectedSearches != null && selectedSearches.size() > 0) {
             if(SearchSuggestionType.CITY.getValue().equals(selectedSearches.get(0).type)) {
                 if(!TextUtils.isEmpty(selectedSearches.get(0).city)) {
-                    builder.append(selectedSearches.get(0).city);
+                    builder.append(selectedSearches.get(0).city.toLowerCase());
                 }
             } else if(SearchSuggestionType.BUILDERCITY.getValue().equals(selectedSearches.get(0).type)) {
                 if(!TextUtils.isEmpty(selectedSearches.get(0).builderName)) {
-                    builder.append(selectedSearches.get(0).builderName);
+                    builder.append(selectedSearches.get(0).builderName.toLowerCase());
                 }
                 if(!TextUtils.isEmpty(selectedSearches.get(0).entityName)) {
                     builder.append(" in ");
-                    builder.append(selectedSearches.get(0).entityName);
+                    builder.append(selectedSearches.get(0).entityName.toLowerCase());
                 }
             } else {
                 for(SearchResponseItem search : selectedSearches) {
                     if(!TextUtils.isEmpty(search.entityName)) {
                         if(SearchSuggestionType.GOOGLE_PLACE.getValue().equalsIgnoreCase(search.type)) {
-                            builder.append(search.entityName);
+                            builder.append(search.entityName.toLowerCase());
                         } else {
-                            builder.append(String.format("%s, ", search.entityName));
+                            builder.append(String.format("%s, ", search.entityName.toLowerCase()));
                         }
                     }
                 }
                 if(!TextUtils.isEmpty(selectedSearches.get(0).city)) {
-                    builder.append(selectedSearches.get(0).city);
+                    builder.append(selectedSearches.get(0).city.toLowerCase());
                 }
             }
         }
-        mSearchedEntities = builder.toString();
+        mSearchedEntities = builder.toString();*/
+        if(isBuyContext) {
+            mSearchedEntities = " properties for sale";
+        } else {
+            mSearchedEntities = " properties for rent";
+        }
 
         if(mListingAdapter != null && mListingRecyclerView != null) {
 

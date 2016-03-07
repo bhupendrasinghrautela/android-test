@@ -87,7 +87,8 @@ public class ListingService implements MakaanService {
 
         if (null != listingId) {
             Selector listingDetailSelector = new Selector();
-            listingDetailSelector.fields(new String[]{"logo","profilePictureURL","score","masterAmenityIds","companySeller","overviewUrl","constructionStatusId","mainImage", "activeStatus", "mainImageURL", "avgPriceRisePercentage", "amenitiesIds", "contactNumber", "registered", "contactNumbers", "seller", "company", "user", "imageURL", "cityId", "latitude", "longitude", "percentageCompletionOnTime", "priceAllInclusive", "type", "altText", "title", "imageType", "absolutePath", "imageTypeId", "URL", "percentageCompletionOnTime", "projectStatusCount", "tenantType", "noOfOpenSides", "studyRoom", "poojaRoom", "servantRoom", "balcony", "bedrooms", "bathrooms", "possessionDate", "facingId", "maxConstructionCompletionDate", "minConstructionCompletionDate", "unitName", "unitType", "livabilityScore", "url", "availability", "size", "unitTypeId", "percentageCompletionOnTime", "establishedDate", "description", "poojaRoom", "servantRoom", "mainEntryRoadWidth", "tenantTypes", "derivedAvailability", "projectStatus", "listingCategory", "id", "label", "name", "floor", "securityDeposit", "propertyId", "images", "furnished", "ownershipTypeId", "viewDirections", "viewType", "bookingAmount", "pricePerUnitArea","avgPricePerUnitArea", "price", "currentListingPrice", "totalFloors", "project", "property", "builder", "locality","localityId", "suburb", "city", "specifications", "furnishings", "amenity", "projectAmenityId", "projectId", "amenityDisplayName", "listingAmenities", "amenityMaster", "verified", "amenityId", "amenityName", "abbreviation", "masterSpecification", "masterSpecificationCategory", "masterSpecClassName", "masterSpecId", "masterSpecCatId", "masterSpecCatDisplayName", "masterSpecParentCat", "masterSpecParentCatId", "masterSpecParentDisplayName", "masterFurnishingId", "masterFurnishing", "statusId", "sellerId", "ownerId", "seller", "rating", "assist", "fullName", "carParkingType", "noOfCarParks", "negotiable"});           String listingDetailUrl = ApiConstants.LISTING.concat(listingId.toString()).concat("?").concat(listingDetailSelector.build());
+            listingDetailSelector.fields(new String[]{"logo", "profilePictureURL", "score", "masterAmenityIds", "companySeller", "overviewUrl", "constructionStatusId", "mainImage", "activeStatus", "mainImageURL", "avgPriceRisePercentage", "amenitiesIds", "contactNumber", "registered", "contactNumbers", "seller", "company", "user", "imageURL", "cityId", "latitude", "longitude", "percentageCompletionOnTime", "priceAllInclusive", "type", "altText", "title", "imageType", "absolutePath", "imageTypeId", "URL", "percentageCompletionOnTime", "projectStatusCount", "tenantType", "noOfOpenSides", "studyRoom", "poojaRoom", "servantRoom", "balcony", "bedrooms", "bathrooms", "possessionDate", "facingId", "maxConstructionCompletionDate", "minConstructionCompletionDate", "unitName", "unitType", "livabilityScore", "url", "availability", "size", "unitTypeId", "percentageCompletionOnTime", "establishedDate", "description", "poojaRoom", "servantRoom", "mainEntryRoadWidth", "tenantTypes", "derivedAvailability", "projectStatus", "listingCategory", "id", "label", "name", "floor", "securityDeposit", "propertyId", "images", "furnished", "ownershipTypeId", "viewDirections", "viewType", "bookingAmount", "pricePerUnitArea", "avgPricePerUnitArea", "price", "currentListingPrice", "totalFloors", "project", "property", "builder", "locality", "localityId", "suburb", "city", "specifications", "furnishings", "amenity", "projectAmenityId", "projectId", "amenityDisplayName", "listingAmenities", "amenityMaster", "verified", "amenityId", "amenityName", "abbreviation", "masterSpecification", "masterSpecificationCategory", "masterSpecClassName", "masterSpecId", "masterSpecCatId", "masterSpecCatDisplayName", "masterSpecParentCat", "masterSpecParentCatId", "masterSpecParentDisplayName", "masterFurnishingId", "masterFurnishing", "statusId", "sellerId", "ownerId", "seller", "rating", "assist", "fullName", "carParkingType", "noOfCarParks", "negotiable"});
+            String listingDetailUrl = ApiConstants.LISTING.concat(listingId.toString()).concat("?").concat(listingDetailSelector.build());
             Type listingDetailType = new TypeToken<ListingDetail>() {
             }.getType();
 
@@ -125,7 +126,8 @@ public class ListingService implements MakaanService {
 
             selector.term("listingId", listingIds);
             String listingDetailUrl = ApiConstants.LISTING.concat("?").concat(selector.build());
-            Type listingDetailType = new TypeToken<ListingByIdsGetEvent>() {}.getType();
+            Type listingDetailType = new TypeToken<ListingByIdsGetEvent>() {
+            }.getType();
 
             MakaanNetworkClient.getInstance().get(listingDetailUrl, new JSONGetCallback() {
                 @Override
@@ -141,7 +143,8 @@ public class ListingService implements MakaanService {
                     if (responseObject != null) {
                         try {
                             JSONObject data = responseObject.getJSONObject(ResponseConstants.DATA);
-                            Type type = new TypeToken<ListingByIdsGetEvent>() {}.getType();
+                            Type type = new TypeToken<ListingByIdsGetEvent>() {
+                            }.getType();
                             ListingByIdsGetEvent listingByIdsGetEvent = MakaanBuyerApplication.gson.fromJson(data.toString(), type);
                             AppBus.getInstance().post(listingByIdsGetEvent);
                         } catch (JSONException e) {
@@ -156,10 +159,10 @@ public class ListingService implements MakaanService {
     }
 
 
-    public void getSimilarListingDetail(Long listingId){
+    public void getSimilarListingDetail(Long listingId) {
         if (null != listingId) {
             Selector listingDetailSelector = new Selector();
-            listingDetailSelector.fields(new String[]{"assist","company","companySeller","mainImageURL","resaleURL","overviewUrl","listing", "size", "isAssist", "carpetArea", "currentListingPrice", "unitName", "url", "id", "label", "name", "unitTypeId", "bedrooms", "type", "altText", "title", "carpetArea", "priceVerified", "imageType", "absolutePath",  "pricePerUnitArea", "price", "currentListingPrice", "project", "property", "builder", "locality", "suburb", "city", "amenity", "verified"});
+            listingDetailSelector.fields(new String[]{"assist", "company", "companySeller", "mainImageURL", "resaleURL", "overviewUrl", "listing", "size", "isAssist", "carpetArea", "currentListingPrice", "unitName", "url", "id", "label", "name", "unitTypeId", "bedrooms", "type", "altText", "title", "carpetArea", "priceVerified", "imageType", "absolutePath", "pricePerUnitArea", "price", "currentListingPrice", "project", "property", "builder", "locality", "suburb", "city", "amenity", "verified"});
 
             String listingDetailUrl = ApiConstants.SIMILAR_LISTING.concat(listingId.toString()).concat("?").concat(listingDetailSelector.build());
 
@@ -173,7 +176,7 @@ public class ListingService implements MakaanService {
 
                 @Override
                 public void onSuccess(String responseObject) {
-                    SimilarListingGetEvent similarListingGetEvent = (SimilarListingGetEvent) JsonParser.parseJson(responseObject,SimilarListingGetEvent.class);
+                    SimilarListingGetEvent similarListingGetEvent = (SimilarListingGetEvent) JsonParser.parseJson(responseObject, SimilarListingGetEvent.class);
 
                     //listingDetail.description = AppUtils.stripHtml(listingDetail.description);
                     AppBus.getInstance().post(similarListingGetEvent);
@@ -184,7 +187,7 @@ public class ListingService implements MakaanService {
     }
 
 
-    public void getListingDetailForEnquiry(Long listingId){
+    public void getListingDetailForEnquiry(Long listingId) {
         if (null != listingId) {
             Selector listingDetailSelector = new Selector();
             listingDetailSelector.field("user").field("mainImageURL").field("logo").field("profilePictureURL").field("currentListingPrice")
@@ -226,7 +229,7 @@ public class ListingService implements MakaanService {
     public void getOtherSellersOnListingDetail(Long projectId, Integer bedrooms, Integer bathrooms, Integer studyRoom, Integer poojaRoom, Integer servantRoom, Integer noOfSellers) {
 
         Selector otherSellersSelector = new Selector();
-        otherSellersSelector.fields(new String[]{"companyImage", "score", "contactNumber", "contactNumbers", "user", "name", "id","logo","profileImageURL", "label", "sellerId", "property", "currentListingPrice", "price", "bedrooms", "bathrooms", "size", "unitTypeId", "project", "projectId", "studyRoom", "servantRoom", "poojaRoom", "companySeller", "company", "companyScore"});
+        otherSellersSelector.fields(new String[]{"companyImage", "score", "contactNumber", "contactNumbers", "user", "name", "id", "logo", "profileImageURL", "label", "sellerId", "property", "currentListingPrice", "price", "bedrooms", "bathrooms", "size", "unitTypeId", "project", "projectId", "studyRoom", "servantRoom", "poojaRoom", "companySeller", "company", "companyScore"});
         if (null != projectId) {
             otherSellersSelector.term(PROJECT_ID, projectId.toString());
         }
@@ -257,7 +260,6 @@ public class ListingService implements MakaanService {
 
         MakaanNetworkClient.getInstance().get(otherSellersUrl.toString(), new ListingOtherSellersCallback());
     }
-
 
 
     public void handleSerpRequest(String selector, String gpId) {

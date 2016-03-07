@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by aishwarya on 26/01/16.
@@ -101,20 +102,23 @@ public class SaveSearchService implements MakaanService {
         String getSavedSearchUrl = ApiConstants.SAVED_SEARCH_NEW_MATCHES_URL;
         if(ids != null && ids.size() > 0) {
             String separator = "";
-            getSavedSearchUrl = getSavedSearchUrl.concat("?saveSearchId=");
+            getSavedSearchUrl = getSavedSearchUrl.concat("?savedSearchId=");
             for(Long id : ids) {
                 getSavedSearchUrl = getSavedSearchUrl.concat(separator);
                 getSavedSearchUrl = getSavedSearchUrl.concat(String.valueOf(id));
                 separator = ",";
             }
         }
-        Type saveSearchType = new TypeToken<NewMatchesGetEvent>() {
+        Type saveSearchType = new TypeToken<HashMap<String, Integer>>() {
         }.getType();
 
         MakaanNetworkClient.getInstance().get(getSavedSearchUrl, saveSearchType, new ObjectGetCallback() {
             @Override
             public void onSuccess(Object responseObject) {
-                NewMatchesGetEvent event = (NewMatchesGetEvent) responseObject;
+                NewMatchesGetEvent event = new NewMatchesGetEvent();
+                if(responseObject != null && responseObject instanceof HashMap) {
+                    event.data = (HashMap) responseObject;
+                }
                 AppBus.getInstance().post(event);
             }
 
@@ -151,6 +155,12 @@ public class SaveSearchService implements MakaanService {
             @Override
             public void onSuccess(Object responseObject) {
                 ArrayList<SaveSearch> saveSearch = (ArrayList<SaveSearch>) responseObject;
+                MasterDataCache.getInstance().clearSavedSearches();
+                for (SaveSearch savedSearch : saveSearch) {
+                    if (null != savedSearch) {
+                        MasterDataCache.getInstance().addSavedSearch(savedSearch);
+                    }
+                }
                 AppBus.getInstance().post(new SaveSearchGetEvent(saveSearch));
             }
 

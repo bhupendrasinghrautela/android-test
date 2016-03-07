@@ -12,7 +12,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
@@ -58,7 +57,6 @@ import com.makaan.ui.view.MPlusBadgePopupDialog;
 import com.makaan.util.ErrorUtil;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.Preference;
-import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
@@ -485,14 +483,14 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 // create new listing fragment to show the listings
                 mChildSerpListFragment = SerpListFragment.init(true);
                 updateListings(listingGetEvent, null);
-                mChildSerpListFragment.updateListings(mChildListings, null, getSelectedSearches(), this, mSerpRequestType, mChildListingCount);
+                mChildSerpListFragment.updateListings(mChildListings, null, getSelectedSearches(), this, mSerpRequestType, mChildListingCount, mSerpContext == SERP_CONTEXT_BUY);
 
                 initFragments(new int[]{R.id.activity_serp_similar_properties_frame_layout, R.id.activity_serp_content_frame_layout},
                         new Fragment[]{childSerpClusterFragment, mChildSerpListFragment}, true);
 
             } else {
                 updateListings(listingGetEvent, null);
-                mChildSerpListFragment.updateListings(mChildListings, null, getSelectedSearches(), this, mSerpRequestType, mChildListingCount);
+                mChildSerpListFragment.updateListings(mChildListings, null, getSelectedSearches(), this, mSerpRequestType, mChildListingCount, mSerpContext == SERP_CONTEXT_BUY);
             }
         } else {
             mListingGetEvent = listingGetEvent;
@@ -507,12 +505,12 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                     mListingFragment = SerpListFragment.init(false);
 
                     updateListings(listingGetEvent, mGroupListingGetEvent);
-                    mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, mSerpRequestType, mListingCount);
+                    mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, mSerpRequestType, mListingCount, mSerpContext == SERP_CONTEXT_BUY);
                     initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
                 } else {
                     // update already running listing fragment with the new list
                     updateListings(listingGetEvent, mGroupListingGetEvent);
-                    mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, mSerpRequestType, mListingCount);
+                    mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, mSerpRequestType, mListingCount, mSerpContext == SERP_CONTEXT_BUY);
 
                     if((mSerpRequestType & MASK_LISTING_UPDATE_TYPE) == 0) {
                         initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
@@ -556,12 +554,12 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 // create new listing fragment to show the listings
                 mListingFragment = SerpListFragment.init(false);
                 updateListings(mListingGetEvent, mGroupListingGetEvent);
-                mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, mSerpRequestType, mListingCount);
+                mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, mSerpRequestType, mListingCount, mSerpContext == SERP_CONTEXT_BUY);
                 initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
             } else {
                 // update already running listing fragment with the new list
                 updateListings(mListingGetEvent, mGroupListingGetEvent);
-                mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, mSerpRequestType, mListingCount);
+                mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, mSerpRequestType, mListingCount, mSerpContext == SERP_CONTEXT_BUY);
             }
 
 
@@ -725,7 +723,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             if(mListingFragment == null) {
                 mListingFragment = SerpListFragment.init(false);
             }
-            mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE), mListingCount);
+            mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE), mListingCount, mSerpContext == SERP_CONTEXT_BUY);
             initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
             setJarvisVisibility(true);
         } else {
@@ -985,6 +983,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                     }
                 } else if(SearchSuggestionType.BUILDER.getValue().equalsIgnoreCase(selectedSearches.get(0).type)
                         || SearchSuggestionType.BUILDERCITY.getValue().equalsIgnoreCase(selectedSearches.get(0).type)) {
+                    return null;
+                } else if(SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(selectedSearches.get(0).type)) {
                     return null;
                 } else {
                     for(SearchResponseItem search : selectedSearches) {
