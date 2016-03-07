@@ -384,7 +384,7 @@ public class PyrPagePresenter {
             pyrRequest.setEmail(userEmail);
         }
         else{
-            Toast.makeText(context,context.getResources().getString(R.string.invalid_email_toast),
+            Toast.makeText(context,context.getResources().getString(R.string.invalid_email),
                     Toast.LENGTH_SHORT).show();
             return false;
         }

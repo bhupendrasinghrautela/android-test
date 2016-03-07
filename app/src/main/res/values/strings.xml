@@ -83,8 +83,8 @@
     <string name="advisors_string">advisors</string>
     <string name="view_all_sellers">view all sellers</string>
     <string name="add_user_name_toast">add user name</string>
-    <string name="invalid_email_toast">invalid email id</string>
-    <string name="invalid_password">invalid password</string>
+    <string name="invalid_email">please provide a valid email (3-50 chars)</string>
+    <string name="invalid_password">please provide a valid password (6-32 chars)</string>
 
     <string name="invalid_phone_no_toast">invalid phone no</string>
     <string name="listings_limit_toast">Only a maximum of 6 listings can be added</string>
@@ -252,14 +252,14 @@
     <string name="not_found_error">such a kill joy!\nthe page you were looking for is sitting at home</string>
     <string name="internal_server_error">the page you were looking for is chilling at server\'s home. let\'s refresh</string>
     <string name="service_unavailable_error">makaan is overwhelmed with active users.\ntoo many happy users! please try again in a minute</string>
-    <string name="enter_valid_email">enter valid email id</string>
-    <string name="enter_password">enter password</string>
+    <string name="enter_valid_email">please provide a valid email (3-50 chars)</string>
+    <string name="enter_password">please provide a valid password (6-32 chars)</string>
     <string name="personal_info">personal information</string>
     <string name="Password">password</string>
     <string name="remember_me">remember me</string>
     <string name="forgot_pwd">forgot password ?</string>
     <string name="signup">new to makaan? sign up!</string>
-    <string name="enter_username">enter username</string>
+    <string name="enter_username">please provide your name (2-100 chars)</string>
 
     <string name="no_network_connection">your network connection seems to be lost. please enable internet connection and try again.</string>
     <string name="no_network_connection_short">your network connection seems to be lost</string>

@@ -149,26 +149,26 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
             if(bundle!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
-                properties.put(MakaanEventPayload.LABEL, getActivity().getResources().getString(R.string.invalid_email_toast));
+                properties.put(MakaanEventPayload.LABEL, getActivity().getResources().getString(R.string.invalid_email));
                 MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickSerpCallConnect);
             }
             else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
-                properties.put(MakaanEventPayload.LABEL, getActivity().getResources().getString(R.string.invalid_email_toast));
+                properties.put(MakaanEventPayload.LABEL, getActivity().getResources().getString(R.string.invalid_email));
                 MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectCallConnect);
             }
             else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
-                properties.put(MakaanEventPayload.LABEL, getActivity().getResources().getString(R.string.invalid_email_toast));
+                properties.put(MakaanEventPayload.LABEL, getActivity().getResources().getString(R.string.invalid_email));
                 MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickPropertyCallConnect);
             }
             /*Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.invalid_email_toast),
                     Toast.LENGTH_SHORT).show();*/
 
             MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
-                    getActivity().getResources().getString(R.string.invalid_email_toast), "ok");
+                    getActivity().getResources().getString(R.string.invalid_email), "ok");
         }
         else if(!ValidationUtil.isValidPhoneNumber(mNumber.getText().toString().trim(),mCountrySpinner.getSelectedItem().toString())){
             Bundle bundle =getArguments();

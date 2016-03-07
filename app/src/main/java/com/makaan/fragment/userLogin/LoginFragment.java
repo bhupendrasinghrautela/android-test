@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.makaan.R;
@@ -91,11 +90,6 @@ public class LoginFragment extends Fragment {
         mSignUpSelectedListener=onSignUpSelectedListener;
     }
 
-    /*@OnClick(R.id.iv_back)
-    public void backClicked() {
-
-    }*/
-
     @OnClick(R.id.tv_forgot_pwd)
     void forgotClicked(){
         ForgotPasswordDialogFragment forgotPasswordDialogFragment = new ForgotPasswordDialogFragment();
@@ -108,9 +102,11 @@ public class LoginFragment extends Fragment {
         String email = mEditTextEmail.getText().toString().trim();
         String pwd = mEditTextPassword.getText().toString().trim();
         if(!CommonUtil.isValidEmail(email)) {
-            Toast.makeText(getActivity(), getString(R.string.enter_valid_email), Toast.LENGTH_SHORT).show();
+            mTilEmail.setError(getString(R.string.invalid_email));
+            //Toast.makeText(getActivity(), getString(R.string.enter_valid_email), Toast.LENGTH_SHORT).show();
         }else if(TextUtils.isEmpty(pwd)) {
-            Toast.makeText(getActivity(),getString(R.string.enter_password),Toast.LENGTH_SHORT).show();
+            mTilPassword.setError(getString(R.string.invalid_password));
+            //Toast.makeText(getActivity(),getString(R.string.enter_password),Toast.LENGTH_SHORT).show();
         } else {
            ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
             ))).loginWithMakaanAccount(email,pwd);
@@ -163,7 +159,7 @@ public class LoginFragment extends Fragment {
             MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.login);
             mOnUserLoginListener.onUserLoginError(userLoginEvent.error);
             //set error on login fail
-            mTilEmail.setError(getString(R.string.invalid_email_toast));
+            mTilEmail.setError(getString(R.string.invalid_email));
             mTilPassword.setError(getString(R.string.invalid_password));
 
         }
