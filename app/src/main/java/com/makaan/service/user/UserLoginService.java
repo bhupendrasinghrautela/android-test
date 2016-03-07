@@ -62,7 +62,7 @@ public class UserLoginService implements MakaanService{
     private static String buildMakaanSignInRequest() {
         StringBuilder queryBuilder = new StringBuilder();
         queryBuilder.append(ApiConstants.BASE_URL);
-        queryBuilder.append("/app/v1//login");
+        queryBuilder.append("/madrox/app/v1//login");
         return queryBuilder.toString();
     }
 
@@ -73,7 +73,7 @@ public class UserLoginService implements MakaanService{
         }
         StringBuilder queryBuilder = new StringBuilder();
         queryBuilder.append(ApiConstants.BASE_URL);
-        queryBuilder.append("/app/v1/login/google?access_token=");
+        queryBuilder.append("/madrox/app/v1/login/google?access_token=");
         queryBuilder.append(token);
         queryBuilder.append("&domainId=1&rememberme=true");
 
@@ -87,7 +87,7 @@ public class UserLoginService implements MakaanService{
         }
         StringBuilder queryBuilder = new StringBuilder();
         queryBuilder.append(ApiConstants.BASE_URL);
-        queryBuilder.append("/app/v1/login/facebook?access_token=");
+        queryBuilder.append("/madrox/app/v1/login/facebook?access_token=");
         queryBuilder.append(token);
         queryBuilder.append("&domainId=1&rememberme=true");
 

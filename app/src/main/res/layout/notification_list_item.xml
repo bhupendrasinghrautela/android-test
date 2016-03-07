@@ -1,63 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.makaan.seller.backend.notification.NotificationCard xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notification_card_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:id="@+id/notification_layout"
+    android:gravity="center_vertical"
+    android:padding="@dimen/notifications_padding"
     android:background="@android:color/white">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingBottom="@dimen/padding_layout"
-        android:paddingLeft="@dimen/view_left_padding_layout"
-        android:paddingTop="@dimen/padding_layout">
-
-        <ImageView
-            android:id="@+id/iv_notification_type_logo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/journey_loan" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="9"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/notification_msg"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:text="@string/title_txt"
                 android:textColor="@color/dark_grey_text"
                 android:textSize="@dimen/text_size_medium"
                 android:typeface="monospace" />
 
             <TextView
+                android:id="@+id/notification_detail"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:text="@string/sub_title_txt"
                 android:textSize="@dimen/text_size_medium_2"
                 android:typeface="serif" />
+
+            <com.android.volley.toolbox.FadeInNetworkImageView
+                android:id="@+id/iv_notifications"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/notifications_image_height"
+                android:padding="@dimen/notifications_padding"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/house"/>
+
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_bottom_arrow" />
-    </LinearLayout>
-    <ImageView
-        android:id="@+id/iv_notifications"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/house"
-        android:visibility="gone"/>
-</LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/notification_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:textSize="@dimen/notification_card_font_size_small" />
+
+            <ImageView
+                android:id="@+id/iv_delete"
+                android:layout_width="@dimen/image_width"
+                android:layout_height="@dimen/image_width"
+                android:layout_gravity="center"
+                android:src="@drawable/delete_selected_icon" />
+        </LinearLayout>
+
+
+</com.makaan.seller.backend.notification.NotificationCard>
+

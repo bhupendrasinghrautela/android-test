@@ -121,6 +121,14 @@ public class SerpFilterCard extends BaseCtaView<ExposeMessage>{
         }
     }
 
+
+    @OnClick(R.id.btn_cancel)
+    public void onCacelClick(){
+        if(null!=mOnCancelClickListener){
+            mOnCancelClickListener.onCancelClick();
+        }
+    }
+
     private String getFilterType(ExposeMessage item){
         Map<String, SerpFilterMessageMap> serpFilterMessageMap = MasterDataCache.getInstance().getSerpFilterMessageMap();
 
