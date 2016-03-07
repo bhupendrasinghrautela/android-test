@@ -140,4 +140,10 @@ public abstract class MakaanBaseFragment extends Fragment {
         mNoResultsLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.GONE);
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        AppBus.getInstance().register(this);
+    }
 }

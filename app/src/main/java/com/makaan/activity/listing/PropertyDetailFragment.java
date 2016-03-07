@@ -207,6 +207,12 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
                     mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.localityId != null) {
                 bundle.putLong("localityId", mListingDetail.property.project.locality.localityId);
             }
+            if(mListingDetail!=null && mListingDetail.property != null && mListingDetail.property.project != null) {
+                if(mListingDetail.property.project.builder != null) {
+                    bundle.putString("builder", mListingDetail.property.project.builder.name);
+                }
+                bundle.putString("project", mListingDetail.property.project.name);
+            }
             if(Area!=null){
                 bundle.putString("area", Area);
             }

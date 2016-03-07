@@ -64,6 +64,7 @@ import com.makaan.ui.property.AmenitiesViewScroll;
 import com.makaan.ui.property.ListingDataOverViewScroll;
 import com.makaan.ui.property.PropertyImageViewPager;
 import com.makaan.ui.view.FontTextView;
+import com.makaan.util.AppBus;
 import com.makaan.util.AppUtils;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.segment.analytics.Properties;
@@ -253,6 +254,12 @@ public class ProjectFragment extends MakaanBaseFragment{
                     }
                     if(project!=null && project.locality!=null && project.locality.label!=null) {
                         bundle.putString("locality", String.valueOf(project.locality.label));
+                    }
+                    if(project!=null && project.name!=null) {
+                        bundle.putString("project", String.valueOf(project.name));
+                    }
+                    if(project.builder!=null && project.builder.name!=null) {
+                        bundle.putString("builder", String.valueOf(project.builder.name));
                     }
                     if(project!=null && project.locality!=null && project.locality.localityId != null) {
                         bundle.putLong("localityId", project.locality.localityId);
@@ -669,5 +676,4 @@ public class ProjectFragment extends MakaanBaseFragment{
         }
         fragmentTransaction.commitAllowingStateLoss();
     }
-
 }

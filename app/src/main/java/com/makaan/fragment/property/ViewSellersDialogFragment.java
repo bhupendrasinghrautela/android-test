@@ -142,6 +142,8 @@ public class ViewSellersDialogFragment extends DialogFragment {
                 intent.putExtra("bhkAndUnitType", bundle.getString("bhkAndUnitType"));
                 intent.putExtra("localityID", bundle.getLong("localityId"));
                 intent.putExtra("source", bundle.getString("source"));
+                intent.putExtra("project", bundle.getString("project"));
+                intent.putExtra("builder", bundle.getString("builder"));
                 //intent.putExtra("sellerImageUrl", bundle.getString("sellerImageUrl"));
 
                 if(assist){

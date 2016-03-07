@@ -85,6 +85,10 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
 
         }else{
             GooglePlayServicesUtil.getErrorDialog(status, getActivity(), status);
+            // todo
+            mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+
+            mNeighborhoodCategoryView.setLayoutManager(mLayoutManager);
         }
     }
 
