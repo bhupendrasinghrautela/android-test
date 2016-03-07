@@ -12,7 +12,7 @@
     <dimen name= "pyr_medium_text">14sp</dimen>
     <dimen name= "pyr_small_text">10sp</dimen>
     <dimen name= "pyr_very_small_text">5sp</dimen>
-    <string name="no_matching_results">sorry, no matching results found</string>
+    <string name="no_matching_results">sorry, no matching locality found</string>
     
     <!-- jarvis strings-->
     <string name="sign_up">sign up</string>

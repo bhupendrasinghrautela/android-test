@@ -520,6 +520,7 @@ public class LocalityFragment extends MakaanBaseFragment {
     public void onBottomPyrClick(){
         Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
         pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, locality.suburb.city.label);
+        pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, locality.suburb.city.id);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_ID, locality.localityId);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_NAME, locality.label);
 

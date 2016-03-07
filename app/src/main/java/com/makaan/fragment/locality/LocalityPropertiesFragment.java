@@ -11,8 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.pojo.TaxonomyCard;
+import com.segment.analytics.Properties;
 
 import java.util.List;
 
@@ -81,7 +84,10 @@ public class LocalityPropertiesFragment extends MakaanBaseFragment {
                     public void onClick(View view) {
                         TaxonomyCard taxonomyCard = taxonomyCardList.get(getAdapterPosition());
                         taxonomyCard.serpRequest.launchSerp(getActivity());
-
+                        Properties properties = MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+                        properties.put(MakaanEventPayload.LABEL, taxonomyCard.label1+"_"+(getAdapterPosition()+1));
+                        MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.selectPropertiesLocality);
                     }
                 });
             }

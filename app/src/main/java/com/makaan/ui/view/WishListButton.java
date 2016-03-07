@@ -121,10 +121,10 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
         if(mContext instanceof PropertyActivity && mWishListDto.listingId != null) {
             Properties properties = MakaanEventPayload.beginBatch();
             if(isChecked) {
-                properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_Select");
+                properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_Shortlist");
             }
             else{
-                properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_UnSelect");
+                properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_UnShortlist");
             }
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
             MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyOverview);
