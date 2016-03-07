@@ -70,4 +70,35 @@ public class DateUtil {
         cal.setTime(date);
         return cal;
     }
+
+    public static String getTime(long timestamp) {
+
+        long millis = System.currentTimeMillis();
+        long diff = Math.abs(millis - timestamp);
+        if (diff > 0) {
+
+            long diffMinutes = diff / (60 * 1000) % 60;
+            long diffHours = diff / (60 * 60 * 1000) % 24;
+            long diffDays = diff / (24 * 60 * 60 * 1000);
+
+
+            if (diffDays > 1) {
+                return (int) diffDays + " days ago";
+            } else if (diffDays == 1) {
+                return "1 day ago";
+            } else if (diffHours > 1) {
+                return (int) diffHours + " hrs ago";
+            } else if (diffHours == 1) {
+                return "1 hr ago";
+            } else if (diffMinutes > 1) {
+                return (int) diffMinutes + " minutes ago";
+            } else if (diffMinutes <= 1) {
+                return "1 min ago";
+            }
+
+        }
+
+        return "";
+
+    }
 }

@@ -80,7 +80,7 @@ public class WishListService implements MakaanService {
 
         StringBuilder requestBuilder = new StringBuilder();
         requestBuilder.append(ApiConstants.BASE_URL);
-        requestBuilder.append("/data/v1/entity/user/wish-list");
+        requestBuilder.append("/petra/data/v1/entity/user/wish-list");
 
         return requestBuilder.toString();
     }

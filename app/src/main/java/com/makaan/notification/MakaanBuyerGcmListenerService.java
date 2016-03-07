@@ -12,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.google.android.gms.gcm.GcmListenerService;
+import com.makaan.database.NotificationDbHelper;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonParser;
@@ -116,5 +117,6 @@ public class MakaanBuyerGcmListenerService extends GcmListenerService {
 
     private void storeNotification(Context context, NotificationAttributes attributes){
         attributes.setTimestamp(System.currentTimeMillis());
+        NotificationDbHelper.insertNotification(context,attributes);
     }
 }
