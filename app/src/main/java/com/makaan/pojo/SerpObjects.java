@@ -68,6 +68,9 @@ public class SerpObjects {
     }
 
     public static boolean isBuyContext(Context context) {
+        if(context == null) {
+            return true;
+        }
         SerpObjects obj = MakaanBuyerApplication.serpObjects.get(context.hashCode());
         if(obj != null) {
             return obj.isBuy;

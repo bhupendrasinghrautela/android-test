@@ -19,14 +19,13 @@ import com.makaan.util.JsonParser;
  * Created by sunil on 03/12/15.
  */
 public class VolleyErrorParser {
-    private static final String GENERIC_ERROR = "oops! something went wrong. please try again";
-    private static final String NETWORK_ERROR = "connection trouble! seems, we are not connected by the internet";
-    private static final String SERVER_ERROR = "the page you were looking for is chilling at server's home. let's refresh";
-    private static final String SERVICE_UNAVAILABLE_ERROR = "makaan is overwhelmed with active users.\ntoo many happy users! please try again in a minute";
-    private static final String NO_CONTENT_ERROR = "found no results matching your search criteria";
-    private static final String NOT_FOUND_ERROR = "such a kill joy!\\nthe page you were looking for is sitting at home";
-    // TODO check below error
-    private static final String WEAK_NETWORK_ERROR = "connection trouble! seems, we are not connected by the internet";
+    private static final String GENERIC_ERROR = "oops! something went wrong. let's get you back on the joyride";
+    private static final String NETWORK_ERROR = "oops! looks like a connection issue. let's get you back on the joyride";
+    private static final String SERVER_ERROR = "oops! something went wrong. let's get you back on the joyride";
+    private static final String SERVICE_UNAVAILABLE_ERROR = "oops! something went wrong. let's get you back on the joyride";
+    private static final String NO_CONTENT_ERROR = "no matching results!";
+    private static final String NOT_FOUND_ERROR = "such a kill joy!\nthe page you were looking for is sitting at home.\nto find joy, find home";
+    private static final String WEAK_NETWORK_ERROR = "oops! looks like a connection issue. let's get you back on the joyride";
 
     /**
      * Returns appropriate message which is to be displayed to the user

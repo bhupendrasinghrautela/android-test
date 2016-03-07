@@ -448,6 +448,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     }
 
     protected void setJarvisVisibility(boolean visible) {
+        dismissPopupWithAnim();
         isJarvisHeadVisible = visible;
         if(mJarvisHead != null) {
             mJarvisHead.setVisibility(visible ? View.VISIBLE : View.GONE);

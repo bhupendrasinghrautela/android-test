@@ -18,7 +18,7 @@
         <com.makaan.ui.view.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_project_name"
+            android:layout_below="@id/tv_project_name"
             android:id="@+id/tv_project_location"
             android:layout_marginTop="15dp"
             android:layout_toLeftOf="@+id/rl_builder_score"

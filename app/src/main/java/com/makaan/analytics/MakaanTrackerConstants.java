@@ -65,7 +65,8 @@ public class MakaanTrackerConstants {
         clickLocalityTopBuilders("CLICK_Locality_Top Builders"),clickLocalityNearbyLocalities("CLICK_Locality_Nearby Localities"),callSerpProperty("CALL_Serp_Property"),
         clickCityPriceTrends("CLICK_City_Price Trends"),clickCity("CLICK_City"),login("Login"),clickProjectImages("CLICK_Project_Images"),clickPropertyImages("CLICK_Property_Images"),
         clickPropertyViewOtherSellers("CLICK_Property_View other sellers"),clickCityOverView("CLICK_City_Overview"),clickProjectConstructionImages("CLICK_Project_Construction Images"),
-        clickSerpPropertyShortList("CLICK_Serp_Property Shortlist"),clickLocalityOverView("CLICK_Locality_Overview");
+        clickSerpPropertyShortList("CLICK_Serp_Property Shortlist"),clickLocalityOverView("CLICK_Locality_Overview"),selectPropertiesLocality("SELECT_Properties in Locality"),
+        clickSerpPropertySeller("CLICK_Serp_Property Seller");
 
         private String value;
 

@@ -1,9 +1,12 @@
 package com.makaan.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -21,6 +24,7 @@ import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.Session;
 import com.makaan.event.location.LocationGetEvent;
 import com.makaan.event.user.UserLoginEvent;
+import com.makaan.location.MakaanLocationManager;
 import com.makaan.notification.GcmRegister;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.response.user.UserResponse;
@@ -55,6 +59,7 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PermissionManager.begin().addRequest(PermissionManager.ACCOUNTS_REQUEST).request(this);
 
         GcmRegister.checkAndSetGcmId(this, null);
 
@@ -139,13 +144,22 @@ public class HomeActivity extends MakaanBaseSearchActivity {
         });
 
         initUi(false);
-
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if ((requestCode & PermissionManager.ACCOUNTS_REQUEST)
+                == PermissionManager.ACCOUNTS_REQUEST) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                GcmRegister.checkAndSetGcmId(this, null);
+            } else if(grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                // TODO show message or something
+            }
+        }
     }
 
     @Override

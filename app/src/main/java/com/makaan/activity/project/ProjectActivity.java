@@ -143,9 +143,11 @@ public class ProjectActivity extends MakaanBaseSearchActivity implements TotalIm
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Properties properties = MakaanEventPayload.beginBatch();
-        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
-        properties.put(MakaanEventPayload.LABEL, mTotalImagesSeen);
-        MakaanEventPayload.endBatch(getApplicationContext(), MakaanTrackerConstants.Action.clickPropertyImages);
+        if(mTotalImagesSeen>0) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+            properties.put(MakaanEventPayload.LABEL, mTotalImagesSeen);
+            MakaanEventPayload.endBatch(getApplicationContext(), MakaanTrackerConstants.Action.clickPropertyImages);
+        }
     }
 }

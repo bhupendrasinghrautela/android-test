@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
+import com.makaan.fragment.pyr.NoSellersFragment;
 import com.makaan.ui.pyr.FilterableMultichoiceDialogFragment;
 import com.makaan.fragment.pyr.PyrPagePresenter;
 import com.makaan.fragment.pyr.PyrReplaceFragment;
@@ -19,6 +20,7 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
 
     public static final String KEY_IS_BUY = "isBuy";
     public static final String KEY_CITY_NAME = "cityName";
+    public static final String KEY_CITY_Id = "cityId";
     public static final String KEY_LOCALITY_ID = "localityId";
     public static final String KEY_LOCALITY_NAME = "localityName";
 
@@ -41,6 +43,8 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
             long localityId = getIntent().getLongExtra(KEY_LOCALITY_ID, 0);
             String localityName = getIntent().getStringExtra(KEY_LOCALITY_NAME);
             String cityName = getIntent().getStringExtra(KEY_CITY_NAME);
+            Long cityId = this.getIntent().getExtras().getLong(KEY_CITY_Id);
+            mPagePresenter.setCityId(cityId.intValue());
             mPagePresenter.prefillLocality(localityName, localityId, cityName);
         }
 
@@ -56,6 +60,20 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
 
     @Override
     public void replaceFragment(Fragment fragment, boolean shouldAddToBackStack) {
+        if(fragment.getClass().getName().equalsIgnoreCase(NoSellersFragment.class.getName())) {
+            Bundle bundle = new Bundle();
+            if (null != getIntent()) {
+                String localityName = getIntent().getStringExtra(KEY_LOCALITY_NAME);
+                String cityName = getIntent().getStringExtra(KEY_CITY_NAME);
+                if(localityName!=null){
+                    bundle.putString(KEY_LOCALITY_NAME,localityName);
+                }
+                if(cityName!=null){
+                    bundle.putString(KEY_CITY_NAME, cityName);
+                }
+            }
+            fragment.setArguments(bundle);
+        }
         mFragmentTransaction = getSupportFragmentManager().beginTransaction();
         mFragmentTransaction.replace(R.id.pyr_fragment_holder, fragment, fragment.getClass().getName());
         if(shouldAddToBackStack) {

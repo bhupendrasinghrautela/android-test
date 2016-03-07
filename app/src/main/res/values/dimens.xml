@@ -584,6 +584,9 @@
     <dimen name="jarvis_chat_card_button_text_size">16sp</dimen>
     <dimen name="jarvis_chat_card_title_text_size">18sp</dimen>
     <dimen name="jarvis_chat_card_subtitle_text_size">16sp</dimen>
+    <dimen name="jarvis_chat_button_layout_margin_side">50dp</dimen>
+    <dimen name="jarvis_chat_button_layout_margin_bottom">20dp</dimen>
+
 
     <!---Amenities-->
     <dimen name="amenity_type_logo_dimen">64dp</dimen>
@@ -1414,4 +1417,16 @@
     <dimen name="neighbourhood_map_recycler_scroll">3dp</dimen>
     <dimen name="neighbourhood_map_text_height">24dp</dimen>
     <dimen name="neighbourhood_map_text_marging_top">25dp</dimen>
+
+    <!---Notification Card -->
+    <dimen name="notification_card_internal_margin">10dp</dimen>
+    <dimen name="notification_card_font_size_large">20dp</dimen>
+    <dimen name="inter_text_top_margin">10dp</dimen>
+    <dimen name="notification_card_font_size_medium">16dp</dimen>
+    <dimen name="notification_card_font_size_small">10dp</dimen>
+    <dimen name="image_width">30dp</dimen>
+    <dimen name="notification_image_dimen">20dp</dimen>
+    <dimen name="notifications_image_height">180dp</dimen>
+    <dimen name="notifications_padding">8dp</dimen>
+
 </resources>

@@ -1,13 +1,17 @@
 package com.makaan.activity.buyerJourney;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.makaan.R;
+import com.makaan.database.NotificationDbHelper;
 import com.makaan.notification.NotificationAttributes;
+import com.makaan.notification.NotificationHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,11 +44,36 @@ public class NotificationsAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
-        final NotificationsHolder mNotificationHolder = (NotificationsHolder)holder;
-        mNotificationHolder.mNotificationLayout.setOnClickListener(new View.OnClickListener() {
+
+        final NotificationCardViewHolder mNotificationCardViewHolder = (NotificationCardViewHolder)holder;
+        mNotificationCardViewHolder.mNotificationCardView.bindView(mNotifications.get(position));
+        mNotificationCardViewHolder.mImageViewDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
+
+                try {
+                    NotificationDbHelper.deleteNotification(mContext, mNotifications.get(position).getNotificationId());
+                    Toast.makeText(mContext, mContext.getString(R.string.notification_deleted)
+                            , Toast.LENGTH_SHORT).show();
+                    mNotifications.remove(position);
+                    notifyDataSetChanged();
+                }catch (Exception e){
+                    Toast.makeText(mContext, mContext.getString(R.string.notification_deletion_error)
+                            , Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        mNotificationCardViewHolder.mNotificationCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                NotificationDbHelper.markNotificationRead(mContext, mNotifications.get(position).getNotificationId());
+                Intent next = NotificationHelper.getIntentFromAttribute(mContext,mNotifications.get(position));
+                if(next != null) {
+                    mContext.startActivity(next);
+
+                }
             }
         });
 
@@ -53,7 +82,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.notification_list_item, parent, false);
-        NotificationsHolder holder = new NotificationsHolder(v);
+        NotificationCardViewHolder holder = new NotificationCardViewHolder(v);
         return holder;
     }
 

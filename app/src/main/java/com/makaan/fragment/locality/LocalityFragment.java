@@ -14,6 +14,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -304,12 +305,18 @@ public class LocalityFragment extends MakaanBaseFragment {
                 Log.e("value", scrollY + " " + oldScrollY + " " + alpha);
                 if (alpha > 1) {
                     alpha = 1;
-                    if(locality!=null) {
-                        mCityCollapseToolbar.setTitle(locality.label + " - " + locality.suburb.city.label);
+                    if(locality!=null && locality.label != null) {
+                        if(locality.suburb != null && locality.suburb.city != null) {
+                            if(!TextUtils.isEmpty(locality.suburb.city.label)) {
+                                mCityCollapseToolbar.setTitle(locality.label.toLowerCase() + " - " + locality.suburb.city.label.toLowerCase());
+                            } else {
+                                mCityCollapseToolbar.setTitle(locality.label.toLowerCase());
+                            }
+                        }
                     }
                 }else{
-                    if(locality!=null) {
-                        mCityCollapseToolbar.setTitle(locality.label);
+                    if(locality!=null && locality.label != null) {
+                        mCityCollapseToolbar.setTitle(locality.label.toLowerCase());
                     }
                 }
                 mBlurredCityImage.setAlpha(alpha);
@@ -516,6 +523,7 @@ public class LocalityFragment extends MakaanBaseFragment {
     public void onBottomPyrClick(){
         Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
         pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, locality.suburb.city.label);
+        pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, locality.suburb.city.id);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_ID, locality.localityId);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_NAME, locality.label);
 

@@ -1,7 +1,9 @@
 package com.makaan.fragment.property;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
@@ -37,6 +39,7 @@ import com.makaan.pojo.SellerCard;
 import com.makaan.ui.view.CustomRatingBar;
 import com.makaan.util.AppBus;
 import com.makaan.util.ImageUtils;
+import com.makaan.util.PermissionManager;
 import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
@@ -139,6 +142,8 @@ public class ViewSellersDialogFragment extends DialogFragment {
                 intent.putExtra("bhkAndUnitType", bundle.getString("bhkAndUnitType"));
                 intent.putExtra("localityID", bundle.getLong("localityId"));
                 intent.putExtra("source", bundle.getString("source"));
+                intent.putExtra("project", bundle.getString("project"));
+                intent.putExtra("builder", bundle.getString("builder"));
                 //intent.putExtra("sellerImageUrl", bundle.getString("sellerImageUrl"));
 
                 if(assist){
@@ -345,9 +350,14 @@ public class ViewSellersDialogFragment extends DialogFragment {
                 @Override
                 public void onClick(View view) {
                     if(null!=mSellerCards.get((int)view.getTag()).contactNo){
-                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
-                                +  mSellerCards.get((int) view.getTag()).contactNo));
-                        startActivity(intent);
+
+                        if(PermissionManager.isPermissionRequestRequired(getActivity(), Manifest.permission.CALL_PHONE)) {
+                            PermissionManager.begin().addRequest(PermissionManager.CALL_PHONE_REQUEST).request(getActivity());
+                        } else {
+                            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
+                                    + mSellerCards.get((int) view.getTag()).contactNo));
+                            startActivity(intent);
+                        }
                     }
                     else {
                         Toast.makeText(getContext(),getResources().getString(R.string.seller_not_available),Toast.LENGTH_SHORT).show();
@@ -367,7 +377,14 @@ public class ViewSellersDialogFragment extends DialogFragment {
                 holder.mSellerLogoTextView.setBackgroundDrawable(drawable);
             }
             if(mSellerCards.get(position).name!=null) {
-                holder.mSellerName.setText(mSellerCards.get(position).name + (mSellerCards.get(position).type==null?"":"("+mSellerCards.get(position).type+")"));
+                if(mSellerCards.get(position).type != null && "broker".equalsIgnoreCase(mSellerCards.get(position).type)) {
+                    holder.mSellerName.setText(String.format("%s (%s)", mSellerCards.get(position).name, "agent").toLowerCase());
+                } else if(!TextUtils.isEmpty(mSellerCards.get(position).type)) {
+                    holder.mSellerName.setText(String.format("%s (%s)", mSellerCards.get(position).name, mSellerCards.get(position).type).toLowerCase());
+                } else {
+                    holder.mSellerName.setText(mSellerCards.get(position).name);
+                }
+
                 holder.mSellerLogoTextView.setText(String.valueOf(mSellerCards.get(position).name.charAt(0)));
             }
         }
@@ -377,5 +394,21 @@ public class ViewSellersDialogFragment extends DialogFragment {
             return sellerCards.size();
         }
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if ((requestCode & PermissionManager.CALL_PHONE_REQUEST)
+                == PermissionManager.CALL_PHONE_REQUEST) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // todo add functionality if need to as call can now be requested
+            } else if(grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                // TODO show message or something
+            }
+        }
     }
 }

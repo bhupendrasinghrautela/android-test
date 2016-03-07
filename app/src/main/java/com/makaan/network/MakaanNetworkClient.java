@@ -313,18 +313,21 @@ public class MakaanNetworkClient {
 
     public void loginRegisterPost(final String url, JSONObject jsonObject,
                                   final StringRequestCallback stringRequestCallback, String tag){
+
+        final String urlToHit = appendSourceDomain(url);
+
         StringRequest stringRequest = new StringRequest
-                (Request.Method.POST, url, new Response.Listener<String>() {
+                (Request.Method.POST, urlToHit, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        completeRequestInQueue(url);
+                        completeRequestInQueue(urlToHit);
                         stringRequestCallback.onSuccess(response);
 
                     }
                 }, jsonObject, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        completeRequestInQueue(url);
+                        completeRequestInQueue(urlToHit);
                         stringRequestCallback.onError(getResponseError(error));
                     }
                 }){
@@ -342,11 +345,13 @@ public class MakaanNetworkClient {
     public void post(final String url, JSONObject jsonObject,
                      final StringRequestCallback stringRequestCallback, String tag) {
 
+        final String urlToHit = appendSourceDomain(url)+"debug=true";
+
         StringRequest stringRequest = new StringRequest
-                (Request.Method.POST, url, new Response.Listener<String>() {
+                (Request.Method.POST, urlToHit, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        completeRequestInQueue(url);
+                        completeRequestInQueue(urlToHit);
                         if(null!=stringRequestCallback) {
                             stringRequestCallback.onSuccess(response);
                         }
@@ -355,7 +360,7 @@ public class MakaanNetworkClient {
                 }, jsonObject, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        completeRequestInQueue(url);
+                        completeRequestInQueue(urlToHit);
                         if(null!=stringRequestCallback) {
                             stringRequestCallback.onError(getResponseError(error));
                         }
@@ -367,11 +372,13 @@ public class MakaanNetworkClient {
     public void post(final String url, final Type type,JSONObject jsonObject,
                        final ObjectGetCallback objectGetCallback, String tag, final boolean isDataArr) {
 
+        final String urlToHit = appendSourceDomain(url);
+
         JsonObjectRequest stringRequest = new JsonObjectRequest
-                (Request.Method.POST,url,jsonObject, new Response.Listener<JSONObject>() {
+                (Request.Method.POST,urlToHit,jsonObject, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        completeRequestInQueue(url);
+                        completeRequestInQueue(urlToHit);
                         if (null != response) {
                             try {
                                 Object objResponse;
@@ -386,7 +393,7 @@ public class MakaanNetworkClient {
 
                             } catch (JSONException | JsonSyntaxException | IllegalArgumentException e) {
 //                                Log.e(TAG, "JSONException", e);
-                                Crashlytics.log(url);
+                                Crashlytics.log(urlToHit);
                                 Crashlytics.logException(e);
                                 objectGetCallback.onError(getResponseError(new VolleyError()));
                             }
@@ -395,7 +402,7 @@ public class MakaanNetworkClient {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        completeRequestInQueue(url);
+                        completeRequestInQueue(urlToHit);
                         objectGetCallback.onError(getResponseError(error));
                     }
                 });
@@ -405,11 +412,13 @@ public class MakaanNetworkClient {
     public void loginPost(final String url, final Map<String, String> params,
                      final StringRequestCallback stringRequestCallback, String tag) {
 
+        final String urlToHit = appendSourceDomain(url);
+
         CustomRequest stringRequest = new CustomRequest
-                (Request.Method.POST, url,params, new Response.Listener<String>() {
+                (Request.Method.POST, urlToHit,params, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        completeRequestInQueue(url);
+                        completeRequestInQueue(urlToHit);
                         stringRequestCallback.onSuccess(response);
 
                     }
@@ -420,7 +429,7 @@ public class MakaanNetworkClient {
                             String errorString = new String(error.networkResponse.data);
                             Log.e("Error : ", errorString);
                         }
-                        completeRequestInQueue(url);
+                        completeRequestInQueue(urlToHit);
                         stringRequestCallback.onError(getResponseError(error));
                     }
                 }){
@@ -483,18 +492,20 @@ public class MakaanNetworkClient {
     public void delete(final String url, JSONObject jsonObject,
                      final StringRequestCallback stringRequestCallback, String tag) {
 
+        final String urlToHit = appendSourceDomain(url);
+
         StringRequest stringRequest = new StringRequest
-                (Request.Method.DELETE, url, new Response.Listener<String>() {
+                (Request.Method.DELETE, urlToHit, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        completeRequestInQueue(url);
+                        completeRequestInQueue(urlToHit);
                         stringRequestCallback.onSuccess(response);
 
                     }
                 }, jsonObject, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        completeRequestInQueue(url);
+                        completeRequestInQueue(urlToHit);
                         stringRequestCallback.onError(getResponseError(error));
                     }
                 });
@@ -504,11 +515,13 @@ public class MakaanNetworkClient {
     public void delete(final String url, final Type type,
                        final ObjectGetCallback objectGetCallback, String tag, final boolean isDataArr) {
 
+        final String urlToHit = appendSourceDomain(url);
+
         JsonObjectRequest stringRequest = new JsonObjectRequest
-                (Request.Method.DELETE, url,null, new Response.Listener<JSONObject>() {
+                (Request.Method.DELETE, urlToHit,null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        completeRequestInQueue(url);
+                        completeRequestInQueue(urlToHit);
                         if (null != response) {
                             try {
                                 Object objResponse;
@@ -529,7 +542,7 @@ public class MakaanNetworkClient {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        completeRequestInQueue(url);
+                        completeRequestInQueue(urlToHit);
                         objectGetCallback.onError(getResponseError(error));
                     }
                 });
@@ -539,18 +552,20 @@ public class MakaanNetworkClient {
     public void put(final String url, JSONObject jsonObject,
                      final StringRequestCallback stringRequestCallback, String tag) {
 
+        final String urlToHit = appendSourceDomain(url);
+
         StringRequest stringRequest = new StringRequest
-                (Request.Method.PUT, url, new Response.Listener<String>() {
+                (Request.Method.PUT, urlToHit, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        completeRequestInQueue(url);
+                        completeRequestInQueue(urlToHit);
                         stringRequestCallback.onSuccess(response);
 
                     }
                 }, jsonObject, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        completeRequestInQueue(url);
+                        completeRequestInQueue(urlToHit);
                         stringRequestCallback.onError(getResponseError(error));
                     }
                 });

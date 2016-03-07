@@ -20,6 +20,15 @@
             android:src="@drawable/map_marker"
             android:scaleType="centerCrop"
             />
+        <ProgressBar
+            android:id="@+id/search_result_item_progress_bar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="@dimen/search_result_item_type_text_view_margin_right"
+            android:layout_marginEnd="@dimen/search_result_item_type_text_view_margin_right"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:visibility="gone" />
         <TextView
             android:id="@+id/search_result_item_type_text_view"
             android:layout_width="wrap_content"

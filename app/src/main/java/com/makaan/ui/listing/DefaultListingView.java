@@ -623,6 +623,11 @@ public class DefaultListingView extends AbstractListingView {
     @OnClick({R.id.serp_default_listing_seller_image_frame_layout, R.id.serp_default_listing_seller_name_text_view, R.id.serp_default_listing_seller_rating})
     public void onSellerPressed(View view) {
         // TODO discuss what should be done if listing posted by is not present
+        Properties properties = MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+        properties.put(MakaanEventPayload.LABEL, mListing.lisitingId + "_" + (mPosition + 1)+"_" + mListing.lisitingPostedBy.id);
+        MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickSerpPropertySeller);
+        
         SerpRequest request = new SerpRequest(SerpActivity.TYPE_SELLER);
         request.setSellerId(mListing.lisitingPostedBy.id);
         request.setTitle(mListing.lisitingPostedBy.name);

@@ -16,7 +16,7 @@
     <RelativeLayout
         android:id="@+id/property_image_detail"
         android:layout_gravity="bottom"
-        android:background="@color/white"
+        android:background="#E6FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="80.7dp">
         <ImageView
