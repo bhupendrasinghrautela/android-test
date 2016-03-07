@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             app:collapsedTitleTextAppearance="@color/white"
+            app:expandedTitleTextAppearance="@color/white"
             app:contentScrim="@color/appThemeRed"
             app:expandedTitleGravity="center|center_horizontal"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">

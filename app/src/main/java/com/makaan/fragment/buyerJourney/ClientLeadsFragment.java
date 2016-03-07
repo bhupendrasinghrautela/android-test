@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import com.makaan.response.buyerjourney.Company;
 import com.makaan.service.ClientLeadsService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.AppUtils;
+import com.makaan.util.ErrorUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -111,8 +113,11 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
     @Subscribe
     public void onResults(ClientLeadsByGetEvent clientLeadsByGetEvent) {
         if(clientLeadsByGetEvent == null || clientLeadsByGetEvent.error != null) {
-            // TODO
-            showNoResults();
+            if(clientLeadsByGetEvent != null && !TextUtils.isEmpty(clientLeadsByGetEvent.error.msg)) {
+                showNoResults(clientLeadsByGetEvent.error.msg);
+            } else {
+                showNoResults();
+            }
             return;
         }
 
@@ -126,15 +131,14 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
 
             ((ClientLeadsService) MakaanServiceFactory.getInstance().getService(ClientLeadsService.class)).requestClientLeadCompanies(ids);
         } else {
-            showNoResults("no leads present");
+            showNoResults(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT));
         }
     }
 
     @Subscribe
     public void onResults(ArrayList<Company> companies) {
         if(companies == null || companies.size() == 0) {
-            // TODO
-            showNoResults();
+            showNoResults(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT));
             return;
         }
 

@@ -21,8 +21,8 @@ import com.makaan.util.JsonParser;
 public class VolleyErrorParser {
     private static final String GENERIC_ERROR = "oops! something went wrong. please try again";
     private static final String NETWORK_ERROR = "connection trouble! seems, we are not connected by the internet";
-    private static final String SERVER_ERROR = "the page you were looking for is chilling at server\\'s home. let\\'s refresh";
-    private static final String SERVICE_UNAVAILABLE_ERROR = "makaan is overwhelmed with active users.\\ntoo many happy users! please try again in a minute";
+    private static final String SERVER_ERROR = "the page you were looking for is chilling at server's home. let's refresh";
+    private static final String SERVICE_UNAVAILABLE_ERROR = "makaan is overwhelmed with active users.\ntoo many happy users! please try again in a minute";
     private static final String NO_CONTENT_ERROR = "found no results matching your search criteria";
     private static final String NOT_FOUND_ERROR = "such a kill joy!\\nthe page you were looking for is sitting at home";
     // TODO check below error
@@ -36,7 +36,7 @@ public class VolleyErrorParser {
      * @return
      */
     public static String getMessage(Object error) {
-        if(null==error){
+        if(null == error) {
             return GENERIC_ERROR;
         }
         if (error instanceof TimeoutError) {

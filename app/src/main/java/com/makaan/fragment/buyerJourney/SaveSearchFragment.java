@@ -17,15 +17,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
-import com.android.volley.toolbox.ImageRequest;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ApiConstants;
-import com.makaan.event.builder.BuilderByIdEvent;
-import com.makaan.event.city.CityByIdEvent;
-import com.makaan.event.locality.LocalityByIdEvent;
+import com.makaan.event.buyerjourney.NewMatchesGetEvent;
 import com.makaan.event.saveSearch.SaveSearchGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.listing.SetAlertsDialogFragment;
@@ -39,10 +36,9 @@ import com.makaan.response.city.City;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Builder;
 import com.makaan.response.saveSearch.SaveSearch;
-import com.makaan.response.serp.TermFilter;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
-import com.makaan.util.AppBus;
+import com.makaan.util.ErrorUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.squareup.otto.Subscribe;
@@ -78,10 +74,17 @@ public class SaveSearchFragment extends MakaanBaseFragment {
 
         if(MasterDataCache.getInstance().getSavedSearch() != null) {
 
-            mAdapter = new SaveSearchAdapter(MasterDataCache.getInstance().getSavedSearch());
+            ArrayList<SaveSearch> saveSearches = MasterDataCache.getInstance().getSavedSearch();
+            mAdapter = new SaveSearchAdapter(saveSearches);
             if (mRecyclerView != null) {
                 mRecyclerView.setAdapter(mAdapter);
             }
+            // todo response event is also received by BuyerJourneyFragment
+            ArrayList<Long> ids = new ArrayList<>();
+            for(SaveSearch search : saveSearches) {
+                ids.add(search.id);
+            }
+            ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).getSavedSearchesNewMatchesByIds(ids);
         }
     }
 
@@ -95,10 +98,12 @@ public class SaveSearchFragment extends MakaanBaseFragment {
     private class SaveSearchAdapter extends RecyclerView.Adapter<SaveSearchAdapter.ViewHolder> {
         private List<SaveSearch> savedSearches;
         private List<ImageObject> imageObjects;
+        private HashMap<String, Integer> newMatchesCount;
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             private final ImageView deleteImageView;
             private final FadeInNetworkImageView backgroundImageView;
+            private final TextView newMatchesCountTextView;
             // each data item is just a string in this case
             public TextView saveSearchName;
             public TextView saveSearchFilter;
@@ -114,6 +119,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                 saveSearchFilter = (TextView) v.findViewById(R.id.filter_name);
                 saveSearchPlace = (TextView) v.findViewById(R.id.place_name);
                 deleteImageView = (ImageView) v.findViewById(R.id.iv_cancel);
+                newMatchesCountTextView = (TextView) v.findViewById(R.id.new_matches_count);
                 deleteImageView.setOnClickListener(this);
             }
 
@@ -146,6 +152,16 @@ public class SaveSearchFragment extends MakaanBaseFragment {
             for(int i = 0; i < savedSearches.size(); i++) {
                 this.imageObjects.add(new ImageObject());
             }
+        }
+
+        public void updateNewCount(HashMap<String, Integer> data) {
+            if(this.newMatchesCount == null) {
+                this.newMatchesCount = new HashMap<>();
+            } else {
+                this.newMatchesCount.clear();
+            }
+            this.newMatchesCount.putAll(data);
+            notifyDataSetChanged();
         }
 
         @Override
@@ -192,6 +208,10 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                 holder.saveSearchName.setVisibility(View.INVISIBLE);
                 holder.saveSearchPlace.setVisibility(View.INVISIBLE);
                 holder.saveSearchFilter.setVisibility(View.INVISIBLE);
+            }
+
+            if(newMatchesCount != null && newMatchesCount.containsKey(String.valueOf(savedSearches.get(position).id))) {
+                holder.newMatchesCountTextView.setText(newMatchesCount.get(String.valueOf(savedSearches.get(position).id)) + " new");
             }
 
             if(imageObjects.get(position).request == null) {
@@ -242,13 +262,37 @@ public class SaveSearchFragment extends MakaanBaseFragment {
     @Subscribe
     public void onResults(SaveSearchGetEvent saveSearchGetEvent){
         if(null== saveSearchGetEvent || null!=saveSearchGetEvent.error){
-            //TODO handle error
+            if(saveSearchGetEvent != null && !TextUtils.isEmpty(saveSearchGetEvent.error.msg)) {
+                showNoResults(saveSearchGetEvent.error.msg);
+            } else {
+                showNoResults();
+            }
             return;
         }
-        SaveSearchGetEvent saveSearchGetEvent1 = saveSearchGetEvent;
-        mAdapter = new SaveSearchAdapter(saveSearchGetEvent.saveSearchArrayList);
-        if (mRecyclerView != null)
-            mRecyclerView.setAdapter(mAdapter);
+        if(saveSearchGetEvent.saveSearchArrayList == null || saveSearchGetEvent.saveSearchArrayList.size() == 0) {
+            showNoResults(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT));
+        } else {
+            mAdapter = new SaveSearchAdapter(saveSearchGetEvent.saveSearchArrayList);
+            if (mRecyclerView != null) {
+                mRecyclerView.setAdapter(mAdapter);
+            }
+            ArrayList<Long> ids = new ArrayList<>();
+            for(SaveSearch search : saveSearchGetEvent.saveSearchArrayList) {
+                ids.add(search.id);
+            }
+            ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).getSavedSearchesNewMatchesByIds(ids);
+        }
+    }
+
+
+    @Subscribe
+    public void onResults(NewMatchesGetEvent event){
+        if(null== event || null!=event.error) {
+            return;
+        }
+        if(event.data != null && event.data.size() > 0) {
+            mAdapter.updateNewCount(event.data);
+        }
     }
 
     class ImageObject {
