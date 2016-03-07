@@ -3,6 +3,7 @@ package com.makaan.activity.pyr;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -29,6 +30,8 @@ public class SellerViewHolder extends RecyclerView.ViewHolder{
     TextView mTextViewExpertise;
     @Bind(R.id.seller_ratingbar)
     RatingBar mSellerRatingBar;
+    @Bind(R.id.m_plus_badge)
+    ImageView mPlusBadge;
     private boolean isChecked=false;
 
     public SellerViewHolder(View itemView) {

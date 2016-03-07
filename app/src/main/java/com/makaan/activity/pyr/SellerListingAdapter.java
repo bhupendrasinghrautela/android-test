@@ -76,6 +76,13 @@ public class SellerListingAdapter extends RecyclerView.Adapter<RecyclerView.View
         if (null != topAgent) {
             final Agent agent = topAgent.agent;
             if (null != agent) {
+                if(agent.company!=null){
+                    if(agent.company.assist){
+                        mSellerViewHolder.mPlusBadge.setVisibility(View.VISIBLE);
+                    }else {
+                        mSellerViewHolder.mPlusBadge.setVisibility(View.INVISIBLE);
+                    }
+                }
                 mSellerViewHolder.mSellerName.setText(topAgent.agent.user.fullName.toLowerCase());
                 mSellerViewHolder.mTextSellerImage.setText(topAgent.agent.user.fullName);
                 setAgentImage(agent, mSellerViewHolder.mTextSellerImage, mSellerViewHolder.mSellerImage);

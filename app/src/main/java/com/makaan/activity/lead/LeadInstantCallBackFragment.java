@@ -77,7 +77,7 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
     private List<String> mCountryNames;
     private List<CountryCodeResponse.CountryCodeData> mCountries;
     private static final int MOSTLY_USED_COUNTRIES = 7;
-    private boolean mobileFlag=true;
+    private boolean mobileFlag=true,defaultCountry=false;
 
     @Override
     protected int getContentViewId() {
@@ -86,16 +86,20 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        initializeCountrySpinner();
         super.onActivityCreated(savedInstanceState);
         mLeadFormPresenter= LeadFormPresenter.getLeadFormPresenter();
         mTextViewSellerName.setText(mLeadFormPresenter.getName());
         mRatingBarSeller.setRating(Float.valueOf(mLeadFormPresenter.getScore()));
-
+        mobileFlag=false;
+        defaultCountry=false;
+        initializeCountrySpinner();
         //User data prefill
         try{
             UserResponse userResponse = CookiePreferences.getLastUserInfo(getContext());
-            mNumber.setText(userResponse.getData().contactNumber);
+            if(userResponse!=null && userResponse.getData()!=null && userResponse.getData().contactNumber!=null) {
+                mNumber.setText(userResponse.getData().contactNumber);
+            }
+            mobileFlag=true;
         }catch (Exception e){
             //No impact don't do anything
         }
@@ -112,11 +116,9 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
                 Bundle bundle =getArguments();
                 if(bundle!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
                     jsonObject.put("listingId", mLeadFormPresenter.getProjectOrListingId());
-
                 }
                 else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName())) {
                     jsonObject.put("projectId", mLeadFormPresenter.getProjectOrListingId());
-
                 }
                 else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName())) {
                     jsonObject.put("listingId", mLeadFormPresenter.getProjectOrListingId());
@@ -241,25 +243,26 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = getArguments();
-                if (bundle != null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
+                if (bundle != null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())&& defaultCountry) {
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
                     properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.country);
                     MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillSerpCall);
 
-                } else if (bundle != null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName())) {
+                } else if (bundle != null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName())&& defaultCountry) {
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProjectCall);
                     properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.country);
                     MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillProjectCall);
 
-                } else if (bundle != null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName())) {
+                } else if (bundle != null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName())&& defaultCountry) {
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                     properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.country);
                     MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillPropertyCall);
 
                 }
+                defaultCountry=true;
                 if (position > MOSTLY_USED_COUNTRIES) {
                     position--;
                 }
