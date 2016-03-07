@@ -71,6 +71,13 @@ public class DateUtil {
         return cal;
     }
 
+    public static Date getDateMonthsBack(int months) {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -months);
+        Date result = cal.getTime();
+        return result;
+    }
+
     public static String getTime(long timestamp) {
 
         long millis = System.currentTimeMillis();
@@ -99,6 +106,5 @@ public class DateUtil {
         }
 
         return "";
-
     }
 }

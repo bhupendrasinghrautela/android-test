@@ -80,4 +80,28 @@
             font:fontName="proxima.otf" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_price_trends_fourth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_price_trends_city_rent_growth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/icon_yellow_heart" />
+
+        <com.makaan.ui.view.FontTextView
+            android:id="@+id/tv_price_trends_city_rent_growth_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textColor="#444"
+            android:textSize="16sp"
+            font:fontName="proxima.otf" />
+    </LinearLayout>
+
 </LinearLayout>

@@ -24,9 +24,12 @@ import com.makaan.service.LocalityService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PriceTrendService;
 import com.makaan.ui.PriceTrendView;
+import com.makaan.util.DateUtil;
+import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,9 +43,9 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
     private String title;
     private Long localityId;
     private int primaryMedian;
-    private Double primaryRise;
-    private Double secondaryAverage;
-    private int secondaryMedian;
+    private int primaryRental;
+    private int cityAverage;
+    private int cityRental;
     private ArrayList<Long> locality;
 
     @Bind(R.id.price_trend_view)
@@ -53,6 +56,8 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
     public TextView trendsGrowthTv;
     @Bind(R.id.tv_price_trends_rent_growth_desc)
     public TextView trendsRentGrowthTv;
+    @Bind(R.id.tv_price_trends_city_rent_growth_desc)
+    public TextView citytrendsRentGrowthTv;
     @Bind(R.id.header_text)
     public TextView titleTv;
     @Bind(R.id.rv_localities_recent_searches)
@@ -65,11 +70,14 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
     LinearLayout priceTrendsSecondLl;
     @Bind(R.id.ll_price_trends_third)
     LinearLayout priceTrendsThirdLl;
+    @Bind(R.id.ll_price_trends_fourth)
+    LinearLayout priceTrendsFourthLl;
 
 
     private LinearLayoutManager mLayoutManager;
     private PopularSearchesAdapter mAdapter;
     private String localityName;
+    private String cityName;
 
 
     @Override
@@ -92,7 +100,9 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
             locality = new ArrayList<>();
             locality.add(localityId);
         }
-        new PriceTrendService().getPriceTrendForLocalities(locality, months, new LocalityTrendCallback() {
+        final String minTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(1));
+        final String maxTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(37));
+        new PriceTrendService().getPriceTrendForLocalities(locality, minTime,maxTime, new LocalityTrendCallback() {
             @Override
             public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
                 if (localityPriceTrendDto.data != null && localityPriceTrendDto.data.size() != 0) {
@@ -117,27 +127,33 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         localityId = getArguments().getLong("localityId");
         title = getArguments().getString("title");
         locality = (ArrayList<Long>) getArguments().getSerializable("locality");
-        primaryMedian = getArguments().getInt("primaryMedian");
-        primaryRise = getArguments().getDouble("primaryRise");
-        secondaryAverage = getArguments().getDouble("secondaryAverage");
-        secondaryMedian = getArguments().getInt("secondaryMedian");
+        primaryMedian = getArguments().getInt("primaryAverage");
+        primaryRental = getArguments().getInt("secondaryRental");
+        cityAverage = getArguments().getInt("cityAverage");
+        cityRental = getArguments().getInt("cityRental");
         localityName = getArguments().getString("localityName");
+        cityName = getArguments().getString("cityName");
 
         titleTv.setText(title);
         if(primaryMedian != 0) {
-            trendsMedianTv.setText("the average home value in " + localityName + " is " + primaryMedian + " / sq ft.");
+            trendsMedianTv.setText("average price in " + localityName + " is \u20B9" + StringUtil.getFormattedNumber(primaryMedian) + " / sq ft.");
         }else{
             priceTrendsFirstLl.setVisibility(View.GONE);
         }
-        if(primaryRise != 0)
-            trendsGrowthTv.setText(localityName+" home values have gone up +" + primaryRise + " over the past year");
+        if(cityAverage != 0)
+            trendsGrowthTv.setText(cityName+" average price is \u20B9" + StringUtil.getFormattedNumber(cityAverage) + " / sq ft.");
         else{
             priceTrendsSecondLl.setVisibility(View.GONE);
         }
-        if(secondaryAverage !=0 && secondaryMedian!=0)
-            trendsRentGrowthTv.setText("the average rent price in "+localityName+" is " + secondaryAverage + " which is higher than city average of " + secondaryMedian);
+        if(primaryRental !=0)
+            trendsRentGrowthTv.setText("monthly average rental in "+localityName+" is \u20B9" + StringUtil.getFormattedNumber(primaryRental));
         else{
             priceTrendsThirdLl.setVisibility(View.GONE);
+        }
+        if(cityRental !=0)
+            citytrendsRentGrowthTv.setText("monthly average rental in "+cityName+" is \u20B9" + StringUtil.getFormattedNumber(cityRental));
+        else{
+            priceTrendsFourthLl.setVisibility(View.GONE);
         }
     }
 

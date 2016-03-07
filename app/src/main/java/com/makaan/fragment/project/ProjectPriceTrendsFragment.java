@@ -19,8 +19,10 @@ import com.makaan.service.LocalityService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PriceTrendService;
 import com.makaan.ui.MakaanLineChartView;
+import com.makaan.util.DateUtil;
 import com.squareup.otto.Subscribe;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -72,11 +74,13 @@ public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
             localities = new ArrayList<>();
             localities.add(localityId);
         }
-        ((PriceTrendService) MakaanServiceFactory.getInstance().getService(PriceTrendService.class)).getPriceTrendForLocalities(localities, months, new LocalityTrendCallback() {
+        final String minTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(1));
+        final String maxTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(37));
+        ((PriceTrendService) MakaanServiceFactory.getInstance().getService(PriceTrendService.class)).getPriceTrendForLocalities(localities, minTime,maxTime, new LocalityTrendCallback() {
             @Override
             public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
                 if(localityPriceTrendDto!=null && localityPriceTrendDto.data!=null && !localityPriceTrendDto.data.isEmpty()) {
-                    ((PriceTrendService) MakaanServiceFactory.getInstance().getService(PriceTrendService.class)).getPriceTrendForProject(projectId, months);
+                    ((PriceTrendService) MakaanServiceFactory.getInstance().getService(PriceTrendService.class)).getPriceTrendForProject(projectId,minTime,maxTime);
                     priceTrendViewl.setVisibility(View.VISIBLE);
                     priceTrendView.setProjectId(projectId);
                     priceTrendView.bindView(localityPriceTrendDto.data);

@@ -415,19 +415,7 @@
     "Rental": {
       "Apartment": {
         "overview": [
-          "bathrooms",
-          "floor",
-          "balcony",
-          "furnishStat",
-          "totalFloor",
-          "openSides",
-          "securityDeposit",
-          "availability",
-          "tenantPref",
-          "facing",
-          "parking",
-          "overlook",
-          "addRoom"
+          "furnishStat", "securityDeposit", "availability", "tenantPref", "bathrooms", "floor", "balcony", "totalFloor", "openSides", "facing", "parking", "overlook", "addRoom"
         ],
         "amenity": [
           "1",
@@ -463,19 +451,7 @@
       },
       "BuilderFloor": {
         "overview": [
-          "bathrooms",
-          "floor",
-          "balcony",
-          "furnishStat",
-          "totalFloor",
-          "openSides",
-          "securityDeposit",
-          "availability",
-          "tenantPref",
-          "facing",
-          "parking",
-          "overlook",
-          "addRoom"
+          "furnishStat", "securityDeposit", "availability", "tenantPref", "bathrooms", "floor", "balcony", "totalFloor", "openSides", "facing", "parking", "overlook", "addRoom"
         ],
         "amenity": [
           "1",
@@ -511,19 +487,7 @@
       },
       "IndependentHouse": {
         "overview": [
-          "bathrooms",
-          "floor",
-          "balcony",
-          "furnishStat",
-          "totalFloor",
-          "openSides",
-          "securityDeposit",
-          "availability",
-          "tenantPref",
-          "facing",
-          "parking",
-          "overlook",
-          "addRoom"
+          "furnishStat", "securityDeposit", "availability", "tenantPref", "bathrooms", "floor", "balcony", "totalFloor", "openSides", "facing", "parking", "overlook", "addRoom"
         ],
         "amenity": [
           "1",
@@ -559,19 +523,7 @@
       },
       "Villa": {
         "overview": [
-          "bathrooms",
-          "floor",
-          "balcony",
-          "furnishStat",
-          "totalFloor",
-          "openSides",
-          "securityDeposit",
-          "availability",
-          "tenantPref",
-          "facing",
-          "parking",
-          "overlook",
-          "addRoom"
+          "furnishStat", "securityDeposit", "availability", "tenantPref", "bathrooms", "floor", "balcony", "totalFloor", "openSides", "facing", "parking", "overlook", "addRoom"
         ],
         "amenity": [
           "1",
@@ -607,19 +559,7 @@
       },
       "Plot": {
         "overview": [
-          "openSides",
-          "facing",
-          "bathrooms",
-          "floor",
-          "balcony",
-          "furnishStat",
-          "totalFloor",
-          "securityDeposit",
-          "availability",
-          "tenantPref",
-          "parking",
-          "overlook",
-          "addRoom"
+          "age", "posession", "openSides", "bookamt", "facing", "ownerType", "category", "entryRoadWd", "parking", "overlook"
         ],
         "amenity": [
           "1",
@@ -655,19 +595,7 @@
       },
       "Penthouse": {
         "overview": [
-          "bathrooms",
-          "floor",
-          "balcony",
-          "openSides",
-          "facing",
-          "furnishStat",
-          "totalFloor",
-          "securityDeposit",
-          "availability",
-          "tenantPref",
-          "parking",
-          "overlook",
-          "addRoom"
+          "furnishStat", "securityDeposit", "availability", "tenantPref", "bathrooms", "floor", "balcony", "totalFloor", "openSides", "facing", "parking", "overlook", "addRoom"
         ],
         "amenity": [
           "1",
@@ -703,19 +631,7 @@
       },
       "StudioApartment": {
         "overview": [
-          "bathrooms",
-          "floor",
-          "balcony",
-          "furnishStat",
-          "openSides",
-          "facing",
-          "totalFloor",
-          "securityDeposit",
-          "availability",
-          "tenantPref",
-          "parking",
-          "overlook",
-          "addRoom"
+          "furnishStat", "securityDeposit", "availability", "tenantPref", "bathrooms", "floor", "balcony", "totalFloor", "openSides", "facing", "parking", "overlook", "addRoom"
         ],
         "amenity": [
           "1",
@@ -751,19 +667,7 @@
       },
       "Farmhouse": {
         "overview": [
-          "bathrooms",
-          "balcony",
-          "furnishStat",
-          "floor",
-          "totalFloor",
-          "openSides",
-          "facing",
-          "securityDeposit",
-          "availability",
-          "tenantPref",
-          "parking",
-          "overlook",
-          "addRoom"
+          "furnishStat", "securityDeposit", "availability", "tenantPref", "bathrooms", "floor", "balcony", "totalFloor", "openSides", "facing", "parking", "overlook", "addRoom"
         ],
         "amenity": [
           "1",
