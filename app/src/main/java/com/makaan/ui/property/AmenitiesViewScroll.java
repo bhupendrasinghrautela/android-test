@@ -35,7 +35,8 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
     List<String> mAmenitiesPriority;
     HashMap<Long,Boolean> mAmenitiesToDisplay;
     private Context mContext;
-    private List<ListingAmenity> mAmenityIdList;
+    private List<ListingAmenity> mAmenityIdListingList;
+    private List<ProjectAmenity> mAmenityIdProjectList;
 
     public AmenitiesViewScroll(Context context) {
         super(context);
@@ -60,7 +61,7 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
     }
 
     public void bindView(String listingCategory,String unitType,List<ListingAmenity> amenityIdList) {
-        mAmenityIdList = amenityIdList;
+        mAmenityIdListingList = amenityIdList;
         if(!TextUtils.isEmpty(listingCategory) && !TextUtils.isEmpty(unitType)) {
             mAmenitiesPriority = MasterDataCache.getInstance().getDisplayOrder(listingCategory, unitType, "amenity");
             createAmenitiesToDisplay();
@@ -74,11 +75,53 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
     }
 
     public void bindView(List<ProjectAmenity> projectAmenities){
-        createAdapterDataForProject(projectAmenities);
+        mAmenityIdProjectList = projectAmenities;
+        mAmenitiesPriority = MasterDataCache.getInstance().getDisplayOrder(null, null, "amenity");
+        createAmenitiesToDisplayForProject();
+        createAdapterDataForProperty();
+        if(mAmenityItems.size()>0){
+            this.setVisibility(VISIBLE);
+        }
+        ListingOverViewAdapter listingOverViewAdapter = new ListingOverViewAdapter(mContext,mAmenityItems);
+        mAmenityScroll.setAdapter(listingOverViewAdapter);
     }
 
-    private void createAdapterDataForProject(List<ProjectAmenity> projectAmenities) {
+    private void createAmenitiesToDisplayForProject() {
+        mAmenitiesToDisplay = MasterDataCache.getInstance().getDefaultAmenityList();
+        for(ProjectAmenity id: mAmenityIdProjectList){
+            if(mAmenitiesToDisplay.get(id.amenityMaster.amenityId)!=null){
+                mAmenitiesToDisplay.put(id.amenityMaster.amenityId,true);
+            }
+            else{
+                mAmenitiesToDisplay.put(id.amenityMaster.amenityId,true);
+            }
+        }
+    }
+
+/*    private void createAdapterDataForProject(List<ProjectAmenity> projectAmenities) {
         mAmenityItems = new ArrayList<>();
+        for(String amenityId:mAmenitiesPriority){
+            try {
+                if((mAmenitiesToDisplay.get(Long.parseLong(amenityId)))!=null){
+                    HorizontalScrollItem amenityItem = new HorizontalScrollItem();
+                    Long id = Long.parseLong(amenityId);
+                    amenityItem.resourceId = R.drawable.possession;
+                    if(mAmenitiesToDisplay.get(id)){
+                        amenityItem.activated = true;
+                    }
+                    else{
+                        amenityItem.activated = false;
+                    }
+                    amenityItem.value = MasterDataCache.getInstance().getPropertyAmenityById(id).amenityName;
+                    amenityItem.name = amenityId;
+                    mAmenityItems.add(amenityItem);
+                }
+            }catch (NumberFormatException e){
+
+            }catch (Exception e){
+
+            }
+        }
         for(ProjectAmenity projectAmenity : projectAmenities){
             try {
                 HorizontalScrollItem amenityItem = new HorizontalScrollItem();
@@ -94,11 +137,11 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
         }
         ListingOverViewAdapter listingOverViewAdapter = new ListingOverViewAdapter(mContext,mAmenityItems);
         mAmenityScroll.setAdapter(listingOverViewAdapter);
-    }
+    }*/
 
     private void createAmenitiesToDisplay() {
         mAmenitiesToDisplay = MasterDataCache.getInstance().getDefaultAmenityList();
-        for(ListingAmenity id:mAmenityIdList){
+        for(ListingAmenity id: mAmenityIdListingList){
             if(mAmenitiesToDisplay.get(id.amenity.amenityMaster.amenityId)!=null){
                 mAmenitiesToDisplay.put(id.amenity.amenityMaster.amenityId,true);
             }

@@ -64,18 +64,18 @@ public class AppUtils {
 
     public static String getMMMYYYYDateStringFromEpoch(String epochTime) {
         SimpleDateFormat mmYYFormatter = new SimpleDateFormat("MMM yyyy", Locale.getDefault());
-        return mmYYFormatter.format(getDateFromEpoch(epochTime));
+        return mmYYFormatter.format(getDateFromEpoch(epochTime)).toLowerCase();
     }
 
     public static String getDDMMMYYDateStringFromEpoch(String epochTime) {
         SimpleDateFormat mmYYFormatter = new SimpleDateFormat("dd MMM, yy", Locale.getDefault());
-        return mmYYFormatter.format(getDateFromEpoch(epochTime));
+        return mmYYFormatter.format(getDateFromEpoch(epochTime)).toLowerCase();
     }
 
 
     public static String getDateStringFromEpoch(String epochTime) {
         if (epochTime != null && !TextUtils.isEmpty(epochTime)) {
-            return ddMMYYFormatter.format(getDateFromEpoch(epochTime));
+            return ddMMYYFormatter.format(getDateFromEpoch(epochTime)).toLowerCase();
         }
         return "";
     }
@@ -115,7 +115,7 @@ public class AppUtils {
             contentTrimmed.append(text);
 
         }
-        return contentTrimmed.toString();
+        return contentTrimmed.toString().toLowerCase();
 //return stripHtml(result);
     }
 
