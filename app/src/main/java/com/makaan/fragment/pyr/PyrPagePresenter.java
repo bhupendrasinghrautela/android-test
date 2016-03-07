@@ -8,6 +8,9 @@ import android.widget.Toast;
 import com.makaan.R;
 import com.makaan.activity.pyr.PyrOtpVerification;
 
+import com.makaan.cache.MasterDataCache;
+import com.makaan.pojo.SerpObjects;
+import com.makaan.pojo.SerpRequest;
 import com.makaan.response.agents.TopAgent;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.request.pyr.PyrRequest;
@@ -55,6 +58,7 @@ public class PyrPagePresenter {
     private String userName=null, userEmail=null, phoneNumber=null, countryName="India";
     private int countryId=1;
     private String mCityContext;
+    private Integer mCityId=null;
     ArrayList<TopAgent> mTopAgentsDatas;
 
     public ArrayList<TopAgent> getmTopAgentsDatas() {
@@ -393,7 +397,7 @@ public class PyrPagePresenter {
             pyrRequest.setPhone(phoneNumber);
             pyrRequest.setCountry(countryName);
             pyrRequest.setCountryId(countryId);
-            pyrRequest.setCityId(2);
+            pyrRequest.setCityId(mCityId);
         }
         else {
             Toast.makeText(context,context.getResources().getString(R.string.invalid_phone_no_toast),
@@ -549,6 +553,12 @@ public class PyrPagePresenter {
         return mCityContext;
     }
 
+    public void setCityId(Integer cityId){
+        if(mCityId==null) {
+            mCityId = cityId;
+        }
+    }
+
     public void prefillLocality(String localityName, long localityId, String cityName){
         if(localityId>0) {
             SearchResponseItem searchResponseItem = new SearchResponseItem();
@@ -558,7 +568,7 @@ public class PyrPagePresenter {
             locaityIds.add(searchResponseItem);
         }
 
-        if(!TextUtils.isEmpty(mCityContext)) {
+        if(TextUtils.isEmpty(mCityContext)) {
             mCityContext = cityName;
         }
     }
@@ -567,7 +577,105 @@ public class PyrPagePresenter {
         list.clear();
         locaityIds.clear();
         mSellerIdMap.clear();
+        mCityId=null;
         mCityContext = "";
     }
 
+    public SerpRequest getserpRequestObject(){
+        PyrRequest pyrRequest =getPyrRequestObject();
+        SerpRequest serpRequest;
+        if(BUY_SELECTED) {
+            serpRequest = new SerpRequest(SerpRequest.CONTEXT_BUY);
+        }
+        else {
+            serpRequest = new SerpRequest(SerpRequest.CONTEXT_RENT);
+        }
+        serpRequest.setCityId(pyrRequest.getCityId());
+
+        int localityIds[]=pyrRequest.getLocalityIds();
+
+        for(int i=0;i<locaityIds.size();i++) {
+            serpRequest.setLocalityId(localityIds[i]);
+        }
+
+        if(pyrRequest.getProjectId()!=null){
+            serpRequest.setProjectId(pyrRequest.getProjectId());
+        }
+
+        return serpRequest;
+    }
+
+    public ArrayList<FilterGroup> getSerpFilterGroups(){
+        try {
+            PyrRequest pyrRequest=getPyrRequestObject();
+            if(pyrRequest.getSalesType().equalsIgnoreCase("buy")) {
+                ArrayList<FilterGroup> filterGroups = MasterDataCache.getInstance().getAllBuyFilterGroups();
+                populateFilters(getClonedFilterGroups(filterGroups));
+                return filterGroups;
+            }
+            else if(pyrRequest.getSalesType().equalsIgnoreCase("rent")) {
+                ArrayList<FilterGroup> filterGroups = MasterDataCache.getInstance().getAllRentFilterGroups();
+                populateFilters(getClonedFilterGroups(filterGroups));
+                return filterGroups;
+            }
+        } catch (CloneNotSupportedException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    private ArrayList<FilterGroup> getClonedFilterGroups(ArrayList<FilterGroup> filterGroups) throws CloneNotSupportedException {
+        ArrayList<FilterGroup> group = new ArrayList<>(filterGroups.size());
+        for (FilterGroup filter : filterGroups) {
+            group.add(filter.clone());
+        }
+        return group;
+    }
+
+    public void populateFilters(ArrayList<FilterGroup> filterGroups){
+        PyrRequest pyrRequest =getPyrRequestObject();
+        for(FilterGroup grp : filterGroups) {
+            if("i_beds".equalsIgnoreCase(grp.internalName)) {
+                if(pyrRequest.getBhk() != null && pyrRequest.getBhk().size() >= 0) {
+                    ArrayList<Integer>bhkArr=pyrRequest.getBhk();
+                    if(bhkArr!=null && bhkArr.size()>0) {
+                        for (TermFilter filter : grp.termFilterValues) {
+                            if (bhkArr.contains(4) && filter.displayName.equalsIgnoreCase("3+")) {
+                                filter.selected = true;
+                                grp.isSelected = true;
+                            } else if (bhkArr.contains(Integer.valueOf(filter.displayName))) {
+                                filter.selected = true;
+                                grp.isSelected = true;
+                            }
+
+                        }
+                    }
+                }
+            } else if("i_budget".equalsIgnoreCase(grp.internalName)) {
+                for(RangeFilter filter : grp.rangeFilterValues) {
+                    filter.selectedMinValue=pyrRequest.getMinBudget();
+                    filter.selectedMaxValue=pyrRequest.getMaxBudget();
+                    grp.isSelected=true;
+                }
+            } else if("i_property_type".equalsIgnoreCase(grp.internalName)) {
+                ArrayList<String>propertyTypes= pyrRequest.getPropertyTypes();
+                if(propertyTypes!=null && propertyTypes.size()>0) {
+                    for (TermFilter filter : grp.termFilterValues) {
+                        if (filter.value.equalsIgnoreCase("1") && propertyTypes.contains("Apartment")) {
+                            filter.selected = true;
+                            grp.isSelected = true;
+                        } else {
+                            for (String type : propertyTypes) {
+                                if (type.equalsIgnoreCase(filter.displayName.replace(" ", ""))) {
+                                    filter.selected = true;
+                                    grp.isSelected = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

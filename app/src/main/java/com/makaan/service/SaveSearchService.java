@@ -215,4 +215,49 @@ public class SaveSearchService implements MakaanService {
             e.printStackTrace();
         }
     }
+
+    public void saveNewSearch(Selector selector, String name, String email) {
+        String saveNewSearchUrl = ApiConstants.SAVE_NEW_SEARCH_URL;
+        Type saveSearchType = new TypeToken<SaveSearch>() {
+        }.getType();
+
+        if(!TextUtils.isEmpty(email)) {
+            saveNewSearchUrl = saveNewSearchUrl.concat("?email=" + email);
+        }
+
+        SaveNewSearch saveNewSearch = new SaveNewSearch();
+        saveNewSearch.searchQuery = selector.build();
+        if(saveNewSearch.searchQuery != null && saveNewSearch.searchQuery.contains("selector=")) {
+            saveNewSearch.searchQuery = saveNewSearch.searchQuery.replace("selector=", "");
+        }
+        if (TextUtils.isEmpty(name)) {
+            saveNewSearch.name = selector.getUniqueName();
+        } else {
+            saveNewSearch.name = name;
+        }
+
+        try {
+            JSONObject jsonObject = JsonBuilder.toJson(saveNewSearch);
+            MakaanNetworkClient.getInstance().post(saveNewSearchUrl, saveSearchType, jsonObject, new ObjectGetCallback() {
+
+                @Override
+                public void onSuccess(Object responseObject) {
+                    SaveSearch saveSearch = (SaveSearch) responseObject;
+                    ArrayList<SaveSearch> arrayList=new ArrayList<SaveSearch>();
+                    arrayList.add(saveSearch);
+                    AppBus.getInstance().post(new SaveSearchGetEvent(arrayList));
+                }
+
+                @Override
+                public void onError(ResponseError error) {
+                    SaveSearchGetEvent saveSearchGetEvent = new SaveSearchGetEvent();
+                    saveSearchGetEvent.error = error;
+                    AppBus.getInstance().post(saveSearchGetEvent);
+                    //TODO handle error
+                }
+            }, TAG, false);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }

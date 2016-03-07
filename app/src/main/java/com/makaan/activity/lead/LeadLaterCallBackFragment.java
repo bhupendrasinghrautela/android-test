@@ -83,6 +83,10 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
     private boolean mobileFlag=true;
     private boolean nameFlag=true;
     private boolean emailFlag=true;
+    private boolean defaultCountry=false;
+    private String previousName="";
+    private String previousEmail="";
+    private String previousNumber="";
 
     @Override
     protected int getContentViewId() {
@@ -91,18 +95,31 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        initializeCountrySpinner();
         super.onActivityCreated(savedInstanceState);
         mLeadFormPresenter= LeadFormPresenter.getLeadFormPresenter();
         mTextViewSellerName.setText(mLeadFormPresenter.getName());
         mRatingBarSeller.setRating(Float.valueOf(mLeadFormPresenter.getScore()));
+        mobileFlag=false;
+        nameFlag=false;
+        emailFlag=false;
+        defaultCountry=false;
+        initializeCountrySpinner();
 
         //User data prefill
         try{
             UserResponse userResponse = CookiePreferences.getLastUserInfo(getContext());
-            mName.setText(userResponse.getData().firstName);
-            mEmail.setText(userResponse.getData().email);
-            mNumber.setText(userResponse.getData().contactNumber);
+            if(userResponse!=null && userResponse.getData()!=null && userResponse.getData().firstName!=null) {
+                mName.setText(userResponse.getData().firstName);
+            }
+            if(userResponse!=null && userResponse.getData()!=null && userResponse.getData().email!=null) {
+                mEmail.setText(userResponse.getData().email);
+            }
+            if(userResponse!=null && userResponse.getData()!=null && userResponse.getData().contactNumber!=null) {
+                mNumber.setText(userResponse.getData().contactNumber);
+            }
+            mobileFlag=true;
+            nameFlag=true;
+            emailFlag=true;
         }catch (Exception e){
             //No impact don't do anything
         }
@@ -294,27 +311,31 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = getArguments();
-                if (bundle != null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
+                if (bundle != null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName()) && defaultCountry) {
+                    //defaultCountry=true;
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
                     properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.country);
                     MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillSerpGetCallBack);
 
                 }
-                else if (bundle != null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName())) {
+                else if (bundle != null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName()) && defaultCountry) {
+                    //defaultCountry=true;
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
                     properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.country);
                     MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillProjectGetCallBack);
 
                 }
-                else if (bundle != null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName())) {
+                else if (bundle != null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName()) && defaultCountry) {
+                    //defaultCountry=true;
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                     properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.country);
                     MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillPropertyGetCallBack);
 
                 }
+                defaultCountry=true;
                 if (position > MOSTLY_USED_COUNTRIES) {
                     position--;
                 }
@@ -333,35 +354,40 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
     @OnTextChanged(R.id.leadform_mobileno_edittext)
     public void onMobileTextChange(CharSequence cs, int arg1, int arg2, int arg3) {
         Bundle bundle = getArguments();
-        if (bundle != null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName()) && mobileFlag) {
+        if (!previousNumber.equalsIgnoreCase(cs.toString())&&
+                bundle != null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName()) && mobileFlag) {
             mobileFlag=false;
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.mobile);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillSerpGetCallBack);
         }
-        else if (bundle != null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName()) && emailFlag) {
-            emailFlag=false;
+        else if (!previousNumber.equalsIgnoreCase(cs.toString())&&
+                bundle != null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName()) && mobileFlag) {
+            mobileFlag=false;
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.mobile);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillProjectGetCallBack);
 
         }
-        else if (bundle != null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName()) && emailFlag) {
-            emailFlag=false;
+        else if (!previousNumber.equalsIgnoreCase(cs.toString())&&
+                bundle != null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName()) && mobileFlag) {
+            mobileFlag=false;
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.mobile);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillPropertyGetCallBack);
 
         }
+        previousNumber=cs.toString();
     }
 
     @OnTextChanged(R.id.leadform_name)
     public void onNameTextChange(CharSequence cs, int arg1, int arg2, int arg3) {
         Bundle bundle = getArguments();
-        if (bundle != null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName()) && nameFlag) {
+        if (!previousName.equalsIgnoreCase(cs.toString())&&
+                bundle != null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName()) && nameFlag) {
             nameFlag=false;
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
@@ -369,7 +395,8 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillSerpGetCallBack);
 
         }
-        else if (bundle != null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName()) && nameFlag) {
+        else if (!previousName.equalsIgnoreCase(cs.toString())&&
+                bundle != null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName()) && nameFlag) {
             nameFlag=false;
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
@@ -377,7 +404,8 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillProjectGetCallBack);
 
         }
-        else if (bundle != null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName()) && nameFlag) {
+        else if (!previousName.equalsIgnoreCase(cs.toString())&&
+                bundle != null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName()) && nameFlag) {
             nameFlag=false;
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
@@ -385,12 +413,14 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillPropertyGetCallBack);
 
         }
+        previousName=cs.toString();
     }
 
     @OnTextChanged(R.id.leadform_email)
     public void onEmailTextChange(CharSequence cs, int arg1, int arg2, int arg3) {
         Bundle bundle = getArguments();
-        if (bundle != null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName()) && emailFlag) {
+        if (!previousEmail.equalsIgnoreCase(cs.toString())&&
+                bundle != null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName()) && emailFlag) {
             emailFlag=false;
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
@@ -398,7 +428,8 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillSerpGetCallBack);
 
         }
-        else if (bundle != null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName()) && emailFlag) {
+        else if (!previousEmail.equalsIgnoreCase(cs.toString())&&
+                bundle != null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName()) && emailFlag) {
             emailFlag=false;
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProjectGetCallBack);
@@ -406,14 +437,15 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillProjectGetCallBack);
 
         }
-        else if (bundle != null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName()) && emailFlag) {
+        else if (!previousEmail.equalsIgnoreCase(cs.toString())&&
+                bundle != null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName()) && emailFlag) {
             emailFlag=false;
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.email);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillPropertyGetCallBack);
-
         }
+        previousEmail=cs.toString();
     }
 
     public void setSellerImage(){
