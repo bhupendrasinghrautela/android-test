@@ -520,7 +520,7 @@ public class DefaultListingView extends AbstractListingView {
                 }
                 break;
             case "bathrooms":
-                if(mListing.bathrooms != null && mListing.bathrooms != 0) {
+                if(mListing.bathrooms != null && mListing.bathrooms >= 0) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.bathrooms).toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
@@ -544,7 +544,7 @@ public class DefaultListingView extends AbstractListingView {
                 }
                 break;
             case "balcony":
-                if(mListing.balcony != null && mListing.balcony != 0) {
+                if(mListing.balcony != null && mListing.balcony >= 0) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.balcony).toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
@@ -603,7 +603,7 @@ public class DefaultListingView extends AbstractListingView {
                 }
                 break;
             case "noOfOpenSides":
-                if(mListing.noOfOpenSides != null && mListing.noOfOpenSides != 0) {
+                if(mListing.noOfOpenSides != null && mListing.noOfOpenSides >= 0) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.noOfOpenSides).toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
@@ -611,7 +611,7 @@ public class DefaultListingView extends AbstractListingView {
                 }
                 break;
             case "securityDeposit":
-                if(mListing.securityDeposit != null && mListing.securityDeposit != 0) {
+                if(mListing.securityDeposit != null && mListing.securityDeposit >= 0) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.securityDeposit).toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
