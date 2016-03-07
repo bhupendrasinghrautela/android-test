@@ -1,90 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <com.makaan.ui.locality.SimilarProjectCard xmlns:android="http://schemas.android.com/apk/res/android"
-                                           xmlns:app="http://schemas.android.com/apk/res-auto"
-                                           android:layout_width="310dp"
-                                           xmlns:font="http://schemas.android.com/tools"
-                                           android:layout_marginLeft="@dimen/project_similar_project_card_left_margin"
-                                           android:layout_gravity="center"
-                                           android:layout_marginRight="@dimen/project_similar_project_card_left_margin"
-                                           android:layout_height="240dp"
-                                           android:id="@+id/card_similar_projects"
-                                           app:cardCornerRadius="@dimen/project_similar_project_card_radius">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:font="http://schemas.android.com/tools"
+    android:id="@+id/card_similar_projects"
+    android:layout_width="@dimen/project_similar_project_card_width"
+    android:layout_height="@dimen/project_similar_project_card_height"
+    android:layout_gravity="center"
+    android:layout_marginLeft="@dimen/project_similar_project_card_left_margin"
+    android:layout_marginRight="@dimen/project_similar_project_card_left_margin"
+    app:cardCornerRadius="@dimen/project_similar_project_card_radius">
+
     <RelativeLayout
         android:id="@+id/rl_similar_project_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ImageView
+            android:id="@+id/iv_similar_project"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/iv_similar_project"
-            android:scaleType="centerCrop"
-        />
+            android:scaleType="centerCrop" />
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/app_grey"
             android:alpha="0.5"
-        />
+            android:background="@color/app_grey" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_margin="20dp"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_height="wrap_content">
-            <LinearLayout android:layout_width="match_parent"
-                          android:orientation="horizontal"
-                          android:layout_height="wrap_content">
-            <com.makaan.ui.view.FontTextView
-                android:layout_width="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/project_text_medium"
-                android:singleLine="true"
-                android:id="@+id/tv_similar_project_price_prefix"
-                font:fontName="proxima.otf"
-                android:textColor="@color/white"
-            />
-                <com.makaan.ui.view.FontTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="30sp"
-                    android:singleLine="true"
-                    android:id="@+id/tv_similar_project_price"
-                    font:fontName="proxima.otf"
-                    android:textColor="@color/white"
-                />
+                android:orientation="horizontal">
 
                 <com.makaan.ui.view.FontTextView
+                    android:id="@+id/tv_similar_project_price_prefix"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/project_text_medium"
                     android:singleLine="true"
-                    android:id="@+id/tv_similar_project_price_postfix"
-                    font:fontName="proxima.otf"
                     android:textColor="@color/white"
-                />
+                    android:textSize="@dimen/project_text_medium"
+                    font:fontName="proxima.otf" />
+
+                <com.makaan.ui.view.FontTextView
+                    android:id="@+id/tv_similar_project_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    font:fontName="proxima.otf" />
+
+                <com.makaan.ui.view.FontTextView
+                    android:id="@+id/tv_similar_project_price_postfix"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/project_text_medium"
+                    font:fontName="proxima.otf" />
             </LinearLayout>
+
             <com.makaan.ui.view.FontTextView
+                android:id="@+id/tv_similar_project_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/shortlist_text_size_large"
-                font:fontName="proxima.otf"
                 android:layout_marginTop="10dp"
                 android:singleLine="true"
-                android:id="@+id/tv_similar_project_name"
                 android:textColor="@color/white"
-            />
+                android:textSize="@dimen/shortlist_text_size_large"
+                font:fontName="proxima.otf" />
+
             <com.makaan.ui.view.FontTextView
+                android:id="@+id/tv_similar_project_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/project_text_small"
                 android:singleLine="true"
-                font:fontName="proxima.otf"
-                android:id="@+id/tv_similar_project_address"
                 android:text=""
                 android:textColor="@color/white"
-            />
+                android:textSize="@dimen/project_text_small"
+                font:fontName="proxima.otf" />
         </LinearLayout>
     </RelativeLayout>
 </com.makaan.ui.locality.SimilarProjectCard>

@@ -21,6 +21,7 @@ import com.makaan.response.project.ProjectStatusCount;
 import com.makaan.ui.BaseLinearLayout;
 import com.makaan.ui.ExpandableLinearLayout;
 import com.makaan.util.DateUtil;
+import com.makaan.util.ImageUtils;
 import com.segment.analytics.Properties;
 
 import butterknife.Bind;
@@ -138,8 +139,11 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
             boolean isDataPresent = false;
             mAboutBuilderTv.setText(getResources().getString(R.string.more_about_builder));
             if(item.imageURL!=null) {
+                int width = getResources().getDimensionPixelSize(R.dimen.property_page_builder_logo_width);
+                int height = getResources().getDimensionPixelSize(R.dimen.property_page_builder_logo_height);
                 mBuilderLogo.setVisibility(VISIBLE);
-                mBuilderLogo.setImageUrl(item.imageURL, MakaanNetworkClient.getInstance().getImageLoader());
+                mBuilderLogo.setImageUrl(ImageUtils.getImageRequestUrl(item.imageURL, width, height, false),
+                        MakaanNetworkClient.getInstance().getImageLoader());
                 isDataPresent = true;
             }
             if(item.establishedDate!=null){

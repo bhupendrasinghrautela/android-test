@@ -20,6 +20,7 @@ import com.makaan.fragment.pyr.TopSellersFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.agents.Agent;
 import com.makaan.response.agents.TopAgent;
+import com.makaan.util.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -128,8 +129,10 @@ public class SellerListingAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void setAgentImage(Agent agent, final TextView mNameImage, final CircleImageView imageView){
         if(agent.user.profilePictureURL!=null && agent.user.profilePictureURL.length()>0 )
         {
-
-            MakaanNetworkClient.getInstance().getImageLoader().get(agent.user.profilePictureURL, new ImageLoader.ImageListener() {
+            int width = mContext.getResources().getDimensionPixelSize(R.dimen.seller_image_width_height);
+            int height = mContext.getResources().getDimensionPixelSize(R.dimen.seller_image_width_height);
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(agent.user.profilePictureURL, width, height, false),
+                    new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {

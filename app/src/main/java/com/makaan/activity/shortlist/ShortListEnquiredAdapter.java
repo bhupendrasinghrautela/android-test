@@ -136,7 +136,9 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
             }
         }
         holder.mAddress.setText(name.toString().toLowerCase());
-        holder.mMainImage.setImageUrl(project.imageURL, MakaanNetworkClient.getInstance().getImageLoader());
+        int height = (int)Math.ceil(mContext.getResources().getDimension(R.dimen.enq_card_height));
+        int width = mContext.getResources().getConfiguration().screenWidthDp;
+        holder.mMainImage.setImageUrl(ImageUtils.getImageRequestUrl(project.imageURL, width, height, true), MakaanNetworkClient.getInstance().getImageLoader());
     }
 
     private void populateListingDetail(ListingDetail listingDetail, final ShortListEnquiredViewHolder holder) {

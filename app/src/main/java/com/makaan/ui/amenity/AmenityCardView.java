@@ -13,6 +13,7 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.amenity.Amenity;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.ui.listing.BaseCardView;
+import com.makaan.util.ImageUtils;
 
 import butterknife.Bind;
 
@@ -54,7 +55,9 @@ public class AmenityCardView extends BaseCardView<AmenityCluster> {
         finalImageUrl.append(item.amenityId);
         finalImageUrl.append(".png");
         mAmenityTitle.setText(item.name);
-        mAmenityLogo.setImageUrl(finalImageUrl.toString(), MakaanNetworkClient.getInstance().getImageLoader());
+        int width = getResources().getDimensionPixelSize(R.dimen.amenity_type_logo_dimen);
+        mAmenityLogo.setImageUrl(ImageUtils.getImageRequestUrl(finalImageUrl.toString(), width, width, false),
+                MakaanNetworkClient.getInstance().getImageLoader());
             for (int i = 0; i < 3; i++) {
                 final View amenityItem =
                         mLayoutInflater.inflate(R.layout.amenity_item_layout, null);

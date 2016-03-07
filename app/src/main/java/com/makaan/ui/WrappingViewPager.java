@@ -33,7 +33,10 @@ public class WrappingViewPager extends ViewPager {
             widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY);
         }
 
-        int fragmentHeight = measureFragment(((Fragment) getAdapter().instantiateItem(this, getCurrentItem())).getView());
+        int fragmentHeight = 0;
+        if(getAdapter() != null) {
+            fragmentHeight = measureFragment(((Fragment) getAdapter().instantiateItem(this, getCurrentItem())).getView());
+        }
         int height = tabHeight + fragmentHeight + (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
         //if(maxHeight<height){
             maxHeight = height;

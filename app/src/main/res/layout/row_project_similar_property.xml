@@ -2,12 +2,12 @@
 
 <com.makaan.ui.locality.SimilarProjectCard xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="310dp"
+    android:layout_width="@dimen/project_similar_project_card_width"
+    android:layout_height="@dimen/project_similar_project_card_height"
     xmlns:font="http://schemas.android.com/tools"
     android:layout_marginLeft="@dimen/project_similar_project_card_left_margin"
     android:layout_gravity="center"
     android:layout_marginRight="@dimen/project_similar_project_card_left_margin"
-    android:layout_height="240dp"
     android:id="@+id/card_similar_projects"
     app:cardCornerRadius="@dimen/project_similar_project_card_radius"
     app:cardPreventCornerOverlap="false">

@@ -195,8 +195,10 @@ public class DefaultListingView extends AbstractListingView {
             int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_height);
             mPropertyImageView.setImageUrl(ImageUtils.getImageRequestUrl(mListing.mainImageUrl, width, height, false), MakaanNetworkClient.getInstance().getImageLoader());
         } else {
+            int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_width);
+            int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_height);
             //TODO this is just a dummy image
-            String url = "https://im.proptiger-ws.com/1/644953/6/imperial-project-image-460007.jpeg";
+            String url = ImageUtils.getImageRequestUrl("https://im.proptiger-ws.com/1/644953/6/imperial-project-image-460007.jpeg", width, height, false);
             mPropertyImageView.setImageUrl(url, MakaanNetworkClient.getInstance().getImageLoader());
         }
 
@@ -518,7 +520,7 @@ public class DefaultListingView extends AbstractListingView {
                 }
                 break;
             case "bathrooms":
-                if(mListing.bathrooms != null && mListing.bathrooms != 0) {
+                if(mListing.bathrooms != null && mListing.bathrooms >= 0) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.bathrooms).toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
@@ -542,7 +544,7 @@ public class DefaultListingView extends AbstractListingView {
                 }
                 break;
             case "balcony":
-                if(mListing.balcony != null && mListing.balcony != 0) {
+                if(mListing.balcony != null && mListing.balcony >= 0) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.balcony).toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
@@ -601,7 +603,7 @@ public class DefaultListingView extends AbstractListingView {
                 }
                 break;
             case "noOfOpenSides":
-                if(mListing.noOfOpenSides != null && mListing.noOfOpenSides != 0) {
+                if(mListing.noOfOpenSides != null && mListing.noOfOpenSides >= 0) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.noOfOpenSides).toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
@@ -609,7 +611,7 @@ public class DefaultListingView extends AbstractListingView {
                 }
                 break;
             case "securityDeposit":
-                if(mListing.securityDeposit != null && mListing.securityDeposit != 0) {
+                if(mListing.securityDeposit != null && mListing.securityDeposit >= 0) {
                     mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.securityDeposit).toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
