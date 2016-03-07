@@ -24,9 +24,11 @@ import com.makaan.event.locality.OnNearByLocalityClickEvent;
 import com.makaan.event.project.OnSimilarProjectClickedEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.response.image.Image;
 import com.makaan.response.project.Project;
 import com.makaan.ui.view.ParallexScrollview;
 import com.makaan.util.AppBus;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
 
@@ -177,7 +179,10 @@ public class SimilarProjectFragment extends MakaanBaseFragment implements View.O
                 holder.addressTv.setVisibility(View.VISIBLE);
                 holder.addressTv.setText(project.address.toLowerCase());
             }
-            MakaanNetworkClient.getInstance().getImageLoader().get(project.imageURL.replace("http", "https"), new ImageLoader.ImageListener() {
+            int width = getResources().getDimensionPixelSize(R.dimen.project_similar_project_card_width);
+            int height = getResources().getDimensionPixelSize(R.dimen.project_similar_project_card_height);
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(project.imageURL, width, height, false),
+                    new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {

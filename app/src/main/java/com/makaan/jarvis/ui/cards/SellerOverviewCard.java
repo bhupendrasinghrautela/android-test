@@ -18,6 +18,7 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.ui.view.BaseView;
 import com.makaan.ui.view.CustomRatingBar;
+import com.makaan.util.ImageUtils;
 
 import java.util.Random;
 
@@ -84,7 +85,10 @@ public class SellerOverviewCard extends BaseView<Message> {
         }
 
         if(!TextUtils.isEmpty(item.chatObj.image)) {
-            MakaanNetworkClient.getInstance().getImageLoader().get(item.chatObj.image, new ImageLoader.ImageListener() {
+            int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_width);
+            int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_height);
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(item.chatObj.image, width, height, false),
+                    new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {

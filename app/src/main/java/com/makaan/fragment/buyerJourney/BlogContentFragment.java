@@ -22,8 +22,10 @@ import com.makaan.event.content.BlogByTagEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.content.BlogItem;
+import com.makaan.response.image.Image;
 import com.makaan.service.BlogService;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.squareup.otto.Subscribe;
 
@@ -258,7 +260,10 @@ public class BlogContentFragment extends MakaanBaseFragment {
         public void onBindViewHolder(BlogContentHolder holder, int position) {
             if(holder.viewType == TYPE_ITEM) {
                 int itemPosition = position-1;
-                holder.imageView.setImageUrl(mBlogItems.get(itemPosition).primaryImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
+                int height = (int) Math.ceil(mContext.getResources().getDimension(R.dimen.buyer_content_image_height));
+                int width = mContext.getResources().getConfiguration().screenWidthDp;
+                holder.imageView.setImageUrl(ImageUtils.getImageRequestUrl(mBlogItems.get(itemPosition).primaryImageUrl, width, height, true),
+                        MakaanNetworkClient.getInstance().getImageLoader());
                 if(mBlogItems.get(itemPosition).postTitle != null) {
                     holder.titleTextView.setText(mBlogItems.get(itemPosition).postTitle.toLowerCase());
                 }

@@ -16,6 +16,7 @@ import com.makaan.response.listing.detail.ListingAmenity;
 import com.makaan.response.project.ProjectAmenity;
 import com.makaan.ui.BaseLinearLayout;
 import com.makaan.ui.listing.CustomHorizontalScrollView;
+import com.makaan.util.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -212,7 +213,9 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
             finalImageUrl.append("/");
             finalImageUrl.append(dataItem.name);
             finalImageUrl.append(".png");
-            imageView.setImageUrl(finalImageUrl.toString(), MakaanNetworkClient.getInstance().getImageLoader());
+            int width = getResources().getDimensionPixelSize(R.dimen.amenities_horizontal_scroll_item_dimen);
+            imageView.setImageUrl(ImageUtils.getImageRequestUrl(finalImageUrl.toString(), width, width, false),
+                    MakaanNetworkClient.getInstance().getImageLoader());
             if(!dataItem.activated){
                 imageView.setAlpha(0.5f);
                 valueText.setTextColor(mContext.getResources().getColor(R.color.pyr_light_grey));

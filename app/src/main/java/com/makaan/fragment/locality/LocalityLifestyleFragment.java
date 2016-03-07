@@ -14,6 +14,8 @@ import com.makaan.R;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.city.EntityDesc;
+import com.makaan.response.image.Image;
+import com.makaan.util.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +101,10 @@ public class LocalityLifestyleFragment extends MakaanBaseFragment{
             holder.descriptionTv.setText(nearByLocalitu.entityDescriptionCategories.masterDescriptionCategory.name);
             holder.descriptionFullTv.setText(nearByLocalitu.description);
             if(nearByLocalitu.imageUrl!=null) {
-                holder.localityIv.setImageUrl(nearByLocalitu.imageUrl, MakaanNetworkClient.getInstance().getImageLoader());
+                int width = getResources().getDimensionPixelSize(R.dimen.row_localities_lifestyle_width);
+                int height = getResources().getDimensionPixelSize(R.dimen.row_localities_lifestyle_height);
+                holder.localityIv.setImageUrl(ImageUtils.getImageRequestUrl(nearByLocalitu.imageUrl, width, height, false),
+                        MakaanNetworkClient.getInstance().getImageLoader());
             }
             else{
                 holder.localityIv.setDefaultImageResId(R.drawable.placeholder_localities_props);

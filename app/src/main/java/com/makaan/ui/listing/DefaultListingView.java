@@ -195,8 +195,10 @@ public class DefaultListingView extends AbstractListingView {
             int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_height);
             mPropertyImageView.setImageUrl(ImageUtils.getImageRequestUrl(mListing.mainImageUrl, width, height, false), MakaanNetworkClient.getInstance().getImageLoader());
         } else {
+            int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_width);
+            int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_height);
             //TODO this is just a dummy image
-            String url = "https://im.proptiger-ws.com/1/644953/6/imperial-project-image-460007.jpeg";
+            String url = ImageUtils.getImageRequestUrl("https://im.proptiger-ws.com/1/644953/6/imperial-project-image-460007.jpeg", width, height, false);
             mPropertyImageView.setImageUrl(url, MakaanNetworkClient.getInstance().getImageLoader());
         }
 

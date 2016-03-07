@@ -16,6 +16,7 @@ import com.makaan.R;
 import com.makaan.constants.ImageConstants;
 import com.makaan.event.image.ImagesGetEvent;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.util.ImageUtils;
 
 import java.util.ArrayList;
 
@@ -109,7 +110,9 @@ public class FloorPlanLayout extends LinearLayout {
                     (CardView) mLayoutInflater.inflate(R.layout.floor_plan_pager_item, null);
             FadeInNetworkImageView imageView = (FadeInNetworkImageView) cardView.findViewById(R.id.floor_plan_imageview);
             if(imagesGetEventArrayList.get(position).images.size()>0) {
-                imageView.setImageUrl(imagesGetEventArrayList.get(position).images.get(0).absolutePath,
+                int width = getResources().getConfiguration().screenWidthDp;
+                int height = (int)Math.ceil(getResources().getDimension(R.dimen.floor_plan_view_pager_height));
+                imageView.setImageUrl(ImageUtils.getImageRequestUrl(imagesGetEventArrayList.get(position).images.get(0).absolutePath, width, height, true),
                         MakaanNetworkClient.getInstance().getImageLoader());
             }
             container.addView(cardView,0);

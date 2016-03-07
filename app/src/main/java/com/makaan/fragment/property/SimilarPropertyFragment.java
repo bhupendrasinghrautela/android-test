@@ -21,6 +21,7 @@ import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.property.Property;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.StringUtil;
 
 import java.util.List;
@@ -165,7 +166,10 @@ public class SimilarPropertyFragment extends MakaanBaseFragment implements View.
                 holder.pricePreTv.setText("\u20B9 ");
             }
             if(listing.mainImageURL!=null) {
-                MakaanNetworkClient.getInstance().getImageLoader().get(listing.mainImageURL.replace("http", "https"), new ImageLoader.ImageListener() {
+                int width = getResources().getDimensionPixelSize(R.dimen.project_similar_project_card_width);
+                int height = getResources().getDimensionPixelSize(R.dimen.project_similar_project_card_height);
+                MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(listing.mainImageURL, width, height, false),
+                        new ImageLoader.ImageListener() {
                     @Override
                     public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                         if (b && imageContainer.getBitmap() == null) {

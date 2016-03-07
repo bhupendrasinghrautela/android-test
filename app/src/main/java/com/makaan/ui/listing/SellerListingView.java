@@ -169,9 +169,11 @@ public class SellerListingView extends AbstractCardListingView {
         }
 
         if(seller.logo != null) {
+            int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_item_seller_image_view_width);
+            int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_item_seller_image_view_height);
             // get seller image
             MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(
-                    seller.logo, mSellerImageView.getWidth(), mSellerImageView.getHeight(), false), new ImageLoader.ImageListener() {
+                    seller.logo, width, height, false), new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {
@@ -189,10 +191,12 @@ public class SellerListingView extends AbstractCardListingView {
         }
 
         if(seller.coverPicture != null) {
+            int width = getResources().getConfiguration().screenWidthDp;
+            int height = (int) Math.ceil(getResources().getDimension(R.dimen.serp_listing_item_seller_max_height));
             // get seller cover image
             // TODO discuss request size
             MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(
-                    seller.coverPicture, mSellerBackgroundImageView.getWidth(), mSellerBackgroundImageView.getHeight(), false), new ImageLoader.ImageListener() {
+                    seller.coverPicture, width, height, false), new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {

@@ -57,7 +57,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/select_locality_margin_left"
+                android:layout_marginStart="@dimen/select_locality_margin_left"
                 android:layout_marginRight="@dimen/select_locality_margin_right"
+                android:layout_marginEnd="@dimen/select_locality_margin_right"
                 android:orientation="horizontal"
                 android:text="@string/select_locality_text"
                 android:textColor="@color/black"
@@ -70,9 +72,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="@dimen/red_tick_margin_right"
+                android:layout_marginEnd="@dimen/red_tick_margin_right"
                 android:gravity="end"
                 android:text="@string/apply"
-                android:textColor="@color/appThemeRed" />
+                android:textColor="@color/appThemeRed"
+                android:singleLine="true"
+                android:textAllCaps="false"/>
 
         </LinearLayout>
 

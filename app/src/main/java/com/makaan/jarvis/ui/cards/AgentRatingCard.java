@@ -14,6 +14,7 @@ import com.makaan.jarvis.JarvisClient;
 import com.makaan.jarvis.message.Message;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.ui.view.BaseView;
+import com.makaan.util.ImageUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -59,7 +60,9 @@ public class AgentRatingCard extends BaseView<Message> {
         });
 
         if(!TextUtils.isEmpty(item.chatObj.image)) {
-            MakaanNetworkClient.getInstance().getImageLoader().get(item.chatObj.image, new ImageLoader.ImageListener() {
+            int width = getResources().getDimensionPixelSize(R.dimen.jarvis_seller_card_profile_pic_dimen);
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(item.chatObj.image, width, width, false),
+                    new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {
