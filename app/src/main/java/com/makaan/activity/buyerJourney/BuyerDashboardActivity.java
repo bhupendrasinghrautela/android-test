@@ -97,7 +97,9 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
                     if(MasterDataCache.getInstance().getSavedSearch() == null) {
                         ((SaveSearchService) (MakaanServiceFactory.getInstance().getService(SaveSearchService.class))).getSavedSearches();
                     }
-                    initFragment(R.id.activity_base_buyer_journey_content_frame_layout, new SaveSearchFragment(), false);
+                    SaveSearchFragment fragment1 = new SaveSearchFragment();
+                    initFragment(R.id.activity_base_buyer_journey_content_frame_layout, fragment1, false);
+                    fragment1.setData(this);
                     setTitle("save searches");
                     break;
                 case LOAD_FRAGMENT_REWARDS:
@@ -210,13 +212,20 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
                 }
                 break;
             }
-            case LOAD_THANK_YOU_FRAGMENT:
+            case LOAD_THANK_YOU_FRAGMENT: {
                 ThankYouScreenFragment fragment = new ThankYouScreenFragment();
                 Bundle bundle = new Bundle();
                 bundle.putBoolean(ThankYouScreenFragment.IS_DASHBOARD, true);
                 fragment.setArguments(bundle);
                 initFragment(R.id.activity_base_buyer_journey_content_frame_layout, fragment, shouldAddToBackStack);
                 break;
+            }
+            case LOAD_FRAGMENT_CONTENT: {
+                BlogContentFragment fragment = new BlogContentFragment();
+                fragment.setArguments(data);
+                initFragment(R.id.activity_base_buyer_journey_content_frame_layout, fragment, shouldAddToBackStack);
+                break;
+            }
         }
         if(!TextUtils.isEmpty(title)) {
             setTitle(title);

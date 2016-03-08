@@ -12,6 +12,7 @@ import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.image.Image;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.StringUtil;
 
 import java.text.DecimalFormat;
@@ -33,6 +34,8 @@ public class PropertyImageCardView extends CardView {
     TextView priceUnitText;
     @Bind(R.id.price_change)
     ImageView priceChange;
+    @Bind(R.id.rupee_icon)
+    ImageView rupeeIcon;
     @Bind(R.id.area_text)
     TextView sizeText;
     @Bind(R.id.emi_text)
@@ -52,12 +55,12 @@ public class PropertyImageCardView extends CardView {
 
     public void bindView(Context mContext, Image listingDetailImage, int position, Double price, Double size, boolean hasIncreased, String category) {
         ButterKnife.bind(this);
-        if(position != 1){
+        /*if(position != 1){
             mPropertyImageDetailLayout.setVisibility(GONE);
-        }else{
+        }else{*/
             mPropertyImageDetailLayout.setVisibility(VISIBLE);
-        }
-        if(price!=null) {
+//        }
+        if(price!=null && price > 0) {
             String priceString = StringUtil.getDisplayPrice(price);
             String priceUnit = "";
             if(priceString.indexOf("\u20B9") == 0) {
@@ -68,12 +71,21 @@ public class PropertyImageCardView extends CardView {
             if(priceParts.length > 1) {
                 priceUnit = priceParts[1];
             }
+            if(!TextUtils.isEmpty(priceUnit) && category != null) {
+                priceUnit = priceUnit.concat(" +");
+            }
             priceText.setText(String.valueOf(priceString));
+            rupeeIcon.setVisibility(VISIBLE);
             priceUnitText.setText(priceUnit);
+        } else {
+            rupeeIcon.setVisibility(GONE);
         }
 
         mPropertyImageView.setDefaultImageResId(R.drawable.luxury_project);
-        mPropertyImageView.setImageUrl(listingDetailImage.absolutePath, MakaanNetworkClient.getInstance().getImageLoader());
+        int width = getResources().getConfiguration().screenWidthDp;
+        int height = (int)Math.ceil(getResources().getDimension(R.dimen.property_page_stack_like_pager_height));
+        mPropertyImageView.setImageUrl(ImageUtils.getImageRequestUrl(listingDetailImage.absolutePath, width, height, true),
+                MakaanNetworkClient.getInstance().getImageLoader());
         if(category == null){
             initData(size,price,hasIncreased,mContext);
         }
@@ -88,8 +100,11 @@ public class PropertyImageCardView extends CardView {
     }
 
     public void initData(Double size,Double price,boolean hasIncreased,Context mContext){
-        if (size != null) {
+        if (size != null && size > 0) {
             sizeText.setText(StringUtil.getFormattedNumber(size) + " " + mContext.getString(R.string.avg_price_postfix));
+            priceChange.setVisibility(VISIBLE);
+        } else {
+            priceChange.setVisibility(INVISIBLE);
         }
         if (price != null) {
             String formatted = new DecimalFormat("##,##,##0").format(calculateEmi(price, 9.55 / 100, 20));

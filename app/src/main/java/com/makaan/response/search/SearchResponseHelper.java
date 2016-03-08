@@ -158,9 +158,11 @@ public class SearchResponseHelper {
             if(Session.phoneLocation != null) {
                 request.setLatitude(Session.phoneLocation.getLatitude());
                 request.setLongitude(Session.phoneLocation.getLongitude());
-            } else if(Session.apiLocation != null) {
+            } /* else if(Session.apiLocation != null) {
                 request.setLatitude(Session.apiLocation.centerLatitude);
                 request.setLongitude(Session.apiLocation.centerLongitude);
+            } */ else {
+                return;
             }
             request.setSort(SerpRequest.Sort.GEO_ASC);
             request.setTitle(searchItem.displayText);

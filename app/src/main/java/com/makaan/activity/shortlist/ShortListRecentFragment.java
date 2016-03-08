@@ -22,6 +22,7 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.wishlist.WishListResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.WishListService;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
 import com.squareup.otto.Subscribe;
@@ -135,10 +136,17 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
             }
 
             public void bindData(final RecentPropertyProjectManager.DataObject dataObject) {
-                ((FadeInNetworkImageView)view.findViewById(R.id.iv_content)).setImageUrl(dataObject.imageUrl, MakaanNetworkClient.getInstance().getImageLoader());
+                int height = (int)Math.ceil(getResources().getDimension(R.dimen.fav_card_height));
+                int width = getResources().getConfiguration().screenWidthDp;
+                ((FadeInNetworkImageView)view.findViewById(R.id.iv_content)).setImageUrl(ImageUtils.getImageRequestUrl(dataObject.imageUrl, width, height, true),
+                        MakaanNetworkClient.getInstance().getImageLoader());
                 ((TextView)view.findViewById(R.id.tv_price_value)).setText(StringUtil.getDisplayPrice(dataObject.price));
-                ((TextView)view.findViewById(R.id.tv_area)).setText(dataObject.addressLine1);
-                ((TextView)view.findViewById(R.id.tv_locality)).setText(dataObject.addressLine2);
+                if(dataObject.addressLine1 != null) {
+                    ((TextView) view.findViewById(R.id.tv_area)).setText(dataObject.addressLine1.toLowerCase());
+                }
+                if(dataObject.addressLine2 != null) {
+                    ((TextView) view.findViewById(R.id.tv_locality)).setText(dataObject.addressLine2.toLowerCase());
+                }
                 // TODO check below statement
 //                if(!TextUtils.isEmpty(dataObject.phoneNo)) {
                 if(!TextUtils.isEmpty(dataObject.sellerName)) {

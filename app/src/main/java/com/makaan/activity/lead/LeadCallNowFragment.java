@@ -1,6 +1,8 @@
 package com.makaan.activity.lead;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
@@ -19,7 +21,9 @@ import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.notification.GcmRegister;
 import com.makaan.util.ImageUtils;
+import com.makaan.util.PermissionManager;
 import com.segment.analytics.Properties;
 
 import butterknife.Bind;
@@ -93,9 +97,13 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickPropertyCallConnect);
         }
         //TODO remove this hardcoded number
-        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
-                + mLeadFormPresenter.getPhone()));
-        startActivity(intent);
+        if(PermissionManager.isPermissionRequestRequired(getActivity(), Manifest.permission.CALL_PHONE)) {
+            PermissionManager.begin().addRequest(PermissionManager.CALL_PHONE_REQUEST).request(getActivity());
+        } else {
+            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
+                    + mLeadFormPresenter.getPhone()));
+            startActivity(intent);
+        }
     }
 
     @OnClick(R.id.tv_share_your_deatils)
@@ -150,6 +158,24 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
             mSellerImage.setVisibility(View.INVISIBLE);
             mSellerNameProfileText.setVisibility(View.VISIBLE);
             mSellerNameProfileText.setText(mLeadFormPresenter.getName());
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if ((requestCode & PermissionManager.CALL_PHONE_REQUEST)
+                == PermissionManager.CALL_PHONE_REQUEST) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
+                        + mLeadFormPresenter.getPhone()));
+                startActivity(intent);
+            } else if(grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                // TODO show message or something
+            }
         }
     }
 

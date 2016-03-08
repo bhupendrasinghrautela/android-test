@@ -71,6 +71,7 @@ public class RequestConstants {
     public static final String LISTING_AGGREGATIONS = "listingAggregations";
     public static final String PROJECT_NAME = "projectName";
     public static final String MONTH_DURATION = "monthDuration";
+    public static final String MONTH = "month";
     public static final String LIVABILITY_SCORE = "livabilityScore";
     public static final String BUILDER_DB_STATUS = "builderDbStatus";
     public static final String LATITUDE = "latitude";

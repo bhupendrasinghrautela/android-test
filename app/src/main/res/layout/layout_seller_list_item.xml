@@ -62,10 +62,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <com.makaan.ui.view.CustomRatingBar
-            android:id="@+id/seller_ratingbar"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <com.makaan.ui.view.CustomRatingBar
+            android:id="@+id/seller_ratingbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
             android:layout_marginTop="0dp"
             android:isIndicator="true"
             app:itemHeight="@dimen/rating_star_height"
@@ -78,6 +84,14 @@
             style="?android:attr/ratingBarStyleSmall"
             />
 
+         <ImageView
+             android:id="@+id/m_plus_badge"
+             android:layout_width="45dp"
+             android:layout_height="15dp"
+             android:background="@drawable/m_badge"
+             android:visibility="gone"/>
+
+        </LinearLayout>
     </LinearLayout>
 
     <CheckBox

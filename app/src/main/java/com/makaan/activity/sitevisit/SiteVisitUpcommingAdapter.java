@@ -163,7 +163,10 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
         }
         populateCompany(listingDetail.companySeller, holder);
         holder.mAddress.setText(name.toString().toLowerCase());
-        holder.mMainImage.setImageUrl(listingDetail.mainImageURL, MakaanNetworkClient.getInstance().getImageLoader());
+        int height = (int)Math.ceil(mContext.getResources().getDimension(R.dimen.enq_card_height));
+        int width = mContext.getResources().getConfiguration().screenWidthDp;
+        holder.mMainImage.setImageUrl(ImageUtils.getImageRequestUrl(listingDetail.mainImageURL, width, height, true),
+                MakaanNetworkClient.getInstance().getImageLoader());
     }
 
     private void populateCompany(CompanySeller companySeller, final SiteVisitViewHolder holder) {

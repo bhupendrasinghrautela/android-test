@@ -14,6 +14,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -44,7 +45,6 @@ import com.makaan.pojo.TaxonomyCard;
 import com.makaan.response.agents.TopAgent;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.city.EntityDesc;
-import com.makaan.response.image.Image;
 import com.makaan.response.locality.ListingAggregation;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Builder;
@@ -57,6 +57,7 @@ import com.makaan.ui.CompressedTextView;
 import com.makaan.util.Blur;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.LocalityUtil;
+import com.makaan.util.StringUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -251,7 +252,7 @@ public class LocalityFragment extends MakaanBaseFragment {
             showFirstSection = true;
             salesMedianPrice.setVisibility(View.VISIBLE);
             salesMedianPriceLabel.setVisibility(View.VISIBLE);
-            salesMedianPrice.setText("\u20B9 " + meadianSale + " / sq ft");
+            salesMedianPrice.setText("\u20B9 " + StringUtil.getFormattedNumber(meadianSale) + " / sq ft");
             
         }
         else{
@@ -262,7 +263,7 @@ public class LocalityFragment extends MakaanBaseFragment {
             showSecondSection = true;
             rentMedianPrice.setVisibility(View.VISIBLE);
             rentMedianPriceLabel.setVisibility(View.VISIBLE);
-            rentMedianPrice.setText("\u20B9 " + meadianRental + " / month");
+            rentMedianPrice.setText("\u20B9 " + StringUtil.getFormattedNumber(meadianRental) + " / month");
         }
         else{
 
@@ -304,12 +305,18 @@ public class LocalityFragment extends MakaanBaseFragment {
                 Log.e("value", scrollY + " " + oldScrollY + " " + alpha);
                 if (alpha > 1) {
                     alpha = 1;
-                    if(locality!=null) {
-                        mCityCollapseToolbar.setTitle(locality.label + " - " + locality.suburb.city.label);
+                    if(locality!=null && locality.label != null) {
+                        if(locality.suburb != null && locality.suburb.city != null) {
+                            if(!TextUtils.isEmpty(locality.suburb.city.label)) {
+                                mCityCollapseToolbar.setTitle(locality.label.toLowerCase() + " - " + locality.suburb.city.label.toLowerCase());
+                            } else {
+                                mCityCollapseToolbar.setTitle(locality.label.toLowerCase());
+                            }
+                        }
                     }
                 }else{
-                    if(locality!=null) {
-                        mCityCollapseToolbar.setTitle(locality.label);
+                    if(locality!=null && locality.label != null) {
+                        mCityCollapseToolbar.setTitle(locality.label.toLowerCase());
                     }
                 }
                 mBlurredCityImage.setAlpha(alpha);
@@ -366,11 +373,14 @@ public class LocalityFragment extends MakaanBaseFragment {
         bundle.putString("title", getResources().getString(R.string.locality_price_trends_label));
         bundle.putLong("localityId", localityId);
         bundle.putSerializable("locality", localities);
-        bundle.putInt("primaryMedian", meadianSale == null ? 0 : meadianSale);
-        bundle.putDouble("primaryRise", locality.avgPriceRisePercentage == null ? 0 : locality.avgPriceRisePercentage);
-        bundle.putDouble("secondaryAverage", locality.averageRentPerMonth == null ? 0 : locality.averageRentPerMonth);
-        bundle.putInt("secondaryMedian", meadianRental == null ? 0 : meadianRental);
+        bundle.putInt("primaryAverage", meadianSale == null ? 0 : meadianSale);
+        Integer cityMedian = LocalityUtil.calculateAveragePrice(locality.suburb.city.listingAggregations).intValue();
+        bundle.putInt("cityAverage", cityMedian == null ? 0 : cityMedian);
+        Integer cityRental = LocalityUtil.calculateRentalPrice(locality.suburb.city.listingAggregations).intValue();
+        bundle.putInt("cityRental", cityRental == null ? 0 : cityRental);
+        bundle.putInt("secondaryRental", meadianRental == null ? 0 : meadianRental);
         bundle.putString("localityName", locality.label);
+        bundle.putString("cityName", locality.suburb.city.label);
         newFragment.setArguments(bundle);
         initFragment(R.id.container_nearby_localities_price_trends, newFragment, false);
     }
@@ -471,8 +481,8 @@ public class LocalityFragment extends MakaanBaseFragment {
 
 
     private void calculateMedian(ArrayList<ListingAggregation> listingAggregations) {
-            meadianSale = LocalityUtil.calculateMedian(listingAggregations).intValue();
-            meadianRental = locality.averageRentPerMonth == null? null : locality.averageRentPerMonth.intValue();
+            meadianSale = LocalityUtil.calculateAveragePrice(listingAggregations).intValue();
+            meadianRental = LocalityUtil.calculateRentalPrice(listingAggregations).intValue();
 
     }
 
@@ -513,6 +523,7 @@ public class LocalityFragment extends MakaanBaseFragment {
     public void onBottomPyrClick(){
         Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
         pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, locality.suburb.city.label);
+        pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, locality.suburb.city.id);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_ID, locality.localityId);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_NAME, locality.label);
 

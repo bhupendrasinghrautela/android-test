@@ -6,10 +6,10 @@ package com.makaan.constants;
 public class ApiConstants {
 
 
-    public static final String BASE_URL = "http://mp-qa2.makaan-ws.com";
+    //public static final String BASE_URL = "http://mp-qa2.makaan-ws.com";
     //public static final String BASE_URL = "https://marketplace-qa.proptiger-ws.com";
     //public static final String BASE_URL = "https://marketplace-qa.makaan-ws.com";
-//    public static final String BASE_URL = "http://beta.makaan-ws.com";
+    public static final String BASE_URL = "http://beta.makaan-ws.com";
     //public static final String BASE_URL = "https://marketplace-qa.makaan-ws.com";
     //public static final String BASE_URL = "http://beta.makaan-ws.com";
     //public static final String BASE_URL = "http://mp-qa1.makaan-ws.com/";
@@ -45,7 +45,7 @@ public class ApiConstants {
     public static final String LOCALITY_DATA = BASE_URL.concat("/data/v3/entity/locality");
     public static final String LOCALITY = BASE_URL.concat("/app/v3/locality/");
 
-    public static final String TREND_URL = BASE_URL.concat("/data/v1/trend/hitherto");
+    public static final String TREND_URL = BASE_URL.concat("/compass/data/v1/trend");
     public static final String LOCALITY_TREND_URL = TREND_URL.concat("?fields=avgPricePerUnitArea,localityName,projectName&group=localityId,month");
     public static final String CITY_TREND_URL = TREND_URL.concat("?fields=avgBuyPricePerUnitArea,localityName,projectName,cityName&group=cityId,month");
     public static final String PROJECT_TREND_URL = TREND_URL.concat("?fields=avgBuyPricePerUnitArea,localityName,projectName&group=projectId,month");

@@ -79,7 +79,7 @@ public class ProjectSpecificationView extends LinearLayout{
         final ArrayList<String> tabNames=new ArrayList<String>();
         for(String tab:map.keySet()) {
             ArrayList<SpecificaitonsUI> specificaitonsUIs = map.get(tab);
-            tabNames.add(tab);
+            tabNames.add(tab.toLowerCase());
             if(specificaitonsUIs.size()>max)
                 max = specificaitonsUIs.size();
 
@@ -134,7 +134,7 @@ public class ProjectSpecificationView extends LinearLayout{
 
         public void addFrag(Fragment fragment, String title) {
             mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
+            mFragmentTitleList.add(title.toLowerCase());
         }
 
         @Override

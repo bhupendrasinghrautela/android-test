@@ -21,11 +21,13 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PriceTrendService;
 import com.makaan.service.WishListService;
 import com.makaan.service.user.UserLoginService;
+import com.makaan.util.DateUtil;
 import com.makaan.util.JsonBuilder;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,7 +133,9 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         for (Locality locality : cityTopLocalityEvent.topLocalitiesInCity) {
             topLocalities.add(locality.localityId);
         }
-        ((PriceTrendService) (MakaanServiceFactory.getInstance().getService(PriceTrendService.class))).getPriceTrendForLocalities(topLocalities, 6, new TopLocalitiesTrendCallback());
+        final String minTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(1));
+        final String maxTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(7));
+        ((PriceTrendService) (MakaanServiceFactory.getInstance().getService(PriceTrendService.class))).getPriceTrendForLocalities(topLocalities,minTime,maxTime, new TopLocalitiesTrendCallback());
 
     }
 

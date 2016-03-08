@@ -63,11 +63,14 @@ import com.makaan.ui.MultiSelectionSpinner.OnSelectionChangeListener;
 import com.makaan.ui.PriceTrendView;
 import com.makaan.ui.city.TopLocalityView;
 import com.makaan.util.Blur;
+import com.makaan.util.DateUtil;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.LocalityUtil;
 import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -206,7 +209,10 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     }
 
     private void initUiUsingCityDetails() {
-        mMainCityImage.setImageUrl(mCity.cityHeroshotImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
+        int width = getResources().getConfiguration().screenWidthDp;
+        int height = getResources().getConfiguration().screenHeightDp;
+        mMainCityImage.setImageUrl(ImageUtils.getImageRequestUrl(mCity.cityHeroshotImageUrl, width, height, true),
+                MakaanNetworkClient.getInstance().getImageLoader());
         new CityService().getPropertyRangeInCity(mCity.id,null,null,false,mCity.cityBuyMinPrice.intValue(),mCity.cityBuyMaxPrice.intValue(),
                 (mCity.cityBuyMaxPrice.intValue()-mCity.cityBuyMinPrice.intValue())/20);
         if(mCity.label!=null) {
@@ -220,7 +226,8 @@ public class CityOverViewFragment extends MakaanBaseFragment{
                 mCity.minLuxuryPrice, mCity.maxBudgetPrice));
         //mCityConnectHeader.setText(getString(R.string.city_connect_header_text) + " " + mCity.label);
         if(mCity.cityHeroshotImageUrl != null) {
-            MakaanNetworkClient.getInstance().getImageLoader().get(mCity.cityHeroshotImageUrl, new ImageListener() {
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(mCity.cityHeroshotImageUrl, width, height, true),
+                    new ImageListener() {
                 @Override
                 public void onResponse(final ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {
@@ -273,7 +280,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         }
         if(!TextUtils.isEmpty(mCity.description)) {
             mCompressedTextViewLayout.setVisibility(View.VISIBLE);
-            mCityDescription.setText(Html.fromHtml(mCity.description));
+            mCityDescription.setText(Html.fromHtml(mCity.description).toString().toLowerCase());
         }
         else{
             mCompressedTextViewLayout.setVisibility(View.GONE);
@@ -426,14 +433,16 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         for(Locality locality:cityTopLocalities){
             localityIds.add(locality.localityId);
         }
-        new PriceTrendService().getPriceTrendForLocalities(localityIds, 60, new LocalityTrendCallback() {
+        final String minTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(1));
+        final String maxTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(37));
+        new PriceTrendService().getPriceTrendForLocalities(localityIds,minTime,maxTime, new LocalityTrendCallback() {
             @Override
             public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
                 if (localityPriceTrendDto.data != null && localityPriceTrendDto.data.size() != 0) {
                     mPriceTrendView.setVisibility(View.VISIBLE);
                     mPriceTrendView.bindView(localityPriceTrendDto);
                     mLocalityPriceTrendDto = localityPriceTrendDto;
-                    new PriceTrendService().getCityPriceTrendForCity(mCity.id,60);
+                    new PriceTrendService().getCityPriceTrendForCity(mCity.id,minTime,maxTime);
                 } else
                     mPriceTrendView.setVisibility(View.GONE);
             }
@@ -500,6 +509,10 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     @OnClick(R.id.pyr_button_bottom)
     public void onBottomPyrClick(){
         Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
+        if(mCity!=null && mCity.label!=null) {
+            pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, mCity.label);
+            pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, mCity.id);
+        }
         getActivity().startActivity(pyrIntent);
     }
 }

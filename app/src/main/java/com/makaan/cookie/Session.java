@@ -10,4 +10,5 @@ import com.makaan.response.location.MyLocation;
 public class Session {
     public static MyLocation apiLocation;
     public static Location phoneLocation;
+    public static boolean locationRequested;
 }

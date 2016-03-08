@@ -116,7 +116,7 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
             if(clientLeadsByGetEvent != null && !TextUtils.isEmpty(clientLeadsByGetEvent.error.msg)) {
                 showNoResults(clientLeadsByGetEvent.error.msg);
             } else {
-                showNoResults();
+                showNoResults("");
             }
             return;
         }
@@ -131,7 +131,7 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
 
             ((ClientLeadsService) MakaanServiceFactory.getInstance().getService(ClientLeadsService.class)).requestClientLeadCompanies(ids);
         } else {
-            showNoResults(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT));
+            showNoResults("");
         }
     }
 

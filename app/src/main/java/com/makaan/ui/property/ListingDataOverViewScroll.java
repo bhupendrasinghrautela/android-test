@@ -59,7 +59,8 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
             "ownerType"*/
     private enum OVERVIEW{
         STATUS("status"),POSSESSION("possession"),AGE("age"),BATH("bathrooms"),FLOOR("floor"),BALCONY("balcony"),
-        TOTAL_FLOOR("totalFloor"),CATEGORY("category"),BOOK_AMOUNT("bookamt"),
+        TOTAL_FLOOR("totalFloor"),CATEGORY("category"),BOOK_AMOUNT("bookamt"),FURNISH_STAT("furnishStat"),
+        SECURITY_DEPOSIT("securityDeposit"),AVAILABILITY("availablity"),TENANT_PREF("tenantPref"),
         OPEN_SIDES("openSides"),ENTRY_ROAD_WIDTH("entryRoadWidth"),FACING("facing"),
         PARKING("parking"),OVERLOOK("overlook"),ADD_ROOM("addroom"),OWNER_TYPE("ownerType"),TYPE("type");
 
@@ -191,6 +192,19 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                             overViewItem.value =ageYrs.concat(" yrs");
                         }
                         break;
+                    case FURNISH_STAT:
+                        if(!TextUtils.isEmpty(mDetail.furnished)) {
+                            overViewItem.name = "furnished";
+                            overViewItem.resourceId = R.drawable.furniture_status;
+                            overViewItem.value = mDetail.furnished.toLowerCase();
+                        }
+                        break;
+                    case SECURITY_DEPOSIT:
+                        if(mDetail.securityDeposit!=0){
+                            overViewItem.name= "security deposit";
+                            overViewItem.resourceId = R.drawable.shower;
+                            overViewItem.value = String.valueOf(mDetail.securityDeposit);
+                        }
                     case BATH:
                         if(mDetail.property!=null && mDetail.property.bathrooms!=null) {
                             overViewItem.name = overview.toString();
@@ -238,7 +252,13 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                         if(mDetail.listingCategory!=null) {
                             overViewItem.name = overview.toString();
                             overViewItem.resourceId = R.drawable.new_resale;
-                            overViewItem.value = String.valueOf(mDetail.listingCategory);
+                            if("primary".equalsIgnoreCase(mDetail.listingCategory)) {
+                                overViewItem.value = "new".toLowerCase();
+                            } else if("resale".equalsIgnoreCase(mDetail.listingCategory)) {
+                                overViewItem.value = "resale".toLowerCase();
+                            } else {
+                                overViewItem.value = mDetail.listingCategory.toLowerCase();
+                            }
                         }
                         break;
                     case ENTRY_ROAD_WIDTH:

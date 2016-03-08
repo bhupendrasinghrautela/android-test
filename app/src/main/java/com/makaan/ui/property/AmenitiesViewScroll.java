@@ -16,6 +16,7 @@ import com.makaan.response.listing.detail.ListingAmenity;
 import com.makaan.response.project.ProjectAmenity;
 import com.makaan.ui.BaseLinearLayout;
 import com.makaan.ui.listing.CustomHorizontalScrollView;
+import com.makaan.util.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +36,8 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
     List<String> mAmenitiesPriority;
     HashMap<Long,Boolean> mAmenitiesToDisplay;
     private Context mContext;
-    private List<ListingAmenity> mAmenityIdList;
+    private List<ListingAmenity> mAmenityIdListingList;
+    private List<ProjectAmenity> mAmenityIdProjectList;
 
     public AmenitiesViewScroll(Context context) {
         super(context);
@@ -60,7 +62,7 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
     }
 
     public void bindView(String listingCategory,String unitType,List<ListingAmenity> amenityIdList) {
-        mAmenityIdList = amenityIdList;
+        mAmenityIdListingList = amenityIdList;
         if(!TextUtils.isEmpty(listingCategory) && !TextUtils.isEmpty(unitType)) {
             mAmenitiesPriority = MasterDataCache.getInstance().getDisplayOrder(listingCategory, unitType, "amenity");
             createAmenitiesToDisplay();
@@ -74,11 +76,53 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
     }
 
     public void bindView(List<ProjectAmenity> projectAmenities){
-        createAdapterDataForProject(projectAmenities);
+        mAmenityIdProjectList = projectAmenities;
+        mAmenitiesPriority = MasterDataCache.getInstance().getDisplayOrder(null, null, "amenity");
+        createAmenitiesToDisplayForProject();
+        createAdapterDataForProperty();
+        if(mAmenityItems.size()>0){
+            this.setVisibility(VISIBLE);
+        }
+        ListingOverViewAdapter listingOverViewAdapter = new ListingOverViewAdapter(mContext,mAmenityItems);
+        mAmenityScroll.setAdapter(listingOverViewAdapter);
     }
 
-    private void createAdapterDataForProject(List<ProjectAmenity> projectAmenities) {
+    private void createAmenitiesToDisplayForProject() {
+        mAmenitiesToDisplay = MasterDataCache.getInstance().getDefaultAmenityList();
+        for(ProjectAmenity id: mAmenityIdProjectList){
+            if(mAmenitiesToDisplay.get(id.amenityMaster.amenityId)!=null){
+                mAmenitiesToDisplay.put(id.amenityMaster.amenityId,true);
+            }
+            else{
+                mAmenitiesToDisplay.put(id.amenityMaster.amenityId,true);
+            }
+        }
+    }
+
+/*    private void createAdapterDataForProject(List<ProjectAmenity> projectAmenities) {
         mAmenityItems = new ArrayList<>();
+        for(String amenityId:mAmenitiesPriority){
+            try {
+                if((mAmenitiesToDisplay.get(Long.parseLong(amenityId)))!=null){
+                    HorizontalScrollItem amenityItem = new HorizontalScrollItem();
+                    Long id = Long.parseLong(amenityId);
+                    amenityItem.resourceId = R.drawable.possession;
+                    if(mAmenitiesToDisplay.get(id)){
+                        amenityItem.activated = true;
+                    }
+                    else{
+                        amenityItem.activated = false;
+                    }
+                    amenityItem.value = MasterDataCache.getInstance().getPropertyAmenityById(id).amenityName;
+                    amenityItem.name = amenityId;
+                    mAmenityItems.add(amenityItem);
+                }
+            }catch (NumberFormatException e){
+
+            }catch (Exception e){
+
+            }
+        }
         for(ProjectAmenity projectAmenity : projectAmenities){
             try {
                 HorizontalScrollItem amenityItem = new HorizontalScrollItem();
@@ -94,11 +138,11 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
         }
         ListingOverViewAdapter listingOverViewAdapter = new ListingOverViewAdapter(mContext,mAmenityItems);
         mAmenityScroll.setAdapter(listingOverViewAdapter);
-    }
+    }*/
 
     private void createAmenitiesToDisplay() {
         mAmenitiesToDisplay = MasterDataCache.getInstance().getDefaultAmenityList();
-        for(ListingAmenity id:mAmenityIdList){
+        for(ListingAmenity id: mAmenityIdListingList){
             if(mAmenitiesToDisplay.get(id.amenity.amenityMaster.amenityId)!=null){
                 mAmenitiesToDisplay.put(id.amenity.amenityMaster.amenityId,true);
             }
@@ -169,7 +213,9 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
             finalImageUrl.append("/");
             finalImageUrl.append(dataItem.name);
             finalImageUrl.append(".png");
-            imageView.setImageUrl(finalImageUrl.toString(), MakaanNetworkClient.getInstance().getImageLoader());
+            int width = getResources().getDimensionPixelSize(R.dimen.amenities_horizontal_scroll_item_dimen);
+            imageView.setImageUrl(ImageUtils.getImageRequestUrl(finalImageUrl.toString(), width, width, false),
+                    MakaanNetworkClient.getInstance().getImageLoader());
             if(!dataItem.activated){
                 imageView.setAlpha(0.5f);
                 valueText.setTextColor(mContext.getResources().getColor(R.color.pyr_light_grey));
