@@ -1,6 +1,7 @@
 package com.makaan.activity.shortlist;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -137,8 +138,8 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
 
             public void bindData(final RecentPropertyProjectManager.DataObject dataObject) {
                 int height = (int)Math.ceil(getResources().getDimension(R.dimen.fav_card_height));
-                int width = getResources().getConfiguration().screenWidthDp;
-                ((FadeInNetworkImageView)view.findViewById(R.id.iv_content)).setImageUrl(ImageUtils.getImageRequestUrl(dataObject.imageUrl, width, height, true),
+                int width = (int) (getResources().getConfiguration().screenWidthDp * Resources.getSystem().getDisplayMetrics().density);
+                ((FadeInNetworkImageView)view.findViewById(R.id.iv_content)).setImageUrl(ImageUtils.getImageRequestUrl(dataObject.imageUrl, width, height, false),
                         MakaanNetworkClient.getInstance().getImageLoader());
                 ((TextView)view.findViewById(R.id.tv_price_value)).setText(StringUtil.getDisplayPrice(dataObject.price));
                 if(dataObject.addressLine1 != null) {

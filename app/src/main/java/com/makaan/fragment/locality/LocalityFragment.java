@@ -48,6 +48,7 @@ import com.makaan.response.city.EntityDesc;
 import com.makaan.response.locality.ListingAggregation;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Builder;
+import com.makaan.response.search.SearchResponseItem;
 import com.makaan.service.AgentService;
 import com.makaan.service.AmenityService;
 import com.makaan.service.LocalityService;
@@ -62,6 +63,7 @@ import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -239,13 +241,15 @@ public class LocalityFragment extends MakaanBaseFragment {
         else {
             compressedTv.setVisibility(View.GONE);
         }
-        mCityCollapseToolbar.setTitle(locality.label);
+        if(locality.label != null) {
+            mCityCollapseToolbar.setTitle(locality.label.toLowerCase());
+            interestedInTv.setText("interested in "+locality.label.toLowerCase()+"?");
+        }
         livinScoreTv.setText("" + locality.livabilityScore);
         livingScoreProgress.setProgress(locality.livabilityScore == null ? 0 : (int) (locality.livabilityScore * 10));
         livingScoreProgress.setVisibility(locality.livabilityScore == null ? View.GONE : View.VISIBLE);
         livinScoreTv.setVisibility(locality.livabilityScore == null ? View.GONE : View.VISIBLE);
         calculateMedian(locality.listingAggregations);
-        interestedInTv.setText("interested in "+locality.label+"?");
         boolean showFirstSection = false;
         boolean showSecondSection = false;
         if(meadianSale != null && meadianSale.intValue() != 0) {
@@ -337,6 +341,15 @@ public class LocalityFragment extends MakaanBaseFragment {
 
     private void addNearByLocalitiesFragment(ArrayList<Locality> nearbyLocalities) {
         if(nearbyLocalities != null && nearbyLocalities.size()>0) {
+            if(locality != null && locality.localityId != null && locality.localityId > 0) {
+                for (Iterator<Locality> iterator = nearbyLocalities.iterator(); iterator.hasNext(); ) {
+                    Locality local = iterator.next();
+                    if(local.localityId != null && local.localityId.equals(locality.localityId)) {
+                        iterator.remove();
+                    }
+                }
+            }
+
             NearByLocalitiesFragment newFragment = new NearByLocalitiesFragment();
             Bundle bundle = new Bundle();
             bundle.putString("title", getResources().getString(R.string.locality_nearby_localities_title));

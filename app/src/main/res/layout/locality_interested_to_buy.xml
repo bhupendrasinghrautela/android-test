@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--TODO :: hardcoded values, work in progress-->
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:font="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:font="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="vertical">
+
     <FrameLayout
         android:layout_width="match_parent"
-        android:background="#000001"
+        android:layout_height="222dp"
         android:layout_centerInParent="true"
         android:alpha="0.5"
-        android:layout_height="222dp" >
-    </FrameLayout>
+        android:background="#000001"></FrameLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:orientation="vertical">
-<com.makaan.ui.view.FontTextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="41dp"
+
+        <com.makaan.ui.view.FontTextView
+            android:id="@+id/tv_locality_interested_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
 
-    android:layout_marginBottom="50dp"
-    android:gravity="center_horizontal"
-    android:layout_marginLeft="80dp"
-    android:layout_marginRight="80dp"
-    android:textColor="@color/white"
-    font:fontName="comforta.ttf"
-    android:id="@+id/tv_locality_interested_in"
-    android:textSize="24sp"
-    android:text=""
-    />
-<Button
-    android:id="@+id/pyr_button_bottom"
-    android:layout_width="150dp"
-    android:layout_height="wrap_content"
-    android:background="@drawable/btn_find_your_home"
-    android:layout_gravity="center_horizontal"
-    android:layout_marginBottom="50dp"
-    android:textSize="16sp"
-    android:textAllCaps="false"
-    android:textColor="@color/white"
-    android:text="find your home"
-    />
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginTop="41dp"
+            android:gravity="center_horizontal"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            font:fontName="comforta.ttf" />
+
+        <Button
+            android:id="@+id/pyr_button_bottom"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/btn_find_your_home"
+            android:text="find your home"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
     </LinearLayout>
 </RelativeLayout>

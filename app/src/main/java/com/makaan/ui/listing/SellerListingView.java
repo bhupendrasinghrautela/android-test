@@ -1,6 +1,7 @@
 package com.makaan.ui.listing;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -17,6 +18,7 @@ import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.event.seller.SellerByIdEvent;
+import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.project.CompanySeller;
@@ -191,25 +193,25 @@ public class SellerListingView extends AbstractCardListingView {
         }
 
         if(seller.coverPicture != null) {
-            int width = getResources().getConfiguration().screenWidthDp;
+            int width = (int) (getResources().getConfiguration().screenWidthDp * Resources.getSystem().getDisplayMetrics().density);
             int height = (int) Math.ceil(getResources().getDimension(R.dimen.serp_listing_item_seller_max_height));
             // get seller cover image
             // TODO discuss request size
             MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(
-                    seller.coverPicture, width, height, false), new ImageLoader.ImageListener() {
+                    seller.coverPicture, width, height, false).concat("&blur=true"), new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }
                     final Bitmap image = imageContainer.getBitmap();
-                    final Bitmap newImg = Blur.fastblur(mContext, image, 5);
-                    mSellerBackgroundImageView.setImageBitmap(newImg);
+//                    final Bitmap newImg = Blur.fastblur(mContext, image, 5);
+                    mSellerBackgroundImageView.setImageBitmap(image);
                 }
 
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-
+                    super.onErrorResponse(volleyError);
                 }
             });
         } else {

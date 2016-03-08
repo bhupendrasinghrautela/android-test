@@ -85,7 +85,11 @@ public class TopLocalityView extends BaseLinearLayout<List<Locality>> {
             }else{
                 localityAvgPriceRise.setVisibility(View.GONE);
             }
-            localityScore.setText(String.valueOf(locality.livabilityScore));
+            if(locality.livabilityScore != null && locality.livabilityScore > 10) {
+                localityScore.setText(String.valueOf(10));
+            } else {
+                localityScore.setText(String.valueOf(locality.livabilityScore));
+            }
             localityScoreProgress.setProgress((int) (locality.livabilityScore * 10));
             localityItem.setOnClickListener(new OnClickListener() {
                 @Override

@@ -87,7 +87,9 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         placeholderResource = getArguments().getInt("placeholder");
         viewDetailText = getArguments().getString("action");
 //        switchLl.setVisibility(R.drawable.placeholder_agent == placeholderResource ? View.VISIBLE : View.GONE);
-        titleTv.setText(title);
+        if(title != null) {
+            titleTv.setText(title.toLowerCase());
+        }
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         mRecyclerView.setLayoutManager(mLayoutManager);
