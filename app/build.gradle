@@ -39,9 +39,16 @@ android {
 
     buildTypes {
         release {
+            minifyEnabled true
+            shrinkResources true
+            //signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug{
             minifyEnabled false
-            signingConfig signingConfigs.release
-            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            shrinkResources false
+            //signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     lintOptions {
@@ -85,7 +92,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'org.apmem.tools:layouts:1.10@aar'
     compile 'com.facebook.android:facebook-android-sdk:4.1.0'
-    compile 'com.tusharchoudhary:timeline:1.2.4'
+    compile 'com.tusharchoudhary:timeline:1.2.6'
     compile 'com.segment.analytics.android:analytics:4.+'
     compile('org.apache.httpcomponents:httpmime:4.3.1') {
         exclude module: "httpclient"

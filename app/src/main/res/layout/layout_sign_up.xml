@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -49,8 +50,11 @@
         android:padding="@dimen/input_top_margin">
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_username"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+
 
         <EditText
             android:id="@+id/sign_up_username"
@@ -58,7 +62,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/input_top_margin"
-            android:background="@drawable/edittext_bg_bottom_border"
             android:hint="@string/user_name"
             android:paddingBottom="@dimen/edit_internal_padding"
             android:paddingTop="@dimen/edit_internal_padding"
@@ -69,17 +72,19 @@
 
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_signup_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/drawable_top_padding">
+            android:layout_marginTop="@dimen/drawable_top_padding"
+            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-            <EditText
+
+        <EditText
                 android:id="@+id/sign_up_email"
                 android:textSize="@dimen/medium_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/input_top_margin"
-                android:background="@drawable/edittext_bg_bottom_border"
                 android:hint="@string/email"
                 android:paddingBottom="@dimen/edit_internal_padding"
                 android:paddingTop="@dimen/edit_internal_padding"
@@ -94,16 +99,18 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/drawable_top_padding">
+                android:layout_marginTop="@dimen/drawable_top_padding"
+                android:id="@+id/til_signup_password"
+                app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-                <EditText
+
+            <EditText
                     android:id="@+id/sign_up_password"
                     android:inputType="textPassword"
                     android:textSize="@dimen/medium_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/input_top_margin"
-                    android:background="@drawable/edittext_bg_bottom_border"
                     android:hint="@string/Password"
                     android:paddingBottom="@dimen/edit_internal_padding"
                     android:paddingTop="@dimen/edit_internal_padding"

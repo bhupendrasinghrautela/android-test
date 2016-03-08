@@ -2,6 +2,7 @@ package com.makaan.fragment.userLogin;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -43,6 +44,13 @@ public class SignUpFragment extends Fragment {
     EditText mEditTextPassword;
     @Bind(R.id.sign_up_button)
     Button mButtonLogin;
+    @Bind(R.id.til_username)
+    TextInputLayout mTilUsername;
+    @Bind(R.id.til_signup_email)
+    TextInputLayout mTilEmail;
+    @Bind(R.id.til_signup_password)
+    TextInputLayout mTilPassword;
+
     private OnUserRegistrationListener mOnUserRegistrationListener;
     private UserRegistrationDto userRegistrationDto;
 
@@ -66,14 +74,16 @@ public class SignUpFragment extends Fragment {
         String email = mEditTextEmail.getText().toString().trim();
         String pwd = mEditTextPassword.getText().toString().trim();
         String name=mEditTextName.getText().toString().trim();
-        if(!CommonUtil.isValidEmail(email)) {
-            Toast.makeText(getActivity(), getString(R.string.enter_valid_email), Toast.LENGTH_SHORT).show();
+        if(TextUtils.isEmpty(name)){
+            mTilUsername.setError(getString(R.string.enter_username));
+            //Toast.makeText(getActivity(),getString(R.string.enter_username),Toast.LENGTH_SHORT).show();
+        }else if(!CommonUtil.isValidEmail(email)) {
+            mTilEmail.setError(getString(R.string.enter_valid_email));
+            //Toast.makeText(getActivity(), getString(R.string.enter_valid_email), Toast.LENGTH_SHORT).show();
         }else if(TextUtils.isEmpty(pwd)) {
-            Toast.makeText(getActivity(),getString(R.string.enter_password),Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(name)){
-            Toast.makeText(getActivity(),getString(R.string.enter_username),Toast.LENGTH_SHORT).show();
-        }
-        else {
+            mTilPassword.setError(getString(R.string.enter_password));
+            //Toast.makeText(getActivity(),getString(R.string.enter_password),Toast.LENGTH_SHORT).show();
+        }else{
             userRegistrationDto=new UserRegistrationDto();
             userRegistrationDto.setFullName(mEditTextName.getText().toString().trim());
             userRegistrationDto.setEmail(mEditTextEmail.getText().toString().trim());

@@ -82,7 +82,7 @@ public class MultipleLeadFormFragment extends MakaanBaseFragment {
                     Toast.LENGTH_SHORT).show();*/
             if(getActivity() != null) {
                 MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
-                        getActivity().getResources().getString(R.string.invalid_email_toast), "ok");
+                        getActivity().getResources().getString(R.string.invalid_email), "ok");
             }
 
         }
