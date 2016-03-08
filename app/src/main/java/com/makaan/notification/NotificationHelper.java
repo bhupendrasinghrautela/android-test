@@ -252,7 +252,7 @@ public class NotificationHelper{
 			return null;
 		}
 		long listingId = payload.getListingId();
-		Intent intent = new Intent(context, ProjectActivity.class);
+		Intent intent = new Intent(context, PropertyActivity.class);
 		intent.putExtra(PropertyActivity.LISTING_ID, listingId);
 		return intent;
 	}

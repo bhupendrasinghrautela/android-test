@@ -1,7 +1,9 @@
 package com.makaan.ui.buyerjourney;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -63,8 +65,11 @@ public class NotificationCard extends BaseLinearLayout<NotificationAttributes> {
         mNotificationMsg.setText(item.getTitle());
         mNotificationTime.setText(DateUtil.getTime(item.getTimestamp()));
 
-        mNotificationImage.setImageUrl(item.getNotificationPayload().getImageUrl(),
-                MakaanNetworkClient.getInstance().getImageLoader());
+        if(!TextUtils.isEmpty(item.getNotificationPayload().getImageUrl())) {
+            mNotificationImage.setVisibility(View.VISIBLE);
+            mNotificationImage.setImageUrl(item.getNotificationPayload().getImageUrl(),
+                    MakaanNetworkClient.getInstance().getImageLoader());
+        }
     }
 
 

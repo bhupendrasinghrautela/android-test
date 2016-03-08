@@ -1432,7 +1432,7 @@
     <dimen name="image_width">30dp</dimen>
     <dimen name="notification_image_dimen">20dp</dimen>
     <dimen name="notifications_image_height">180dp</dimen>
-    <dimen name="notifications_padding">8dp</dimen>
+    <dimen name="notifications_padding">22dp</dimen>
 
     <dimen name="buyer_dashboard_listing_view_height">180dp</dimen>
     <dimen name="row_localities_lifestyle_height">200dp</dimen>
