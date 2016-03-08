@@ -6,9 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
 import com.makaan.R;
+import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
 import com.makaan.activity.city.CityActivity;
 import com.makaan.activity.listing.ListingDetailActivity;
@@ -16,6 +18,7 @@ import com.makaan.activity.listing.PropertyActivity;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.project.ProjectActivity;
+import com.makaan.fragment.buyerJourney.BlogContentFragment;
 
 
 /**
@@ -209,6 +212,14 @@ public class NotificationHelper{
 				break;
 			case SERP_PAGE:
 				resultIntent = getSerpPageIntent(context, attributes.getNotificationPayload());
+			case BUYER_DASHBOARD:
+				resultIntent = getSerpPageIntent(context, attributes.getNotificationPayload());
+			case BUYER_CASHBACK:
+			case BUYER_SAVED_SEARCHES:
+			case BUYER_SHORTLIST:
+			case BUYER_LOAN:
+			case BUYER_SITE_VISIT:
+				resultIntent = getSerpPageIntent(context, attributes.getNotificationPayload());
 				break;
 
 		}
@@ -271,6 +282,44 @@ public class NotificationHelper{
 			return null;
 		}
 		Intent intent = new Intent(context, BuyerJourneyActivity.class);
+		return intent;
+	}
+
+	private static Intent getDashboardIntent(Context context, NotificationPayload payload){
+		if(payload==null){
+			return null;
+		}
+		Intent intent = new Intent(context, BuyerDashboardActivity.class);
+		ScreenType screenType =
+				ScreenType.fromTypeId(payload.getScreenTypeId());
+		if(screenType==null){
+			return null;
+		}
+
+		switch(screenType){
+			case BUYER_CASHBACK:
+				intent.putExtra(BuyerDashboardActivity.TYPE, BuyerDashboardActivity.LOAD_FRAGMENT_REWARDS);
+				break;
+
+			case BUYER_SAVED_SEARCHES:
+				intent.putExtra(BuyerDashboardActivity.TYPE, BuyerDashboardActivity.LOAD_FRAGMENT_SAVE_SEARCH);
+				break;
+
+			case BUYER_SHORTLIST:
+				intent.putExtra(BuyerDashboardActivity.TYPE, BuyerDashboardActivity.LOAD_FRAGMENT_SHORTLIST);
+				break;
+
+			case BUYER_LOAN:
+				intent.putExtra(BuyerDashboardActivity.TYPE, BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT);
+				intent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.HOME_LOAN);
+				break;
+
+			case BUYER_SITE_VISIT:
+				intent.putExtra(BuyerDashboardActivity.TYPE, BuyerDashboardActivity.LOAD_FRAGMENT_SITE_VISIT);
+				break;
+		}
+
+
 		return intent;
 	}
 

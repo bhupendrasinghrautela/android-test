@@ -19,6 +19,8 @@ import com.makaan.util.DateUtil;
  */
 public class MessageViewHolder extends RecyclerView.ViewHolder implements HolderBinder<Message>{
     BaseView view;
+    TextView timestampText;
+
     public MessageViewHolder(BaseView itemView) {
         super(itemView);
         view = itemView;
@@ -28,32 +30,40 @@ public class MessageViewHolder extends RecyclerView.ViewHolder implements Holder
     public void bind(Context context, Message message) {
         view.bindView(context, message);
 
-    }
-
-    public void addTimeStamp(Context context){
-
-        LinearLayoutCompat.LayoutParams lparams = new LinearLayoutCompat.LayoutParams(
-                LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
-
-        lparams.setMargins(16,16,16,22);
-
-
-        TextView timestampText=new TextView(context);
-        if(view instanceof OutTextCard) {
-            timestampText.setGravity(Gravity.RIGHT);
-        }else{
-            timestampText.setGravity(Gravity.LEFT);
+        if(message.timestamp>0) {
+            addTimeStamp(context, message.timestamp);
         }
 
-        timestampText.setTextSize(12);
-        timestampText.setTypeface(null,Typeface.ITALIC);
+    }
 
-        timestampText.setTextColor(Color.LTGRAY);
+    private void addTimeStamp(Context context, long timeStamp){
 
-        timestampText.setLayoutParams(lparams);
-        timestampText.setText(DateUtil.getDateTime(System.currentTimeMillis()));
+        if(null==timestampText) {
+            LinearLayoutCompat.LayoutParams lparams = new LinearLayoutCompat.LayoutParams(
+                    LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
 
-        view.addView(timestampText);
+            lparams.setMargins(16, 16, 16, 22);
+
+
+            timestampText = new TextView(context);
+            if (view instanceof OutTextCard) {
+                timestampText.setGravity(Gravity.RIGHT);
+            } else {
+                timestampText.setGravity(Gravity.LEFT);
+            }
+
+            timestampText.setTextSize(12);
+            timestampText.setTypeface(null, Typeface.ITALIC);
+
+            timestampText.setTextColor(Color.LTGRAY);
+
+            timestampText.setLayoutParams(lparams);
+
+
+            view.addView(timestampText);
+        }
+
+        timestampText.setText(DateUtil.getDateTime(timeStamp));
 
     }
 }

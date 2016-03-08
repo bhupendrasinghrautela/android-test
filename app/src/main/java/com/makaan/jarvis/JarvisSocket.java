@@ -198,6 +198,7 @@ public class JarvisSocket {
             if(null!=args || args.length>0) {
                 userConfirmsAgent(args[0]);
                 SocketMessage message = parseMessage((JSONObject) args[0]);
+                message.timestamp = System.currentTimeMillis();
                 JarvisClient.getInstance().getChatMessages().add((Message) message);
             }
         }
