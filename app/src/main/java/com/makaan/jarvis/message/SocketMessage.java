@@ -11,4 +11,6 @@ public class SocketMessage {
     public boolean appliedFilter;
     public String filtered;
     public ChatObject chatObj;
+
+    public long timestamp;
 }

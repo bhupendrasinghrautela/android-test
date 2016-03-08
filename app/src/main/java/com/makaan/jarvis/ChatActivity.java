@@ -174,6 +174,7 @@ public class ChatActivity extends AppCompatActivity {
     private void sendMessageToService(SocketMessage message){
         OutgoingMessageEvent event = new OutgoingMessageEvent();
         event.message = message;
+        message.timestamp = System.currentTimeMillis();
         eventBus.post(event);
     }
 
