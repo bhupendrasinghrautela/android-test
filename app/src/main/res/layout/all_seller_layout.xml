@@ -85,7 +85,7 @@
             android:layout_below="@id/seller_name_text_view"
             android:layout_marginTop="@dimen/serp_listing_card_seller_rating_margin_top"
             android:numStars="5"
-            android:rating="3.5"
+            android:rating="0"
             android:stepSize="0.1"
             android:isIndicator="true"
             app:itemHeight="@dimen/serp_listing_card_seller_rating_item_height"
