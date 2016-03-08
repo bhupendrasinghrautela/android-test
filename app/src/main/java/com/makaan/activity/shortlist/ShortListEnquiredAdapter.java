@@ -3,6 +3,7 @@ package com.makaan.activity.shortlist;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
@@ -137,8 +138,8 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
         }
         holder.mAddress.setText(name.toString().toLowerCase());
         int height = (int)Math.ceil(mContext.getResources().getDimension(R.dimen.enq_card_height));
-        int width = mContext.getResources().getConfiguration().screenWidthDp;
-        holder.mMainImage.setImageUrl(ImageUtils.getImageRequestUrl(project.imageURL, width, height, true), MakaanNetworkClient.getInstance().getImageLoader());
+        int width = (int) (mContext.getResources().getConfiguration().screenWidthDp * Resources.getSystem().getDisplayMetrics().density);
+        holder.mMainImage.setImageUrl(ImageUtils.getImageRequestUrl(project.imageURL, width, height, false), MakaanNetworkClient.getInstance().getImageLoader());
     }
 
     private void populateListingDetail(ListingDetail listingDetail, final ShortListEnquiredViewHolder holder) {

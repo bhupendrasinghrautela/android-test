@@ -54,7 +54,8 @@
             android:indeterminate="false"
             android:progress="78"
             android:progressDrawable="@drawable/circular_progress_drawable"
-            android:secondaryProgress="100" />
+            android:secondaryProgress="100"
+            android:max="100"/>
 
         <TextView
             android:id="@+id/locality_score_text"

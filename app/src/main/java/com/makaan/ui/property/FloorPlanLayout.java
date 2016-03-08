@@ -1,6 +1,7 @@
 package com.makaan.ui.property;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -110,9 +111,9 @@ public class FloorPlanLayout extends LinearLayout {
                     (CardView) mLayoutInflater.inflate(R.layout.floor_plan_pager_item, null);
             FadeInNetworkImageView imageView = (FadeInNetworkImageView) cardView.findViewById(R.id.floor_plan_imageview);
             if(imagesGetEventArrayList.get(position).images.size()>0) {
-                int width = getResources().getConfiguration().screenWidthDp;
+                int width = (int) (getResources().getConfiguration().screenWidthDp * Resources.getSystem().getDisplayMetrics().density);
                 int height = (int)Math.ceil(getResources().getDimension(R.dimen.floor_plan_view_pager_height));
-                imageView.setImageUrl(ImageUtils.getImageRequestUrl(imagesGetEventArrayList.get(position).images.get(0).absolutePath, width, height, true),
+                imageView.setImageUrl(ImageUtils.getImageRequestUrl(imagesGetEventArrayList.get(position).images.get(0).absolutePath, width, height, false),
                         MakaanNetworkClient.getInstance().getImageLoader());
             }
             container.addView(cardView,0);

@@ -1,6 +1,7 @@
 package com.makaan.ui.property;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -82,9 +83,9 @@ public class PropertyImageCardView extends CardView {
         }
 
         mPropertyImageView.setDefaultImageResId(R.drawable.luxury_project);
-        int width = getResources().getConfiguration().screenWidthDp;
+        int width = (int) (getResources().getConfiguration().screenWidthDp * Resources.getSystem().getDisplayMetrics().density);
         int height = (int)Math.ceil(getResources().getDimension(R.dimen.property_page_stack_like_pager_height));
-        mPropertyImageView.setImageUrl(ImageUtils.getImageRequestUrl(listingDetailImage.absolutePath, width, height, true),
+        mPropertyImageView.setImageUrl(ImageUtils.getImageRequestUrl(listingDetailImage.absolutePath, width, height, false),
                 MakaanNetworkClient.getInstance().getImageLoader());
         if(category == null){
             initData(size,price,hasIncreased,mContext);

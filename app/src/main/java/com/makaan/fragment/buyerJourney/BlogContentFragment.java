@@ -2,6 +2,7 @@ package com.makaan.fragment.buyerJourney;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -261,8 +262,8 @@ public class BlogContentFragment extends MakaanBaseFragment {
             if(holder.viewType == TYPE_ITEM) {
                 int itemPosition = position-1;
                 int height = (int) Math.ceil(mContext.getResources().getDimension(R.dimen.buyer_content_image_height));
-                int width = mContext.getResources().getConfiguration().screenWidthDp;
-                holder.imageView.setImageUrl(ImageUtils.getImageRequestUrl(mBlogItems.get(itemPosition).primaryImageUrl, width, height, true),
+                int width = (int) (mContext.getResources().getConfiguration().screenWidthDp * Resources.getSystem().getDisplayMetrics().density);
+                holder.imageView.setImageUrl(ImageUtils.getImageRequestUrl(mBlogItems.get(itemPosition).primaryImageUrl, width, height, false),
                         MakaanNetworkClient.getInstance().getImageLoader());
                 if(mBlogItems.get(itemPosition).postTitle != null) {
                     holder.titleTextView.setText(mBlogItems.get(itemPosition).postTitle.toLowerCase());

@@ -1,5 +1,6 @@
 package com.makaan.fragment.buyerJourney;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -240,9 +241,9 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
                 }
                 if(listingDetail != null && listingDetail.listing != null) {
                     if(!TextUtils.isEmpty(listingDetail.listing.mainImageURL)) {
-                        int width = getResources().getConfiguration().screenWidthDp;
+                        int width = (int) (getResources().getConfiguration().screenWidthDp * Resources.getSystem().getDisplayMetrics().density);
                         int height = (int)Math.ceil(getResources().getDimension(R.dimen.buyer_dashboard_listing_view_height));
-                        imageView.setImageUrl(ImageUtils.getImageRequestUrl(listingDetail.listing.mainImageURL, width, height, true),
+                        imageView.setImageUrl(ImageUtils.getImageRequestUrl(listingDetail.listing.mainImageURL, width, height, false),
                                 MakaanNetworkClient.getInstance().getImageLoader());
                     }
 

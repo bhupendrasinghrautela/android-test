@@ -2,6 +2,7 @@ package com.makaan.activity.shortlist;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -74,8 +75,8 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
         }
         if(imageUrl != null) {
             int height = (int)Math.ceil(mContext.getResources().getDimension(R.dimen.fav_card_height));
-            int width = mContext.getResources().getConfiguration().screenWidthDp;
-            shortListFavoriteViewHolder.mImageViewBackground.setImageUrl(ImageUtils.getImageRequestUrl(imageUrl, width, height, true),
+            int width = (int) (mContext.getResources().getConfiguration().screenWidthDp * Resources.getSystem().getDisplayMetrics().density);
+            shortListFavoriteViewHolder.mImageViewBackground.setImageUrl(ImageUtils.getImageRequestUrl(imageUrl, width, height, false),
                     MakaanNetworkClient.getInstance().getImageLoader());
         }
 

@@ -2,6 +2,7 @@ package com.makaan.activity.sitevisit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
@@ -164,8 +165,8 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
         populateCompany(listingDetail.companySeller, holder);
         holder.mAddress.setText(name.toString().toLowerCase());
         int height = (int)Math.ceil(mContext.getResources().getDimension(R.dimen.enq_card_height));
-        int width = mContext.getResources().getConfiguration().screenWidthDp;
-        holder.mMainImage.setImageUrl(ImageUtils.getImageRequestUrl(listingDetail.mainImageURL, width, height, true),
+        int width = (int) (mContext.getResources().getConfiguration().screenWidthDp * Resources.getSystem().getDisplayMetrics().density);
+        holder.mMainImage.setImageUrl(ImageUtils.getImageRequestUrl(listingDetail.mainImageURL, width, height, false),
                 MakaanNetworkClient.getInstance().getImageLoader());
     }
 
