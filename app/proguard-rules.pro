@@ -32,3 +32,47 @@
     @com.squareup.otto.Subscribe public *;
     @com.squareup.otto.Produce public *;
 }
+
+-allowobfuscation
+-allowoptimization
+-allowshrinking
+-optimizationpasses 3
+-forceprocessing
+-microedition
+-dontobfuscate
+
+-dontpreverify
+-repackageclasses ''
+-allowaccessmodification
+-keepattributes *Annotation*
+-keepattributes Signature
+-keepattributes InnerClasses
+
+-dontwarn com.google.android.gms.**
+-dontwarn com.android.support.**
+-dontwarn com.jakewharton.**
+-dontwarn com.github.nkzawa.**
+-dontwarn com.vincentbrison.openlibraries.android
+-dontwarn org.apmem.tools.**
+-dontwarn com.facebook.**
+-dontwarn com.tusharchoudhary.**
+-dontwarn org.apache.httpcomponents.**
+-dontwarn com.squareup.**
+-dontwarn com.pkmmte.view.**
+-dontwarn com.segment.analytics.**
+-dontwarn com.google.maps.**
+-dontwarn com.github.paolorotolo.**
+-dontwarn com.crashlytics.sdk.android.**
+
+
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.preference.Preference
+
+
+
+
+
