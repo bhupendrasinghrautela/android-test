@@ -64,7 +64,6 @@ import com.makaan.ui.property.AmenitiesViewScroll;
 import com.makaan.ui.property.ListingDataOverViewScroll;
 import com.makaan.ui.property.PropertyImageViewPager;
 import com.makaan.ui.view.FontTextView;
-import com.makaan.util.AppBus;
 import com.makaan.util.AppUtils;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.segment.analytics.Properties;
@@ -663,7 +662,7 @@ public class ProjectFragment extends MakaanBaseFragment{
         bundle.putString("description", project.locality.description);
         fragment.setArguments(bundle);
         initFragment(R.id.container_about_locality, fragment, false);
-        fragment.setData(amenityClusterList);
+        fragment.setData(mAmenityClusters);
     }
 
     protected void initFragment(int fragmentHolderId, Fragment fragment, boolean shouldAddToBackStack) {

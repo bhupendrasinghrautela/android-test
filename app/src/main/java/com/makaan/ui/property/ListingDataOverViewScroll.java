@@ -158,7 +158,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
         if(mProject.dominantUnitType !=null){
             HorizontalScrollItem overViewItem = new HorizontalScrollItem();
             overViewItem.name = OVERVIEW.TYPE.toString();
-            overViewItem.resourceId = R.drawable.under_construction;
+            overViewItem.resourceId = R.drawable.property_type;
             overViewItem.value = mProject.dominantUnitType;
             mOverViewItems.add(overViewItem);
         }
@@ -192,6 +192,13 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                             overViewItem.value =ageYrs.concat(" yrs");
                         }
                         break;
+                    case BOOK_AMOUNT:
+                        if(mDetail.bookingAmount!=null){
+                            overViewItem.name = "booking amount";
+                            overViewItem.resourceId = R.drawable.booking_amount;
+                            overViewItem.value = String.valueOf(mDetail.bookingAmount);
+                        }
+                        break;
                     case FURNISH_STAT:
                         if(!TextUtils.isEmpty(mDetail.furnished)) {
                             overViewItem.name = "furnished";
@@ -205,6 +212,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                             overViewItem.resourceId = R.drawable.shower;
                             overViewItem.value = String.valueOf(mDetail.securityDeposit);
                         }
+                        break;
                     case BATH:
                         if(mDetail.property!=null && mDetail.property.bathrooms!=null) {
                             overViewItem.name = overview.toString();
