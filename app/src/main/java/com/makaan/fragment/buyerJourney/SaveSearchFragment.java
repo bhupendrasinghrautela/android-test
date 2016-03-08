@@ -50,6 +50,8 @@ import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.squareup.otto.Subscribe;
 
+import org.apache.http.HttpStatus;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -143,16 +145,16 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                         MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
                                 "delete saved search " + saveSearchName.getText().toString() + "?", "delete", "cancel",
                                 new MakaanMessageDialogFragment.MessageDialogCallbacks() {
-                            @Override
-                            public void onPositiveClicked() {
-                                ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).removeSavedSearch(searchId);
-                            }
+                                    @Override
+                                    public void onPositiveClicked() {
+                                        ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).removeSavedSearch(searchId);
+                                    }
 
-                            @Override
-                            public void onNegativeClicked() {
+                                    @Override
+                                    public void onNegativeClicked() {
 
-                            }
-                        });
+                                    }
+                                });
                     }
                 } else if(savedSearches != null && savedSearches.size() > position) {
                     SerpRequest request = new SerpRequest(SerpActivity.TYPE_SUGGESTION);
@@ -287,7 +289,15 @@ public class SaveSearchFragment extends MakaanBaseFragment {
     @Subscribe
     public void onResults(SaveSearchGetEvent saveSearchGetEvent){
         if(null== saveSearchGetEvent || null!=saveSearchGetEvent.error){
-            if(saveSearchGetEvent != null && !TextUtils.isEmpty(saveSearchGetEvent.error.msg)) {
+            if(saveSearchGetEvent != null && saveSearchGetEvent.error != null
+                    && saveSearchGetEvent.error.error != null && saveSearchGetEvent.error.error.networkResponse != null
+                    && saveSearchGetEvent.error.error.networkResponse.statusCode == HttpStatus.SC_UNAUTHORIZED) {
+                if(mCallback != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(BlogContentFragment.TYPE, BlogContentFragment.SEARCH);
+                    mCallback.loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT, false, bundle, null, null);
+                }
+            } else if(saveSearchGetEvent != null && !TextUtils.isEmpty(saveSearchGetEvent.error.msg)) {
                 showNoResults(saveSearchGetEvent.error.msg);
             } else {
                 showNoResults();

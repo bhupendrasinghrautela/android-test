@@ -72,7 +72,11 @@ public class NotificationsAdapter extends RecyclerView.Adapter<RecyclerView.View
                 Intent next = NotificationHelper.getIntentFromAttribute(mContext,mNotifications.get(position));
                 if(next != null) {
                     mContext.startActivity(next);
-
+                } else if(NotificationHelper.ScreenType.fromTypeId(mNotifications.get(position).getNotificationPayload().getScreenTypeId())
+                        == NotificationHelper.ScreenType.BUYER_DASHBOARD) {
+                    if(mContext instanceof BuyerJourneyActivity) {
+                        ((NotificationCallbacks)mContext).loadDashboard();
+                    }
                 }
             }
         });
@@ -87,5 +91,8 @@ public class NotificationsAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
 
+    public interface NotificationCallbacks {
+        void loadDashboard();
+    }
 }
 

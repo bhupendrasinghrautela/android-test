@@ -149,7 +149,7 @@ public class NotificationDbHelper {
         values.put(NotificationAttributeColumns.CITY_ID, payload.getCityId());
         values.put(NotificationAttributeColumns.LISTING_ID, payload.getListingId());
         values.put(NotificationAttributeColumns.PROJECT_ID, payload.getProjectId());
-        values.put(NotificationAttributeColumns.LISTING_ID, payload.getListingId());
+        values.put(NotificationAttributeColumns.LOCALITY_ID, payload.getLocalityId());
         values.put(NotificationAttributeColumns.SERP_FILTER_URL, payload.getSerpFilterUrl());
 
         return values;

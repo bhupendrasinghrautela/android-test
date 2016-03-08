@@ -6,19 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
 import com.makaan.activity.city.CityActivity;
-import com.makaan.activity.listing.ListingDetailActivity;
 import com.makaan.activity.listing.PropertyActivity;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.fragment.buyerJourney.BlogContentFragment;
+import com.makaan.pojo.SerpRequest;
 
 
 /**
@@ -212,14 +211,16 @@ public class NotificationHelper{
 				break;
 			case SERP_PAGE:
 				resultIntent = getSerpPageIntent(context, attributes.getNotificationPayload());
+				break;
 			case BUYER_DASHBOARD:
-				resultIntent = getSerpPageIntent(context, attributes.getNotificationPayload());
+				resultIntent = getBuyerJourneyIntent(context, attributes.getNotificationPayload());
+				break;
 			case BUYER_CASHBACK:
 			case BUYER_SAVED_SEARCHES:
 			case BUYER_SHORTLIST:
 			case BUYER_LOAN:
 			case BUYER_SITE_VISIT:
-				resultIntent = getSerpPageIntent(context, attributes.getNotificationPayload());
+				resultIntent = getDashboardIntent(context, attributes.getNotificationPayload());
 				break;
 
 		}
@@ -243,7 +244,7 @@ public class NotificationHelper{
 			return null;
 		}
 		long cityId = payload.getCityId();
-		Intent intent = new Intent(context, ProjectActivity.class);
+		Intent intent = new Intent(context, CityActivity.class);
 		intent.putExtra(CityActivity.CITY_ID, cityId);
 		return intent;
 	}
@@ -253,7 +254,7 @@ public class NotificationHelper{
 			return null;
 		}
 		long localityId = payload.getLocalityId();
-		Intent intent = new Intent(context, ProjectActivity.class);
+		Intent intent = new Intent(context, LocalityActivity.class);
 		intent.putExtra(LocalityActivity.LOCALITY_ID, localityId);
 		return intent;
 	}
@@ -273,16 +274,20 @@ public class NotificationHelper{
 			return null;
 		}
 		String serpFilterUrl = payload.getSerpFilterUrl();
-		Intent intent = new Intent(context, SerpActivity.class);
-		return intent;
+        SerpRequest request = new SerpRequest(SerpActivity.TYPE_NOTIFICATION);
+		request.launchSerp(context, serpFilterUrl);
+		return null;
 	}
 
 	private static Intent getBuyerJourneyIntent(Context context, NotificationPayload payload){
 		if(payload==null){
 			return null;
 		}
-		Intent intent = new Intent(context, BuyerJourneyActivity.class);
-		return intent;
+        if(context instanceof BuyerJourneyActivity) {
+            return null;
+        } else {
+            return new Intent(context, BuyerJourneyActivity.class);
+        }
 	}
 
 	private static Intent getDashboardIntent(Context context, NotificationPayload payload){

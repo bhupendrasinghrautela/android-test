@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
 import com.makaan.activity.shortlist.ShortListCallback;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.List;
  * adapter for buyer journey
  */
 public class SiteVisitPagerAdapter extends FragmentStatePagerAdapter implements ShortListCallback {
+    private BuyerDashboardCallbacks mCallbacks;
     int mNumOfTabs;
     Context mContext;
     String [] label = {"site visits"};
@@ -28,6 +30,9 @@ public class SiteVisitPagerAdapter extends FragmentStatePagerAdapter implements 
         super(fm);
         this.mNumOfTabs = numOfTabs;
         this.mContext=context;
+        if(context instanceof BuyerDashboardCallbacks) {
+            this.mCallbacks = (BuyerDashboardCallbacks)context;
+        }
     }
 
     @Override
@@ -36,7 +41,7 @@ public class SiteVisitPagerAdapter extends FragmentStatePagerAdapter implements 
         switch (position) {
             case 0:
                 SiteVisitUpcommingFragment enquiredFragment = new SiteVisitUpcommingFragment();
-                enquiredFragment.bindView(this,0);
+                enquiredFragment.bindView(this,0, mCallbacks);
                 return enquiredFragment;
             default:
                 return null;

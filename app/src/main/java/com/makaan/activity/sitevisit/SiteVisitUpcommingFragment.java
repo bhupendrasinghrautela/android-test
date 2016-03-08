@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
+import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
 import com.makaan.activity.shortlist.ShortListCallback;
 import com.makaan.activity.sitevisit.SiteVisitUpcommingAdapter.Enquiry;
 import com.makaan.activity.sitevisit.SiteVisitUpcommingAdapter.EnquiryType;
@@ -15,6 +17,7 @@ import com.makaan.event.buyerjourney.ClientEventsByGetEvent;
 import com.makaan.event.listing.ListingByIdGetEvent;
 import com.makaan.event.project.ProjectByIdEvent;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.fragment.buyerJourney.BlogContentFragment;
 import com.makaan.response.buyerjourney.ClientEvent;
 import com.makaan.response.buyerjourney.Company;
 import com.makaan.service.ClientEventsService;
@@ -23,6 +26,8 @@ import com.makaan.service.ListingService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.ProjectService;
 import com.squareup.otto.Subscribe;
+
+import org.apache.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,8 +46,7 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
     private int position;
     private ShortListCallback callback;
     private ArrayList<Long> mSellerIds;
-    @Bind(R.id.tv_no_shortlist)
-    TextView statusMessage;
+    private BuyerDashboardCallbacks mCallback;
 
     @Override
     protected int getContentViewId() {
@@ -55,6 +59,7 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         enquiredRecyclerView.setLayoutManager(mLayoutManager);
         ((ClientEventsService) MakaanServiceFactory.getInstance().getService(ClientEventsService.class)).getClientEvents(0);
+        showProgress();
     }
 
     @Override
@@ -65,14 +70,25 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
     @Subscribe
     public void onResults(ClientEventsByGetEvent clientEventsByGetEvent) {
         if(clientEventsByGetEvent == null || clientEventsByGetEvent.error != null) {
-            // TODO
+            if(clientEventsByGetEvent != null && clientEventsByGetEvent.error != null
+                    && clientEventsByGetEvent.error.error != null && clientEventsByGetEvent.error.error.networkResponse != null
+                    && clientEventsByGetEvent.error.error.networkResponse.statusCode == HttpStatus.SC_UNAUTHORIZED) {
+                if(mCallback != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(BlogContentFragment.TYPE, BlogContentFragment.SITE_VISIT);
+                    mCallback.loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT, false, bundle, null, null);
+                }
+            } else if(clientEventsByGetEvent != null && !TextUtils.isEmpty(clientEventsByGetEvent.error.msg)) {
+                showNoResults(clientEventsByGetEvent.error.msg);
+            } else {
+                showNoResults();
+            }
             return;
         }
         if(mEnquiryHashMap == null){
             mEnquiryHashMap = new HashMap<>();
         }
         if(clientEventsByGetEvent.results!=null && clientEventsByGetEvent.results.size()>0) {
-            statusMessage.setVisibility(View.GONE);
             mAdapter = new SiteVisitUpcommingAdapter(getActivity());
             mSellerIds = new ArrayList<>();
             for (ClientEvent clientEvent : clientEventsByGetEvent.results) {
@@ -109,10 +125,13 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
             mAdapter.setData(mEnquiryHashMap);
             enquiredRecyclerView.setVisibility(View.VISIBLE);
             enquiredRecyclerView.setAdapter(mAdapter);
+            showContent();
         }else{
-
-            statusMessage.setVisibility(View.VISIBLE);
-            statusMessage.setText(getActivity().getString(R.string.no_site_visits));
+            if(mCallback != null) {
+                Bundle bundle = new Bundle();
+                bundle.putString(BlogContentFragment.TYPE, BlogContentFragment.SITE_VISIT);
+                mCallback.loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT, false, bundle, null, null);
+            }
         }
     }
 
@@ -177,8 +196,9 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
         }
     }
 
-    public void bindView(ShortListCallback shortListCallback, int i) {
+    public void bindView(ShortListCallback shortListCallback, int i, BuyerDashboardCallbacks callbacks) {
         position = i;
         callback = shortListCallback;
+        this.mCallback = callbacks;
     }
 }

@@ -20,6 +20,7 @@ import com.makaan.service.ClientLeadsService;
 import com.makaan.service.ListingService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.ProjectService;
+import com.makaan.util.ErrorUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         enquiredRecyclerView.setLayoutManager(mLayoutManager);
         ((ClientLeadsService) MakaanServiceFactory.getInstance().getService(ClientLeadsService.class)).requestClientLeads();
+        showProgress();
        // enquiredRecyclerView.setAdapter(new ShortListEnquiredAdapter(getActivity()));
     }
 
@@ -63,7 +65,11 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
     @Subscribe
     public void onResults(ClientLeadsByGetEvent clientLeadsByGetEvent) {
         if(clientLeadsByGetEvent == null || clientLeadsByGetEvent.error != null) {
-            // TODO
+            if(clientLeadsByGetEvent != null && clientLeadsByGetEvent.error != null && clientLeadsByGetEvent.error.msg != null) {
+                showNoResults(clientLeadsByGetEvent.error.msg);
+            } else {
+                showNoResults();
+            }
             return;
         }
         if(mEnquiryHashMap == null){
@@ -114,6 +120,9 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
             mAdapter.setData(mEnquiryHashMap);
             enquiredRecyclerView.setVisibility(View.VISIBLE);
             enquiredRecyclerView.setAdapter(mAdapter);
+            showContent();
+        } else {
+            showNoResults(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT, false));
         }
 
 

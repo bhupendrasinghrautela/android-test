@@ -377,7 +377,7 @@ public class SerpMapFragment extends MakaanBaseFragment {
                 container.setBackgroundResource(R.drawable.map_single_selected);
             }
 
-            String price = StringUtil.getDisplayPrice(listing.price, 1);
+            String price = StringUtil.getDisplayPrice(listing.price);
             price = price.replace("\u20B9", "");
             if(isSelected) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

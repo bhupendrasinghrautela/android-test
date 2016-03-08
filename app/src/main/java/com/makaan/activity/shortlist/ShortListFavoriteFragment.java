@@ -16,6 +16,7 @@ import com.makaan.network.VolleyErrorParser;
 import com.makaan.response.wishlist.WishListResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.WishListService;
+import com.makaan.util.ErrorUtil;
 import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
@@ -27,12 +28,6 @@ public class ShortListFavoriteFragment extends MakaanBaseFragment{
 
     @Bind(R.id.favorite_recycler_view)
     RecyclerView favoriteRecyclerView;
-
-    @Bind(R.id.loading_progress)
-    ProgressBar progressBar;
-
-    @Bind(R.id.tv_no_shortlist)
-    TextView statusMessage;
 
     private RecyclerView.LayoutManager mLayoutManager;
     private ShortListCallback mCallback;
@@ -48,19 +43,21 @@ public class ShortListFavoriteFragment extends MakaanBaseFragment{
         super.onActivityCreated(savedInstanceState);
 
         ((WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class)).get();
-        statusMessage.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
         mLayoutManager = new LinearLayoutManager(getActivity());
         favoriteRecyclerView.setLayoutManager(mLayoutManager);
+        showProgress();
 
     }
 
     @Subscribe
     public void wishListResponse(WishListResultEvent wishListResultEvent){
-        progressBar.setVisibility(View.GONE);
         if(null==wishListResultEvent ||null!=wishListResultEvent.error){
-            statusMessage.setVisibility(View.VISIBLE);
-            Toast.makeText(getActivity(), VolleyErrorParser.getMessage(wishListResultEvent.error.error), Toast.LENGTH_SHORT).show();
+            if(wishListResultEvent != null && wishListResultEvent.error != null && wishListResultEvent.error.msg != null) {
+                showNoResults(wishListResultEvent.error.msg);
+            } else {
+                showNoResults();
+            }
+            return;
         }
 
         WishListResponse wishListResponse = wishListResultEvent.wishListResponse;
@@ -68,8 +65,9 @@ public class ShortListFavoriteFragment extends MakaanBaseFragment{
             favoriteRecyclerView.setVisibility(View.VISIBLE);
             favoriteRecyclerView.setAdapter(new ShortListFavoriteAdapter(getActivity(), wishListResponse.data));
             mCallback.updateCount(mPosition, wishListResponse.data.size());
+            showContent();
         }else{
-            statusMessage.setVisibility(View.VISIBLE);
+            showNoResults(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT, false));
         }
 
     }

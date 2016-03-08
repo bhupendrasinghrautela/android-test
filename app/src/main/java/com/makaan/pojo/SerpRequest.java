@@ -88,7 +88,7 @@ public class SerpRequest implements Parcelable, Cloneable {
     }
 
     public SerpRequest(String json) {
-        SelectorParser.parse(json).applySelections(this);
+        SelectorParser.parse(json, this);
     }
 
     public int getType() {

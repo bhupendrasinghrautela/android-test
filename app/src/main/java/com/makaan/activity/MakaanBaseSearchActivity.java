@@ -961,10 +961,16 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     private void showEmptySearchResults() {
         if(mSelectedSearches.size() > 0 && (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(mSelectedSearches.get(0).type)
                 || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(mSelectedSearches.get(0).type))) {
+            mSearchEditText.setHint(this.getResources().getString(R.string.search_locality_hint));
             LocationService service = (LocationService) MakaanServiceFactory.getInstance().getService(LocationService.class);
             service.getTopNearbyLocalitiesAsSearchResult(mSelectedSearches.get(mSelectedSearches.size() - 1));
             showSearchResults();
         } else {
+            if(mSerpContext == SERP_CONTEXT_BUY) {
+                mSearchEditText.setHint(this.getResources().getString(R.string.search_default_hint));
+            } else {
+                mSearchEditText.setHint(this.getResources().getString(R.string.search_default_rent_hint));
+            }
             ArrayList<SearchResponseItem> searches = RecentSearchManager.getInstance(getApplicationContext()).getRecentSearches(this);
             if (searches != null && searches.size() > 0) {
 
@@ -1005,11 +1011,6 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                     showSearchResults();
                 }*/
             }
-        }
-        if(mSerpContext == SERP_CONTEXT_BUY) {
-            mSearchEditText.setHint(this.getResources().getString(R.string.search_default_hint));
-        } else {
-            mSearchEditText.setHint(this.getResources().getString(R.string.search_default_rent_hint));
         }
     }
 

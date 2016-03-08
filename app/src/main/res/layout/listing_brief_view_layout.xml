@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@id/listing_brief_view_layout_property_price_text_view"
                     android:layout_alignStart="@id/listing_brief_view_layout_property_price_text_view"
-                    android:layout_below="@+id/listing_brief_view_layout_property_price_text_view"
+                    android:layout_below="@id/listing_brief_view_layout_property_price_text_view"
                     android:layout_marginLeft="@dimen/listing_brief_view_layout_property_area_sq_ft_text_view_left_margin"
                     android:layout_marginStart="@dimen/listing_brief_view_layout_property_area_sq_ft_text_view_left_margin"
                     android:layout_marginTop="@dimen/listing_brief_view_layout_property_area_sq_ft_text_view_top_margin"

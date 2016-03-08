@@ -24,7 +24,7 @@ import java.util.Iterator;
 public class SelectorParser {
     Filter filters;
 
-    public static SelectorParser parse(String json) {
+    /*public static SelectorParser parse(String json) {
         if (json.indexOf(RequestConstants.SELECTOR) >= 0 && RequestConstants.SELECTOR.length() + 1 < json.length()) {
             json = json.substring(RequestConstants.SELECTOR.length() + 1);
         }
@@ -35,7 +35,7 @@ public class SelectorParser {
         }.getType();
         SelectorParser parser = MakaanBuyerApplication.gson.fromJson(json, type);
         return parser;
-    }
+    }*/
 
     public static void parse(String json, SerpRequest request) {
         if (json.indexOf(RequestConstants.SELECTOR) >= 0 && RequestConstants.SELECTOR.length() + 1 < json.length()) {
@@ -113,7 +113,7 @@ public class SelectorParser {
         }
     }
 
-    public void applySelections(SerpRequest request) {
+    /*public void applySelections(SerpRequest request) {
         if (filters != null && filters.and != null && filters.and.size() > 0) {
             for (And and : filters.and) {
                 if (and != null) {
@@ -121,7 +121,7 @@ public class SelectorParser {
                 }
             }
         }
-    }
+    }*/
 
     class Filter {
         ArrayList<And> and;
