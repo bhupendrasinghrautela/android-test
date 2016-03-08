@@ -1,80 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:visibility="gone"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_project_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/white"
-    android:layout_height="match_parent"
-    >
-<ScrollView
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="60dp"
-    android:layout_width="match_parent">
+    android:visibility="gone">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="60dp">
 
-        <View android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:focusableInTouchMode="true"
-              android:focusable="true"/>
-        <com.makaan.ui.property.PropertyImageViewPager
-            android:visibility="invisible"
-            android:id="@+id/property_image_viewpager"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_margin="@dimen/property_page_stack_like_pager_margin"
-            android:layout_height="@dimen/property_page_stack_like_pager_height" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <include layout="@layout/project_builder_basic_details"/>
-        <include layout="@layout/builder_brief_layout"/>
-        <include layout="@layout/listing_over_view_scroll_layout"/>
-        <include layout="@layout/project_configuration"/>
-        <include layout="@layout/project_description" />
-        <include layout="@layout/key_detail_layout"/>
-        <include layout="@layout/project_amenties_view_scroll_layout"/>
-        <include layout="@layout/project_specification"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
 
-        <FrameLayout
-            android:id="@+id/container_price_trends"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <com.makaan.ui.property.PropertyImageViewPager
+                android:id="@+id/property_image_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/property_page_stack_like_pager_height"
+                android:layout_margin="@dimen/property_page_stack_like_pager_margin"
+                android:visibility="invisible" />
 
-        <FrameLayout
-            android:id="@+id/container_construction_photos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <include layout="@layout/project_builder_basic_details" />
 
-        <FrameLayout
-            android:id="@+id/container_about_locality"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <include layout="@layout/builder_brief_layout" />
 
-        <FrameLayout
-            android:id="@+id/container_similar_projects"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-</ScrollView>
+            <include layout="@layout/listing_over_view_scroll_layout" />
+
+            <include layout="@layout/project_configuration" />
+
+            <include layout="@layout/project_description" />
+
+            <include layout="@layout/key_detail_layout" />
+
+            <include layout="@layout/project_amenties_view_scroll_layout" />
+
+            <include layout="@layout/project_specification" />
+
+            <FrameLayout
+                android:id="@+id/container_price_trends"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <FrameLayout
+                android:id="@+id/container_construction_photos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <FrameLayout
+                android:id="@+id/container_about_locality"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <FrameLayout
+                android:id="@+id/container_similar_projects"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+
     <View
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/project_contact_seller_bottom_margin"
         android:layout_width="match_parent"
         android:layout_height="@dimen/project_yellow_strip_above_contact_seller_button_height"
-        android:background="@color/app_yellow"
-        />
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/project_contact_seller_bottom_margin"
+        android:background="@color/app_yellow" />
+
     <Button
         android:id="@+id/contact_top_seller"
         android:layout_width="match_parent"
-        android:layout_gravity="bottom"
         android:layout_height="@dimen/project_button_contact_seller_height"
+        android:layout_gravity="bottom"
+        android:background="@color/project_similar_projects_red"
+        android:text="@string/contact_top_seller"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/project_button_contact_seller_text_height"
-        android:background="@color/project_similar_projects_red"
-        android:textAllCaps="false"
-        android:typeface="monospace"
-        android:text="@string/contact_top_seller"
-        />
+        android:typeface="monospace" />
 </FrameLayout>
