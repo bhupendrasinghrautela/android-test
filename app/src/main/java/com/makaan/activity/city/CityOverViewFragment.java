@@ -64,6 +64,7 @@ import com.makaan.ui.PriceTrendView;
 import com.makaan.ui.city.TopLocalityView;
 import com.makaan.util.Blur;
 import com.makaan.util.DateUtil;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.LocalityUtil;
 import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;

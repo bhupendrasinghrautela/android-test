@@ -94,7 +94,8 @@ public class NotificationsFragment extends Fragment implements LoaderManager.Loa
         if(notifications.isEmpty()){
             mZeroNotifications.setVisibility(View.VISIBLE);
         } else {
-            mZeroNotifications.setVisibility(View.INVISIBLE);
+            mZeroNotifications.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
             mAdapter.setData(notifications);
         }
 
