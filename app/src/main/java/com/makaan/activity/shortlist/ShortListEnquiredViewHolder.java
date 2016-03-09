@@ -25,7 +25,7 @@ public class ShortListEnquiredViewHolder extends RecyclerView.ViewHolder {
     private int position;
     private ScheduleSiteVisit listener;
     public interface ScheduleSiteVisit{
-        public void onSiteVisitClicked(int position);
+        void onSiteVisitClicked(int position);
     }
 
     public ShortListEnquiredViewHolder(View itemView) {

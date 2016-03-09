@@ -44,7 +44,7 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
         WishListResponseUICallback, View.OnClickListener {
 
     public enum WishListType{
-        listing, project;
+        listing, project
     }
 
     @Bind(R.id.shortlist_checkbox)
@@ -167,7 +167,7 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
         }else{
             setChecked(!isChecked);
 
-            /*if(getContext() instanceof Activity) {
+            if(getContext() instanceof Activity) {
                 Activity activity = (Activity) getContext();
                 MakaanMessageDialogFragment.showMessage(activity.getFragmentManager(),
                         activity.getResources().getString(R.string.add_to_fav_login_prompt),
@@ -186,7 +186,7 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
 
                             }
                         });
-            }else */{
+            }else {
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(mContext);
                 builder.setMessage(R.string.add_to_fav_login_prompt);
                 builder.setPositiveButton(mContext.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {

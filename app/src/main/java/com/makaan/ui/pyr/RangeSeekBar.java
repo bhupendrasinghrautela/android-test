@@ -136,7 +136,7 @@ public class RangeSeekBar<T extends Number> extends ImageView {
         msteps[0]=0d;
         msteps[mstep-1]=1d;
         for(int step=1;step<mstep-1;step++){
-            msteps[step]=msteps[step-1]+(double)(1/(double)(mstep-1));
+            msteps[step]=msteps[step-1]+ 1/(double)(mstep-1);
         }
     }
 
@@ -526,7 +526,7 @@ public class RangeSeekBar<T extends Number> extends ImageView {
          *            The canvas to draw upon.
          */
         private void drawThumb(float screenCoord, boolean pressed, Canvas canvas) {
-            canvas.drawBitmap(pressed ? thumbPressedImage : thumbImage, screenCoord - thumbHalfWidth, (float) ((0.5f * getHeight()) - thumbHalfHeight), paint);
+            canvas.drawBitmap(pressed ? thumbPressedImage : thumbImage, screenCoord - thumbHalfWidth, (0.5f * getHeight()) - thumbHalfHeight, paint);
         }
 
         /**
@@ -666,23 +666,23 @@ public class RangeSeekBar<T extends Number> extends ImageView {
          *            The Number type the RangeSeekBar has been declared with.
          */
         public interface OnRangeSeekBarChangeListener<T> {
-                public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar, T minValue, T maxValue);
+                void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar, T minValue, T maxValue);
         }
 
         /**
          * Thumb constants (min and max).
          */
-        private static enum Thumb {
+        private enum Thumb {
                 MIN, MAX
-        };
+        }
 
-        /**
+    /**
          * Utility enumaration used to convert between Numbers and doubles.
          * 
          * @author Stephan Tittel (stephan.tittel@kom.tu-darmstadt.de)
          * 
          */
-        private static enum NumberType {
+        private enum NumberType {
                 LONG, DOUBLE, INTEGER, FLOAT, SHORT, BYTE, BIG_DECIMAL;
 
                 public static <E extends Number> NumberType fromNumber(E value) throws IllegalArgumentException {

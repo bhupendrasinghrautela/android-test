@@ -1,12 +1,10 @@
 package com.makaan.activity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -18,13 +16,11 @@ import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
-import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.constants.PreferenceConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.Session;
 import com.makaan.event.location.LocationGetEvent;
 import com.makaan.event.user.UserLoginEvent;
-import com.makaan.location.MakaanLocationManager;
 import com.makaan.notification.GcmRegister;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.response.user.UserResponse;

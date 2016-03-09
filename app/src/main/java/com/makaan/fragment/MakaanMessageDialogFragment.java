@@ -119,7 +119,7 @@ public class MakaanMessageDialogFragment extends MakaanBaseDialogFragment implem
         dismissAllowingStateLoss();
     }
 
-    public static interface MessageDialogCallbacks {
+    public interface MessageDialogCallbacks {
         void onPositiveClicked();
 
         void onNegativeClicked();

@@ -21,7 +21,6 @@ import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.network.MakaanNetworkClient;
-import com.makaan.notification.GcmRegister;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.PermissionManager;
 import com.segment.analytics.Properties;

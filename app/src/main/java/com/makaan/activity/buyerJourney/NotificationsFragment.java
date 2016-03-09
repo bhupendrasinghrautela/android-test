@@ -6,28 +6,27 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.database.DataProvider;
 import com.makaan.database.NotificationDbHelper;
 import com.makaan.notification.NotificationAttributes;
 
-/**
- * Created by sunil on 18/12/15.
- */
-import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+/**
+ * Created by sunil on 18/12/15.
+ */
 
 public class NotificationsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -48,7 +47,7 @@ public class NotificationsFragment extends Fragment implements LoaderManager.Loa
         View view = inflater.inflate(R.layout.fragment_notifications, container, false);
         ButterKnife.bind(this, view);
 
-        mLayoutManager = new LinearLayoutManager((Context)getActivity());
+        mLayoutManager = new LinearLayoutManager(getActivity());
         list=new ArrayList<NotificationAttributes>();
 
 

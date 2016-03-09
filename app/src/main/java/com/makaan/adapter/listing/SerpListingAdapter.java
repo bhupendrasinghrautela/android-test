@@ -51,7 +51,7 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
     public SerpListingAdapter(Context context, SerpRequestCallback callbacks, List<Listing> listings, int requestType) {
         mContext = context;
         mCallback = callbacks;
-        setData((ArrayList<Listing>) listings, requestType);
+        setData(listings, requestType);
         recycleViewMode = RecycleViewMode.DATA;
     }
 

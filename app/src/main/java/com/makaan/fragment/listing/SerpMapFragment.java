@@ -364,7 +364,7 @@ public class SerpMapFragment extends MakaanBaseFragment {
         }
 
         private Bitmap generateMapPointer(boolean isSelected, Listing listing) {
-            ViewGroup container = (ViewGroup)LayoutInflater.from(getContext()).inflate(R.layout.map_pointer, (ViewGroup)null);
+            ViewGroup container = (ViewGroup)LayoutInflater.from(getContext()).inflate(R.layout.map_pointer, null);
             if(!isSelected) {
                 if (listing.id != null) {
                     if (RecentPropertyProjectManager.getInstance(getActivity()).containsProperty(listing.id)) {

@@ -122,7 +122,7 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
     private void populateProjectDetail(Project project, SiteVisitViewHolder holder) {
         StringBuilder name = new StringBuilder();
         if(project.builder!=null && project.builder.name!=null) {
-            name.append(project.builder.name+" ");
+            name.append(project.builder.name).append(" ");
         }
         if(project.name!=null) {
             name.append(project.name);
@@ -131,7 +131,7 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
         if(project.locality!=null){
             Locality locality = project.locality;
             if(locality.label!=null){
-                name.append(project.locality.label+", ");
+                name.append(project.locality.label).append(", ");
             }
             if(locality.suburb!=null && locality.suburb.city!=null && locality.suburb.city.label!=null){
                 name.append(locality.suburb.city.label);
@@ -146,7 +146,7 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
         if(listingDetail.property!=null) {
             Property property = listingDetail.property;
             if (property.bedrooms != null) {
-                name.append(property.bedrooms + "bhk ");
+                name.append(property.bedrooms).append("bhk ");
             }
             if (property.unitType != null) {
                 name.append(property.unitType);
@@ -155,7 +155,7 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
             if(property.project!=null && property.project.locality!=null){
                 Locality locality = property.project.locality;
                 if(locality.label!=null){
-                    name.append(property.project.locality.label+", ");
+                    name.append(property.project.locality.label).append(", ");
                 }
                 if(locality.suburb!=null && locality.suburb.city!=null && locality.suburb.city.label!=null){
                     name.append(locality.suburb.city.label);

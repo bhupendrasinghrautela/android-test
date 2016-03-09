@@ -199,7 +199,7 @@ public class SaveSearchService implements MakaanService {
                         event.saveSearchArrayList.add((SaveSearch) responseObject);
                         AppBus.getInstance().post(event);
                     } else {
-                        AppBus.getInstance().post((SaveSearchGetEvent)null);
+                        AppBus.getInstance().post(null);
                     }
                 }
 

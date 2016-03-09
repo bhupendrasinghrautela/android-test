@@ -41,7 +41,7 @@ public class MakaanBarChartView extends BaseLinearLayout<List<CityTrendData>>{
     private Long mMaxListings;
     private OnBarTouchListener mListener;
     public interface OnBarTouchListener{
-        public void onBarTouched(CityTrendData cityTrendData);
+        void onBarTouched(CityTrendData cityTrendData);
     }
 
     public MakaanBarChartView(Context context) {

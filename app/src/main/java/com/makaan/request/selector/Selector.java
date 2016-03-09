@@ -6,6 +6,7 @@ import com.makaan.MakaanBuyerApplication;
 import com.makaan.util.StringUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -49,9 +50,7 @@ public class Selector implements Cloneable {
     }
 
     public Selector fields(String[] fields) {
-        for (String field : fields) {
-            fieldSelector.add(field);
-        }
+        Collections.addAll(fieldSelector, fields);
         return this;
     }
 
@@ -269,10 +268,8 @@ public class Selector implements Cloneable {
 
                     if (firstFilterAdded) {
                         andStrBuilder.append(",").append(geoSelector.build());
-                        firstFilterAdded = true;
                     } else {
                         andStrBuilder.append(geoSelector.build());
-                        firstFilterAdded = true;
                     }
 
                 }

@@ -1,7 +1,6 @@
 package com.makaan.activity.listing;
 
 import android.app.FragmentTransaction;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -898,10 +897,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Override
     public boolean needSellerInfoInSerp() {
-        if((mSerpRequestType & MASK_LISTING_TYPE) == TYPE_SELLER) {
-            return false;
-        }
-        return true;
+        return (mSerpRequestType & MASK_LISTING_TYPE) != TYPE_SELLER;
     }
 
     @Override
@@ -1111,10 +1107,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Override
     protected boolean areListingsAvailable() {
-        if(mListings == null) {
-            return false;
-        }
-        return true;
+        return mListings != null;
     }
 
     private void setTrackUrl(){

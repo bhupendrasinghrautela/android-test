@@ -8,21 +8,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.makaan.R;
 import com.makaan.jarvis.BaseJarvisActivity;
-import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.ui.MakaanProgressDialog;
 import com.makaan.util.AnimationUtils;
 import com.makaan.util.AppBus;
 import com.makaan.util.AppUtils;
-import com.squareup.otto.Subscribe;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**

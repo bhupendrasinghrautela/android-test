@@ -24,7 +24,7 @@ public class LegendAdapter extends AbstractBaseAdapter<PriceTrendKey> {
     private OnLegendsTouchListener mListener;
 
     public interface OnLegendsTouchListener{
-        public void legendTouched(View view, int position);
+        void legendTouched(View view, int position);
     }
     public LegendAdapter(Context context,List<PriceTrendKey>list) {
         super(context, list);

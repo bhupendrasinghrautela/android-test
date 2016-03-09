@@ -462,12 +462,9 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     }
 
     private boolean shouldTrackUserActiveness(){
-        if(this instanceof SerpActivity || this instanceof ProjectActivity ||
-                this instanceof LocalityActivity || this instanceof CityActivity){
-            return true;
-        }
+        return this instanceof SerpActivity || this instanceof ProjectActivity ||
+                this instanceof LocalityActivity || this instanceof CityActivity;
 
-        return false;
     }
 
     public void addSerpScrollTrackStatus(SerpRequest request){

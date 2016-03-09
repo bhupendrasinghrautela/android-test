@@ -70,8 +70,8 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
     @Subscribe
     public void onResults(ClientEventsByGetEvent clientEventsByGetEvent) {
         if(clientEventsByGetEvent == null || clientEventsByGetEvent.error != null) {
-            if(clientEventsByGetEvent != null && clientEventsByGetEvent.error != null
-                    && clientEventsByGetEvent.error.error != null && clientEventsByGetEvent.error.error.networkResponse != null
+            if(clientEventsByGetEvent != null && clientEventsByGetEvent.error.error != null
+                    && clientEventsByGetEvent.error.error.networkResponse != null
                     && clientEventsByGetEvent.error.error.networkResponse.statusCode == HttpStatus.SC_UNAUTHORIZED) {
                 if(mCallback != null) {
                     Bundle bundle = new Bundle();
@@ -115,7 +115,7 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
                     enquiry.clientId = clientEvent.agentId;
                     mSellerIds.add(clientEvent.agentId);
                 }
-                if (enquiry != null) {
+                if (enquiry.id != null) {
                         mEnquiryHashMap.put(enquiry.id, enquiry);
                 }
                 enquiry.time = clientEvent.performTime;

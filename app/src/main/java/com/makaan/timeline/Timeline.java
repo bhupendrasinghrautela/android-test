@@ -63,7 +63,7 @@ public class Timeline extends LinearLayout implements TimelineView.OnTimeLineCha
             Collections.sort(list);
             this.timelineScrollListener = timelineScrollListener;
             this.list = list;
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View timeline = inflater.inflate(R.layout.timeline, null);
             container.addView(timeline);
             initTimelineViews(timeline);

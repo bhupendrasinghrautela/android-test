@@ -137,11 +137,7 @@ public class LoginFragment extends Fragment {
     @OnCheckedChanged(R.id.cb_remember_me)
     public void onRememberMeCheckedChanged( boolean isChecked) {
         // checkbox status is changed from uncheck to checked.
-        if (!isChecked) {
-            isRemember=false;
-        } else {
-            isRemember=true;
-        }
+        isRemember = isChecked;
     }
 
     @OnClick(R.id.tv_signup)

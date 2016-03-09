@@ -92,7 +92,7 @@ public class StringUtil {
             }
             StringBuilder priceStringBuilder = new StringBuilder();
             priceStringBuilder.append("\u20B9");
-            double displayPrice = (double) price / 100000.00;
+            double displayPrice = price / 100000.00;
 
             DecimalFormat df = null;
             if(decimalPositions >= 2) {
@@ -102,7 +102,7 @@ public class StringUtil {
             }
 
             if(displayPrice < 1) {
-                displayPrice = (double) price / 1000.00;
+                displayPrice = price / 1000.00;
                 try {
                     String convertedPrice = String.format("%.2f",
                             Double.parseDouble(df.format(displayPrice)));
@@ -154,10 +154,10 @@ public class StringUtil {
             }
             StringBuilder priceStringBuilder = new StringBuilder();
             priceStringBuilder.append("\u20B9");
-            double displayPrice = (double) price / 100000.00;
+            double displayPrice = price / 100000.00;
 
             if(displayPrice < 1) {
-                displayPrice = (double) price / 1000.00;
+                displayPrice = price / 1000.00;
                 DecimalFormat df = new DecimalFormat("#.##");
                 try {
                     priceStringBuilder.append(String.format("%.1f",
@@ -207,10 +207,10 @@ public class StringUtil {
             if(price<1000){
                 return String.valueOf(String.format("%.0f",price));
             }
-            double displayPrice = (double) price / 100000.00;
+            double displayPrice = price / 100000.00;
 
             if(displayPrice < 1) {
-                displayPrice = (double) price / 1000.00;
+                displayPrice = price / 1000.00;
                 DecimalFormat df = new DecimalFormat("#.#");
                 try {
                     priceStringBuilder.append(String.format("%.1f",
@@ -250,10 +250,10 @@ public class StringUtil {
     public static float getPriceForChart(double price) {
         try {
             StringBuilder priceStringBuilder = new StringBuilder();
-            double displayPrice = (double) price / 100000.00;
+            double displayPrice = price / 100000.00;
 
             if(displayPrice < 1) {
-                displayPrice = (double) price / 1000.00;
+                displayPrice = price / 1000.00;
                 DecimalFormat df = new DecimalFormat("#.#");
                 try {
                     return Float.parseFloat(df.format(displayPrice));
@@ -293,10 +293,10 @@ public class StringUtil {
             }
             StringBuilder priceStringBuilder = new StringBuilder();
             priceStringBuilder.append("\u20B9");
-            double displayPrice = (double) price / 100000.00;
+            double displayPrice = price / 100000.00;
 
             if(displayPrice < 1) {
-                displayPrice = (double) price / 1000.00;
+                displayPrice = price / 1000.00;
                 DecimalFormat df = new DecimalFormat("#.#");
                 try {
                     priceStringBuilder.append(String.format("%.1f",

@@ -138,13 +138,13 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         || SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)) {
                     view.findViewById(R.id.search_result_item_image_view).setVisibility(View.GONE);
                     ((TextView) view.findViewById(R.id.search_result_item_name_2_text_view)).setText(searchResponseItem.displayText.toLowerCase());
-                    ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setVisibility(View.GONE);
-                    ((TextView) view.findViewById(R.id.search_result_item_name_2_text_view)).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.search_result_item_name_text_view).setVisibility(View.GONE);
+                    view.findViewById(R.id.search_result_item_name_2_text_view).setVisibility(View.VISIBLE);
                 } else {
                     view.findViewById(R.id.search_result_item_image_view).setVisibility(View.VISIBLE);
                     ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setText(searchResponseItem.displayText.toLowerCase());
-                    ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setVisibility(View.VISIBLE);
-                    ((TextView) view.findViewById(R.id.search_result_item_name_2_text_view)).setVisibility(View.GONE);
+                    view.findViewById(R.id.search_result_item_name_text_view).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.search_result_item_name_2_text_view).setVisibility(View.GONE);
                 }
 
                 // TODO implement lru cache

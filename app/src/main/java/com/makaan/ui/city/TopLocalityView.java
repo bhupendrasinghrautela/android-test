@@ -58,7 +58,7 @@ public class TopLocalityView extends BaseLinearLayout<List<Locality>> {
 
     @Override
     public void bindView(List<Locality> item) {
-        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         for(final Locality locality:item){
             View localityItem = inflater.inflate(R.layout.top_locality_item, null);
             TextView localityLabel = (TextView) localityItem.findViewById(R.id.city_locality_label);
