@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <com.makaan.timeline.Timeline
+    <com.makaan.timelinewidget.Timeline
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/timeline_main_view"

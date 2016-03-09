@@ -17,6 +17,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
 
         if (NetworkUtil.isNetworkAvailable(context)) {
             JarvisClient.getInstance().refreshJarvisSocket();
+            JarvisClient.getInstance().fetchChatHistory();
         }
 
     }

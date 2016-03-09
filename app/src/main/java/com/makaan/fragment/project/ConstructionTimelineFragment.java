@@ -16,8 +16,8 @@ import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.image.Image;
 import com.makaan.service.ImageService;
 import com.makaan.service.MakaanServiceFactory;
-import com.makaan.timeline.Timeline;
-import com.makaan.timeline.TimelineView;
+import com.makaan.timelinewidget.Timeline;
+import com.makaan.timelinewidget.TimelineView;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 

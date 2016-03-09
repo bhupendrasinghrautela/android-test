@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.makaan.timeline.Timeline xmlns:android="http://schemas.android.com/apk/res/android"
+<com.makaan.timelinewidget.Timeline xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/timeline_container"
     android:layout_width="match_parent"
     android:layout_height="500dp"
@@ -35,7 +35,7 @@
             android:textColor="#444"
             android:textSize="14sp" />
 
-        <com.makaan.timeline.TimelineView
+        <com.makaan.timelinewidget.TimelineView
             android:id="@+id/timeline"
             android:layout_width="match_parent"
             android:layout_height="25dp"
@@ -65,4 +65,4 @@
             android:textSize="10sp" />
     </RelativeLayout>
 
-</com.makaan.timeline.Timeline>
+</com.makaan.timelinewidget.Timeline>

@@ -22,6 +22,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<MessageViewHolder>
         mContext = context;
     }
 
+
+
     /**
      * This will add the message to the conversation
      * @param message {@link Message}
@@ -29,6 +31,16 @@ public class ConversationAdapter extends RecyclerView.Adapter<MessageViewHolder>
     public void addMessage(Message message){
         messages.add(message);
         notifyItemChanged(messages.size());
+    }
+
+    public void addMessages(List<Message> messages1){
+        messages.addAll(messages1);
+        notifyItemChanged(messages.size());
+    }
+
+    public void removeAllItems(){
+        messages.clear();
+        notifyDataSetChanged();
     }
 
     @Override

@@ -8,7 +8,6 @@ import com.github.nkzawa.socketio.client.Ack;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.makaan.cache.MasterDataCache;
-import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.OnExposeEvent;
 import com.makaan.jarvis.message.ChatObject;
 import com.makaan.jarvis.message.CtaType;
@@ -19,7 +18,6 @@ import com.makaan.jarvis.message.SocketMessage;
 import com.makaan.util.AppBus;
 import com.makaan.util.JsonBuilder;
 import com.makaan.util.JsonParser;
-import com.squareup.otto.Bus;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,13 +32,20 @@ public class JarvisSocket {
 
     private boolean mTyping = false;
     private static int index = 0;
-    private boolean isConnectionError = false;
+    private boolean isRefreshRequired = false;
     private Object agentData;
     private boolean agentLost = false;
     private boolean isAcquired = false;
+    private boolean isAvailabilityChecked = false;
 
     private Runnable mTimeoutRunnable;
     private Handler mTimeoutHandler =new Handler();
+
+    private Runnable mUserInactiveTimeoutRunnable;
+    private Handler mUserInactiveTimeoutHandler =new Handler();
+
+    private static final long AUTOMATIC_AGENT_TRANSFER_TIMEOUT = 10000;
+    private static final long USER_INACTIVE_TIMEOUT = 180000;
 
     public Socket mSocket; {
         try {
@@ -62,6 +67,24 @@ public class JarvisSocket {
 
                     }
                 });
+            }
+        };
+
+        mUserInactiveTimeoutRunnable=new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("deliveryId",JarvisConstants.DELIVERY_ID);
+                    mSocket.emit("user-inactive", jsonObject);
+                    isRefreshRequired = true;
+                    mUserInactiveTimeoutHandler.removeCallbacks(mUserInactiveTimeoutRunnable);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         };
     }
@@ -92,8 +115,8 @@ public class JarvisSocket {
     }
 
     public void refresh() {
-        if(isConnectionError){
-            isConnectionError=false;
+        if(isRefreshRequired){
+            isRefreshRequired =false;
             if(null==mSocket || !mSocket.connected()){
                 try {
                     mSocket = IO.socket(JarvisConstants.CHAT_SERVER_URL);
@@ -106,12 +129,41 @@ public class JarvisSocket {
         }
     }
 
+    public void checkAvailable(){
+            try {
+                if(isAvailabilityChecked){
+                    return;
+                }
+
+                isAvailabilityChecked = true;
+                mSocket.emit("check-available",JarvisConstants.DELIVERY_ID, new Ack() {
+                    @Override
+                    public void call(Object... args) {
+                        JSONObject jsonObject = (JSONObject) args[0];
+                        String reason = jsonObject.optString("reason");
+                        Message message = new Message();
+                        message.message = reason;
+                        message.isAgentAvailableMessage = true;
+                        message.timestamp = System.currentTimeMillis();
+                        JarvisClient.getInstance().getChatMessages().add((Message) message);
+
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    }
+
     private void joinUser(){
         try {
             mSocket.emit("join-user", JsonBuilder.toJson(new JoinUser(agentData, isAcquired)), new Ack() {
                 @Override
                 public void call(Object... args) {
                     Log.e("join user", "user");
+                    if(null!=mUserInactiveTimeoutHandler) {
+                        mUserInactiveTimeoutHandler.removeCallbacks(mUserInactiveTimeoutRunnable);
+                        mUserInactiveTimeoutHandler.postDelayed(mUserInactiveTimeoutRunnable, USER_INACTIVE_TIMEOUT);
+                    }
                 }
             });
         } catch (JSONException e) {
@@ -128,6 +180,11 @@ public class JarvisSocket {
             mSocket.emit("new-message-for-agent", JsonBuilder.toJson(message), new Ack() {
                 @Override
                 public void call(Object... args) {
+                    if(null!=mUserInactiveTimeoutHandler){
+                        mUserInactiveTimeoutHandler.removeCallbacks(mUserInactiveTimeoutRunnable);
+                        mUserInactiveTimeoutHandler.postDelayed(mUserInactiveTimeoutRunnable, USER_INACTIVE_TIMEOUT);
+
+                    }
                 }
             });
         } catch (JSONException e) {
@@ -172,7 +229,7 @@ public class JarvisSocket {
     private Emitter.Listener onConnectError = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            isConnectionError = true;
+            isRefreshRequired = true;
             handleMessage(args);
         }
     };
@@ -185,6 +242,8 @@ public class JarvisSocket {
                 isAcquired = true;
                 JSONObject jsonObject = (JSONObject) args[0];
                 agentData = jsonObject.get("userDetails");
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -244,7 +303,7 @@ public class JarvisSocket {
 
                     if(currentAgent.optInt("id") == serverAgent.optInt("id")) {
                         agentLost = true;
-                        mTimeoutHandler.postDelayed(mTimeoutRunnable, 10000);
+                        mTimeoutHandler.postDelayed(mTimeoutRunnable, AUTOMATIC_AGENT_TRANSFER_TIMEOUT);
                     }
                 }
             } catch (JSONException e) {

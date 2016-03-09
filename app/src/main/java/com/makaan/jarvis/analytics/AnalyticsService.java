@@ -1,5 +1,7 @@
 package com.makaan.jarvis.analytics;
 
+import android.text.TextUtils;
+
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ApiConstants;
@@ -73,6 +75,10 @@ public class AnalyticsService implements MakaanService {
 
     public synchronized void track(Type type, JSONObject object){
         if(object==null){
+            return;
+        }
+
+        if(TextUtils.isEmpty(JarvisConstants.DELIVERY_ID)){
             return;
         }
 

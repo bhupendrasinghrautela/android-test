@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.jarvis.event.ChatHistoryEvent;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.OutgoingMessageEvent;
 import com.makaan.jarvis.event.SendRequirementEvent;
@@ -31,6 +32,8 @@ import com.makaan.util.NetworkUtil;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -39,8 +42,6 @@ import butterknife.OnClick;
  * Created by sunil on 11/01/16.
  */
 public class ChatActivity extends AppCompatActivity {
-
-    //TODO WIP
 
     private Bus eventBus;
     private ConversationAdapter mAdapter;
@@ -54,8 +55,6 @@ public class ChatActivity extends AppCompatActivity {
 
     @Bind(R.id.compose)
     EditText mCompose;
-
-
 
 
     @Override
@@ -142,9 +141,9 @@ public class ChatActivity extends AppCompatActivity {
                     }
                 });
 
-
-
-        bootUpChat();
+        if(!JarvisClient.getInstance().getFetchingStatus()) {
+            bootUpChat();
+        }
     }
 
 
@@ -156,6 +155,17 @@ public class ChatActivity extends AppCompatActivity {
                 showError(getResources().getString(R.string.no_network_connection_short));
                 return;
             }
+
+            if(TextUtils.isEmpty(JarvisConstants.DELIVERY_ID)){
+                showError(getResources().getString(R.string.generic_error));
+                return;
+            }
+
+            if(JarvisClient.getInstance().getFetchingStatus()){
+                showError(getResources().getString(R.string.chat_initializing));
+                return;
+            }
+
             Message message = new Message();
             message.messageType = MessageType.outText;
             message.message = text;
@@ -188,7 +198,13 @@ public class ChatActivity extends AppCompatActivity {
     public void onSendRequirementMessage(SendRequirementEvent event){
         final Message message = (Message) event.message;
         sendMessageToService(message);
-        //addChatMessage(message);
+    }
+
+    @Subscribe
+    public void onChatHistory(ChatHistoryEvent event){
+        ChatMessages messages = JarvisClient.getInstance().getChatMessages();
+        mAdapter.removeAllItems();
+        addChatMessages(messages);
     }
 
     private void addChatMessage(final Message message){
@@ -202,9 +218,21 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    private void addChatMessages(final List<Message> messages){
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.addMessages(messages);
+                scrollToEnd();
+            }
+        });
+    }
+
+
     private void bootUpChat(){
+        mAdapter.removeAllItems();
         ChatMessages messages = JarvisClient.getInstance().getChatMessages();
-        //TODO this should be bulk update
         for(Message message : messages){
             addChatMessage(message);
         }
