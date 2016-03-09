@@ -46,7 +46,7 @@ public class MakaanNetworkClient {
     public static final String TAG = MakaanNetworkClient.class.getSimpleName();
     private final Context context;
 
-    private RequestQueue makaanGetRequestQueue;
+    private CustomVolleyRequestQueue makaanGetRequestQueue;
     private ImageLoader mImageLoader;
 
     private AssetManager assetManager;
@@ -55,7 +55,7 @@ public class MakaanNetworkClient {
     private HashMap<String, String> requestUrlToTag = new HashMap<>();
 
     private MakaanNetworkClient(Context appContext) {
-        makaanGetRequestQueue = Volley.newRequestQueue(appContext);
+        makaanGetRequestQueue = CustomVolleyRequestQueue.newRequestQueue(appContext);
 
         assetManager = appContext.getAssets();
         context = appContext;

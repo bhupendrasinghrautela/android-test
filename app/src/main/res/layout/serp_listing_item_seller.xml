@@ -47,7 +47,8 @@
             android:text="Rohit Kumar"
             android:textColor="@color/white"
             android:textSize="@dimen/serp_listing_item_seller_name_text_view_text_size"
-            android:typeface="sans" />
+            android:typeface="sans"
+            android:textAllCaps="false"/>
 
         <TextView
             android:id="@+id/serp_listing_item_seller_company_name_text_view"
@@ -60,7 +61,8 @@
             android:text="xyz real estate pvt ltd"
             android:textColor="@color/white"
             android:textSize="@dimen/serp_listing_item_seller_company_name_text_view_text_size"
-            android:typeface="serif" />
+            android:typeface="serif"
+            android:textAllCaps="false" />
 
         <com.makaan.ui.view.CustomRatingBar
             android:id="@+id/serp_listing_item_seller_rating_bar"
@@ -92,7 +94,8 @@
             android:textColor="@color/white"
             android:textSize="@dimen/serp_listing_item_seller_company_not_rated_text_size"
             android:typeface="serif"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:textAllCaps="false" />
 
         <View
             android:layout_width="match_parent"
@@ -120,7 +123,8 @@
                 android:text="operates in - 10 localities"
                 android:textColor="@color/white"
                 android:textSize="@dimen/serp_listing_item_seller_operates_in_text_view_text_size"
-                android:typeface="monospace" />
+                android:typeface="monospace"
+                android:textAllCaps="false" />
 
             <TextView
                 android:id="@+id/serp_listing_item_seller_address_text_view"
@@ -134,7 +138,8 @@
                 android:text="huda city center, sushantlok"
                 android:textColor="@color/white"
                 android:textSize="@dimen/serp_listing_item_seller_address_text_view_text_size"
-                android:typeface="serif" />
+                android:typeface="serif"
+                android:textAllCaps="false" />
 
             <ImageView
                 android:id="@+id/serp_listing_item_seller_add_image_view"
@@ -214,7 +219,8 @@
                     android:text="500 properties"
                     android:textColor="@color/white"
                     android:textSize="@dimen/serp_listing_item_seller_text_text_size"
-                    android:typeface="serif" />
+                    android:typeface="serif"
+                    android:textAllCaps="false" />
             </LinearLayout>
 
             <LinearLayout
@@ -232,7 +238,8 @@
                     android:text="500 projects"
                     android:textColor="@color/white"
                     android:textSize="@dimen/serp_listing_item_seller_text_text_size"
-                    android:typeface="serif" />
+                    android:typeface="serif"
+                    android:textAllCaps="false" />
             </LinearLayout>
         </LinearLayout>
 
@@ -272,7 +279,8 @@
                     android:text="12"
                     android:textColor="@color/white"
                     android:textSize="@dimen/serp_listing_item_seller_info_text_size"
-                    android:typeface="serif" />
+                    android:typeface="serif"
+                    android:textAllCaps="false" />
             </LinearLayout>
         </LinearLayout>
 
@@ -315,7 +323,8 @@
                     android:text="experience"
                     android:textColor="@color/white"
                     android:textSize="@dimen/serp_listing_item_seller_text_text_size"
-                    android:typeface="serif" />
+                    android:typeface="serif"
+                    android:textAllCaps="false" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -18,6 +18,7 @@
 -keep class butterknife.** { *; }
 -dontwarn butterknife.internal.**
 -keep class **$$ViewBinder { *; }
+-keep class com.crashlytics.** { *; }
 
 -keepclasseswithmembernames class * {
     @butterknife.* <fields>;
@@ -62,7 +63,7 @@
 -dontwarn com.segment.analytics.**
 -dontwarn com.google.maps.**
 -dontwarn com.github.paolorotolo.**
--dontwarn com.crashlytics.sdk.android.**
+-dontwarn com.crashlytics.**
 
 
 -keep public class * extends android.app.Activity

@@ -44,6 +44,7 @@ import com.makaan.event.trend.callback.LocalityTrendCallback;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.locality.LocalityLifestyleFragment;
 import com.makaan.fragment.locality.LocalityPropertiesFragment;
+import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.pojo.TaxonomyCard;
@@ -164,7 +165,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         makeBarGraphRequest();
     }
 
-    private static final int BLUR_EFFECT_HEIGHT = 300;
+    private static final int BLUR_EFFECT_HEIGHT = 200;
     private float alpha;
     private Context mContext;
     private City mCity;
@@ -227,23 +228,18 @@ public class CityOverViewFragment extends MakaanBaseFragment{
                 mCity.minLuxuryPrice, mCity.maxBudgetPrice));
         //mCityConnectHeader.setText(getString(R.string.city_connect_header_text) + " " + mCity.label);
         if(mCity.cityHeroshotImageUrl != null) {
-            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(mCity.cityHeroshotImageUrl, width, height, true),
-                    new ImageListener() {
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(mCity.cityHeroshotImageUrl, width, height, true).concat("&blur=true"),
+                    new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }
                     final Bitmap image = imageContainer.getBitmap();
-                    final Bitmap newImg = Blur.fastblur(mContext, image, 25);
+//                    final Bitmap newImg = Blur.fastblur(mContext, image, 25);
                     if(mBlurredCityImage != null) {
-                        mBlurredCityImage.setImageBitmap(newImg);
+                        mBlurredCityImage.setImageBitmap(image);
                     }
-                }
-
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-
                 }
             });
         }

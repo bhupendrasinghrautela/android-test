@@ -92,10 +92,10 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        if(MasterDataCache.getInstance().getSavedSearch() == null) {
-            SaveSearchService saveSearchService =
+        if(MasterDataCache.getInstance().getSavedSearch() != null && MasterDataCache.getInstance().getSavedSearch().size() > 0) {
+            /*SaveSearchService saveSearchService =
                     (SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class);
-            saveSearchService.getSavedSearches();
+            saveSearchService.getSavedSearches();*/
 
             showContent();
 
@@ -198,7 +198,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                     int id = this.getResources().getIdentifier(grp.imageName, "drawable", "com.makaan");
                     Bitmap b = BitmapFactory.decodeResource(getResources(), id);
                     ((ImageView) view.findViewById(R.id.fragment_set_alerts_list_item_image_view)).setImageBitmap(b);
-                    MakaanBuyerApplication.bitmapCache.putBitmap(grp.imageName, bitmap);
+                    MakaanBuyerApplication.bitmapCache.putBitmap(grp.imageName, b);
                 }
             }
 
@@ -538,6 +538,20 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
             if(isSubmitInitiated) {
                 MakaanMessageDialogFragment.showMessage(getFragmentManager(),
                         (event != null && event.error != null && !TextUtils.isEmpty(event.error.msg)) ? event.error.msg : getString(R.string.generic_error), "ok");
+            } else {
+                if(event != null && event.error != null && event.error.error != null
+                        && event.error.error.networkResponse != null && event.error.error.networkResponse.statusCode == 401) {
+                    showContent();
+
+                    populateData();
+                    mSetAlertsNameEditText.setText(handleSearchName());
+                    mSetAlertsNameEditText.setSelection(mSetAlertsNameEditText.getText().length());
+                    mSetAlertsNameEditText.requestFocus();
+                } else if(event != null && event.error != null && event.error.msg != null) {
+                    showNoResults(event.error.msg);
+                } else {
+                    showNoResults(getString(R.string.generic_error));
+                }
             }
         } else {
             if(isSubmitInitiated) {

@@ -48,7 +48,9 @@ public class LocalityLifestyleFragment extends MakaanBaseFragment{
 
     private void initView() {
         title = getArguments().getString("title");
-        titleTv.setText(title);
+        if(title != null) {
+            titleTv.setText(title.toLowerCase());
+        }
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -98,8 +100,14 @@ public class LocalityLifestyleFragment extends MakaanBaseFragment{
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             final EntityDesc nearByLocalitu = entityDescs.get(position);
-            holder.descriptionTv.setText(nearByLocalitu.entityDescriptionCategories.masterDescriptionCategory.name);
-            holder.descriptionFullTv.setText(nearByLocalitu.description);
+            if(nearByLocalitu != null && nearByLocalitu.entityDescriptionCategories != null
+                    && nearByLocalitu.entityDescriptionCategories.masterDescriptionCategory != null
+                    && nearByLocalitu.entityDescriptionCategories.masterDescriptionCategory.name != null) {
+                holder.descriptionTv.setText(nearByLocalitu.entityDescriptionCategories.masterDescriptionCategory.name.toLowerCase());
+            }
+            if(nearByLocalitu != null && nearByLocalitu.description != null) {
+                holder.descriptionFullTv.setText(nearByLocalitu.description.toLowerCase());
+            }
             if(nearByLocalitu.imageUrl!=null) {
                 int width = getResources().getDimensionPixelSize(R.dimen.row_localities_lifestyle_width);
                 int height = getResources().getDimensionPixelSize(R.dimen.row_localities_lifestyle_height);
