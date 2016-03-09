@@ -563,6 +563,9 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
         } else {
             mSellerName.setText(String.format("%s (%s)", company.name, company.type).toLowerCase());
         }
+        if(company.score!=null) {
+            mSellerRating.setRating(company.score.floatValue() / 2);
+        }
         User user = mListingDetail.companySeller!=null?mListingDetail.companySeller.user:null;
         if(!company.assist){
             mSellerAssistButton.setVisibility(View.GONE);

@@ -129,7 +129,12 @@ public class ProjectConfigCallback extends JSONGetCallback {
                         //sellerCard.assist =
                         sellerCard.name = company.name;
                         sellerCard.type = company.type;
-                        sellerCard.rating = company.score;
+                        if(company.score!=null) {
+                            sellerCard.rating = company.score;
+                        }
+                        else{
+                            sellerCard.rating = 0d;
+                        }
                         sellerCard.noOfProperties = sellerPropCountMap.get(company.id);
                         if(projectConfigItem.topSellerCard == null){
                             projectConfigItem.topSellerCard = sellerCard;

@@ -357,6 +357,8 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity implements Noti
             CookiePreferences.setUserLoggedOut(this);
             CookiePreferences.setUserInfo(this, null);
             MasterDataCache.getInstance().clearSavedSearches();
+            MasterDataCache.getInstance().setUserData(null);
+            MasterDataCache.getInstance().clearWishList();
             //TODO also clear metadata and userinfo
             finish();
         }else{
