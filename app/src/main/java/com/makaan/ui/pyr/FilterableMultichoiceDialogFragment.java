@@ -128,10 +128,10 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 			multiSelectionDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.YELLOW));
 			multiSelectionDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 			String city = mPyrPresenter.getCityContext();
-			mMultiChoiceSearchTextView.setHint(getResources().getString(R.string.search_locality)+" "+city.toLowerCase());
-
+			mMultiChoiceSearchTextView.setHint(getResources().getString(R.string.search_locality)+" "+(city!=null?city.toLowerCase():""));
 			return multiSelectionDialog;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -171,7 +171,7 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 	@OnItemClick(R.id.multichoice_dialog_list_view)
 	public void multiChoiceClick(AdapterView<?> arg0, View arg1,
 								 int clicked, long id){
-
+			mMultiChoiceSearchTextView.setText("");
 			String clickedItem = (String) mUnselectedItemsAdapter.getItem(clicked).entityId;
 			if(mSelectedItemsList.size()<6) {
 				mPyrPresenter.updateSelectedItemsList(clickedItem, mSelectedItemsList,

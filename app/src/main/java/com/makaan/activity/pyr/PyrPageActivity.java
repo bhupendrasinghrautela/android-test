@@ -46,10 +46,15 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
             long localityId = getIntent().getLongExtra(KEY_LOCALITY_ID, 0);
             String localityName = getIntent().getStringExtra(KEY_LOCALITY_NAME);
             String cityName = getIntent().getStringExtra(KEY_CITY_NAME);
-            Long cityId = this.getIntent().getExtras().getLong(KEY_CITY_Id);
-            ProjectConfigItem projectConfigItem=this.getIntent().getExtras().getParcelable(BEDROOM_AND_BUDGET);
-            boolean isBuySelected=this.getIntent().getExtras().getBoolean(BUY_SELECTED);
-            mPagePresenter.setCityId(cityId.intValue());
+            Long cityId = null;
+            ProjectConfigItem projectConfigItem=null;
+            boolean isBuySelected = false;
+            if(null!=getIntent().getExtras()) {
+                cityId = this.getIntent().getExtras().getLong(KEY_CITY_Id);
+                projectConfigItem = this.getIntent().getExtras().getParcelable(BEDROOM_AND_BUDGET);
+                isBuySelected = this.getIntent().getExtras().getBoolean(BUY_SELECTED);
+            }
+            mPagePresenter.setCityId(cityId!=null?cityId.intValue():0);
             mPagePresenter.prefillLocality(localityName, localityId, cityName ,projectConfigItem, isBuySelected);
         }
 

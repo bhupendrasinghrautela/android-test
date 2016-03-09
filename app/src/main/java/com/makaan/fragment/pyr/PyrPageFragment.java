@@ -327,8 +327,7 @@ public class PyrPageFragment extends Fragment {
                 for(TermFilter filter : group.termFilterValues) {
                     if(filter.selected) {
                         if(count<2) {
-                            stringBuilder.append(filter.displayName.contains("/flat") ?
-                                    filter.displayName.replace("/flat", ""):filter.displayName);
+                            stringBuilder.append(filter.displayName.replace("/flat", ""));
                             stringBuilder.append(space);
                         }
                         space=" ";
