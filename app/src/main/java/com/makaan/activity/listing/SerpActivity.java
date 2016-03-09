@@ -100,6 +100,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public static final int TYPE_TAXONOMY = 0x0c;
     public static final int TYPE_HOME = 0x0d;
     public static final int TYPE_NEARBY = 0x0e;
+    public static final int TYPE_NOTIFICATION = 0x0f;
 
     public static final int MASK_LISTING_TYPE = 0x0f;
     public static final int MASK_LISTING_UPDATE_TYPE = 0xf0;
@@ -273,6 +274,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 removeAllSelectors();
                 parseSerpRequest(intent, type);
             } else if (type == SerpActivity.TYPE_SUGGESTION) {
+                removeAllSelectors();
+                parseSerpRequest(intent, type);
+            } else if(type == SerpActivity.TYPE_NOTIFICATION) {
                 removeAllSelectors();
                 parseSerpRequest(intent, type);
             } else {

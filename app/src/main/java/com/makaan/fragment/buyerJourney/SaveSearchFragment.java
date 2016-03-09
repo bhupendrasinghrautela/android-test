@@ -50,6 +50,8 @@ import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.squareup.otto.Subscribe;
 
+import org.apache.http.HttpStatus;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,7 +83,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
         context = getActivity();
         initView();
 
-        if(MasterDataCache.getInstance().getSavedSearch() != null) {
+        if (MasterDataCache.getInstance().getSavedSearch() != null) {
 
             ArrayList<SaveSearch> saveSearches = MasterDataCache.getInstance().getSavedSearch();
             mAdapter = new SaveSearchAdapter(saveSearches);
@@ -89,7 +91,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                 mRecyclerView.setAdapter(mAdapter);
             }
             ArrayList<Long> ids = new ArrayList<>();
-            for(SaveSearch search : saveSearches) {
+            for (SaveSearch search : saveSearches) {
                 ids.add(search.id);
             }
             ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).getSavedSearchesNewMatchesByIds(ids);
@@ -138,23 +140,23 @@ public class SaveSearchFragment extends MakaanBaseFragment {
 
             @Override
             public void onClick(View v) {
-                if(v instanceof ImageView) {
-                    if(searchId != null) {
+                if (v instanceof ImageView) {
+                    if (searchId != null) {
                         MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
                                 "delete saved search " + saveSearchName.getText().toString() + "?", "delete", "cancel",
                                 new MakaanMessageDialogFragment.MessageDialogCallbacks() {
-                            @Override
-                            public void onPositiveClicked() {
-                                ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).removeSavedSearch(searchId);
-                            }
+                                    @Override
+                                    public void onPositiveClicked() {
+                                        ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).removeSavedSearch(searchId);
+                                    }
 
-                            @Override
-                            public void onNegativeClicked() {
+                                    @Override
+                                    public void onNegativeClicked() {
 
-                            }
-                        });
+                                    }
+                                });
                     }
-                } else if(savedSearches != null && savedSearches.size() > position) {
+                } else if (savedSearches != null && savedSearches.size() > position) {
                     SerpRequest request = new SerpRequest(SerpActivity.TYPE_SUGGESTION);
                     request.launchSerp(getActivity(), savedSearches.get(position).searchQuery);
                 }
@@ -162,25 +164,25 @@ public class SaveSearchFragment extends MakaanBaseFragment {
         }
 
         public SaveSearchAdapter(List<SaveSearch> savedSearches) {
-            if(this.savedSearches == null) {
+            if (this.savedSearches == null) {
                 this.savedSearches = new ArrayList<>();
             } else {
                 this.savedSearches.clear();
             }
             this.savedSearches.addAll(savedSearches);
 
-            if(this.imageObjects == null) {
+            if (this.imageObjects == null) {
                 this.imageObjects = new ArrayList<>();
             } else {
                 this.imageObjects.clear();
             }
-            for(int i = 0; i < savedSearches.size(); i++) {
+            for (int i = 0; i < savedSearches.size(); i++) {
                 this.imageObjects.add(new ImageObject());
             }
         }
 
         public void updateNewCount(HashMap<String, Integer> data) {
-            if(this.newMatchesCount == null) {
+            if (this.newMatchesCount == null) {
                 this.newMatchesCount = new HashMap<>();
             } else {
                 this.newMatchesCount.clear();
@@ -191,7 +193,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
 
         @Override
         public SaveSearchAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                                          int viewType) {
+                                                               int viewType) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.card_search, parent, false);
             ViewHolder vh = new ViewHolder(v);
@@ -203,11 +205,11 @@ public class SaveSearchFragment extends MakaanBaseFragment {
             holder.position = position;
             String name = savedSearches.get(position).name;
             holder.searchId = savedSearches.get(position).id;
-            if(!TextUtils.isEmpty(name)) {
+            if (!TextUtils.isEmpty(name)) {
                 String[] text = name.split(";");
                 holder.saveSearchName.setVisibility(View.VISIBLE);
                 holder.saveSearchName.setText(text[0]);
-                if(text.length > 1) {
+                if (text.length > 1) {
                     holder.saveSearchPlace.setVisibility(View.VISIBLE);
                     holder.saveSearchFilter.setVisibility(View.VISIBLE);
 
@@ -220,7 +222,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                         separator = " | ";
                     }
                     holder.saveSearchFilter.setText(builder.toString());
-                    if(text.length > 2) {
+                    if (text.length > 2) {
                         holder.saveSearchPlace.setText(text[2]);
                     } else {
                         holder.saveSearchPlace.setVisibility(View.INVISIBLE);
@@ -235,31 +237,31 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                 holder.saveSearchFilter.setVisibility(View.INVISIBLE);
             }
 
-            if(newMatchesCount != null && newMatchesCount.containsKey(String.valueOf(savedSearches.get(position).id))) {
+            if (newMatchesCount != null && newMatchesCount.containsKey(String.valueOf(savedSearches.get(position).id))) {
                 holder.newMatchesCountTextView.setText(newMatchesCount.get(String.valueOf(savedSearches.get(position).id)) + " new");
             }
 
-            if(imageObjects.get(position).request == null) {
+            if (imageObjects.get(position).request == null) {
                 imageObjects.get(position).request = new SerpRequest(SerpActivity.TYPE_SUGGESTION);
                 SelectorParser.parse(savedSearches.get(position).searchQuery, imageObjects.get(position).request);
             }
 
-            if(imageObjects.get(position).imageUrl == null) {
+            if (imageObjects.get(position).imageUrl == null) {
                 HashMap<String, ArrayList<String>> map = imageObjects.get(position).request.getTermMap();
-                if(map != null) {
-                    for(String key : map.keySet()) {
-                        if(KeyUtil.LOCALITY_ID.equalsIgnoreCase(key)) {
-                            if(map.get(KeyUtil.LOCALITY_ID) != null && map.get(KeyUtil.LOCALITY_ID).size() > 0) {
+                if (map != null) {
+                    for (String key : map.keySet()) {
+                        if (KeyUtil.LOCALITY_ID.equalsIgnoreCase(key)) {
+                            if (map.get(KeyUtil.LOCALITY_ID) != null && map.get(KeyUtil.LOCALITY_ID).size() > 0) {
                                 imageObjects.get(position).requestLocalityImage(map.get(KeyUtil.LOCALITY_ID).get(0));
                                 break;
                             }
-                        } else if(KeyUtil.CITY_ID.equalsIgnoreCase(key)) {
-                            if(map.get(KeyUtil.CITY_ID) != null && map.get(KeyUtil.CITY_ID).size() > 0) {
+                        } else if (KeyUtil.CITY_ID.equalsIgnoreCase(key)) {
+                            if (map.get(KeyUtil.CITY_ID) != null && map.get(KeyUtil.CITY_ID).size() > 0) {
                                 imageObjects.get(position).requestCityImage(map.get(KeyUtil.CITY_ID).get(0));
                                 break;
                             }
-                        } else if(KeyUtil.BUILDER_ID.equalsIgnoreCase(key)) {
-                            if(map.get(KeyUtil.BUILDER_ID) != null && map.get(KeyUtil.BUILDER_ID).size() > 0) {
+                        } else if (KeyUtil.BUILDER_ID.equalsIgnoreCase(key)) {
+                            if (map.get(KeyUtil.BUILDER_ID) != null && map.get(KeyUtil.BUILDER_ID).size() > 0) {
                                 imageObjects.get(position).requestBuilderImage(map.get(KeyUtil.BUILDER_ID).get(0));
                                 break;
                             }
@@ -285,18 +287,26 @@ public class SaveSearchFragment extends MakaanBaseFragment {
 
 
     @Subscribe
-    public void onResults(SaveSearchGetEvent saveSearchGetEvent){
-        if(null== saveSearchGetEvent || null!=saveSearchGetEvent.error){
-            if(saveSearchGetEvent != null && !TextUtils.isEmpty(saveSearchGetEvent.error.msg)) {
+    public void onResults(SaveSearchGetEvent saveSearchGetEvent) {
+        if (null == saveSearchGetEvent || null != saveSearchGetEvent.error) {
+            if (saveSearchGetEvent != null && saveSearchGetEvent.error != null
+                    && saveSearchGetEvent.error.error != null && saveSearchGetEvent.error.error.networkResponse != null
+                    && saveSearchGetEvent.error.error.networkResponse.statusCode == HttpStatus.SC_UNAUTHORIZED) {
+                if (mCallback != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(BlogContentFragment.TYPE, BlogContentFragment.SEARCH);
+                    mCallback.loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT, false, bundle, null, null);
+                }
+            } else if (saveSearchGetEvent != null && !TextUtils.isEmpty(saveSearchGetEvent.error.msg)) {
                 showNoResults(saveSearchGetEvent.error.msg);
             } else {
                 showNoResults();
             }
             return;
         }
-        if(saveSearchGetEvent.saveSearchArrayList == null || saveSearchGetEvent.saveSearchArrayList.size() == 0) {
+        if (saveSearchGetEvent.saveSearchArrayList == null || saveSearchGetEvent.saveSearchArrayList.size() == 0) {
 //            showNoResults(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT));
-            if(mCallback != null) {
+            if (mCallback != null) {
                 Bundle bundle = new Bundle();
                 bundle.putString(BlogContentFragment.TYPE, BlogContentFragment.SEARCH);
                 mCallback.loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_CONTENT, false, bundle, null, null);
@@ -307,7 +317,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                 mRecyclerView.setAdapter(mAdapter);
             }
             ArrayList<Long> ids = new ArrayList<>();
-            for(SaveSearch search : saveSearchGetEvent.saveSearchArrayList) {
+            for (SaveSearch search : saveSearchGetEvent.saveSearchArrayList) {
                 ids.add(search.id);
             }
             ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).getSavedSearchesNewMatchesByIds(ids);
@@ -316,11 +326,11 @@ public class SaveSearchFragment extends MakaanBaseFragment {
 
 
     @Subscribe
-    public void onResults(NewMatchesGetEvent event){
-        if(null== event || null!=event.error) {
+    public void onResults(NewMatchesGetEvent event) {
+        if (null == event || null != event.error) {
             return;
         }
-        if(event.data != null && event.data.size() > 0) {
+        if (event.data != null && event.data.size() > 0) {
             mAdapter.updateNewCount(event.data);
         }
     }
@@ -349,7 +359,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                 @Override
                 public void onSuccess(Object responseObject) {
                     Locality locality = (Locality) responseObject;
-                    if(locality != null && locality.localityHeroshotImageUrl != null) {
+                    if (locality != null && locality.localityHeroshotImageUrl != null) {
                         ImageObject.this.imageUrl = locality.localityHeroshotImageUrl;
                         mAdapter.notifyDataSetChanged();
                     }
@@ -380,7 +390,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                     @Override
                     public void onSuccess(Object responseObject) {
                         City city = (City) responseObject;
-                        if(city != null && city.cityHeroshotImageUrl != null) {
+                        if (city != null && city.cityHeroshotImageUrl != null) {
                             ImageObject.this.imageUrl = city.cityHeroshotImageUrl;
                             mAdapter.notifyDataSetChanged();
                         }
@@ -396,7 +406,8 @@ public class SaveSearchFragment extends MakaanBaseFragment {
 
                 String builderUrl = ApiConstants.BUILDER_DETAIL.concat("/").concat(builderId.toString()).concat("?").concat(builderSelector.build());
 
-                Type builderType = new TypeToken<Builder>() {}.getType();
+                Type builderType = new TypeToken<Builder>() {
+                }.getType();
 
                 MakaanNetworkClient.getInstance().get(builderUrl, builderType, new ObjectGetCallback() {
                     @Override
@@ -407,7 +418,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                     public void onSuccess(Object responseObject) {
                         Builder builder = (Builder) responseObject;
 
-                        if(builder != null && builder.imageURL != null) {
+                        if (builder != null && builder.imageURL != null) {
                             ImageObject.this.imageUrl = builder.imageURL;
                             mAdapter.notifyDataSetChanged();
                         }

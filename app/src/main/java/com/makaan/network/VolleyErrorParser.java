@@ -26,6 +26,8 @@ public class VolleyErrorParser {
     private static final String NO_CONTENT_ERROR = "no matching results!";
     private static final String NOT_FOUND_ERROR = "such a kill joy!\nthe page you were looking for is sitting at home.\nto find joy, find home";
     private static final String WEAK_NETWORK_ERROR = "oops! looks like a connection issue. let's get you back on the joyride";
+    // todo
+    private static final String AUTH_ERROR = "authentication error!";
 
     /**
      * Returns appropriate message which is to be displayed to the user
@@ -49,6 +51,8 @@ public class VolleyErrorParser {
             return NETWORK_ERROR;
         } else if (isNetworkProblem(error)) {
             return WEAK_NETWORK_ERROR;
+        } else if (error instanceof AuthFailureError) {
+            return AUTH_ERROR;
         } else if(error instanceof VolleyError) {
             NetworkResponse response = ((VolleyError)error).networkResponse;
             if(response != null) {

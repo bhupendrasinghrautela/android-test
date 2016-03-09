@@ -10,12 +10,5 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         />
-    <TextView
-        android:id="@+id/tv_no_shortlist"
-        android:textSize="@dimen/button_text_size"
-        android:text="@string/no_enquiries_available"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:typeface="monospace"/>
 
 </LinearLayout>

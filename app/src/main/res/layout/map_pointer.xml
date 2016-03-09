@@ -13,5 +13,6 @@
         android:textColor="@color/map_pointer_text_selected"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="4dp"
-        android:typeface="serif"/>
+        android:typeface="serif"
+        android:maxLength="4"/>
 </LinearLayout>

@@ -23,6 +23,7 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.wishlist.WishListResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.WishListService;
+import com.makaan.util.ErrorUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
@@ -39,12 +40,6 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
 
     @Bind(R.id.favorite_recycler_view)
     RecyclerView favoriteRecyclerView;
-
-    @Bind(R.id.loading_progress)
-    ProgressBar progressBar;
-
-    @Bind(R.id.tv_no_shortlist)
-    TextView statusMessage;
 
     private RecyclerView.LayoutManager mLayoutManager;
     private int mPosition;
@@ -70,13 +65,11 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
         favoriteRecyclerView.setLayoutManager(mLayoutManager);
         //favoriteRecyclerView.setAdapter(new ShortListFavoriteAdapter(getActivity()));
 
-        progressBar.setVisibility(View.GONE);
-
         if(entries == null || entries.size() == 0) {
-            statusMessage.setVisibility(View.VISIBLE);
+            showNoResults(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT, false));
             favoriteRecyclerView.setVisibility(View.GONE);
         } else {
-            statusMessage.setVisibility(View.GONE);
+            showContent();
             favoriteRecyclerView.setVisibility(View.VISIBLE);
             RecentAdapter adapter = new RecentAdapter();
             adapter.setData(entries);

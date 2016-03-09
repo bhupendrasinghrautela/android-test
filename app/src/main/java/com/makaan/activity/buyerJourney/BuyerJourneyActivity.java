@@ -46,7 +46,7 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class BuyerJourneyActivity extends MakaanFragmentActivity {
+public class BuyerJourneyActivity extends MakaanFragmentActivity implements NotificationsAdapter.NotificationCallbacks {
     @Bind(R.id.button_login)
     Button mLoginButton;
 
@@ -80,6 +80,13 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity {
     AppBarLayout mAppBarLayout;
     private Long mAgentId;
     private Long mLeadId;
+
+    @Override
+    public void loadDashboard() {
+        if(mTabLayout != null && mTabLayout.getTabAt(0) != null) {
+            mTabLayout.getTabAt(0).select();
+        }
+    }
 
     enum TabType {
         Journey("journey"),
