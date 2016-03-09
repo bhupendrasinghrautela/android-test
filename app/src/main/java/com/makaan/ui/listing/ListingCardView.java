@@ -127,10 +127,10 @@ public class ListingCardView extends AbstractListingView {
         if(!TextUtils.isEmpty(mListing.project.name)
                 && (mListing.project.activeStatus == null || !"dummy".equalsIgnoreCase(mListing.project.activeStatus))) {
             if(!TextUtils.isEmpty(mListing.project.builderName)) {
-                mPropertyAddressTextView.setText(String.format("%s %s, %s, %s", mListing.project.builderName,
+                mPropertyAddressTextView.setText(String.format("<font color=\"#E71C28\">%s %s</font>, %s, %s", mListing.project.builderName,
                         mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase());
             } else {
-                mPropertyAddressTextView.setText(String.format("%s, %s, %s", mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase());
+                mPropertyAddressTextView.setText(String.format("<font color=\"#E71C28\">%s</font>, %s, %s", mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase());
             }
         } else {
             mPropertyAddressTextView.setText(String.format("%s, %s", mListing.localityName, mListing.cityName).toLowerCase());

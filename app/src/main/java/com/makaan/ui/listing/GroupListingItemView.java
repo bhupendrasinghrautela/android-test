@@ -96,7 +96,9 @@ public class GroupListingItemView extends RelativeLayout implements View.OnClick
         mPropertySizeTextView.setText(String.format(PROPERTY_SIZE_STRING, mBedrooms));
         for(ApiIntLabel intLabel : MasterDataCache.getInstance().getBuyPropertyTypes()) {
             if(intLabel.id.equals(mUnitId)) {
-                mPropertyTypeTextView.setText(intLabel.name);
+                if(intLabel.name != null) {
+                    mPropertyTypeTextView.setText(intLabel.name.toLowerCase());
+                }
                 break;
             }
         }

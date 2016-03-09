@@ -26,7 +26,9 @@ public class SelectedSearchAdapter extends CustomFlowLayout.CustomFlowLayoutAdap
         View view = inflater.inflate(R.layout.selected_search_item_view, parent, false);
         if(data != null) {
             TextView textView = (TextView) view.findViewById(R.id.selected_search_item_view_text_view);
-            textView.setText(data.entityName);
+            if(data.entityName != null) {
+                textView.setText(data.entityName.toLowerCase());
+            }
             ImageButton button = (ImageButton) view.findViewById(R.id.selected_search_item_view_delete_image_button);
             button.setOnClickListener(this);
             button.setTag(data);
