@@ -216,7 +216,7 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
                 } else if(viewType == TYPE_ADD) {
                     if(getActivity() instanceof BuyerDashboardCallbacks) {
                         if(mObj != null) {
-                            mObj.listingDetail = mItems.get(position).listing;
+//                            mObj.listingDetail = mItems.get(position).listing;
                             ((BuyerDashboardCallbacks) getActivity()).loadFragment(
                                     BuyerDashboardActivity.LOAD_FRAGMENT_CLIENT_COMPANY_LEAD_ADD_PROPERTY,
                                     true, null, null, mObj);
@@ -252,12 +252,14 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
                     }
 
                     if(listingDetail.listing.property != null && listingDetail.listing.property.project != null) {
-                        projectNameTextView.setText(listingDetail.listing.property.project.name);
+                        if(listingDetail.listing.property.project.name != null) {
+                            projectNameTextView.setText(listingDetail.listing.property.project.name.toLowerCase());
+                        }
 
                         if(listingDetail.listing.property.project.locality != null
                                 && listingDetail.listing.property.project.locality.suburb != null
                                 && listingDetail.listing.property.project.locality.suburb.city != null) {
-                            addressTextView.setText(String.format("%s, %s", listingDetail.listing.property.project.locality.label, listingDetail.listing.property.project.locality.suburb.city.label));
+                            addressTextView.setText(String.format("%s, %s", listingDetail.listing.property.project.locality.label, listingDetail.listing.property.project.locality.suburb.city.label).toLowerCase());
                         }
                     }
                 }

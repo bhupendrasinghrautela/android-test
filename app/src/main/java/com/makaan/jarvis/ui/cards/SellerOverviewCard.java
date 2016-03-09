@@ -61,7 +61,7 @@ public class SellerOverviewCard extends BaseView<Message> {
         sellerRatingBar.setRating(item.chatObj.score);
 
         if(!TextUtils.isEmpty(item.chatObj.name)) {
-            name.setText(item.chatObj.name);
+            name.setText(item.chatObj.name.toLowerCase());
         }
 
         if(item.chatObj.listingCount>0) {
@@ -79,7 +79,7 @@ public class SellerOverviewCard extends BaseView<Message> {
             }
 
             if(!TextUtils.isEmpty(builder.toString())){
-                locations.setText(builder.toString());
+                locations.setText(builder.toString().toLowerCase());
             }
 
         }

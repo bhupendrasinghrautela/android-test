@@ -46,7 +46,9 @@ public class NearbyLocalitiesView extends BaseCardView {
     }
 
     public void bindLocalityData(String value){
-        mName.setText(value);
+        if(value != null) {
+            mName.setText(value.toLowerCase());
+        }
     }
 
     @OnClick(R.id.view_details)

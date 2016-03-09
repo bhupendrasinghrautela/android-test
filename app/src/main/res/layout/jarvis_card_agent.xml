@@ -23,7 +23,8 @@
         android:paddingRight="20dp"
         android:text="please rate your \nexperience with"
         android:layout_gravity="center"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:textAllCaps="false"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/agent_image"
@@ -61,9 +62,10 @@
         android:layout_margin="10dp"
         android:layout_weight="1"
         android:background="@drawable/filled_red"
-        android:text="Submit"
+        android:text="submit"
         android:textColor="@android:color/white"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textAllCaps="false" />
 
     </LinearLayout>
 

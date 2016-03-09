@@ -94,8 +94,10 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
             if(enquiry.project!=null){
                 populateProjectDetail(enquiry.project,shortListEnquiredViewHolder);
                 if(enquiry.company!=null) {
-                    shortListEnquiredViewHolder.mName.setText(enquiry.company.name);
-                    shortListEnquiredViewHolder.mRating.setRating(enquiry.company.score/2);
+                    if(enquiry.company.name != null) {
+                        shortListEnquiredViewHolder.mName.setText(enquiry.company.name.toLowerCase());
+                    }
+                    shortListEnquiredViewHolder.mRating.setRating(enquiry.company.score / 2);
                     showTextAsImage(shortListEnquiredViewHolder, enquiry.company.name);
                 }
             }
@@ -261,7 +263,7 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
             }
 
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-        fromDatePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+        fromDatePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         fromDatePickerDialog.show();
     }
 

@@ -1,76 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.makaan.ui.property.PropertyImageCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.makaan.ui.property.PropertyImageCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="25dp"
     app:cardElevation="@dimen/card_elevation_small"
-    android:layout_height="match_parent">
+    app:cardPreventCornerOverlap="false">
+
     <com.android.volley.toolbox.FadeInNetworkImageView
         android:id="@+id/property_imageview"
         android:layout_width="match_parent"
-        android:scaleType="centerCrop"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
     <RelativeLayout
         android:id="@+id/property_image_detail"
-        android:layout_gravity="bottom"
-        android:background="#E6FFFFFF"
         android:layout_width="match_parent"
-        android:layout_height="80.7dp">
+        android:layout_height="80.7dp"
+        android:layout_gravity="bottom"
+        android:background="#E6FFFFFF">
+
         <ImageView
             android:id="@+id/rupee_icon"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="14dp"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:src="@drawable/rupee"/>
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/rupee" />
+
         <TextView
             android:id="@+id/price_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="11dp"
             android:layout_toRightOf="@+id/rupee_icon"
-            android:layout_width="wrap_content"
             android:textSize="32sp"
-            android:typeface="serif"
-            android:layout_height="wrap_content"/>
+            android:typeface="serif" />
+
         <TextView
             android:id="@+id/price_unit"
-            android:layout_alignBaseline="@id/price_text"
-            android:layout_toRightOf="@+id/price_text"
-            android:layout_marginLeft="5dp"
             android:layout_width="wrap_content"
-            android:textSize="16sp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/price_text"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/price_text"
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/area_text"
-            android:layout_toRightOf="@id/rupee_icon"
-            android:layout_below="@+id/price_text"
             android:layout_width="wrap_content"
-            android:typeface="serif"
             android:layout_height="wrap_content"
-            android:textSize="16sp"/>
+            android:layout_below="@+id/price_text"
+            android:layout_toRightOf="@id/rupee_icon"
+            android:textSize="16sp"
+            android:typeface="serif" />
+
         <TextView
             android:id="@+id/emi_text"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:clickable="true"
-            android:textColor="@color/emi_text_color_selector"
             android:layout_width="wrap_content"
-            android:typeface="monospace"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="14dp"
             android:layout_marginTop="30dp"
+            android:clickable="true"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:textColor="@color/emi_text_color_selector"
             android:textSize="13sp"
-            android:layout_height="wrap_content"/>
+            android:typeface="monospace" />
+
         <ImageView
             android:id="@+id/price_change"
-            android:layout_marginLeft="8dp"
-            android:layout_alignBottom="@id/area_text"
-            android:layout_toRightOf="@id/area_text"
             android:layout_width="16dp"
-            android:layout_height="16dp"/>
+            android:layout_height="16dp"
+            android:layout_alignBottom="@id/area_text"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/area_text" />
     </RelativeLayout>
 </com.makaan.ui.property.PropertyImageCardView>

@@ -208,7 +208,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
             if (!TextUtils.isEmpty(name)) {
                 String[] text = name.split(";");
                 holder.saveSearchName.setVisibility(View.VISIBLE);
-                holder.saveSearchName.setText(text[0]);
+                holder.saveSearchName.setText(text[0].toLowerCase());
                 if (text.length > 1) {
                     holder.saveSearchPlace.setVisibility(View.VISIBLE);
                     holder.saveSearchFilter.setVisibility(View.VISIBLE);
@@ -221,9 +221,9 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                         builder.append(filter);
                         separator = " | ";
                     }
-                    holder.saveSearchFilter.setText(builder.toString());
+                    holder.saveSearchFilter.setText(builder.toString().toLowerCase());
                     if (text.length > 2) {
-                        holder.saveSearchPlace.setText(text[2]);
+                        holder.saveSearchPlace.setText(text[2].toLowerCase());
                     } else {
                         holder.saveSearchPlace.setVisibility(View.INVISIBLE);
                     }

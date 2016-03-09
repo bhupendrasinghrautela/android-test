@@ -55,7 +55,9 @@ public class PyrPopupCard extends BaseCtaView<ExposeMessage> {
 
     @Override
     public void bindView(final Context context, ExposeMessage item) {
-        mTitle.setText("interested in " + item.city);
+        if(item.city != null) {
+            mTitle.setText("interested in " + item.city.toLowerCase());
+        }
 
         mApplyButton.setOnClickListener(new OnClickListener() {
             @Override

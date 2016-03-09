@@ -44,7 +44,7 @@ public class PlainLinkCard extends BaseView<Message> {
     @Override
     public void bindView(Context context, final Message item) {
         if(null!=item || null!=item.message){
-            mPlainLink.setText(Html.fromHtml(item.message));
+            mPlainLink.setText(Html.fromHtml(item.message).toString().toLowerCase());
         }
 
         setOnClickListener(new OnClickListener() {

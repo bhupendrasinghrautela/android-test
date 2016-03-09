@@ -9,7 +9,8 @@
     android:layout_gravity="center"
     android:layout_marginLeft="@dimen/project_similar_project_card_left_margin"
     android:layout_marginRight="@dimen/project_similar_project_card_left_margin"
-    app:cardCornerRadius="@dimen/project_similar_project_card_radius">
+    app:cardCornerRadius="@dimen/project_similar_project_card_radius"
+    app:cardPreventCornerOverlap="false">
 
     <RelativeLayout
         android:id="@+id/rl_similar_project_container"

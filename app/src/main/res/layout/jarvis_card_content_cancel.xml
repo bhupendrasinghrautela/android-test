@@ -28,7 +28,8 @@
             android:maxLines="2"
             android:text="The IT hub of India, Bengaluru, has witnessed a rising demand for real estate"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/jarvis_chat_card_subtitle_text_size" />
+            android:textSize="@dimen/jarvis_chat_card_subtitle_text_size"
+            android:textAllCaps="false" />
 
         <RelativeLayout
             android:layout_width="match_parent"

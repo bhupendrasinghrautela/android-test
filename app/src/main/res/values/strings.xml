@@ -19,14 +19,14 @@
     <string name="get_call_back">get call back</string>
     <string name="indian_code">+91</string>
     <string name="instantly">instantly</string>
-    <string name="jarvis_apply_button_string">OK</string>
-    <string name="jarvis_apply_filter_string">Would you like to apply filter?</string>
-    <string name="bhk_string">BHK</string>
+    <string name="jarvis_apply_button_string">ok</string>
+    <string name="jarvis_apply_filter_string">would you like to apply filter?</string>
+    <string name="bhk_string">bhk</string>
     <string name="et_type_hint">property type</string>
     <string name="et_price_hint">\u20B9 price</string>
     <string name="et_locality_hint">locality</string>
     <string name="btn_apply_string">apply</string>
-    <string name="give_you_call_back_string">We\'ll give you a call back</string>
+    <string name="give_you_call_back_string">we\'ll give you a call back</string>
 
     <string name="call_now">call now</string>
     <string name="get_callback">get callBack</string>

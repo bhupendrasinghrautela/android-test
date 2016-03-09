@@ -31,6 +31,8 @@ public class OutTextCard extends BaseView<Message> {
 
     @Override
     public void bindView(Context context, Message item) {
-        mTextMessage.setText(item.message);
+        if(item.message != null) {
+            mTextMessage.setText(item.message.toLowerCase());
+        }
     }
 }

@@ -25,7 +25,8 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:textColor="@color/white"
-            android:textSize="@dimen/card_brief_text_line1_text_size" />
+            android:textSize="@dimen/card_brief_text_line1_text_size"
+            android:textAllCaps="false" />
 
         <TextView
             android:id="@+id/text_line2"
@@ -33,7 +34,8 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:textColor="@color/white"
-            android:textSize="@dimen/card_brief_text_line2_text_size" />
+            android:textSize="@dimen/card_brief_text_line2_text_size"
+            android:textAllCaps="false" />
 
         <TextView
             android:id="@+id/text_line3"
@@ -41,7 +43,8 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:textColor="@color/white"
-            android:textSize="@dimen/card_brief_text_line3_text_size" />
+            android:textSize="@dimen/card_brief_text_line3_text_size"
+            android:textAllCaps="false" />
     </LinearLayout>
 
 

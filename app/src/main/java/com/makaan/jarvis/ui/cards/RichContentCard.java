@@ -64,7 +64,9 @@ public class RichContentCard extends BaseCtaView<ExposeMessage> {
 
             final Content content = contents.get(0);
 
-            mDetails.setText(content.postTitle);
+            if(content.postTitle != null) {
+                mDetails.setText(content.postTitle.toLowerCase());
+            }
             mImage.setImageUrl(content.primaryImageUrl, MakaanNetworkClient.getInstance().getImageLoader());
 
             setOnClickListener(new OnClickListener() {

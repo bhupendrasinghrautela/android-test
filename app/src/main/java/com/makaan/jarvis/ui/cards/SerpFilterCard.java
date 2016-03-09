@@ -134,7 +134,7 @@ public class SerpFilterCard extends BaseCtaView<ExposeMessage>{
 
         SerpFilterMessageMap serpFilterMessageMap1 = serpFilterMessageMap.get(item.properties.suggest_filter);
         if(null!=serpFilterMessageMap1){
-            mAlertTitle.setText(serpFilterMessageMap1.message);
+            mAlertTitle.setText(serpFilterMessageMap1.message.toLowerCase());
             return serpFilterMessageMap1.internalName;
         }else {
             return "";

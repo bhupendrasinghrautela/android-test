@@ -13,7 +13,8 @@
         android:gravity="center_horizontal"
         android:layout_margin="20dp"
         android:textColor="@color/jarvis_card_subtitle_color"
-        android:textSize="@dimen/jarvis_chat_card_subtitle_text_size" />
+        android:textSize="@dimen/jarvis_chat_card_subtitle_text_size"
+        android:textAllCaps="false" />
 
 
     <LinearLayout
@@ -35,7 +36,8 @@
             android:background="@drawable/round_red"
             android:text="cancel"
             android:textColor="@color/app_red"
-            android:textSize="@dimen/jarvis_chat_card_button_text_size" />
+            android:textSize="@dimen/jarvis_chat_card_button_text_size"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/btn_yes"
@@ -46,7 +48,8 @@
             android:background="@drawable/filled_red"
             android:text="ok"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/jarvis_chat_card_button_text_size" />
+            android:textSize="@dimen/jarvis_chat_card_button_text_size"
+            android:textAllCaps="false" />
     </LinearLayout>
 
 </com.makaan.jarvis.ui.cards.SimpleCtaCard>

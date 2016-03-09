@@ -308,7 +308,7 @@
     <dimen name="serp_listing_card_property_image_height">132dp</dimen>
 
     <dimen name="serp_listing_card_property_price_rupee_image_left_margin">7dp</dimen>
-    <dimen name="serp_listing_card_property_price_rupee_image_top_margin">28dp</dimen>
+    <dimen name="serp_listing_card_property_price_rupee_image_top_margin">26dp</dimen>
     <dimen name="serp_listing_card_property_price_rupee_image_width">16dp</dimen>
     <dimen name="serp_listing_card_property_price_rupee_image_height">16dp</dimen>
 

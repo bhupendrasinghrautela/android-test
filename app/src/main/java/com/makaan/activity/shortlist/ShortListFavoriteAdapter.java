@@ -65,7 +65,13 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
         }
         if(!TextUtils.isEmpty(wishList.get(position).projectName)){
             shortListFavoriteViewHolder.mTextViewArea.setVisibility(View.VISIBLE);
-            shortListFavoriteViewHolder.mTextViewArea.setText(wishList.get(position).builderName + " " + wishList.get(position).projectName);
+            if(wishList.get(position).projectName != null) {
+                if(wishList.get(position).builderName != null) {
+                    shortListFavoriteViewHolder.mTextViewArea.setText(String.format("%s %s", wishList.get(position).builderName, wishList.get(position).projectName).toLowerCase());
+                } else {
+                    shortListFavoriteViewHolder.mTextViewArea.setText(wishList.get(position).projectName.toLowerCase());
+                }
+            }
         }else{
             shortListFavoriteViewHolder.mTextViewArea.setVisibility(View.GONE);
         }
@@ -80,8 +86,8 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
                     MakaanNetworkClient.getInstance().getImageLoader());
         }
 
-        if(wishList.get(position).project != null) {
-            shortListFavoriteViewHolder.mTextViewLocality.setText(wishList.get(position).project.address);
+        if(wishList.get(position).project != null && wishList.get(position).project.address != null) {
+            shortListFavoriteViewHolder.mTextViewLocality.setText(wishList.get(position).project.address.toLowerCase());
         }
         shortListFavoriteViewHolder.mTextViewGetCallBack.setOnClickListener(new View.OnClickListener() {
             @Override
