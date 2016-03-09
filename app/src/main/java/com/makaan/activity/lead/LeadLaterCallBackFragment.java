@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
@@ -74,6 +75,8 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
     TextView mSellerNameProfileText;
     @Bind(R.id.iv_seller_image_lead_later_Call_back )
     de.hdodenhof.circleimageview.CircleImageView mSellerImage;
+    @Bind(R.id.btn_call_later)
+    Button mCallLaterButton;
 
     private Integer mCountryId;
     private ArrayAdapter<String> mCountryAdapter;
@@ -259,8 +262,11 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (jsonObject != null)
+            if (jsonObject != null) {
+                mCallLaterButton.setText(getResources().getString(R.string.submitting_info));
+                mCallLaterButton.setClickable(false);
                 ((PyrService) (MakaanServiceFactory.getInstance().getService(PyrService.class))).makePyrRequest(jsonObject);
+            }
         }
     }
 
@@ -477,6 +483,16 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
             mSellerNameProfileText.setVisibility(View.VISIBLE);
             mSellerNameProfileText.setText(mLeadFormPresenter.getName());
         }
+    }
+
+    public void successfulResponse(){
+        mCallLaterButton.setText(getResources().getString(R.string.get_call_later));
+        mCallLaterButton.setClickable(true);
+    }
+
+    public void errorInResponse(){
+        mCallLaterButton.setText(getResources().getString(R.string.get_call_later));
+        mCallLaterButton.setClickable(true);
     }
 
 }

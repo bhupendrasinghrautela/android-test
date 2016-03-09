@@ -215,8 +215,32 @@ public class LeadFormPresenter {
         bundle.putBoolean(MAKAAN_ASSIST_VALUE, makaanAssist);
         bundle.putBoolean(NO_SELLERS_FRAGMENT, throughNoSellers);
         mThankYouFragment.setArguments(bundle);
-        mLeadFormReplaceFragment.popFromBackstack(popcount+1);
+        mLeadFormReplaceFragment.popFromBackstack(popcount + 1);
         mLeadFormReplaceFragment.replaceFragment(mThankYouFragment, false);
+    }
+
+    public void getCallBackSuccess(){
+        if(mLeadLaterCallBackFragment!=null){
+            mLeadLaterCallBackFragment.successfulResponse();
+        }
+    }
+
+    public void getCallBackFailure(){
+        if(mLeadLaterCallBackFragment!=null){
+            mLeadLaterCallBackFragment.errorInResponse();
+        }
+    }
+
+    public void instantCallSuccess(){
+        if(mLeadInstantCallBackFragment!=null){
+            mLeadInstantCallBackFragment.successfulInstantResponse();
+        }
+    }
+
+    public void instantCallFailure(){
+        if(mLeadInstantCallBackFragment!=null){
+            mLeadInstantCallBackFragment.errorInInstantResponse();
+        }
     }
 
 }

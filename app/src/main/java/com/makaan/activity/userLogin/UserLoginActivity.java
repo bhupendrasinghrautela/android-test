@@ -13,7 +13,9 @@ import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.fragment.userLogin.LoginFragment;
+import com.makaan.fragment.userLogin.LoginSocialFragment;
 import com.makaan.fragment.userLogin.ReplaceFragment;
+import com.makaan.fragment.userLogin.SignUpFragment;
 import com.makaan.response.ResponseError;
 import com.makaan.response.login.OnUserLoginListener;
 import com.makaan.response.login.OnUserRegistrationListener;
@@ -88,6 +90,25 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
 
     @Override
     public void onBackPressed() {
+        SignUpFragment myFragment = (SignUpFragment)getSupportFragmentManager().findFragmentByTag(SignUpFragment.class.getName());
+        LoginSocialFragment myFragmnt = (LoginSocialFragment)getSupportFragmentManager().findFragmentByTag(LoginSocialFragment.class.getName());
+
+        if(myFragment!=null && myFragment.isVisible()){
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerHome);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.closeSignUp);
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.signUpClose);
+            myFragment=null;
+        }
+
+        if(myFragmnt!=null && myFragmnt.isVisible()){
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerHome);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.closeSocial);
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.signUpSocial);
+            myFragmnt=null;
+        }
+
         if (getSupportFragmentManager().getBackStackEntryCount() > 1 ){
             getSupportFragmentManager().popBackStack();
         } else {
@@ -115,7 +136,7 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
     @Override
     public void onUserRegistrationError(ResponseError error) {
         Properties properties= MakaanEventPayload.beginBatch();
-        properties.put(MakaanEventPayload.CATEGORY , MakaanTrackerConstants.Category.userLogin);
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.userLogin);
         properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.registrationFailed);
         MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.login);
         if(mProgressDialog !=null)

@@ -58,6 +58,7 @@ import com.makaan.service.ProjectService;
 import com.makaan.ui.CompressedTextView;
 import com.makaan.ui.FixedGridView;
 import com.makaan.ui.locality.ProjectConfigView;
+import com.makaan.ui.project.ProjectConfigItemView;
 import com.makaan.ui.project.ProjectSpecificationView;
 import com.makaan.ui.property.AboutBuilderExpandedLayout;
 import com.makaan.ui.property.AmenitiesViewScroll;
@@ -279,16 +280,19 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     private void startPyrActivity(ProjectConfigItemClickListener configItemClickListener) {
         Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
+        pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id,project.locality.suburb.city.id);
         pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, project.locality.suburb.city.label);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_ID, project.locality.localityId);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_NAME, project.locality.label);
-
+        pyrIntent.putExtra(PyrPageActivity.BEDROOM_AND_BUDGET, configItemClickListener.projectConfigItem);
+        pyrIntent.putExtra(PyrPageActivity.BUY_SELECTED, !configItemClickListener.isRent);
         getActivity().startActivity(pyrIntent);
     }
 
     @Subscribe
     public  void openPyr(OpenPyrClicked openPyrClicked){
         Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
+        pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id,project.locality.suburb.city.id);
         pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, project.locality.suburb.city.label);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_ID, project.locality.localityId);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_NAME, project.locality.label);
@@ -585,7 +589,7 @@ public class ProjectFragment extends MakaanBaseFragment{
 
         Properties properties = MakaanEventPayload.beginBatch();
         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
-        properties.put(MakaanEventPayload.LABEL, onSimilarProjectClickedEvent.id+"_"+onSimilarProjectClickedEvent.clickedPosition);
+        properties.put(MakaanEventPayload.LABEL, onSimilarProjectClickedEvent.id + "_" + onSimilarProjectClickedEvent.clickedPosition);
         MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectSimilarProjects);
 
         Intent i = new Intent(getActivity(),ProjectActivity.class);
@@ -675,4 +679,5 @@ public class ProjectFragment extends MakaanBaseFragment{
         }
         fragmentTransaction.commitAllowingStateLoss();
     }
+
 }

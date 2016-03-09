@@ -66,7 +66,7 @@ public class MakaanTrackerConstants {
         clickCityPriceTrends("CLICK_City_Price Trends"),clickCity("CLICK_City"),login("Login"),clickProjectImages("CLICK_Project_Images"),clickPropertyImages("CLICK_Property_Images"),
         clickPropertyViewOtherSellers("CLICK_Property_View other sellers"),clickCityOverView("CLICK_City_Overview"),clickProjectConstructionImages("CLICK_Project_Construction Images"),
         clickSerpPropertyShortList("CLICK_Serp_Property Shortlist"),clickLocalityOverView("CLICK_Locality_Overview"),selectPropertiesLocality("SELECT_Properties in Locality"),
-        clickSerpPropertySeller("CLICK_Serp_Property Seller");
+        clickSerpPropertySeller("CLICK_Serp_Property Seller"),clickSerpPropertyView("CLICK_Serp_Property View"),signUpClose("SIGNUP_Close"),signUpSocial("SIGNUP_Social");
 
         private String value;
 
@@ -94,7 +94,8 @@ public class MakaanTrackerConstants {
         right("Right"),left("Left"),checked("Checked"),unChecked("UnChecked"),propertiesForSale("Properties for sale in_"),buy("buy"),rent("rent"),
         facebookSuccess("FACEBOOK_Success"),facebookFailed("FACEBOOK_Failed"), googleSuccess("GOOGLE_Success"),googleFail("GOOGLE_Fail"),
         loginWithEmailSuccess("LOGIN_WITH_email_success"),loginWithEmailFail("LOGIN_WITH_email_failed"),callNow("CALL_now"),
-        registrationSuccess("REGISTRATION_Success"),registrationFailed("REGISTRATION_Failed"),getCallBackFromSeller("GET_CALL_BACK_from_seller");
+        registrationSuccess("REGISTRATION_Success"),registrationFailed("REGISTRATION_Failed"),getCallBackFromSeller("GET_CALL_BACK_from_seller"),
+        closeSignUp("Close_SignUp"),dontHaveSocial("I don't have social"),facebook("Facebook"),google("Google"),backSocial("Back_social"),closeSocial("Close_social");
 
         private String value;
 

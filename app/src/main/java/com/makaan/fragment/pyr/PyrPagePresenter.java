@@ -9,6 +9,7 @@ import com.makaan.R;
 import com.makaan.activity.pyr.PyrOtpVerification;
 
 import com.makaan.cache.MasterDataCache;
+import com.makaan.pojo.ProjectConfigItem;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.response.agents.TopAgent;
@@ -58,6 +59,9 @@ public class PyrPagePresenter {
     private String userName=null, userEmail=null, phoneNumber=null, countryName="India";
     private int countryId=1;
     private String mCityContext;
+    public double alreadySelectedMinBudget=0l,alreadySelectedMaxBudget=0l;
+     private boolean pyrFromProjectBuySelected;
+    private boolean fromProject;
     private Integer mCityId=null;
     ArrayList<TopAgent> mTopAgentsDatas;
 
@@ -78,6 +82,22 @@ public class PyrPagePresenter {
             pyrPagePresenter = new PyrPagePresenter();
         }
         return pyrPagePresenter;
+    }
+
+    public boolean isFromProject() {
+        return fromProject;
+    }
+
+    public boolean isPyrFromProjectBuySelected() {
+        return pyrFromProjectBuySelected;
+    }
+
+    public double getAlreadySelectedMinBudget() {
+        return alreadySelectedMinBudget;
+    }
+
+    public double getAlreadySelectedMaxBudget() {
+        return alreadySelectedMaxBudget;
     }
 
     public void setReplaceFragment(PyrReplaceFragment replaceFragment) {
@@ -559,7 +579,8 @@ public class PyrPagePresenter {
         }
     }
 
-    public void prefillLocality(String localityName, long localityId, String cityName){
+    public void prefillLocality(String localityName, long localityId, String cityName,
+                                ProjectConfigItem projectConfigItem, boolean isBuySelected){
         if(localityId>0) {
             SearchResponseItem searchResponseItem = new SearchResponseItem();
             searchResponseItem.entityId = String.valueOf(localityId);
@@ -568,10 +589,23 @@ public class PyrPagePresenter {
             locaityIds.add(searchResponseItem);
         }
 
+        if(projectConfigItem!=null){
+            fromProject=true;
+            if(projectConfigItem.minPrice!=0) {
+                alreadySelectedMinBudget = projectConfigItem.minPrice;
+            }
+            if(projectConfigItem.maxPrice!=0) {
+                alreadySelectedMaxBudget = projectConfigItem.maxPrice;
+            }
+            pyrFromProjectBuySelected=isBuySelected;
+        }
+
         if(TextUtils.isEmpty(mCityContext)) {
             mCityContext = cityName;
         }
     }
+
+
 
     public void clear(){
         list.clear();
@@ -579,6 +613,10 @@ public class PyrPagePresenter {
         mSellerIdMap.clear();
         mCityId=null;
         mCityContext = "";
+        alreadySelectedMinBudget=0;
+        alreadySelectedMaxBudget=0;
+        fromProject=false;
+        pyrFromProjectBuySelected=false;
     }
 
     public SerpRequest getserpRequestObject(){

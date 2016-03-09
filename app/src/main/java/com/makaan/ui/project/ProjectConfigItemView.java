@@ -154,7 +154,7 @@ public class ProjectConfigItemView extends LinearLayout implements View.OnClickL
                 AppBus.getInstance().post(new ProjectConfigItemClickListener(items.get((int) v.getTag()),ConfigItemType.PROPERTIES,isRent));
                 break;
             case R.id.open_pyr_project:
-                AppBus.getInstance().post(new ProjectConfigItemClickListener(null,ConfigItemType.PYR,isRent));
+                AppBus.getInstance().post(new ProjectConfigItemClickListener(items.get(currentExpandedItemPos),ConfigItemType.PYR,isRent));
                 break;
             default:
                 expandOrShrinkLayout(v);

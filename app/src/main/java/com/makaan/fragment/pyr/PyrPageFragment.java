@@ -89,6 +89,7 @@ public class PyrPageFragment extends Fragment {
     @Bind(R.id.pyr_page_email)EditText mUserEmail;
 
     @Bind(R.id.leadform_mobileno_edittext)EditText mUserMobile;
+    @Bind(R.id.property_value)TextView mPropertyString;
 
     private Integer mCountryId;
     private ArrayAdapter<String> mCountryAdapter;
@@ -138,8 +139,12 @@ public class PyrPageFragment extends Fragment {
                 mGroupsBuy = getClonedFilterGroups(grpsBuy);
                 mGroupsRent = getClonedFilterGroups(grpsRent);
             }
-
-            pyrPagePresenter.setBuySelected(SerpObjects.isBuyContext(getActivity()));//pre-fill buy context
+            if(pyrPagePresenter.isFromProject()){
+                prefillBudgetValues(pyrPagePresenter.isPyrFromProjectBuySelected());
+                pyrPagePresenter.setBuySelected(pyrPagePresenter.isPyrFromProjectBuySelected());
+            }else {
+                pyrPagePresenter.setBuySelected(SerpObjects.isBuyContext(getActivity()));
+            }//pre-fill buy context
             setLocaityInfo();//Pre-fill localities
 
 /*            for(FilterGroup group : mGroupsBuy) {
@@ -225,7 +230,7 @@ public class PyrPageFragment extends Fragment {
 
         if(makeRequest && pyrRequest.getSalesType().equals("buy")) {
             AgentService agentService = ((AgentService) (MakaanServiceFactory.getInstance().getService(AgentService.class)));
-            agentService.getTopAgentsForLocality((long)pyrRequest.getCityId(), localities
+            agentService.getTopAgentsForLocality((long) pyrRequest.getCityId(), localities
                     , bedrooms, propertyTypes, 20, false, new TopBuyAgentsPyrCallback());
         }
         else if(makeRequest && pyrRequest.getSalesType().equals("rent")){
@@ -313,18 +318,31 @@ public class PyrPageFragment extends Fragment {
 
     public void setPropertyCount(){
         int count = 0;
+        StringBuilder stringBuilder=new StringBuilder();
+        String space="\n";
         ArrayList<FilterGroup> grp = mIsBuySelected ? mGroupsBuy : mGroupsRent;
         for(FilterGroup group : grp) {
             String name = group.internalName;
             if("i_property_type".equals(name)) {
                 for(TermFilter filter : group.termFilterValues) {
                     if(filter.selected) {
+                        if(count<2) {
+                            stringBuilder.append(filter.displayName.contains("/flat") ?
+                                    filter.displayName.replace("/flat", ""):filter.displayName);
+                            stringBuilder.append(space);
+                        }
+                        space=" ";
                         count++;
                     }
                 }
             }
         }
+
+        if(count>2){
+            stringBuilder.append("+ "+(count-2));
+        }
         if(count>0){
+            mPropertyString.setText(stringBuilder.toString());
             mPropertyTypeCount.setVisibility(View.VISIBLE);
             mPropertyTypeCount.setText(String.valueOf(count));
         }
@@ -421,5 +439,20 @@ public class PyrPageFragment extends Fragment {
             }
         }
         setPropertyCount();
+    }
+
+    public void prefillBudgetValues(boolean pyrFromProjectBuySelected){
+        ArrayList<FilterGroup> grps = pyrFromProjectBuySelected ? mGroupsBuy : mGroupsRent;
+        mIsBuySelected = pyrFromProjectBuySelected;
+        for(FilterGroup group : grps) {
+            String name = group.internalName;
+            if("i_budget".equals(name)) {
+                group.rangeFilterValues.get(0).selectedMinValue = pyrPagePresenter.alreadySelectedMinBudget;
+                if (pyrPagePresenter.alreadySelectedMaxBudget != 0) {
+                    group.rangeFilterValues.get(0).selectedMaxValue = pyrPagePresenter.alreadySelectedMaxBudget;
+                }
+              mBudgetCardView.setValues(group.rangeFilterValues);
+            }
+        }
     }
 }

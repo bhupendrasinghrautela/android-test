@@ -127,6 +127,9 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 			multiSelectionDialog.setContentView(dialogCustomView);
 			multiSelectionDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.YELLOW));
 			multiSelectionDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+			String city = mPyrPresenter.getCityContext();
+			mMultiChoiceSearchTextView.setHint(getResources().getString(R.string.search_locality)+" "+city.toLowerCase());
+
 			return multiSelectionDialog;
 		} catch (Exception e) {
 			return null;
