@@ -120,29 +120,29 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, final boolean isChecked) {
-        if(mContext instanceof PropertyActivity && mWishListDto.listingId != null) {
-            Properties properties = MakaanEventPayload.beginBatch();
-            if(isChecked) {
-                properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_Shortlist");
-            }
-            else{
-                properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_UnShortlist");
-            }
-            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
-            MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyOverview);
-        }
-        else if(mContext instanceof SerpActivity && mWishListDto.serpItemPosition != null && mWishListDto.listingId != null){
-            Properties properties = MakaanEventPayload.beginBatch();
-            if(isChecked) {
-                properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_"+(mWishListDto.serpItemPosition+1));
-            }
-            else{
-                properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_"+(mWishListDto.serpItemPosition+1));
-            }
-            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
-            MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickSerpPropertyShortList);
-        }
+
         if(null!=MasterDataCache.getInstance().getUserData()) {
+            if(mContext instanceof PropertyActivity && mWishListDto.listingId != null) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                if(isChecked) {
+                    properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_Shortlist");
+                }
+                else{
+                    properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_UnShortlist");
+                }
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyOverview);
+            }
+            else if(mContext instanceof SerpActivity && mWishListDto.serpItemPosition != null && mWishListDto.listingId != null) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                if (isChecked) {
+                    properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_" + (mWishListDto.serpItemPosition + 1));
+                } else {
+                    properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_" + (mWishListDto.serpItemPosition + 1));
+                }
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+                MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickSerpPropertyShortList);
+            }
 
             WishListService wishListService =
                     (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);

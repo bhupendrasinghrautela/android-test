@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.fragment.pyr.NoSellersFragment;
+import com.makaan.pojo.ProjectConfigItem;
 import com.makaan.ui.pyr.FilterableMultichoiceDialogFragment;
 import com.makaan.fragment.pyr.PyrPagePresenter;
 import com.makaan.fragment.pyr.PyrReplaceFragment;
@@ -23,6 +24,8 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
     public static final String KEY_CITY_Id = "cityId";
     public static final String KEY_LOCALITY_ID = "localityId";
     public static final String KEY_LOCALITY_NAME = "localityName";
+    public static final String BEDROOM_AND_BUDGET="bedroomAndBudget";
+    public static final String BUY_SELECTED="buySelected";
 
     private FragmentTransaction mFragmentTransaction;
     private PyrPagePresenter mPagePresenter;
@@ -44,8 +47,10 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
             String localityName = getIntent().getStringExtra(KEY_LOCALITY_NAME);
             String cityName = getIntent().getStringExtra(KEY_CITY_NAME);
             Long cityId = this.getIntent().getExtras().getLong(KEY_CITY_Id);
+            ProjectConfigItem projectConfigItem=this.getIntent().getExtras().getParcelable(BEDROOM_AND_BUDGET);
+            boolean isBuySelected=this.getIntent().getExtras().getBoolean(BUY_SELECTED);
             mPagePresenter.setCityId(cityId.intValue());
-            mPagePresenter.prefillLocality(localityName, localityId, cityName);
+            mPagePresenter.prefillLocality(localityName, localityId, cityName ,projectConfigItem, isBuySelected);
         }
 
         mPagePresenter.showPyrMainPageFragment();

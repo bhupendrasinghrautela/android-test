@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
@@ -71,6 +72,8 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
     TextView mSellerNameProfileText;
     @Bind(R.id.iv_seller_image_instant_call_back)
     CircleImageView mSellerImage;
+    @Bind(R.id.btn_get_instant_call)
+    Button mInstantCallButton;
 
     private Integer mCountryId;
     private ArrayAdapter<String> mCountryAdapter;
@@ -137,6 +140,8 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
             }catch (Exception e){
                 //No impact don't do anything
             }
+            mInstantCallButton.setText(getResources().getString(R.string.connecting));
+            mInstantCallButton.setClickable(false);
             ((LeadInstantCallbackService) MakaanServiceFactory.getInstance().getService(LeadInstantCallbackService.class)).makeInstantCallbackRequest(mNumber.getText().toString().trim(), "911166765339", mCountryId, jsonObject);
         } else {
             Bundle bundle =getArguments();
@@ -180,14 +185,14 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void getConnectNowResponse(InstantCallbackResponse response){
-        if(response.getStatusCode()==null && !response.getStatusCode().equals("2XX")){
-            /*Toast.makeText(getActivity(), getActivity().getString(R.string.generic_error), Toast.LENGTH_SHORT).show();*/
+        /*if(response.getStatusCode()==null && !response.getStatusCode().equals("2XX")){
+            *//*Toast.makeText(getActivity(), getActivity().getString(R.string.generic_error), Toast.LENGTH_SHORT).show();*//*
 
             if(getActivity() != null) {
                 MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
                         getActivity().getString(R.string.generic_error), "ok");
             }
-        }
+        }*/
     }
 
     @OnClick(R.id.tv_get_call_now)
@@ -336,4 +341,15 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
         }
 
     }
+
+    public void successfulInstantResponse(){
+        mInstantCallButton.setClickable(true);
+        mInstantCallButton.setText(getResources().getString(R.string.connect_now));
+    }
+
+    public void errorInInstantResponse(){
+        mInstantCallButton.setClickable(true);
+        mInstantCallButton.setText(getResources().getString(R.string.connect_now));
+    }
+
 }

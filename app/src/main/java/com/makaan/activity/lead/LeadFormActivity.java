@@ -187,11 +187,13 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
         if(null!=pyrPostResponse.getError()){
             /*Toast.makeText(this, VolleyErrorParser.getMessage(pyrPostResponse.getError()),Toast.LENGTH_SHORT).show();*/
             if(!isFinishing()) {
+                mLeadFormPresenter.getCallBackFailure();
                 MakaanMessageDialogFragment.showMessage(getFragmentManager(),
                         VolleyErrorParser.getMessage(pyrPostResponse.getError()), "ok");
             }
         }
-        if(pyrPostResponse.getStatusCode().equals("2XX")) {
+        else if(pyrPostResponse.getStatusCode().equals("2XX")) {
+            mLeadFormPresenter.getCallBackSuccess();
             if(source!=null && source.equalsIgnoreCase(SerpActivity.class.getName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
@@ -225,12 +227,13 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
         if(null!=instantCallbackResponse.getError()){
             /*Toast.makeText(this, VolleyErrorParser.getMessage(instantCallbackResponse.getError()),Toast.LENGTH_SHORT).show();*/
             if(!isFinishing()) {
+                mLeadFormPresenter.instantCallFailure();
                 MakaanMessageDialogFragment.showMessage(getFragmentManager(),
                         VolleyErrorParser.getMessage(instantCallbackResponse.getError()), "ok");
             }
         }
-        if(instantCallbackResponse.getStatusCode().equals("2XX")){
-
+        else if(instantCallbackResponse.getStatusCode().equals("2XX")){
+            mLeadFormPresenter.instantCallSuccess();
             if(source!=null && source.equalsIgnoreCase(SerpActivity.class.getName())){
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);

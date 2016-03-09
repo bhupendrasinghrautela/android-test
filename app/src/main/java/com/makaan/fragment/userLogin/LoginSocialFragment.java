@@ -112,7 +112,10 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
             return;
         }
         loginType=UserLoginPresenter.LOGIN_FB;
-
+        Properties properties= MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerHome);
+        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.facebook);
+        MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.signUpSocial);
         if(AccessToken.getCurrentAccessToken()==null) {
             LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("email"));
         }else {
@@ -129,6 +132,10 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
         if(PermissionManager.isPermissionRequestRequired(getActivity(), Manifest.permission.GET_ACCOUNTS)) {
             PermissionManager.begin().addRequest(PermissionManager.ACCOUNTS_REQUEST).request(getActivity());
         } else {
+            Properties properties= MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerHome);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.google);
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.signUpSocial);
             loginType = UserLoginPresenter.LOGIN_GMAIL;
             try {
                 Intent intent = AccountPicker.newChooseAccountIntent(null, null, new String[]
@@ -143,6 +150,10 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
 
     @OnClick(R.id.makaan_login)
     public void onMakaanLoginClick(){
+        Properties properties= MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerHome);
+        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.dontHaveSocial);
+        MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.signUpSocial);
         mOnLoginWithMakaanSelectedListener.onLoginWithMakaanSelected();
 
     }
@@ -228,6 +239,10 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
     @OnClick(R.id.iv_back)
     public void onBackPressed(){
         getActivity().onBackPressed();
+        Properties properties= MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerHome);
+        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.backSocial);
+        MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.signUpSocial);
     }
 
     @Override

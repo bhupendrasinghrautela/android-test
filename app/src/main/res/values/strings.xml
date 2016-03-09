@@ -52,6 +52,7 @@
     <string name="pyr_four_bhk_text">4</string>
     <string name="pyr_property_string">property</string>
     <string name="pyr_property_value_string">residential property apartment</string>
+    <string name="search_locality">search locality in </string>
 
     <string name="pyr_budget_string">budget</string>
     <string name="cluster_item_group_text">we’ve grouped properties</string>
@@ -68,6 +69,7 @@
     <string name="contacting_makaan_assist">for contacting makaan assists</string>
     <string name="sellers">seller\'s</string>
     <string name="seller">seller</string>
+    <string name="sellr">seller</string>
     <string name="contact_you">will contact you shortly</string>
     <string name="thank_you_continue">done</string>
     <string name="receive_expert">you will shortly receive a call from makaan assist </string>
@@ -234,7 +236,9 @@
     <string name="connect_now">connect now</string>
     <string name="or_later">or later</string>
     <string name="get_call_later">get call later</string>
+    <string name="submitting_info">submitting info</string>
     <string name="or_now">or now</string>
+    <string name="connecting">connecting…</string>
     <string name="instant_call">instant call back request successful</string>
     <string name="seller_not_available">seller number not available</string>
     <string name="please_enter_phone_no">please enter phone no.</string>

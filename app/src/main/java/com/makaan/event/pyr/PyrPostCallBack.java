@@ -28,6 +28,9 @@ public class PyrPostCallBack extends StringRequestCallback {
 
     @Override
     public void onError(ResponseError error) {
+        PyrPostResponse pyrPostResponse=new PyrPostResponse();
+        pyrPostResponse.setError(error);
+        AppBus.getInstance().post(pyrPostResponse);
         //TODO handle error
     }
 }

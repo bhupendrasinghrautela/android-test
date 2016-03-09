@@ -374,6 +374,11 @@ public class DefaultListingView extends AbstractListingView {
             @Override
             public void onClick(View v) {
                 if (mListing != null) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+                    properties.put(MakaanEventPayload.LABEL, mListing.lisitingId + "_" + (mPosition + 1));
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickSerpPropertyView);
+
                     Bundle bundle = new Bundle();
                     bundle.putLong(KeyUtil.LISTING_ID, mListing.id);
                     bundle.putDouble(KeyUtil.LISTING_LAT, mListing.latitude);
@@ -643,6 +648,11 @@ public class DefaultListingView extends AbstractListingView {
         if(!TextUtils.isEmpty(mListing.project.name)
                 && (mListing.project.activeStatus == null || !"dummy".equalsIgnoreCase(mListing.project.activeStatus))) {
             if (mListing.projectId != null && mListing.projectId != 0) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+                properties.put(MakaanEventPayload.LABEL, mListing.lisitingId + "_" + (mPosition + 1)+"_" + mListing.projectId);
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickProject);
+
                 Bundle bundle = new Bundle();
                 bundle.putLong(ProjectActivity.PROJECT_ID, mListing.projectId);
                 mCallback.requestDetailPage(SerpActivity.REQUEST_PROJECT_PAGE, bundle);

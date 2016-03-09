@@ -23,6 +23,9 @@ public class LeadInstantCallback extends StringRequestCallback {
 
     @Override
     public void onError(ResponseError error) {
+        InstantCallbackResponse instantCallResponse=new InstantCallbackResponse();
+        instantCallResponse.setError(error);
+        AppBus.getInstance().post(instantCallResponse);
         //TODO handle error here
     }
 }

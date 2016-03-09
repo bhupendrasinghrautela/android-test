@@ -67,6 +67,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
     private List<NearByLocalities> nearByLocalities;
     private boolean isRentSelected;
     private String viewDetailText;
+    private int topSellersSeen=0;
 
 
     @Override
@@ -249,6 +250,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                     break;
                 case TOPAGENTS:
                     Properties property = MakaanEventPayload.beginBatch();
+                    topSellersSeen=topSellersSeen+1;
                     int posn=position+1;
                     if(switchPrimarySecondary.isChecked()) {
                         property.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
@@ -537,4 +539,9 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+    }
 }
