@@ -2,7 +2,10 @@ package com.makaan.fragment.listing;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.adapter.listing.FiltersViewAdapter;
@@ -128,9 +132,16 @@ public class FiltersDialogFragment extends MakaanBaseDialogFragment {
                 }*/
 
                 if(filterGroup.layoutType != FiltersViewAdapter.SINGLE_CHECKBOX) {
-                    int id = this.getResources().getIdentifier(filterGroup.imageName, "drawable", "com.makaan");
-                    if (id != 0) {
-                        ((ImageView) view.findViewById(R.id.fragment_dialog_filters_item_layout_image_view)).setImageResource(id);
+                    if(filterGroup.imageName != null) {
+                        Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap(filterGroup.imageName);
+                        if (bitmap != null) {
+                            ((ImageView) view.findViewById(R.id.fragment_dialog_filters_item_layout_image_view)).setImageBitmap(bitmap);
+                        } else {
+                            int id = this.getResources().getIdentifier(filterGroup.imageName, "drawable", "com.makaan");
+                            Bitmap b = BitmapFactory.decodeResource(getResources(), id);
+                            ((ImageView) view.findViewById(R.id.fragment_dialog_filters_item_layout_image_view)).setImageBitmap(b);
+                            MakaanBuyerApplication.bitmapCache.putBitmap(filterGroup.imageName, b);
+                        }
                     }
                 } else {
                     view.findViewById(R.id.fragment_dialog_filters_item_layout_left_linear_layout).setVisibility(View.GONE);

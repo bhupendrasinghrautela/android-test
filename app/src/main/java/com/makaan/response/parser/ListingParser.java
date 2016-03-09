@@ -67,8 +67,8 @@ public class ListingParser {
                     listing.lisitingId = listingJson.optInt(ID);
                     listing.projectId = project.optInt(PROJECT_ID);
 
-                    listing.description = listingJson.optString(DESCRIPTION);
-                    listing.description = stripContent(listing.description, 100, true);
+//                    listing.description = listingJson.optString(DESCRIPTION);
+//                    listing.description = stripContent(listing.description, 100, true);
 
                     listing.facing = masterDataCache.getDirection(listingJson.optInt(FACING_ID));
                     listing.ownershipType = masterDataCache.getOwnershipType(listingJson.optInt(OWNERSHIP_TYPE_ID));

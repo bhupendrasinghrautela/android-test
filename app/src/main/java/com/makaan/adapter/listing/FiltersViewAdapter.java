@@ -1,7 +1,10 @@
 package com.makaan.adapter.listing;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
@@ -171,10 +175,18 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
             seekBar.setSelectedMaxValue(((RangeFilter) this.getItem(holder.pos)).selectedMaxValue);
             seekBar.setOnRangeSeekBarChangeListener(this);
         } else if(type == SINGLE_CHECKBOX) {
-            int id = context.getResources().getIdentifier(filterGroup.imageName, "drawable", "com.makaan");
-            if (id != 0) {
-                ((ImageView)holder.view.findViewById(R.id.fragment_dialog_filters_single_checkbox_item_view_image_view)).setImageResource(id);
+            if(filterGroup.imageName != null) {
+                Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap(filterGroup.imageName);
+                if (bitmap != null) {
+                    ((ImageView) holder.view.findViewById(R.id.fragment_dialog_filters_single_checkbox_item_view_image_view)).setImageBitmap(bitmap);
+                } else {
+                    int id = context.getResources().getIdentifier(filterGroup.imageName, "drawable", "com.makaan");
+                    Bitmap b = BitmapFactory.decodeResource(context.getResources(), id);
+                    ((ImageView) holder.view.findViewById(R.id.fragment_dialog_filters_single_checkbox_item_view_image_view)).setImageBitmap(b);
+                    MakaanBuyerApplication.bitmapCache.putBitmap(filterGroup.imageName, b);
+                }
             }
+
             ((CheckBox)holder.view.findViewById(R.id.fragment_dialog_filters_single_checkbox_item_view_checkbox)).setText(this.getItem(position).displayName);
             ((CheckBox)holder.view.findViewById(R.id.fragment_dialog_filters_single_checkbox_item_view_checkbox)).setChecked(this.getItem(position).selected);
         }
