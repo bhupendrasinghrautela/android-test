@@ -79,8 +79,8 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
             // S is the millisecond
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM, yyyy");
             SimpleDateFormat timeFormat = new SimpleDateFormat("h.mm a");
-            shortListEnquiredViewHolder.mSiteVisitDate.setText(simpleDateFormat.format(enquiry.time));
-            shortListEnquiredViewHolder.mSiteVisitTime.setText(timeFormat.format(enquiry.time));
+            shortListEnquiredViewHolder.mSiteVisitDate.setText(simpleDateFormat.format(enquiry.time).toLowerCase());
+            shortListEnquiredViewHolder.mSiteVisitTime.setText(timeFormat.format(enquiry.time).toLowerCase());
         }
         if(enquiry.type == EnquiryType.LISTING){
             if(enquiry.listingDetail!=null){
@@ -95,8 +95,10 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
             if(enquiry.project!=null){
                 populateProjectDetail(enquiry.project,shortListEnquiredViewHolder);
                 if(enquiry.company!=null) {
-                    shortListEnquiredViewHolder.mName.setText(enquiry.company.name);
-                    shortListEnquiredViewHolder.mRating.setRating(enquiry.company.score/2);
+                    if(enquiry.company.name != null) {
+                        shortListEnquiredViewHolder.mName.setText(enquiry.company.name.toLowerCase());
+                    }
+                    shortListEnquiredViewHolder.mRating.setRating(enquiry.company.score / 2);
                     showTextAsImage(shortListEnquiredViewHolder, enquiry.company.name);
                 }
             }
@@ -108,7 +110,9 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
         else if(enquiry.type == EnquiryType.SELLER){
             if(enquiry.company!=null) {
                 shortListEnquiredViewHolder.mAddress.setText("");
-                shortListEnquiredViewHolder.mName.setText(enquiry.company.name);
+                if(enquiry.company.name != null) {
+                    shortListEnquiredViewHolder.mName.setText(enquiry.company.name.toLowerCase());
+                }
                 shortListEnquiredViewHolder.mRating.setRating(enquiry.company.score / 2);
                 showTextAsImage(shortListEnquiredViewHolder, enquiry.company.name);
             }

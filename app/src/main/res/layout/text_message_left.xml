@@ -20,6 +20,7 @@
         android:paddingRight="@dimen/in_text_message_padding_right"
         android:paddingTop="@dimen/in_text_message_padding_top_bottom"
         android:textColor="@color/black"
-        android:textSize="@dimen/in_text_message_text_size" />
+        android:textSize="@dimen/in_text_message_text_size"
+        android:textAllCaps="false" />
 
 </com.makaan.jarvis.ui.cards.InTextCard>

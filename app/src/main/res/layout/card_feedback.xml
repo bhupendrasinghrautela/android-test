@@ -12,9 +12,10 @@
 
 android:padding="20dp"
         android:gravity="center_horizontal"
-        android:text="Feedback"
+        android:text="feedback"
         android:textColor="@android:color/black"
-        android:textSize="22sp" />
+        android:textSize="22sp"
+        android:textAllCaps="false" />
 
     <ImageView
         android:layout_width="100dp"
@@ -30,7 +31,8 @@ android:padding="20dp"
         android:text="Allen Wade"
         android:textColor="@android:color/black"
         android:textSize="20sp"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:textAllCaps="false"/>
 
     <RatingBar
         android:layout_width="wrap_content"
@@ -57,9 +59,10 @@ android:padding="20dp"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:background="@drawable/round_red"
-            android:text="Cancel"
+            android:text="cancel"
             android:textColor="@color/app_red"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/btn_yes"
@@ -71,9 +74,10 @@ android:padding="20dp"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:background="@drawable/filled_red"
-            android:text="Submit"
+            android:text="submit"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textAllCaps="false"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -64,7 +64,7 @@
     <dimen name="listing_brief_view_layout_property_info_text_view_top_margin">8dp</dimen>
     <dimen name="listing_brief_view_layout_property_price_unit_top_margin">18dp</dimen>
 
-    <dimen name="serp_listing_card_property_price_rupee_image_top_margin">28dp</dimen>
+    <dimen name="serp_listing_card_property_price_rupee_image_top_margin">26dp</dimen>
     <dimen name="serp_listing_card_property_price_top_margin">14dp</dimen>
     <dimen name="listing_brief_view_layout_property_price_top_margin">8dp</dimen>
     <dimen name="listing_brief_view_layout_rupee_image_top_margin">22dp</dimen>

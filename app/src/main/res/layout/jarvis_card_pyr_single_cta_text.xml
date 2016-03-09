@@ -14,7 +14,8 @@
         android:textSize="@dimen/give_you_call_back_text_size"
         android:textColor="@android:color/black"
         android:gravity="center_horizontal"
-        android:text="@string/give_you_call_back_string" />
+        android:text="@string/give_you_call_back_string"
+        android:textAllCaps="false" />
 
 
     <Button
@@ -30,6 +31,7 @@
         android:background="@drawable/filled_red"
         android:text="@string/jarvis_apply_button_string"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/btn_ok_text_size" />
+        android:textSize="@dimen/btn_ok_text_size"
+        android:textAllCaps="false" />
 
 </LinearLayout>

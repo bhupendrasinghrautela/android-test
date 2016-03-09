@@ -74,7 +74,9 @@ public class SimpleCtaCard extends BaseCtaView<ExposeMessage> {
         }
 
         final BuyerJourneyMessage buyerJourneyMessage = jarvisBuyerJourneyMessageMap.get(item.properties.message_type);
-        mMessage.setText(buyerJourneyMessage.message);
+        if(buyerJourneyMessage.message != null) {
+            mMessage.setText(buyerJourneyMessage.message.toLowerCase());
+        }
 
         mApplyButton.setOnClickListener(new OnClickListener() {
             @Override

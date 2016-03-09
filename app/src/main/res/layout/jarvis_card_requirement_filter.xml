@@ -82,7 +82,8 @@
         android:background="@drawable/filled_red"
         android:text="@string/btn_apply_string"
         android:textColor="@color/white"
-        android:textSize="@dimen/btn_apply_text_size" />
+        android:textSize="@dimen/btn_apply_text_size"
+        android:textAllCaps="false" />
 
     </LinearLayout>
 

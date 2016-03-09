@@ -64,8 +64,12 @@ public class LocalityCard extends BaseView<Message> {
             textViewTitle.setText("property for rent near");
         }
 
-        textViewSubTitle.setText(item.chatObj.localityName);
-        textViewSubTitle2.setText(item.chatObj.cityName);
+        if(item.chatObj.localityName != null) {
+            textViewSubTitle.setText(item.chatObj.localityName.toLowerCase());
+        }
+        if(item.chatObj.cityName != null) {
+            textViewSubTitle2.setText(item.chatObj.cityName.toLowerCase());
+        }
 
         if(!TextUtils.isEmpty(item.chatObj.image)){
             imageView.setImageUrl(item.chatObj.image + "?WIDTH=220&HEIGHT=120", MakaanNetworkClient.getInstance().getImageLoader());

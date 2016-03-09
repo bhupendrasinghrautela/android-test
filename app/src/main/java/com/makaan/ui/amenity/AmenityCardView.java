@@ -54,7 +54,9 @@ public class AmenityCardView extends BaseCardView<AmenityCluster> {
         finalImageUrl.append("/");
         finalImageUrl.append(item.amenityId);
         finalImageUrl.append(".png");
-        mAmenityTitle.setText(item.name);
+        if(item.name != null) {
+            mAmenityTitle.setText(item.name.toLowerCase());
+        }
         int width = getResources().getDimensionPixelSize(R.dimen.amenity_type_logo_dimen);
         mAmenityLogo.setImageUrl(ImageUtils.getImageRequestUrl(finalImageUrl.toString(), width, width, false),
                 MakaanNetworkClient.getInstance().getImageLoader());

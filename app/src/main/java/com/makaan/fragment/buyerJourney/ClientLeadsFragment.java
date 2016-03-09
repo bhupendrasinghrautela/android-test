@@ -246,8 +246,10 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
 
             public void bindData(ClientLeadsObject clientLeadsObject, int position) {
                 imageView.setVisibility(View.GONE);
-                nameTextView.setText(clientLeadsObject.company.name);
-                companyNameTextView.setText(AppUtils.getDDMMMYYDateStringFromEpoch(String.valueOf(clientLeadsObject.clientLead.createdAt)));
+                if(clientLeadsObject.company.name != null) {
+                    nameTextView.setText(clientLeadsObject.company.name.toLowerCase());
+                }
+                companyNameTextView.setText(AppUtils.getDDMMMYYDateStringFromEpoch(String.valueOf(clientLeadsObject.clientLead.createdAt)).toLowerCase());
                 radioButton.setOnCheckedChangeListener(null);
                 radioButton.setChecked(position == mSelected);
                 radioButton.setOnCheckedChangeListener(this);

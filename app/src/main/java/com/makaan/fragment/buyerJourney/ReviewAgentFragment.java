@@ -82,7 +82,7 @@ public class ReviewAgentFragment extends MakaanBaseFragment {
             // TODO
             return null;
         }
-        mAgentNameTextView.setText(mObj.clientLeadObject.company.name);
+        mAgentNameTextView.setText(mObj.clientLeadObject.company.name.toLowerCase());
         mAgentImageView.setVisibility(View.GONE);
 
         if(mObj.clientLeadObject.company.name != null) {
