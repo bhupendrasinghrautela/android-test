@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -109,7 +110,7 @@ public class SellerListingView extends AbstractCardListingView {
         CompanySeller seller = sellerByIdEvent.seller;
         if(seller.sellers != null && seller.sellers.size() > 0 && seller.sellers.get(0).companyUser != null
                 && seller.sellers.get(0).companyUser.sellerListingData != null) {
-            mSellerNameTextView.setText(seller.sellers.get(0).companyUser.user.fullName);
+            mSellerNameTextView.setText(seller.sellers.get(0).companyUser.user.fullName.toLowerCase());
             if(seller.sellers.get(0).cities != null) {
                 if(seller.sellers.get(0).cities.size() > 1) {
                     mSellerOperatesInTextView.setText(String.format("operates in - %d localities in %d cities",
@@ -126,22 +127,34 @@ public class SellerListingView extends AbstractCardListingView {
 
             if(seller.sellers.get(0).companyUser.sellerListingData.categoryWiseCount != null
                     && seller.sellers.get(0).companyUser.sellerListingData.categoryWiseCount.size() > 0) {
-                String amp = "";
                 int properties = 0;
-                StringBuilder builder = new StringBuilder("");
+                String[] type = new String[3];
+                int currentTypeNum = 0;
                 for(CompanySeller.Seller.CompanyUser.SellerListingData.CategoryWiseCount categoryWiseCount
                         : seller.sellers.get(0).companyUser.sellerListingData.categoryWiseCount) {
                     properties += categoryWiseCount.listingCount;
-                    builder.append(amp);
-                    builder.append(categoryWiseCount.listingCategoryType.toLowerCase());
-                    amp = " & ";
+                    if(currentTypeNum < 3) {
+                        type[currentTypeNum] = categoryWiseCount.listingCategoryType.toLowerCase();
+                        currentTypeNum++;
+                    }
                 }
                 if(properties != 0) {
                     mSellerPropertiesCountTextView.setText(String.format("%d properties", properties));
                 } else {
                     mSellerPropertiesCountTextView.setText("na");
                 }
-                mSellerTypeTextView.setText(builder.toString());
+                if(currentTypeNum == 3) {
+                    mSellerTypeTextView.setVisibility(VISIBLE);
+                    mSellerTypeTextView.setText(String.format("%s, %s & %s", type[0], type[1], type[2]));
+                } else if(currentTypeNum == 2) {
+                    mSellerTypeTextView.setVisibility(VISIBLE);
+                    mSellerTypeTextView.setText(String.format("%s & %s", type[0], type[1]));
+                } else if(currentTypeNum == 1) {
+                    mSellerTypeTextView.setVisibility(VISIBLE);
+                    mSellerTypeTextView.setText(type[0]);
+                } else {
+                    mSellerTypeTextView.setVisibility(INVISIBLE);
+                }
             }
             if(seller.sellers.get(0).companyUser.sellerListingData.projectCount != 0) {
                 mSellerProjectCountTextView.setText(String.format("%d projects", seller.sellers.get(0).companyUser.sellerListingData.projectCount));
@@ -150,7 +163,9 @@ public class SellerListingView extends AbstractCardListingView {
             }
         }
 
-        mSellerCompanyNameTextView.setText(seller.name);
+        if(seller.name != null) {
+            mSellerCompanyNameTextView.setText(seller.name.toLowerCase());
+        }
 
         if(seller.activeSince != null && seller.activeSince != 0) {
             mExperienceLabelView.setVisibility(View.VISIBLE);
@@ -190,13 +205,32 @@ public class SellerListingView extends AbstractCardListingView {
 
                 }
             });
+        } else if(seller.sellers != null && seller.sellers.size() > 0 && seller.sellers.get(0).companyUser != null
+                && seller.sellers.get(0).companyUser.user != null && !TextUtils.isEmpty(seller.sellers.get(0).companyUser.user.profilePictureURL)) {
+            int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_item_seller_image_view_width);
+            int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_item_seller_image_view_height);
+            // get seller image
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(
+                    seller.sellers.get(0).companyUser.user.profilePictureURL, width, height, false), new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
+                    if (b && imageContainer.getBitmap() == null) {
+                        return;
+                    }
+                    final Bitmap image = imageContainer.getBitmap();
+                    mSellerImageView.setImageBitmap(image);
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                }
+            });
         }
 
         if(seller.coverPicture != null) {
             int width = (int) (getResources().getConfiguration().screenWidthDp * Resources.getSystem().getDisplayMetrics().density);
             int height = (int) Math.ceil(getResources().getDimension(R.dimen.serp_listing_item_seller_max_height));
             // get seller cover image
-            // TODO discuss request size
             MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(
                     seller.coverPicture, width, height, false).concat("&blur=true"), new CustomImageLoaderListener() {
                 @Override
@@ -219,7 +253,7 @@ public class SellerListingView extends AbstractCardListingView {
             Bitmap bitmap = null;
 
             final Drawable image = mContext.getResources().getDrawable(R.drawable.temp_bulding);
-            if(image.getIntrinsicWidth() <= 0 || image.getIntrinsicHeight() <= 0) {
+            if(image != null && (image.getIntrinsicWidth() <= 0 || image.getIntrinsicHeight() <= 0)) {
                 bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_4444);
             } else {
                 bitmap = Bitmap.createBitmap(image.getIntrinsicWidth(), image.getIntrinsicHeight(), Bitmap.Config.ARGB_4444);

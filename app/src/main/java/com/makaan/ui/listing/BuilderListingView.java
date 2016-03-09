@@ -108,7 +108,7 @@ public class BuilderListingView extends AbstractCardListingView {
             return;
         }
         if(!TextUtils.isEmpty(builder.name)) {
-            mBuilderNameTextView.setText(builder.name);
+            mBuilderNameTextView.setText(builder.name.toLowerCase());
         }
         try {
             mBuilderExperienceTextView.setText(StringUtil.getAgeFromTimeStamp(Long.valueOf(builder.establishedDate), Calendar.YEAR));

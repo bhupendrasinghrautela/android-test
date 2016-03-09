@@ -35,6 +35,7 @@ public class CompanySeller {
 
             public class User {
                 public String fullName;
+                public String profilePictureURL;
             }
 
             public class SellerListingData {

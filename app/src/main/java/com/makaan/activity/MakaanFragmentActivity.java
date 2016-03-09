@@ -111,7 +111,7 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
         // TODO
         // check if we this can be called from any background thread or after background to ui thread communication
         // then we need to make use of commitAllowingStateLoss()
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     private void cancelLoadingDialog() {
