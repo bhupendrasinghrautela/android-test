@@ -59,6 +59,7 @@ public class GcmRegister{
             if (sRegid.isEmpty()) {
                 registerInBackground(context);
             }else{
+                JarvisConstants.DELIVERY_ID = sRegid;
             	sendRegistrationIdToBackend(sRegid);
             }
         }
@@ -118,6 +119,8 @@ public class GcmRegister{
 
                     sRegid = instanceID.getToken(SENDER_ID,
                             GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+
+                    JarvisConstants.DELIVERY_ID = sRegid;
 
                     /*if (sGcm == null) {
                         sGcm = GoogleCloudMessaging.getInstance(context);

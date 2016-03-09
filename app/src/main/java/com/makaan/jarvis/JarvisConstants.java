@@ -9,11 +9,13 @@ public class JarvisConstants {
     public static final String MESSAGE = "message";
     public static final String APPLIED_FILTER = "appliedFilter";
     public static final String FILTERED = "filtered";
+    public static final String PARTICIPANT = "participant";
+    public static final String TIMESTAMP = "timestamp";
     public static final String CHAT_OBJECT = "chatObj";
 
     public static final String CHAT_SERVER_URL = "https://beta-mpchat.makaan-ws.com";
-    //public static final String CHAT_SERVER_URL = "http://10.10.1.72:8100";
-    public static String DELIVERY_ID = "12965289-3f28-474a-a37b-fb270fd90711";
+    //public static final String CHAT_SERVER_URL = "http://10.10.2.254:8100";
+    public static String DELIVERY_ID = "";
     public static final int CHAT_CARD_DEFAULT_LEFT_MARGIN=20;
     public static final int CHAT_CARD_DEFAULT_TOP_BOTTOM_MARGIN=20;
 

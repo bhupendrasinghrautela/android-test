@@ -10,6 +10,7 @@ import com.squareup.otto.Bus;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +34,7 @@ public class ChatMessages extends ArrayList<Message> {
             return super.add(message);
         }
 
-        if(TextUtils.isEmpty(message.filtered)) {
+        if(TextUtils.isEmpty(message.filtered) || message.isAgentAvailableMessage) {
             message.messageType = MessageType.inText;
         }else{
             Integer type = jarvisMessageTypeMap.get(message.filtered);
@@ -51,4 +52,5 @@ public class ChatMessages extends ArrayList<Message> {
 
         return result;
     }
+
 }

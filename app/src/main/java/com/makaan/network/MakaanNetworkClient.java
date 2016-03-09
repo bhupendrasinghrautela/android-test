@@ -443,24 +443,36 @@ public class MakaanNetworkClient {
         addToRequestQueue(stringRequest, tag);
     }
 
-    public void socialLoginPost(final String url, final StringRequestCallback stringRequestCallback,
+    public void postFormWithParams(final String urlToHit, final Map<String, String> params,
+                                final StringRequestCallback stringRequestCallback,
                                 String tag){
 
-        StringRequest stringRequest = new StringRequest
-                (Request.Method.POST, url, new Response.Listener<String>() {
+        CustomRequest stringRequest = new CustomRequest
+                (Request.Method.POST, urlToHit,params, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        completeRequestInQueue(url);
+                        completeRequestInQueue(urlToHit);
                         stringRequestCallback.onSuccess(response);
 
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        completeRequestInQueue(url);
+                        if(null!=error && null!=error.networkResponse) {
+                            String errorString = new String(error.networkResponse.data);
+                            Log.e("Error : ", errorString);
+                        }
+                        completeRequestInQueue(urlToHit);
                         stringRequestCallback.onError(getResponseError(error));
                     }
-                });
+                }){
+
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded";
+            }
+
+        };
         addToRequestQueue(stringRequest, tag);
     }
 

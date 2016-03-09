@@ -1,4 +1,4 @@
-package com.makaan.timeline;
+package com.makaan.timelinewidget;
 
 import android.content.Context;
 import android.graphics.Point;

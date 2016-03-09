@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 import android.util.SparseArray;
 
 import com.crashlytics.android.Crashlytics;
@@ -17,10 +18,12 @@ import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.PreferenceConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.MakaanCookieStore;
+import com.makaan.jarvis.ChatHistoryService;
 import com.makaan.jarvis.JarvisConstants;
 import com.makaan.jarvis.JarvisServiceCreator;
 import com.makaan.jarvis.analytics.AnalyticsService;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.notification.GcmRegister;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.service.AgentService;
 import com.makaan.service.AmenityService;
@@ -91,6 +94,11 @@ public class MakaanBuyerApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        MakaanNetworkClient.init(this);
+        gson = new GsonBuilder().serializeNulls().disableHtmlEscaping().create();
+        GcmRegister.checkAndSetGcmId(this,null);
+
         Fabric.with(this, new Crashlytics());
         bitmapCache = new LruBitmapCache();
 
@@ -105,9 +113,6 @@ public class MakaanBuyerApplication extends Application {
 
 
 
-        MakaanNetworkClient.init(this);
-        JarvisServiceCreator.create(this);
-        gson = new GsonBuilder().serializeNulls().disableHtmlEscaping().create();
 
         //GcmRegister.checkAndSetGcmId(this, null);
 
@@ -146,6 +151,7 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(AnalyticsService.class, new AnalyticsService());
         MakaanServiceFactory.getInstance().registerService(ClientLeadsService.class, new ClientLeadsService());
         MakaanServiceFactory.getInstance().registerService(ClientEventsService.class, new ClientEventsService());
+        MakaanServiceFactory.getInstance().registerService(ChatHistoryService.class, new ChatHistoryService());
 
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();
@@ -175,14 +181,18 @@ public class MakaanBuyerApplication extends Application {
         CookieManager cookieManager = new CookieManager(cookieStore, CookiePolicy.ACCEPT_ALL);
         CookieHandler.setDefault(cookieManager);
 
-        Analytics analytics = new Analytics.Builder(this, MakaanTrackerConstants.segmentSdkKey).build();
-        Analytics.setSingletonInstance(analytics);
-        Analytics.with(this).identify(JarvisConstants.DELIVERY_ID);
-        Analytics.with(this).flush();
+        if(!TextUtils.isEmpty(JarvisConstants.DELIVERY_ID)) {
+            Analytics analytics = new Analytics.Builder(this, MakaanTrackerConstants.segmentSdkKey).build();
+            Analytics.setSingletonInstance(analytics);
+            Analytics.with(this).identify(JarvisConstants.DELIVERY_ID);
+            Analytics.with(this).flush();
+        }
 
         if(null!=CookiePreferences.getUserInfo(this)) {
             MasterDataCache.getInstance().setUserData(CookiePreferences.getUserInfo(this).getData());
         }
+
+        JarvisServiceCreator.create(this);
 
         // TODO verify after update
 //        setPeriodicUpdateRequest();

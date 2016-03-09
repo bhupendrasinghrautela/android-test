@@ -12,5 +12,8 @@ public class SocketMessage {
     public String filtered;
     public ChatObject chatObj;
 
+    public int participant;
     public long timestamp;
+
+    public boolean isAgentAvailableMessage;
 }
