@@ -1,6 +1,8 @@
 package com.makaan.activity.buyerJourney;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.LeadPhaseConstants;
@@ -307,11 +310,18 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             mViews[i].findViewById(R.id.iv_stage).setVisibility(View.INVISIBLE);
         }
 
-        if(i == LeadPhaseConstants.LEAD_PHASE_POSSESSION || i == LeadPhaseConstants.LEAD_PHASE_BOOKING) {
-            mJoyImageView.setImageResource(R.drawable.journey_makaan);
-        } else if(i == LeadPhaseConstants.LEAD_PHASE_REGISTRATION) {
-            mJoyImageView.setImageResource(R.drawable.journey_makaan);
-            mBookingImageView.setImageResource(R.drawable.journey_makaan);
+        if(i >= LeadPhaseConstants.LEAD_PHASE_BOOKING) {
+            Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap("journey_makaan");
+            if (bitmap == null) {
+                int id = R.drawable.journey_makaan;
+                bitmap = BitmapFactory.decodeResource(getResources(), id);
+                MakaanBuyerApplication.bitmapCache.putBitmap("journey_makaan", bitmap);
+            }
+
+            mJoyImageView.setImageBitmap(bitmap);
+            if(i == LeadPhaseConstants.LEAD_PHASE_REGISTRATION) {
+                mBookingImageView.setImageBitmap(bitmap);
+            }
         }
 
         for(int j = 0; j < i && j < mViews.length; j++) {

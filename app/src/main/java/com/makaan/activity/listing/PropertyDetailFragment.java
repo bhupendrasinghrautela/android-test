@@ -49,6 +49,7 @@ import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Project;
 import com.makaan.response.property.Property;
+import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.user.Company;
 import com.makaan.response.user.User;
 import com.makaan.service.AmenityService;
@@ -75,6 +76,7 @@ import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -431,8 +433,20 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
         if(similarListingGetEvent == null || similarListingGetEvent.error!=null){
             return;
         }
-        if(similarListingGetEvent.data!=null && similarListingGetEvent.data.items!=null){
-            addSimilarProperties(similarListingGetEvent.data.items);
+
+        if(similarListingGetEvent.data!=null && similarListingGetEvent.data.items!=null
+                && similarListingGetEvent.data.items.size() > 0){
+            if(listingId != null && listingId > 0) {
+                for (Iterator<ListingItems> iterator = similarListingGetEvent.data.items.iterator(); iterator.hasNext(); ) {
+                    ListingItems item = iterator.next();
+                    if(item != null && item.listing != null && item.listing.id != null && item.listing.id.equals(listingId)) {
+                        iterator.remove();
+                    }
+                }
+            }
+            if(similarListingGetEvent.data.items.size() > 0) {
+                addSimilarProperties(similarListingGetEvent.data.items);
+            }
         }
     }
 

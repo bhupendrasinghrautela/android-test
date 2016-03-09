@@ -13,6 +13,7 @@ import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.cache.LruBitmapCache;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.PreferenceConstants;
 import com.makaan.cookie.CookiePreferences;
@@ -73,6 +74,7 @@ public class MakaanBuyerApplication extends Application {
     public static RandomString randomString = new RandomString(6);
 //    public static Selector mSerpSelector = new Selector();
     public static SparseArray<SerpObjects> serpObjects = new SparseArray<>();
+    public static LruBitmapCache bitmapCache;
 
     public static Gson gson;
 /*    private static RefWatcher refWatcher;
@@ -82,10 +84,15 @@ public class MakaanBuyerApplication extends Application {
         return refWatcher;
     }*/
 
+    public static LruBitmapCache getBitmapCache() {
+        return bitmapCache;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
+        bitmapCache = new LruBitmapCache();
 
         // leak canary to detect memory leaks
         // comment below line to disable leak canary
@@ -204,5 +211,20 @@ public class MakaanBuyerApplication extends Application {
         }
     }
 
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        bitmapCache.evictAll();
+    }
 
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        switch (level) {
+            case TRIM_MEMORY_COMPLETE:
+            case TRIM_MEMORY_RUNNING_CRITICAL:
+                bitmapCache.evictAll();
+                break;
+        }
+    }
 }

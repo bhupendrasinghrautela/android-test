@@ -2,6 +2,8 @@ package com.makaan.ui.listing;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
@@ -9,6 +11,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,6 +22,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader;
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
@@ -494,15 +498,14 @@ public class DefaultListingView extends AbstractListingView {
         switch (infoMap.fieldName) {
             case "propertyStatus":
                 if(!TextUtils.isEmpty(mListing.propertyStatus)) {
-                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText(mListing.propertyStatus.toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
-                    return true;
+                    break;
+                } else {
+                    return false;
                 }
-                break;
             case "propertyAge":
                 if(mListing.isReadyToMove && mListing.age >= 0) {
-                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     if(mListing.age <= 1) {
                         mPropertyInfoTextViews.get(j).setText(String.format("%d - %d yr", mListing.age, mListing.age + 1));
                     } else if(mListing.age <= 2) {
@@ -513,28 +516,28 @@ public class DefaultListingView extends AbstractListingView {
                         mPropertyInfoTextViews.get(j).setText(String.format(">%d yrs", 5));
                     }
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
-                    return true;
+                    break;
+                } else {
+                    return false;
                 }
-                break;
             case "possessionDate":
                 if(!mListing.isReadyToMove && !TextUtils.isEmpty(mListing.possessionDate)) {
-                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText(mListing.possessionDate.toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
-                    return true;
+                    break;
+                } else {
+                    return false;
                 }
-                break;
             case "bathrooms":
                 if(mListing.bathrooms != null && mListing.bathrooms >= 0) {
-                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.bathrooms).toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
-                    return true;
+                    break;
+                } else {
+                    return false;
                 }
-                break;
             case "floor,totalFloors":
                 if(mListing.floor != null && mListing.totalFloors != null && mListing.floor >= 0 && mListing.totalFloors != 0) {
-                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     if(mListing.floor == 1) {
                         mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>st</small></sup> of %d", mListing.floor, mListing.totalFloors).toLowerCase()));
                     } else if(mListing.floor == 2) {
@@ -545,20 +548,20 @@ public class DefaultListingView extends AbstractListingView {
                         mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>th</small></sup> of %d", mListing.floor, mListing.totalFloors).toLowerCase()));
                     }
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
-                    return true;
+                    break;
+                } else {
+                    return false;
                 }
-                break;
             case "balcony":
                 if(mListing.balcony != null && mListing.balcony >= 0) {
-                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.balcony).toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
-                    return true;
+                    break;
+                } else {
+                    return false;
                 }
-                break;
             case "listingCategory":
                 if(!TextUtils.isEmpty(mListing.listingCategory)) {
-                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     if("primary".equalsIgnoreCase(mListing.listingCategory)) {
                         mPropertyInfoTextViews.get(j).setText("new".toLowerCase());
                     } else if("resale".equalsIgnoreCase(mListing.listingCategory)) {
@@ -567,64 +570,77 @@ public class DefaultListingView extends AbstractListingView {
                         mPropertyInfoTextViews.get(j).setText(mListing.listingCategory.toLowerCase());
                     }
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
-                    return true;
+                    break;
+                } else {
+                    return false;
                 }
-                break;
             case "facing":
                 if(!TextUtils.isEmpty(mListing.facing)) {
-                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText(mListing.facing.toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
-                    return true;
+                    break;
+                } else {
+                    return false;
                 }
-                break;
             case "ownershipType":
                 if(!TextUtils.isEmpty(mListing.ownershipType)) {
-                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText(mListing.ownershipType.toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
-                    return true;
+                    break;
+                } else {
+                    return false;
                 }
-                break;
             case "furnished":
                 if(!TextUtils.isEmpty(mListing.furnished)) {
-                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText(mListing.furnished.toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
-                    return true;
+                    break;
+                } else {
+                    return false;
                 }
-                break;
             case "isReadyToMove":
                 if(!mListing.isReadyToMove && !TextUtils.isEmpty(mListing.possessionDate)) {
-                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText(mListing.possessionDate.toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
-                    return true;
+                    break;
                 } else if(mListing.isReadyToMove) {
-                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText("ready to move in");
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
-                    return true;
+                    break;
+                } else {
+                    return false;
                 }
-                break;
             case "noOfOpenSides":
                 if(mListing.noOfOpenSides != null && mListing.noOfOpenSides >= 0) {
-                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.noOfOpenSides).toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
-                    return true;
+                    break;
+                } else {
+                    return false;
                 }
-                break;
             case "securityDeposit":
                 if(mListing.securityDeposit != null && mListing.securityDeposit >= 0) {
-                    mPropertyInfoImageViews.get(j).setImageResource(this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan"));
                     mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.securityDeposit).toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
-                    return true;
+                    break;
+                } else {
+                    return false;
                 }
-                break;
+            default:
+                return false;
         }
-        return false;
+        if(infoMap.imageName != null) {
+            Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap(infoMap.imageName);
+            if (bitmap != null) {
+                mPropertyInfoImageViews.get(j).setImageBitmap(bitmap);
+            } else {
+                int id = this.getResources().getIdentifier(infoMap.imageName, "drawable", "com.makaan");
+                Bitmap b = BitmapFactory.decodeResource(getResources(), id);
+                mPropertyInfoImageViews.get(j).setImageBitmap(b);
+                MakaanBuyerApplication.bitmapCache.putBitmap(infoMap.imageName, b);
+            }
+        }
+        return true;
     }
 
     @OnClick({R.id.serp_default_listing_seller_image_frame_layout, R.id.serp_default_listing_seller_name_text_view, R.id.serp_default_listing_seller_rating})

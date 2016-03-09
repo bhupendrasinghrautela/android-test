@@ -4,8 +4,11 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.cache.MasterDataCache;
@@ -185,9 +189,17 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
             View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_set_alerts_list_item, mContentLinearLayout, false);
             mContentLinearLayout.addView(view);
             ((TextView) view.findViewById(R.id.fragment_set_alerts_list_item_display_text_view)).setText(grp.displayName);
-            int id = this.getResources().getIdentifier(grp.imageName, "drawable", "com.makaan");
-            if (id != 0) {
-                ((ImageView) view.findViewById(R.id.fragment_set_alerts_list_item_image_view)).setImageResource(id);
+
+            if(grp.imageName != null) {
+                Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap(grp.imageName);
+                 if(bitmap != null) {
+                    ((ImageView) view.findViewById(R.id.fragment_set_alerts_list_item_image_view)).setImageBitmap(bitmap);
+                } else {
+                    int id = this.getResources().getIdentifier(grp.imageName, "drawable", "com.makaan");
+                    Bitmap b = BitmapFactory.decodeResource(getResources(), id);
+                    ((ImageView) view.findViewById(R.id.fragment_set_alerts_list_item_image_view)).setImageBitmap(b);
+                    MakaanBuyerApplication.bitmapCache.putBitmap(grp.imageName, bitmap);
+                }
             }
 
             if(!grp.isSelected) {
