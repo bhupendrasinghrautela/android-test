@@ -119,16 +119,17 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         if(null!=currentPageTag) {
             renewUserActivityTimer();
         }
+
+        if(isJarvisHeadVisible && mJarvisHead != null) {
+            if(mJarvisHead.getVisibility()!=View.VISIBLE) {
+                mJarvisHead.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        if(isJarvisHeadVisible && mJarvisHead != null) {
-            mJarvisHead.setVisibility(View.VISIBLE);
-        }
-
         JarvisClient.getInstance().refreshJarvisSocket();
     }
 

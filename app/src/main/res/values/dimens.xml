@@ -1429,10 +1429,14 @@
     <dimen name="inter_text_top_margin">10dp</dimen>
     <dimen name="notification_card_font_size_medium">16dp</dimen>
     <dimen name="notification_card_font_size_small">10dp</dimen>
-    <dimen name="image_width">30dp</dimen>
+    <dimen name="notification_card_delete_icon_size">38dp</dimen>
     <dimen name="notification_image_dimen">20dp</dimen>
     <dimen name="notifications_image_height">180dp</dimen>
     <dimen name="notifications_padding">22dp</dimen>
+    <dimen name="notifications_image_padding">12dp</dimen>
+    <dimen name="notification_card_delete_icon_padding">4dp</dimen>
+    <dimen name="notification_card_desc_text_size">14sp</dimen>
+    <dimen name="notification_card_title_text_size">16sp</dimen>
 
     <dimen name="buyer_dashboard_listing_view_height">180dp</dimen>
     <dimen name="row_localities_lifestyle_height">200dp</dimen>
