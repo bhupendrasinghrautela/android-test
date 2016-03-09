@@ -48,7 +48,7 @@ public class ClusterListingView extends AbstractCardListingView {
         if(data != null && data instanceof GroupCluster) {
             fragmentPagerAdapter = new HorizontalScrollFragmentAdapter<GroupListing>(
                     ((FragmentActivity) mContext).getSupportFragmentManager(), mContext,
-                    (List<GroupListing>) (((GroupCluster) data).groupListings), false, callback);
+                    ((GroupCluster) data).groupListings, false, callback);
             viewPager.setAdapter(fragmentPagerAdapter);
         }
         /*if(data!= null && data instanceof ArrayList<?>) {

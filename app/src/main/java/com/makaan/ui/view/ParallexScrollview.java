@@ -11,7 +11,7 @@ import android.widget.ScrollView;
 public class ParallexScrollview extends ScrollView {
 
     public interface OnScrollChangedListener {
-        public void onScrollChanged(int deltaX, int deltaY);
+        void onScrollChanged(int deltaX, int deltaY);
     }
 
     private OnScrollChangedListener mOnScrollChangedListener;

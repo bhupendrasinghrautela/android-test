@@ -20,11 +20,7 @@ public class VersionCodes {
                 if(v.name.equalsIgnoreCase(version.name)) {
                     if(version.version > v.version) {
                         File file = new File(context.getFilesDir(), version.name);
-                        if(file.exists()) {
-                            return true;
-                        } else {
-                            return false;
-                        }
+                        return file.exists();
                     } else {
                         return false;
                     }

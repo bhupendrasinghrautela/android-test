@@ -28,7 +28,7 @@ public class AnalyticsService implements MakaanService {
     private static final String TAG = AnalyticsService.class.getSimpleName();
 
     public enum Type{
-        identify, track;
+        identify, track
     }
 
     public void trackSerpScroll(Set<String> selectedFiltersName, int position, JarvisTrackExtraData jarvisTrackExtraData){

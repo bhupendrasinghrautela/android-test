@@ -129,7 +129,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                 holder = new ViewHolder();
                 holder.view = convertView;
                 ((CheckBox)holder.view.findViewById(R.id.fragment_dialog_filters_single_checkbox_item_view_checkbox)).setOnCheckedChangeListener(this);
-                ((CheckBox)holder.view.findViewById(R.id.fragment_dialog_filters_single_checkbox_item_view_checkbox)).setTag(holder);
+                holder.view.findViewById(R.id.fragment_dialog_filters_single_checkbox_item_view_checkbox).setTag(holder);
             } else {
                 convertView = LayoutInflater.from(context).inflate(R.layout.fragment_dialog_filters_seekbar_item_view, parent, false);
                 holder = new ViewHolder();

@@ -2,7 +2,6 @@ package com.makaan.event.buyerjourney;
 
 import com.makaan.event.MakaanEvent;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

@@ -26,7 +26,7 @@ public class SmsReceiver extends BroadcastReceiver {
     }
 
     public interface OnVerificationListener{
-        public void getOTP(String OTP);
+        void getOTP(String OTP);
     }
     @Override
     public void onReceive(Context context, Intent intent) {

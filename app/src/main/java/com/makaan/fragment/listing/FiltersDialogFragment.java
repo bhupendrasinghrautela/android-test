@@ -211,6 +211,6 @@ public class FiltersDialogFragment extends MakaanBaseDialogFragment {
     }
 
     public interface FilterDialogFragmentCallback {
-        public void dialogDismissed();
+        void dialogDismissed();
     }
 }

@@ -38,7 +38,7 @@ public class CustomRequest extends Request<String> {
 	@Override
 	protected Map<String, String> getParams() throws com.android.volley.AuthFailureError {
 		return params;
-	};
+	}
 
 	@Override
 	protected Response<String> parseNetworkResponse(NetworkResponse response) {

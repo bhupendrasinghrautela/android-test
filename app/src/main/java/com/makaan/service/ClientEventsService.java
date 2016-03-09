@@ -97,7 +97,6 @@ public class ClientEventsService implements MakaanService {
 
                 }
             }, TAG);
-            ;
         } catch (JSONException e) {
             e.printStackTrace();
         }

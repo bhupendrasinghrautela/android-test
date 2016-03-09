@@ -48,7 +48,6 @@ public class CustomVolleyRequestQueue extends RequestQueue {
             PackageInfo queue = context.getPackageManager().getPackageInfo(network, 0);
             userAgent = network + "/" + queue.versionCode;
         } catch (PackageManager.NameNotFoundException var6) {
-            ;
         }
 
         if (stack == null) {
@@ -59,7 +58,7 @@ public class CustomVolleyRequestQueue extends RequestQueue {
             }
         }
 
-        BasicNetwork network1 = new BasicNetwork((HttpStack) stack);
+        BasicNetwork network1 = new BasicNetwork(stack);
         CustomVolleyRequestQueue queue1 = new CustomVolleyRequestQueue(new DiskBasedCache(cacheDir), network1);
         queue1.start();
         return queue1;

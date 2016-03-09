@@ -13,7 +13,7 @@ public enum  RecycleViewMode {
         return value;
     }
 
-    private RecycleViewMode(int type)
+    RecycleViewMode(int type)
     {
         value = type;
 

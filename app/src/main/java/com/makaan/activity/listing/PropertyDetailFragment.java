@@ -49,7 +49,6 @@ import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Project;
 import com.makaan.response.property.Property;
-import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.user.Company;
 import com.makaan.response.user.User;
 import com.makaan.service.AmenityService;

@@ -6,6 +6,6 @@ package com.makaan.request.selector;
 public interface MakaanReqSelector {
 
 
-    public String build();
+    String build();
 
 }

@@ -34,7 +34,7 @@ public class MultiSelectionSpinner extends Spinner implements  OnMultiChoiceClic
     ArrayAdapter<String> simple_adapter;
     private OnSelectionChangeListener listener;
     public interface OnSelectionChangeListener{
-        public void onSelectionChanged();
+        void onSelectionChanged();
     }
 
     public MultiSelectionSpinner(Context context) {

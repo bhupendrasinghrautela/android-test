@@ -337,14 +337,14 @@ public class ViewSellersDialogFragment extends DialogFragment {
                         Properties properties = MakaanEventPayload.beginBatch();
                         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
                         properties.put(MakaanEventPayload.LABEL, bundle.get(MakaanEventPayload.PROJECT_ID) + "_" +
-                                mSellerCards.get((int) buttonView.getTag() - 1).sellerId + "_" + (int) buttonView.getTag() + "_" + MakaanTrackerConstants.Label.checked);
+                                mSellerCards.get((int) buttonView.getTag() - 1).sellerId + "_" + buttonView.getTag() + "_" + MakaanTrackerConstants.Label.checked);
                         MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectViewOtherSellers);
                     } else if (getActivity() instanceof PropertyActivity) {
                         Bundle bundle = getArguments();
                         Properties properties = MakaanEventPayload.beginBatch();
                         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                         properties.put(MakaanEventPayload.LABEL, bundle.get(MakaanEventPayload.PROJECT_ID) + "_" +
-                                mSellerCards.get((int) buttonView.getTag() - 1).sellerId + "_" + (int) buttonView.getTag() + "_" + MakaanTrackerConstants.Label.unChecked);
+                                mSellerCards.get((int) buttonView.getTag() - 1).sellerId + "_" + buttonView.getTag() + "_" + MakaanTrackerConstants.Label.unChecked);
                         MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickPropertyViewOtherSellers);
                     }
 

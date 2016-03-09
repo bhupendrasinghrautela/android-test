@@ -6,11 +6,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static com.makaan.constants.RequestConstants.DISTANCE;
-import static com.makaan.constants.RequestConstants.LAT;
-import static com.makaan.constants.RequestConstants.LON;
-import static com.makaan.constants.RequestConstants.RANGE;
 import static com.makaan.constants.RequestConstants.GEO;
 import static com.makaan.constants.RequestConstants.GEO_DISTANCE;
+import static com.makaan.constants.RequestConstants.LAT;
+import static com.makaan.constants.RequestConstants.LON;
 
 /**
  * Created by sunil on 10/01/16.

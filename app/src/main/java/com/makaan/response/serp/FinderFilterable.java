@@ -5,9 +5,9 @@ package com.makaan.response.serp;
  */
 public interface FinderFilterable {
 
-    public String getId();
+    String getId();
 
-    public String displayName();
+    String displayName();
 
 
 }

@@ -109,7 +109,7 @@ public class SellerListingAdapter extends RecyclerView.Adapter<RecyclerView.View
                             topSellersFragment.changeSellerCount(mPyrPresenter.getContactAdvisorsCount());
                         } else {
                             buttonView.setBackgroundResource(R.drawable.check_tick);
-                            selectedValues.remove((Long)agent.company.id);
+                            selectedValues.remove(agent.company.id);
                             mPyrPresenter.setSellerIds(agent.company.id, false);
                             topSellersFragment.changeSellerCount(mPyrPresenter.getContactAdvisorsCount());
                         }

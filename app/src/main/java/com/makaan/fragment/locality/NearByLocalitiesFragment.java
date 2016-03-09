@@ -197,14 +197,14 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         for(TopAgent agent:topAgents){
             if(agent.agent != null && agent.agent.company != null && agent.agent.user != null) {
                 if (!TextUtils.isEmpty(agent.agent.company.logo)) {
-                    nearByLocalities.add(new NearByLocalities(agent.agent.company.logo, "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, (long) agent.agent.company.id));
+                    nearByLocalities.add(new NearByLocalities(agent.agent.company.logo, "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, agent.agent.company.id));
                 } else if (!TextUtils.isEmpty(agent.agent.user.profilePictureURL)) {
-                    nearByLocalities.add(new NearByLocalities(agent.agent.user.profilePictureURL, "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, (long) agent.agent.company.id));
+                    nearByLocalities.add(new NearByLocalities(agent.agent.user.profilePictureURL, "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, agent.agent.company.id));
                 } else {
-                    nearByLocalities.add(new NearByLocalities("", "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, (long) agent.agent.company.id));
+                    nearByLocalities.add(new NearByLocalities("", "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, agent.agent.company.id));
                 }
             } else {
-                nearByLocalities.add(new NearByLocalities("", "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, (long) agent.agent.company.id));
+                nearByLocalities.add(new NearByLocalities("", "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, agent.agent.company.id));
             }
         }
         return nearByLocalities;

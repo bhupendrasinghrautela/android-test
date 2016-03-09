@@ -3,12 +3,10 @@ package com.makaan.ui.pyr;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import com.makaan.R;
 import com.makaan.fragment.pyr.PyrPagePresenter;
@@ -16,8 +14,6 @@ import com.makaan.fragment.pyr.PyrPagePresenter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
-import butterknife.OnFocusChange;
-import butterknife.OnTextChanged;
 
 /**
  * Created by proptiger on 7/1/16.

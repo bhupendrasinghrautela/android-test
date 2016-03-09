@@ -117,7 +117,7 @@ public class RelevancePopupWindowController implements PopupWindow.OnDismissList
     }
 
     public interface RelevancePopupWindowCallback {
-        public void popupWindowDismissed();
-        public void sortSelected(String sort, String fieldName, String value, int i);
+        void popupWindowDismissed();
+        void sortSelected(String sort, String fieldName, String value, int i);
     }
 }

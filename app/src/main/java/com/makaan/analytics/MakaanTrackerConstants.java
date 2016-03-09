@@ -19,7 +19,7 @@ public class MakaanTrackerConstants {
 
         private String value;
 
-        private Category(String value) {
+        Category(String value) {
             this.value = value;
         }
 
@@ -70,7 +70,7 @@ public class MakaanTrackerConstants {
 
         private String value;
 
-        private Action(String value) {
+        Action(String value) {
             this.value = value;
         }
 
@@ -99,7 +99,7 @@ public class MakaanTrackerConstants {
 
         private String value;
 
-        private Label(String value) {
+        Label(String value) {
             this.value = value;
         }
 

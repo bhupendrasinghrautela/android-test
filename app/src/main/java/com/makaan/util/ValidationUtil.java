@@ -18,19 +18,10 @@ public class ValidationUtil {
     public static boolean isValidPhoneNumber(CharSequence target , String countryName) {
 
         if(countryName.equalsIgnoreCase("India")){
-            if(target.length()==10 && Integer.parseInt(String.valueOf(String.valueOf(target).charAt(0)))>=7 ){
-                return true;
-            }
-            else {
-                return false;
-            }
+            return target.length() == 10 && Integer.parseInt(String.valueOf(String.valueOf(target).charAt(0))) >= 7;
         }
-        else if(!countryName.equalsIgnoreCase("India") && target.length()>=6 && target.length()<=12){
-            return true;
-        }
-        else {
-            return false;
-        }
+        else
+            return !countryName.equalsIgnoreCase("India") && target.length() >= 6 && target.length() <= 12;
 
     }
 }

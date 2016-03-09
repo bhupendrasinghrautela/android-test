@@ -3,7 +3,6 @@ package com.makaan.activity.buyerJourney;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.makaan.R;
 import com.makaan.ui.buyerjourney.NotificationCard;

@@ -30,7 +30,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -58,14 +57,11 @@ import com.makaan.response.user.UserResponse;
 import com.makaan.service.LocationService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SearchService;
-
 import com.makaan.ui.listing.CustomFlowLayout;
 import com.makaan.util.ErrorUtil;
 import com.makaan.util.PermissionManager;
 import com.makaan.util.RecentSearchManager;
-import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
-
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -1168,7 +1164,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         if(mSelectedSearches != null && mSelectedSearches.size() > 0
                 && item != null && item instanceof SearchResponseItem) {
             // we need to remove the item from saved searches
-            mSelectedSearches.remove((SearchResponseItem) item);
+            mSelectedSearches.remove(item);
             // enable search edit text
             mSearchEditText.setEnabled(true);
 

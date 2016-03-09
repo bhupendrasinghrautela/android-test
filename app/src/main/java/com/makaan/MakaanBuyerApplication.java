@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.util.SparseArray;
 
 import com.crashlytics.android.Crashlytics;
@@ -22,24 +21,19 @@ import com.makaan.jarvis.JarvisConstants;
 import com.makaan.jarvis.JarvisServiceCreator;
 import com.makaan.jarvis.analytics.AnalyticsService;
 import com.makaan.network.MakaanNetworkClient;
-import com.makaan.notification.GcmRegister;
 import com.makaan.pojo.SerpObjects;
-import com.makaan.service.ClientLeadsService;
-import com.makaan.service.LocationService;
-import com.makaan.service.ClientEventsService;
-import com.makaan.service.download.DownloadAssetService;
-import com.makaan.service.user.ForgotPasswordService;
-import com.makaan.service.user.UserLogoutService;
-import com.makaan.service.user.UserRegistrationService;
 import com.makaan.service.AgentService;
 import com.makaan.service.AmenityService;
 import com.makaan.service.BlogService;
 import com.makaan.service.BuilderService;
 import com.makaan.service.CityService;
+import com.makaan.service.ClientEventsService;
+import com.makaan.service.ClientLeadsService;
 import com.makaan.service.ImageService;
 import com.makaan.service.LeadInstantCallbackService;
 import com.makaan.service.ListingService;
 import com.makaan.service.LocalityService;
+import com.makaan.service.LocationService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.MasterDataService;
 import com.makaan.service.OtpVerificationService;
@@ -52,17 +46,23 @@ import com.makaan.service.SellerService;
 import com.makaan.service.TaxonomyService;
 import com.makaan.service.UserService;
 import com.makaan.service.WishListService;
+import com.makaan.service.download.DownloadAssetService;
+import com.makaan.service.user.ForgotPasswordService;
 import com.makaan.service.user.UserLoginService;
+import com.makaan.service.user.UserLogoutService;
+import com.makaan.service.user.UserRegistrationService;
 import com.makaan.util.FontTypeface;
 import com.makaan.util.RandomString;
 import com.segment.analytics.Analytics;
-//import com.squareup.leakcanary.RefWatcher;
 
-import io.fabric.sdk.android.Fabric;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.net.CookieStore;
+
+import io.fabric.sdk.android.Fabric;
+
+//import com.squareup.leakcanary.RefWatcher;
 
 /**
  * Created by vaibhav on 23/12/15.

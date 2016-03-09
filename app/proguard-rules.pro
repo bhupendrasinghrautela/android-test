@@ -34,9 +34,6 @@
     @com.squareup.otto.Produce public *;
 }
 
--allowobfuscation
--allowoptimization
--allowshrinking
 -optimizationpasses 3
 -forceprocessing
 -microedition
@@ -57,13 +54,16 @@
 -dontwarn org.apmem.tools.**
 -dontwarn com.facebook.**
 -dontwarn com.tusharchoudhary.**
--dontwarn org.apache.httpcomponents.**
+-dontwarn org.apache.**
 -dontwarn com.squareup.**
 -dontwarn com.pkmmte.view.**
 -dontwarn com.segment.analytics.**
 -dontwarn com.google.maps.**
 -dontwarn com.github.paolorotolo.**
 -dontwarn com.crashlytics.**
+-dontwarn android.**
+-dontwarn io.fabric.**
+-dontwarn lecho.lib.**
 
 
 -keep public class * extends android.app.Activity
@@ -72,8 +72,3 @@
 -keep public class * extends android.content.BroadcastReceiver
 -keep public class * extends android.content.ContentProvider
 -keep public class * extends android.preference.Preference
-
-
-
-
-

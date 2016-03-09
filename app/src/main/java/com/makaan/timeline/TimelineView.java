@@ -126,10 +126,7 @@ public class TimelineView extends View{
     }
 
     public void setIsOnlyOneEpochTimeInList() {
-        if(getNumberOfDistinctEpochItems()==1)
-            this.isOnlyOneEpochTimeInList = true;
-        else
-            this.isOnlyOneEpochTimeInList = false;
+        this.isOnlyOneEpochTimeInList = getNumberOfDistinctEpochItems() == 1;
     }
 
     private void drawView(Canvas canvas) {
@@ -285,10 +282,7 @@ public class TimelineView extends View{
             DateTime rhsTime = new DateTime(that.epochTime);
 
             if(lhsTime.getYear() == rhsTime.getYear()) {
-                if (lhsTime.getMonthOfYear() == rhsTime.getMonthOfYear())
-                    return true;
-                else
-                    return false;
+                return lhsTime.getMonthOfYear() == rhsTime.getMonthOfYear();
             }else{
                 return false;
             }

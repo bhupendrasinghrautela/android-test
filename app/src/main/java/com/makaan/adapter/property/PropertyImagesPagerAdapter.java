@@ -148,7 +148,7 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == ((View) object);
+        return view == object;
     }
 
     @Override
@@ -173,6 +173,6 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        ((ViewPager) container).removeView((View) object);
+        container.removeView((View) object);
     }
 }
