@@ -72,7 +72,7 @@ public class PropertyImageCardView extends CardView {
             if(priceParts.length > 1) {
                 priceUnit = priceParts[1];
             }
-            if(!TextUtils.isEmpty(priceUnit) && category != null) {
+            if(!TextUtils.isEmpty(priceUnit) && category == null) {
                 priceUnit = priceUnit.concat(" +");
             }
             priceText.setText(String.valueOf(priceString));

@@ -182,7 +182,6 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mMainCityImage.setDefaultImageResId(R.drawable.locality_hero);
         mContext = getActivity();
         initToolbar();
         initView();
@@ -193,7 +192,9 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        mMainCityImage.setDefaultImageResId(R.drawable.locality_hero);
+        return view;
     }
 
     private void initToolbar() {

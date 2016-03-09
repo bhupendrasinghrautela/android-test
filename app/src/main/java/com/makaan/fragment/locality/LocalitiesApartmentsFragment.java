@@ -166,9 +166,21 @@ public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
     }
 
     private void calculateMaxForOneBhks(DataItem dataItem, ListingAggregation listingAggregation) {
-        if(dataItem.oneBhkMaxArea<listingAggregation.maxSize){ dataItem.oneBhkMaxArea = listingAggregation.maxSize;}
-        if(dataItem.oneBhkMaxPrice<listingAggregation.maxPrice){ dataItem.oneBhkMaxPrice = listingAggregation.maxPrice;}
-        if(dataItem.oneBhkMaxPricePerArea<listingAggregation.maxPricePerUnitArea){ dataItem.oneBhkMaxPricePerArea = listingAggregation.maxPricePerUnitArea;}
+        if(dataItem.oneBhkMaxArea!=null && listingAggregation.maxSize!=null) {
+            if (dataItem.oneBhkMaxArea < listingAggregation.maxSize) {
+                dataItem.oneBhkMaxArea = listingAggregation.maxSize;
+            }
+        }
+        if(dataItem.oneBhkMaxPrice !=null && listingAggregation.maxPrice!=null) {
+            if (dataItem.oneBhkMaxPrice < listingAggregation.maxPrice) {
+                dataItem.oneBhkMaxPrice = listingAggregation.maxPrice;
+            }
+        }
+        if(dataItem.oneBhkMaxPricePerArea!=null && listingAggregation.maxPricePerUnitArea!=null) {
+            if (dataItem.oneBhkMaxPricePerArea < listingAggregation.maxPricePerUnitArea) {
+                dataItem.oneBhkMaxPricePerArea = listingAggregation.maxPricePerUnitArea;
+            }
+        }
     }
 
     private void calculateMinForOneBhks(DataItem dataItem, ListingAggregation listingAggregation) {

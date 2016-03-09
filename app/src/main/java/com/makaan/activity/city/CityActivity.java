@@ -13,7 +13,6 @@ import com.makaan.event.city.CityByIdEvent;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.OnExposeEvent;
 import com.makaan.jarvis.event.PageTag;
-import com.makaan.response.listing.Listing;
 import com.makaan.service.CityService;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
@@ -46,6 +45,7 @@ public class CityActivity extends MakaanFragmentActivity {
         initFragment(R.id.container, mCityOverViewFragment, false);
         fetchData();
     }
+
 
     @Override
     public boolean isJarvisSupported() {
