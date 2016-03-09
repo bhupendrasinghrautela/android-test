@@ -1386,7 +1386,11 @@
     <dimen name="multiple_lead_form_email_margin_bottom">20dp</dimen>
     <dimen name="multiple_lead_form_call_button_orange_background">140dp</dimen>
     <dimen name="multiple_lead_form_call_button_orange_background_margin_end">18dp</dimen>
-    
+    <dimen name="multiple_lead_form_info_margin_top">50dp</dimen>
+    <dimen name="multiple_lead_form_info_margin_bottom">30dp</dimen>
+    <dimen name="multiple_lead_form_get_call_button_marign_top_bottom">70dp</dimen>
+
+
     <!--country spinner -->
     <dimen name="country_text_padding_top_bottom">4dp</dimen>
     <dimen name="country_text_text_size">16sp</dimen>

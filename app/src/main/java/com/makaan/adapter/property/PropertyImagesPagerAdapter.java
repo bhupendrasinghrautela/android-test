@@ -63,18 +63,16 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
                 if (position == 0) {
                     //left
                     if(mContext instanceof PropertyActivity) {
-                        properties.put(MakaanEventPayload.LABEL,
-                                mItems.get(position).imageType.displayName!=null?
-                                        mItems.get(position).imageType.displayName!=null:""+"_"+MakaanTrackerConstants.Label.left);
+                        properties.put(MakaanEventPayload.LABEL, String.format("%s_%s",mItems.get(position).imageType.displayName!=null?
+                                mItems.get(position).imageType.displayName:"" , MakaanTrackerConstants.Label.left));
                         MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyImages);
                     }
                     pager.setCurrentItem(mCount - 2, false);
                 } else if (position == mCount - 1) {
                     //right
                     if(mContext instanceof ProjectActivity) {
-                        properties.put(MakaanEventPayload.LABEL,
-                                mItems.get(position).imageType.displayName!=null?
-                                        mItems.get(position).imageType.displayName!=null:""+"_"+MakaanTrackerConstants.Label.right);
+                        properties.put(MakaanEventPayload.LABEL, String.format("%s_%s",mItems.get(position).imageType.displayName!=null?
+                                mItems.get(position).imageType.displayName:"" , MakaanTrackerConstants.Label.right));
                         MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickProjectImages);
                     }
                     pager.setCurrentItem(1, false);
@@ -83,30 +81,26 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
                     if(previousPosition!=-1 && previousPosition<position){
                         //right
                         if(mContext instanceof ProjectActivity) {
-                            properties.put(MakaanEventPayload.LABEL, mItems.get(position).imageType.displayName!=null?
-                                    mItems.get(position).imageType.displayName!=null:""+"_"+
-                                    MakaanTrackerConstants.Label.left);
+                            properties.put(MakaanEventPayload.LABEL,  String.format("%s_%s",mItems.get(position).imageType.displayName!=null?
+                                    mItems.get(position).imageType.displayName:"" , MakaanTrackerConstants.Label.left));
                             MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickProjectImages);
                         }
                         else if(mContext instanceof PropertyActivity) {
-                            properties.put(MakaanEventPayload.LABEL, mItems.get(position).imageType.displayName!=null?
-                                    mItems.get(position).imageType.displayName!=null:""+"_"+
-                                    MakaanTrackerConstants.Label.left);
+                            properties.put(MakaanEventPayload.LABEL,  String.format("%s_%s",mItems.get(position).imageType.displayName!=null?
+                                    mItems.get(position).imageType.displayName:"" , MakaanTrackerConstants.Label.left));
                             MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyImages);
                         }
                     }
                     else if(previousPosition!=-1 && previousPosition>position){
                         //left
                         if(mContext instanceof ProjectActivity) {
-                            properties.put(MakaanEventPayload.LABEL, mItems.get(position).imageType.displayName!=null?
-                                    mItems.get(position).imageType.displayName!=null:""+"_"+
-                                    MakaanTrackerConstants.Label.right);
+                            properties.put(MakaanEventPayload.LABEL,  String.format("%s_%s",mItems.get(position).imageType.displayName!=null?
+                                    mItems.get(position).imageType.displayName:"" , MakaanTrackerConstants.Label.right));
                             MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickProjectImages);
                         }
                         else if(mContext instanceof PropertyActivity) {
-                            properties.put(MakaanEventPayload.LABEL, mItems.get(position).imageType.displayName!=null?
-                                    mItems.get(position).imageType.displayName!=null:""+"_"+
-                                    MakaanTrackerConstants.Label.right);
+                            properties.put(MakaanEventPayload.LABEL,  String.format("%s_%s",mItems.get(position).imageType.displayName!=null?
+                                    mItems.get(position).imageType.displayName:"" , MakaanTrackerConstants.Label.right));
                             MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyImages);
                         }
                     }
