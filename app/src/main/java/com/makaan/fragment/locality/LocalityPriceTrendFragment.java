@@ -135,8 +135,8 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         cityName = getArguments().getString("cityName");
 
         titleTv.setText(title);
-        if(primaryMedian != 0) {
-            trendsMedianTv.setText("average price in " + localityName + " is \u20B9" + StringUtil.getFormattedNumber(primaryMedian) + " / sq ft.");
+        if(primaryMedian != 0 && localityName != null) {
+            trendsMedianTv.setText("average price in " + localityName.toLowerCase() + " is \u20B9" + StringUtil.getFormattedNumber(primaryMedian) + " / sq ft.");
         }else{
             priceTrendsFirstLl.setVisibility(View.GONE);
         }
@@ -145,13 +145,13 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         else{
             priceTrendsSecondLl.setVisibility(View.GONE);
         }
-        if(primaryRental !=0)
-            trendsRentGrowthTv.setText("monthly average rental in "+localityName+" is \u20B9" + StringUtil.getFormattedNumber(primaryRental));
+        if(primaryRental !=0 && localityName != null)
+            trendsRentGrowthTv.setText("monthly average rental in "+localityName.toLowerCase()+" is \u20B9" + StringUtil.getFormattedNumber(primaryRental));
         else{
             priceTrendsThirdLl.setVisibility(View.GONE);
         }
-        if(cityRental !=0)
-            citytrendsRentGrowthTv.setText("monthly average rental in "+cityName+" is \u20B9" + StringUtil.getFormattedNumber(cityRental));
+        if(cityRental !=0 && cityName != null)
+            citytrendsRentGrowthTv.setText("monthly average rental in "+cityName.toLowerCase()+" is \u20B9" + StringUtil.getFormattedNumber(cityRental));
         else{
             priceTrendsFourthLl.setVisibility(View.GONE);
         }
@@ -225,7 +225,9 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             final SearchResponseItem responseItem = list.get(position);
-            holder.descriptionTv.setText(responseItem.displayText);
+            if(responseItem.displayText != null) {
+                holder.descriptionTv.setText(responseItem.displayText.toLowerCase());
+            }
         }
 
         @Override

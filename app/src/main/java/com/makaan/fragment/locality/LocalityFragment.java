@@ -120,7 +120,7 @@ public class LocalityFragment extends MakaanBaseFragment {
     @Bind(R.id.iv_avg_price)
     ImageView mAvgPrice;
 
-    private static final int BLUR_EFFECT_HEIGHT = 300;
+    private static final int BLUR_EFFECT_HEIGHT = 200;
     private float alpha;
     private Long localityId ;
     private Locality locality;
@@ -247,7 +247,7 @@ public class LocalityFragment extends MakaanBaseFragment {
         mCityCollapseToolbar.setCollapsedTitleTypeface(tf);
         mCityCollapseToolbar.setExpandedTitleTypeface(tf);
         if(locality.description !=null && !locality.description.isEmpty())
-            overviewContentTV.setText(Html.fromHtml(locality.description));
+            overviewContentTV.setText(Html.fromHtml(locality.description).toString().toLowerCase());
         else {
             compressedTv.setVisibility(View.GONE);
         }

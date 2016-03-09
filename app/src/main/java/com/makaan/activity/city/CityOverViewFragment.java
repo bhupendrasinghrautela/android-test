@@ -165,7 +165,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         makeBarGraphRequest();
     }
 
-    private static final int BLUR_EFFECT_HEIGHT = 300;
+    private static final int BLUR_EFFECT_HEIGHT = 200;
     private float alpha;
     private Context mContext;
     private City mCity;
