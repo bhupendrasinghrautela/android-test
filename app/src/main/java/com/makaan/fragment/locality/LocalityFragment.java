@@ -42,6 +42,7 @@ import com.makaan.event.locality.OnTopAgentClickEvent;
 import com.makaan.event.locality.OnTopBuilderClickEvent;
 import com.makaan.event.locality.TopBuilderInLocalityEvent;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.pojo.TaxonomyCard;
@@ -475,7 +476,8 @@ public class LocalityFragment extends MakaanBaseFragment {
             Configuration config = getResources().getConfiguration();
             int width = config.screenWidthDp;
             int height = config.screenHeightDp;
-            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(locality.localityHeroshotImageUrl, width, height, true), new ImageLoader.ImageListener() {
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(locality.localityHeroshotImageUrl, width, height, true).concat("&blur=true"),
+                    new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
 
@@ -483,14 +485,9 @@ public class LocalityFragment extends MakaanBaseFragment {
                         return;
                     }
                     final Bitmap image = imageContainer.getBitmap();
-                    final Bitmap newImg = Blur.fastblur(mContext, image, 25);
+//                    final Bitmap newImg = Blur.fastblur(mContext, image, 25);
                     if(mBlurredCityImage!=null)
-                        mBlurredCityImage.setImageBitmap(newImg);
-                }
-
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-
+                        mBlurredCityImage.setImageBitmap(image);
                 }
             });
             mMainCityImage.setImageUrl(ImageUtils.getImageRequestUrl(locality.localityHeroshotImageUrl, width, height, true), MakaanNetworkClient.getInstance().getImageLoader());

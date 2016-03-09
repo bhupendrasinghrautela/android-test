@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.makaan.R;
-import com.squareup.picasso.Picasso;
+import com.makaan.network.MakaanNetworkClient;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -33,7 +33,7 @@ public class Timeline extends LinearLayout implements TimelineView.OnTimeLineCha
     private TimelineView timelineView;
     private LinearLayoutManager mLayoutManager;
     private TimelineleAdapter mAdapter;
-    private int firstVisibleItem, visibleItemCount, totalItemCount ,currentItemVisible;
+    private int firstVisibleItem, visibleItemCount, totalItemCount, currentItemVisible;
     private TextView currentDateTv;
     private List<TimelineView.TimelineDataItem> list;
     private int numberOfScrolls;
@@ -58,8 +58,8 @@ public class Timeline extends LinearLayout implements TimelineView.OnTimeLineCha
     }
 
 
-    public void bindView(List<TimelineView.TimelineDataItem> list,Timeline container, OnTimelineScrollListener timelineScrollListener) {
-        if(list != null && list.size()>0) {
+    public void bindView(List<TimelineView.TimelineDataItem> list, Timeline container, OnTimelineScrollListener timelineScrollListener) {
+        if (list != null && list.size() > 0) {
             Collections.sort(list);
             this.timelineScrollListener = timelineScrollListener;
             this.list = list;
@@ -75,7 +75,7 @@ public class Timeline extends LinearLayout implements TimelineView.OnTimeLineCha
 
     private void setDates(List<TimelineView.TimelineDataItem> list) {
         currentDateTv.setText(DateTimeFormat.forPattern("d MMMM, YYYY").print(new DateTime(list.get(0).epochTime)).toLowerCase());
-        if(getNumberOfDistinctEpochItems() !=1) {
+        if (getNumberOfDistinctEpochItems() != 1) {
             startDateTv.setText(DateTimeFormat.forPattern("MMMM, YYYY").print(new DateTime(list.get(0).epochTime)).toLowerCase());
             endDateTv.setText(DateTimeFormat.forPattern("MMMM, YYYY").print(list.get(list.size() - 1).epochTime).toString().toLowerCase());
         }
@@ -94,7 +94,7 @@ public class Timeline extends LinearLayout implements TimelineView.OnTimeLineCha
         mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addOnScrollListener(new RecyclerScrollListener());
-        mAdapter = new TimelineleAdapter(context,list);
+        mAdapter = new TimelineleAdapter(context, list);
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -110,9 +110,9 @@ public class Timeline extends LinearLayout implements TimelineView.OnTimeLineCha
         return px;
     }
 
-    private int getNumberOfDistinctEpochItems(){
+    private int getNumberOfDistinctEpochItems() {
         Set<TimelineView.TimelineDataItem> timelineDataItemSet = new HashSet<>();
-        for(TimelineView.TimelineDataItem item :list){
+        for (TimelineView.TimelineDataItem item : list) {
             timelineDataItemSet.add(item);
         }
         return timelineDataItemSet.size();
@@ -151,7 +151,7 @@ public class Timeline extends LinearLayout implements TimelineView.OnTimeLineCha
         }
 
         private void makeViewHolderFitScreenWidth(View v) {
-            WindowManager windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+            WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
             Point point = new Point();
             windowManager.getDefaultDisplay().getSize(point);
             int width = point.x - dpToPx(40);
@@ -169,7 +169,7 @@ public class Timeline extends LinearLayout implements TimelineView.OnTimeLineCha
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             TimelineView.TimelineDataItem item = list.get(position);
-            imageLoader = CustomVolleyRequest.getInstance(context).getImageLoader();
+            imageLoader = MakaanNetworkClient.getInstance().getImageLoader();
             imageLoader.get(item.url, ImageLoader.getImageListener(holder.timelineIv, R.drawable.placeholder_timeline, android.R.drawable.ic_dialog_alert));
             holder.timelineIv.setImageUrl(item.url, imageLoader);
 
@@ -183,28 +183,28 @@ public class Timeline extends LinearLayout implements TimelineView.OnTimeLineCha
 
     }
 
-    public class RecyclerScrollListener extends RecyclerView.OnScrollListener{
+    public class RecyclerScrollListener extends RecyclerView.OnScrollListener {
         @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-        {
-            if(dx!=0) {
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            if (dx != 0) {
                 visibleItemCount = mLayoutManager.getChildCount();
                 totalItemCount = mLayoutManager.getItemCount();
                 firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
                 if (firstVisibleItem != -1 && currentItemVisible != firstVisibleItem) {
-                    numberOfScrolls ++;
+                    numberOfScrolls++;
 //                    Log.e("scrolled", " positions: visibleItemCount " + visibleItemCount + ", totalItemCount" + totalItemCount + ", firstVisibleItemCount " + firstVisibleItem);
                     currentItemVisible = firstVisibleItem;
                     timelineView.setNewPosition(firstVisibleItem);
-                    timelineScrollListener.onTimelineScroll(firstVisibleItem,numberOfScrolls,totalItemCount);
+                    timelineScrollListener.onTimelineScroll(firstVisibleItem, numberOfScrolls, totalItemCount);
                     if (list != null)
                         currentDateTv.setText(DateTimeFormat.forPattern("d MMMM, YYYY").print(new DateTime(list.get(firstVisibleItem).epochTime)).toLowerCase());
                 }
             }
         }
     }
-    public interface OnTimelineScrollListener{
-        void onTimelineScroll(int position,int totalNumberOfScrolls, int totalTimelineImages);
+
+    public interface OnTimelineScrollListener {
+        void onTimelineScroll(int position, int totalNumberOfScrolls, int totalTimelineImages);
     }
 }
 

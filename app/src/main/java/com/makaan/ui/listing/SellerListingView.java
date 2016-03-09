@@ -242,15 +242,9 @@ public class SellerListingView extends AbstractCardListingView {
 //                    final Bitmap newImg = Blur.fastblur(mContext, image, 5);
                     mSellerBackgroundImageView.setImageBitmap(image);
                 }
-
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                    super.onErrorResponse(volleyError);
-                }
             });
         } else {
-            // TODO need to use original data
-            Bitmap bitmap = null;
+            /*Bitmap bitmap = null;
 
             final Drawable image = mContext.getResources().getDrawable(R.drawable.temp_bulding);
             if(image != null && (image.getIntrinsicWidth() <= 0 || image.getIntrinsicHeight() <= 0)) {
@@ -264,7 +258,8 @@ public class SellerListingView extends AbstractCardListingView {
 
             final Bitmap newImg = Blur.fastblur(mContext, bitmap, 25);
 
-            mSellerBackgroundImageView.setImageBitmap(newImg);
+            mSellerBackgroundImageView.setImageBitmap(newImg);*/
+            mSellerBackgroundImageView.setImageResource(R.drawable.seller_serp_placeholder);
         }
         mSellerContentLinearLayout.setVisibility(View.VISIBLE);
 
