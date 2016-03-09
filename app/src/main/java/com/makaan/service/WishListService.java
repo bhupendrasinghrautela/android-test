@@ -1,7 +1,6 @@
 package com.makaan.service;
 
 import com.android.volley.Request;
-import com.android.volley.toolbox.StringRequest;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ApiConstants;
 import com.makaan.network.MakaanNetworkClient;

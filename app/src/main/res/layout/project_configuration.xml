@@ -5,6 +5,7 @@
     android:id="@+id/project_config_view"
     android:orientation="vertical"
     android:layout_width="match_parent"
+                                          android:visibility="gone"
     android:layout_height="wrap_content">
     <include layout="@layout/project_seperator"/>
 
