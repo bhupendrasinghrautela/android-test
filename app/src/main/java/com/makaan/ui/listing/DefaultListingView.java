@@ -286,10 +286,11 @@ public class DefaultListingView extends AbstractListingView {
         if(!TextUtils.isEmpty(mListing.project.name)
                 && (mListing.project.activeStatus == null || !"dummy".equalsIgnoreCase(mListing.project.activeStatus))) {
             if(!TextUtils.isEmpty(mListing.project.builderName)) {
-                mPropertyAddressTextView.setText(String.format("%s %s, %s, %s", mListing.project.builderName,
-                        mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase());
+                mPropertyAddressTextView.setText(Html.fromHtml(String.format("<font color=\"#E71C28\">%s %s</font>, %s, %s", mListing.project.builderName,
+                        mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase()), TextView.BufferType.SPANNABLE);
             } else {
-                mPropertyAddressTextView.setText(String.format("%s, %s, %s", mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase());
+                mPropertyAddressTextView.setText(Html.fromHtml(String.format("<font color=\"#E71C28\">%s</font>, %s, %s", mListing.project.name, mListing.localityName,
+                        mListing.cityName).toLowerCase()), TextView.BufferType.SPANNABLE);
             }
         } else {
             mPropertyAddressTextView.setText(String.format("%s, %s", mListing.localityName, mListing.cityName).toLowerCase());
@@ -315,9 +316,11 @@ public class DefaultListingView extends AbstractListingView {
             // TODO check seller name
             if(mListing.lisitingPostedBy != null) {
                 if("broker".equalsIgnoreCase(mListing.lisitingPostedBy.type)) {
-                    mPropertySellerNameTextView.setText(String.format("%s (%s)", mListing.lisitingPostedBy.name, "agent").toLowerCase());
+                    mPropertySellerNameTextView.setText(Html.fromHtml(String.format("<font color=\"#E71C28\">%s</font> (%s)",
+                            mListing.lisitingPostedBy.name, "agent").toLowerCase()), TextView.BufferType.SPANNABLE);
                 } else {
-                    mPropertySellerNameTextView.setText(String.format("%s (%s)", mListing.lisitingPostedBy.name, mListing.lisitingPostedBy.type).toLowerCase());
+                    mPropertySellerNameTextView.setText(Html.fromHtml(String.format("<font color=\"#E71C28\">%s</font> (%s)",
+                            mListing.lisitingPostedBy.name, mListing.lisitingPostedBy.type).toLowerCase()), TextView.BufferType.SPANNABLE);
                 }
             } else {
                 mPropertySellerNameTextView.setText(mListing.project.builderName.toLowerCase());
