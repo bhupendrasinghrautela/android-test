@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:fillViewport="true"
             android:layout_height="match_parent"
             android:layout_width="match_parent">
 <LinearLayout
@@ -14,7 +13,9 @@
         android:gravity="center"
         android:layout_weight="0.6"
         android:layout_height="0dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/multiple_lead_form_info_margin_top"
+        android:layout_marginBottom="@dimen/multiple_lead_form_info_margin_bottom">
 
         <TextView
             android:id="@+id/multiple_lead_forn_bhk_apartment"
@@ -136,6 +137,8 @@
         android:layout_width="match_parent"
         android:layout_weight="0.6"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/multiple_lead_form_get_call_button_marign_top_bottom"
+        android:layout_marginBottom="@dimen/multiple_lead_form_get_call_button_marign_top_bottom"
         android:gravity="center">
 
         <View

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.makaan.timeline.Timeline xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/timeline_container"
+    android:layout_width="match_parent"
+    android:layout_height="500dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginBottom="20dp"
+    android:layout_marginTop="20dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_timeline"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:overScrollMode="never" />
+
+        <TextView
+            android:id="@+id/tv_timeline_current_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/rv_timeline"
+            android:layout_below="@+id/rv_timeline"
+            android:layout_gravity="left"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#444"
+            android:textSize="14sp" />
+
+        <com.makaan.timeline.TimelineView
+            android:id="@+id/timeline"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_alignLeft="@id/rv_timeline"
+            android:layout_alignRight="@id/rv_timeline"
+            android:layout_below="@+id/tv_timeline_current_date"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/tv_timeline_start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/rv_timeline"
+            android:layout_below="@+id/timeline"
+            android:layout_marginLeft="10dp"
+            android:textColor="#444"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/tv_timeline_end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/rv_timeline"
+            android:layout_below="@+id/timeline"
+            android:layout_marginRight="10dp"
+            android:textColor="#444"
+            android:textSize="10sp" />
+    </RelativeLayout>
+
+</com.makaan.timeline.Timeline>
