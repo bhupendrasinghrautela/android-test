@@ -4,7 +4,7 @@
     android:id="@+id/notification_card_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
+    android:gravity="center"
     android:padding="@dimen/notifications_padding"
     android:background="@android:color/white">
 
@@ -20,24 +20,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/dark_grey_text"
-                android:textSize="@dimen/text_size_medium"
+                android:textSize="@dimen/notification_card_title_text_size"
                 android:typeface="monospace" />
 
             <TextView
                 android:id="@+id/notification_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_medium_2"
+                android:textColor="@color/dark_grey_text"
+                android:textSize="@dimen/notification_card_desc_text_size"
                 android:typeface="serif" />
 
             <com.android.volley.toolbox.FadeInNetworkImageView
                 android:id="@+id/iv_notifications"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/notifications_image_height"
-                android:padding="@dimen/notifications_padding"
+                android:padding="@dimen/notifications_image_padding"
                 android:contentDescription="@string/app_name"
-                android:visibility="gone"
-                android:src="@drawable/house"/>
+                android:visibility="gone"/>
 
         </LinearLayout>
 
@@ -49,15 +49,17 @@
                 android:id="@+id/notification_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|top"
+                android:layout_gravity="top|center"
                 android:textSize="@dimen/notification_card_font_size_small" />
 
             <ImageView
                 android:id="@+id/iv_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|bottom"
-                android:src="@drawable/delete_selected_icon" />
+                android:layout_gravity="bottom|center"
+                android:padding="@dimen/notification_card_delete_icon_padding"
+                android:src="@drawable/delete_selected_icon"
+                android:visibility="gone"/>
         </LinearLayout>
 
 
