@@ -345,7 +345,7 @@ public class MakaanNetworkClient {
     public void post(final String url, JSONObject jsonObject,
                      final StringRequestCallback stringRequestCallback, String tag) {
 
-        final String urlToHit = appendSourceDomain(url)+"debug=true";
+        final String urlToHit = appendSourceDomain(url);
 
         StringRequest stringRequest = new StringRequest
                 (Request.Method.POST, urlToHit, new Response.Listener<String>() {
