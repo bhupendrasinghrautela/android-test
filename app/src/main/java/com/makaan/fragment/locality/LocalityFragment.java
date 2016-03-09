@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -16,7 +17,9 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -48,7 +51,6 @@ import com.makaan.response.city.EntityDesc;
 import com.makaan.response.locality.ListingAggregation;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Builder;
-import com.makaan.response.search.SearchResponseItem;
 import com.makaan.service.AgentService;
 import com.makaan.service.AmenityService;
 import com.makaan.service.LocalityService;
@@ -134,12 +136,19 @@ public class LocalityFragment extends MakaanBaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = getActivity();
-        mMainCityImage.setDefaultImageResId(R.drawable.locality_hero);
         initToolbar();
         setLocalityId();
         showProgress();
         fetchData();
         initListeners();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        mMainCityImage.setDefaultImageResId(R.drawable.locality_hero);
+        return view;
     }
 
     private void initToolbar() {
@@ -362,14 +371,14 @@ public class LocalityFragment extends MakaanBaseFragment {
     }
 
     private void addLocalitiesApartmentsFragment(ArrayList<ListingAggregation> listingAggregations) {
-        if(listingAggregations != null && listingAggregations.size()>0) {
+/*        if(listingAggregations != null && listingAggregations.size()>0) {
             LocalitiesApartmentsFragment newFragment = new LocalitiesApartmentsFragment();
             Bundle bundle = new Bundle();
             bundle.putString("title", getResources().getString(R.string.locality_available_locality_status));
             newFragment.setArguments(bundle);
             initFragment(R.id.container_nearby_localities_apartments, newFragment, false);
             newFragment.setData(listingAggregations);
-        }
+        }*/
     }
 
     private void addPriceTrendFragment(ArrayList<Locality> nearbyLocalities) {
