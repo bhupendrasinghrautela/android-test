@@ -17,6 +17,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.fragment.pyr.PyrPagePresenter;
 import com.makaan.fragment.pyr.TopSellersFragment;
+import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.agents.Agent;
 import com.makaan.response.agents.TopAgent;
@@ -132,7 +133,7 @@ public class SellerListingAdapter extends RecyclerView.Adapter<RecyclerView.View
             int width = mContext.getResources().getDimensionPixelSize(R.dimen.seller_image_width_height);
             int height = mContext.getResources().getDimensionPixelSize(R.dimen.seller_image_width_height);
             MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(agent.user.profilePictureURL, width, height, false),
-                    new ImageLoader.ImageListener() {
+                    new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {
@@ -145,6 +146,7 @@ public class SellerListingAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
+                    super.onErrorResponse(volleyError);
                     mNameImage.setVisibility(View.VISIBLE);
                 }
             });

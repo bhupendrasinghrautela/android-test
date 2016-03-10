@@ -42,6 +42,7 @@ import com.makaan.event.listing.SimilarListingGetEvent.ListingItems;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.property.SimilarPropertyFragment;
 import com.makaan.fragment.property.ViewSellersDialogFragment;
+import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SellerCard;
 import com.makaan.response.amenity.AmenityCluster;
@@ -591,29 +592,34 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
         if(!TextUtils.isEmpty(company.logo)) {
             mSellerLogoTextView.setVisibility(View.GONE);
             mSellerImageView.setVisibility(View.VISIBLE);
-            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(company.logo, width, height, false), new ImageLoader.ImageListener() {
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(company.logo, width, height, false), new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }
+                    mSellerLogoTextView.setVisibility(View.GONE);
+                    mSellerImageView.setVisibility(View.VISIBLE);
                     mSellerImageView.setImageBitmap(imageContainer.getBitmap());
                 }
 
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
+                    super.onErrorResponse(volleyError);
                     showTextAsImage();
                 }
             });
         } else if(user!=null && !TextUtils.isEmpty(user.profilePictureURL)) {
             mSellerLogoTextView.setVisibility(View.GONE);
             mSellerImageView.setVisibility(View.VISIBLE);
-            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(user.profilePictureURL, width, height, false), new ImageLoader.ImageListener() {
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(user.profilePictureURL, width, height, false), new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }
+                    mSellerLogoTextView.setVisibility(View.GONE);
+                    mSellerImageView.setVisibility(View.VISIBLE);
                     mSellerImageView.setImageBitmap(imageContainer.getBitmap());
                 }
 

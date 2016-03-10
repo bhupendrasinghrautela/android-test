@@ -9,8 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:orientation="vertical">
 
         <android.support.design.widget.CoordinatorLayout
 
@@ -57,37 +57,61 @@
 
 
                 <LinearLayout
+                    android:id="@+id/activity_search_base_search_no_result_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:id="@+id/activity_search_base_search_no_result_layout"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:layout_gravity="center">
+                        android:layout_height="match_parent"
+                        android:fillViewport="true">
 
-                        <ImageView
-                            android:id="@+id/activity_search_base_search_no_result_image_view"
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true" />
+                            android:layout_gravity="center">
 
-                        <TextView
-                            android:id="@+id/activity_search_base_search_no_result_text_view"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/default_error_message_left_margin"
-                            android:layout_marginStart="@dimen/default_error_message_left_margin"
-                            android:layout_marginRight="@dimen/default_error_message_right_margin"
-                            android:layout_marginEnd="@dimen/default_error_message_right_margin"
-                            android:layout_below="@id/activity_search_base_search_no_result_image_view"
-                            android:layout_centerHorizontal="true"
-                            android:textSize="@dimen/default_error_message_text_size"
-                            android:textColor="@color/app_red"
-                            android:typeface="serif"
-                            android:gravity="center"/>
-                    </RelativeLayout>
+                            <ImageView
+                                android:id="@+id/activity_search_base_search_no_result_image_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true" />
+
+                            <TextView
+                                android:id="@+id/activity_search_base_search_no_result_text_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/activity_search_base_search_no_result_image_view"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginEnd="@dimen/default_error_message_right_margin"
+                                android:layout_marginLeft="@dimen/default_error_message_left_margin"
+                                android:layout_marginRight="@dimen/default_error_message_right_margin"
+                                android:layout_marginStart="@dimen/default_error_message_left_margin"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center"
+                                android:textColor="@color/app_red"
+                                android:textSize="@dimen/default_error_message_text_size"
+                                android:typeface="serif" />
+
+                            <Button
+                                android:id="@+id/activity_search_base_search_no_result_action_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/activity_search_base_search_no_result_text_view"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/round_red"
+                                android:minHeight="0dp"
+                                android:padding="8dp"
+                                android:text="go home"
+                                android:textAllCaps="false"
+                                android:textColor="@color/app_red"
+                                android:textSize="16sp"
+                                android:typeface="serif" />
+                        </RelativeLayout>
+                    </ScrollView>
                 </LinearLayout>
 
                 <ImageView

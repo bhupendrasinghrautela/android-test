@@ -3,7 +3,10 @@ package com.makaan.ui.listing;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 
 import com.makaan.activity.listing.PropertyActivity;
@@ -20,6 +24,7 @@ import com.makaan.constants.PreferenceConstants;
 
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.listing.Listing;
+import com.makaan.ui.CustomNetworkImageView;
 import com.makaan.ui.view.WishListButton;
 import com.makaan.ui.view.WishListButton.WishListDto;
 import com.makaan.ui.view.WishListButton.WishListType;
@@ -41,7 +46,7 @@ import butterknife.OnClick;
 public class ListingCardView extends AbstractListingView {
 
 
-    @Bind(R.id.listing_brief_view_layout_property_image_view)FadeInNetworkImageView mPropertyImageView;
+    @Bind(R.id.listing_brief_view_layout_property_image_view)CustomNetworkImageView mPropertyImageView;
     @Bind(R.id.listing_brief_view_layout_property_price_text_view)TextView mPropertyPriceTextView;
     @Bind(R.id.listing_brief_view_layout_property_price_unit_text_view)TextView mPropertyPriceUnitTextView;
     @Bind(R.id.listing_brief_view_layout_property_shortlist_checkbox)public WishListButton mPropertyWishListCheckbox;
@@ -127,10 +132,10 @@ public class ListingCardView extends AbstractListingView {
         if(!TextUtils.isEmpty(mListing.project.name)
                 && (mListing.project.activeStatus == null || !"dummy".equalsIgnoreCase(mListing.project.activeStatus))) {
             if(!TextUtils.isEmpty(mListing.project.builderName)) {
-                mPropertyAddressTextView.setText(String.format("<font color=\"#E71C28\">%s %s</font>, %s, %s", mListing.project.builderName,
-                        mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase());
+                mPropertyAddressTextView.setText(Html.fromHtml(String.format("<font color=\"#E71C28\">%s %s</font>, %s, %s", mListing.project.builderName,
+                        mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase()));
             } else {
-                mPropertyAddressTextView.setText(String.format("<font color=\"#E71C28\">%s</font>, %s, %s", mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase());
+                mPropertyAddressTextView.setText(Html.fromHtml(String.format("<font color=\"#E71C28\">%s</font>, %s, %s", mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase()));
             }
         } else {
             mPropertyAddressTextView.setText(String.format("%s, %s", mListing.localityName, mListing.cityName).toLowerCase());
@@ -140,13 +145,18 @@ public class ListingCardView extends AbstractListingView {
         if(mListing.mainImageUrl != null && !TextUtils.isEmpty(mListing.mainImageUrl)) {
             int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_width);
             int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_height);
+            mPropertyImageView.setDefaultImageResId(R.drawable.serp_placeholder);
             mPropertyImageView.setImageUrl(ImageUtils.getImageRequestUrl(mListing.mainImageUrl, width, height, false), MakaanNetworkClient.getInstance().getImageLoader());
         } else {
-            //TODO this is just a dummy image
-            int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_width);
-            int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_height);
-            String url = "https://im.proptiger-ws.com/1/644953/6/imperial-project-image-460007.jpeg";
-            mPropertyImageView.setImageUrl(ImageUtils.getImageRequestUrl(url, width, height, false), MakaanNetworkClient.getInstance().getImageLoader());
+            // show placeholder
+            Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap("serp_placeholder");
+            if (bitmap == null) {
+                int id = R.drawable.serp_placeholder;
+                bitmap = BitmapFactory.decodeResource(getResources(), id);
+                MakaanBuyerApplication.bitmapCache.putBitmap("serp_placeholder", bitmap);
+            }
+
+            mPropertyImageView.setImageBitmap(bitmap);
         }
 
         this.setOnClickListener(new OnClickListener() {
