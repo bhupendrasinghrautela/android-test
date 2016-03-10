@@ -58,9 +58,6 @@ public class MakaanBuyerGcmListenerService extends GcmListenerService {
 
         attributes.setNotificationId(payload.getNotificationId());
         attributes.setNotificationPayload(payload);
-        storeNotification(context, attributes);
-
-
 
         if(TextUtils.isEmpty(attributes.getNotificationPayload().getImageUrl())){
             createNotification(context, attributes);
@@ -74,6 +71,7 @@ public class MakaanBuyerGcmListenerService extends GcmListenerService {
             MakaanNotification notification = NotificationFactory.getNotification(attributes);
             if(notification!=null) {
                 notification.createNotification(context, attributes);
+                storeNotification(context, attributes);
             }
         }catch(Exception e){
             //do nothing as there might be some issue with the data

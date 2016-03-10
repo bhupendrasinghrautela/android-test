@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.database.DataProvider;
+import com.makaan.database.DatabaseHelper;
 import com.makaan.database.NotificationDbHelper;
 import com.makaan.notification.NotificationAttributes;
 
@@ -78,7 +79,7 @@ public class NotificationsFragment extends Fragment implements LoaderManager.Loa
                 null,     // Projection to return
                 null,     // No selection clause
                 null,     // No selection arguments
-                null);
+                DatabaseHelper.NotificationAttributeColumns.TIMESTAMP + " DESC");
     }
 
     @Override

@@ -16,6 +16,7 @@ import com.makaan.activity.listing.PropertyActivity;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.project.ProjectActivity;
+import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.fragment.buyerJourney.BlogContentFragment;
 import com.makaan.pojo.SerpRequest;
 
@@ -70,7 +71,7 @@ public class NotificationHelper {
         CITY_PAGE(401), LOCALITY_PAGE(402),
         BUYER_DASHBOARD(501), BUYER_SAVED_SEARCHES(502),
         BUYER_SHORTLIST(503), BUYER_SITE_VISIT(504),
-        BUYER_CASHBACK(505), BUYER_LOAN(506);
+        BUYER_CASHBACK(505), BUYER_LOAN(506),PYR(601);
 
         int value;
 
@@ -225,6 +226,9 @@ public class NotificationHelper {
             case BUYER_SITE_VISIT:
                 resultIntent = getDashboardIntent(context, attributes.getNotificationPayload());
                 break;
+            case PYR:
+                resultIntent = getPyrIntent(context);
+                break;
 
         }
 
@@ -329,6 +333,11 @@ public class NotificationHelper {
 
 
         return intent;
+    }
+
+    private static Intent getPyrIntent(Context context){
+        Intent pyrIntent = new Intent(context, PyrPageActivity.class);
+        return pyrIntent;
     }
 
 
