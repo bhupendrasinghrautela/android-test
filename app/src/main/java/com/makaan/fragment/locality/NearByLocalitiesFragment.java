@@ -134,7 +134,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         for(Locality locality:nearbyLocalities){
             int[] counts = getCountOfNumberOfListingsBasedOnType(locality.listingAggregations);
             int[] medians = calculateMedianForListings(locality.listingAggregations);
-                nearByLocalities.add(new NearByLocalitiesFragment.NearByLocalities(""+locality.localityHeroshotImageUrl,"" + counts[1],"" + counts[0],medians[0] == 0?"":"median price: "+medians[0]+"/ sq ft",locality.label, locality.localityId));
+                nearByLocalities.add(new NearByLocalitiesFragment.NearByLocalities(""+locality.localityHeroshotImageUrl,"" + counts[1],"" + counts[0],medians[0] == 0?"":"average price: \u20B9 "+medians[0]+"/ sq ft",locality.label, locality.localityId));
         }
         return nearByLocalities;
     }

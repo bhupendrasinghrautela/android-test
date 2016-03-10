@@ -105,6 +105,9 @@
     <string name="property_for_sale_string">properties for\nsale</string>
     <string name="property_for_rent_string">properties\nfor rent1</string>
     <string name="view_deatils_string">view details</string>
+    <string name="properties_for_sale">properties for sale</string>
+    <string name="properties_for_rent">properties for rent</string>
+    <string name="view_details">view details</string>
 
     <!--top agents card-->
     <string name="view_seller_details_string">view seller details</string>
@@ -356,7 +359,6 @@
 
     <string name="notification_deleted">Notification Deleted</string>
     <string name="notification_deletion_error">unable to delete notification, please try again later</string>
-
 
 </resources>
 
