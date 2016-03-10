@@ -58,7 +58,7 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
     private ArrayList<AxisValue>mAxisYValues;
     private boolean setAxesForFirstTime = true;
     private Viewport mViewPort;
-    private Long timeFrom = 6l;
+    private Long timeFrom = 7l;
     private Integer mMonths;
     private ArrayList<Long> mAllMonthsTime;
     private Long mMaxPrice;
@@ -95,7 +95,7 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
         mAllMonthsTime = new ArrayList<>();
         Date referenceDate = new Date();
         Calendar c = Calendar.getInstance();
-        for(int i =59;i>=0;i--){
+        for(int i =37;i>=1;i--){
             c.setTime(referenceDate);
             c.add(Calendar.MONTH, -i);
             mAllMonthsTime.add(c.getTimeInMillis());
@@ -109,7 +109,7 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
         Date referenceDate = new Date();
         Calendar c = Calendar.getInstance();
         c.setTime(referenceDate);
-        c.add(Calendar.MONTH, -6);
+        c.add(Calendar.MONTH, -7);
         timeFrom =c.getTimeInMillis();
         generateDataForAllMonths();
     }
@@ -160,10 +160,12 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
                     //}
                 }
                 for(int i=current;i<mAllMonthsTime.size();i++){
-                    pointValueList.add(new PointValue(mAllMonthsTime.get(i),-0.1f));
-                    // if(setAxesForFirstTime) {
-                    mAxisXLabels.add(DateUtil.getMonthYearDisplayDate(mAllMonthsTime.get(i)));
-                    mAxisXValues.add((float)mAllMonthsTime.get(i));
+                    if(mAllMonthsTime.get(i)>timeFrom) {
+                        pointValueList.add(new PointValue(mAllMonthsTime.get(i), -0.1f));
+                        // if(setAxesForFirstTime) {
+                        mAxisXLabels.add(DateUtil.getMonthYearDisplayDate(mAllMonthsTime.get(i)));
+                        mAxisXValues.add((float) mAllMonthsTime.get(i));
+                    }
                 }
                 Line line = new Line(pointValueList);
                 line.setColor(entry.getKey().colorId);

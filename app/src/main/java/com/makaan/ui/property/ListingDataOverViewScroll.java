@@ -18,6 +18,7 @@ import com.makaan.ui.BaseLinearLayout;
 import com.makaan.ui.listing.CustomHorizontalScrollView;
 import com.makaan.util.AppUtils;
 import com.makaan.util.ListingUtil;
+import com.makaan.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,31 +173,17 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                 HorizontalScrollItem overViewItem = new HorizontalScrollItem();
                 switch (overview) {
                     case STATUS:
-                        if(mDetail.property!=null && mDetail.property.project!=null && mDetail.property.project.projectStatus!=null) {
+                        if(MasterDataCache.getInstance().getConstructionStatus(mDetail.constructionStatusId)!=null) {
                             overViewItem.name = overview.toString();
                             overViewItem.resourceId = R.drawable.under_construction;
-                            overViewItem.value = mDetail.property.project.projectStatus;
-                        }
-                        break;
-                    case POSSESSION:
-                        if(!ListingUtil.isReadyToMove(mDetail.constructionStatusId)&& mDetail.possessionDate!=null) {
-                            overViewItem.name = overview.toString();
-                            overViewItem.resourceId = R.drawable.possession;
-                            overViewItem.value = AppUtils.getMMMYYYYDateStringFromEpoch(mDetail.possessionDate);
-                        }
-                        else if(mDetail.minConstructionCompletionDate!=null){
-                            Long age = mDetail.minConstructionCompletionDate;
-                            String ageYrs = String.valueOf((age > 0 ? getElapsedYearsFromNow(age) : 0));
-                            overViewItem.name ="age";
-                            overViewItem.resourceId = R.drawable.possession;
-                            overViewItem.value =ageYrs.concat(" yrs");
+                            overViewItem.value = MasterDataCache.getInstance().getConstructionStatus(mDetail.constructionStatusId).displayName;
                         }
                         break;
                     case BOOK_AMOUNT:
                         if(mDetail.bookingAmount!=null){
                             overViewItem.name = "booking amount";
                             overViewItem.resourceId = R.drawable.booking_amount;
-                            overViewItem.value = String.valueOf(mDetail.bookingAmount);
+                            overViewItem.value = StringUtil.getDisplayPrice(mDetail.bookingAmount);
                         }
                         break;
                     case FURNISH_STAT:
@@ -221,15 +208,30 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                         }
                         break;
                     case FLOOR:
-                        if(mDetail.floor != null && mDetail.totalFloors != null && mDetail.floor != 0 && mDetail.totalFloors != 0) {
+                        if(mDetail.floor != null && mDetail.totalFloors != null) {
                             if(mDetail.floor == 1) {
                                 overViewItem.value = String.format("%d<sup>st</sup> of %d", mDetail.floor, mDetail.totalFloors);
                             } else if(mDetail.floor == 2) {
                                overViewItem.value = String.format("%d<sup>nd</sup> of %d", mDetail.floor, mDetail.totalFloors);
                             } else if(mDetail.floor == 3) {
                                 overViewItem.value = String.format("%d<sup>rd</sup> of %d", mDetail.floor, mDetail.totalFloors);
-                            } else {
+                            }else if(mDetail.floor == 0) {
+                                overViewItem.value = String.format("%d<sup>rd</sup> of %d", "gr", mDetail.totalFloors);
+                            }  else {
                                 overViewItem.value = String.format("%d<sup>th</sup> of %d", mDetail.floor, mDetail.totalFloors);
+                            }
+                        }
+                        else if(mDetail.floor !=null && mDetail.floor !=0){
+                            if(mDetail.floor == 1) {
+                                overViewItem.value = String.format("%d<sup>st</sup>", mDetail.floor);
+                            } else if(mDetail.floor == 2) {
+                                overViewItem.value = String.format("%d<sup>nd</sup>", mDetail.floor);
+                            } else if(mDetail.floor == 3) {
+                                overViewItem.value = String.format("%d<sup>rd</sup>", mDetail.floor);
+                            }else if(mDetail.floor == 0) {
+                                overViewItem.value = String.format("%d<sup>rd</sup> of %d", "gr", mDetail.totalFloors);
+                            } else {
+                                overViewItem.value = String.format("%d<sup>th</sup>", mDetail.floor);
                             }
                         }
                         overViewItem.name = overview.toString();
