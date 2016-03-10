@@ -33,6 +33,8 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.AppBus;
 import com.makaan.util.DateUtil;
 import com.makaan.util.ImageUtils;
+import com.makaan.util.LocalityUtil;
+import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
@@ -134,7 +136,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         for(Locality locality:nearbyLocalities){
             int[] counts = getCountOfNumberOfListingsBasedOnType(locality.listingAggregations);
             int[] medians = calculateMedianForListings(locality.listingAggregations);
-                nearByLocalities.add(new NearByLocalitiesFragment.NearByLocalities(""+locality.localityHeroshotImageUrl,"" + counts[1],"" + counts[0],medians[0] == 0?"":"average price: \u20B9 "+medians[0]+"/ sq ft",locality.label, locality.localityId));
+            nearByLocalities.add(new NearByLocalitiesFragment.NearByLocalities(""+locality.localityHeroshotImageUrl,"" + counts[1],"" + counts[0],medians[0] == 0?"":"average price: "+ StringUtil.getFormattedNumber(medians[0])+"/ sq ft",locality.label, locality.localityId));
         }
         return nearByLocalities;
     }
@@ -156,30 +158,9 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
     }
 
     private int[] calculateMedianForListings(ArrayList<ListingAggregation> listingAggregations) {
-        double rentalMedian = 0, saleMedian = 0;
-        int countsRental = 0, countsSales = 0;
         int[] counts = new int[2];
-        for (ListingAggregation ListingAggregation:listingAggregations) {
-            if (ListingAggregation.listingCategory.equalsIgnoreCase("primary") ||
-                    ListingAggregation.listingCategory.equalsIgnoreCase("resale")) {
-                if(ListingAggregation.avgPricePerUnitArea!=null) {
-                    saleMedian = saleMedian + ListingAggregation.avgPricePerUnitArea;
-                    countsSales++;
-                }
-            } else {
-                if(ListingAggregation.avgPricePerUnitArea!=null) {
-                    rentalMedian = rentalMedian + ListingAggregation.avgPricePerUnitArea;
-                    countsRental++;
-                }
-            }
-        }
-            if(countsSales!=0)
-                saleMedian = saleMedian / countsSales;
-            if(countsRental!=0)
-                rentalMedian = rentalMedian / countsRental;
-
-            counts[0] = (int) saleMedian;
-            counts[1] = (int) rentalMedian;
+            counts[0] = LocalityUtil.calculateAveragePrice(listingAggregations).intValue();
+            counts[1] = LocalityUtil.calculateRentalPrice(listingAggregations).intValue();
 
         return counts;
     }

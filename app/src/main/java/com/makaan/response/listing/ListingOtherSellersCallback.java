@@ -70,7 +70,9 @@ public class ListingOtherSellersCallback extends JSONGetCallback {
                     //sellerCard.assist =
                     sellerCard.name = company.name;
                     sellerCard.type = company.type;
-                    sellerCard.rating = company.score/2;
+                    if(company.score!=null) {
+                        sellerCard.rating = company.score / 2;
+                    }
                     if(company.logo!=null){
                         sellerCard.imageUrl = company.logo;
                     }

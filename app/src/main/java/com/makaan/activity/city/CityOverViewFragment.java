@@ -270,8 +270,8 @@ public class CityOverViewFragment extends MakaanBaseFragment{
                 mIvRental.setImageResource(R.drawable.bottom_arrow_circle_green_up);
         }
         else{
-            mRentalGrowthRefer.setVisibility(View.VISIBLE);
-            mRentalGrowth.setVisibility(View.VISIBLE);
+            mRentalGrowthRefer.setVisibility(View.GONE);
+            mRentalGrowth.setVisibility(View.GONE);
         }
         if(!TextUtils.isEmpty(mCity.description)) {
             mCompressedTextViewLayout.setVisibility(View.VISIBLE);

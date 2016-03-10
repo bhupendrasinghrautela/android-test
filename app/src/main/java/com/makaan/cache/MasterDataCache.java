@@ -5,6 +5,7 @@ import android.util.SparseArray;
 
 import com.makaan.jarvis.analytics.BuyerJourneyMessage;
 import com.makaan.jarvis.analytics.SerpFilterMessageMap;
+import com.makaan.pojo.ConstructionStatus;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.master.ApiLabel;
@@ -50,6 +51,7 @@ public class MasterDataCache {
     private HashMap<String, FilterGroup> internalNameToPyrGrpBuy = new HashMap<>();
     private HashMap<String, FilterGroup> internalNameToPyrGrpRent = new HashMap<>();
     private Map<Integer, AmenityCluster> amenityMap = new HashMap<>();
+    private Map<Integer, ConstructionStatus> constructionStatusMap = new HashMap<>();
     private Map<String, ApiLabel> searchTypeMap = new HashMap<>();
     private Map<String, Map<String, Map<String, List<String>>>> propertyDisplayOrder = new HashMap<>();
     private List<Long> defaultAmenityList;
@@ -183,6 +185,12 @@ public class MasterDataCache {
     public void addAmenityCluster(AmenityCluster amenityCluster) {
         if (null != amenityCluster) {
             amenityMap.put(amenityCluster.placeTypeId, amenityCluster);
+        }
+    }
+
+    public void addConstructionStatus(ConstructionStatus amenityCluster) {
+        if (null != amenityCluster) {
+            constructionStatusMap.put(amenityCluster.id, amenityCluster);
         }
     }
 
@@ -326,6 +334,9 @@ public class MasterDataCache {
 
     public ApiIntLabel getPropertyStatus(Integer status) {
         return idToPropertyStatus.get(status);
+    }
+    public ConstructionStatus getConstructionStatus(Integer status) {
+        return constructionStatusMap.get(status);
     }
 
     public void addShortlistedProperty(Long id, Long wishlistId) {

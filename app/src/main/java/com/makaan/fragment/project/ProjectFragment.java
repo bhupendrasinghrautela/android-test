@@ -48,6 +48,7 @@ import com.makaan.pojo.ProjectConfigItem;
 import com.makaan.pojo.SellerCard;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.response.amenity.AmenityCluster;
+import com.makaan.response.image.Image;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Project;
 import com.makaan.service.AmenityService;
@@ -58,7 +59,6 @@ import com.makaan.service.ProjectService;
 import com.makaan.ui.CompressedTextView;
 import com.makaan.ui.FixedGridView;
 import com.makaan.ui.locality.ProjectConfigView;
-import com.makaan.ui.project.ProjectConfigItemView;
 import com.makaan.ui.project.ProjectSpecificationView;
 import com.makaan.ui.property.AboutBuilderExpandedLayout;
 import com.makaan.ui.property.AmenitiesViewScroll;
@@ -328,11 +328,15 @@ public class ProjectFragment extends MakaanBaseFragment{
     @Subscribe
     public void onResults(ImagesGetEvent imagesGetEvent){
         if(null== imagesGetEvent || null!=imagesGetEvent.error){
-            //TODO handle error
-            return;
+            imagesGetEvent = new ImagesGetEvent();
+            imagesGetEvent.images = new ArrayList<>();
+            imagesGetEvent.images.add(getDummyImage());
         }
         try {
             Double price = project.minPrice != null ? project.minPrice : project.minResaleOrPrimaryPrice;
+            if(imagesGetEvent.images.size() == 0){
+                imagesGetEvent.images.add(getDummyImage());
+            }
             if (imagesGetEvent.images.size() > 0) {
                 mPropertyImageViewPager.setVisibility(View.VISIBLE);
                 mPropertyImageViewPager.bindView();
@@ -610,7 +614,7 @@ public class ProjectFragment extends MakaanBaseFragment{
         bundle.putLong("localityId", project.localityId);
         bundle.putLong("projectId", project.projectId);
         bundle.putSerializable("localities", localities);
-        if(project.minPricePerUnitArea != null) {
+        if(project.minPricePerUnitArea != null && project.locality.avgPricePerUnitArea!=null) {
             bundle.putInt("price", project.minPricePerUnitArea.intValue());
             if (project.locality != null && project.locality.avgPricePerUnitArea < project.minPricePerUnitArea) {
                 bundle.putBoolean("increased",true);
@@ -680,4 +684,9 @@ public class ProjectFragment extends MakaanBaseFragment{
         fragmentTransaction.commitAllowingStateLoss();
     }
 
+    public Image getDummyImage() {
+        Image image = new Image();
+        image.absolutePath = project.imageURL;
+        return image;
+    }
 }

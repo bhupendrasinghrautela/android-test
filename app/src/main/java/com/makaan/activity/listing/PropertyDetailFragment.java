@@ -45,6 +45,7 @@ import com.makaan.fragment.property.ViewSellersDialogFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SellerCard;
 import com.makaan.response.amenity.AmenityCluster;
+import com.makaan.response.image.Image;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Project;
@@ -382,43 +383,51 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
         }
     }
 
+    public Image getDummyImage(){
+        Image image = new Image();
+        image.absolutePath = mListingDetail.mainImageURL;
+        return image;
+    }
+
     @Subscribe
     public void onResults(ImagesGetEvent imagesGetEvent){
         if(imagesGetEvent == null){
-            mPropertyImageViewPager.setVisibility(View.GONE);
-            return;
+            imagesGetEvent = new ImagesGetEvent();
+            imagesGetEvent.images = new ArrayList<>();
+            imagesGetEvent.images.add(getDummyImage());
         }
+        else if(imagesGetEvent.error!=null){
+            imagesGetEvent = new ImagesGetEvent();
+            imagesGetEvent.images = new ArrayList<>();
+            imagesGetEvent.images.add(getDummyImage());
+            mFloorPlanLayout.setVisibility(View.GONE);
+        }
+
         if(imagesGetEvent.imageType == null) {
-            if (imagesGetEvent.images.size() > 0) {
-                mPropertyImageViewPager.setVisibility(View.VISIBLE);
-                if(mListingDetail.currentListingPrice.price!=0 && mListingDetail.currentListingPrice.pricePerUnitArea!=0) {
-                    mPropertyImageViewPager.bindView();
-                    if (mListingDetail.property != null && mListingDetail.property.project != null && mListingDetail.property.project.locality != null) {
-                        if (mListingDetail.property.project.locality.avgPricePerUnitArea != null &&
-                                mListingDetail.property.project.locality.avgPricePerUnitArea < mListingDetail.currentListingPrice.pricePerUnitArea) {
+            if(imagesGetEvent.images.size()==0){
+                imagesGetEvent.images.add(getDummyImage());
+            }
+            mPropertyImageViewPager.setVisibility(View.VISIBLE);
+            if(mListingDetail.currentListingPrice.price!=0 && mListingDetail.currentListingPrice.pricePerUnitArea!=0) {
+                mPropertyImageViewPager.bindView();
+                if (mListingDetail.property != null && mListingDetail.property.project != null && mListingDetail.property.project.locality != null) {
+                    if (mListingDetail.property.project.locality.avgPricePerUnitArea != null &&
+                            mListingDetail.property.project.locality.avgPricePerUnitArea < mListingDetail.currentListingPrice.pricePerUnitArea) {
                             mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, true,mListingDetail.listingCategory);
-                        } else {
-                            mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false,mListingDetail.listingCategory);
-                        }
                     } else {
                         mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false,mListingDetail.listingCategory);
                     }
-                }
-                else {
-                    mPropertyImageViewPager.bindView();
+                } else {
                     mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false,mListingDetail.listingCategory);
                 }
             }
-            else{
-                mPropertyImageViewPager.setVisibility(View.GONE);
+            else {
+                mPropertyImageViewPager.bindView();
+                mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false,mListingDetail.listingCategory);
             }
         }
         else if(imagesGetEvent.images!= null && imagesGetEvent.images.size()>0){
             mFloorPlanLayout.bindFloorPlan(imagesGetEvent);
-        }
-        else if(imagesGetEvent.error!=null){
-            mFloorPlanLayout.setVisibility(View.GONE);
-            mPropertyImageViewPager.setVisibility(View.GONE);
         }
     }
 
@@ -619,11 +628,13 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
     }
 
     private void showTextAsImage() {
-        if(mListingDetail.companySeller.company.name == null) {
+        if(TextUtils.isEmpty(mListingDetail.companySeller.company.name)) {
             mSellerLogoTextView.setVisibility(View.INVISIBLE);
         }
-        mSellerLogoTextView.setText(String.valueOf(mListingDetail.companySeller.company.name.charAt(0)));
-        mSellerLogoTextView.setVisibility(View.VISIBLE);
+        else {
+            mSellerLogoTextView.setText(String.valueOf(mListingDetail.companySeller.company.name.charAt(0)));
+            mSellerLogoTextView.setVisibility(View.VISIBLE);
+        }
         mSellerImageView.setVisibility(View.GONE);
         // show seller first character as logo
 

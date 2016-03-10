@@ -6,7 +6,8 @@ package com.makaan.constants;
 public class ApiConstants {
 
 
-    public static final String BASE_URL = "https://mp-qa2.makaan-ws.com";
+    //public static final String BASE_URL = "https://mp-qa2.makaan-ws.com";
+    public static final String BASE_URL = "https://mp-qa1.makaan-ws.com";
     //public static final String BASE_URL = "https://beta.makaan-ws.com";
 
     public static final String FILTER_GROUP = BASE_URL.concat("/data/v1/entity/filter-group");           //TODO: need to implement this on server side
@@ -17,6 +18,7 @@ public class ApiConstants {
     public static final String DEFAULT_AMENITY = BASE_URL.concat("/data/v1/entity/default-amenity");
     public static final String UNIT_TYPE = BASE_URL.concat("/data/v1/entity/unit-types");
     public static final String AMENITY = BASE_URL.concat("/data/v1/entity/amenities");
+    public static final String CONSTRUCTION_STATUS = BASE_URL.concat("/data/v1/entity/master-listing-construction-status");
     public static final String JARVIS_MESSAGE_TYPE = BASE_URL.concat("/data/v1/entity/jarvis/message-type");
     public static final String JARVIS_CTA_MESSAGE_TYPE = BASE_URL.concat("/data/v1/entity/jarvis/cta-message-type");
     public static final String JARVIS_SERP_FILTER_MESSAGE_MAP = BASE_URL.concat("/data/v1/entity/jarvis/serp_filter-message-message");

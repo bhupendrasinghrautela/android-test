@@ -12,6 +12,7 @@ import com.makaan.jarvis.analytics.SerpFilterMessageMap;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
+import com.makaan.pojo.ConstructionStatus;
 import com.makaan.response.ResponseError;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.master.ApiIntLabel;
@@ -400,6 +401,36 @@ public class MasterDataService implements MakaanService {
 
 
         }, "amenityMap.json");
+    }
+
+    public void populateConstructionStatus() {
+        final Type ConstructionStatusList = new TypeToken<ArrayList<ConstructionStatus>>() {
+        }.getType();
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.CONSTRUCTION_STATUS, new JSONGetCallback() {
+
+            @Override
+            public void onError(ResponseError error) {}
+
+            @Override
+            public void onSuccess(JSONObject responseObject) {
+                try {
+                    JSONArray amenities = responseObject.getJSONArray(ResponseConstants.DATA);
+
+                    ArrayList<ConstructionStatus> amenityClusters =
+                            MakaanBuyerApplication.gson.fromJson(amenities.toString(), ConstructionStatusList);
+
+                    for (ConstructionStatus constructionStatus : amenityClusters) {
+                        MasterDataCache.getInstance().addConstructionStatus(constructionStatus);
+                    }
+                } catch (JSONException je) {
+                    Log.e(TAG, "Unable to parse filters", je);
+                }
+
+            }
+
+
+        });
     }
 
 

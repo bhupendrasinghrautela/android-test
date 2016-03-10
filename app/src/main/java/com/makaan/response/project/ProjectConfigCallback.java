@@ -53,35 +53,50 @@ public class ProjectConfigCallback extends JSONGetCallback {
             JSONObject primaryConfig = configuration.optJSONObject("Primary");
             JSONObject rentalConfig = configuration.optJSONObject("Rental");
 
-            ArrayList<ProjectConfigItem> temp;
+            ArrayList<ProjectConfigItem> temp = null;
             if (null != rentalConfig) {
-                temp = getProjectConfigItems(rentalConfig.getJSONObject("Apartment"), sellerPropCountMap);
-                rentProjectConfigItems.addAll(temp);
-                temp.clear();
+                try {
+                    temp = getProjectConfigItems(rentalConfig.getJSONObject("Apartment"), sellerPropCountMap);
+                }
+                catch (JSONException w){}
+                if(temp!=null) {
+                    rentProjectConfigItems.addAll(temp);
+                    temp.clear();
+                }
             }
 
 
             if (null != resaleConfig) {
-                temp = getProjectConfigItems(resaleConfig.getJSONObject("Apartment"), sellerPropCountMap);
-                for(ProjectConfigItem projectConfigItem:temp){
-                    buyProjectConfigItems.put(projectConfigItem.minPrice,projectConfigItem);
+                try {
+                    temp = getProjectConfigItems(resaleConfig.getJSONObject("Apartment"), sellerPropCountMap);
+
+                }
+                catch (JSONException e){}
+                if(temp!=null) {
+                    for (ProjectConfigItem projectConfigItem : temp) {
+                        buyProjectConfigItems.put(projectConfigItem.minPrice, projectConfigItem);
+                    }
                 }
             }
 
             if (null != primaryConfig) {
-                temp = getProjectConfigItems(primaryConfig.getJSONObject("Apartment"), sellerPropCountMap);
-                for(ProjectConfigItem projectConfigItem:temp){
-                    ProjectConfigItem getProjectConfigItem = buyProjectConfigItems.get(projectConfigItem.minPrice);
-                    if(getProjectConfigItem == null) {
-                        buyProjectConfigItems.put(projectConfigItem.minPrice, projectConfigItem);
-                    }
-                    else{
-                        getProjectConfigItem.propertyCount +=projectConfigItem.propertyCount;
-                        getProjectConfigItem.bedrooms.addAll(projectConfigItem.bedrooms);
-                        for(SellerCard sellerCard:projectConfigItem.companies.values()){
-                            getProjectConfigItem.companies.put(sellerCard.sellerId,sellerCard);
+                try {
+                    temp = getProjectConfigItems(primaryConfig.getJSONObject("Apartment"), sellerPropCountMap);
+
+                }catch (JSONException e){}
+                if(temp!=null) {
+                    for (ProjectConfigItem projectConfigItem : temp) {
+                        ProjectConfigItem getProjectConfigItem = buyProjectConfigItems.get(projectConfigItem.minPrice);
+                        if (getProjectConfigItem == null) {
+                            buyProjectConfigItems.put(projectConfigItem.minPrice, projectConfigItem);
+                        } else {
+                            getProjectConfigItem.propertyCount += projectConfigItem.propertyCount;
+                            getProjectConfigItem.bedrooms.addAll(projectConfigItem.bedrooms);
+                            for (SellerCard sellerCard : projectConfigItem.companies.values()) {
+                                getProjectConfigItem.companies.put(sellerCard.sellerId, sellerCard);
+                            }
+                            buyProjectConfigItems.put(getProjectConfigItem.minPrice, getProjectConfigItem);
                         }
-                        buyProjectConfigItems.put(getProjectConfigItem.minPrice,getProjectConfigItem);
                     }
                 }
             }
