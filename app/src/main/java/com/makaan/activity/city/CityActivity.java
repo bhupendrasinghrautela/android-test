@@ -59,7 +59,7 @@ public class CityActivity extends MakaanFragmentActivity {
 
     private void fetchData() {
         new CityService().getCityById(mCityId);
-        new CityService().getTopLocalitiesInCity(mCityId, 4);
+        new CityService().getTopLocalitiesInCity(mCityId, 15);
     }
 
 

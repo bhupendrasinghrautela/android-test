@@ -102,35 +102,39 @@ public class StringUtil {
             }
 
             if(displayPrice < 1) {
-                displayPrice = price / 1000.00;
+                long formattedPrice = (long)(price / 10.00);
+                displayPrice = formattedPrice / 100.00;
                 try {
                     String convertedPrice = String.format("%.2f",
                             Double.parseDouble(df.format(displayPrice)));
                     convertedPrice = convertedPrice.indexOf(".") < 0 ? convertedPrice : convertedPrice.replaceAll("0*$", "").replaceAll("\\.$", "");
                     priceStringBuilder.append(convertedPrice);
                 } catch (NumberFormatException nfe) {
-                    return "Price on request";
+                    return "price on request";
                 }
                 priceStringBuilder.append(" K");
             } else if (displayPrice < 100.0) {
+                long formattedPrice = (long)(price / 1000.00);
+                displayPrice = formattedPrice / 100.00;
                 try {
                     String convertedPrice = String.format("%.2f",
                             Double.parseDouble(df.format(displayPrice)));
                     convertedPrice = convertedPrice.indexOf(".") < 0 ? convertedPrice : convertedPrice.replaceAll("0*$", "").replaceAll("\\.$", "");
                     priceStringBuilder.append(convertedPrice);
                 } catch (NumberFormatException nfe) {
-                    return "Price on request";
+                    return "price on request";
                 }
                 priceStringBuilder.append(" L");
             } else {
-                displayPrice = displayPrice / 100;
+                long formattedPrice = (long)displayPrice;
+                displayPrice = formattedPrice / 100.00;
                 try {
                     String convertedPrice = String.format("%.2f",
                             Double.parseDouble(df.format(displayPrice)));
                     convertedPrice = convertedPrice.indexOf(".") < 0 ? convertedPrice : convertedPrice.replaceAll("0*$", "").replaceAll("\\.$", "");
                     priceStringBuilder.append(convertedPrice);
                 } catch (NumberFormatException nfe) {
-                    return "Price on request";
+                    return "price on request";
                 }
                 priceStringBuilder.append(" Cr");
             }

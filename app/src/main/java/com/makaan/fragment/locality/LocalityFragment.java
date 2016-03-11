@@ -186,16 +186,16 @@ public class LocalityFragment extends MakaanBaseFragment {
             addLocalitiesLifestyleFragment(locality.entityDescriptions);
             addProperties(new TaxonomyService().getTaxonomyCardForLocality(locality.localityId, locality.minAffordablePrice, locality.maxAffordablePrice, locality.maxAffordablePrice, locality.maxBudgetPrice));
             if(locality.latitude != null && locality.longitude != null) {
-                ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(locality.latitude, locality.longitude, 10);
+                ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(locality.latitude, locality.longitude, 16);
                 ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(locality.latitude, locality.longitude, 3);
             }
-            ((AgentService) MakaanServiceFactory.getInstance().getService(AgentService.class)).getTopAgentsForLocality(locality.cityId, locality.localityId, 10, false, new TopAgentsCallback() {
+            ((AgentService) MakaanServiceFactory.getInstance().getService(AgentService.class)).getTopAgentsForLocality(locality.cityId, locality.localityId, 15, false, new TopAgentsCallback() {
                 @Override
                 public void onTopAgentsRcvd(ArrayList<TopAgent> topAgents) {
                     addTopAgentsFragment(topAgents);
                 }
             });
-            ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getTopBuildersInLocality(locality.localityId, 10);
+            ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getTopBuildersInLocality(locality.localityId, 15);
             addLocalitiesApartmentsFragment(locality.listingAggregations);
         }
     }
@@ -388,7 +388,7 @@ public class LocalityFragment extends MakaanBaseFragment {
             return;
         }
         ArrayList<Long> localities = new ArrayList<>();
-        for(int i = 0;i< nearbyLocalities.size() && i<4;i++){
+        for(int i = 0;i< nearbyLocalities.size() && i<3;i++){
             localities.add(nearbyLocalities.get(i).localityId);
         }
         LocalityPriceTrendFragment newFragment = new LocalityPriceTrendFragment();

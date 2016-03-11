@@ -51,8 +51,7 @@ public class CountListingView extends RelativeLayout {
         if(mCallback != null) {
             text = mCallback.getOverviewText();
         }
-        Log.d("abc", text);
-        if(TextUtils.isEmpty(text)) {
+        if(text == null || !(text instanceof CharSequence) || text.length() == 0) {
             mOverviewButton.setVisibility(View.GONE);
         } else {
             mOverviewButton.setVisibility(View.VISIBLE);

@@ -638,7 +638,7 @@ public class DefaultListingView extends AbstractListingView {
                     return false;
                 }
             case "securityDeposit":
-                if(mListing.securityDeposit != null && mListing.securityDeposit >= 0) {
+                if(mListing.securityDeposit != null && mListing.securityDeposit > 0) {
                     mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.securityDeposit).toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     break;

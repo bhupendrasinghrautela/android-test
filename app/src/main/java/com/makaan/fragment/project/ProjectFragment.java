@@ -397,7 +397,7 @@ public class ProjectFragment extends MakaanBaseFragment{
             initUi();
             if (project.locality.latitude != null && project.locality.longitude != null) {
                 ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(project.locality.latitude, project.locality.longitude,3);
-                ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(project.locality.latitude, project.locality.longitude, 10);
+                ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(project.locality.latitude, project.locality.longitude, 15);
             }
             addConstructionTimelineFragment();
             ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getProjectTimelineImages(project.projectId);
@@ -614,9 +614,9 @@ public class ProjectFragment extends MakaanBaseFragment{
         bundle.putLong("localityId", project.localityId);
         bundle.putLong("projectId", project.projectId);
         bundle.putSerializable("localities", localities);
-        if(project.minPricePerUnitArea != null && project.locality.avgPricePerUnitArea!=null) {
+        if(project.minPricePerUnitArea != null) {
             bundle.putInt("price", project.minPricePerUnitArea.intValue());
-            if (project.locality != null && project.locality.avgPricePerUnitArea != null
+            if (project.locality != null && project.locality.avgPricePerUnitArea!=null
                     && project.locality.avgPricePerUnitArea < project.minPricePerUnitArea) {
                 bundle.putBoolean("increased",true);
             } else {

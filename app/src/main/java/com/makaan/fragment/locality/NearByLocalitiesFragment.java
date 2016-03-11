@@ -109,7 +109,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                 new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
-                ((AgentService) MakaanServiceFactory.getInstance().getService(AgentService.class)).getTopAgentsForLocality(citId, localitId, 10, isChecked, new TopAgentsCallback() {
+                ((AgentService) MakaanServiceFactory.getInstance().getService(AgentService.class)).getTopAgentsForLocality(citId, localitId, 15, isChecked, new TopAgentsCallback() {
                     @Override
                     public void onTopAgentsRcvd(ArrayList<TopAgent> topAgents) {
                         isRentSelected = isChecked;
@@ -206,9 +206,20 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
             if(builder.establishedDate!=null) {
                 Date date = new Date(Long.parseLong(builder.establishedDate));
                 int experience = DateUtil.getDiffYears(date, new Date());
-                nearByLocalities.add(new NearByLocalities(url, "0", "" + builder.projectCount.intValue(), "experience : " + experience+" years", "" + builder.name, builder.id));
+                if(builder.projectStatusCount != null && builder.projectStatusCount.underConstruction > 0) {
+                    nearByLocalities.add(new NearByLocalities(url, String.valueOf(builder.projectStatusCount.underConstruction),
+                            "" + builder.projectCount.intValue(), "experience : " + experience+" years", "" + builder.name, builder.id));
+                } else {
+                    nearByLocalities.add(new NearByLocalities(url, "0", "" + builder.projectCount.intValue(),
+                            "experience : " + experience+" years", "" + builder.name, builder.id));
+                }
             }else{
-                nearByLocalities.add(new NearByLocalities(url, "0", "" + builder.projectCount.intValue(), "", "" + builder.name, builder.id));
+                if(builder.projectStatusCount != null && builder.projectStatusCount.underConstruction > 0) {
+                    nearByLocalities.add(new NearByLocalities(url, String.valueOf(builder.projectStatusCount.underConstruction),
+                            "" + builder.projectCount.intValue(), "", "" + builder.name, builder.id));
+                } else {
+                    nearByLocalities.add(new NearByLocalities(url, "0", "" + builder.projectCount.intValue(), "", "" + builder.name, builder.id));
+                }
             }
             }
 
@@ -371,9 +382,9 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                     break;
                 case TOPBUILDERS:
                     holder.localityIv.setDefaultImageResId(R.drawable.builder_logo_placeholder);
-                    holder.rentLl.setVisibility(View.VISIBLE);
-                    holder.rentLl.setVisibility(View.GONE);
+                    removeZeroData(holder, nearByLocality);
                     holder.primarySaleLabelTv.setText("total projects");
+                    holder.secondarySaleLabelTv.setText("ongoing projects");
                     break;
             }
 

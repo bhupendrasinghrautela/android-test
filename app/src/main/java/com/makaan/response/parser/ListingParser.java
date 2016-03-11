@@ -121,7 +121,7 @@ public class ListingParser {
                     //listing.maxConstructionCompletionDate =  listingJson.optLong(MAX_CONST_COMPLETION_DATE);
 
                     listing.noOfOpenSides = listingJson.optInt(NO_OPEN_SIDES);
-                    listing.securityDeposit = listingJson.optInt(NO_OPEN_SIDES);
+                    listing.securityDeposit = listingJson.optInt(SECURITY_DEPOSIT);
 
                     //TODO: check if we need diff
                     /*if (listing.price != null && listing.localityAvgPrice != null) {
