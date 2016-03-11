@@ -30,7 +30,7 @@ public class AmenityService implements MakaanService{
     }
 
     private String buildUrl(double lat, double lon, int distance){
-        StringBuilder urlBuilder = new StringBuilder("http://marketplace-qa.makaan-ws.com/app/v1/amenity?latitude=");
+        StringBuilder urlBuilder = new StringBuilder(ApiConstants.AMENITIES);
         urlBuilder.append(lat);
         urlBuilder.append("&longitude=");
         urlBuilder.append(lon);
