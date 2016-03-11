@@ -30,11 +30,13 @@ import com.makaan.activity.project.ProjectActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.serp.ListingInfoMap;
+import com.makaan.ui.CustomNetworkImageView;
 import com.makaan.ui.view.WishListButton;
 import com.makaan.ui.view.WishListButton.WishListDto;
 import com.makaan.ui.view.WishListButton.WishListType;
@@ -61,7 +63,7 @@ public class DefaultListingView extends AbstractListingView {
     public WishListButton mPropertyWishListCheckbox;
 
     @Bind(R.id.serp_default_listing_property_image_image_view)
-    FadeInNetworkImageView mPropertyImageView;
+    CustomNetworkImageView mPropertyImageView;
     @Bind(R.id.serp_default_listing_property_price_difference_image_view)
     ImageView mPropertyPriceDifferenceImageView;
     @Bind(R.id.serp_default_listing_badge_Image_view)
@@ -197,13 +199,18 @@ public class DefaultListingView extends AbstractListingView {
         if(mListing.mainImageUrl != null && !TextUtils.isEmpty(mListing.mainImageUrl)) {
             int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_width);
             int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_height);
+            mPropertyImageView.setDefaultImageResId(R.drawable.serp_placeholder);
             mPropertyImageView.setImageUrl(ImageUtils.getImageRequestUrl(mListing.mainImageUrl, width, height, false), MakaanNetworkClient.getInstance().getImageLoader());
         } else {
-            int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_width);
-            int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_property_image_height);
-            //TODO this is just a dummy image
-            String url = ImageUtils.getImageRequestUrl("https://im.proptiger-ws.com/1/644953/6/imperial-project-image-460007.jpeg", width, height, false);
-            mPropertyImageView.setImageUrl(url, MakaanNetworkClient.getInstance().getImageLoader());
+            // show placeholder
+            Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap("serp_placeholder");
+            if (bitmap == null) {
+                int id = R.drawable.serp_placeholder;
+                bitmap = BitmapFactory.decodeResource(getResources(), id);
+                MakaanBuyerApplication.bitmapCache.putBitmap("serp_placeholder", bitmap);
+            }
+
+            mPropertyImageView.setImageBitmap(bitmap);
         }
 
         if(mListing.images != null && mListing.images.size() > 0) {
@@ -332,29 +339,36 @@ public class DefaultListingView extends AbstractListingView {
             if(!TextUtils.isEmpty(mListing.lisitingPostedBy.logo)) {
                 mSellerLogoTextView.setVisibility(View.GONE);
                 mSellerImageView.setVisibility(View.VISIBLE);
-                MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(mListing.lisitingPostedBy.logo, width, height, false), new ImageLoader.ImageListener() {
+                MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(mListing.lisitingPostedBy.logo, width, height, false),
+                        new CustomImageLoaderListener() {
                     @Override
                     public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                         if (b && imageContainer.getBitmap() == null) {
                             return;
                         }
+                        mSellerLogoTextView.setVisibility(View.GONE);
+                        mSellerImageView.setVisibility(View.VISIBLE);
                         mSellerImageView.setImageBitmap(imageContainer.getBitmap());
                     }
 
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
+                        super.onErrorResponse(volleyError);
                         showTextAsImage();
                     }
                 });
             } else if(!TextUtils.isEmpty(mListing.lisitingPostedBy.profilePictureURL)) {
                 mSellerLogoTextView.setVisibility(View.GONE);
                 mSellerImageView.setVisibility(View.VISIBLE);
-                MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(mListing.lisitingPostedBy.profilePictureURL, width, height, false), new ImageLoader.ImageListener() {
+                MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(mListing.lisitingPostedBy.profilePictureURL, width, height, false),
+                        new CustomImageLoaderListener() {
                     @Override
                     public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                         if (b && imageContainer.getBitmap() == null) {
                             return;
                         }
+                        mSellerLogoTextView.setVisibility(View.GONE);
+                        mSellerImageView.setVisibility(View.VISIBLE);
                         mSellerImageView.setImageBitmap(imageContainer.getBitmap());
                     }
 
@@ -532,7 +546,7 @@ public class DefaultListingView extends AbstractListingView {
                     return false;
                 }
             case "bathrooms":
-                if(mListing.bathrooms != null && mListing.bathrooms >= 0) {
+                if(mListing.bathrooms != null && mListing.bathrooms > 0) {
                     mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.bathrooms).toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     break;

@@ -1,5 +1,6 @@
 package com.makaan.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import com.makaan.util.AppBus;
 import com.makaan.util.AppUtils;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by vaibhav on 23/12/15.
@@ -68,7 +70,12 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
         AnimationUtils.backActivityAnimation(this);
     }
 
-
+    @OnClick(R.id.activity_makaan_base_no_result_action_button)
+    public void onGoHomePressed(View view) {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 
     private void showLoadingDialog() {
         progressDialog = new MakaanProgressDialog(this);

@@ -34,7 +34,7 @@
                     android:paddingRight="@dimen/serp_listing_card_padding_right"
                     android:paddingEnd="@dimen/serp_listing_card_padding_right">
 
-                    <com.android.volley.toolbox.FadeInNetworkImageView
+                    <com.makaan.ui.CustomNetworkImageView
                         android:id="@+id/serp_default_listing_property_image_image_view"
                         android:layout_width="@dimen/serp_listing_card_property_image_width"
                         android:layout_height="@dimen/serp_listing_card_property_image_height"

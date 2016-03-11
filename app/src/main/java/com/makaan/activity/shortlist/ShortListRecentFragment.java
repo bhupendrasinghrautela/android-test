@@ -132,6 +132,7 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
             public void bindData(final RecentPropertyProjectManager.DataObject dataObject) {
                 int height = (int)Math.ceil(getResources().getDimension(R.dimen.fav_card_height));
                 int width = (int) (getResources().getConfiguration().screenWidthDp * Resources.getSystem().getDisplayMetrics().density);
+                ((FadeInNetworkImageView)view.findViewById(R.id.iv_content)).setDefaultImageResId(R.drawable.property_placeholder);
                 ((FadeInNetworkImageView)view.findViewById(R.id.iv_content)).setImageUrl(ImageUtils.getImageRequestUrl(dataObject.imageUrl, width, height, false),
                         MakaanNetworkClient.getInstance().getImageLoader());
                 ((TextView)view.findViewById(R.id.tv_price_value)).setText(StringUtil.getDisplayPrice(dataObject.price));

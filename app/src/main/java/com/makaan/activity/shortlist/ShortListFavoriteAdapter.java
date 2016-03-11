@@ -76,12 +76,15 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
             shortListFavoriteViewHolder.mTextViewArea.setVisibility(View.GONE);
         }
         String imageUrl=wishList.get(position).project != null ? wishList.get(position).project.imageURL : null;
-        if(imageUrl != null && !imageUrl.contains("https")){
+        /*if(imageUrl != null && !imageUrl.contains("https")){
             imageUrl=imageUrl.replace("http","https");//TODO : handle it in volley
-        }
+        }*/
         if(imageUrl != null) {
             int height = (int)Math.ceil(mContext.getResources().getDimension(R.dimen.fav_card_height));
             int width = (int) (mContext.getResources().getConfiguration().screenWidthDp * Resources.getSystem().getDisplayMetrics().density);
+            shortListFavoriteViewHolder.mImageViewBackground.setDefaultImageResId(
+                    wishList.get(position).project != null? R.drawable.project_placeholder
+                            : R.drawable.property_placeholder);
             shortListFavoriteViewHolder.mImageViewBackground.setImageUrl(ImageUtils.getImageRequestUrl(imageUrl, width, height, false),
                     MakaanNetworkClient.getInstance().getImageLoader());
         }

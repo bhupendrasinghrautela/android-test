@@ -1,6 +1,7 @@
 package com.makaan.fragment.project;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
@@ -17,12 +18,14 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.locality.OnNearByLocalityClickEvent;
 import com.makaan.event.project.OnSimilarProjectClickedEvent;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.image.Image;
 import com.makaan.response.project.Project;
@@ -179,10 +182,19 @@ public class SimilarProjectFragment extends MakaanBaseFragment implements View.O
                 holder.addressTv.setVisibility(View.VISIBLE);
                 holder.addressTv.setText(project.address.toLowerCase());
             }
+
+            Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap("project_placeholder");
+            if (bitmap == null) {
+                int id = R.drawable.project_placeholder;
+                bitmap = BitmapFactory.decodeResource(getResources(), id);
+                MakaanBuyerApplication.bitmapCache.putBitmap("project_placeholder", bitmap);
+            }
+
+            holder.projectIv.setImageBitmap(bitmap);
             int width = getResources().getDimensionPixelSize(R.dimen.project_similar_project_card_width);
             int height = getResources().getDimensionPixelSize(R.dimen.project_similar_project_card_height);
             MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(project.imageURL, width, height, false),
-                    new ImageLoader.ImageListener() {
+                    new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {
@@ -190,11 +202,6 @@ public class SimilarProjectFragment extends MakaanBaseFragment implements View.O
                     }
                     final Bitmap image = imageContainer.getBitmap();
                     holder.projectIv.setImageBitmap(image);
-                }
-
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-
                 }
             });
         }

@@ -190,7 +190,7 @@ public class SellerListingView extends AbstractCardListingView {
             int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_item_seller_image_view_height);
             // get seller image
             MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(
-                    seller.logo, width, height, false), new ImageLoader.ImageListener() {
+                    seller.logo, width, height, false), new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {
@@ -198,11 +198,6 @@ public class SellerListingView extends AbstractCardListingView {
                     }
                     final Bitmap image = imageContainer.getBitmap();
                     mSellerImageView.setImageBitmap(image);
-                }
-
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-
                 }
             });
         } else if(seller.sellers != null && seller.sellers.size() > 0 && seller.sellers.get(0).companyUser != null
@@ -211,7 +206,8 @@ public class SellerListingView extends AbstractCardListingView {
             int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_item_seller_image_view_height);
             // get seller image
             MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(
-                    seller.sellers.get(0).companyUser.user.profilePictureURL, width, height, false), new ImageLoader.ImageListener() {
+                    seller.sellers.get(0).companyUser.user.profilePictureURL, width, height, false),
+                    new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {
@@ -219,10 +215,6 @@ public class SellerListingView extends AbstractCardListingView {
                     }
                     final Bitmap image = imageContainer.getBitmap();
                     mSellerImageView.setImageBitmap(image);
-                }
-
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
                 }
             });
         }

@@ -253,22 +253,24 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                         if (KeyUtil.LOCALITY_ID.equalsIgnoreCase(key)) {
                             if (map.get(KeyUtil.LOCALITY_ID) != null && map.get(KeyUtil.LOCALITY_ID).size() > 0) {
                                 imageObjects.get(position).requestLocalityImage(map.get(KeyUtil.LOCALITY_ID).get(0));
+                                holder.backgroundImageView.setLocalImageBitmap(mDefaultBitmap);
                                 break;
                             }
                         } else if (KeyUtil.CITY_ID.equalsIgnoreCase(key)) {
                             if (map.get(KeyUtil.CITY_ID) != null && map.get(KeyUtil.CITY_ID).size() > 0) {
                                 imageObjects.get(position).requestCityImage(map.get(KeyUtil.CITY_ID).get(0));
+                                holder.backgroundImageView.setLocalImageBitmap(mDefaultBitmap);
                                 break;
                             }
                         } else if (KeyUtil.BUILDER_ID.equalsIgnoreCase(key)) {
                             if (map.get(KeyUtil.BUILDER_ID) != null && map.get(KeyUtil.BUILDER_ID).size() > 0) {
                                 imageObjects.get(position).requestBuilderImage(map.get(KeyUtil.BUILDER_ID).get(0));
+                                holder.backgroundImageView.setLocalImageBitmap(mDefaultBitmap);
                                 break;
                             }
                         }
                     }
                 }
-                holder.backgroundImageView.setLocalImageBitmap(mDefaultBitmap);
             } else {
                 Configuration configuration = getResources().getConfiguration();
                 int width = (int) (configuration.screenHeightDp * Resources.getSystem().getDisplayMetrics().density);
