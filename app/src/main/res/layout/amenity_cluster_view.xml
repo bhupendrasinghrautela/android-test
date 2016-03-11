@@ -19,7 +19,7 @@
             android:id="@+id/amenity_logo"
             android:layout_width="@dimen/amenity_type_logo_dimen"
             android:layout_height="@dimen/amenity_type_logo_dimen"
-            android:src="@drawable/placeholder_amenity"
+            android:src="@drawable/amenity_placeholder"
             android:layout_marginTop="@dimen/amenity_margin_top"
             android:layout_marginBottom="@dimen/amenity_type_logo_margin"/>
 

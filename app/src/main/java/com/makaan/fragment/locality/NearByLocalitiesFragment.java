@@ -89,7 +89,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         title = getArguments().getString("title");
         placeholderResource = getArguments().getInt("placeholder");
         viewDetailText = getArguments().getString("action");
-//        switchLl.setVisibility(R.drawable.placeholder_agent == placeholderResource ? View.VISIBLE : View.GONE);
+//        switchLl.setVisibility(R.drawable.seller_placeholder == placeholderResource ? View.VISIBLE : View.GONE);
         if(title != null) {
             titleTv.setText(title.toLowerCase());
         }
@@ -373,7 +373,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                     removeZeroData(holder, nearByLocality);
                     break;
                 case TOPAGENTS:
-                    holder.localityIv.setDefaultImageResId(R.drawable.agent_image_placeholder);
+                    holder.localityIv.setDefaultImageResId(R.drawable.seller_placeholder);
                     if(isRentSelected)
                         holder.primarySaleLabelTv.setText("properties for rent");
                     else
@@ -381,7 +381,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                     holder.rentLl.setVisibility(View.GONE);
                     break;
                 case TOPBUILDERS:
-                    holder.localityIv.setDefaultImageResId(R.drawable.builder_logo_placeholder);
+                    holder.localityIv.setDefaultImageResId(R.drawable.builder_placeholder);
                     removeZeroData(holder, nearByLocality);
                     holder.primarySaleLabelTv.setText("total projects");
                     holder.secondarySaleLabelTv.setText("ongoing projects");

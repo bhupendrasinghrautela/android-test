@@ -3,6 +3,8 @@ package com.makaan.fragment.buyerJourney;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
@@ -26,6 +29,7 @@ import com.makaan.response.content.BlogItem;
 import com.makaan.response.image.Image;
 import com.makaan.service.BlogService;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.ui.CustomNetworkImageView;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.squareup.otto.Subscribe;
@@ -263,8 +267,19 @@ public class BlogContentFragment extends MakaanBaseFragment {
                 int itemPosition = position-1;
                 int height = (int) Math.ceil(mContext.getResources().getDimension(R.dimen.buyer_content_image_height));
                 int width = (int) (mContext.getResources().getConfiguration().screenWidthDp * Resources.getSystem().getDisplayMetrics().density);
-                holder.imageView.setImageUrl(ImageUtils.getImageRequestUrl(mBlogItems.get(itemPosition).primaryImageUrl, width, height, false),
-                        MakaanNetworkClient.getInstance().getImageLoader());
+                if(TextUtils.isEmpty(mBlogItems.get(itemPosition).primaryImageUrl)) {
+                    Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap("blog_placeholder");
+                    if (bitmap == null) {
+                        int id = R.drawable.blog_placeholder;
+                        bitmap = BitmapFactory.decodeResource(getResources(), id);
+                        MakaanBuyerApplication.bitmapCache.putBitmap("blog_placeholder", bitmap);
+                    }
+                    holder.imageView.setLocalImageBitmap(bitmap);
+                } else {
+                    holder.imageView.setDefaultImageResId(R.drawable.blog_placeholder);
+                    holder.imageView.setImageUrl(ImageUtils.getImageRequestUrl(mBlogItems.get(itemPosition).primaryImageUrl, width, height, false),
+                            MakaanNetworkClient.getInstance().getImageLoader());
+                }
                 if(mBlogItems.get(itemPosition).postTitle != null) {
                     holder.titleTextView.setText(mBlogItems.get(itemPosition).postTitle.toLowerCase());
                 }
@@ -290,7 +305,7 @@ public class BlogContentFragment extends MakaanBaseFragment {
         class BlogContentHolder extends RecyclerView.ViewHolder {
             private final int viewType;
             private final View view;
-            FadeInNetworkImageView imageView;
+            CustomNetworkImageView imageView;
             TextView titleTextView;
             public String link;
 
@@ -299,7 +314,7 @@ public class BlogContentFragment extends MakaanBaseFragment {
                 this.viewType = viewType;
                 this.view = itemView;
                 if(viewType == TYPE_ITEM) {
-                    imageView = (FadeInNetworkImageView) itemView.findViewById(R.id.iv_content);
+                    imageView = (CustomNetworkImageView) itemView.findViewById(R.id.iv_content);
                     titleTextView = (TextView) itemView.findViewById(R.id.txt_content);
 
                     itemView.setOnClickListener(listener);

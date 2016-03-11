@@ -120,22 +120,22 @@ public class LocalityPropertiesFragment extends MakaanBaseFragment {
             holder.localityIv.setImageResource(getImage(position));
         }
         private int getImage(int position) {
-            int id = R.drawable.placeholder_localities_props;
+            int id = R.drawable.locality_placeholder;
             switch (position) {
                 case 0:
-                    id = R.drawable.taxonomy_placeholder_one;
+                    id = R.drawable.luxury_properties;
                     break;
                 case 1:
-                    id = R.drawable.taxonomy_placeholder_two;
+                    id = R.drawable.recent_properties;
                     break;
                 case 2:
-                    id = R.drawable.taxonomy_placeholder_three;
+                    id = R.drawable.budget_homes;
                     break;
                 case 3:
-                    id = R.drawable.taxonomy_placeholder_four;
+                    id = R.drawable.popular_properties;
                     break;
                 case 4:
-                    id = R.drawable.taxonomy_placeholder_five;
+                    id = R.drawable.new_rental_properties;
                     break;
             }
             return id;

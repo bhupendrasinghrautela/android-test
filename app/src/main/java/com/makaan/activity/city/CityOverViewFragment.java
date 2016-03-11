@@ -192,7 +192,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        mMainCityImage.setDefaultImageResId(R.drawable.locality_hero);
+        mMainCityImage.setDefaultImageResId(R.drawable.city_background_placeholder);
         return view;
     }
 
@@ -242,9 +242,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
             });
         }
         else{
-            Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.locality_hero);
-            final Bitmap newImg = Blur.fastblur(mContext, image, 25);
-            mBlurredCityImage.setImageBitmap(newImg);
+            mBlurredCityImage.setImageResource(R.drawable.city_background_blur_placeholder);
         }
         if(mCity.cityTagLine!=null) {
             mCityTagLine.setText(mCity.cityTagLine.toLowerCase());
@@ -294,6 +292,16 @@ public class CityOverViewFragment extends MakaanBaseFragment{
                 }
 
                 mBlurredCityImage.setAlpha(alpha);
+                if(alpha == 0) {
+                    mBlurredCityImage.setVisibility(View.GONE);
+                } else {
+                    mBlurredCityImage.setVisibility(View.VISIBLE);
+                }
+                if(alpha == 1) {
+                    mMainCityImage.setVisibility(View.GONE);
+                } else {
+                    mMainCityImage.setVisibility(View.VISIBLE);
+                }
             }
         });
         mPropertyTypeSpinner.setOnSelectionChangeListener(new OnSelectionChangeListener() {

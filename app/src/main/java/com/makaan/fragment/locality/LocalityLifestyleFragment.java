@@ -115,7 +115,7 @@ public class LocalityLifestyleFragment extends MakaanBaseFragment{
                         MakaanNetworkClient.getInstance().getImageLoader());
             }
             else{
-                holder.localityIv.setDefaultImageResId(R.drawable.placeholder_localities_props);
+                holder.localityIv.setDefaultImageResId(R.drawable.locality_placeholder);
             }
         }
 

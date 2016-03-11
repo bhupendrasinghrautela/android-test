@@ -110,7 +110,7 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
             }
         }
         else if(enquiry.type == EnquiryType.SELLER){
-            shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.placeholder_agent);
+            shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.seller_placeholder);
             if(enquiry.company!=null) {
                 shortListEnquiredViewHolder.mAddress.setText("");
                 if(enquiry.company.name != null) {

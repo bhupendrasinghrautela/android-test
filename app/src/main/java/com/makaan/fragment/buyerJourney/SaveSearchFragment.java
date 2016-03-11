@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.google.gson.reflect.TypeToken;
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
@@ -69,7 +70,6 @@ public class SaveSearchFragment extends MakaanBaseFragment {
 
     private SaveSearchAdapter mAdapter;
     private Context context;
-    private Bitmap mDefaultBitmap = null;
     private BuyerDashboardCallbacks mCallback;
 
     @Override
@@ -96,7 +96,6 @@ public class SaveSearchFragment extends MakaanBaseFragment {
             }
             ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).getSavedSearchesNewMatchesByIds(ids);
         }
-        mDefaultBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.locality_hero);
     }
 
     private void initView() {
@@ -253,19 +252,38 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                         if (KeyUtil.LOCALITY_ID.equalsIgnoreCase(key)) {
                             if (map.get(KeyUtil.LOCALITY_ID) != null && map.get(KeyUtil.LOCALITY_ID).size() > 0) {
                                 imageObjects.get(position).requestLocalityImage(map.get(KeyUtil.LOCALITY_ID).get(0));
-                                holder.backgroundImageView.setLocalImageBitmap(mDefaultBitmap);
+                                Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap("locality_placeholder");
+                                if (bitmap == null) {
+                                    int id = R.drawable.locality_placeholder;
+                                    bitmap = BitmapFactory.decodeResource(getResources(), id);
+                                    MakaanBuyerApplication.bitmapCache.putBitmap("locality_placeholder", bitmap);
+                                }
+                                holder.backgroundImageView.setLocalImageBitmap(bitmap);
                                 break;
                             }
                         } else if (KeyUtil.CITY_ID.equalsIgnoreCase(key)) {
                             if (map.get(KeyUtil.CITY_ID) != null && map.get(KeyUtil.CITY_ID).size() > 0) {
                                 imageObjects.get(position).requestCityImage(map.get(KeyUtil.CITY_ID).get(0));
-                                holder.backgroundImageView.setLocalImageBitmap(mDefaultBitmap);
+                                Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap("city_placeholder");
+                                if (bitmap == null) {
+                                    int id = R.drawable.city_placeholder;
+                                    bitmap = BitmapFactory.decodeResource(getResources(), id);
+                                    MakaanBuyerApplication.bitmapCache.putBitmap("city_placeholder", bitmap);
+                                }
+                                holder.backgroundImageView.setLocalImageBitmap(bitmap);
                                 break;
                             }
                         } else if (KeyUtil.BUILDER_ID.equalsIgnoreCase(key)) {
                             if (map.get(KeyUtil.BUILDER_ID) != null && map.get(KeyUtil.BUILDER_ID).size() > 0) {
                                 imageObjects.get(position).requestBuilderImage(map.get(KeyUtil.BUILDER_ID).get(0));
-                                holder.backgroundImageView.setLocalImageBitmap(mDefaultBitmap);
+                                Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap("builder_placeholder");
+                                if (bitmap == null) {
+                                    int id = R.drawable.builder_placeholder;
+                                    bitmap = BitmapFactory.decodeResource(getResources(), id);
+                                    MakaanBuyerApplication.bitmapCache.putBitmap("builder_placeholder", bitmap);
+                                }
+
+                                holder.backgroundImageView.setLocalImageBitmap(bitmap);
                                 break;
                             }
                         }
@@ -275,7 +293,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                 Configuration configuration = getResources().getConfiguration();
                 int width = (int) (configuration.screenHeightDp * Resources.getSystem().getDisplayMetrics().density);
                 int height = getResources().getDimensionPixelSize(R.dimen.buyer_content_image_height);
-                Log.d("debug", "position : " + position + ", img = " + ImageUtils.getImageRequestUrl(imageObjects.get(position).imageUrl, width, height, false));
+//                Log.d("debug", "position : " + position + ", img = " + ImageUtils.getImageRequestUrl(imageObjects.get(position).imageUrl, width, height, false));
                 holder.backgroundImageView.setImageUrl(ImageUtils.getImageRequestUrl(imageObjects.get(position).imageUrl, width, height, false), MakaanNetworkClient.getInstance().getImageLoader());
             }
         }

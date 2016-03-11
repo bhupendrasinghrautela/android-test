@@ -148,7 +148,7 @@ public class LocalityFragment extends MakaanBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        mMainCityImage.setDefaultImageResId(R.drawable.locality_hero);
+        mMainCityImage.setDefaultImageResId(R.drawable.locality_background_placeholder);
         return view;
     }
 
@@ -334,6 +334,17 @@ public class LocalityFragment extends MakaanBaseFragment {
                     }
                 }
                 mBlurredCityImage.setAlpha(alpha);
+                mBlurredCityImage.setAlpha(alpha);
+                if(alpha == 0) {
+                    mBlurredCityImage.setVisibility(View.GONE);
+                } else {
+                    mBlurredCityImage.setVisibility(View.VISIBLE);
+                }
+                if(alpha == 1) {
+                    mMainCityImage.setVisibility(View.GONE);
+                } else {
+                    mMainCityImage.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
@@ -363,7 +374,7 @@ public class LocalityFragment extends MakaanBaseFragment {
             NearByLocalitiesFragment newFragment = new NearByLocalitiesFragment();
             Bundle bundle = new Bundle();
             bundle.putString("title", getResources().getString(R.string.locality_nearby_localities_title));
-            bundle.putInt("placeholder", R.drawable.placeholder_localities_nearby);
+            bundle.putInt("placeholder", R.drawable.locality_placeholder);
             bundle.putString("action", "view details");
             newFragment.setArguments(bundle);
             initFragment(R.id.container_nearby_localities, newFragment, false);
@@ -438,7 +449,7 @@ public class LocalityFragment extends MakaanBaseFragment {
             NearByLocalitiesFragment newFragment = new NearByLocalitiesFragment();
             Bundle bundle = new Bundle();
             bundle.putString("title", getResources().getString(R.string.locality_top_agents_label));
-            bundle.putInt("placeholder", R.drawable.placeholder_agent);
+            bundle.putInt("placeholder", R.drawable.seller_placeholder);
             bundle.putString("action", "view seller details");
             newFragment.setArguments(bundle);
             initFragment(R.id.container_nearby_localities_top_agents, newFragment, false);
@@ -452,7 +463,7 @@ public class LocalityFragment extends MakaanBaseFragment {
             NearByLocalitiesFragment newFragment = new NearByLocalitiesFragment();
             Bundle bundle = new Bundle();
             bundle.putString("title", String.format(getResources().getString(R.string.locality_top_builders_label), locality.label));
-            bundle.putInt("placeholder", R.drawable.placeholder_localities_builders);
+            bundle.putInt("placeholder", R.drawable.builder_placeholder);
             bundle.putString("action", "view projects");
             newFragment.setArguments(bundle);
             initFragment(R.id.container_nearby_localities_top_builders, newFragment, false);
@@ -492,9 +503,7 @@ public class LocalityFragment extends MakaanBaseFragment {
             });
             mMainCityImage.setImageUrl(ImageUtils.getImageRequestUrl(locality.localityHeroshotImageUrl, width, height, true), MakaanNetworkClient.getInstance().getImageLoader());
         }else{
-            Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.locality_hero);
-            final Bitmap newImg = Blur.fastblur(mContext, image, 25);
-            mBlurredCityImage.setImageBitmap(newImg);
+            mBlurredCityImage.setImageResource(R.drawable.locality_background_blur_placeholder);
         }
     }
 

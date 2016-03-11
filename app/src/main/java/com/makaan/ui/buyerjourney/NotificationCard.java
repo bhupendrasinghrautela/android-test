@@ -67,8 +67,11 @@ public class NotificationCard extends BaseLinearLayout<NotificationAttributes> {
 
         if(!TextUtils.isEmpty(item.getNotificationPayload().getImageUrl())) {
             mNotificationImage.setVisibility(View.VISIBLE);
+            mNotificationImage.setDefaultImageResId(R.drawable.notification_placeholder);
             mNotificationImage.setImageUrl(item.getNotificationPayload().getImageUrl(),
                     MakaanNetworkClient.getInstance().getImageLoader());
+        } else {
+            mNotificationImage.setVisibility(View.GONE);
         }
     }
 

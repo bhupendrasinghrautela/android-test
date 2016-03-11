@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.android.volley.toolbox.FadeInNetworkImageView
+        <com.makaan.ui.CustomNetworkImageView
             android:id="@+id/iv_content"
             android:layout_width="match_parent"
             android:layout_height="@dimen/buyer_content_image_height"
