@@ -62,7 +62,9 @@ public class TaxonomyService implements MakaanService {
         luxuryCard.label2 = LUXURY_PROPERTIES_MSG;
         luxuryCard.serpRequest = new SerpRequest(SerpActivity.TYPE_TAXONOMY);
         luxuryCard.serpRequest.setCityId(cityId);
-        luxuryCard.serpRequest.setMinBudget(minLuxuryPrice == null ? 0 : minLuxuryPrice.longValue());
+        luxuryCard.serpRequest.setSerpContext(SerpRequest.CONTEXT_BUY);
+//        luxuryCard.serpRequest.setMinBudget(minLuxuryPrice == null ? 0 : minLuxuryPrice.longValue());
+        luxuryCard.serpRequest.setMinBudget(defaultMinLuxuryPrice.longValue());
 
 
         TaxonomyCard affordableCard = new TaxonomyCard();
@@ -71,8 +73,8 @@ public class TaxonomyService implements MakaanService {
         affordableCard.label2 = RECENT_PROPERTIES_MSG;
         affordableCard.serpRequest = new SerpRequest(SerpActivity.TYPE_TAXONOMY);
         affordableCard.serpRequest.setCityId(cityId);
-        affordableCard.serpRequest.setMinBudget(minAffordablePrice == null ? 0 : minAffordablePrice.longValue());
-        affordableCard.serpRequest.setMaxBudget(maxAffordablePrice == null ? 0 : maxAffordablePrice.longValue());
+        affordableCard.serpRequest.setSort(SerpRequest.Sort.DATE_POSTED_DESC);
+        affordableCard.serpRequest.setSerpContext(SerpRequest.CONTEXT_BUY);
 
 
         TaxonomyCard budgetCard = new TaxonomyCard();
@@ -81,7 +83,8 @@ public class TaxonomyService implements MakaanService {
         budgetCard.label2 = BUDGET_HOMES_MSG;
         budgetCard.serpRequest = new SerpRequest(SerpActivity.TYPE_TAXONOMY);
         budgetCard.serpRequest.setCityId(cityId);
-        budgetCard.serpRequest.setMaxBudget(maxBudgetPrice == null ? 0 : maxBudgetPrice.longValue());
+        budgetCard.serpRequest.setMaxBudget(defaultMaxBudgetPrice.longValue());
+        budgetCard.serpRequest.setSerpContext(SerpRequest.CONTEXT_BUY);
 
 
         TaxonomyCard bestCard = new TaxonomyCard();
@@ -90,7 +93,8 @@ public class TaxonomyService implements MakaanService {
         bestCard.label2 = POPULAR_PROPERTIES_MSG;
         bestCard.serpRequest = new SerpRequest(SerpActivity.TYPE_TAXONOMY);
         bestCard.serpRequest.setCityId(cityId);
-        bestCard.serpRequest.setSort(SerpRequest.Sort.QUALITY_SCORE_DESC);
+        bestCard.serpRequest.setSort(SerpRequest.Sort.SELLER_RATING_DESC);
+        bestCard.serpRequest.setSerpContext(SerpRequest.CONTEXT_BUY);
 
 
         TaxonomyCard rentalCard = new TaxonomyCard();

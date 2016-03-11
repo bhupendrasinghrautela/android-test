@@ -76,9 +76,9 @@
                     android:maxLength="4"
                     android:singleLine="true"
                     android:textAllCaps="false"
-                    android:textColor="@color/listing_brief_view_layout_default_text_color"
+                    android:textColor="@color/app_red"
                     android:textSize="@dimen/listing_brief_view_layout_property_price_text_size"
-                    android:typeface="serif" />
+                    android:typeface="serif"/>
 
                 <TextView
                     android:id="@+id/listing_brief_view_layout_property_price_unit_text_view"
