@@ -14,6 +14,7 @@
         android:textSize="@dimen/give_you_call_back_text_size"
         android:textColor="@android:color/black"
         android:gravity="center_horizontal"
+        android:typeface="monospace"
         android:text="@string/give_you_call_back_string"
         android:textAllCaps="false" />
 
@@ -29,6 +30,7 @@
         android:paddingRight="@dimen/btn_ok_padding_left_right"
         android:layout_weight="1"
         android:background="@drawable/filled_red"
+        android:typeface="monospace"
         android:text="@string/jarvis_apply_button_string"
         android:textColor="@android:color/white"
         android:textSize="@dimen/btn_ok_text_size"

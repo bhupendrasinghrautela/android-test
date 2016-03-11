@@ -97,6 +97,7 @@ public class MakaanBuyerApplication extends Application {
 
         MakaanNetworkClient.init(this);
         gson = new GsonBuilder().serializeNulls().disableHtmlEscaping().create();
+        MakaanServiceFactory.getInstance().registerService(ChatHistoryService.class, new ChatHistoryService());
         GcmRegister.checkAndSetGcmId(this,null);
 
         Fabric.with(this, new Crashlytics());

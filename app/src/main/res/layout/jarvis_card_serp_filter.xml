@@ -16,6 +16,7 @@
         android:textColor="@android:color/black"
         android:gravity="center_horizontal"
         android:text="@string/jarvis_apply_filter_string"
+        android:typeface="monospace"
         android:textAllCaps="false" />
 
     <com.makaan.ui.view.ExpandableHeightGridView
