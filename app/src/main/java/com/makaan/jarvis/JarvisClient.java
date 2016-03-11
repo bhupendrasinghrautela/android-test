@@ -87,6 +87,10 @@ public class JarvisClient {
     }
 
     public void fetchChatHistory() {
+        if(TextUtils.isEmpty(JarvisConstants.DELIVERY_ID)){
+            return;
+        }
+
         isFetching = true;
         ChatHistoryService chatHistoryService =
                 (ChatHistoryService) MakaanServiceFactory.getInstance().getService(ChatHistoryService.class);

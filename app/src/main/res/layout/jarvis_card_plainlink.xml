@@ -27,6 +27,7 @@
         android:paddingRight="@dimen/plain_link_card_message_padding_left_right"
         android:paddingTop="@dimen/plain_link_card_message_padding_top_bottom"
         android:textColor="@color/black"
+        android:typeface="monospace"
         android:textSize="@dimen/plain_link_card_message_text_size"
         android:textAllCaps="false" />
 

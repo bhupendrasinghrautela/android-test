@@ -15,6 +15,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:textColor="@color/jarvis_card_title_color"
+        android:typeface="monospace"
         android:textSize="@dimen/jarvis_chat_card_title_text_size" />
 
     <TextView
@@ -28,6 +29,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:textColor="@color/jarvis_card_subtitle_color"
+        android:typeface="monospace"
         android:textSize="@dimen/jarvis_chat_card_subtitle_text_size"
         android:textAllCaps="false" />
 
@@ -51,6 +53,7 @@
             android:background="@drawable/round_red"
             android:text="no"
             android:textColor="@color/app_red"
+            android:typeface="monospace"
             android:textSize="@dimen/jarvis_chat_card_button_text_size"
             android:textAllCaps="false" />
 
@@ -63,6 +66,7 @@
             android:background="@drawable/filled_red"
             android:text="yes"
             android:textColor="@android:color/white"
+            android:typeface="monospace"
             android:textSize="@dimen/jarvis_chat_card_button_text_size"
             android:textAllCaps="false" />
     </LinearLayout>
