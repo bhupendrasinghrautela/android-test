@@ -17,6 +17,7 @@ import com.makaan.R;
 import com.makaan.database.DataProvider;
 import com.makaan.database.DatabaseHelper;
 import com.makaan.database.NotificationDbHelper;
+import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.notification.NotificationAttributes;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ import butterknife.ButterKnife;
  * Created by sunil on 18/12/15.
  */
 
-public class NotificationsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class NotificationsFragment extends MakaanBaseFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private NotificationsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -40,33 +41,35 @@ public class NotificationsFragment extends Fragment implements LoaderManager.Loa
     @Bind(R.id.notification_recycler_view)
     RecyclerView mRecyclerView;
 
-    @Bind(R.id.tv_no_notifications)
-    TextView mZeroNotifications;
+    @Override
+    protected int getContentViewId() {
+        return R.layout.fragment_notifications;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_notifications, container, false);
-        ButterKnife.bind(this, view);
+        View view = super .onCreateView(inflater, container, savedInstanceState);
 
         mLayoutManager = new LinearLayoutManager(getActivity());
-        list=new ArrayList<NotificationAttributes>();
+        list=new ArrayList<>();
 
 
-        if(list==null||list.size()==0){
-            mZeroNotifications.setVisibility(View.VISIBLE);
-        }
+        if(list.size()==0){
+            showNoResults(R.string.no_notifications);
+        } else {
 
-        if(mLayoutManager != null)
-            mRecyclerView.setLayoutManager(mLayoutManager);
+            if (mLayoutManager != null) {
+                mRecyclerView.setLayoutManager(mLayoutManager);
+            }
 
-        mAdapter = new NotificationsAdapter(getActivity(), list);
+            mAdapter = new NotificationsAdapter(getActivity(), list);
 
-        if(mAdapter!= null) {
             mRecyclerView.setAdapter(mAdapter);
-            mAdapter.setData(list);
-        }
+//            mAdapter.setData(list);
 
-        getActivity().getSupportLoaderManager().initLoader(NOTIFICATIONS_LOADER, null, this);
+            getActivity().getSupportLoaderManager().initLoader(NOTIFICATIONS_LOADER, null, this);
+            showProgress();
+        }
 
         return view;
     }
@@ -92,9 +95,9 @@ public class NotificationsFragment extends Fragment implements LoaderManager.Loa
 
         List<NotificationAttributes> notifications = NotificationDbHelper.getNotificationList(data);
         if(notifications.isEmpty()){
-            mZeroNotifications.setVisibility(View.VISIBLE);
+            showNoResults(R.string.no_notifications);
         } else {
-            mZeroNotifications.setVisibility(View.GONE);
+            showContent();
             mRecyclerView.setVisibility(View.VISIBLE);
             mAdapter.setData(notifications);
         }
