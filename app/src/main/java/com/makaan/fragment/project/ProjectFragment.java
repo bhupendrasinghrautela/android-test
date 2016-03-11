@@ -355,7 +355,9 @@ public class ProjectFragment extends MakaanBaseFragment{
                 mPropertyImageViewPager.setVisibility(View.GONE);
             }
         }catch (Exception e){
-            mPropertyImageViewPager.setVisibility(View.GONE);
+            if(mPropertyImageViewPager!=null) {
+                mPropertyImageViewPager.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -636,16 +638,17 @@ public class ProjectFragment extends MakaanBaseFragment{
     }
 
     private void addSimilarProjectsFragment(ArrayList<Project> similarProjects) {
-        SimilarProjectFragment fragment = new SimilarProjectFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("title",getString(R.string.project_similar_project_title));
-        fragment.setArguments(bundle);
-        initFragment(R.id.container_similar_projects, fragment, false);
-        fragment.setData(similarProjects);
+        if(isVisible()) {
+            SimilarProjectFragment fragment = new SimilarProjectFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("title", getString(R.string.project_similar_project_title));
+            fragment.setArguments(bundle);
+            initFragment(R.id.container_similar_projects, fragment, false);
+            fragment.setData(similarProjects);
+        }
     }
 
     private void addProjectAboutLocalityFragment(List<AmenityCluster> amenityClusterList) {
-
         if(amenityClusterList == null || amenityClusterList.size() == 0){
             return;
         }

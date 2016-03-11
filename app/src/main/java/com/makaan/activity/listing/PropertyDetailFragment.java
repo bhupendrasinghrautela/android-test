@@ -245,7 +245,15 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
             User user = mListingDetail.companySeller.user;
             Company company = mListingDetail.companySeller.company;
             try {
-                intent.putExtra("name", company.name);
+                if(company.name!=null) {
+                    intent.putExtra("name", company.name);
+                }
+                else if(user.fullName!=null){
+                    intent.putExtra("name",user.fullName);
+                }
+                else{
+                    intent.putExtra("name","");
+                }
                 if (company!=null && company.score != null) {
                     intent.putExtra("score", company.score.toString());
                 } else {
@@ -567,10 +575,26 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
         int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_width);
         int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_height);
         mAllSellerLayout.setVisibility(View.VISIBLE);
+        String name = null;
+        if(company.name!=null){
+            name = company.name;
+        }
+        else if(mListingDetail.companySeller.user!=null && mListingDetail.companySeller.user.fullName!=null){
+            name = mListingDetail.companySeller.user.fullName;
+        }
         if("broker".equalsIgnoreCase(company.type)) {
-            mSellerName.setText(String.format("%s (%s)", company.name, "agent").toLowerCase());
+            if(name != null){
+                mSellerName.setText(String.format("%s (%s)",name, "agent").toLowerCase());
+            }
         } else {
-            mSellerName.setText(String.format("%s (%s)", company.name, company.type).toLowerCase());
+            if(name != null){
+                if(company.type!=null) {
+                    mSellerName.setText(String.format("%s (%s)",name, company.type).toLowerCase());
+                }
+                else{
+                    mSellerName.setText(String.format("%s",name).toLowerCase());
+                }
+            }
         }
         if(company.score!=null) {
             mSellerRating.setRating(company.score.floatValue() / 2);
@@ -579,14 +603,8 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
         if(!company.assist){
             mSellerAssistButton.setVisibility(View.GONE);
         }
-        if(!TextUtils.isEmpty(company.name)) {
-            mSellerLogoTextView.setText(String.valueOf(company.name.charAt(0)));
-        } else if(user != null) {
-            if(!TextUtils.isEmpty(user.fullName)) {
-                mSellerLogoTextView.setText(String.valueOf(user.fullName.charAt(0)));
-            } else if(!TextUtils.isEmpty(user.name)) {
-                mSellerLogoTextView.setText(String.valueOf(user.name.charAt(0)));
-            }
+        if(!TextUtils.isEmpty(name)) {
+            mSellerLogoTextView.setText(String.valueOf(name.charAt(0)));
         }
         if(!TextUtils.isEmpty(company.logo)) {
             mSellerLogoTextView.setVisibility(View.GONE);
@@ -628,13 +646,6 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
     }
 
     private void showTextAsImage() {
-        if(TextUtils.isEmpty(mListingDetail.companySeller.company.name)) {
-            mSellerLogoTextView.setVisibility(View.INVISIBLE);
-        }
-        else {
-            mSellerLogoTextView.setText(String.valueOf(mListingDetail.companySeller.company.name.charAt(0)));
-            mSellerLogoTextView.setVisibility(View.VISIBLE);
-        }
         mSellerImageView.setVisibility(View.GONE);
         // show seller first character as logo
 

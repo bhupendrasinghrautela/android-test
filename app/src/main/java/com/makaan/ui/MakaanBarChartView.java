@@ -159,7 +159,9 @@ public class MakaanBarChartView extends BaseLinearLayout<List<CityTrendData>>{
         @Override
         public void onValueSelected(int columnIndex, int subcolumnIndex, SubcolumnValue value) {
             if(mListener!=null) {
-                mListener.onBarTouched(mChartData.get(columnIndex));
+                if(columnIndex<mChartData.size()) {
+                    mListener.onBarTouched(mChartData.get(columnIndex));
+                }
             }
         }
 

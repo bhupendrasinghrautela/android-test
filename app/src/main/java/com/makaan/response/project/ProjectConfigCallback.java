@@ -92,6 +92,9 @@ public class ProjectConfigCallback extends JSONGetCallback {
                         } else {
                             getProjectConfigItem.propertyCount += projectConfigItem.propertyCount;
                             getProjectConfigItem.bedrooms.addAll(projectConfigItem.bedrooms);
+                            if(getProjectConfigItem.maxPrice>projectConfigItem.maxPrice){
+                                getProjectConfigItem.maxPrice = projectConfigItem.maxPrice;
+                            }
                             for (SellerCard sellerCard : projectConfigItem.companies.values()) {
                                 getProjectConfigItem.companies.put(sellerCard.sellerId, sellerCard);
                             }
@@ -109,6 +112,7 @@ public class ProjectConfigCallback extends JSONGetCallback {
 
     private ArrayList<ProjectConfigItem> getProjectConfigItems(JSONObject apartment, HashMap<Long, Long> sellerPropCountMap) {
         ArrayList<ProjectConfigItem> projectConfigItems = new ArrayList<>();
+        boolean once = false;
 
         Type type = new TypeToken<SortedMap<Double, ArrayList<ListingDetail>>>() {
         }.getType();
@@ -119,16 +123,9 @@ public class ProjectConfigCallback extends JSONGetCallback {
         int count  = 0;
         for (Map.Entry<Double, ArrayList<ListingDetail>> entry : apartMentListing.entrySet()) {
             minPrice = entry.getKey();
-            if(lastConfigItem!=null){
-                lastConfigItem.maxPrice = minPrice;
-            }
             Double price = entry.getKey();
             ArrayList<ListingDetail> listings = entry.getValue();
             ProjectConfigItem projectConfigItem = new ProjectConfigItem();
-            projectConfigItems.add(projectConfigItem);
-
-            projectConfigItem.minPrice = minPrice;
-            lastConfigItem = projectConfigItem;
             if (null != listings && listings.size() > 0) {
 
                 for (ListingDetail listingDetail : listings) {
@@ -167,6 +164,30 @@ public class ProjectConfigCallback extends JSONGetCallback {
 
                 }
 
+            }
+            if(projectConfigItems.size()==0) {
+                projectConfigItems.add(projectConfigItem);
+                projectConfigItem.minPrice = minPrice;
+                lastConfigItem = projectConfigItem;
+                if(projectConfigItem.propertyCount>0){
+                    once = true;
+                }
+            }
+            else if(projectConfigItem.propertyCount == 0 && once){
+                if(lastConfigItem!=null) {
+                    lastConfigItem.maxPrice = minPrice;
+                }
+                projectConfigItems.add(projectConfigItem);
+                projectConfigItem.minPrice = minPrice;
+                lastConfigItem = projectConfigItem;
+            }
+            else if(projectConfigItem.propertyCount>0){
+                if(lastConfigItem!=null) {
+                    lastConfigItem.maxPrice = minPrice;
+                }
+                projectConfigItems.add(projectConfigItem);
+                projectConfigItem.minPrice = minPrice;
+                lastConfigItem = projectConfigItem;
             }
         }
 

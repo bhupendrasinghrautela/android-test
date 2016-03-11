@@ -68,7 +68,12 @@ public class ListingOtherSellersCallback extends JSONGetCallback {
                     //sellerMap.put(company.id, sellerCard);
                     sellerCard.sellerId = listingDetail.sellerId;
                     //sellerCard.assist =
-                    sellerCard.name = company.name;
+                    if(company.name!=null) {
+                        sellerCard.name = company.name;
+                    }
+                    else if(listingDetail.companySeller!=null && listingDetail.companySeller.user!=null && listingDetail.companySeller.user.fullName!=null){
+                        sellerCard.name = listingDetail.companySeller.user.fullName;
+                    }
                     sellerCard.type = company.type;
                     if(company.score!=null) {
                         sellerCard.rating = company.score / 2;
