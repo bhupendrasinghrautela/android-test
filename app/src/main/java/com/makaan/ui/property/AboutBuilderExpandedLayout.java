@@ -160,9 +160,20 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
             }
             if(item.projectStatusCount !=null){
                 ProjectStatusCount projectStatusCount = item.projectStatusCount;
+                if(projectStatusCount.completed != 0) {
                     setProject(mBuilderCompleted, projectStatusCount.completed);
+                    isDataPresent = true;
+                }
+                else{
+                    mBuilderCompletedLayout.setVisibility(GONE);
+                }
+                if(projectStatusCount.underConstruction != 0) {
                     setProject(mBuilderOngoing, projectStatusCount.underConstruction);
-                isDataPresent = true;
+                    isDataPresent = true;
+                }
+                else{
+                    mBuilderOngoingLayout.setVisibility(GONE);
+                }
             }
             else{
                 mBuilderCompletedLayout.setVisibility(GONE);

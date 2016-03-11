@@ -62,7 +62,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
         STATUS("status"),POSSESSION("possession"),AGE("age"),BATH("bathrooms"),FLOOR("floor"),BALCONY("balcony"),
         TOTAL_FLOOR("totalFloor"),CATEGORY("category"),BOOK_AMOUNT("bookamt"),FURNISH_STAT("furnishStat"),
         SECURITY_DEPOSIT("securityDeposit"),AVAILABILITY("availablity"),TENANT_PREF("tenantPref"),
-        OPEN_SIDES("openSides"),ENTRY_ROAD_WIDTH("entryRoadWidth"),FACING("facing"),
+        OPEN_SIDES("openSides"),ENTRY_ROAD_WIDTH("entryRoadWidth"),FACING("facing"),NEGOTIABLE("priceNeg"),
         PARKING("parking"),OVERLOOK("overlook"),ADD_ROOM("addroom"),OWNER_TYPE("ownerType"),TYPE("type");
 
         private String value;
@@ -196,7 +196,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                     case SECURITY_DEPOSIT:
                         if(mDetail.securityDeposit!=0){
                             overViewItem.name= "security deposit";
-                            overViewItem.resourceId = R.drawable.shower;
+                            overViewItem.resourceId = R.drawable.security_deposit;
                             overViewItem.value = String.valueOf(mDetail.securityDeposit);
                         }
                         break;
@@ -249,6 +249,18 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                             overViewItem.name = overview.toString();
                             overViewItem.resourceId = R.drawable.open_sides;
                             overViewItem.value = String.valueOf(mDetail.noOfOpenSides);
+                        }
+                        break;
+                    case NEGOTIABLE:
+                        if(mDetail.negotiable!=null){
+                            overViewItem.name = "price negotiable";
+                            overViewItem.resourceId = R.drawable.booking_amount;
+                            if(mDetail.negotiable) {
+                                overViewItem.value = "yes";
+                            }
+                            else{
+                                overViewItem.value = "no";
+                            }
                         }
                         break;
                     case BALCONY:

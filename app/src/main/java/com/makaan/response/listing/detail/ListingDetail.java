@@ -21,6 +21,7 @@ public class ListingDetail {
     public Long minConstructionCompletionDate;
     public Integer facingId,noOfOpenSides;
     public boolean status;
+    public Boolean negotiable;
     public int noOfCarParks,constructionStatusId;
     public Long propertyId, projectId;
     public String unitType, unitName, measure;

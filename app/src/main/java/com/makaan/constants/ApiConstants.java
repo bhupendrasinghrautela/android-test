@@ -7,8 +7,9 @@ public class ApiConstants {
 
 
     //public static final String BASE_URL = "https://mp-qa2.makaan-ws.com";
+    //public static final String BASE_URL = "https://mp-qa1.makaan-ws.com";
+    public static final String BASE_URL = "https://beta.makaan-ws.com";
     //public static final String BASE_URL = "https://beta.makaan-ws.com";
-    public static final String BASE_URL = "https://mp-qa1.makaan-ws.com";
 
     public static final String MICROSERVICE_MADELYNE = BASE_URL.concat("/madelyne/");
     public static final String MICROSERVICE_COMPASS = BASE_URL.concat("/compass/");
