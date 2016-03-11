@@ -22,6 +22,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="please rate your \nexperience with"
+        android:typeface="monospace"
         android:layout_gravity="center"
         android:textSize="16sp"
         android:textAllCaps="false"/>
@@ -63,6 +64,7 @@
         android:layout_weight="1"
         android:background="@drawable/filled_red"
         android:text="submit"
+        android:typeface="monospace"
         android:textColor="@android:color/white"
         android:textSize="16sp"
         android:textAllCaps="false" />

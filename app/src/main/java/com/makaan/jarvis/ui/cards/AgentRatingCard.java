@@ -12,6 +12,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.jarvis.JarvisClient;
 import com.makaan.jarvis.message.Message;
+import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.ui.view.BaseView;
 import com.makaan.util.ImageUtils;
@@ -62,17 +63,13 @@ public class AgentRatingCard extends BaseView<Message> {
         if(!TextUtils.isEmpty(item.chatObj.image)) {
             int width = getResources().getDimensionPixelSize(R.dimen.jarvis_seller_card_profile_pic_dimen);
             MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(item.chatObj.image, width, width, false),
-                    new ImageLoader.ImageListener() {
+                    new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }
                     mAgentImage.setImageBitmap(imageContainer.getBitmap());
-                }
-
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
                 }
             });
         }

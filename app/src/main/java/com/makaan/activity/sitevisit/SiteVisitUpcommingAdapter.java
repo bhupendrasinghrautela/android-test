@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
+import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.locality.Locality;
@@ -72,7 +73,6 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
         shortListEnquiredViewHolder.setPosition(position);
         Enquiry enquiry = mEnquiries.get(position);
 
-        shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.locality_hero);
         if(enquiry.time != null) {
             Date date = new Date(enquiry.time);
 
@@ -83,6 +83,7 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
             shortListEnquiredViewHolder.mSiteVisitTime.setText(timeFormat.format(enquiry.time).toLowerCase());
         }
         if(enquiry.type == EnquiryType.LISTING){
+            shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.property_placeholder);
             if(enquiry.listingDetail!=null){
                 populateListingDetail(enquiry.listingDetail, shortListEnquiredViewHolder);
             }
@@ -92,6 +93,7 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
             }
         }
         else if(enquiry.type == EnquiryType.PROJECT){
+            shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.project_placeholder);
             if(enquiry.project!=null){
                 populateProjectDetail(enquiry.project,shortListEnquiredViewHolder);
                 if(enquiry.company!=null) {
@@ -108,6 +110,7 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
             }
         }
         else if(enquiry.type == EnquiryType.SELLER){
+            shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.placeholder_agent);
             if(enquiry.company!=null) {
                 shortListEnquiredViewHolder.mAddress.setText("");
                 if(enquiry.company.name != null) {
@@ -181,12 +184,14 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
             if (!TextUtils.isEmpty(company.logo)) {
                 holder.mSellerText.setVisibility(View.GONE);
                 holder.mSellerImage.setVisibility(View.VISIBLE);
-                MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(company.logo, width, height, false), new ImageLoader.ImageListener() {
+                MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(company.logo, width, height, false), new CustomImageLoaderListener() {
                     @Override
                     public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                         if (b && imageContainer.getBitmap() == null) {
                             return;
                         }
+                        holder.mSellerText.setVisibility(View.GONE);
+                        holder.mSellerImage.setVisibility(View.VISIBLE);
                         holder.mSellerImage.setImageBitmap(imageContainer.getBitmap());
                     }
 
@@ -198,12 +203,14 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
             } else if (user != null && !TextUtils.isEmpty(user.profilePictureURL)) {
                 holder.mSellerText.setVisibility(View.GONE);
                 holder.mSellerImage.setVisibility(View.VISIBLE);
-                MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(user.profilePictureURL, width, height, false), new ImageLoader.ImageListener() {
+                MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(user.profilePictureURL, width, height, false), new CustomImageLoaderListener() {
                     @Override
                     public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                         if (b && imageContainer.getBitmap() == null) {
                             return;
                         }
+                        holder.mSellerText.setVisibility(View.GONE);
+                        holder.mSellerImage.setVisibility(View.VISIBLE);
                         holder.mSellerImage.setImageBitmap(imageContainer.getBitmap());
                     }
 

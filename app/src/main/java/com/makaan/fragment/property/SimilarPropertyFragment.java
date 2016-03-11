@@ -1,6 +1,7 @@
 package com.makaan.fragment.property;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
@@ -14,10 +15,12 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.listing.OpenListingListener;
 import com.makaan.event.listing.SimilarListingGetEvent.ListingItems;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.property.Property;
@@ -165,11 +168,21 @@ public class SimilarPropertyFragment extends MakaanBaseFragment implements View.
                 holder.pricePostTv.setText(priceUnit+" onwards");
                 holder.pricePreTv.setText("\u20B9 ");
             }
+
+            Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap("property_placeholder");
+            if (bitmap == null) {
+                int id = R.drawable.property_placeholder;
+                bitmap = BitmapFactory.decodeResource(getResources(), id);
+                MakaanBuyerApplication.bitmapCache.putBitmap("property_placeholder", bitmap);
+            }
+
+            holder.projectIv.setImageBitmap(bitmap);
+
             if(listing.mainImageURL!=null) {
                 int width = getResources().getDimensionPixelSize(R.dimen.project_similar_project_card_width);
                 int height = getResources().getDimensionPixelSize(R.dimen.project_similar_project_card_height);
                 MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(listing.mainImageURL, width, height, false),
-                        new ImageLoader.ImageListener() {
+                        new CustomImageLoaderListener() {
                     @Override
                     public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                         if (b && imageContainer.getBitmap() == null) {
@@ -177,11 +190,6 @@ public class SimilarPropertyFragment extends MakaanBaseFragment implements View.
                         }
                         final Bitmap image = imageContainer.getBitmap();
                         holder.projectIv.setImageBitmap(image);
-                    }
-
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-
                     }
                 });
             }

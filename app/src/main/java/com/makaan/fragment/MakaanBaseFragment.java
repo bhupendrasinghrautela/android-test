@@ -1,5 +1,6 @@
 package com.makaan.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,11 +15,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.makaan.R;
+import com.makaan.activity.HomeActivity;
 import com.makaan.util.AppBus;
 import com.makaan.util.AppUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by rohitgarg on 1/9/16.
@@ -145,5 +148,12 @@ public abstract class MakaanBaseFragment extends Fragment {
     public void onStart() {
         super.onStart();
         AppBus.getInstance().register(this);
+    }
+
+    @OnClick(R.id.fragment_makaan_base_no_result_action_button)
+    public void onGoHomePressed(View view) {
+        Intent intent = new Intent(getActivity(), HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

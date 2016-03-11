@@ -33,6 +33,7 @@ import com.makaan.activity.listing.PropertyActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SellerCard;
 import com.makaan.ui.view.CustomRatingBar;
@@ -302,17 +303,20 @@ public class ViewSellersDialogFragment extends DialogFragment {
             if(!TextUtils.isEmpty(sellerCard.imageUrl)) {
                 holder.mSellerLogoTextView.setVisibility(View.GONE);
                 holder.mSellerImageView.setVisibility(View.VISIBLE);
-                MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(sellerCard.imageUrl, width, height, false), new ImageLoader.ImageListener() {
+                MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(sellerCard.imageUrl, width, height, false), new CustomImageLoaderListener() {
                     @Override
                     public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                         if (b && imageContainer.getBitmap() == null) {
                             return;
                         }
+                        holder.mSellerLogoTextView.setVisibility(View.GONE);
+                        holder.mSellerImageView.setVisibility(View.VISIBLE);
                         holder.mSellerImageView.setImageBitmap(imageContainer.getBitmap());
                     }
 
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
+                        super.onErrorResponse(volleyError);
                         showTextAsImage(position,holder);
                     }
                 });

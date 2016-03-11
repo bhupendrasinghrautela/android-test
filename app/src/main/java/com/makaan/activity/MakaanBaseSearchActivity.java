@@ -1383,4 +1383,11 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             }
         }
     }
+
+    @OnClick(R.id.activity_search_base_search_no_result_action_button)
+    public void onGoHomePressed(View view) {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 }

@@ -27,6 +27,7 @@ import com.makaan.cookie.CookiePreferences;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.MakaanMessageDialogFragment;
 import com.makaan.fragment.project.ProjectFragment;
+import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.country.CountryCodeResponse;
 import com.makaan.response.leadForm.InstantCallbackResponse;
@@ -317,17 +318,20 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
         int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_height);
         if (null != mLeadFormPresenter.getSellerImageUrl()) {
             MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(mLeadFormPresenter.getSellerImageUrl(),
-                    width, height, false), new ImageLoader.ImageListener() {
+                    width, height, false), new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }
+                    mSellerImage.setVisibility(View.VISIBLE);
+                    mSellerNameProfileText.setVisibility(View.INVISIBLE);
                     mSellerImage.setImageBitmap(imageContainer.getBitmap());
                 }
 
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
+                    super.onErrorResponse(volleyError);
                     mSellerImage.setVisibility(View.INVISIBLE);
                     mSellerNameProfileText.setVisibility(View.VISIBLE);
                     mSellerNameProfileText.setText(mLeadFormPresenter.getName());

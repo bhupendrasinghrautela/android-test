@@ -28,7 +28,7 @@
                 android:paddingRight="@dimen/listing_brief_view_layout_padding_rights"
                 android:paddingEnd="@dimen/listing_brief_view_layout_padding_rights">
 
-                <com.android.volley.toolbox.FadeInNetworkImageView
+                <com.makaan.ui.CustomNetworkImageView
                     android:id="@+id/listing_brief_view_layout_property_image_view"
                     android:layout_width="@dimen/listing_brief_view_layout_image_view_width"
                     android:layout_height="@dimen/listing_brief_view_layout_image_view_height"
@@ -45,8 +45,8 @@
                     android:layout_marginLeft="@dimen/listing_brief_view_layout_rupee_image_left_margin"
                     android:layout_marginStart="@dimen/listing_brief_view_layout_rupee_image_left_margin"
                     android:layout_marginTop="@dimen/listing_brief_view_layout_rupee_image_top_margin"
-                    android:layout_toEndOf="@+id/listing_brief_view_layout_property_image_view"
-                    android:layout_toRightOf="@+id/listing_brief_view_layout_property_image_view"
+                    android:layout_toEndOf="@id/listing_brief_view_layout_property_image_view"
+                    android:layout_toRightOf="@id/listing_brief_view_layout_property_image_view"
                     android:scaleType="centerCrop"
                     android:src="@drawable/rupee" />
 

@@ -618,7 +618,8 @@ public class ProjectFragment extends MakaanBaseFragment{
         bundle.putSerializable("localities", localities);
         if(project.minPricePerUnitArea != null && project.locality.avgPricePerUnitArea!=null) {
             bundle.putInt("price", project.minPricePerUnitArea.intValue());
-            if (project.locality != null && project.locality.avgPricePerUnitArea < project.minPricePerUnitArea) {
+            if (project.locality != null && project.locality.avgPricePerUnitArea != null
+                    && project.locality.avgPricePerUnitArea < project.minPricePerUnitArea) {
                 bundle.putBoolean("increased",true);
             } else {
                 bundle.putBoolean("increased",false);

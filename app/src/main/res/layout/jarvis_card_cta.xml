@@ -13,6 +13,7 @@
         android:gravity="center_horizontal"
         android:layout_margin="20dp"
         android:textColor="@color/jarvis_card_subtitle_color"
+        android:typeface="monospace"
         android:textSize="@dimen/jarvis_chat_card_subtitle_text_size"
         android:textAllCaps="false" />
 
@@ -36,6 +37,7 @@
             android:background="@drawable/round_red"
             android:text="cancel"
             android:textColor="@color/app_red"
+            android:typeface="monospace"
             android:textSize="@dimen/jarvis_chat_card_button_text_size"
             android:textAllCaps="false" />
 
@@ -46,6 +48,7 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:background="@drawable/filled_red"
+            android:typeface="monospace"
             android:text="ok"
             android:textColor="@android:color/white"
             android:textSize="@dimen/jarvis_chat_card_button_text_size"

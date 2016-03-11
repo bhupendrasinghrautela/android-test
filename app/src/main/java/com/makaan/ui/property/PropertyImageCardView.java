@@ -2,14 +2,18 @@ package com.makaan.ui.property;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.image.Image;
@@ -82,7 +86,8 @@ public class PropertyImageCardView extends CardView {
             rupeeIcon.setVisibility(GONE);
         }
 
-        mPropertyImageView.setDefaultImageResId(R.drawable.luxury_project);
+        mPropertyImageView.setDefaultImageResId(R.drawable.property_placeholder);
+
         int width = (int) (getResources().getConfiguration().screenWidthDp * Resources.getSystem().getDisplayMetrics().density);
         int height = (int)Math.ceil(getResources().getDimension(R.dimen.property_page_stack_like_pager_height));
         mPropertyImageView.setImageUrl(ImageUtils.getImageRequestUrl(listingDetailImage.absolutePath, width, height, false),

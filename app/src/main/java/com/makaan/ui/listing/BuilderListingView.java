@@ -17,6 +17,7 @@ import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.event.builder.BuilderByIdEvent;
+import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.project.Builder;
 import com.makaan.util.AppBus;
@@ -135,7 +136,7 @@ public class BuilderListingView extends AbstractCardListingView {
             int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_item_builder_image_card_view_height);
             // get seller image
             MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(builder.imageURL, width, height, false),
-                    new ImageLoader.ImageListener() {
+                    new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {
@@ -143,11 +144,6 @@ public class BuilderListingView extends AbstractCardListingView {
                     }
                     final Bitmap image = imageContainer.getBitmap();
                     mBuilderImageView.setImageBitmap(image);
-                }
-
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-
                 }
             });
         }

@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/bhk_string"
+        android:typeface="monospace"
         android:layout_marginBottom="@dimen/bhk_string_margin_bottom"
         android:textSize="@dimen/bhk_string_text_size" />
 
@@ -48,6 +49,7 @@
             android:hint="@string/et_price_hint"
             android:singleLine="true"
             android:layout_marginRight="10dp"
+            android:typeface="monospace"
             android:inputType="number"
             android:textSize="@dimen/et_price_edit_text_size" />
 
@@ -68,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/et_locality_hint"
+            android:typeface="monospace"
             android:singleLine="true"
             android:textSize="@dimen/et_locality_edit_text_size" />
     </android.support.design.widget.TextInputLayout>
@@ -81,6 +84,7 @@
         android:padding="@dimen/btn_apply_padding"
         android:background="@drawable/filled_red"
         android:text="@string/btn_apply_string"
+        android:typeface="monospace"
         android:textColor="@color/white"
         android:textSize="@dimen/btn_apply_text_size"
         android:textAllCaps="false" />

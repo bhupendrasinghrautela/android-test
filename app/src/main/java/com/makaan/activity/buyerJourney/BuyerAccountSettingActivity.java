@@ -16,6 +16,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.cookie.CookiePreferences;
+import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.user.UserResponse;
 import com.makaan.util.ImageUtils;
@@ -89,11 +90,7 @@ public class BuyerAccountSettingActivity extends MakaanFragmentActivity {
                 int width = getResources().getDimensionPixelSize(R.dimen.profile_image_width);
                 int height = getResources().getDimensionPixelSize(R.dimen.profile_image_height);
                 MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(userData.profileImageUrl, width, height, false),
-                        new ImageLoader.ImageListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError volleyError) {
-
-                            }
+                        new CustomImageLoaderListener() {
 
                             @Override
                             public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {

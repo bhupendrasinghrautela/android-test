@@ -14,6 +14,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.jarvis.message.Message;
+import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.ui.view.BaseView;
@@ -88,17 +89,20 @@ public class SellerOverviewCard extends BaseView<Message> {
             int width = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_width);
             int height = getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_height);
             MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(item.chatObj.image, width, height, false),
-                    new ImageLoader.ImageListener() {
+                    new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }
+                    mSellerLogoTextView.setVisibility(View.GONE);
+                    mSellerImageView.setVisibility(View.VISIBLE);
                     mSellerImageView.setImageBitmap(imageContainer.getBitmap());
                 }
 
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
+                    super.onErrorResponse(volleyError);
                     showTextAsImage(item.chatObj.name);
                 }
             });

@@ -16,6 +16,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.makaan.constants.ApiConstants;
 import com.makaan.cookie.CookiePreferences;
+import com.makaan.jarvis.JarvisClient;
 import com.makaan.jarvis.JarvisConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.ResponseError;
@@ -60,7 +61,6 @@ public class GcmRegister{
                 registerInBackground(context);
             }else{
                 JarvisConstants.DELIVERY_ID = sRegid;
-            	sendRegistrationIdToBackend(sRegid);
             }
         }
     }
@@ -126,6 +126,8 @@ public class GcmRegister{
                         sGcm = GoogleCloudMessaging.getInstance(context);
                     }
                     sRegid = sGcm.register(SENDER_ID);*/
+
+                    JarvisClient.getInstance().fetchChatHistory();
                     msg = "Device registered, registration ID = " + sRegid;
                     GcmPreferences.setGcmRegId(context, sRegid);
                     GcmPreferences.setAppVersion(context, CommonUtil.getAppVersion(context));
