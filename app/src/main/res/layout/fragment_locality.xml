@@ -9,14 +9,15 @@
         android:id="@+id/main_city_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/locality_hero"
+        android:background="@drawable/locality_background_placeholder"
         android:scaleType="centerCrop"/>
     <ImageView
         android:id="@+id/blurred_city_image"
         android:layout_width="match_parent"
         android:alpha="0"
         android:scaleType="centerCrop"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@drawable/locality_background_blur_placeholder"/>
 
     <ImageView
         android:background="#80000000"

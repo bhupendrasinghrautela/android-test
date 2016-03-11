@@ -110,6 +110,7 @@ public class LocalityService implements MakaanService {
 
         if (null != localityId && localityId != 0) {
             String localityTrendingSearch = ApiConstants.COLUMBUS_SUGGESTIONS.concat("?entityId=").concat(localityId.toString());
+            localityTrendingSearch = localityTrendingSearch.concat("&rows=3");
             if(buy) {
                 localityTrendingSearch = localityTrendingSearch.concat("&category=buy");
             } else {

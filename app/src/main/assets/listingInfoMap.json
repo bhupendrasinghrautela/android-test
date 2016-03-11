@@ -79,7 +79,7 @@
         {
           "displayName":"security deposit",
           "fieldName":"securityDeposit",
-          "imageName":"shower"
+          "imageName":"security_deposit"
         },
         {
           "displayName":"availability",

@@ -170,7 +170,7 @@ public class Timeline extends LinearLayout implements TimelineView.OnTimeLineCha
         public void onBindViewHolder(ViewHolder holder, int position) {
             TimelineView.TimelineDataItem item = list.get(position);
             imageLoader = MakaanNetworkClient.getInstance().getImageLoader();
-            imageLoader.get(item.url, ImageLoader.getImageListener(holder.timelineIv, R.drawable.placeholder_timeline, android.R.drawable.ic_dialog_alert));
+            imageLoader.get(item.url, ImageLoader.getImageListener(holder.timelineIv, R.drawable.project_placeholder, android.R.drawable.ic_dialog_alert));
             holder.timelineIv.setImageUrl(item.url, imageLoader);
 
             //Picasso.with(context).load(item.url).placeholder(R.drawable.placeholder_timeline).into(holder.timelineIv);

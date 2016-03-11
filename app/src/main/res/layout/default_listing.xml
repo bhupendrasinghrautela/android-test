@@ -80,7 +80,7 @@
                         android:ellipsize="none"
                         android:singleLine="true"
                         android:textAllCaps="false"
-                        android:textColor="@color/serp_listing_card_default_text_color"
+                        android:textColor="@color/app_red"
                         android:textSize="@dimen/serp_listing_card_property_price_text_size"
                         android:typeface="serif"
                         android:maxLength="5"/>

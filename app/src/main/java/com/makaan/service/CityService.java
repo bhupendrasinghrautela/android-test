@@ -120,7 +120,7 @@ public class CityService implements MakaanService {
         if (null != cityId) {
 
             Selector topLocaliltySelector = new Selector();
-            topLocaliltySelector.term(CITY_ID, cityId.toString()).page(0, noOfTopLocalities != null ? noOfTopLocalities : 5)
+            topLocaliltySelector.term(CITY_ID, cityId.toString()).page(0, noOfTopLocalities != null ? noOfTopLocalities : 15)
                     .sort(LOCALITY_LIVABILITY_SCORE, SORT_DESC);
 
             Type topLocalitiesListType = new TypeToken<ArrayList<Locality>>() {

@@ -21,7 +21,8 @@
             android:visibility="gone"
             android:id="@+id/builder_logo"
             android:layout_marginBottom="@dimen/property_page_builder_margin_bottom"
-            android:layout_height="@dimen/property_page_builder_logo_height"/>
+            android:layout_height="@dimen/property_page_builder_logo_height"
+            android:src="@drawable/builder_logo_placeholder"/>
         <TextView
             android:id="@+id/builder_description"
             android:layout_width="match_parent"

@@ -140,8 +140,8 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         }else{
             priceTrendsFirstLl.setVisibility(View.GONE);
         }
-        if(cityAverage != 0)
-            trendsGrowthTv.setText(cityName+" average price is \u20B9" + StringUtil.getFormattedNumber(cityAverage) + " / sq ft.");
+        if(cityAverage != 0 && cityName != null)
+            trendsGrowthTv.setText(cityName.toLowerCase()+" average price is \u20B9" + StringUtil.getFormattedNumber(cityAverage) + " / sq ft.");
         else{
             priceTrendsSecondLl.setVisibility(View.GONE);
         }

@@ -228,7 +228,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             setupData();
         }
         savedSearches = MasterDataCache.getInstance().getSavedSearch();
-        if(savedSearches != null && savedSearches.size() == 0) {
+        if(mIsUserLoggedIn && savedSearches != null && savedSearches.size() == 0) {
             mSavedSearchesCount = savedSearches.size();
             ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).getSavedSearches();
             mSavedSearchesReceived = false;

@@ -243,6 +243,7 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
                     if(!TextUtils.isEmpty(listingDetail.listing.mainImageURL)) {
                         int width = (int) (getResources().getConfiguration().screenWidthDp * Resources.getSystem().getDisplayMetrics().density);
                         int height = (int)Math.ceil(getResources().getDimension(R.dimen.buyer_dashboard_listing_view_height));
+                        imageView.setDefaultImageResId(R.drawable.property_placeholder);
                         imageView.setImageUrl(ImageUtils.getImageRequestUrl(listingDetail.listing.mainImageURL, width, height, false),
                                 MakaanNetworkClient.getInstance().getImageLoader());
                     }

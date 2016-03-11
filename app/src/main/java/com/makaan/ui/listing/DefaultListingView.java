@@ -521,7 +521,7 @@ public class DefaultListingView extends AbstractListingView {
                 } else {
                     return false;
                 }
-            case "propertyAge":
+            /*case "propertyAge":
                 if(mListing.isReadyToMove && mListing.age >= 0) {
                     if(mListing.age <= 1) {
                         mPropertyInfoTextViews.get(j).setText(String.format("%d - %d yr", mListing.age, mListing.age + 1));
@@ -536,7 +536,7 @@ public class DefaultListingView extends AbstractListingView {
                     break;
                 } else {
                     return false;
-                }
+                }*/
             case "possessionDate":
                 if(!mListing.isReadyToMove && !TextUtils.isEmpty(mListing.possessionDate)) {
                     mPropertyInfoTextViews.get(j).setText(mListing.possessionDate.toLowerCase());
@@ -638,7 +638,7 @@ public class DefaultListingView extends AbstractListingView {
                     return false;
                 }
             case "securityDeposit":
-                if(mListing.securityDeposit != null && mListing.securityDeposit >= 0) {
+                if(mListing.securityDeposit != null && mListing.securityDeposit > 0) {
                     mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.securityDeposit).toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     break;

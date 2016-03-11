@@ -108,14 +108,14 @@ public class LocalityLifestyleFragment extends MakaanBaseFragment{
             if(nearByLocalitu != null && nearByLocalitu.description != null) {
                 holder.descriptionFullTv.setText(nearByLocalitu.description.toLowerCase());
             }
-            if(nearByLocalitu.imageUrl!=null) {
+            if(nearByLocalitu != null && nearByLocalitu.imageUrl!=null) {
                 int width = getResources().getDimensionPixelSize(R.dimen.row_localities_lifestyle_width);
                 int height = getResources().getDimensionPixelSize(R.dimen.row_localities_lifestyle_height);
                 holder.localityIv.setImageUrl(ImageUtils.getImageRequestUrl(nearByLocalitu.imageUrl, width, height, false),
                         MakaanNetworkClient.getInstance().getImageLoader());
             }
             else{
-                holder.localityIv.setDefaultImageResId(R.drawable.placeholder_localities_props);
+                holder.localityIv.setDefaultImageResId(R.drawable.locality_placeholder);
             }
         }
 

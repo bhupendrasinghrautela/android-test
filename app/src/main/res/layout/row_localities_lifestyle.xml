@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/row_localities_lifestyle_height"
                 android:scaleType="centerCrop"
-                android:src="@drawable/placeholder_lifestyle" />
+                android:src="@drawable/lifestyle_placeholder" />
 
             <com.makaan.ui.view.FontTextView
                 android:id="@+id/tv_localities_props_label"
