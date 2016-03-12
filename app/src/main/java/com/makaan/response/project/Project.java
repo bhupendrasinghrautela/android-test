@@ -51,6 +51,7 @@ public class Project {
 
     public HashMap<String, Object> specifications;
     public String activeStatus;
+    public Long preLaunchDate;
 
 
     public HashMap<String, ArrayList<SpecificaitonsUI>> getFormattedSpecifications() {

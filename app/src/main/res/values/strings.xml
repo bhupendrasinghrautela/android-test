@@ -154,7 +154,7 @@
     <string name="avg_price_prefix">avg. price</string>
     <string name="avg_price_postfix">/ sq ft</string>
     <string name="property_range">property range</string>
-    <string name="emi_rs">emi  \u20B9</string>
+    <string name="emi_rs">emi from  \u20B9</string>
     <string name="floor_plan">floor plan</string>
     <string name="top_localities">top localities</string>
     <string name="view_properties">view properties</string>
@@ -211,7 +211,8 @@
     <string name="pre_launch_date">pre-launch date</string>
     <string name="date_added">date added</string>
     <string name="launch_date">launch date</string>
-    <string name="new_resale">new/resale</string>
+    <string name="new_resale">new,resale</string>
+    <string name="availability">availability</string>
     <string name="new_">new</string>
     <string name="township">township</string>
     <string name="resale">resale</string>

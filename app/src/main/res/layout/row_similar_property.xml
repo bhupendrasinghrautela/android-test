@@ -23,11 +23,10 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop" />
 
-        <FrameLayout
+        <View
+            android:background="#80000000"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.5"
-            android:background="@color/app_grey" />
+            android:layout_height="match_parent" />
 
         <LinearLayout
             android:layout_width="match_parent"

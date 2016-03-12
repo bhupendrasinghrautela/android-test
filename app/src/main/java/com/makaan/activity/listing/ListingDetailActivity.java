@@ -133,7 +133,7 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         for (Locality locality : cityTopLocalityEvent.topLocalitiesInCity) {
             topLocalities.add(locality.localityId);
         }
-        final String minTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(1));
+        final String minTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(0));
         final String maxTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(7));
         ((PriceTrendService) (MakaanServiceFactory.getInstance().getService(PriceTrendService.class))).getPriceTrendForLocalities(topLocalities,minTime,maxTime, new TopLocalitiesTrendCallback());
 

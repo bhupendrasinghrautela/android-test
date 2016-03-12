@@ -1447,4 +1447,9 @@
     <dimen name="row_localities_lifestyle_width">300dp</dimen>
     <dimen name="amenities_horizontal_scroll_item_dimen">32dp</dimen>
     <dimen name="floor_plan_view_pager_height">278dp</dimen>
+
+    <dimen name="timeline_image_height">228dp</dimen>
+    <dimen name="timeline_image_width">304dp</dimen>
+    <dimen name="timeline_image_margin_left">20dp</dimen>
+    <dimen name="timeline_image_margin_right">20dp</dimen>
 </resources>

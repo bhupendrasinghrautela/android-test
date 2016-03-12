@@ -148,7 +148,7 @@ public class LocalityFragment extends MakaanBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        mMainCityImage.setDefaultImageResId(R.drawable.locality_background_placeholder);
+//        mMainCityImage.setDefaultImageResId(R.drawable.locality_background_placeholder);
         return view;
     }
 
@@ -487,7 +487,7 @@ public class LocalityFragment extends MakaanBaseFragment {
             Configuration config = getResources().getConfiguration();
             int width = config.screenWidthDp;
             int height = config.screenHeightDp;
-            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(locality.localityHeroshotImageUrl, width, height, true).concat("&blur=true"),
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(locality.localityHeroshotImageUrl, width / 2, height / 2, true).concat("&blur=true"),
                     new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
@@ -501,10 +501,10 @@ public class LocalityFragment extends MakaanBaseFragment {
                         mBlurredCityImage.setImageBitmap(image);
                 }
             });
-            mMainCityImage.setImageUrl(ImageUtils.getImageRequestUrl(locality.localityHeroshotImageUrl, width, height, true), MakaanNetworkClient.getInstance().getImageLoader());
-        }else{
+            mMainCityImage.setImageUrl(ImageUtils.getImageRequestUrl(locality.localityHeroshotImageUrl, width / 2, height / 2, true), MakaanNetworkClient.getInstance().getImageLoader());
+        }/*else{
             mBlurredCityImage.setImageResource(R.drawable.locality_background_blur_placeholder);
-        }
+        }*/
     }
 
 

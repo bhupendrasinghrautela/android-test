@@ -74,6 +74,7 @@ public class DateUtil {
     public static Date getDateMonthsBack(int months) {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.MONTH, -months);
+        cal.add(Calendar.DAY_OF_MONTH, - cal.get(Calendar.DAY_OF_MONTH) + 1);
         Date result = cal.getTime();
         return result;
     }

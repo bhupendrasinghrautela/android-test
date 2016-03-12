@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.makaan.R;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ImageConstants;
 import com.makaan.event.image.ImagesGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.image.Image;
@@ -62,15 +63,18 @@ public class ConstructionTimelineFragment extends MakaanBaseFragment implements 
     @Subscribe
     public void onResult(ImagesGetEvent imagesGetEvent) {
         if (null == imagesGetEvent || null != imagesGetEvent.error) {
-            //TODO handle error
+            container.setVisibility(View.GONE);
             return;
         }
         List<TimelineView.TimelineDataItem> list = new ArrayList<>();
-        for (Image image : imagesGetEvent.images)
-            list.add(new TimelineView.TimelineDataItem(image.createdAt, image.absolutePath));//TODO: replace createdAt with imageTakenAt when ever it is available
-        if (imagesGetEvent.images.size() > 0)
+        for (Image image : imagesGetEvent.images) {
+            if(image.imageTypeId != null && image.imageTypeId == 282) {
+                list.add(new TimelineView.TimelineDataItem(image.createdAt, image.absolutePath));//TODO: replace createdAt with imageTakenAt when ever it is available
+            }
+        }
+        if (list.size() > 0) {
             timeline.bindView(list, timeline, this);
-        else {
+        } else {
             container.setVisibility(View.GONE);
         }
     }

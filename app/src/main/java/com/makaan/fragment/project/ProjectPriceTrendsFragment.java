@@ -74,7 +74,7 @@ public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
             localities = new ArrayList<>();
             localities.add(localityId);
         }
-        final String minTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(1));
+        final String minTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(0));
         final String maxTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(37));
         ((PriceTrendService) MakaanServiceFactory.getInstance().getService(PriceTrendService.class)).getPriceTrendForLocalities(localities, minTime,maxTime, new LocalityTrendCallback() {
             @Override

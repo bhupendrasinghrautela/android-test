@@ -2,7 +2,7 @@
 <com.makaan.timelinewidget.Timeline xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/timeline_container"
     android:layout_width="match_parent"
-    android:layout_height="500dp"
+    android:layout_height="400dp"
     android:layout_gravity="center_horizontal"
     android:layout_marginBottom="20dp"
     android:layout_marginTop="20dp"
@@ -17,7 +17,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_timeline"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="@dimen/timeline_image_height"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:overScrollMode="never" />
@@ -27,20 +27,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/rv_timeline"
+            android:layout_alignStart="@id/rv_timeline"
             android:layout_below="@+id/rv_timeline"
             android:layout_gravity="left"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:textColor="#444"
-            android:textSize="14sp" />
+            android:textSize="16sp"
+            android:typeface="serif"/>
 
         <com.makaan.timelinewidget.TimelineView
             android:id="@+id/timeline"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:layout_alignLeft="@id/rv_timeline"
+            android:layout_alignStart="@id/rv_timeline"
             android:layout_alignRight="@id/rv_timeline"
+            android:layout_alignEnd="@id/rv_timeline"
             android:layout_below="@+id/tv_timeline_current_date"
             android:layout_gravity="center_horizontal" />
 
@@ -49,20 +54,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/rv_timeline"
+            android:layout_alignStart="@id/rv_timeline"
             android:layout_below="@+id/timeline"
             android:layout_marginLeft="10dp"
-            android:textColor="#444"
-            android:textSize="10sp" />
+            android:layout_marginStart="10dp"
+            android:textColor="#999999"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_timeline_end_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@id/rv_timeline"
+            android:layout_alignEnd="@id/rv_timeline"
             android:layout_below="@+id/timeline"
             android:layout_marginRight="10dp"
-            android:textColor="#444"
-            android:textSize="10sp" />
+            android:layout_marginEnd="10dp"
+            android:textColor="#999999"
+            android:textSize="14sp" />
     </RelativeLayout>
 
 </com.makaan.timelinewidget.Timeline>

@@ -192,7 +192,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        mMainCityImage.setDefaultImageResId(R.drawable.city_background_placeholder);
+//        mMainCityImage.setDefaultImageResId(R.drawable.city_background_placeholder);
         return view;
     }
 
@@ -211,8 +211,6 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     private void initUiUsingCityDetails() {
         int width = getResources().getConfiguration().screenWidthDp;
         int height = getResources().getConfiguration().screenHeightDp;
-        mMainCityImage.setImageUrl(ImageUtils.getImageRequestUrl(mCity.cityHeroshotImageUrl, width, height, true),
-                MakaanNetworkClient.getInstance().getImageLoader());
         new CityService().getPropertyRangeInCity(mCity.id,null,null,false,mCity.cityBuyMinPrice.intValue(),mCity.cityBuyMaxPrice.intValue(),
                 (mCity.cityBuyMaxPrice.intValue()-mCity.cityBuyMinPrice.intValue())/20);
         if(mCity.label!=null) {
@@ -226,7 +224,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
                 mCity.minLuxuryPrice, mCity.maxBudgetPrice));
         //mCityConnectHeader.setText(getString(R.string.city_connect_header_text) + " " + mCity.label);
         if(mCity.cityHeroshotImageUrl != null) {
-            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(mCity.cityHeroshotImageUrl, width, height, true).concat("&blur=true"),
+            MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(mCity.cityHeroshotImageUrl, width / 2, height / 2, true).concat("&blur=true"),
                     new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageContainer imageContainer, boolean b) {
@@ -240,10 +238,12 @@ public class CityOverViewFragment extends MakaanBaseFragment{
                     }
                 }
             });
-        }
+            mMainCityImage.setImageUrl(ImageUtils.getImageRequestUrl(mCity.cityHeroshotImageUrl, width / 2, height / 2, true),
+                    MakaanNetworkClient.getInstance().getImageLoader());
+        }/*
         else{
             mBlurredCityImage.setImageResource(R.drawable.city_background_blur_placeholder);
-        }
+        }*/
         if(mCity.cityTagLine!=null) {
             mCityTagLine.setText(mCity.cityTagLine.toLowerCase());
         }
@@ -436,7 +436,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         for(Locality locality:cityTopLocalities){
             localityIds.add(locality.localityId);
         }
-        final String minTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(1));
+        final String minTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(0));
         final String maxTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(37));
         new PriceTrendService().getPriceTrendForLocalities(localityIds,minTime,maxTime, new LocalityTrendCallback() {
             @Override
