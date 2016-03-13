@@ -67,6 +67,7 @@ import com.makaan.ui.property.PropertyImageViewPager;
 import com.makaan.ui.view.FontTextView;
 import com.makaan.util.AppUtils;
 import com.makaan.util.RecentPropertyProjectManager;
+import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
@@ -425,35 +426,53 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     private void populateKeyDetails() {
         List<KeyDetail> mKeyDetailList = new ArrayList<>();
-        if(project.isPrimary){
+        if(project.isPrimary && project.isResale) {
             KeyDetail keyDetail = new KeyDetail();
-            keyDetail.label = mContext.getString(R.string.new_resale);
+            keyDetail.label = mContext.getString(R.string.availability);
+            keyDetail.value = mContext.getString(R.string.new_resale);
+            mKeyDetailList.add(keyDetail);
+        } else if(project.isPrimary) {
+            KeyDetail keyDetail = new KeyDetail();
+            keyDetail.label = mContext.getString(R.string.availability);
             keyDetail.value = mContext.getString(R.string.new_);
             mKeyDetailList.add(keyDetail);
-        }
-        else{
+        } else {
             KeyDetail keyDetail = new KeyDetail();
-            keyDetail.label = mContext.getString(R.string.new_resale);
+            keyDetail.label = mContext.getString(R.string.availability);
             keyDetail.value = mContext.getString(R.string.resale);
             mKeyDetailList.add(keyDetail);
         }
         if(project.minSize!=null && project.maxSize!=null){
             KeyDetail keyDetail = new KeyDetail();
             keyDetail.label = "size";
-            keyDetail.value = project.minSize+" - "+project.maxSize+" sq ft";
+            keyDetail.value = StringUtil.getFormattedNumber(project.minSize) + " - " + StringUtil.getFormattedNumber(project.maxSize) + " sq ft";
             mKeyDetailList.add(keyDetail);
         }
         if(project.sizeInAcres!=null && project.sizeInAcres!=0){
             KeyDetail keyDetail = new KeyDetail();
             keyDetail.label = "total area";
-            keyDetail.value = project.sizeInAcres.toString();
+            keyDetail.value = StringUtil.getFormattedNumber(project.sizeInAcres) + " acres";
             mKeyDetailList.add(keyDetail);
         }
+        // todo discuss following scenario with PMs
         if(project.projectStatus!=null && project.projectStatus.toLowerCase().equals("pre launch")) {
-            if (project.possessionDate != null) {
+            if (project.preLaunchDate != null) {
                 KeyDetail keyDetail = new KeyDetail();
                 keyDetail.label = mContext.getString(R.string.pre_launch_date);
-                keyDetail.value = AppUtils.getMMMYYYYDateStringFromEpoch(project.possessionDate);
+                keyDetail.value = AppUtils.getMMMYYYYDateStringFromEpoch(String.valueOf(project.possessionDate));
+                mKeyDetailList.add(keyDetail);
+            }
+
+            if(project.hasTownship){
+                KeyDetail keyDetail = new KeyDetail();
+                keyDetail.label = mContext.getString(R.string.township);
+                keyDetail.value = "present";
+                mKeyDetailList.add(keyDetail);
+            }
+            else{
+                KeyDetail keyDetail = new KeyDetail();
+                keyDetail.label = mContext.getString(R.string.township);
+                keyDetail.value = "not present";
                 mKeyDetailList.add(keyDetail);
             }
         }
@@ -464,19 +483,15 @@ public class ProjectFragment extends MakaanBaseFragment{
                 keyDetail.value = AppUtils.getMMMYYYYDateStringFromEpoch(project.launchDate);
                 mKeyDetailList.add(keyDetail);
             }
+
+            if(project.preLaunchDate != null) {
+                KeyDetail keyDetail = new KeyDetail();
+                keyDetail.label = mContext.getString(R.string.pre_launch_date);
+                keyDetail.value = AppUtils.getMMMYYYYDateStringFromEpoch(String.valueOf(project.preLaunchDate));
+                mKeyDetailList.add(keyDetail);
+            }
         }
-        if(project.hasTownship){
-            KeyDetail keyDetail = new KeyDetail();
-            keyDetail.label = mContext.getString(R.string.township);
-            keyDetail.value = "present";
-            mKeyDetailList.add(keyDetail);
-        }
-        else{
-            KeyDetail keyDetail = new KeyDetail();
-            keyDetail.label = mContext.getString(R.string.township);
-            keyDetail.value = "not present";
-            mKeyDetailList.add(keyDetail);
-        }
+
         if(mKeyDetailList.size()==0){
             keyDetailContainer.setVisibility(View.GONE);
         }
@@ -576,8 +591,10 @@ public class ProjectFragment extends MakaanBaseFragment{
         }
         manager.addEntryToRecent(mDataObject, getContext().getApplicationContext());*/
 
-        projectConfigView.bindView(projectConfigEvent, getActivity());
-        projectConfigView.invalidate();
+        if(projectConfigView != null) {
+            projectConfigView.bindView(projectConfigEvent, getActivity());
+            projectConfigView.invalidate();
+        }
     }
 
     @Subscribe

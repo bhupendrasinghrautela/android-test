@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="20dp">
 
-        <com.android.volley.toolbox.FadeInNetworkImageView
+        <com.makaan.ui.CustomNetworkImageView
             android:id="@+id/iv_nearby_locality"
             android:layout_width="match_parent"
             android:layout_height="@dimen/row_nearby_localities_image_height"

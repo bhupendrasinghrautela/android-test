@@ -17,6 +17,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.makaan.R;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.util.ImageUtils;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -127,9 +128,11 @@ public class Timeline extends LinearLayout implements TimelineView.OnTimeLineCha
         public class ViewHolder extends RecyclerView.ViewHolder {
             // each data item is just a string in this case
             public NetworkImageView timelineIv;
+            public View view;
 
             public ViewHolder(View v) {
                 super(v);
+                this.view = v;
                 timelineIv = (NetworkImageView) v.findViewById(R.id.iv_timeline);
             }
         }
@@ -145,7 +148,7 @@ public class Timeline extends LinearLayout implements TimelineView.OnTimeLineCha
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.row_timeline, parent, false);
 
-            makeViewHolderFitScreenWidth(v);
+//            makeViewHolderFitScreenWidth(v);
             ViewHolder vh = new ViewHolder(v);
             return vh;
         }
@@ -170,9 +173,21 @@ public class Timeline extends LinearLayout implements TimelineView.OnTimeLineCha
         public void onBindViewHolder(ViewHolder holder, int position) {
             TimelineView.TimelineDataItem item = list.get(position);
             imageLoader = MakaanNetworkClient.getInstance().getImageLoader();
-            imageLoader.get(item.url, ImageLoader.getImageListener(holder.timelineIv, R.drawable.project_placeholder, android.R.drawable.ic_dialog_alert));
-            holder.timelineIv.setImageUrl(item.url, imageLoader);
+            int width = getResources().getDimensionPixelSize(R.dimen.timeline_image_width);
+            int height = getResources().getDimensionPixelSize(R.dimen.timeline_image_height);
+            /*imageLoader.get(ImageUtils.getImageRequestUrl(item.url, width, height, false),
+                    ImageLoader.getImageListener(holder.timelineIv, R.drawable.project_placeholder, android.R.drawable.ic_dialog_alert));*/
+            holder.timelineIv.setDefaultImageResId(R.drawable.project_placeholder);
+            holder.timelineIv.setImageUrl(ImageUtils.getImageRequestUrl(item.url, width / 2, height / 2, false), imageLoader);
 
+            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.view.getLayoutParams();
+            if(params != null) {
+                if (position == getItemCount() - 1) {
+                    params.rightMargin = getResources().getDimensionPixelSize(R.dimen.timeline_image_margin_right);
+                } else {
+                    params.rightMargin = 0;
+                }
+            }
             //Picasso.with(context).load(item.url).placeholder(R.drawable.placeholder_timeline).into(holder.timelineIv);
         }
 

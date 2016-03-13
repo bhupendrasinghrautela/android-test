@@ -21,12 +21,11 @@
             android:id="@+id/iv_similar_project"
             android:scaleType="centerCrop"
             />
-        <FrameLayout
+
+        <View
+            android:background="#80000000"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/app_grey"
-            android:alpha="0.5"
-            />
+            android:layout_height="match_parent" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_margin="20dp"

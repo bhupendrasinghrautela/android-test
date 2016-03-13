@@ -1,5 +1,7 @@
 package com.makaan.fragment.locality;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
@@ -10,11 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
@@ -30,6 +34,7 @@ import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Builder;
 import com.makaan.service.AgentService;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.ui.CustomNetworkImageView;
 import com.makaan.util.AppBus;
 import com.makaan.util.DateUtil;
 import com.makaan.util.ImageUtils;
@@ -280,7 +285,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
             public TextView medianTv;
             public TextView numberOfPropsForSaleTv;
             public TextView numberOfPropsForRentTv;
-            public FadeInNetworkImageView localityIv;
+            public CustomNetworkImageView localityIv;
             public LinearLayout rentLl;
             public CardView cardView;
             public TextView primarySaleLabelTv;
@@ -293,13 +298,18 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                 medianTv = (TextView) v.findViewById(R.id.tv_nearby_localities_median);
                 numberOfPropsForSaleTv = (TextView) v.findViewById(R.id.tv_nearby_localities_sale);
                 numberOfPropsForRentTv = (TextView) v.findViewById(R.id.tv_nearby_localities_rent);
-                localityIv = (FadeInNetworkImageView) v.findViewById(R.id.iv_nearby_locality);
+                localityIv = (CustomNetworkImageView) v.findViewById(R.id.iv_nearby_locality);
                 rentLl = (LinearLayout) v.findViewById(R.id.ll_nearby_locality_rent);
                 primarySaleLabelTv = (TextView) v.findViewById(R.id.tv_nearby_localities_sale_label);
                 secondarySaleLabelTv = (TextView) v.findViewById(R.id.tv_nearby_localities_secondary_sale_label);
                 viewDetails = (TextView) v.findViewById(R.id.tv_nearby_localities_view_details);
                 cardView = (CardView) v.findViewById(R.id.card_view_nearby_locality);
                 cardView.setOnClickListener(onClickListener);
+
+                if(cardType == CardType.LOCALITY) {
+                    localityIv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                }
+
             }
         }
 
@@ -369,6 +379,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
             holder.cardView.setTag(position);
             switch (cardType){
                 case LOCALITY:
+                    holder.localityIv.setDefaultImageResId(R.drawable.locality_placeholder);
                     holder.rentLl.setVisibility(View.VISIBLE);
                     removeZeroData(holder, nearByLocality);
                     break;
@@ -407,6 +418,39 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
 
                     }
                 });*/
+            } else {
+                switch (cardType){
+                    case LOCALITY: {
+                        Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap("locality_placeholder");
+                        if (bitmap == null) {
+                            int id = R.drawable.locality_placeholder;
+                            bitmap = BitmapFactory.decodeResource(getResources(), id);
+                            MakaanBuyerApplication.bitmapCache.putBitmap("locality_placeholder", bitmap);
+                        }
+                        holder.localityIv.setLocalImageBitmap(bitmap);
+                        break;
+                    }
+                    case TOPAGENTS: {
+                        Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap("seller_placeholder");
+                        if (bitmap == null) {
+                            int id = R.drawable.seller_placeholder;
+                            bitmap = BitmapFactory.decodeResource(getResources(), id);
+                            MakaanBuyerApplication.bitmapCache.putBitmap("seller_placeholder", bitmap);
+                        }
+                        holder.localityIv.setLocalImageBitmap(bitmap);
+                        break;
+                    }
+                    case TOPBUILDERS: {
+                        Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap("builder_placeholder");
+                        if (bitmap == null) {
+                            int id = R.drawable.builder_placeholder;
+                            bitmap = BitmapFactory.decodeResource(getResources(), id);
+                            MakaanBuyerApplication.bitmapCache.putBitmap("builder_placeholder", bitmap);
+                        }
+                        holder.localityIv.setLocalImageBitmap(bitmap);
+                        break;
+                    }
+                }
             }
         }
 

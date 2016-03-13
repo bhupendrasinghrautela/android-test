@@ -28,6 +28,11 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/lifestyle_placeholder" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_localities_lifestyle_height"
+                android:background="#80000000" />
+
             <com.makaan.ui.view.FontTextView
                 android:id="@+id/tv_localities_props_label"
                 android:layout_width="wrap_content"
