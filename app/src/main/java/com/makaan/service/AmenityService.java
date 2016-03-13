@@ -19,13 +19,18 @@ import java.lang.reflect.Type;
  */
 public class AmenityService implements MakaanService{
 
+    public enum EntityType{
+        PROJECT,LOCALITY
+    }
+
 
     //http://marketplace-qa.makaan-ws.com/app/v1/amenity?latitude=13.03244019&longitude=77.6019516&distance=3&start=0&rows=99&sourceDomain=Makaan
-    public void getAmenitiesByLocation(double lat, double lon, int distance) {
+    public void getAmenitiesByLocation(double lat, double lon, int distance, EntityType entityType) {
+
 
         String amenityRequestUrl = buildUrl(lat,lon,distance);
 
-        MakaanNetworkClient.getInstance().get(amenityRequestUrl, new AmenityCallback());
+        MakaanNetworkClient.getInstance().get(amenityRequestUrl, new AmenityCallback(entityType));
 
     }
 

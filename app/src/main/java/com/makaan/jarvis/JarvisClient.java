@@ -63,9 +63,13 @@ public class JarvisClient {
     private JarvisClient(){
         eventBus = AppBus.getInstance();
         eventBus.register(this);
+
         jarvisSocket = new JarvisSocket();
-        jarvisSocket.open();
-        fetchChatHistory();
+        if(TextUtils.isEmpty(JarvisConstants.DELIVERY_ID)){
+            return;
+        }else {
+            openSocketAndFetchHistory();
+        }
     }
 
     @Subscribe
@@ -76,6 +80,12 @@ public class JarvisClient {
 
     public void rateAgent(float rating){
         jarvisSocket.rateAgent(rating);
+    }
+
+    public void openSocketAndFetchHistory(){
+        jarvisSocket.close();
+        jarvisSocket.open();
+        fetchChatHistory();
     }
 
     public void refreshJarvisSocket(){

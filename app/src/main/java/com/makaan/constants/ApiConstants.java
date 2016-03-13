@@ -9,7 +9,6 @@ public class ApiConstants {
     //public static final String BASE_URL = "https://mp-qa2.makaan-ws.com";
     //public static final String BASE_URL = "https://mp-qa1.makaan-ws.com";
     public static final String BASE_URL = "https://beta.makaan-ws.com";
-    //public static final String BASE_URL = "https://beta.makaan-ws.com";
 
     public static final String MICROSERVICE_MADELYNE = BASE_URL.concat("/madelyne/");
     public static final String MICROSERVICE_COMPASS = BASE_URL.concat("/compass/");
@@ -21,6 +20,7 @@ public class ApiConstants {
     public static final String MICROSERVICE_SAPPHIRE = BASE_URL.concat("/sapphire/");
     public static final String MICROSERVICE_KIRA = BASE_URL.concat("/kira/");
 
+
     public static final String FILTER_GROUP = BASE_URL.concat("/data/v1/entity/filter-group");           //TODO: need to implement this on server side
     public static final String LISTING_INFO_MAP = BASE_URL.concat("/data/v1/entity/listing-info-map");           //TODO: need to implement this on server side
     public static final String API_LABEL = BASE_URL.concat("/data/v1/entity/api-label");
@@ -28,7 +28,8 @@ public class ApiConstants {
     public static final String PROPERTY_DISPLAY_ORDER = BASE_URL.concat("/data/v1/entity/property-display-order");
     public static final String DEFAULT_AMENITY = BASE_URL.concat("/data/v1/entity/default-amenity");
     public static final String UNIT_TYPE = BASE_URL.concat("/data/v1/entity/unit-types");
-    public static final String AMENITY = BASE_URL.concat("/data/v1/entity/amenities");
+    public static final String AMENITY_LOCALITY = BASE_URL.concat("/data/v1/entity/amenities/locality");
+    public static final String AMENITY_PROJECT = BASE_URL.concat("/data/v1/entity/amenities/project");
     public static final String CONSTRUCTION_STATUS = BASE_URL.concat("/data/v1/entity/master-listing-construction-status");
     public static final String JARVIS_MESSAGE_TYPE = BASE_URL.concat("/data/v1/entity/jarvis/message-type");
     public static final String JARVIS_CTA_MESSAGE_TYPE = BASE_URL.concat("/data/v1/entity/jarvis/cta-message-type");

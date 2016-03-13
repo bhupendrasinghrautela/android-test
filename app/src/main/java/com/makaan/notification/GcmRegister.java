@@ -127,7 +127,7 @@ public class GcmRegister{
                     }
                     sRegid = sGcm.register(SENDER_ID);*/
 
-                    JarvisClient.getInstance().fetchChatHistory();
+                    JarvisClient.getInstance().openSocketAndFetchHistory();
                     msg = "Device registered, registration ID = " + sRegid;
                     GcmPreferences.setGcmRegId(context, sRegid);
                     GcmPreferences.setAppVersion(context, CommonUtil.getAppVersion(context));
