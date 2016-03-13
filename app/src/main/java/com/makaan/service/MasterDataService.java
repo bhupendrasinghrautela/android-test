@@ -373,11 +373,11 @@ public class MasterDataService implements MakaanService {
         }, "pyrGroupRent.json");
     }
 
-    public void populateAmenityMap() {
+    public void populateLocalityAmenityMap() {
         final Type amenityClusterTypeList = new TypeToken<ArrayList<AmenityCluster>>() {
         }.getType();
 
-        MakaanNetworkClient.getInstance().get(ApiConstants.AMENITY, new JSONGetCallback() {
+        MakaanNetworkClient.getInstance().get(ApiConstants.AMENITY_LOCALITY, new JSONGetCallback() {
 
             @Override
             public void onError(ResponseError error) {}
@@ -391,7 +391,7 @@ public class MasterDataService implements MakaanService {
                             MakaanBuyerApplication.gson.fromJson(amenities.toString(), amenityClusterTypeList);
 
                     for (AmenityCluster amenityCluster : amenityClusters) {
-                        MasterDataCache.getInstance().addAmenityCluster(amenityCluster);
+                        MasterDataCache.getInstance().addLocalityAmenityCluster(amenityCluster);
                     }
                 } catch (JSONException je) {
                     Log.e(TAG, "Unable to parse filters", je);
@@ -400,7 +400,37 @@ public class MasterDataService implements MakaanService {
             }
 
 
-        }, "amenityMap.json");
+        }, "amenityLocalityMap.json");
+    }
+
+    public void populateProjectAmenityMap() {
+        final Type amenityClusterTypeList = new TypeToken<ArrayList<AmenityCluster>>() {
+        }.getType();
+
+        MakaanNetworkClient.getInstance().get(ApiConstants.AMENITY_PROJECT, new JSONGetCallback() {
+
+            @Override
+            public void onError(ResponseError error) {}
+
+            @Override
+            public void onSuccess(JSONObject responseObject) {
+                try {
+                    JSONArray amenities = responseObject.getJSONArray(ResponseConstants.DATA);
+
+                    ArrayList<AmenityCluster> amenityClusters =
+                            MakaanBuyerApplication.gson.fromJson(amenities.toString(), amenityClusterTypeList);
+
+                    for (AmenityCluster amenityCluster : amenityClusters) {
+                        MasterDataCache.getInstance().addProjectAmenityCluster(amenityCluster);
+                    }
+                } catch (JSONException je) {
+                    Log.e(TAG, "Unable to parse filters", je);
+                }
+
+            }
+
+
+        }, "amenityProjectMap.json");
     }
 
     public void populateConstructionStatus() {

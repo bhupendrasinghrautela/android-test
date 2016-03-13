@@ -35,6 +35,15 @@
         "placeTypeId":2,
         "displayOrder":4,
         "cluster":[]
+      },
+      {
+        "description": "Shopping Mall",
+        "id": 17,
+        "amenityId":21,
+        "name": "shopping mall",
+        "placeTypeId":17,
+        "displayOrder":5,
+        "cluster":[]
       }
     ]
 }

@@ -8,6 +8,7 @@ import com.makaan.constants.ResponseConstants;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.response.ResponseError;
+import com.makaan.service.AmenityService;
 import com.makaan.util.AppBus;
 
 import org.json.JSONArray;
@@ -34,6 +35,12 @@ public class AmenityCallback extends JSONGetCallback {
     private static final String NAME = "name";
     private static final String PLACE_TYPE_ID = "placeTypeId";
 
+    private AmenityService.EntityType entityType;
+
+    public AmenityCallback(AmenityService.EntityType entityType){
+        this.entityType = entityType;
+    }
+
     @Override
     public void onSuccess(JSONObject responseObject) {
         AmenityGetEvent amenityGetEvent = new AmenityGetEvent();
@@ -41,7 +48,7 @@ public class AmenityCallback extends JSONGetCallback {
         if (null != responseObject) {
             try {
 
-                Map<Integer, AmenityCluster> amenityMap = MasterDataCache.getInstance().getAmenityMap();
+                Map<Integer, AmenityCluster> amenityMap = MasterDataCache.getInstance().getAmenityMap(entityType);
 
                 for (Map.Entry<Integer, AmenityCluster> entry : amenityMap.entrySet()){
                     AmenityCluster cluster = entry.getValue();

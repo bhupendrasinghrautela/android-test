@@ -32,7 +32,6 @@
         android:layout_width="@dimen/jarvis_seller_card_profile_pic_dimen"
         android:layout_height="@dimen/jarvis_seller_card_profile_pic_dimen"
         android:layout_margin="@dimen/thumbnail_margin"
-        android:tint="@color/white"
         android:layout_gravity="center"
         android:src="@drawable/jarvis"
         app:civ_border_color="@color/light_gray"

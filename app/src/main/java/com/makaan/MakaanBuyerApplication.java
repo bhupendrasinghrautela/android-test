@@ -162,7 +162,8 @@ public class MakaanBuyerApplication extends Application {
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateFilterGroupsRent();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePyrGroupsBuy();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePyrGroupsRent();
-        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateAmenityMap();
+        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateLocalityAmenityMap();
+        ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateProjectAmenityMap();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateSearchType();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyAmenities();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateMasterFunishings();

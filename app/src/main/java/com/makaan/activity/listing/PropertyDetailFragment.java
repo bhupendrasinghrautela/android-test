@@ -379,7 +379,8 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
             manager.addEntryToRecent(manager.new DataObject(mListingDetail), getActivity().getApplicationContext());
 
             if(mListingDetail.latitude!=0 && mListingDetail.longitude!=0) {
-                ((AmenityService) (MakaanServiceFactory.getInstance().getService(AmenityService.class))).getAmenitiesByLocation(mListingDetail.latitude, mListingDetail.longitude, 3);
+                ((AmenityService) (MakaanServiceFactory.getInstance().getService(
+                        AmenityService.class))).getAmenitiesByLocation(mListingDetail.latitude, mListingDetail.longitude, 3, AmenityService.EntityType.PROJECT);
             }
             TestUi(mListingDetail);
             ((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getOtherSellersOnListingDetail(

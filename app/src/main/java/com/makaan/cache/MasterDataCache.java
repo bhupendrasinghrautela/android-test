@@ -17,6 +17,7 @@ import com.makaan.response.serp.FilterGroup;
 import com.makaan.response.serp.ListingInfoMap;
 import com.makaan.response.serp.RangeFilter;
 import com.makaan.response.user.UserResponse.UserData;
+import com.makaan.service.AmenityService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,7 +51,10 @@ public class MasterDataCache {
 
     private HashMap<String, FilterGroup> internalNameToPyrGrpBuy = new HashMap<>();
     private HashMap<String, FilterGroup> internalNameToPyrGrpRent = new HashMap<>();
-    private Map<Integer, AmenityCluster> amenityMap = new HashMap<>();
+
+    private Map<Integer, AmenityCluster> amenityLocalityMap = new HashMap<>();
+    private Map<Integer, AmenityCluster> amenityProjectMap = new HashMap<>();
+
     private Map<Integer, ConstructionStatus> constructionStatusMap = new HashMap<>();
     private Map<String, ApiLabel> searchTypeMap = new HashMap<>();
     private Map<String, Map<String, Map<String, List<String>>>> propertyDisplayOrder = new HashMap<>();
@@ -182,9 +186,15 @@ public class MasterDataCache {
         }
     }
 
-    public void addAmenityCluster(AmenityCluster amenityCluster) {
+    public void addProjectAmenityCluster(AmenityCluster amenityCluster) {
         if (null != amenityCluster) {
-            amenityMap.put(amenityCluster.placeTypeId, amenityCluster);
+            amenityProjectMap.put(amenityCluster.placeTypeId, amenityCluster);
+        }
+    }
+
+    public void addLocalityAmenityCluster(AmenityCluster amenityCluster) {
+        if (null != amenityCluster) {
+            amenityLocalityMap.put(amenityCluster.placeTypeId, amenityCluster);
         }
     }
 
@@ -312,8 +322,12 @@ public class MasterDataCache {
     }
 
 
-    public Map<Integer, AmenityCluster> getAmenityMap() {
-        return amenityMap;
+    public Map<Integer, AmenityCluster> getAmenityMap(AmenityService.EntityType entityType) {
+        if(AmenityService.EntityType.LOCALITY == entityType) {
+            return amenityLocalityMap;
+        }else{
+            return amenityProjectMap;
+        }
     }
 
     public Map<String, ApiLabel> getSearchTypeMap() {

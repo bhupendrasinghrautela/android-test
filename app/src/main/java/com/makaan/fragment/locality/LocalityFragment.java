@@ -187,7 +187,9 @@ public class LocalityFragment extends MakaanBaseFragment {
             addProperties(new TaxonomyService().getTaxonomyCardForLocality(locality.localityId, locality.minAffordablePrice, locality.maxAffordablePrice, locality.maxAffordablePrice, locality.maxBudgetPrice));
             if(locality.latitude != null && locality.longitude != null) {
                 ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(locality.latitude, locality.longitude, 16);
-                ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class)).getAmenitiesByLocation(locality.latitude, locality.longitude, 3);
+                ((AmenityService) MakaanServiceFactory.getInstance().getService(
+                        AmenityService.class)).getAmenitiesByLocation(locality.latitude, locality.longitude, 3, AmenityService.EntityType.LOCALITY);
+
             }
             ((AgentService) MakaanServiceFactory.getInstance().getService(AgentService.class)).getTopAgentsForLocality(locality.cityId, locality.localityId, 15, false, new TopAgentsCallback() {
                 @Override
