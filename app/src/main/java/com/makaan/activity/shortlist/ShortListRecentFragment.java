@@ -77,7 +77,9 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
             RecentAdapter adapter = new RecentAdapter();
             adapter.setData(entries);
             favoriteRecyclerView.setAdapter(adapter);
-            mCallback.updateCount(mPosition, entries.size());
+            if(mCallback != null) {
+                mCallback.updateCount(mPosition, entries.size());
+            }
         }
         return view;
     }
