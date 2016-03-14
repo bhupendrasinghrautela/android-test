@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,26 +19,31 @@ import android.widget.TextView;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.userLogin.UserLoginActivity;
+import com.makaan.adapter.listing.FiltersViewAdapter;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.event.saveSearch.SaveSearchGetEvent;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.event.user.UserLoginEvent;
 import com.makaan.fragment.MakaanBaseDialogFragment;
 import com.makaan.fragment.MakaanMessageDialogFragment;
-import com.makaan.network.VolleyErrorParser;
 import com.makaan.pojo.SerpRequest;
+import com.makaan.request.saveSearch.SaveNewSearch;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.saveSearch.SaveSearch;
 import com.makaan.response.search.SearchResponseItem;
+import com.makaan.response.search.SearchSuggestionType;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.response.serp.RangeFilter;
 import com.makaan.response.serp.RangeMinMaxFilter;
 import com.makaan.response.serp.TermFilter;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
+import com.makaan.util.JsonBuilder;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
 import com.squareup.otto.Subscribe;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -92,7 +96,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        if(MasterDataCache.getInstance().getSavedSearch() != null && MasterDataCache.getInstance().getSavedSearch().size() > 0) {
+        if (MasterDataCache.getInstance().getSavedSearch() != null && MasterDataCache.getInstance().getSavedSearch().size() > 0) {
             /*SaveSearchService saveSearchService =
                     (SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class);
             saveSearchService.getSavedSearches();*/
@@ -100,7 +104,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
             showContent();
 
             populateData();
-            mSetAlertsNameEditText.setText(handleSearchName());
+            mSetAlertsNameEditText.setText(handleSearchName(null));
             mSetAlertsNameEditText.setSelection(mSetAlertsNameEditText.getText().length());
             mSetAlertsNameEditText.requestFocus();
         } else {
@@ -121,22 +125,37 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
         return R.layout.fragment_set_alert;
     }
 
-    private String handleSearchName() {
+    private String handleSearchName(SaveSearch.JSONDump jsonDump) {
         // TODO handle builder and seller name cases
-        String name = null;
-        StringBuilder builder = new StringBuilder();
-
-        if(mSerpRequest != null) {
+        String name = "";
+        if (mSerpRequest != null) {
             ArrayList<SearchResponseItem> searches = mSerpRequest.getSearches();
-            if(searches.size() == 1) {
+            if (searches.size() == 1) {
+                if (jsonDump != null) {
+                    if (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searches.get(0).type)) {
+                        jsonDump.localityName = searches.get(0).entityName;
+                        if (searches.get(0).city != null) {
+                            jsonDump.cityName = searches.get(0).city;
+                        }
+                    } else if (SearchSuggestionType.CITY.getValue().equalsIgnoreCase(searches.get(0).type)) {
+                        jsonDump.cityName = searches.get(0).entityName;
+                    } else if (SearchSuggestionType.BUILDER.getValue().equalsIgnoreCase(searches.get(0).type)) {
+                        jsonDump.builderName = searches.get(0).entityName;
+                    } else if (SearchSuggestionType.SELLER.getValue().equalsIgnoreCase(searches.get(0).type)) {
+                        jsonDump.sellerName = searches.get(0).entityName;
+                    }
+                }
                 name = searches.get(0).displayText;
-            } else if(searches.size() > 1) {
+            } else if (searches.size() > 1) {
+                if (jsonDump != null) {
+                    jsonDump.localityName = String.format("%s + %d", searches.get(0).entityName, (searches.size() - 1));
+                }
                 name = searches.get(0).displayText + " + " + (searches.size() - 1);
             }
-        } else if(mListingGetEvent != null) {
+        } else if (mListingGetEvent != null) {
             name = mListingGetEvent.listingData.facets != null ? mListingGetEvent.listingData.facets.getSearchName() : null;
         }
-        if(TextUtils.isEmpty(name)) {
+        if (TextUtils.isEmpty(name)) {
             StringBuilder bhk = new StringBuilder();
             StringBuilder budget = new StringBuilder();
             String separator = "";
@@ -144,18 +163,18 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 if (!grp.isSelected) {
                     continue;
                 }
-                if("i_beds".equalsIgnoreCase(grp.internalName)) {
-                    for(TermFilter filter : grp.termFilterValues) {
-                        if(filter.selected) {
+                if ("i_beds".equalsIgnoreCase(grp.internalName)) {
+                    for (TermFilter filter : grp.termFilterValues) {
+                        if (filter.selected) {
                             bhk.append(separator);
                             bhk.append(filter.displayName);
                             separator = ", ";
                         }
                     }
                 }
-                if("i_budget".equalsIgnoreCase(grp.internalName)) {
-                    for(RangeFilter filter : grp.rangeFilterValues) {
-                        if(filter.selectedMinValue != filter.minValue || filter.selectedMaxValue != filter.maxValue) {
+                if ("i_budget".equalsIgnoreCase(grp.internalName)) {
+                    for (RangeFilter filter : grp.rangeFilterValues) {
+                        if (filter.selectedMinValue != filter.minValue || filter.selectedMaxValue != filter.maxValue) {
                             budget.append(separator);
                             budget.append(StringUtil.getDisplayPrice(filter.selectedMinValue));
                             budget.append("-");
@@ -165,10 +184,10 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                     }
                 }
             }
-            if(!TextUtils.isEmpty(bhk.toString())) {
+            if (!TextUtils.isEmpty(bhk.toString())) {
                 bhk.append(" bhk");
             }
-            if(!(TextUtils.isEmpty(bhk.toString()) && TextUtils.isEmpty(budget.toString()))) {
+            if (!(TextUtils.isEmpty(bhk.toString()) && TextUtils.isEmpty(budget.toString()))) {
                 return bhk.toString() + budget.toString();
             } else {
                 return "save search 1";
@@ -179,9 +198,10 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
     }
 
     private void populateData() {
+        mContentLinearLayout.removeAllViews();
         StringBuilder builder = new StringBuilder();
         for (FilterGroup grp : mGroups) {
-            if(!("i_beds".equalsIgnoreCase(grp.internalName)
+            if (!("i_beds".equalsIgnoreCase(grp.internalName)
                     || "i_budget".equalsIgnoreCase(grp.internalName)
                     || "i_property_type".equalsIgnoreCase(grp.internalName))) {
                 continue;
@@ -190,9 +210,9 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
             mContentLinearLayout.addView(view);
             ((TextView) view.findViewById(R.id.fragment_set_alerts_list_item_display_text_view)).setText(grp.displayName);
 
-            if(grp.imageName != null) {
+            if (grp.imageName != null) {
                 Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap(grp.imageName);
-                 if(bitmap != null) {
+                if (bitmap != null) {
                     ((ImageView) view.findViewById(R.id.fragment_set_alerts_list_item_image_view)).setImageBitmap(bitmap);
                 } else {
                     int id = this.getResources().getIdentifier(grp.imageName, "drawable", "com.makaan");
@@ -202,34 +222,34 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 }
             }
 
-            if(!grp.isSelected) {
+            if (!grp.isSelected) {
                 ((TextView) view.findViewById(R.id.fragment_set_alerts_list_item_content_text_view)).setText("not selected");
                 continue;
             }
 
-            if(builder.length() > 0) {
+            if (builder.length() > 0) {
                 builder.delete(0, builder.length());
             }
 
             String separator = "";
-            for(TermFilter filter : grp.termFilterValues) {
-                if(filter.selected) {
+            for (TermFilter filter : grp.termFilterValues) {
+                if (filter.selected) {
                     builder.append(separator);
                     builder.append(filter.displayName);
                     separator = ",";
                 }
             }
 
-            for(RangeFilter filter : grp.rangeFilterValues) {
-                if(filter.selectedMinValue != filter.minValue || filter.selectedMaxValue != filter.maxValue) {
+            for (RangeFilter filter : grp.rangeFilterValues) {
+                if (filter.selectedMinValue != filter.minValue || filter.selectedMaxValue != filter.maxValue) {
                     builder.append(separator);
-                    if("i_budget".equalsIgnoreCase(grp.internalName)) {
+                    if ("i_budget".equalsIgnoreCase(grp.internalName)) {
                         builder.append(StringUtil.getDisplayPrice(filter.selectedMinValue));
                     } else {
                         builder.append(filter.selectedMinValue);
                     }
                     builder.append(" - ");
-                    if("i_budget".equalsIgnoreCase(grp.internalName)) {
+                    if ("i_budget".equalsIgnoreCase(grp.internalName)) {
                         builder.append(StringUtil.getDisplayPrice(filter.selectedMaxValue));
                     } else {
                         builder.append(filter.selectedMaxValue);
@@ -238,8 +258,8 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 }
             }
 
-            for(RangeMinMaxFilter filter : grp.rangeMinMaxFilterValues) {
-                if(filter.selected) {
+            for (RangeMinMaxFilter filter : grp.rangeMinMaxFilterValues) {
+                if (filter.selected) {
                     builder.append(separator);
                     builder.append(filter.displayName);
                     separator = ",";
@@ -248,15 +268,15 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
 
             ((TextView) view.findViewById(R.id.fragment_set_alerts_list_item_content_text_view)).setText(builder.toString());
         }
-        if(mSerpRequest != null) {
+        if (mSerpRequest != null) {
             ArrayList<SearchResponseItem> searches = mSerpRequest.getSearches();
             String location = "not available";
-            if(searches.size() == 1) {
+            if (searches.size() == 1) {
                 location = searches.get(0).displayText;
-            } else if(searches.size() > 1) {
+            } else if (searches.size() > 1) {
                 builder = new StringBuilder();
                 String separator = "";
-                for(SearchResponseItem item : searches) {
+                for (SearchResponseItem item : searches) {
                     builder.append(separator);
                     builder.append(item.displayText);
                     separator = ", ";
@@ -269,9 +289,11 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
 
             ((ImageView) view.findViewById(R.id.fragment_set_alerts_list_item_image_view)).setImageResource(R.drawable.location_icon);
 
-            ((TextView) view.findViewById(R.id.fragment_set_alerts_list_item_content_text_view)).setText(location);
+            if (location != null) {
+                ((TextView) view.findViewById(R.id.fragment_set_alerts_list_item_content_text_view)).setText(location.toLowerCase());
+            }
 
-        } else if(mListingGetEvent != null && mListingGetEvent.listingData.facets != null) {
+        } else if (mListingGetEvent != null && mListingGetEvent.listingData.facets != null) {
             String location = mListingGetEvent.listingData.facets.buildDisplayName();
             if (!TextUtils.isEmpty(location)) {
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_set_alerts_list_item, mContentLinearLayout, false);
@@ -285,17 +307,17 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
         }
     }
 
-    private Selector createSelector() {
+    private void createSelector(SaveSearch saveSearch) {
         Selector selector = new Selector();
-        StringBuilder searchNameBuilder = new StringBuilder();
-        String separator = "";
-        if(!mIsBuyContext) {
+        SaveSearch.JSONDump jsonDump = new SaveSearch.JSONDump();
+
+        if (!mIsBuyContext) {
             selector.term(KeyUtil.LISTING_CATEGORY, "Rental");
         }
         for (FilterGroup grp : mGroups) {
-            if(!grp.isSelected) {
-                if("i_new_resale".equalsIgnoreCase(grp.internalName)) {
-                    if(mIsBuyContext) {
+            if (!grp.isSelected) {
+                if ("i_new_resale".equalsIgnoreCase(grp.internalName)) {
+                    if (mIsBuyContext) {
                         selector.term(KeyUtil.LISTING_CATEGORY, "Primary");
                         selector.term(KeyUtil.LISTING_CATEGORY, "Resale");
                     }
@@ -305,48 +327,46 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
 
             int type = grp.layoutType;
 
-            if(type == SEEKBAR) {
+            if (type == SEEKBAR) {
                 RangeFilter filter = grp.rangeFilterValues.get(0);
-                if(filter.selectedMinValue > filter.minValue || filter.selectedMaxValue < filter.maxValue) {
-                    if("i_budget".equalsIgnoreCase(grp.internalName)) {
-                        searchNameBuilder.append(separator);
-                        searchNameBuilder.append(StringUtil.getDisplayPrice(grp.rangeFilterValues.get(0).selectedMinValue)
-                                + "-" + StringUtil.getDisplayPrice(grp.rangeFilterValues.get(0).selectedMaxValue));
-                        separator = SEPARATOR_FILTER;
+                if (filter.selectedMinValue > filter.minValue || filter.selectedMaxValue < filter.maxValue) {
+                    if ("i_budget".equalsIgnoreCase(grp.internalName)) {
+                        jsonDump.priceRange = StringUtil.getDisplayPrice(grp.rangeFilterValues.get(0).selectedMinValue)
+                                + "-" + StringUtil.getDisplayPrice(grp.rangeFilterValues.get(0).selectedMaxValue);
                     }
 
                     selector.range(grp.rangeFilterValues.get(0).fieldName, grp.rangeFilterValues.get(0).selectedMinValue, grp.rangeFilterValues.get(0).selectedMaxValue);
                 }
-            } else if(type == RADIO_BUTTON) {
-                for(TermFilter filter : grp.termFilterValues) {
-                    if(filter.selected) {
+            } else if (type == RADIO_BUTTON) {
+                for (TermFilter filter : grp.termFilterValues) {
+                    if (filter.selected) {
                         selector.term(filter.fieldName, filter.value);
 //                        searchNameBuilder.append(filter.displayName);
                     }
                 }
-            } else if(type == RADIO_BUTTON_RANGE) {
-                for(RangeFilter filter : grp.rangeFilterValues) {
-                    if(filter.selected) {
-                        if(filter.minValue != UNEXPECTED_VALUE || filter.maxValue != UNEXPECTED_VALUE) {
-                            Long minValue = (long)UNEXPECTED_VALUE;
-                            Long maxValue = (long)UNEXPECTED_VALUE;
+            } else if (type == RADIO_BUTTON_RANGE) {
+                for (RangeFilter filter : grp.rangeFilterValues) {
+                    if (filter.selected) {
+                        if (filter.minValue != UNEXPECTED_VALUE || filter.maxValue != UNEXPECTED_VALUE) {
+                            Long minValue = (long) UNEXPECTED_VALUE;
+                            Long maxValue = (long) UNEXPECTED_VALUE;
                             // TODO check if there can be other case possible than YEAR case
                             //if (grp.type.equalsIgnoreCase(TYPE_YEAR)) {
-                                if(filter.minValue != UNEXPECTED_VALUE) {
-                                    minValue = (long)filter.minValue;
-                                }
+                            if (filter.minValue != UNEXPECTED_VALUE) {
+                                minValue = (long) filter.minValue;
+                            }
 
-                                if(filter.maxValue != UNEXPECTED_VALUE) {
-                                    maxValue = (long)filter.maxValue;
-                                }
-                                if(minValue == UNEXPECTED_VALUE) {
-                                    minValue = null;
-                                }
-                                if(maxValue == UNEXPECTED_VALUE) {
-                                    maxValue = null;
-                                }
+                            if (filter.maxValue != UNEXPECTED_VALUE) {
+                                maxValue = (long) filter.maxValue;
+                            }
+                            if (minValue == UNEXPECTED_VALUE) {
+                                minValue = null;
+                            }
+                            if (maxValue == UNEXPECTED_VALUE) {
+                                maxValue = null;
+                            }
 
-                                selector.range(filter.fieldName, minValue, maxValue);
+                            selector.range(filter.fieldName, minValue, maxValue);
 //                                searchNameBuilder.append(minValue + "-" + maxValue);
                             /*} else if(grp.type.equalsIgnoreCase(TYPE_DAY)) {
                                 Calendar cal = Calendar.getInstance();
@@ -376,32 +396,32 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                         }
                     }
                 }
-            } else if(type == RADIO_BUTTON_MIN_MAX) {
+            } else if (type == RADIO_BUTTON_MIN_MAX) {
 
-                for(RangeMinMaxFilter filter : grp.rangeMinMaxFilterValues) {
-                    if(filter.selected) {
+                for (RangeMinMaxFilter filter : grp.rangeMinMaxFilterValues) {
+                    if (filter.selected) {
                         // TODO check if there can be other case possible than YEAR case
                         //if (grp.type.equalsIgnoreCase(TYPE_YEAR)) {
-                            Calendar cal = Calendar.getInstance();
-                            long minValue = UNEXPECTED_VALUE;
-                            long maxValue = UNEXPECTED_VALUE;
-                            if(filter.minValue != UNEXPECTED_VALUE) {
-                                minValue = (long)filter.minValue;
-                            }
-                            if(filter.maxValue != UNEXPECTED_VALUE) {
-                                maxValue = (long)filter.maxValue;
-                            }
-                            String s = "";
-                            if(minValue != UNEXPECTED_VALUE) {
-                                selector.range(filter.minFieldName, minValue, null);
+                        Calendar cal = Calendar.getInstance();
+                        long minValue = UNEXPECTED_VALUE;
+                        long maxValue = UNEXPECTED_VALUE;
+                        if (filter.minValue != UNEXPECTED_VALUE) {
+                            minValue = (long) filter.minValue;
+                        }
+                        if (filter.maxValue != UNEXPECTED_VALUE) {
+                            maxValue = (long) filter.maxValue;
+                        }
+                        String s = "";
+                        if (minValue != UNEXPECTED_VALUE) {
+                            selector.range(filter.minFieldName, minValue, null);
 //                                searchNameBuilder.append(minValue);
-                                s = "-";
-                            }
-                            if(maxValue != UNEXPECTED_VALUE) {
-                                selector.range(filter.maxFieldName, null, maxValue);
+                            s = "-";
+                        }
+                        if (maxValue != UNEXPECTED_VALUE) {
+                            selector.range(filter.maxFieldName, null, maxValue);
 //                                searchNameBuilder.append(s);
 //                                searchNameBuilder.append(maxValue);
-                            }
+                        }
                         /*} else {
                             String s = "";
                             if(filter.minValue != UNEXPECTED_VALUE) {
@@ -419,35 +439,47 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 }
             } else {
                 String s = "";
-                for(TermFilter filter : grp.termFilterValues) {
-                    if(filter.selected) {
-                        selector.term(filter.fieldName, filter.value);
-                        if("i_beds".equalsIgnoreCase(grp.internalName)) {
-                            searchNameBuilder.append(s);
-                            searchNameBuilder.append(String.valueOf(filter.displayName));
+                for (TermFilter filter : grp.termFilterValues) {
+                    if (filter.selected) {
+                        if (filter.displayName.contains(FiltersViewAdapter.INFINITE_SELECTOR)) {
+                            String[] val = filter.value.split(FiltersViewAdapter.MIN_MAX_SEPARATOR);
+                            int min = Integer.valueOf(val[0]);
+                            int max = Integer.valueOf(val[1]);
+                            for (int i = min; i <= max; i++) {
+                                selector.term(filter.fieldName, String.valueOf(i));
+                            }
+                        } else {
+                            selector.term(filter.fieldName, filter.value);
+                        }
+                        if ("i_beds".equalsIgnoreCase(grp.internalName)) {
+                            if (jsonDump.bhk == null) {
+                                jsonDump.bhk = "";
+                            }
+                            jsonDump.bhk = jsonDump.bhk.concat(s);
+                            jsonDump.bhk = jsonDump.bhk.concat(String.valueOf(filter.displayName));
                             s = ",";
-                            separator = SEPARATOR_FILTER;
                         }
                     }
                 }
             }
-            if("i_beds".equalsIgnoreCase(grp.internalName)) {
-                searchNameBuilder.append(" bhk");
-                separator = SEPARATOR_FILTER;
+            if ("i_beds".equalsIgnoreCase(grp.internalName)) {
+                jsonDump.bhk = jsonDump.bhk.concat(" bhk");
             }
         }
 
-        if(mSerpRequest != null) {
+        if (mSerpRequest != null) {
             mSerpRequest.applySelector(selector, null, false, true);
-            searchNameBuilder.append(";");
-            searchNameBuilder.append(handleSearchName());
-        } else if(mListingGetEvent != null && mListingGetEvent.listingData.facets != null) {
-            searchNameBuilder.append(";");
-            searchNameBuilder.append(mListingGetEvent.listingData.facets.buildDisplayName());
+            handleSearchName(jsonDump);
+        } else if (mListingGetEvent != null && mListingGetEvent.listingData.facets != null) {
+            jsonDump.localityName = mListingGetEvent.listingData.facets.buildDisplayName();
             mListingGetEvent.listingData.facets.applySelector(selector);
         }
-        mSearchName = searchNameBuilder.toString();
-        return selector;
+        saveSearch.searchQuery = selector.build();
+        try {
+            saveSearch.jsonDump = JsonBuilder.toJson(jsonDump).toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -473,8 +505,8 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
     }
 
     @OnClick(R.id.fragment_set_alerts_submit_button)
-    public void onSubmitClicked (View view) {
-        if(null == MasterDataCache.getInstance().getUserData()) {
+    public void onSubmitClicked(View view) {
+        if (null == MasterDataCache.getInstance().getUserData()) {
             isLoginInitiated = true;
             Intent intent = new Intent(mContext, UserLoginActivity.class);
             mContext.startActivity(intent);
@@ -499,7 +531,14 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 }
             }
 
-            ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).saveNewSearch(createSelector(), getSearchName());
+            SaveSearch saveSearch = new SaveSearch();
+            saveSearch.name = mSetAlertsNameEditText.getText().toString();
+            createSelector(saveSearch);
+            SaveNewSearch saveNewSearch = new SaveNewSearch();
+            saveNewSearch.name = saveSearch.name;
+            saveNewSearch.searchQuery = saveSearch.searchQuery;
+            saveNewSearch.jsonDump = saveSearch.jsonDump;
+            ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).saveNewSearch(saveNewSearch);
             isAfterLoginInitiated = false;
             isLoginInitiated = false;
 
@@ -507,16 +546,9 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
         }
     }
 
-    private String getSearchName() {
-        if(TextUtils.isEmpty(mSearchName)) {
-            return mSetAlertsNameEditText.getText().toString();
-        }
-        return mSetAlertsNameEditText.getText().toString() + ";" + mSearchName;
-    }
-
     @Subscribe
-    public void loginResults(UserLoginEvent userLoginEvent){
-        if(null==userLoginEvent || null!=userLoginEvent.error){
+    public void loginResults(UserLoginEvent userLoginEvent) {
+        if (null == userLoginEvent || null != userLoginEvent.error) {
             showNoResults(R.string.generic_error);
 
         }
@@ -525,7 +557,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 (SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class);
         saveSearchService.getSavedSearches();
 
-        if(!isLoginInitiated){
+        if (!isLoginInitiated) {
             return;
         }
 
@@ -534,32 +566,32 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
 
     @Subscribe
     public void onResult(SaveSearchGetEvent event) {
-        if(event == null || event.error != null) {
-            if(isSubmitInitiated) {
+        if (event == null || event.error != null) {
+            if (isSubmitInitiated) {
                 MakaanMessageDialogFragment.showMessage(getFragmentManager(),
                         (event != null && event.error != null && !TextUtils.isEmpty(event.error.msg)) ? event.error.msg : getString(R.string.generic_error), "ok");
             } else {
-                if(event != null && event.error != null && event.error.error != null
+                if (event != null && event.error != null && event.error.error != null
                         && event.error.error.networkResponse != null && event.error.error.networkResponse.statusCode == 401) {
                     showContent();
 
                     populateData();
-                    mSetAlertsNameEditText.setText(handleSearchName());
+                    mSetAlertsNameEditText.setText(handleSearchName(null));
                     mSetAlertsNameEditText.setSelection(mSetAlertsNameEditText.getText().length());
                     mSetAlertsNameEditText.requestFocus();
-                } else if(event != null && event.error != null && event.error.msg != null) {
+                } else if (event != null && event.error != null && event.error.msg != null) {
                     showNoResults(event.error.msg);
                 } else {
                     showNoResults(getString(R.string.generic_error));
                 }
             }
         } else {
-            if(isSubmitInitiated) {
-                if(event.saveSearchArrayList != null && event.saveSearchArrayList.size() > 0) {
-                    if(!TextUtils.isEmpty(event.saveSearchArrayList.get(0).name)
+            if (isSubmitInitiated) {
+                if (event.saveSearchArrayList != null && event.saveSearchArrayList.size() > 0) {
+                    if (!TextUtils.isEmpty(event.saveSearchArrayList.get(0).name)
                             && (!event.saveSearchArrayList.get(0).name.contains(";"))
-                                || (mSetAlertsNameEditText.getText().toString().equalsIgnoreCase(
-                                        event.saveSearchArrayList.get(0).name.substring(0, event.saveSearchArrayList.get(0).name.indexOf(";"))))) {
+                            || (mSetAlertsNameEditText.getText().toString().equalsIgnoreCase(
+                            event.saveSearchArrayList.get(0).name.substring(0, event.saveSearchArrayList.get(0).name.indexOf(";"))))) {
 
                         MasterDataCache.getInstance().clearSavedSearches();
 
@@ -575,7 +607,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
 
                                     }
                                 });
-                    } else if(!TextUtils.isEmpty(event.saveSearchArrayList.get(0).name)) {
+                    } else if (!TextUtils.isEmpty(event.saveSearchArrayList.get(0).name)) {
                         MakaanMessageDialogFragment.showMessage(getFragmentManager(),
                                 "search query already exists", "ok");
                     }
@@ -587,7 +619,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 showContent();
 
                 populateData();
-                mSetAlertsNameEditText.setText(handleSearchName());
+                mSetAlertsNameEditText.setText(handleSearchName(null));
                 mSetAlertsNameEditText.setSelection(mSetAlertsNameEditText.getText().length());
                 mSetAlertsNameEditText.requestFocus();
             }

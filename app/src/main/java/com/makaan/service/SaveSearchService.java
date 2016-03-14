@@ -16,7 +16,6 @@ import com.makaan.request.saveSearch.SaveNewSearch;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.ResponseError;
 import com.makaan.response.saveSearch.SaveSearch;
-import com.makaan.response.wishlist.WishList;
 import com.makaan.util.AppBus;
 import com.makaan.util.JsonBuilder;
 
@@ -172,9 +171,6 @@ public class SaveSearchService implements MakaanService {
     }
 
     public void saveNewSearch(Selector selector, String name) {
-        String saveNewSearchUrl = ApiConstants.SAVE_NEW_SEARCH_URL;
-        Type saveSearchType = new TypeToken<SaveSearch>() {
-        }.getType();
 
         final SaveNewSearch saveNewSearch = new SaveNewSearch();
         saveNewSearch.searchQuery = selector.build();
@@ -186,6 +182,13 @@ public class SaveSearchService implements MakaanService {
         } else {
             saveNewSearch.name = name;
         }
+        saveNewSearch(saveNewSearch);
+    }
+
+    public void saveNewSearch(SaveNewSearch saveNewSearch) {
+        String saveNewSearchUrl = ApiConstants.SAVE_NEW_SEARCH_URL;
+        Type saveSearchType = new TypeToken<SaveSearch>() {
+        }.getType();
 
         try {
             JSONObject jsonObject = JsonBuilder.toJson(saveNewSearch);

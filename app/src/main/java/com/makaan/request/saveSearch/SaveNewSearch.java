@@ -6,4 +6,5 @@ package com.makaan.request.saveSearch;
 public class SaveNewSearch {
     public String searchQuery;
     public String name;
+    public String jsonDump;
 }
