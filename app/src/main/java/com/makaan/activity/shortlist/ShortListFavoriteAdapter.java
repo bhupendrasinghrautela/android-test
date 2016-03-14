@@ -101,6 +101,11 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
                     intent.putExtra("score", wishList.get(position).listing.companySeller.company.score.toString());
                     intent.putExtra("phone", "9090909090");//todo: not available in pojo
                     intent.putExtra("id", wishList.get(position).listing.companySeller.company.id.toString());
+                    if(wishList.get(position).listingId != null) {
+                        intent.putExtra("listingId", wishList.get(position).listingId);
+                    } else if(wishList.get(position).projectId != null) {
+                        intent.putExtra("listingId", wishList.get(position).projectId);
+                    }
                     if(wishList.get(position).project.locality!=null && wishList.get(position).project.locality.cityId!=null) {
                         intent.putExtra("cityId", wishList.get(position).project.locality.cityId);
                     }

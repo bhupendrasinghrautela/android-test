@@ -440,7 +440,7 @@ public class DefaultListingView extends AbstractListingView {
         // or age of property for reseller properties
         // or furnished/unfurnished/semi-furnished for rental properties
         if(isBuy) {
-            if(!TextUtils.isEmpty(mListing.propertyType) && "Residential Plot".equals(mListing.propertyType)) {
+            if(!TextUtils.isEmpty(mListing.propertyType) && "Residential Plot".equalsIgnoreCase(mListing.propertyType)) {
                 ArrayList<ListingInfoMap.InfoMap> map = MasterDataCache.getInstance().getListingMapInfo(ListingInfoMap.MAP_BUY_PLOT_PROPERTIES);
                 mapPropertyInfo(map);
             } else {
