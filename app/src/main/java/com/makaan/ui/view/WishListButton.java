@@ -1,7 +1,6 @@
 package com.makaan.ui.view;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,7 +11,6 @@ import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.makaan.R;
 import com.makaan.activity.listing.PropertyActivity;
 import com.makaan.activity.listing.SerpActivity;
@@ -34,8 +32,6 @@ import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
-import butterknife.OnCheckedChanged;
-import butterknife.OnClick;
 
 /**
  * Created by sunil on 15/02/16.
@@ -81,13 +77,19 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
         }catch(Exception e){}
         isLoginInitiatedFromWishList = false;
         mWishListDto = item;
-        boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(
-                mWishListDto.type==WishListType.listing?mWishListDto.listingId:mWishListDto.projectId);
+        if(MasterDataCache.getInstance().getUserData()!=null) {
+            boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(
+                    mWishListDto.type == WishListType.listing ? mWishListDto.listingId : mWishListDto.projectId);
 
-        mShortlistCheckBox.setOnCheckedChangeListener(null);
-        if(isShortlisted){
-            mShortlistCheckBox.setChecked(true);
-        }else{
+            mShortlistCheckBox.setOnCheckedChangeListener(null);
+            if (isShortlisted) {
+                mShortlistCheckBox.setChecked(true);
+            } else {
+                mShortlistCheckBox.setChecked(false);
+            }
+        }
+        else {
+            mShortlistCheckBox.setOnCheckedChangeListener(null);
             mShortlistCheckBox.setChecked(false);
         }
 
@@ -238,11 +240,11 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
 
         isLoginInitiatedFromWishList = false;
 
-        if(userLoginEvent == null || userLoginEvent.error == null) {
+        if(userLoginEvent == null || userLoginEvent.userResponse == null) {
             Toast.makeText(mContext, getResources().getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
-        } else if(userLoginEvent.error.msg!=null){
+        } else if(userLoginEvent.error!=null && userLoginEvent.error.msg!=null){
             Toast.makeText(mContext, userLoginEvent.error.msg, Toast.LENGTH_SHORT).show();
-        } else {
+        } else if(userLoginEvent.userResponse!=null){
             onCheckedChanged(null, !mShortlistCheckBox.isChecked());
         }
     }
