@@ -80,7 +80,7 @@ public class TopLocalityView extends BaseLinearLayout<List<Locality>> {
             }else{
                 localityAvgPrice.setVisibility(GONE);
             }
-            if(null!=locality.avgPriceRisePercentage && locality.avgPriceRisePercentage>0) {
+            if(null!=locality.avgPriceRisePercentage && locality.avgPriceRisePercentage!=0) {
                 localityAvgPriceRise.setText(String.valueOf(locality.avgPriceRisePercentage) + "%");
             }else{
                 localityAvgPriceRise.setVisibility(View.GONE);

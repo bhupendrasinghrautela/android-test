@@ -74,6 +74,11 @@ public class ListingOtherSellersCallback extends JSONGetCallback {
                     else if(listingDetail.companySeller!=null && listingDetail.companySeller.user!=null && listingDetail.companySeller.user.fullName!=null){
                         sellerCard.name = listingDetail.companySeller.user.fullName;
                     }
+                    if(listingDetail.companySeller.user!=null){
+                        if(listingDetail.companySeller.user.contactNumbers!=null && listingDetail.companySeller.user.contactNumbers.size()>0){
+                            sellerCard.contactNo = listingDetail.companySeller.user.contactNumbers.get(0).contactNumber;
+                        }
+                    }
                     sellerCard.type = company.type;
                     if(company.score!=null) {
                         sellerCard.rating = company.score / 2;
