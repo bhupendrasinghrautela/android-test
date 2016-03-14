@@ -685,11 +685,17 @@
 
     <dimen name="listing_brief_view_layout_map_image_width">20dp</dimen>
     <dimen name="listing_brief_view_layout_map_image_height">20dp</dimen>
-    <dimen name="listing_brief_view_layout_map_image_top_margin">11dp</dimen>
-    <dimen name="listing_brief_view_layout_map_image_left_margin">60dp</dimen>
+    <dimen name="listing_brief_view_layout_map_image_top_margin">10dp</dimen>
+    <dimen name="listing_brief_view_layout_map_image_left_margin">20dp</dimen>
     <dimen name="listing_brief_view_layout_map_image_bottom_margin">10dp</dimen>
 
-    <dimen name="listing_brief_view_layout_property_address_text_view_left_margin">7dp</dimen>
+    <dimen name="listing_brief_view_layout_assist_button_width">39dp</dimen>
+    <dimen name="listing_brief_view_layout_assist_button_height">13dp</dimen>
+    <dimen name="listing_brief_view_layout_assist_button_right_margin">10dp</dimen>
+    <dimen name="listing_brief_view_layout_assist_button_top_margin">2dp</dimen>
+    <dimen name="listing_brief_view_layout_assist_button_left_padding">0dp</dimen>
+
+    <dimen name="listing_brief_view_layout_property_address_text_view_left_margin">6dp</dimen>
     <dimen name="listing_brief_view_layout_property_address_text_view_right_margin">20dp</dimen>
     <dimen name="listing_brief_view_layout_property_address_text_view_top_margin">12dp</dimen>
     <dimen name="listing_brief_view_layout_property_address_text_view_text_size">16sp</dimen>
