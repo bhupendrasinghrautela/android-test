@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.lead.LeadFormActivity;
@@ -151,11 +152,11 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
     }
 
     @OnClick(R.id.iv_verify)
-    public void verifyClicked()
-    {
-        if(mEditTextFirstDigit.getText().toString().trim().length()==1 && mEditTextSecondDigit.getText().toString().trim().length()==1
-                && mEditTextThirdDigit.getText().toString().trim().length()==1&&mEditTextFourthDigit.getText().toString().trim().length()==1
-                ){
+    public void verifyClicked(){
+        if(mEditTextFirstDigit.getText().toString().trim().length()==1
+                && mEditTextSecondDigit.getText().toString().trim().length()==1
+                && mEditTextThirdDigit.getText().toString().trim().length()==1
+                &&mEditTextFourthDigit.getText().toString().trim().length()==1){
             mOtp=mEditTextFirstDigit.getText().toString()+mEditTextSecondDigit.getText().toString()+
                     mEditTextThirdDigit.getText().toString()+mEditTextFourthDigit.getText().toString();
         }
@@ -167,10 +168,14 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
         else if(getActivity() instanceof LeadFormActivity) {
             pyrRequest = LeadFormPresenter.getLeadFormPresenter().getPyrRequest();
         }
-        if(pyrRequest!=null && pyrData!=null && mOtp!=null) {
-            ((OtpVerificationService) (MakaanServiceFactory.getInstance().getService(OtpVerificationService.class))).makeOtpVerificationRequest(
-                    pyrData.getEnquiryIds()[0], mOtp, pyrRequest.getPhone(), String.valueOf(pyrData.getUserId()));
-        }
+        if(pyrRequest!=null && pyrData!=null && mOtp!=null ) {
+            if(mOtp.length()<4) {
+                Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.enter_otp), Toast.LENGTH_SHORT).show();
+            }else {
+                ((OtpVerificationService) (MakaanServiceFactory.getInstance().getService(OtpVerificationService.class))).makeOtpVerificationRequest(
+                        pyrData.getEnquiryIds()[0], mOtp, pyrRequest.getPhone(), String.valueOf(pyrData.getUserId()));
+            }
+            }
     }
 
     @OnClick(R.id.tv_resend)

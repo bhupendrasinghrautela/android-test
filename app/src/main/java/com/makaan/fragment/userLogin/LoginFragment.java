@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.makaan.R;
@@ -39,7 +42,7 @@ import butterknife.OnClick;
 /**
  * Created by makaanuser on 29/12/15.
  */
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements TextWatcher {
 
     public  static String TAG=LoginFragment.class.getSimpleName();
     /*@Bind(R.id.iv_back)
@@ -82,6 +85,8 @@ public class LoginFragment extends Fragment {
             mEditTextEmail.setText(CookiePreferences.getUserName(getActivity()));
             mEditTextPassword.setText(CookiePreferences.getPassword(getActivity()));
         }
+        mEditTextEmail.addTextChangedListener(this);
+        mEditTextPassword.addTextChangedListener(this);
         return view;
     }
 
@@ -162,23 +167,39 @@ public class LoginFragment extends Fragment {
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.loginWithEmailFail);
             MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.login);
             mOnUserLoginListener.onUserLoginError(userLoginEvent.error);
-            //set error on login fail
-            if(isVisible()) {
-                mTilEmail.setError(getString(R.string.invalid_email));
-                mTilPassword.setError(getString(R.string.invalid_password));
-            }
-
-        }
-        else {
+        }else {
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.loginWithEmailSuccess);
             MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.login);
             String str = new Gson().toJson(userLoginEvent.userResponse);
-            mOnUserLoginListener.onUserLoginSuccess(userLoginEvent.userResponse , str);
+            mOnUserLoginListener.onUserLoginSuccess(userLoginEvent.userResponse, str);
         }
     }
 
     @OnClick(R.id.iv_back)
     public void onBackPressed(){
         getActivity().onBackPressed();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (mEditTextEmail.getText().length() > 0)
+            mTilEmail.setErrorEnabled(false);
+        else
+            mTilEmail.setErrorEnabled(true);
+
+        if (mEditTextPassword.getText().length() > 0)
+            mTilPassword.setErrorEnabled(false);
+        else
+            mTilPassword.setErrorEnabled(true);
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }
