@@ -163,8 +163,10 @@ public class LoginFragment extends Fragment {
             MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.login);
             mOnUserLoginListener.onUserLoginError(userLoginEvent.error);
             //set error on login fail
-            mTilEmail.setError(getString(R.string.invalid_email));
-            mTilPassword.setError(getString(R.string.invalid_password));
+            if(isVisible()) {
+                mTilEmail.setError(getString(R.string.invalid_email));
+                mTilPassword.setError(getString(R.string.invalid_password));
+            }
 
         }
         else {
