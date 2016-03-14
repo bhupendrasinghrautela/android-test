@@ -92,6 +92,8 @@
     <string name="invalid_phone_no_toast">invalid phone no</string>
     <string name="listings_limit_toast">Only a maximum of 6 listings can be added</string>
     <string name="otp_string">OTP</string>
+    <string name="enter_otp">please enter otp</string>
+
     <string name="verification_code_string">verification code</string>
     <string name="resend_string">resend?</string>
     <string name="skip_string">skip</string>
@@ -264,6 +266,7 @@
     <string name="timeout_error">oops! looks like a connection issue. let\'s get you back on the joyride</string>
     <string name="enter_valid_email">please provide a valid email (3-50 chars)</string>
     <string name="enter_password">please provide a valid password (6-32 chars)</string>
+    <string name="wrong_username_password">oops! your username or password is incorrect</string>
 
     <string name="personal_info">personal information</string>
     <string name="Password">password</string>
@@ -362,6 +365,9 @@
 
     <string name="notification_deleted">Notification Deleted</string>
     <string name="notification_deletion_error">unable to delete notification, please try again later</string>
+
+    <string name="please_wait">please wait...</string>
+
 
 </resources>
 
