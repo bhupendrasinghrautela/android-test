@@ -37,6 +37,7 @@ import com.makaan.service.user.GoogleTokenInteractor;
 import com.makaan.service.user.OnFacebookTokenListener;
 import com.makaan.service.user.OnGoogleTokenListener;
 import com.makaan.service.user.UserLoginService;
+import com.makaan.ui.CommonProgressDialog;
 import com.makaan.util.NetworkUtil;
 import com.makaan.util.PermissionManager;
 import com.segment.analytics.Properties;
@@ -101,7 +102,6 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
                 GoogleTokenInteractor interactor = new GoogleTokenInteractor(getActivity(), LoginSocialFragment.this);
                 interactor.requestGoogleAccessToken(accountName);
             }else{
-                //TODO
             }
         }
     }
@@ -162,15 +162,17 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
     public void onGoogleTokenSuccess(String token) {
         ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
         ))).loginWithGoogleAccount(token);
+
     }
 
     @Override
     public void onGoogleTokenFail() {
-       // Toast.makeText(getActivity(), getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     public void onFacebookTokenSuccess(String token) {
+
         ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
         ))).loginWithFacebookAccount(token);
     }
