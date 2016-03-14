@@ -118,7 +118,7 @@
     <color name="project_similar_projects_light_color">#999</color>
 
     <!-- Home Activity colors -->
-    <color name="activity_home_search_background">#abffffff</color>
+    <color name="activity_home_search_background">#E6ffffff</color>
     <color name="login_text_color">#444444</color>
 
     <!-- selected search item values -->
