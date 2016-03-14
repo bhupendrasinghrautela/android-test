@@ -10,6 +10,7 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -57,6 +58,9 @@ public class ListingCardView extends AbstractListingView {
     @Bind(R.id.listing_brief_view_layout_property_address_text_view)TextView mPropertyAddressTextView;
     @Bind(R.id.listing_brief_view_layout_badge_Image_view)ImageView mBadgeImageView;
     @Bind(R.id.listing_brief_view_layout_text_view)TextView mBadgeTextView;
+
+    @Bind(R.id.serp_default_listing_assist_button) Button mAssistButton;
+
     private SharedPreferences mPreferences;
     private Listing mListing;
 
@@ -157,6 +161,12 @@ public class ListingCardView extends AbstractListingView {
             }
 
             mPropertyImageView.setImageBitmap(bitmap);
+        }
+
+        if(mListing.lisitingPostedBy == null || !mListing.lisitingPostedBy.assist) {
+            mAssistButton.setVisibility(View.GONE);
+        } else {
+            mAssistButton.setVisibility(View.VISIBLE);
         }
 
         this.setOnClickListener(new OnClickListener() {

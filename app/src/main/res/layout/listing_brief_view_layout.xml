@@ -173,6 +173,21 @@
                     android:paddingBottom="@dimen/listing_brief_view_layout_map_image_bottom_margin"
                     android:paddingTop="@dimen/listing_brief_view_layout_map_image_top_margin">
 
+
+                    <Button
+                        android:id="@+id/listing_brief_view_layout_assist_button"
+                        android:layout_width="@dimen/listing_brief_view_layout_assist_button_width"
+                        android:layout_height="@dimen/listing_brief_view_layout_assist_button_height"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/serp_default_listing_property_seller_info_empty_view"
+                        android:layout_marginEnd="@dimen/listing_brief_view_layout_assist_button_right_margin"
+                        android:layout_marginRight="@dimen/listing_brief_view_layout_assist_button_right_margin"
+                        android:layout_marginTop="@dimen/listing_brief_view_layout_assist_button_top_margin"
+                        android:background="@drawable/m_badge"
+                        android:layout_marginLeft="@dimen/listing_brief_view_layout_assist_button_left_padding"
+                        android:layout_marginStart="@dimen/listing_brief_view_layout_assist_button_left_padding" />
+
                     <ImageView
                         android:id="@+id/listing_brief_view_layout_map_image_view"
                         android:layout_width="@dimen/listing_brief_view_layout_map_image_width"
@@ -193,8 +208,10 @@
                         android:layout_marginLeft="@dimen/listing_brief_view_layout_property_address_text_view_left_margin"
                         android:layout_marginRight="@dimen/listing_brief_view_layout_property_address_text_view_right_margin"
                         android:layout_marginStart="@dimen/listing_brief_view_layout_property_address_text_view_left_margin"
-                        android:layout_toEndOf="@+id/listing_brief_view_layout_map_image_view"
-                        android:layout_toRightOf="@+id/listing_brief_view_layout_map_image_view"
+                        android:layout_toEndOf="@id/listing_brief_view_layout_map_image_view"
+                        android:layout_toRightOf="@id/listing_brief_view_layout_map_image_view"
+                        android:layout_toStartOf="@id/listing_brief_view_layout_assist_button"
+                        android:layout_toLeftOf="@id/listing_brief_view_layout_assist_button"
                         android:ellipsize="end"
                         android:singleLine="true"
                         android:text="sector - 2 sohna, gurgaon"
