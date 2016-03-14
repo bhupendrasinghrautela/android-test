@@ -87,14 +87,15 @@ public class Project {
     }
 
     public String getFullName() {
-        if (null != fullName) {
-            return fullName;
-        } else if (null != builderName && null != name) {
+        if (null != builderName && null != name) {
             return builderName.concat(" ").concat(name);
         } else if (null != name && null != builder && null != builder.name) {
             return builder.name.concat(" ").concat(name);
-        }else if(null != name)
+        } else if (null != fullName) {
+            return fullName;
+        } else if (null != name) {
             return name;
+        }
         return null;
     }
 
