@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.jarvis.message.Message;
@@ -64,6 +65,7 @@ public class PyrPopupCard extends BaseCtaView<ExposeMessage> {
             public void onClick(View view) {
 
                 Intent pyrIntent = new Intent(context, PyrPageActivity.class);
+                pyrIntent.putExtra(PyrPageActivity.SOURCE_SCREEN_NAME, "Jarvis");
                 context.startActivity(pyrIntent);
 
                 if(null!=mOnApplyClickListener){

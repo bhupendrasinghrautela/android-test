@@ -61,7 +61,7 @@ public class ListingParser {
                     JSONObject user = null != seller ? seller.optJSONObject(USER) : null;
                     JSONObject sellerCompany = null != seller ? seller.optJSONObject(COMPANY) : null;
                     JSONArray images = listingJson.optJSONArray(IMAGES);
-
+                    JSONArray contactNumbers=null!= seller?user.optJSONArray(CONTACT_NUMBERS):null;
 
                     listing.postedDate = getDateStringFromEpoch(listingJson.optString(POSTED_DATE));
                     listing.lisitingId = listingJson.optInt(ID);
@@ -173,6 +173,14 @@ public class ListingParser {
                                 (user.optString(FULL_NAME) != null ? user.optString(FULL_NAME) : null) : null;
                     }
 
+                    if (null != contactNumbers) {
+
+                        for (int k = 0; k < contactNumbers.length(); k++) {
+                            JSONObject contactNumbersJSONObject = contactNumbers.getJSONObject(k);
+                            listing.lisitingPostedBy.number = contactNumbersJSONObject.getString("contactNumber");
+                        }
+                    }
+
 
                     listing.hasOffer = listingJson.optString(IS_OFFERED) != null && listingJson.optBoolean(IS_OFFERED);
                     listing.mainImageUrl = listingJson.optString(MAIN_IMAGE_URL);
@@ -206,6 +214,7 @@ public class ListingParser {
                     if (null != listingJson.optString(LANDMARK_DISTANCE)) {
                         listing.landMarkDistance = Math.round(listingJson.optDouble(LANDMARK_DISTANCE) * 10) / 10;
                     }
+
                 }
             }
 

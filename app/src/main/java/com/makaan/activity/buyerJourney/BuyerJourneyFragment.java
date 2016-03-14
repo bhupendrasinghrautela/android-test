@@ -194,7 +194,6 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             ((ClientEventsService) MakaanServiceFactory.getInstance().getService(ClientEventsService.class)).getClientEvents(1);
             ((WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class)).get();
 
-            // TODO
             mNewSearchesReceived = false;
             mClientEventsReceived = false;
             mClientLeadsReceived = false;

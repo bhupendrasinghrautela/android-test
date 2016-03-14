@@ -440,7 +440,7 @@ public class DefaultListingView extends AbstractListingView {
         // or age of property for reseller properties
         // or furnished/unfurnished/semi-furnished for rental properties
         if(isBuy) {
-            if(!TextUtils.isEmpty(mListing.propertyType) && "Residential Plot".equals(mListing.propertyType)) {
+            if(!TextUtils.isEmpty(mListing.propertyType) && "Residential Plot".equalsIgnoreCase(mListing.propertyType)) {
                 ArrayList<ListingInfoMap.InfoMap> map = MasterDataCache.getInstance().getListingMapInfo(ListingInfoMap.MAP_BUY_PLOT_PROPERTIES);
                 mapPropertyInfo(map);
             } else {
@@ -521,7 +521,7 @@ public class DefaultListingView extends AbstractListingView {
                 } else {
                     return false;
                 }
-            /*case "propertyAge":
+            case "propertyAge":
                 if(mListing.isReadyToMove && mListing.age >= 0) {
                     if(mListing.age <= 1) {
                         mPropertyInfoTextViews.get(j).setText(String.format("%d - %d yr", mListing.age, mListing.age + 1));
@@ -536,7 +536,7 @@ public class DefaultListingView extends AbstractListingView {
                     break;
                 } else {
                     return false;
-                }*/
+                }
             case "possessionDate":
                 if(!mListing.isReadyToMove && !TextUtils.isEmpty(mListing.possessionDate)) {
                     mPropertyInfoTextViews.get(j).setText(mListing.possessionDate.toLowerCase());
@@ -706,7 +706,10 @@ public class DefaultListingView extends AbstractListingView {
 
         bundle.putString("name", mListing.lisitingPostedBy.name);
         bundle.putString("score", String.valueOf(mListing.lisitingPostedBy.rating));
-        bundle.putString("phone", null);//todo: not available in pojo
+
+        if(mListing.lisitingPostedBy!=null && mListing.lisitingPostedBy.number!=null) {
+            bundle.putString("phone", mListing.lisitingPostedBy.number);//todo: not available in pojo
+        }
         bundle.putString("id", String.valueOf(mListing.lisitingPostedBy.id));
         bundle.putLong("listingId", mListing.lisitingId);
         if(mListing!=null && mListing.cityId!=null) {

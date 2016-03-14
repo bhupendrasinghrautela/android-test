@@ -12,26 +12,28 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.content.BlogByTagEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.content.BlogItem;
-import com.makaan.response.image.Image;
 import com.makaan.service.BlogService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.ui.CustomNetworkImageView;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -284,6 +286,9 @@ public class BlogContentFragment extends MakaanBaseFragment {
                     holder.titleTextView.setText(mBlogItems.get(itemPosition).postTitle.toLowerCase());
                 }
                 holder.link = mBlogItems.get(itemPosition).guid;
+                if(mBlogItems.get(itemPosition).id!=null){
+                    holder.articleId=mBlogItems.get(itemPosition).id;
+                }
             } else {
                 initHeaderUi(holder.view);
             }
@@ -308,6 +313,7 @@ public class BlogContentFragment extends MakaanBaseFragment {
             CustomNetworkImageView imageView;
             TextView titleTextView;
             public String link;
+            private Long articleId;
 
             public BlogContentHolder(View itemView, int viewType) {
                 super(itemView);
@@ -324,6 +330,10 @@ public class BlogContentFragment extends MakaanBaseFragment {
             View.OnClickListener listener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.e("article ","clicked");
+                    if(articleId!=null) {
+                        createDashBoardEvent(articleId);
+                    }
                     if(link != null) {
                         Activity activity = getActivity();
                         if(activity instanceof BuyerDashboardCallbacks) {
@@ -334,6 +344,35 @@ public class BlogContentFragment extends MakaanBaseFragment {
                     }
                 }
             };
+        }
+    }
+
+    public void createDashBoardEvent(Long articleId){
+        Properties properties= MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY , MakaanTrackerConstants.Category.buyerDashboard);
+        properties.put(MakaanEventPayload.LABEL, articleId);
+        switch (mType) {
+            case SEARCH:
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickSavedSearches);
+                break;
+            case SHORTLIST:
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickShortlist);
+                break;
+            case SITE_VISIT:
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickSiteVisits);
+                break;
+            case HOME_LOAN:
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickHomeLoan);
+                break;
+            case UNIT_BOOK:
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickUnitBook);
+                break;
+            case POSSESSION:
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickPossession);
+                break;
+            case REGISTRATION:
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickRegistration);
+                break;
         }
     }
 }

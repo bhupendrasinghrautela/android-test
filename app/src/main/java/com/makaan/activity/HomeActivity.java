@@ -14,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.appsflyer.AppsFlyerLib;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
 import com.makaan.constants.PreferenceConstants;
@@ -55,6 +56,9 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        AppsFlyerLib.getInstance().init(this,getString(R.string.app_appsflyer_id));
+
         PermissionManager.begin().addRequest(PermissionManager.ACCOUNTS_REQUEST).request(this);
 
         GcmRegister.checkAndSetGcmId(this, null);

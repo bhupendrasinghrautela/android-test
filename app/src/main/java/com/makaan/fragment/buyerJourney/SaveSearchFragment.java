@@ -26,6 +26,8 @@ import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
 import com.makaan.activity.listing.SerpActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ApiConstants;
 import com.makaan.event.buyerjourney.NewMatchesGetEvent;
@@ -49,6 +51,7 @@ import com.makaan.ui.CustomNetworkImageView;
 import com.makaan.util.ErrorUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import org.apache.http.HttpStatus;
@@ -156,6 +159,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                                 });
                     }
                 } else if (savedSearches != null && savedSearches.size() > position) {
+                    createSaveSearchEvent(imageObjects,position);
                     SerpRequest request = new SerpRequest(SerpActivity.TYPE_SUGGESTION);
                     request.launchSerp(getActivity(), savedSearches.get(position).searchQuery);
                 }
@@ -305,7 +309,6 @@ public class SaveSearchFragment extends MakaanBaseFragment {
 
     }
 
-
     @Subscribe
     public void onResults(SaveSearchGetEvent saveSearchGetEvent) {
         if (null == saveSearchGetEvent || null != saveSearchGetEvent.error) {
@@ -447,4 +450,40 @@ public class SaveSearchFragment extends MakaanBaseFragment {
             }
         }
     }
+
+
+    private void createSaveSearchEvent(List<ImageObject> imageObjects, int position) {
+            HashMap<String, ArrayList<String>> map = imageObjects.get(position).request.getTermMap();
+            if (map != null) {
+                for (String key : map.keySet()) {
+                    if (KeyUtil.LOCALITY_ID.equalsIgnoreCase(key)) {
+                        Properties properties= MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                        properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.locality,
+                                   map.get(KeyUtil.LOCALITY_ID).get(0)));
+                        MakaanEventPayload.endBatch(getContext(),MakaanTrackerConstants.Action.clickSavedSearches);
+                        break;
+
+                    } else if (KeyUtil.CITY_ID.equalsIgnoreCase(key)) {
+                        Properties properties= MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                        properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.city,
+                                map.get(KeyUtil.CITY_ID).get(0)));
+                        MakaanEventPayload.endBatch(getContext(),MakaanTrackerConstants.Action.clickSavedSearches);
+                        break;
+
+                    } else if (KeyUtil.BUILDER_ID.equalsIgnoreCase(key)) {
+                        Properties properties= MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                        properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.builder,
+                                map.get(KeyUtil.BUILDER_ID).get(0)));
+                        MakaanEventPayload.endBatch(getContext(),MakaanTrackerConstants.Action.clickSavedSearches);
+                        break;
+
+                    }
+                }
+            }
+    }
+
+
 }

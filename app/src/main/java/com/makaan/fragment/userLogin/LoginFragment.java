@@ -102,9 +102,17 @@ public class LoginFragment extends Fragment {
         String email = mEditTextEmail.getText().toString().trim();
         String pwd = mEditTextPassword.getText().toString().trim();
         if(!CommonUtil.isValidEmail(email)) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorBuyer);
+            properties.put(MakaanEventPayload.LABEL, getString(R.string.invalid_email));
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.errorLogin);
             mTilEmail.setError(getString(R.string.invalid_email));
             //Toast.makeText(getActivity(), getString(R.string.enter_valid_email), Toast.LENGTH_SHORT).show();
         }else if(TextUtils.isEmpty(pwd)) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorBuyer);
+            properties.put(MakaanEventPayload.LABEL, getString(R.string.invalid_password));
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.errorLogin);
             mTilPassword.setError(getString(R.string.invalid_password));
             //Toast.makeText(getActivity(),getString(R.string.enter_password),Toast.LENGTH_SHORT).show();
         } else {

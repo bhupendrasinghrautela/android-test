@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader.ImageContainer;
 import com.makaan.R;
+import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.analytics.MakaanEventPayload;
@@ -515,6 +516,8 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         if(mCity!=null && mCity.label!=null) {
             pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, mCity.label);
             pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, mCity.id);
+            pyrIntent.putExtra(PyrPageActivity.SOURCE_SCREEN_NAME, ((CityActivity) getActivity()).getScreenName());
+
         }
         getActivity().startActivity(pyrIntent);
     }

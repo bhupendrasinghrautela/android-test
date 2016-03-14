@@ -13,11 +13,14 @@ import android.widget.Toast;
 
 
 import com.makaan.R;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.response.BaseResponse;
 import com.makaan.service.user.ForgotPasswordService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.AppBus;
 import com.makaan.util.CommonUtil;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
@@ -62,6 +65,11 @@ public class ForgotPasswordDialogFragment extends DialogFragment {
             ))).forgotPasswordRequest(mEditTextemail.getText().toString().trim());
         }
         else{
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorBuyer);
+            properties.put(MakaanEventPayload.LABEL, getString(R.string.invalid_email));
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.errorPassword);
+
             Toast.makeText(getActivity(),getString(R.string.enter_valid_email),Toast.LENGTH_SHORT).show();
         }
     }
@@ -74,6 +82,11 @@ public class ForgotPasswordDialogFragment extends DialogFragment {
         if(baseResponse.getStatusCode()!=null && baseResponse.getStatusCode().equals("2XX")){
             Toast.makeText(getActivity(),getActivity().getString(R.string.password_recovery),Toast.LENGTH_SHORT).show();
         }else {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorBuyer);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.notRegisteredUser);
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.errorPassword);
+
             if(baseResponse.getError() != null && !TextUtils.isEmpty(baseResponse.getError().msg)) {
                 Toast.makeText(getActivity(), baseResponse.getError().msg, Toast.LENGTH_SHORT).show();
             } else {

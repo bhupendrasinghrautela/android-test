@@ -15,7 +15,8 @@ public class MakaanTrackerConstants {
         property("Buyer_Property"),propertyFilter("Buyer_Property_Filter"),propertyMap("Buyer_Property_Map"),
         buyerPropertyDetails("Buyer_Property_Details"),buyerPropertyCall("Buyer_Property_Call"),buyerPropertyGetCallBack("Buyer_Property_Call_Get Callback"),
         buyerProjectCall("Buyer_Project_Call"),buyerProjectGetCallBack("Buyer_Project_Call_Get Callback"),buyerSerp("Buyer_Serp"),buyerProject("Buyer_Project"),
-        buyerHome("Buyer_Home"), buyerCity("Buyer_City"),searchMap("Search_Map"),searchFilter("Search_Filter"),buyerLocality("Buyer_Locality"),userLogin("User_Login");
+        buyerHome("Buyer_Home"), buyerCity("Buyer_City"),searchMap("Search_Map"),searchFilter("Search_Filter"),buyerLocality("Buyer_Locality"),userLogin("User_Login"),
+        buyerPyr("Buyer_PYR"),errorBuyer("Error_Buyer"),buyerDashboard("Buyer_Dashboard"),errorUsability("Error_Usability");
 
         private String value;
 
@@ -66,7 +67,18 @@ public class MakaanTrackerConstants {
         clickCityPriceTrends("CLICK_City_Price Trends"),clickCity("CLICK_City"),login("Login"),clickProjectImages("CLICK_Project_Images"),clickPropertyImages("CLICK_Property_Images"),
         clickPropertyViewOtherSellers("CLICK_Property_View other sellers"),clickCityOverView("CLICK_City_Overview"),clickProjectConstructionImages("CLICK_Project_Construction Images"),
         clickSerpPropertyShortList("CLICK_Serp_Property Shortlist"),clickLocalityOverView("CLICK_Locality_Overview"),selectPropertiesLocality("SELECT_Properties in Locality"),
-        clickSerpPropertySeller("CLICK_Serp_Property Seller"),clickSerpPropertyView("CLICK_Serp_Property View"),signUpClose("SIGNUP_Close"),signUpSocial("SIGNUP_Social");
+        clickSerpPropertySeller("CLICK_Serp_Property Seller"),clickSerpPropertyView("CLICK_Serp_Property View"),signUpClose("SIGNUP_Close"),signUpSocial("SIGNUP_Social"),
+        submitCityTypePyr("SUBMIT_City_PYR"),submitLocalityTypePyr("SUBMIT_Locality_PYR"),submitProjectTypePyr("SUBMIT_Project_PYR"),
+        submitDashboardTypePyr("SUBMIT_BuyerDashboard_PYR"),submitJarvisTypePyr("SUBMIT_Jarvis_PYR"),selectCityPyrSellers("SELECT_City_PYR_Sellers"),
+        selectLocalityPyrSellers("SELECT_Locality_PYR_Sellers"),selectProjectPyrSellers("SELECT_Project_PYR_Sellers"),
+        selectBuyerDashboardPyrSellers("SELECT_BuyerDashboard_PYR_Sellers"), selectJarvisPyrSellers("VIEW_Jarvis_PYR_Sellers"),viewCityPyrSellers("VIEW_City_PYR_Sellers"),
+        viewLocalityPyrSellers("VIEW_Locality_PYR_Sellers"), viewProjectPyrSellers("VIEW_Project_PYR_Sellers"), viewBuyerDashboardPyrSellers("VIEW_BuyerDashboard_PYR_Sellers"),
+        viewJarvisPyrSellers("VIEW_Jarvis_PYR_Sellers"),selectCityPyrOtp("SELECT_City_PYR_OTP"),selectLocalityPyrOtp("SELECT_Locality_PYR_OTP"),
+        selectProjectPyrOtp("SELECT_Project_PYR_OTP"), selectBuyerDashboardPyrOtp("SELECT_BuyerDashboard_PYR_OTP"), selectJarvisPyrOtp("VIEW_Jarvis_PYR_OTP"),
+        errorPyr("ERROR_PYR"),clickSavedSearches("CLICK_Savedsearches"),clickShortlist("CLICK_Shortlist"),clickSiteVisits("CLICK_Sitevisits"),clickHomeLoan("CLICK_Homeloan"),
+        clickUnitBook("CLICK_Unitbook"),clickPossession("CLICK_Possession"),clickRegistration("CLICK_Registration"),clickShortListFavourite("CLICK_Shortlist_Favourite"),
+        clickShortListRecentlyViewed("CLICK_Shortlist_Recentlyviewed"),errorLogin("ERROR_Login"),errorPassword("ERROR_Password"),errorSignUp("ERROR_Sign Up"),
+        sorryNoMatchingResultFound("Error_sorry, no matching results found");
 
         private String value;
 
@@ -95,7 +107,11 @@ public class MakaanTrackerConstants {
         facebookSuccess("FACEBOOK_Success"),facebookFailed("FACEBOOK_Failed"), googleSuccess("GOOGLE_Success"),googleFail("GOOGLE_Fail"),
         loginWithEmailSuccess("LOGIN_WITH_email_success"),loginWithEmailFail("LOGIN_WITH_email_failed"),callNow("CALL_now"),
         registrationSuccess("REGISTRATION_Success"),registrationFailed("REGISTRATION_Failed"),getCallBackFromSeller("GET_CALL_BACK_from_seller"),
-        closeSignUp("Close_SignUp"),dontHaveSocial("I don't have social"),facebook("Facebook"),google("Google"),backSocial("Back_social"),closeSocial("Close_social");
+        closeSignUp("Close_SignUp"),dontHaveSocial("I don't have social"),facebook("Facebook"),google("Google"),backSocial("Back_social"),closeSocial("Close_social"),
+        city("City"),locality("Locality"),project("Project"),buyerDashBoard("BuyerDashboard"),jarvis("Jarvis"),back("Back"),close("Close"),success("Success"),
+        failure("Failure"),resend("Resend"),skip("Skip"),incorrectOtp("Incorrect OTP"),builder("Builder"),enquired("Enquired"),favourite("Favourite"),recent("Recent"),
+        phoneNumberRequired("phone number is required"),nameRequired("name is required"),emailRequired("email is required"),phoneNumberInvalid("phone number is invalid"),
+        errorWhileSubmitting("error while submitting"),notRegisteredUser("sorry! you are not a registered user."),searchString("Search string");
 
         private String value;
 
@@ -110,7 +126,7 @@ public class MakaanTrackerConstants {
         public String toString() {
             return value;
         }
-    }
 
+    }
 
 }

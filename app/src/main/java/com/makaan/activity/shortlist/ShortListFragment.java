@@ -9,20 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.makaan.R;
-import com.makaan.activity.MakaanFragmentActivity;
-import com.makaan.activity.buyerJourney.BuyerJourneyPagerAdapter;
-import com.makaan.event.wishlist.WishListResultEvent;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.fragment.MakaanBaseFragment;
-import com.makaan.response.wishlist.WishListResultCallback;
-import com.makaan.service.LeadInstantCallbackService;
-import com.makaan.service.MakaanServiceFactory;
-import com.makaan.service.WishListService;
-import com.makaan.util.AppBus;
-import com.makaan.util.AppUtils;
-import com.squareup.otto.Subscribe;
+import com.segment.analytics.Properties;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by makaanuser on 2/2/16.
@@ -80,7 +72,7 @@ public class ShortListFragment extends MakaanBaseFragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
-
+                createEventOnTabSelection(tab.getPosition());
             }
 
             @Override
@@ -93,6 +85,29 @@ public class ShortListFragment extends MakaanBaseFragment {
                 mViewPager.setCurrentItem(tab.getPosition());
             }
         });
+    }
+
+    private void createEventOnTabSelection(int position) {
+        Properties properties= MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+
+        switch (position){
+            case 0:{
+                properties.put(MakaanEventPayload.LABEL,MakaanTrackerConstants.Label.enquired);
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickShortlist);
+                break;
+            }
+            case 1:{
+                properties.put(MakaanEventPayload.LABEL,MakaanTrackerConstants.Label.favourite);
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickShortlist);
+                break;
+            }
+            case 2:{
+                properties.put(MakaanEventPayload.LABEL,MakaanTrackerConstants.Label.recent);
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickShortlist);
+                break;
+            }
+        }
     }
 
 

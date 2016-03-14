@@ -72,7 +72,7 @@ public class SignupCard extends BaseView<Message> {
     }
 
     private void launchLoginActivity(int loginType){
-        if(null==MasterDataCache.getInstance().getUserData()){
+        if(null!=MasterDataCache.getInstance().getUserData()){
             Toast.makeText(mContext, R.string.user_already_logged_in, Toast.LENGTH_SHORT).show();
             return;
         }
