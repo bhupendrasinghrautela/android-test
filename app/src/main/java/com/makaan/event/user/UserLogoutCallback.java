@@ -1,5 +1,6 @@
 package com.makaan.event.user;
 
+import com.makaan.cache.MasterDataCache;
 import com.makaan.network.StringRequestCallback;
 import com.makaan.response.ResponseError;
 import com.makaan.util.AppBus;
@@ -13,6 +14,7 @@ public class UserLogoutCallback extends StringRequestCallback {
     public void onSuccess(String response) {
         UserLogoutEvent mLogoutEvent =new UserLogoutEvent();
         try {
+            MasterDataCache.getInstance().setUserData(null);
             mLogoutEvent.setIsLogoutSuccessfull(true);
         }catch (Exception e){
             //TODO Show error message
