@@ -556,7 +556,7 @@ public class LocalityFragment extends MakaanBaseFragment {
         pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, locality.suburb.city.id);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_ID, locality.localityId);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_NAME, locality.label);
-
+        pyrIntent.putExtra(PyrPageActivity.SOURCE_SCREEN_NAME, ((LocalityActivity) getActivity()).getScreenName());
         getActivity().startActivity(pyrIntent);
     }
 

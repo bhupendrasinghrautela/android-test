@@ -1069,6 +1069,11 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             if(TextUtils.isEmpty(mSearchEditText.getText())) {
                 addNearbyPropertiesSearchItem();
             } else if(this.mSearches.size() == 0) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorUsability);
+                properties.put(MakaanEventPayload.LABEL, mSearchEditText.getText());
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.sorryNoMatchingResultFound);
+
                 addErrorSearchItem(this.getResources().getString(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT, false)));
             }
             mSearchAdapter.setData(mAvailableSearches, false);

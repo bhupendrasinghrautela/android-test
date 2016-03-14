@@ -13,10 +13,14 @@ import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.lead.LeadFormActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.wishlist.WishList;
 import com.makaan.util.ImageUtils;
+import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
+import com.segment.analytics.Properties;
 
 import java.util.List;
 
@@ -95,6 +99,13 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
         shortListFavoriteViewHolder.mTextViewGetCallBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(wishList.get(position).project!=null && wishList.get(position).project.projectId!=null) {
+                    Properties properties= MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                    properties.put(MakaanEventPayload.LABEL, String.format("%s_%s",wishList.get(position).project.projectId ,
+                            MakaanTrackerConstants.Label.getCallBack ));
+                    MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickShortListFavourite);
+                }
                 Intent intent = new Intent(mContext, LeadFormActivity.class);
                 try {
                     intent.putExtra("name", wishList.get(position).listing.companySeller.company.name);

@@ -8,11 +8,17 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.fragment.pyr.NoSellersFragment;
+import com.makaan.fragment.pyr.TopSellersFragment;
+import com.makaan.fragment.userLogin.LoginSocialFragment;
+import com.makaan.fragment.userLogin.SignUpFragment;
 import com.makaan.pojo.ProjectConfigItem;
 import com.makaan.ui.pyr.FilterableMultichoiceDialogFragment;
 import com.makaan.fragment.pyr.PyrPagePresenter;
 import com.makaan.fragment.pyr.PyrReplaceFragment;
+import com.segment.analytics.Properties;
 
 /**
  * Created by proptiger on 6/1/16.
@@ -26,6 +32,7 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
     public static final String KEY_LOCALITY_NAME = "localityName";
     public static final String BEDROOM_AND_BUDGET="bedroomAndBudget";
     public static final String BUY_SELECTED="buySelected";
+    public static final String SOURCE_SCREEN_NAME="sourceScreenName";
 
     private FragmentTransaction mFragmentTransaction;
     private PyrPagePresenter mPagePresenter;
@@ -46,6 +53,7 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
             long localityId = getIntent().getLongExtra(KEY_LOCALITY_ID, 0);
             String localityName = getIntent().getStringExtra(KEY_LOCALITY_NAME);
             String cityName = getIntent().getStringExtra(KEY_CITY_NAME);
+            String screenName=getIntent().getStringExtra(SOURCE_SCREEN_NAME);
             Long cityId = null;
             ProjectConfigItem projectConfigItem=null;
             boolean isBuySelected = false;
@@ -55,7 +63,8 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
                 isBuySelected = this.getIntent().getExtras().getBoolean(BUY_SELECTED);
             }
             mPagePresenter.setCityId(cityId!=null?cityId.intValue():0);
-            mPagePresenter.prefillLocality(localityName, localityId, cityName ,projectConfigItem, isBuySelected);
+            mPagePresenter.prefillLocality(localityName, localityId, cityName ,
+                    projectConfigItem, isBuySelected,screenName);
         }
 
         mPagePresenter.showPyrMainPageFragment();
@@ -109,6 +118,15 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
 
     @Override
     public void onBackPressed() {
+        TopSellersFragment myFragment = (TopSellersFragment)getSupportFragmentManager().findFragmentByTag(TopSellersFragment.class.getName());
+
+        if(myFragment!=null && myFragment.isVisible()){
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerPyr);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.close);
+            MakaanEventPayload.endBatch(this, mPagePresenter.getSelectSellersAction(mPagePresenter.getSourceScreenName()));
+            myFragment=null;
+        }
         if (getSupportFragmentManager().getBackStackEntryCount() > 1 ){
             getSupportFragmentManager().popBackStack();
         } else {

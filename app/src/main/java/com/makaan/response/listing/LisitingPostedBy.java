@@ -10,6 +10,7 @@ public class LisitingPostedBy {
     public String logo;
     public double rating;
     public boolean assist;
+    public String number;
     public long id;
 
     public String profilePictureURL;
