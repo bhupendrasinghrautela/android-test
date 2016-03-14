@@ -38,7 +38,7 @@
                 android:transitionName="search" />
         </android.support.v7.widget.Toolbar>
 
-        <RelativeLayout
+        <!--<RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_home_find_joy_image_view_top_margin">
@@ -95,14 +95,15 @@
                 android:textSize="38sp"
                 app:fontName="comforta.ttf" />
         </RelativeLayout>
-
+-->
         <RelativeLayout
             android:id="@+id/rl_footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_home_search_relative_view_bottom_margin"
             android:layout_marginLeft="@dimen/activity_home_search_toggle_left_margin"
-            android:layout_marginStart="@dimen/activity_home_search_toggle_left_margin">
+            android:layout_marginStart="@dimen/activity_home_search_toggle_left_margin"
+            android:layout_marginEnd="@dimen/activity_home_search_toggle_left_margin">
 
             <RelativeLayout
                 android:id="@+id/activity_home_search_relative_view"
@@ -112,7 +113,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="@dimen/activity_home_search_relative_view_left_margin"
-                android:background="@color/activity_home_search_background">
+                android:background="@drawable/home_search_background">
 
                 <ImageView
                     android:id="@+id/activity_home_search_image_view"

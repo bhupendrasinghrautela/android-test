@@ -982,11 +982,11 @@
     <dimen name="activity_home_find_joy_image_view_width">299dp</dimen>
     <dimen name="activity_home_find_joy_image_view_height">117dp</dimen>
     <dimen name="activity_home_find_joy_image_view_top_margin">192dp</dimen>
-    <dimen name="activity_home_search_toggle_left_margin">20dp</dimen>
+    <dimen name="activity_home_search_toggle_left_margin">16dp</dimen>
 
 
-    <dimen name="activity_home_search_relative_view_left_margin">30dp</dimen>
-    <dimen name="activity_home_search_relative_view_bottom_margin">64dp</dimen>
+    <dimen name="activity_home_search_relative_view_left_margin">10dp</dimen>
+    <dimen name="activity_home_search_relative_view_bottom_margin">100dp</dimen>
 
 
     <!-- selected search item values -->
