@@ -208,34 +208,52 @@ public class SaveSearchFragment extends MakaanBaseFragment {
             holder.position = position;
             String name = savedSearches.get(position).name;
             holder.searchId = savedSearches.get(position).id;
-            if (!TextUtils.isEmpty(name)) {
-                String[] text = name.split(";");
-                holder.saveSearchName.setVisibility(View.VISIBLE);
-                holder.saveSearchName.setText(text[0].toLowerCase());
-                if (text.length > 1) {
-                    holder.saveSearchPlace.setVisibility(View.VISIBLE);
-                    holder.saveSearchFilter.setVisibility(View.VISIBLE);
 
-                    String[] filterArray = text[1].split(SetAlertsDialogFragment.SEPARATOR_FILTER);
-                    StringBuilder builder = new StringBuilder();
-                    String separator = "";
-                    for (String filter : filterArray) {
-                        builder.append(separator);
-                        builder.append(filter);
-                        separator = " | ";
-                    }
-                    holder.saveSearchFilter.setText(builder.toString().toLowerCase());
-                    if (text.length > 2) {
-                        holder.saveSearchPlace.setText(text[2].toLowerCase());
+            if (!TextUtils.isEmpty(name)) {
+                holder.saveSearchName.setVisibility(View.VISIBLE);
+                holder.saveSearchName.setText(name.toLowerCase());
+            } else {
+                holder.saveSearchName.setVisibility(View.INVISIBLE);
+            }
+
+            if(savedSearches.get(position).jsonDump != null) {
+                Type type = new TypeToken<SaveSearch.JSONDump>() {}.getType();
+                SaveSearch.JSONDump jsonDump = MakaanBuyerApplication.gson.fromJson(savedSearches.get(position).jsonDump, type);
+                if(jsonDump != null) {
+                    if(jsonDump.localityName != null) {
+                        holder.saveSearchPlace.setVisibility(View.VISIBLE);
+                        if(jsonDump.cityName != null) {
+                            holder.saveSearchPlace.setText(String.format("%s, %s", jsonDump.localityName, jsonDump.cityName).toLowerCase());
+                        } else {
+                            holder.saveSearchPlace.setText(jsonDump.localityName.toLowerCase());
+                        }
+                    } else if(jsonDump.cityName != null) {
+                        holder.saveSearchPlace.setVisibility(View.VISIBLE);
+                        holder.saveSearchPlace.setText(jsonDump.cityName.toLowerCase());
+                    } else if (jsonDump.builderName != null) {
+                        holder.saveSearchPlace.setVisibility(View.VISIBLE);
+                        holder.saveSearchPlace.setText(jsonDump.builderName.toLowerCase());
+                    } else if(jsonDump.sellerName != null) {
+                        holder.saveSearchPlace.setVisibility(View.VISIBLE);
+                        holder.saveSearchPlace.setText(jsonDump.sellerName.toLowerCase());
                     } else {
                         holder.saveSearchPlace.setVisibility(View.INVISIBLE);
                     }
-                } else {
-                    holder.saveSearchPlace.setVisibility(View.INVISIBLE);
-                    holder.saveSearchFilter.setVisibility(View.INVISIBLE);
+
+                    if(jsonDump.bhk != null || jsonDump.priceRange != null) {
+                        holder.saveSearchFilter.setVisibility(View.VISIBLE);
+                        if(jsonDump.bhk != null && jsonDump.priceRange != null) {
+                            holder.saveSearchFilter.setText(String.format("%s | %s", jsonDump.bhk, jsonDump.priceRange).toLowerCase());
+                        } else if(jsonDump.bhk != null) {
+                            holder.saveSearchFilter.setText(jsonDump.bhk.toLowerCase());
+                        } else if(jsonDump.priceRange != null) {
+                            holder.saveSearchFilter.setText(jsonDump.priceRange.toLowerCase());
+                        }
+                    } else {
+                        holder.saveSearchFilter.setVisibility(View.INVISIBLE);
+                    }
                 }
             } else {
-                holder.saveSearchName.setVisibility(View.INVISIBLE);
                 holder.saveSearchPlace.setVisibility(View.INVISIBLE);
                 holder.saveSearchFilter.setVisibility(View.INVISIBLE);
             }
