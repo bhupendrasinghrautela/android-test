@@ -90,7 +90,7 @@ public class ProjectService implements MakaanService {
     public void getSimilarProjects(final Long projectId, int noOfSimilar) {
         if (null != projectId) {
             final Selector similarProjectSel = new Selector();
-            similarProjectSel.fields(new String[]{"projectId", "URL", "imageURL", "altText", "mainImage", "minPrice", "minResaleOrPrimaryPrice", "id", "city", "suburb", "label", "name", "type", "user", "contactNumbers", "locality", "contactNumber", "sellerId", "listingCategory", "property", "currentListingPrice", "price", "bedrooms", "bathrooms", "size", "unitTypeId", "project", "projectId", "studyRoom", "servantRoom", "poojaRoom", "companySeller", "company", "companyScore"});
+            similarProjectSel.fields(new String[]{"builder", "projectId", "URL", "imageURL", "altText", "mainImage", "minPrice", "minResaleOrPrimaryPrice", "id", "city", "suburb", "label", "name", "type", "user", "contactNumbers", "locality", "contactNumber", "sellerId", "listingCategory", "property", "currentListingPrice", "price", "bedrooms", "bathrooms", "size", "unitTypeId", "project", "projectId", "studyRoom", "servantRoom", "poojaRoom", "companySeller", "company", "companyScore"});
 
             similarProjectSel.page(0, noOfSimilar);
             StringBuilder similarProjectUrl = new StringBuilder(ApiConstants.SIMILAR_PROJECT);

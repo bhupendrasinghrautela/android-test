@@ -253,11 +253,16 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     @Subscribe
     public void onResults(NewMatchesGetEvent newMatchesGetEvent){
         if(null == newMatchesGetEvent || null != newMatchesGetEvent.error){
-            if(newMatchesGetEvent != null && !TextUtils.isEmpty(newMatchesGetEvent.error.msg)) {
+            /*if(newMatchesGetEvent != null && !TextUtils.isEmpty(newMatchesGetEvent.error.msg)) {
                 showNoResults(newMatchesGetEvent.error.msg);
             } else {
                 showNoResults();
             }
+            return;*/
+
+            mNewMatchesCount = 0;
+            mNewSearchesReceived = true;
+            updateUi();
             return;
         }
         mNewMatchesCount = newMatchesGetEvent.totalCount;
