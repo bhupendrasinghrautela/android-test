@@ -706,7 +706,10 @@ public class DefaultListingView extends AbstractListingView {
 
         bundle.putString("name", mListing.lisitingPostedBy.name);
         bundle.putString("score", String.valueOf(mListing.lisitingPostedBy.rating));
-        bundle.putString("phone", null);//todo: not available in pojo
+
+        if(mListing.lisitingPostedBy!=null && mListing.lisitingPostedBy.number!=null) {
+            bundle.putString("phone", mListing.lisitingPostedBy.number);//todo: not available in pojo
+        }
         bundle.putString("id", String.valueOf(mListing.lisitingPostedBy.id));
         bundle.putLong("listingId", mListing.lisitingId);
         if(mListing!=null && mListing.cityId!=null) {

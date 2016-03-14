@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
+import com.makaan.activity.project.ProjectActivity;
 import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
@@ -83,6 +84,7 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
     @OnClick(R.id.fragment_client_leads_get_best_sellers_button)
     void onBestSellerClicked(View view) {
         Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
+        pyrIntent.putExtra(PyrPageActivity.SOURCE_SCREEN_NAME, ((BuyerDashboardActivity) getActivity()).getScreenName());
         getActivity().startActivity(pyrIntent);
     }
 

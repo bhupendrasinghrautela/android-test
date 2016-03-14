@@ -3,11 +3,14 @@ package com.makaan.fragment.pyr;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.pyr.PyrOtpVerification;
 
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.pojo.ProjectConfigItem;
 import com.makaan.pojo.SerpObjects;
@@ -20,12 +23,16 @@ import com.makaan.response.serp.RangeFilter;
 import com.makaan.response.serp.TermFilter;
 import com.makaan.ui.pyr.FilterableMultichoiceDialogFragment;
 import com.makaan.ui.pyr.PyrBudgetCardView;
+import com.segment.analytics.Properties;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.makaan.analytics.MakaanTrackerConstants.*;
 
 /**
  * Created by proptiger on 7/1/16.
@@ -59,8 +66,9 @@ public class PyrPagePresenter {
     private String userName=null, userEmail=null, phoneNumber=null, countryName="India";
     private int countryId=1;
     private String mCityContext;
-    public double alreadySelectedMinBudget=0l,alreadySelectedMaxBudget=0l;
-     private boolean pyrFromProjectBuySelected;
+    private String sourceScreenName;
+    private double alreadySelectedMinBudget=0l,alreadySelectedMaxBudget=0l;
+    private boolean pyrFromProjectBuySelected;
     private boolean fromProject;
     private Integer mCityId=null;
     ArrayList<TopAgent> mTopAgentsDatas;
@@ -86,6 +94,13 @@ public class PyrPagePresenter {
 
     public boolean isFromProject() {
         return fromProject;
+    }
+
+    public String getSourceScreenName() {
+        if(sourceScreenName!=null) {
+            return sourceScreenName;
+        }
+        return "";
     }
 
     public boolean isPyrFromProjectBuySelected() {
@@ -390,6 +405,10 @@ public class PyrPagePresenter {
             pyrRequest.setName(userName);
         }
         else{
+            Properties properties= MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, Category.errorBuyer);
+            properties.put(MakaanEventPayload.LABEL, Label.nameRequired);
+            MakaanEventPayload.endBatch(context, Action.errorPyr);
             Toast.makeText(context, context.getResources().getString(R.string.add_user_name_toast),
                     Toast.LENGTH_SHORT).show();
             return false;
@@ -399,6 +418,16 @@ public class PyrPagePresenter {
             pyrRequest.setEmail(userEmail);
         }
         else{
+            Properties properties= MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, Category.errorBuyer);
+            if(null==userEmail || userEmail.isEmpty()){
+                properties.put(MakaanEventPayload.LABEL, Label.emailRequired);
+                MakaanEventPayload.endBatch(context, Action.errorPyr);
+            }
+            else {
+                properties.put(MakaanEventPayload.LABEL, "email Invalid");
+                MakaanEventPayload.endBatch(context, Action.errorPyr);
+            }
             Toast.makeText(context,context.getResources().getString(R.string.invalid_email),
                     Toast.LENGTH_SHORT).show();
             return false;
@@ -411,6 +440,16 @@ public class PyrPagePresenter {
             pyrRequest.setCityId(mCityId);
         }
         else {
+            Properties properties= MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, Category.errorBuyer);
+            if(null==phoneNumber || phoneNumber.isEmpty()){
+                properties.put(MakaanEventPayload.LABEL, Label.phoneNumberRequired);
+                MakaanEventPayload.endBatch(context, Action.errorPyr);
+            }
+            else {
+                properties.put(MakaanEventPayload.LABEL, Label.phoneNumberInvalid);
+                MakaanEventPayload.endBatch(context, Action.errorPyr);
+            }
             Toast.makeText(context,context.getResources().getString(R.string.invalid_phone_no_toast),
                     Toast.LENGTH_SHORT).show();
             return false;
@@ -571,7 +610,7 @@ public class PyrPagePresenter {
     }
 
     public void prefillLocality(String localityName, long localityId, String cityName,
-                                ProjectConfigItem projectConfigItem, boolean isBuySelected){
+                                ProjectConfigItem projectConfigItem, boolean isBuySelected, String screenName){
         if(localityId>0) {
             SearchResponseItem searchResponseItem = new SearchResponseItem();
             searchResponseItem.entityId = String.valueOf(localityId);
@@ -589,6 +628,10 @@ public class PyrPagePresenter {
                 alreadySelectedMaxBudget = projectConfigItem.maxPrice;
             }
             pyrFromProjectBuySelected=isBuySelected;
+        }
+
+        if(screenName!=null){
+            sourceScreenName=screenName;
         }
 
         if(TextUtils.isEmpty(mCityContext)) {
@@ -706,5 +749,165 @@ public class PyrPagePresenter {
                 }
             }
         }
+    }
+
+    public String getLabelStringOnNextClick(PyrRequest pyrRequest){
+        StringBuilder builder=new StringBuilder();
+        String underScore="_";
+        String comma=",";
+
+        if(pyrRequest.getSalesType()!=null && pyrRequest.getSalesType().equals("buy")){
+            builder.append("Buy");
+            builder.append(underScore);
+        }
+        else if(pyrRequest.getSalesType()!=null&& pyrRequest.getSalesType().equals("rent")){
+            builder.append("Rent");
+            builder.append(underScore);
+        }
+
+        builder.append(pyrRequest.getMinBudget());
+        builder.append("-");
+        builder.append(pyrRequest.getMaxBudget());
+        builder.append(underScore);
+
+        if(null!=pyrRequest.getLocalityIds() && pyrRequest.getLocalityIds().length>0) {
+            builder.append(Arrays.toString(pyrRequest.getLocalityIds()));
+            builder.append(underScore);
+        }else {
+            builder.append(" ");
+            builder.append(underScore);
+        }
+
+        if(null!= pyrRequest.getBhk() && pyrRequest.getBhk().size()>0) {
+            builder.append(pyrRequest.getBhk().toString());
+            builder.append(underScore);
+        }else {
+            builder.append(" ");
+            builder.append(underScore);
+        }
+
+        if(null!= pyrRequest.getPropertyTypes() && pyrRequest.getPropertyTypes().size()>0) {
+            builder.append(pyrRequest.getPropertyTypes().toString());
+        }{
+            builder.append(" ");
+        }
+
+        return builder.toString();
+    }
+
+    public Action getScreenNameAction(String screenName){
+
+        Action action=null;
+        switch (screenName){
+
+            case "City":{
+                action= Action.submitCityTypePyr;
+                break;
+            }
+            case "Locality":{
+                action=Action.submitLocalityTypePyr;
+                break;
+            }
+            case "Project":{
+                action= Action.submitProjectTypePyr;
+                break;
+            }
+            case "BuyerDashboard":{
+                action=Action.submitDashboardTypePyr;
+                break;
+            }
+            case "Jarvis":{
+                action=Action.submitJarvisTypePyr;
+                break;
+            }
+        }
+        return action;
+    }
+
+    public Action getSelectSellersAction(String screenName){
+
+        Action action=null;
+        switch (screenName){
+
+            case "City":{
+                action= Action.selectCityPyrSellers;
+                break;
+            }
+            case "Locality":{
+                action=Action.selectLocalityPyrSellers;
+                break;
+            }
+            case "Project":{
+                action= Action.selectProjectPyrSellers;
+                break;
+            }
+            case "BuyerDashboard":{
+                action=Action.selectBuyerDashboardPyrSellers;
+                break;
+            }
+            case "Jarvis":{
+                action=Action.selectJarvisPyrSellers;
+                break;
+            }
+        }
+        return action;
+    }
+
+    public Action getViewSellersAction(String screenName){
+
+        Action action=null;
+        switch (screenName){
+
+            case "City":{
+                action= Action.viewCityPyrSellers;
+                break;
+            }
+            case "Locality":{
+                action=Action.viewLocalityPyrSellers;
+                break;
+            }
+            case "Project":{
+                action= Action.viewProjectPyrSellers;
+                break;
+            }
+            case "BuyerDashboard":{
+                action=Action.viewBuyerDashboardPyrSellers;
+                break;
+            }
+            case "Jarvis":{
+                action=Action.viewJarvisPyrSellers;
+                break;
+            }
+        }
+        return action;
+    }
+
+    public Action getOtpAction(String screenName){
+
+        Action action=null;
+        switch (screenName){
+
+            case "City":{
+                action= Action.selectCityPyrOtp;
+                break;
+            }
+            case "Locality":{
+                action=Action.selectLocalityPyrOtp;
+                break;
+            }
+            case "Project":{
+                action= Action.selectProjectPyrOtp;
+                break;
+            }
+            case "BuyerDashboard":{
+                action=Action.selectBuyerDashboardPyrOtp;
+                break;
+            }
+            case "Jarvis":{
+                action=Action.selectJarvisPyrOtp;
+                break;
+            }
+        }
+        return action;
     }
 }

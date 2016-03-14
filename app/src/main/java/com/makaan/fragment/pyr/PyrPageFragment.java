@@ -20,12 +20,15 @@ import android.widget.Toast;
 
 
 import com.makaan.R;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.agents.TopBuyAgentsPyrEvent;
 import com.makaan.event.agents.TopRentAgentsPyrEvent;
 import com.makaan.event.agents.callback.TopBuyAgentsPyrCallback;
 import com.makaan.event.agents.callback.TopRentAgentsPyrCallback;
+import com.makaan.network.VolleyErrorParser;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.request.pyr.PyrRequest;
 import com.makaan.response.agents.TopAgent;
@@ -54,6 +57,7 @@ import com.makaan.ui.pyr.PyrPropertyCardView;
 import com.makaan.util.AppBus;
 import com.makaan.util.JsonParser;
 import com.makaan.util.StringUtil;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -228,6 +232,13 @@ public class PyrPageFragment extends Fragment {
             }
         }
 
+        if(makeRequest) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerPyr);
+            properties.put(MakaanEventPayload.LABEL, pyrPagePresenter.getLabelStringOnNextClick(pyrRequest));
+            MakaanEventPayload.endBatch(getContext(), pyrPagePresenter.getScreenNameAction(pyrPagePresenter.getSourceScreenName()));
+        }
+
         if(makeRequest && pyrRequest.getSalesType().equals("buy")) {
             AgentService agentService = ((AgentService) (MakaanServiceFactory.getInstance().getService(AgentService.class)));
             agentService.getTopAgentsForLocality((long) pyrRequest.getCityId(), localities
@@ -241,6 +252,15 @@ public class PyrPageFragment extends Fragment {
 
     @Subscribe
     public void onResults(TopRentAgentsPyrEvent topRentAgentsPyrEvent) {
+        if(topRentAgentsPyrEvent.error!=null){
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorBuyer);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.errorWhileSubmitting);
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.errorPyr);
+            String msg = VolleyErrorParser.getMessage(topRentAgentsPyrEvent.error);
+            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+            return;
+        }
         ArrayList<TopAgent> topAgentList = topRentAgentsPyrEvent.topAgents;
         if ( topAgentList.size() > 0) {
             PyrPagePresenter mPyrPagePresenter = PyrPagePresenter.getPyrPagePresenter();
@@ -256,6 +276,15 @@ public class PyrPageFragment extends Fragment {
 
     @Subscribe
     public void onResults(TopBuyAgentsPyrEvent topBuyAgentsPyrEvent) {
+        if(topBuyAgentsPyrEvent.error!=null){
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorBuyer);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.errorWhileSubmitting);
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.errorPyr);
+            String msg = VolleyErrorParser.getMessage(topBuyAgentsPyrEvent.error);
+            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+            return;
+        }
         ArrayList<TopAgent> topAgentList = topBuyAgentsPyrEvent.topAgents;
         if ( topAgentList.size() > 0) {
             PyrPagePresenter mPyrPagePresenter = PyrPagePresenter.getPyrPagePresenter();
@@ -446,9 +475,9 @@ public class PyrPageFragment extends Fragment {
         for(FilterGroup group : grps) {
             String name = group.internalName;
             if("i_budget".equals(name)) {
-                group.rangeFilterValues.get(0).selectedMinValue = pyrPagePresenter.alreadySelectedMinBudget;
-                if (pyrPagePresenter.alreadySelectedMaxBudget != 0) {
-                    group.rangeFilterValues.get(0).selectedMaxValue = pyrPagePresenter.alreadySelectedMaxBudget;
+                group.rangeFilterValues.get(0).selectedMinValue = pyrPagePresenter.getAlreadySelectedMinBudget();
+                if (pyrPagePresenter.getAlreadySelectedMaxBudget() != 0) {
+                    group.rangeFilterValues.get(0).selectedMaxValue = pyrPagePresenter.getAlreadySelectedMaxBudget();
                 }
               mBudgetCardView.setValues(group.rangeFilterValues);
             }

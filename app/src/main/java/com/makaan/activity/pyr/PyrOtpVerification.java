@@ -20,6 +20,8 @@ import android.widget.TextView;
 import com.makaan.R;
 import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.lead.LeadFormPresenter;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.fragment.pyr.PyrPagePresenter;
 import com.makaan.request.pyr.PyrRequest;
 import com.makaan.response.pyr.OnOtpVerificationListener;
@@ -32,7 +34,10 @@ import com.makaan.service.PyrService;
 import com.makaan.service.SearchService;
 import com.makaan.util.AppBus;
 import com.makaan.util.SmsReceiver;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
+
+import java.util.Arrays;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -173,6 +178,10 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
     {
         PyrRequest pyrRequest=null;
         if(getActivity() instanceof PyrPageActivity) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerPyr);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.resend);
+            MakaanEventPayload.endBatch(getContext(), mPyrPagePresenter.getOtpAction(mPyrPagePresenter.getSourceScreenName()));
             pyrRequest = mPyrPagePresenter.getPyrRequestObject();
         }
         else if(getActivity() instanceof LeadFormActivity) {
@@ -186,6 +195,12 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
 
     @OnClick(R.id.otp_screen_skip)
     public void skip(){
+        if(getActivity() instanceof PyrPageActivity) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerPyr);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.skip);
+            MakaanEventPayload.endBatch(getContext(), mPyrPagePresenter.getOtpAction(mPyrPagePresenter.getSourceScreenName()));
+        }
         if (mPyrPagePresenter!=null && mPyrPagePresenter.isMakkanAssist()) {
             PyrPagePresenter mPyrPagePresenter = PyrPagePresenter.getPyrPagePresenter();
             mPyrPagePresenter.showThankYouScreenFragment(true, true, false);
@@ -310,6 +325,13 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
     @Subscribe
     public void otpResponse(OtpVerificationResponse verificationResponse){
         if(verificationResponse.getData().isOtpValidationSuccess()) {
+            if(getActivity() instanceof PyrPageActivity) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerPyr);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.success);
+                MakaanEventPayload.endBatch(getContext(), mPyrPagePresenter.getOtpAction(mPyrPagePresenter.getSourceScreenName()));
+            }
+
             if ((mPyrPagePresenter!=null && mPyrPagePresenter.isMakkanAssist())) {
                 PyrPagePresenter mPyrPagePresenter = PyrPagePresenter.getPyrPagePresenter();
                 mPyrPagePresenter.showThankYouScreenFragment(true, true, false);
@@ -323,6 +345,14 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
                 } else {
                     LeadFormPresenter.getLeadFormPresenter().showThankYouScreenFragment(false, false,3);
                 }
+            }
+        }
+        else {
+            if(getActivity() instanceof PyrPageActivity) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorBuyer);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.incorrectOtp);
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.errorPyr);
             }
         }
     }

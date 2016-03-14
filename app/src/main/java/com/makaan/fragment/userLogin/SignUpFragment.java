@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.makaan.R;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.user.UserRegistrationEvent;
 import com.makaan.response.login.OnUserRegistrationListener;
 import com.makaan.response.login.UserRegistrationDto;
@@ -23,6 +25,7 @@ import com.makaan.service.user.UserRegistrationService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.AppBus;
 import com.makaan.util.CommonUtil;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
@@ -75,12 +78,27 @@ public class SignUpFragment extends Fragment {
         String pwd = mEditTextPassword.getText().toString().trim();
         String name=mEditTextName.getText().toString().trim();
         if(TextUtils.isEmpty(name)){
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorBuyer);
+            properties.put(MakaanEventPayload.LABEL, getString(R.string.enter_username));
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.errorSignUp);
+
             mTilUsername.setError(getString(R.string.enter_username));
             //Toast.makeText(getActivity(),getString(R.string.enter_username),Toast.LENGTH_SHORT).show();
         }else if(!CommonUtil.isValidEmail(email)) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorBuyer);
+            properties.put(MakaanEventPayload.LABEL, getString(R.string.enter_valid_email));
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.errorSignUp);
+
             mTilEmail.setError(getString(R.string.enter_valid_email));
             //Toast.makeText(getActivity(), getString(R.string.enter_valid_email), Toast.LENGTH_SHORT).show();
         }else if(TextUtils.isEmpty(pwd)) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorBuyer);
+            properties.put(MakaanEventPayload.LABEL, getString(R.string.enter_password));
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.errorSignUp);
+
             mTilPassword.setError(getString(R.string.enter_password));
             //Toast.makeText(getActivity(),getString(R.string.enter_password),Toast.LENGTH_SHORT).show();
         }else{

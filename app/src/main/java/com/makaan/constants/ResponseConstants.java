@@ -32,6 +32,7 @@ public class ResponseConstants {
     public static final String BATHROOMS = "bathrooms";
     public static final String BALCONY = "balcony";
     public static final String PROFILE_PICTURE_URL = "profilePictureURL";
+    public static final String CONTACT_NUMBERS="contactNumbers";
 
     public static final String DESCRIPTION = "description";
     public static final String SIZE = "size";

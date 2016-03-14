@@ -295,6 +295,7 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 				mMultiChoiceCardView.setVisibility(View.VISIBLE);
 			}
 			else if(mOriginalList.size()==0){
+				mMultiChoiceCardView.setVisibility(View.VISIBLE);
 				mNoResultsTextView.setVisibility(View.VISIBLE);
 			}
 

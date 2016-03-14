@@ -17,19 +17,25 @@ import com.google.gson.Gson;
 import com.makaan.R;
 import com.makaan.activity.pyr.PyrOtpVerification;
 import com.makaan.activity.pyr.SellerListingAdapter;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.network.VolleyErrorParser;
 import com.makaan.request.pyr.PyrEnquiryType;
 import com.makaan.request.pyr.PyrRequest;
+import com.makaan.response.agents.Agent;
 import com.makaan.response.agents.TopAgent;
 import com.makaan.response.pyr.PyrPostResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PyrService;
 import com.makaan.util.AppBus;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -48,6 +54,7 @@ public class TopSellersFragment extends Fragment {
     @Bind(R.id.btn_contact)
     Button mButtonContactAdvisors;
     boolean mBound = false;
+    private boolean mAlreadyLoaded=false;
     private static final int DEFAULT_SELECTED_COUNT=4;
 
     @Nullable
@@ -63,12 +70,39 @@ public class TopSellersFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        /*if (savedInstanceState == null && !mAlreadyLoaded) {
+            mAlreadyLoaded = true;
+        }*/
+
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mPyrPagePresenter= PyrPagePresenter.getPyrPagePresenter();
         mLayoutManager = new LinearLayoutManager(getActivity());
         mSellerRecyclerView.setLayoutManager(mLayoutManager);
         mTopAgentsDatas = mPyrPagePresenter.getmTopAgentsDatas();
+        if(mTopAgentsDatas!=null && mTopAgentsDatas.size()>0){
+            long agentId[]=new long[mTopAgentsDatas.size()];
+            int i=0;
+            for(TopAgent agent:mTopAgentsDatas) {
+                if(agent.agent!=null && agent.agent.company.id!=null){
+                    agentId[i]=agent.agent.company.id;
+                    i++;
+                }
+            }
+            if(!mAlreadyLoaded) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerPyr);
+                properties.put(MakaanEventPayload.LABEL, Arrays.toString(agentId));
+                MakaanEventPayload.endBatch(getContext(), mPyrPagePresenter.getViewSellersAction(mPyrPagePresenter.getSourceScreenName()));
+                mAlreadyLoaded=true;
+            }
+        }
+
         if(mTopAgentsDatas.size()<=DEFAULT_SELECTED_COUNT){
             changeSellerCount(mTopAgentsDatas.size());
         }
@@ -91,12 +125,18 @@ public class TopSellersFragment extends Fragment {
 
     @OnClick(R.id.btn_contact)
     public void ContactAdvisorsClicked() {
+
         PyrRequest pyrRequest = mPyrPagePresenter.getPyrRequestObject();
         mPyrPagePresenter.setSellerIdToPyrObject(pyrRequest);
         if(pyrRequest.getMultipleCompanyIds().length==0){
             Toast.makeText(getActivity(),"please select at least one advisor",Toast.LENGTH_SHORT).show();
             return;
         }
+        Properties properties = MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerPyr);
+        properties.put(MakaanEventPayload.LABEL, Arrays.toString(pyrRequest.getMultipleCompanyIds()));
+        MakaanEventPayload.endBatch(getContext(), mPyrPagePresenter.getSelectSellersAction(mPyrPagePresenter.getSourceScreenName()));
+
         PyrEnquiryType pyrEnquiryType = new PyrEnquiryType();
         pyrRequest.setEnquiryType(pyrEnquiryType);
         String str= new Gson().toJson(pyrRequest);
@@ -113,7 +153,7 @@ public class TopSellersFragment extends Fragment {
 
     @Subscribe
     public void pyrResponse(PyrPostResponse pyrPostResponse){
-        if(pyrPostResponse.getStatusCode().equals("2XX")) {
+        if(pyrPostResponse.getStatusCode()!=null && pyrPostResponse.getStatusCode().equals("2XX")) {
             if(pyrPostResponse.getData().isOtpVerified()){
                 if (mPyrPagePresenter.isMakkanAssist()) {
                     PyrPagePresenter mPyrPagePresenter = PyrPagePresenter.getPyrPagePresenter();
@@ -129,6 +169,14 @@ public class TopSellersFragment extends Fragment {
                 PyrOtpVerification fragment = mPyrPagePresenter.showPyrOtpFragment();
                 fragment.setData(pyrPostResponse.getData());
             }
+        }
+        else if(pyrPostResponse.getError()!=null){
+            String msg = VolleyErrorParser.getMessage(pyrPostResponse.getError());
+            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorBuyer);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.errorWhileSubmitting);
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.errorPyr);
         }
     }
 

@@ -25,6 +25,7 @@ import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.adapter.project.KeyDetailsAdapter;
@@ -287,6 +288,7 @@ public class ProjectFragment extends MakaanBaseFragment{
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_NAME, project.locality.label);
         pyrIntent.putExtra(PyrPageActivity.BEDROOM_AND_BUDGET, configItemClickListener.projectConfigItem);
         pyrIntent.putExtra(PyrPageActivity.BUY_SELECTED, !configItemClickListener.isRent);
+        pyrIntent.putExtra(PyrPageActivity.SOURCE_SCREEN_NAME, ((ProjectActivity) getActivity()).getScreenName());
         getActivity().startActivity(pyrIntent);
     }
 
