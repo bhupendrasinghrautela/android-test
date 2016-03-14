@@ -70,7 +70,6 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
     private FacebookTokenInteractor mFacebookTokenInteractor;
     private int mLoginType;
     private int loginType;
-    private CommonProgressDialog dialog;
 
     @Override
     protected int getContentViewId() {
@@ -85,7 +84,6 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
         mFacebookTokenInteractor = new FacebookTokenInteractor(getActivity(), this);
         mFacebookTokenInteractor.initFacebookSdk(savedInstanceState);
         parseLoginType(mLoginType);
-        dialog =new CommonProgressDialog();
     }
 
     public void bindView(OnLoginWithMakaanSelectedListener listener, OnUserLoginListener onUserLoginListener, int loginType){
@@ -104,15 +102,12 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
                 GoogleTokenInteractor interactor = new GoogleTokenInteractor(getActivity(), LoginSocialFragment.this);
                 interactor.requestGoogleAccessToken(accountName);
             }else{
-                if(dialog!=null)
-                    dialog.dismissDialog();
             }
         }
     }
 
     @OnClick(R.id.fb_login)
     public void onFacebookLoginClick(){
-        dialog.showDialog(getActivity(), getString(R.string.please_wait));
         if (!NetworkUtil.isNetworkAvailable(getActivity())) {
             return;
         }
@@ -131,7 +126,6 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
 
     @OnClick(R.id.gmail_login)
     public void onGoogleLoginClick(){
-        dialog.showDialog(getActivity(), getString(R.string.please_wait));
         if (!NetworkUtil.isNetworkAvailable(getActivity())) {
             return;
         }
@@ -168,20 +162,16 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
     public void onGoogleTokenSuccess(String token) {
         ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
         ))).loginWithGoogleAccount(token);
-        if(dialog!=null)
-            dialog.dismissDialog();
+
     }
 
     @Override
     public void onGoogleTokenFail() {
-        if(dialog!=null)
-            dialog.dismissDialog();
+
     }
 
     @Override
     public void onFacebookTokenSuccess(String token) {
-        if(dialog!=null)
-            dialog.dismissDialog();
 
         ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
         ))).loginWithFacebookAccount(token);

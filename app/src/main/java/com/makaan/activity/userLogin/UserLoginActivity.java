@@ -80,7 +80,8 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
     public void onUserLoginError(ResponseError error) {
         if(mProgressDialog !=null)
         mProgressDialog.dismissDialog();
-        Toast.makeText(this,getResources().getString(R.string.wrong_username_password),Toast.LENGTH_SHORT).show();
+        if(error.msg!=null || !error.msg.isEmpty())
+        Toast.makeText(this,error.msg.toLowerCase(),Toast.LENGTH_SHORT).show();
     }
 
     @Override
