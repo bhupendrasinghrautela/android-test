@@ -161,6 +161,9 @@ public class LocationService implements MakaanService {
                         AppBus.getInstance().post(event);
                     } catch (JSONException e) {
                         e.printStackTrace();
+
+                        SearchResultEvent searchResultEvent = new SearchResultEvent();
+                        AppBus.getInstance().post(searchResultEvent);
                     }
                 }
             }
@@ -230,6 +233,8 @@ public class LocationService implements MakaanService {
                     AppBus.getInstance().post(event);
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    SearchResultEvent event = new SearchResultEvent();
+                    AppBus.getInstance().post(event);
                 }
             }
         });

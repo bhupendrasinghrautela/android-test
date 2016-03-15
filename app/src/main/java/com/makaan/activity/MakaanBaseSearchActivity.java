@@ -1365,6 +1365,11 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         mLoadingProgressBar.setVisibility(View.GONE);
 
         mSearchResultFrameLayout.setVisibility(View.VISIBLE);
+        if(mSearchLayoutFrameLayout != null && mSearchLayoutFrameLayout.getVisibility() != View.VISIBLE) {
+            setShowSearchBar(true, false);
+            mSearchRelativeView.setVisibility(View.VISIBLE);
+        }
+
         if (mSelectedSearchAdapter.getItemCount() > 0) {
             mSearchResultsFlowLayout.setVisibility(View.VISIBLE);
         } else {
