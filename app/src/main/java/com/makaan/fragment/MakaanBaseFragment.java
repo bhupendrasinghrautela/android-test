@@ -91,6 +91,9 @@ public abstract class MakaanBaseFragment extends Fragment {
     }
 
     protected void showProgress() {
+        if(!isVisible()) {
+            return;
+        }
         mContentFrameLayout.setVisibility(View.GONE);
         mNoResultsLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.VISIBLE);
@@ -99,6 +102,9 @@ public abstract class MakaanBaseFragment extends Fragment {
     }
 
     protected void showProgressWithContent() {
+        if(!isVisible()) {
+            return;
+        }
         mContentFrameLayout.setVisibility(View.VISIBLE);
         mNoResultsLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.VISIBLE);
@@ -110,22 +116,26 @@ public abstract class MakaanBaseFragment extends Fragment {
         showNoResults(null);
     }
     protected void showNoResults(String message) {
-        if(isVisible()) {
-            mContentFrameLayout.setVisibility(View.GONE);
-            mNoResultsLayout.setVisibility(View.VISIBLE);
-            mLoadingProgressBar.setVisibility(View.GONE);
-
-            if (message == null) {
-                mNoResultsTextView.setText(R.string.generic_error);
-            } else {
-                mNoResultsTextView.setText(message);
-            }
-//        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(mNoResultsImageView);
-            Glide.with(this).load(R.raw.no_result).crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mNoResultsImageView);
+        if(!isVisible()) {
+            return;
         }
+        mContentFrameLayout.setVisibility(View.GONE);
+        mNoResultsLayout.setVisibility(View.VISIBLE);
+        mLoadingProgressBar.setVisibility(View.GONE);
+
+        if (message == null) {
+            mNoResultsTextView.setText(R.string.generic_error);
+        } else {
+            mNoResultsTextView.setText(message);
+        }
+//        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(mNoResultsImageView);
+        Glide.with(this).load(R.raw.no_result).crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mNoResultsImageView);
     }
 
     protected void showNoResults(int stringId) {
+        if(!isVisible()) {
+            return;
+        }
         mContentFrameLayout.setVisibility(View.GONE);
         mNoResultsLayout.setVisibility(View.VISIBLE);
         mLoadingProgressBar.setVisibility(View.GONE);
@@ -140,6 +150,9 @@ public abstract class MakaanBaseFragment extends Fragment {
     }
 
     protected void showContent() {
+        if(!isVisible()) {
+            return;
+        }
         mContentFrameLayout.setVisibility(View.VISIBLE);
         mNoResultsLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.GONE);
