@@ -59,7 +59,7 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
     private ArrayList<AxisValue> mAxisYValues;
     private boolean setAxesForFirstTime = true;
     private Viewport mViewPort;
-    private Long timeFrom = 7l;
+    private Long timeFrom;
     private Integer mMonths;
     private ArrayList<Long> mAllMonthsTime;
     private Long mMaxPrice;
@@ -99,6 +99,7 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
         for (int i = 37; i >= 1; i--) {
             c.setTime(referenceDate);
             c.add(Calendar.MONTH, -i);
+            c.add(Calendar.DAY_OF_MONTH, -c.get(Calendar.DAY_OF_MONTH) + 1);
             mAllMonthsTime.add(c.getTimeInMillis());
         }
     }
@@ -107,8 +108,8 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
         mAxisXLabels = new LinkedHashSet<>();
         mAxisXValues = new LinkedHashSet<>();
         mAxisYValues = new ArrayList<>();
-        changeDataBasedOnTime(6);
         generateDataForAllMonths();
+        changeDataBasedOnTime(6);
     }
 
     private void generateDataForChart() {
@@ -197,7 +198,11 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
             Axis axisX = Axis.generateAxisFromCollection(x, y);
             axisX.setHasTiltedLabels(true);
             axisX.setMaxLabelChars(5);
-            axisX.setTextColor(mContext.getResources().getColor(R.color.listingBlack));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                axisX.setTextColor(getResources().getColor(R.color.listingBlack, null));
+            } else {
+                axisX.setTextColor(getResources().getColor(R.color.listingBlack));
+            }
             mLineChartData.setAxisXBottom(axisX);
 
             Float gap = (float) findUpperLimitValue(mMaxPrice, 5) / 5;
@@ -211,7 +216,11 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
             axisY.setHasLines(true);
             axisY.setHasTiltedLabels(true);
             axisY.setMaxLabelChars(5);
-            axisY.setTextColor(mContext.getResources().getColor(R.color.listingBlack));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                axisY.setTextColor(getResources().getColor(R.color.listingBlack, null));
+            } else {
+                axisY.setTextColor(getResources().getColor(R.color.listingBlack));
+            }
             axisY.setName("price / sqft");
             mLineChartData.setAxisYLeft(axisY);
             mLineChartData.setBaseValue(Float.NEGATIVE_INFINITY);
