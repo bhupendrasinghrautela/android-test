@@ -52,10 +52,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/pyr_locality_value_left_margin"
-                android:gravity="center_horizontal"
                 android:orientation="horizontal"
                 android:text="@string/pyr_locality_value_string"
-                android:textColor="@color/black"
+                android:textColor="@color/pyr_grey"
                 android:textSize="@dimen/pyr_locality_value_text_size" />
 
         </LinearLayout>

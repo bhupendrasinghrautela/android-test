@@ -94,6 +94,7 @@ public class PyrPageFragment extends Fragment {
 
     @Bind(R.id.leadform_mobileno_edittext)EditText mUserMobile;
     @Bind(R.id.property_value)TextView mPropertyString;
+    @Bind(R.id.location_value)TextView mLocationString;
 
     private Integer mCountryId;
     private ArrayAdapter<String> mCountryAdapter;
@@ -337,10 +338,26 @@ public class PyrPageFragment extends Fragment {
     public void setLocaityInfo(){
         List<SearchResponseItem>selectedProjectsList=pyrPagePresenter.getAlreadySelectedProjects();
         if(selectedProjectsList.size()>0){
+            int count = 0;
+            StringBuilder stringBuilder=new StringBuilder();
+            String space="\n";
+            for(SearchResponseItem responseItem:selectedProjectsList){
+                if(count<2) {
+                    stringBuilder.append(responseItem.entityName);
+                    stringBuilder.append(space);
+                }
+                space=" ";
+                count++;
+            }
+            if(count>2){
+                stringBuilder.append("+ "+(count-2));
+            }
+            mLocationString.setText(stringBuilder.toString().toLowerCase());
             mLocalityCount.setVisibility(View.VISIBLE);
             mLocalityCount.setText(String.valueOf(selectedProjectsList.size()));
         }
         else{
+            mLocationString.setText(getResources().getString(R.string.pyr_locality_value_string).toLowerCase());
             mLocalityCount.setVisibility(View.GONE);
         }
     }
