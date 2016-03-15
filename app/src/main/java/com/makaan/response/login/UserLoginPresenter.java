@@ -50,7 +50,7 @@ public class UserLoginPresenter implements
 
     public void showSignUpFragment(){
         mSignUpFragment = new SignUpFragment();
-        mSignUpFragment.bindView(mRegistrationListener);
+        mSignUpFragment.bindView(mRegistrationListener, mOnUserLoginListener);
         mReplaceFragment.replaceFragment(mSignUpFragment, true);
     }
 

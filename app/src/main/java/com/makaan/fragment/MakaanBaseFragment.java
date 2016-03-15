@@ -91,9 +91,6 @@ public abstract class MakaanBaseFragment extends Fragment {
     }
 
     protected void showProgress() {
-        if(!isVisible()) {
-            return;
-        }
         mContentFrameLayout.setVisibility(View.GONE);
         mNoResultsLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.VISIBLE);
@@ -102,9 +99,6 @@ public abstract class MakaanBaseFragment extends Fragment {
     }
 
     protected void showProgressWithContent() {
-        if(!isVisible()) {
-            return;
-        }
         mContentFrameLayout.setVisibility(View.VISIBLE);
         mNoResultsLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.VISIBLE);
@@ -116,9 +110,6 @@ public abstract class MakaanBaseFragment extends Fragment {
         showNoResults(null);
     }
     protected void showNoResults(String message) {
-        if(!isVisible()) {
-            return;
-        }
         mContentFrameLayout.setVisibility(View.GONE);
         mNoResultsLayout.setVisibility(View.VISIBLE);
         mLoadingProgressBar.setVisibility(View.GONE);
@@ -133,9 +124,6 @@ public abstract class MakaanBaseFragment extends Fragment {
     }
 
     protected void showNoResults(int stringId) {
-        if(!isVisible()) {
-            return;
-        }
         mContentFrameLayout.setVisibility(View.GONE);
         mNoResultsLayout.setVisibility(View.VISIBLE);
         mLoadingProgressBar.setVisibility(View.GONE);
@@ -150,9 +138,6 @@ public abstract class MakaanBaseFragment extends Fragment {
     }
 
     protected void showContent() {
-        if(!isVisible()) {
-            return;
-        }
         mContentFrameLayout.setVisibility(View.VISIBLE);
         mNoResultsLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.GONE);

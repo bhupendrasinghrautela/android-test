@@ -414,7 +414,7 @@ public class DefaultListingView extends AbstractListingView {
     }
 
     private void showTextAsImage() {
-        if(mListing.lisitingPostedBy.name == null) {
+        if(mListing.lisitingPostedBy.name == null || mListing.lisitingPostedBy.name.length() == 0) {
             mSellerLogoTextView.setVisibility(View.INVISIBLE);
         }
         mSellerLogoTextView.setText(String.valueOf(mListing.lisitingPostedBy.name.charAt(0)));
