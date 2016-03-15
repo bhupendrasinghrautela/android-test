@@ -51,7 +51,6 @@ public class JarvisSocket {
         try {
 
             mSocket = IO.socket(JarvisConstants.CHAT_SERVER_URL);
-            AppBus.getInstance().register(this);
 
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);

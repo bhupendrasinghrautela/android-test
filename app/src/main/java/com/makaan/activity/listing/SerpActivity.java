@@ -443,6 +443,10 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Subscribe
     public synchronized void onResults(SerpGetEvent listingGetEvent) {
+        if(isActivityDead()){
+            return;
+        }
+
         if(null==listingGetEvent|| null!=listingGetEvent.error){
             //TODO handle error
             mSerpReceived = true;
@@ -532,6 +536,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Subscribe
     public synchronized void onResults(GroupSerpGetEvent groupListingGetEvent) {
+        if(isActivityDead()){
+            return;
+        }
+
+
         if(null==groupListingGetEvent|| null!=groupListingGetEvent.error){
             //TODO handle error
             mGroupReceived = true;
@@ -667,6 +676,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Subscribe
     public void onResults(SearchResultEvent searchResultEvent) {
+
         super.onResults(searchResultEvent);
     }
 
@@ -682,6 +692,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Subscribe
     public void onResults(GpByIdEvent gpIdResultEvent) {
+        if(isActivityDead()){
+            return;
+        }
         if(null==gpIdResultEvent|| null!=gpIdResultEvent.error){
             //TODO handle error
             return;
@@ -1053,11 +1066,19 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Subscribe
     public void onIncomingMessage(IncomingMessageEvent event){
+        if(isActivityDead()){
+            return;
+        }
+
         animateJarvisHead();
     }
 
     @Subscribe
     public void onExposeMessage(OnExposeEvent event) {
+        if(isActivityDead()){
+            return;
+        }
+
         if(null==event.message){
             return;
         }

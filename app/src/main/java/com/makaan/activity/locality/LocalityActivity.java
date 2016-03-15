@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
@@ -46,6 +45,10 @@ public class LocalityActivity extends MakaanFragmentActivity {
 
     @Subscribe
     public void onResult(OnSeeOnMapClicked onSeeOnMapClicked){
+        if(isActivityDead()){
+            return;
+        }
+
         mNeighborhoodMapFragment = new NeighborhoodMapFragment();
         mNeighborhoodMapFragment.setData(mEntityInfo,onSeeOnMapClicked.amenityClusters);
         initFragment(R.id.container, mNeighborhoodMapFragment, true);
@@ -80,11 +83,19 @@ public class LocalityActivity extends MakaanFragmentActivity {
 
     @Subscribe
     public void onIncomingMessage(IncomingMessageEvent event){
+        if(isActivityDead()){
+            return;
+        }
+
         animateJarvisHead();
     }
 
     @Subscribe
     public void onExposeMessage(OnExposeEvent event) {
+        if(isActivityDead()){
+            return;
+        }
+
         if(null==event.message){
             return;
         }
@@ -110,6 +121,10 @@ public class LocalityActivity extends MakaanFragmentActivity {
 
     @Subscribe
     public void onResults(LocalityByIdEvent localityByIdEvent) {
+        if(isActivityDead()){
+            return;
+        }
+
         if (null != localityByIdEvent && null != localityByIdEvent.locality) {
 
             PageTag pageTag = new PageTag();
