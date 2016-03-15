@@ -51,6 +51,9 @@ public class ShortListFavoriteFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void wishListResponse(WishListResultEvent wishListResultEvent){
+        if(!isVisible()) {
+            return;
+        }
         if(null==wishListResultEvent ||null!=wishListResultEvent.error){
             if(wishListResultEvent != null && wishListResultEvent.error != null && wishListResultEvent.error.msg != null) {
                 showNoResults(wishListResultEvent.error.msg);

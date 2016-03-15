@@ -30,7 +30,7 @@ public class ForgotPasswordService implements MakaanService{
             params.put("sourceDomain","Makaan");
 
             //TODO Check in sourceDomain needed or not
-            MakaanNetworkClient.getInstance().loginPost(buildForgotPasswordRequest()
+            MakaanNetworkClient.getInstance().loginPost(ApiConstants.FORGOT_PASSWORD
                     , params, new ForgotPasswordCallBack(), TAG);
 
         } catch (Exception e) {
@@ -38,7 +38,7 @@ public class ForgotPasswordService implements MakaanService{
         }
     }
 
-    public static String buildForgotPasswordRequest() {
+    /*public static String buildForgotPasswordRequest() {
         return ApiConstants.BASE_URL + ApiConstants.FORGOT_PASSWORD;
-    }
+    }*/
 }

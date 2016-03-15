@@ -253,6 +253,9 @@ public class PyrPageFragment extends Fragment {
 
     @Subscribe
     public void onResults(TopRentAgentsPyrEvent topRentAgentsPyrEvent) {
+        if(!isVisible()) {
+            return;
+        }
         if(topRentAgentsPyrEvent.error!=null){
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorBuyer);
@@ -277,6 +280,9 @@ public class PyrPageFragment extends Fragment {
 
     @Subscribe
     public void onResults(TopBuyAgentsPyrEvent topBuyAgentsPyrEvent) {
+        if(!isVisible()) {
+            return;
+        }
         if(topBuyAgentsPyrEvent.error!=null){
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorBuyer);

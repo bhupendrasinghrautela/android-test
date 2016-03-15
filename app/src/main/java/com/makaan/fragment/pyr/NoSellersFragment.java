@@ -185,6 +185,9 @@ public class NoSellersFragment extends Fragment {
 
     @Subscribe
     public void setAlertResponse( SaveSearchGetEvent saveSearchGetEvent){
+        if(!isVisible()) {
+            return;
+        }
         if(saveSearchGetEvent.error==null){
             PyrPagePresenter pyrPagePresenter=PyrPagePresenter.getPyrPagePresenter();
             pyrPagePresenter.showThankYouScreenFragment(true, false, true);

@@ -329,6 +329,9 @@ public class SaveSearchFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(SaveSearchGetEvent saveSearchGetEvent) {
+        if(!isVisible()) {
+            return;
+        }
         if (null == saveSearchGetEvent || null != saveSearchGetEvent.error) {
             if (saveSearchGetEvent != null && saveSearchGetEvent.error != null
                     && saveSearchGetEvent.error.error != null && saveSearchGetEvent.error.error.networkResponse != null
@@ -368,6 +371,9 @@ public class SaveSearchFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(NewMatchesGetEvent event) {
+        if(!isVisible()) {
+            return;
+        }
         if (null == event || null != event.error) {
             return;
         }

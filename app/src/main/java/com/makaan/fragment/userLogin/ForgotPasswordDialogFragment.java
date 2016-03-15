@@ -76,6 +76,9 @@ public class ForgotPasswordDialogFragment extends DialogFragment {
 
     @Subscribe
     public void forgotPasswordResponse(BaseResponse baseResponse){
+        if(!isVisible()) {
+            return;
+        }
         if(getActivity()==null || getActivity().isFinishing()){
             return;
         }

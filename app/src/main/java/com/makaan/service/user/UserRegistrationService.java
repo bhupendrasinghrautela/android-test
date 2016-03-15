@@ -32,7 +32,7 @@ public class UserRegistrationService implements MakaanService{
     }
 
     private void makeRegistrationRequest(UserRegistrationDto userRegistrationDto) {
-      String requestUrl = buildRegistrationRequest();
+      String requestUrl = ApiConstants.REGISTER;
         try {
             JSONObject userRegistrationPayload = JsonBuilder.toJson(userRegistrationDto);
             MakaanNetworkClient.getInstance().loginRegisterPost(requestUrl, userRegistrationPayload,
@@ -41,11 +41,11 @@ public class UserRegistrationService implements MakaanService{
         }
     }
 
-    public static String buildRegistrationRequest() {
+    /*public static String buildRegistrationRequest() {
         StringBuilder builder = new StringBuilder();
         builder.append(ApiConstants.BASE_URL);
         builder.append("/userservice/app/v1/register");
 
         return builder.toString();
-    }
+    }*/
 }

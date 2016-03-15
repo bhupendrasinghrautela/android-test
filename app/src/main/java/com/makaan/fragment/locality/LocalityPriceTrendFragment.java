@@ -116,6 +116,9 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResults(TrendingSearchLocalityEvent searchResultEvent){
+        if(!isVisible()) {
+            return;
+        }
         if(null== searchResultEvent || null!=searchResultEvent.error){
             //TODO handle error
             return;
