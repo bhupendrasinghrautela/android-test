@@ -116,9 +116,11 @@ public class LocalityActivity extends MakaanFragmentActivity {
             pageTag.addLocality(localityByIdEvent.locality.label);
             super.setCurrentPageTag(pageTag);
 
-            mEntityInfo = new NeighborhoodMapFragment.EntityInfo(localityByIdEvent.locality.label,
-                    localityByIdEvent.locality.latitude,
-                    localityByIdEvent.locality.longitude);
+            if(localityByIdEvent.locality.latitude != null && localityByIdEvent.locality.longitude != null) {
+                mEntityInfo = new NeighborhoodMapFragment.EntityInfo(localityByIdEvent.locality.label,
+                        localityByIdEvent.locality.latitude,
+                        localityByIdEvent.locality.longitude);
+            }
 
             mLocalityName = localityByIdEvent.locality.label;
         }

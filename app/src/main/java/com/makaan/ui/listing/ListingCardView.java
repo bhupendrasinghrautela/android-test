@@ -57,7 +57,7 @@ public class ListingCardView extends AbstractListingView {
     @Bind(R.id.listing_brief_view_layout_property_size_info_text_view)TextView mPropertySizeInfoTextView;
     @Bind(R.id.listing_brief_view_layout_property_address_text_view)TextView mPropertyAddressTextView;
     @Bind(R.id.listing_brief_view_layout_badge_Image_view)ImageView mBadgeImageView;
-    @Bind(R.id.listing_brief_view_layout_text_view)TextView mBadgeTextView;
+    @Bind(R.id.listing_brief_view_layout_assist_button)TextView mBadgeTextView;
 
     @Bind(R.id.serp_default_listing_assist_button) Button mAssistButton;
 

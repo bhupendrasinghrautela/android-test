@@ -204,7 +204,11 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
     public void setProjectData(Project project){
         if(project != null) {
             if(!TextUtils.isEmpty(project.name)) {
-                projectNameTv.setText(project.name.toLowerCase());
+                if(project.builder != null && project.builder.name != null) {
+                    projectNameTv.setText(String.format("%s %s", project.builder.name, project.name).toLowerCase());
+                } else {
+                    projectNameTv.setText(project.name.toLowerCase());
+                }
                 projectNameTv.setVisibility(View.VISIBLE);
             }
             if(project.locality != null) {

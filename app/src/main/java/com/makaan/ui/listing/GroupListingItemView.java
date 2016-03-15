@@ -39,7 +39,7 @@ public class GroupListingItemView extends RelativeLayout implements View.OnClick
 
     private static final String PRICE_RANGE_STRING = "%s to %s";
     private static final String PROPERTY_SIZE_STRING = "%dbhk ";
-    private static final String LISTING_SIZE_STRING = "%s listings ";
+    private static final String LISTING_SIZE_STRING = "%s+ listings ";
     private SerpRequestCallback mCallback;
     private GroupListing mItem;
 
