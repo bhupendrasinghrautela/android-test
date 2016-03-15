@@ -64,6 +64,9 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(ClientLeadsByGetEvent clientLeadsByGetEvent) {
+        if(!isVisible()) {
+            return;
+        }
         if(clientLeadsByGetEvent == null || clientLeadsByGetEvent.error != null) {
             if(clientLeadsByGetEvent != null && clientLeadsByGetEvent.error != null && clientLeadsByGetEvent.error.msg != null) {
                 showNoResults(clientLeadsByGetEvent.error.msg);
@@ -130,6 +133,9 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResultsListing(ListingByIdGetEvent listingByIdGetEvent) {
+        if(!isVisible()) {
+            return;
+        }
         if(listingByIdGetEvent.listingDetail ==null || listingByIdGetEvent.error!=null){
             return;
         }
@@ -150,6 +156,9 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResultsProject(ProjectByIdEvent projectByIdEvent) {
+        if(!isVisible()) {
+            return;
+        }
         if(projectByIdEvent.project ==null || projectByIdEvent.error!=null){
             return;
         }
@@ -176,6 +185,9 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onCompanyResult(ArrayList<Company> companies){
+        if(!isVisible()) {
+            return;
+        }
         if(companies ==null || companies.size()==0){
             return;
         }

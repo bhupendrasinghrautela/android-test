@@ -52,19 +52,19 @@ public class WishListService implements MakaanService {
     }
 
     private void add(JSONObject wishListPayload, WishListResultCallback callback){
-        String requestUrl = buildWishListUrl();
-        MakaanNetworkClient.getInstance().post(requestUrl, wishListPayload, callback, TAG);
+//        String requestUrl = buildWishListUrl();
+        MakaanNetworkClient.getInstance().post(ApiConstants.WISHLIST, wishListPayload, callback, TAG);
     }
 
     public void get(){
-        String requestUrl = buildWishListUrl();
-        MakaanNetworkClient.getInstance().get(requestUrl, new WishListResultCallback(Request.Method.GET), TAG);
+//        String requestUrl = buildWishListUrl();
+        MakaanNetworkClient.getInstance().get(ApiConstants.WISHLIST, new WishListResultCallback(Request.Method.GET), TAG);
     }
 
     public void delete(Long itemId, WishListResponseUICallback callback){
         Long wishListId = MasterDataCache.getInstance().getWishlistId(itemId);
         if(null!=wishListId) {
-            String requestUrl = buildWishListUrl().concat("/" + wishListId);
+            String requestUrl = ApiConstants.WISHLIST.concat("/" + wishListId);
             WishListResultCallback wishListResultCallback = new WishListResultCallback(Request.Method.DELETE, callback);
             wishListResultCallback.setItemId(itemId);
             MakaanNetworkClient.getInstance().delete(requestUrl, null, wishListResultCallback, TAG);
@@ -85,13 +85,13 @@ public class WishListService implements MakaanService {
         this.entityIdToBeShortlisted = entityIdToBeShortlisted;
     }
 
-    private String buildWishListUrl(){
+    /*private String buildWishListUrl(){
 
         StringBuilder requestBuilder = new StringBuilder();
-        requestBuilder.append(ApiConstants.BASE_URL);
+        requestBuilder.append(ApiConstants.WISHLIST);
         requestBuilder.append("/petra/data/v1/entity/user/wish-list");
 
         return requestBuilder.toString();
-    }
+    }*/
 
 }

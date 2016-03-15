@@ -24,7 +24,7 @@ public class UserLoginService implements MakaanService{
             throw new IllegalArgumentException("Invalid arguments");
         }
 
-        String url = buildMakaanSignInRequest();
+        String url = ApiConstants.MAKAAN_LOGIN;
         Map<String, String> pars = new HashMap<String, String>();
         pars.put("username", uName);
         pars.put("password", pwd);
@@ -59,12 +59,12 @@ public class UserLoginService implements MakaanService{
         }
     }
 
-    private static String buildMakaanSignInRequest() {
+    /*private static String buildMakaanSignInRequest() {
         StringBuilder queryBuilder = new StringBuilder();
         queryBuilder.append(ApiConstants.BASE_URL);
         queryBuilder.append("/madrox/app/v1//login");
         return queryBuilder.toString();
-    }
+    }*/
 
 
     public static String buildGoogleSignInRequest(String token) {
@@ -72,8 +72,7 @@ public class UserLoginService implements MakaanService{
             throw new IllegalArgumentException("Please supply proper arguments");
         }
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(ApiConstants.BASE_URL);
-        queryBuilder.append("/madrox/app/v1/login/google?access_token=");
+        queryBuilder.append(ApiConstants.GOOGLE_LOGIN);
         queryBuilder.append(token);
         queryBuilder.append("&domainId=1&rememberme=true");
 
@@ -86,8 +85,7 @@ public class UserLoginService implements MakaanService{
             throw new IllegalArgumentException("Please supply proper arguments");
         }
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(ApiConstants.BASE_URL);
-        queryBuilder.append("/madrox/app/v1/login/facebook?access_token=");
+        queryBuilder.append(ApiConstants.FACEBOOK_LOGIN);
         queryBuilder.append(token);
         queryBuilder.append("&domainId=1&rememberme=true");
 

@@ -131,6 +131,9 @@ public class SignUpFragment extends Fragment {
 
     @Subscribe
     public void registrationResults(UserRegistrationEvent userRegistrationEvent){
+        if(!isVisible()) {
+            return;
+        }
         if(userRegistrationEvent.error!=null ){
             mOnUserRegistrationListener.onUserRegistrationError(userRegistrationEvent.error);
         }

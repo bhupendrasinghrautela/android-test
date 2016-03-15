@@ -344,6 +344,9 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
 
     @Subscribe
     public void onResults(AmenityGetEvent amenityGetEvent) {
+        if(!isVisible()) {
+            return;
+        }
         if(amenityGetEvent.amenityClusters == null){
             return;
         }
@@ -364,6 +367,9 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
 
     @Subscribe
     public void onResults(ListingByIdGetEvent listingByIdGetEvent) {
+        if(!isVisible()) {
+            return;
+        }
         if(listingByIdGetEvent.listingDetail ==null){
             showNoResults();
             return;
@@ -401,6 +407,9 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
 
     @Subscribe
     public void onResults(ImagesGetEvent imagesGetEvent){
+        if(!isVisible()) {
+            return;
+        }
         if(imagesGetEvent == null){
             imagesGetEvent = new ImagesGetEvent();
             imagesGetEvent.images = new ArrayList<>();
@@ -443,11 +452,17 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
 
     @Subscribe
     public void onOtherSellers(OtherSellersGetEvent otherSellersGetEvent){
+        if(!isVisible()) {
+            return;
+        }
         mSellerCards = otherSellersGetEvent.sellerCards;
     }
 
     @Subscribe
     public void onSimilarListings(SimilarListingGetEvent similarListingGetEvent){
+        if(!isVisible()) {
+            return;
+        }
         if(similarListingGetEvent == null || similarListingGetEvent.error!=null){
             return;
         }

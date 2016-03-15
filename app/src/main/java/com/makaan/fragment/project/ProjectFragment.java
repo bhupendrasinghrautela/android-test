@@ -212,6 +212,9 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResults(OnViewAllPropertiesClicked onViewAllPropertiesClicked) {
+        if(!isVisible()) {
+            return;
+        }
 
         Properties properties= MakaanEventPayload.beginBatch();
         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
@@ -234,6 +237,9 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResults(ProjectConfigItemClickListener configItemClickListener){
+        if(!isVisible()) {
+            return;
+        }
         switch (configItemClickListener.configItemType){
             case SELLER:
                 ProjectConfigItem projectConfigItem = configItemClickListener.projectConfigItem;
@@ -294,6 +300,9 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public  void openPyr(OpenPyrClicked openPyrClicked){
+        if(!isVisible()) {
+            return;
+        }
         Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
         pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id,project.locality.suburb.city.id);
         pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, project.locality.suburb.city.label);
@@ -305,6 +314,9 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onRentBuySelected(OnRentBuyClicked rentBuyClicked){
+        if(!isVisible()) {
+            return;
+        }
         isRent = rentBuyClicked.isRent;
     }
 
@@ -330,6 +342,9 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResults(ImagesGetEvent imagesGetEvent){
+        if(!isVisible()) {
+            return;
+        }
         if(null== imagesGetEvent || null!=imagesGetEvent.error){
             imagesGetEvent = new ImagesGetEvent();
             imagesGetEvent.images = new ArrayList<>();
@@ -366,6 +381,9 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResult(ProjectByIdEvent projectByIdEvent) {
+        if(!isVisible()) {
+            return;
+        }
         if (null == projectByIdEvent || null != projectByIdEvent.error) {
             //getActivity().finish();
             showNoResults();
@@ -509,6 +527,9 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResults(NearByLocalitiesEvent localitiesEvent){
+        if(!isVisible()) {
+            return;
+        }
         addPriceTrendsFragment(localitiesEvent.nearbyLocalities);
     }
 
@@ -570,6 +591,9 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResults(AmenityGetEvent amenityGetEvent) {
+        if(!isVisible()) {
+            return;
+        }
         if(null== amenityGetEvent || null!=amenityGetEvent.error){
             //TODO handle error
             return;
@@ -579,6 +603,9 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResult(ProjectConfigEvent projectConfigEvent){
+        if(!isVisible()) {
+            return;
+        }
         this.mProjectConfigEvent = projectConfigEvent;
         if(null== projectConfigEvent || null!=projectConfigEvent.error){
             //TODO handle error
@@ -605,6 +632,9 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResult(SimilarProjectGetEvent similarProjectGetEvent){
+        if(!isVisible()) {
+            return;
+        }
         if(null== similarProjectGetEvent || null!=similarProjectGetEvent.error){
             //TODO handle error
             return;
@@ -615,6 +645,9 @@ public class ProjectFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResult(OnSimilarProjectClickedEvent onSimilarProjectClickedEvent){
+        if(!isVisible()) {
+            return;
+        }
 
         Properties properties = MakaanEventPayload.beginBatch();
         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);

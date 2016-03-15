@@ -1,10 +1,12 @@
 package com.makaan.ui.listing;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -103,6 +105,18 @@ public class SellerListingView extends AbstractCardListingView {
 
     @Subscribe
     public void onResults(SellerByIdEvent sellerByIdEvent) {
+        if (mContext instanceof Activity) {
+            Activity activity = (Activity)mContext;
+            if ( activity.isFinishing() ) {
+                return;
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                if(activity.isDestroyed()) {
+                    return;
+                }
+            }
+        }
+
         if(null== sellerByIdEvent || null!=sellerByIdEvent.error){
             //TODO handle error
             return;

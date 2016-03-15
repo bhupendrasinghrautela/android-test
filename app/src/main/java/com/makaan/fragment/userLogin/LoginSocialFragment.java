@@ -214,6 +214,9 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
 
     @Subscribe
     public void loginResults(UserLoginEvent userLoginEvent){
+        if(!isVisible()) {
+            return;
+        }
         Properties properties= MakaanEventPayload.beginBatch();
         properties.put(MakaanEventPayload.CATEGORY ,MakaanTrackerConstants.Category.userLogin);
 

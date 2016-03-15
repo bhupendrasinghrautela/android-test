@@ -69,6 +69,9 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(ClientEventsByGetEvent clientEventsByGetEvent) {
+        if(!isVisible()) {
+            return;
+        }
         if(clientEventsByGetEvent == null || clientEventsByGetEvent.error != null) {
             if(clientEventsByGetEvent != null && clientEventsByGetEvent.error.error != null
                     && clientEventsByGetEvent.error.error.networkResponse != null
@@ -137,6 +140,9 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResultsListing(ListingByIdGetEvent listingByIdGetEvent) {
+        if(!isVisible()) {
+            return;
+        }
         if(listingByIdGetEvent.listingDetail ==null || listingByIdGetEvent.error!=null){
             return;
         }
@@ -158,6 +164,9 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResultsProject(ProjectByIdEvent projectByIdEvent) {
+        if(!isVisible()) {
+            return;
+        }
         if(projectByIdEvent.project ==null || projectByIdEvent.error!=null){
             return;
         }
@@ -180,6 +189,9 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onCompanyResult(ArrayList<Company> companies){
+        if(!isVisible()) {
+            return;
+        }
         if(companies ==null || companies.size()==0){
             return;
         }

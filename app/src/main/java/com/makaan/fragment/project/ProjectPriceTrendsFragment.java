@@ -93,6 +93,9 @@ public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResult(ProjectPriceTrendEvent projectPriceTrendEvent){
+        if(!isVisible()) {
+            return;
+        }
         if(projectPriceTrendEvent == null || projectPriceTrendEvent.error!=null){
             return;
         }

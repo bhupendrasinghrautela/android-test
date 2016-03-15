@@ -171,6 +171,9 @@ public class LocalityFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(LocalityByIdEvent localityByIdEvent) {
+        if(!isVisible()) {
+            return;
+        }
         if (null == localityByIdEvent || null != localityByIdEvent.error || localityByIdEvent.locality == null) {
             showNoResults("locality details could not be loaded at this time. please try later.");
 //            Toast.makeText(getActivity(), "locality details could not be loaded at this time. please try later.", Toast.LENGTH_LONG).show();
@@ -204,6 +207,9 @@ public class LocalityFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(TopBuilderInLocalityEvent topBuilderInLocalityEvent){
+        if(!isVisible()) {
+            return;
+        }
         if(null== topBuilderInLocalityEvent || null!=topBuilderInLocalityEvent.error){
             //TODO handle error
             return;
@@ -213,6 +219,9 @@ public class LocalityFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(NearByLocalitiesEvent localitiesEvent){
+        if(!isVisible()) {
+            return;
+        }
         if(null== localitiesEvent || null!=localitiesEvent.error){
             //TODO handle error
             return;
@@ -223,6 +232,9 @@ public class LocalityFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(AmenityGetEvent amenityGetEvent) {
+        if(!isVisible()) {
+            return;
+        }
         if(null==amenityGetEvent|| null!=amenityGetEvent.error){
             //TODO handle error
             return;
@@ -528,6 +540,9 @@ public class LocalityFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResult(OnNearByLocalityClickEvent nearByLocalityClickEvent){
+        if(!isVisible()) {
+            return;
+        }
         Toast.makeText(getActivity(), "Nearby clicked, locality id :" + nearByLocalityClickEvent.localityId, Toast.LENGTH_SHORT);
         Intent intent = new Intent(getActivity(),LocalityActivity.class);
         intent.putExtra(LocalityActivity.LOCALITY_ID, nearByLocalityClickEvent.localityId);
@@ -536,6 +551,9 @@ public class LocalityFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResult(OnTopAgentClickEvent onTopAgentClickEvent){
+        if(!isVisible()) {
+            return;
+        }
         SerpRequest serpRequest = new SerpRequest(SerpActivity.TYPE_SELLER);
         serpRequest.setSellerId(onTopAgentClickEvent.agentId);
         serpRequest.launchSerp(getActivity());
@@ -543,6 +561,9 @@ public class LocalityFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResult(OnTopBuilderClickEvent onTopBuilderClickEvent){
+        if(!isVisible()) {
+            return;
+        }
         SerpRequest serpRequest = new SerpRequest(SerpActivity.TYPE_BUILDER);
         serpRequest.setBuilderId(onTopBuilderClickEvent.builderId);
         serpRequest.launchSerp(getActivity());
