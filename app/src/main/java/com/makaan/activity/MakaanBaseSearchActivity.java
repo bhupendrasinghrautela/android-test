@@ -1051,15 +1051,10 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }*/
 
     public void onResults(SearchResultEvent searchResultEvent) {
-        if(isFinishing()){
+        if(isActivityDead()){
             return;
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            if(isDestroyed()){
-                return;
-            }
-        }
 
         if(null==searchResultEvent || null!=searchResultEvent.error) {
             if(searchResultEvent.error != null && !TextUtils.isEmpty(searchResultEvent.error.msg)) {
