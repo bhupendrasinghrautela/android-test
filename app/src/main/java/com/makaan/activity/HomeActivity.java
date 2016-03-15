@@ -14,7 +14,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.appsflyer.AppsFlyerLib;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
 import com.makaan.constants.PreferenceConstants;
@@ -186,6 +185,9 @@ public class HomeActivity extends MakaanBaseSearchActivity {
 
     @Subscribe
     public void onResults(UserLoginEvent userLoginEvent) {
+        if(isActivityDead()){
+            return;
+        }
 
         if (null != userLoginEvent.error) {
             return;
@@ -196,6 +198,9 @@ public class HomeActivity extends MakaanBaseSearchActivity {
 
     @Subscribe
     public void onResults(LocationGetEvent locationGetEvent) {
+        if(isActivityDead()){
+            return;
+        }
         Session.apiLocation = locationGetEvent.myLocation;
     }
 
@@ -225,6 +230,10 @@ public class HomeActivity extends MakaanBaseSearchActivity {
 
     @Subscribe
     public void onResults(SearchResultEvent searchResultEvent) {
+        if(isActivityDead()){
+            return;
+        }
+
         super.onResults(searchResultEvent);
     }
 

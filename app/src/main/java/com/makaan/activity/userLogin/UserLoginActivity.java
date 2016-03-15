@@ -24,6 +24,7 @@ import com.makaan.response.login.UserLoginPresenter;
 import com.makaan.response.user.UserResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.WishListService;
+import com.makaan.service.user.UserLoginService;
 import com.makaan.ui.CommonProgressDialog;
 import com.makaan.util.AppBus;
 import com.makaan.util.Preference;
@@ -126,13 +127,13 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
         properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.registrationSuccess);
         MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.login);
 
-        if(mProgressDialog !=null)
+/*        if(mProgressDialog !=null)
             mProgressDialog.dismissDialog();
         CookiePreferences.setUserInfo(this, response);
         CookiePreferences.setUserLoggedIn(this);
         refreshWishList();
         setResult(RESULT_OK);
-        finish();
+        finish();*/
     }
 
     @Override

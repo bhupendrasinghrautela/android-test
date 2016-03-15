@@ -84,6 +84,10 @@ public class PropertyActivity extends MakaanBaseSearchActivity implements ShowMa
 
     @Subscribe
     public void onResults(AmenityGetEvent amenityGetEvent) {
+        if(isActivityDead()){
+            return;
+        }
+
         if(amenityGetEvent.amenityClusters == null){
             return;
         }
@@ -102,6 +106,10 @@ public class PropertyActivity extends MakaanBaseSearchActivity implements ShowMa
 
     @Subscribe
     public void onResults(ListingByIdGetEvent listingByIdGetEvent) {
+        if(isActivityDead()){
+            return;
+        }
+
         if(listingByIdGetEvent.listingDetail ==null || null != listingByIdGetEvent.error){
             return;
         }else {
@@ -115,6 +123,10 @@ public class PropertyActivity extends MakaanBaseSearchActivity implements ShowMa
 
     @Subscribe
     public void onIncomingMessage(IncomingMessageEvent event){
+        if(isActivityDead()){
+            return;
+        }
+
         animateJarvisHead();
     }
 

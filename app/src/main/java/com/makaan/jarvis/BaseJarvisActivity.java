@@ -587,6 +587,25 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
     }
 
+    public boolean isActivityDead(){
+        if(isFinishing() || isActivityDestroyed()){
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean isActivityDestroyed(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if(isDestroyed()){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
     protected boolean needBackProcessing() {
         return (mJarvisPopupCard !=null && mJarvisPopupCard.getVisibility()==View.VISIBLE);
     }

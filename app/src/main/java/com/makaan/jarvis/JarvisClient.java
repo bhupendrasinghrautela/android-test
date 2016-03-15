@@ -50,6 +50,9 @@ public class JarvisClient {
 
     public void destroy(){
         jarvisSocket.close();
+        if(null!=eventBus) {
+            eventBus.unregister(this);
+        }
     }
 
     public ChatMessages getChatMessages(){

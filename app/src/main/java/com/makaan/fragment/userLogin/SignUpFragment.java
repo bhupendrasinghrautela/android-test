@@ -21,6 +21,7 @@ import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.user.UserRegistrationEvent;
 import com.makaan.response.login.OnUserRegistrationListener;
 import com.makaan.response.login.UserRegistrationDto;
+import com.makaan.service.user.UserLoginService;
 import com.makaan.service.user.UserRegistrationService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.AppBus;
@@ -140,6 +141,9 @@ public class SignUpFragment extends Fragment {
         else {
             String str = new Gson().toJson(userRegistrationEvent.userResponse);
             mOnUserRegistrationListener.onUserRegistrationSuccess(userRegistrationEvent.userResponse , str);
+
+            ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
+            ))).loginWithMakaanAccount(userRegistrationDto.getEmail(),userRegistrationDto.getPassword());
         }
 
     }

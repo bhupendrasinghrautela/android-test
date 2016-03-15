@@ -1,6 +1,7 @@
 package com.makaan.jarvis;
 
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -70,6 +71,14 @@ public class ChatActivity extends AppCompatActivity {
         JarvisClient.getInstance().refreshJarvisSocket();
     }
 
+    @Override
+    protected void onDestroy() {
+        if(null!=eventBus){
+            eventBus.unregister(ChatActivity.this);
+        }
+
+        super.onDestroy();
+    }
 
     private void setUpWindow() {
 
@@ -190,12 +199,32 @@ public class ChatActivity extends AppCompatActivity {
 
     @Subscribe
     public void onIncomingMessage(IncomingMessageEvent event){
+        if(isFinishing()){
+            return;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if(isDestroyed()){
+                return;
+            }
+        }
+
         final Message message = (Message) event.message;
         addChatMessage(message);
     }
 
     @Subscribe
     public void onSendRequirementMessage(SendRequirementEvent event){
+        if(isFinishing()){
+            return;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if(isDestroyed()){
+                return;
+            }
+        }
+
         final Message message = (Message) event.message;
         sendMessageToService(message);
     }
