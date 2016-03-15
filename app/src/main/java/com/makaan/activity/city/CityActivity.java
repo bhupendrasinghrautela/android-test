@@ -79,6 +79,9 @@ public class CityActivity extends MakaanFragmentActivity {
 
     @Subscribe
     public void onResults(CityByIdEvent cityByIdEvent){
+        if(isActivityDead()){
+            return;
+        }
         if (null != cityByIdEvent && null!=cityByIdEvent.city) {
 
             PageTag pageTag = new PageTag();
@@ -91,11 +94,17 @@ public class CityActivity extends MakaanFragmentActivity {
 
     @Subscribe
     public void onIncomingMessage(IncomingMessageEvent event){
+        if(isActivityDead()){
+            return;
+        }
         animateJarvisHead();
     }
 
     @Subscribe
     public void onExposeMessage(OnExposeEvent event) {
+        if(isActivityDead()){
+            return;
+        }
         if(null==event.message){
             return;
         }
