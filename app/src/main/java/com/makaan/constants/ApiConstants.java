@@ -7,15 +7,15 @@ public class ApiConstants {
 
 
     //public static final String BASE_URL = "https://mp-qa2.makaan-ws.com";
-    public static final String BASE_URL = "https://mp-qa1.makaan-ws.com";
-    //public static final String BASE_URL = "https://beta.makaan-ws.com";
+    //public static final String BASE_URL = "https://mp-qa1.makaan-ws.com";
+    public static final String BASE_URL = "https://beta.makaan-ws.com";
 
     public static final String MICROSERVICE_MADELYNE = BASE_URL.concat("/madelyne/");
     public static final String MICROSERVICE_COMPASS = BASE_URL.concat("/compass/");
     public static final String MICROSERVICE_PIXIE = BASE_URL.concat("/pixie/");
     public static final String MICROSERVICE_PETRA = BASE_URL.concat("/petra/");
     public static final String MICROSERVICE_COLUMBUS = BASE_URL.concat("/columbus/");
-    public static final String MICROSERVICE_MADROX = BASE_URL.concat("/madrox/");
+    private static final String MICROSERVICE_MADROX = BASE_URL.concat("/madrox/");
     public static final String MICROSERVICE_DOWNSTAR = BASE_URL.concat("/dawnstar/");
     public static final String MICROSERVICE_SAPPHIRE = BASE_URL.concat("/sapphire/");
     public static final String MICROSERVICE_KIRA = BASE_URL.concat("/kira/");
@@ -86,18 +86,18 @@ public class ApiConstants {
     public static final String FORGOT_PASSWORD = BASE_URL.concat("/app/v1/reset-password");
     public static final String GOOGLE_NAV_BASE_STRING = "http://maps.google.com/?daddr=";
     public static final String ICRM_CLIENT_LEADS = MICROSERVICE_SAPPHIRE.concat("/v1/client-leads");
-    public static final String USER_SERVICE_ENTITY_COMPANIES = MICROSERVICE_MADROX.concat("/data/v1/entity/companies?filters=");
+    public static final String USER_SERVICE_ENTITY_COMPANIES = MICROSERVICE_MADROX.concat("data/v1/entity/companies?filters=");
     public static final String USER_SERVICE_ENTITY_COMPANIES_FILTER = "id==%d,";
     public static final String SELLER_RATING = MICROSERVICE_PETRA.concat("/data/v1/entity/user/seller-rating-review");
     public static final String SITE_VISIT_CLIENT_EVENTS = MICROSERVICE_SAPPHIRE.concat("/v1/client/events/");
-    public static final String GCM = MICROSERVICE_MADROX.concat("/data/v1/entity/gcm-user");
+    public static final String GCM = MICROSERVICE_MADROX.concat("data/v1/entity/gcm-user");
     public static final String TYPEAHEAD = MICROSERVICE_COLUMBUS.concat("/app/v5/typeahead?");
     public static final String WISHLIST = MICROSERVICE_PETRA.concat("/data/v1/entity/user/wish-list");
-    public static final String FACEBOOK_LOGIN = MICROSERVICE_MADROX.concat("/app/v1/login/facebook?access_token=");
-    public static final String GOOGLE_LOGIN = MICROSERVICE_MADROX.concat("/app/v1/login/google?access_token=");
-    public static final String MAKAAN_LOGIN = MICROSERVICE_MADROX.concat("/app/v1//login");
-    public static final String LOGOUT = BASE_URL.concat("/app/v1/logout");
-    public static final String REGISTER = MICROSERVICE_MADROX.concat("/app/v1/register");
+    public static final String FACEBOOK_LOGIN = MICROSERVICE_MADROX.concat("app/v1/login/facebook?access_token=");
+    public static final String GOOGLE_LOGIN = MICROSERVICE_MADROX.concat("app/v1/login/google?access_token=");
+    public static final String MAKAAN_LOGIN = MICROSERVICE_MADROX.concat("app/v1//login");
+    public static final String LOGOUT = MICROSERVICE_MADROX.concat("app/v1/logout");
+    public static final String REGISTER = MICROSERVICE_MADROX.concat("app/v1/register");
 
     //public static final String SIMILAR_LISTING = BASE_URL.concat("/app/v1/similar/listing/");
 
