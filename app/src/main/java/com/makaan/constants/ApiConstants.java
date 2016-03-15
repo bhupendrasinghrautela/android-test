@@ -7,8 +7,8 @@ public class ApiConstants {
 
 
     //public static final String BASE_URL = "https://mp-qa2.makaan-ws.com";
-    //public static final String BASE_URL = "https://mp-qa1.makaan-ws.com";
-    public static final String BASE_URL = "https://beta.makaan-ws.com";
+    public static final String BASE_URL = "https://mp-qa1.makaan-ws.com";
+//    public static final String BASE_URL = "https://beta.makaan-ws.com";
 
     private static final String MICROSERVICE_MADELYNE = BASE_URL.concat("/madelyne");
     private static final String MICROSERVICE_COMPASS = BASE_URL.concat("/compass");
@@ -95,7 +95,7 @@ public class ApiConstants {
     public static final String WISHLIST = MICROSERVICE_PETRA.concat("/data/v1/entity/user/wish-list");
     public static final String FACEBOOK_LOGIN = MICROSERVICE_MADROX.concat("/app/v1/login/facebook?access_token=");
     public static final String GOOGLE_LOGIN = MICROSERVICE_MADROX.concat("/app/v1/login/google?access_token=");
-    public static final String MAKAAN_LOGIN = MICROSERVICE_MADROX.concat("/app/v1//login");
+    public static final String MAKAAN_LOGIN = MICROSERVICE_MADROX.concat("/app/v1/login");
     public static final String LOGOUT = MICROSERVICE_MADROX.concat("/app/v1/logout");
     public static final String REGISTER = MICROSERVICE_MADROX.concat("/app/v1/register");
 
