@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,7 +25,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
@@ -58,7 +56,6 @@ import com.makaan.service.LocalityService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.TaxonomyService;
 import com.makaan.ui.CompressedTextView;
-import com.makaan.util.Blur;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.LocalityUtil;
 import com.makaan.util.StringUtil;
@@ -179,26 +176,28 @@ public class LocalityFragment extends MakaanBaseFragment {
 //            Toast.makeText(getActivity(), "locality details could not be loaded at this time. please try later.", Toast.LENGTH_LONG).show();
         } else {
             locality = localityByIdEvent.locality;
-            showContent();
-            populateLocalityData();
-            frame.setVisibility(View.VISIBLE);
-            fetchHero();
-            addLocalitiesLifestyleFragment(locality.entityDescriptions);
-            addProperties(new TaxonomyService().getTaxonomyCardForLocality(locality.localityId, locality.minAffordablePrice, locality.maxAffordablePrice, locality.maxAffordablePrice, locality.maxBudgetPrice));
-            if(locality.latitude != null && locality.longitude != null) {
-                ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(locality.latitude, locality.longitude, 16);
-                ((AmenityService) MakaanServiceFactory.getInstance().getService(
-                        AmenityService.class)).getAmenitiesByLocation(locality.latitude, locality.longitude, 3, AmenityService.EntityType.LOCALITY);
+            if(isVisible()) {
+                showContent();
+                populateLocalityData();
+                frame.setVisibility(View.VISIBLE);
+                fetchHero();
+                addLocalitiesLifestyleFragment(locality.entityDescriptions);
+                addProperties(new TaxonomyService().getTaxonomyCardForLocality(locality.localityId, locality.minAffordablePrice, locality.maxAffordablePrice, locality.maxAffordablePrice, locality.maxBudgetPrice));
+                if (locality.latitude != null && locality.longitude != null) {
+                    ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getNearByLocalities(locality.latitude, locality.longitude, 16);
+                    ((AmenityService) MakaanServiceFactory.getInstance().getService(
+                            AmenityService.class)).getAmenitiesByLocation(locality.latitude, locality.longitude, 3, AmenityService.EntityType.LOCALITY);
 
-            }
-            ((AgentService) MakaanServiceFactory.getInstance().getService(AgentService.class)).getTopAgentsForLocality(locality.cityId, locality.localityId, 15, false, new TopAgentsCallback() {
-                @Override
-                public void onTopAgentsRcvd(ArrayList<TopAgent> topAgents) {
-                    addTopAgentsFragment(topAgents);
                 }
-            });
-            ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getTopBuildersInLocality(locality.localityId, 15);
-            addLocalitiesApartmentsFragment(locality.listingAggregations);
+                ((AgentService) MakaanServiceFactory.getInstance().getService(AgentService.class)).getTopAgentsForLocality(locality.cityId, locality.localityId, 15, false, new TopAgentsCallback() {
+                    @Override
+                    public void onTopAgentsRcvd(ArrayList<TopAgent> topAgents) {
+                        addTopAgentsFragment(topAgents);
+                    }
+                });
+                ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getTopBuildersInLocality(locality.localityId, 15);
+                addLocalitiesApartmentsFragment(locality.listingAggregations);
+            }
         }
     }
 
