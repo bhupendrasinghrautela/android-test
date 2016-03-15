@@ -715,7 +715,7 @@ public class PyrPagePresenter {
                             if (bhkArr.contains(4) && filter.displayName.equalsIgnoreCase("3+")) {
                                 filter.selected = true;
                                 grp.isSelected = true;
-                            } else if (bhkArr.contains(Integer.valueOf(filter.displayName))) {
+                            } else if (!("3+").equalsIgnoreCase(filter.displayName) && bhkArr.contains(Integer.valueOf(filter.displayName))) {
                                 filter.selected = true;
                                 grp.isSelected = true;
                             }
