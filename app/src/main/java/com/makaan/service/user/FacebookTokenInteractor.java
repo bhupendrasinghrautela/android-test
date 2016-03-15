@@ -40,7 +40,6 @@ public class FacebookTokenInteractor {
     public void initFacebookSdk(Bundle savedInstanceState){
         try {
             if (mContext != null) {
-                //TODO use a valid fb id
                 AppEventsLogger.activateApp(mContext, mContext.getResources().getString(R.string.app_FB_id));
             }
         } catch (Exception e) {}
@@ -66,22 +65,30 @@ public class FacebookTokenInteractor {
                     @Override
                     public void onSuccess(final LoginResult loginResult) {
                         mOnFacebookTokenListener.onFacebookLoginManagerCallback();
-                            GraphRequestAsyncTask request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
-                                    new GraphRequest.GraphJSONObjectCallback() {
-                                        @Override
-                                        public void onCompleted(JSONObject object, GraphResponse response) {
-                                            if (object != null) {
-                                                try {
-                                                    mOnFacebookTokenListener.onFacebookTokenSuccess(loginResult.getAccessToken().getToken());
-                                                    AccessToken.setCurrentAccessToken(loginResult.getAccessToken());
-                                                } catch (Exception e) {
-                                                    mOnFacebookTokenListener.onFacebookTokenFail();
-                                                }
-                                            } else {
+
+                        GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
+                                new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(
+                                            JSONObject object,
+                                            GraphResponse response) {
+                                        if (object != null) {
+                                            try {
+                                                mOnFacebookTokenListener.onFacebookTokenSuccess(loginResult.getAccessToken().getToken());
+                                                AccessToken.setCurrentAccessToken(loginResult.getAccessToken());
+                                            } catch (Exception e) {
                                                 mOnFacebookTokenListener.onFacebookTokenFail();
                                             }
+                                            //mUserId=object.optString("email");
+                                        } else {
+                                            mOnFacebookTokenListener.onFacebookTokenFail();
                                         }
-                                    }).executeAsync();
+                                    }
+                                });
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,link,email,first_name,last_name,gender");
+                        request.setParameters(parameters);
+                        request.executeAsync();
                     }
 
                     @Override

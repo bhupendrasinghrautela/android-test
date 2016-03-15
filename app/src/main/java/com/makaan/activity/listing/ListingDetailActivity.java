@@ -106,19 +106,6 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
 
     }
 
-    private void testWishList(){
-        if(!CookiePreferences.isUserLoggedIn(this)) {
-            UserLoginService userLoginService =
-                    (UserLoginService) MakaanServiceFactory.getInstance().getService(UserLoginService.class);
-            userLoginService.loginWithMakaanAccount("harvi@proptiger.com", "123456");
-        }else{
-            WishListService wishListService =
-                    (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
-            wishListService.get();
-        }
-    }
-
-
     @Subscribe
     public void onResults(SerpGetEvent serpGetEvent) {
         System.out.println("TEST");

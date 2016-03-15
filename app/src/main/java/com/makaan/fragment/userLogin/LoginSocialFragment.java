@@ -80,10 +80,16 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        FacebookSdk.sdkInitialize(getActivity());
+        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
         mFacebookTokenInteractor = new FacebookTokenInteractor(getActivity(), this);
         mFacebookTokenInteractor.initFacebookSdk(savedInstanceState);
         parseLoginType(mLoginType);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mFacebookTokenInteractor.stopTracking();
     }
 
     public void bindView(OnLoginWithMakaanSelectedListener listener, OnUserLoginListener onUserLoginListener, int loginType){
@@ -96,6 +102,7 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        mFacebookTokenInteractor.onFacebookActivityResult(requestCode, resultCode, data);
         if (requestCode == GOOGLE_ACCOUNT_PICKER_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
@@ -117,7 +124,7 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
         properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.facebook);
         MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.signUpSocial);
         if(AccessToken.getCurrentAccessToken()==null) {
-            LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("email"));
+            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email","public_profile", "user_friends"));
         }else {
             ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
             ))).loginWithFacebookAccount(AccessToken.getCurrentAccessToken().getToken());
@@ -160,6 +167,7 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
 
     @Override
     public void onGoogleTokenSuccess(String token) {
+        mOnUserLoginListener.onUserLoginBegin();
         ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
         ))).loginWithGoogleAccount(token);
 
@@ -172,7 +180,7 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
 
     @Override
     public void onFacebookTokenSuccess(String token) {
-
+        mOnUserLoginListener.onUserLoginBegin();
         ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
         ))).loginWithFacebookAccount(token);
     }
@@ -184,7 +192,7 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
 
     @Override
     public void onFacebookTokenFail() {
-        //Toast.makeText(getActivity(), getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
     }
 
     private void parseLoginType(int loginType){

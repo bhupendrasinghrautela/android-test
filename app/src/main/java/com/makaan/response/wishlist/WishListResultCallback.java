@@ -6,7 +6,10 @@ import com.android.volley.Request;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.network.StringRequestCallback;
+import com.makaan.network.VolleyErrorParser;
 import com.makaan.response.ResponseError;
+import com.makaan.service.MakaanServiceFactory;
+import com.makaan.service.WishListService;
 import com.makaan.util.AppBus;
 import com.makaan.util.JsonParser;
 
@@ -44,7 +47,7 @@ public class WishListResultCallback extends StringRequestCallback {
         if(wishListResponse == null || wishListResponse.data == null ) {
 
             ResponseError error = new ResponseError();
-            error.msg = "No data";
+            error.msg = VolleyErrorParser.GENERIC_ERROR;
             wishListResultEvent.error = error;
 
             if(null!=wishListResponseUICallback){
@@ -65,6 +68,8 @@ public class WishListResultCallback extends StringRequestCallback {
                         }
                     }
                 }
+
+
             }else  if (Request.Method.DELETE==requestMethod){
                 MasterDataCache.getInstance().removeShortlistedProperty(itemId);
             }
@@ -72,6 +77,14 @@ public class WishListResultCallback extends StringRequestCallback {
             if(null!=wishListResponseUICallback){
                 wishListResponseUICallback.onSuccess(wishListResponse);
             }
+
+            if(Request.Method.POST==requestMethod){
+                WishListService wishListService =
+                        (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
+                wishListService.setEntityIdToBeShortlisted(-1);
+            }
+
+            wishListResultEvent.requestMethod = requestMethod;
         }
 
         AppBus.getInstance().post(wishListResultEvent);
@@ -86,6 +99,8 @@ public class WishListResultCallback extends StringRequestCallback {
         if(null!=wishListResponseUICallback){
             wishListResponseUICallback.onError(error);
         }
+
+        wishListResultEvent.requestMethod = requestMethod;
 
         AppBus.getInstance().post(wishListResultEvent);
     }

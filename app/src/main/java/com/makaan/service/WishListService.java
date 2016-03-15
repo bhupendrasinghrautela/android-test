@@ -18,6 +18,8 @@ public class WishListService implements MakaanService {
 
     private static final String TAG = WishListService.class.getSimpleName();
 
+    private long entityIdToBeShortlisted = -1;
+
     public void addProject(Long projectId, WishListResponseUICallback callback){
         try {
             JSONObject wishListPayload = new JSONObject();
@@ -73,6 +75,14 @@ public class WishListService implements MakaanService {
                 callback.onError(error);
             }
         }
+    }
+
+    public long getEntityIdToBeShortlisted() {
+        return entityIdToBeShortlisted;
+    }
+
+    public void setEntityIdToBeShortlisted(long entityIdToBeShortlisted) {
+        this.entityIdToBeShortlisted = entityIdToBeShortlisted;
     }
 
     private String buildWishListUrl(){

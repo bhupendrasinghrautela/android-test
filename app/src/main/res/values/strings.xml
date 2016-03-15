@@ -322,7 +322,7 @@
     <string name="redeem_now">get cashback</string>
 
     <string name="password_recovery">please check your mail for password recovery details</string>
-    <string name="app_FB_id">111204692324347</string>
+    <string name="app_FB_id">1048400568534787</string>
     <string name="contact_all_sellers">contact all sellers</string>
     <string name="app_appsflyer_id">W3Jyb4NpTyqAGjENS3tM7Q</string>
 
@@ -358,7 +358,7 @@
 
     <string name="call_sellers">call sellers</string>
     <string name="add_to_fav_login_prompt">please signin to be able to add this property to your wishlist </string>
-    <string name="user_already_logged_in">already logged in, please signout if you want to sugn in with different account</string>
+    <string name="user_already_logged_in">already logged in, please signout if you want to sign in with different account</string>
 
     <string name="ok">ok</string>
     <string name="cancel">cancel</string>

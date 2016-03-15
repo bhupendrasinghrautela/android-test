@@ -19,7 +19,7 @@ import com.makaan.util.JsonParser;
  * Created by sunil on 03/12/15.
  */
 public class VolleyErrorParser {
-    private static final String GENERIC_ERROR = "oops! something went wrong. let's get you back on the joyride";
+    public static final String GENERIC_ERROR = "oops! something went wrong. let's get you back on the joyride";
     private static final String NETWORK_ERROR = "oops! looks like a connection issue. let's get you back on the joyride";
     private static final String SERVER_ERROR = "oops! something went wrong. let's get you back on the joyride";
     private static final String SERVICE_UNAVAILABLE_ERROR = "oops! something went wrong. let's get you back on the joyride";

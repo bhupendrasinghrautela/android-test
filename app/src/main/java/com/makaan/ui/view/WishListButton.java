@@ -11,6 +11,7 @@ import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.makaan.R;
 import com.makaan.activity.listing.PropertyActivity;
 import com.makaan.activity.listing.SerpActivity;
@@ -19,6 +20,7 @@ import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.event.user.UserLoginEvent;
+import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.fragment.MakaanMessageDialogFragment;
 import com.makaan.network.VolleyErrorParser;
 import com.makaan.response.ResponseError;
@@ -53,7 +55,6 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
 
     private WishListDto mWishListDto;
 
-    private boolean isLoginInitiatedFromWishList;
 
     public WishListButton(Context context) {
         super(context);
@@ -75,7 +76,6 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
         try {
             AppBus.getInstance().register(this);
         }catch(Exception e){}
-        isLoginInitiatedFromWishList = false;
         mWishListDto = item;
         if(MasterDataCache.getInstance().getUserData()!=null) {
             boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(
@@ -178,7 +178,7 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
                         new MakaanMessageDialogFragment.MessageDialogCallbacks() {
                             @Override
                             public void onPositiveClicked() {
-                                isLoginInitiatedFromWishList = true;
+                                addEntityToQueue();
                                 Intent intent = new Intent(mContext, UserLoginActivity.class);
                                 mContext.startActivity(intent);
                             }
@@ -195,7 +195,7 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        isLoginInitiatedFromWishList = true;
+                        addEntityToQueue();
                         Intent intent = new Intent(mContext, UserLoginActivity.class);
                         mContext.startActivity(intent);
                     }
@@ -232,20 +232,60 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
         return;
     }
 
+
     @Subscribe
-    public void loginResults(UserLoginEvent userLoginEvent){
-        if(!isLoginInitiatedFromWishList){
+    public void onResults(WishListResultEvent wishListResultEvent) {
+
+        if(!isEntityAddedToQueue()){
             return;
         }
 
-        isLoginInitiatedFromWishList = false;
+        //We are concerned only for get wishlist event
+        if(wishListResultEvent.requestMethod!= Request.Method.GET){
+            return;
+        }
 
-        if(userLoginEvent == null || userLoginEvent.userResponse == null) {
-            Toast.makeText(mContext, getResources().getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
-        } else if(userLoginEvent.error!=null && userLoginEvent.error.msg!=null){
-            Toast.makeText(mContext, userLoginEvent.error.msg, Toast.LENGTH_SHORT).show();
-        } else if(userLoginEvent.userResponse!=null){
-            onCheckedChanged(null, !mShortlistCheckBox.isChecked());
+        if(wishListResultEvent.wishListResponse==null || wishListResultEvent.error!=null){
+            Toast.makeText(mContext, VolleyErrorParser.getMessage(wishListResultEvent.error), Toast.LENGTH_SHORT).show();
+        }
+
+        boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(
+                mWishListDto.type == WishListType.listing ? mWishListDto.listingId : mWishListDto.projectId);
+
+        if(isShortlisted){
+            setEnabled(true);
+            return;
+        }
+
+        //onCheckedChanged(null, !mShortlistCheckBox.isChecked());
+        mShortlistCheckBox.setChecked(true);
+
+    }
+
+    private void addEntityToQueue(){
+        WishListService wishListService =
+                (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
+
+        if(mWishListDto.type==WishListType.listing) {
+            wishListService.setEntityIdToBeShortlisted(mWishListDto.listingId);
+        }else{
+            wishListService.setEntityIdToBeShortlisted(mWishListDto.projectId);
         }
     }
+
+    private boolean isEntityAddedToQueue(){
+        WishListService wishListService =
+                (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
+
+        if(wishListService.getEntityIdToBeShortlisted()<0){
+            return false;
+        }
+
+        if(mWishListDto.type==WishListType.listing) {
+            return wishListService.getEntityIdToBeShortlisted() == mWishListDto.listingId;
+        }else{
+            return wishListService.getEntityIdToBeShortlisted() == mWishListDto.projectId;
+        }
+    }
+
 }
