@@ -59,9 +59,6 @@ public abstract class MakaanBaseDialogFragment extends DialogFragment {
     }
 
     protected void showProgress() {
-        if(!isVisible()) {
-            return;
-        }
         mContentFrameLayout.setVisibility(View.GONE);
         mNoResultsLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.VISIBLE);
@@ -73,9 +70,6 @@ public abstract class MakaanBaseDialogFragment extends DialogFragment {
         showNoResults(null);
     }
     protected void showNoResults(String message) {
-        if(!isVisible()) {
-            return;
-        }
         mContentFrameLayout.setVisibility(View.GONE);
         mNoResultsLayout.setVisibility(View.VISIBLE);
         mLoadingProgressBar.setVisibility(View.GONE);
@@ -90,9 +84,6 @@ public abstract class MakaanBaseDialogFragment extends DialogFragment {
     }
 
     protected void showNoResults(int stringId) {
-        if(!isVisible()) {
-            return;
-        }
         mContentFrameLayout.setVisibility(View.GONE);
         mNoResultsLayout.setVisibility(View.VISIBLE);
         mLoadingProgressBar.setVisibility(View.GONE);
@@ -107,9 +98,6 @@ public abstract class MakaanBaseDialogFragment extends DialogFragment {
     }
 
     protected void showContent() {
-        if(!isVisible()) {
-            return;
-        }
         mContentFrameLayout.setVisibility(View.VISIBLE);
         mNoResultsLayout.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.GONE);
