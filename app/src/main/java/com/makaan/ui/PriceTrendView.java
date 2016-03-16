@@ -32,9 +32,9 @@ public class PriceTrendView extends BaseLinearLayout<LocalityPriceTrendDto> {
 
 
     private enum TRENDS_MONTH{
-        SIX("6 \n months",6),
-        TWELVE("12 \n months",12),
-        THIRTY_SIX("3 \n years",36);
+        SIX("6 \n months",7),
+        TWELVE("12 \n months",13),
+        THIRTY_SIX("3 \n years",37);
 
         private  String name;
         private int value;

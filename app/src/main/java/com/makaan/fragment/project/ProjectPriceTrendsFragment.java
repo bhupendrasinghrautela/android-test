@@ -11,11 +11,9 @@ import com.makaan.R;
 import com.makaan.event.trend.ProjectPriceTrendEvent;
 import com.makaan.event.trend.callback.LocalityTrendCallback;
 import com.makaan.fragment.MakaanBaseFragment;
-import com.makaan.pojo.SerpObjects;
 import com.makaan.response.trend.LocalityPriceTrendDto;
 import com.makaan.response.trend.PriceTrendData;
 import com.makaan.response.trend.PriceTrendKey;
-import com.makaan.service.LocalityService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PriceTrendService;
 import com.makaan.ui.MakaanLineChartView;
@@ -75,7 +73,7 @@ public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
             localities.add(localityId);
         }
         final String minTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(0));
-        final String maxTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(37));
+        final String maxTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(13));
         ((PriceTrendService) MakaanServiceFactory.getInstance().getService(PriceTrendService.class)).getPriceTrendForLocalities(localities, minTime,maxTime, new LocalityTrendCallback() {
             @Override
             public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
@@ -84,7 +82,7 @@ public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
                     priceTrendViewl.setVisibility(View.VISIBLE);
                     priceTrendView.setProjectId(projectId);
                     priceTrendView.bindView(localityPriceTrendDto.data);
-                    priceTrendView.changeDataBasedOnTime(12);
+                    priceTrendView.changeDataBasedOnTime(13);
                     localityPriceTrendsData = localityPriceTrendDto.data;
                 }
             }});
@@ -108,7 +106,7 @@ public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
                 localityPriceTrendsData.put(key, projectPriceTrendEvent.projectPriceTrendDto.data.get(key));
             }
             priceTrendView.bindView(localityPriceTrendsData);
-            priceTrendView.changeDataBasedOnTime(12);
+            priceTrendView.changeDataBasedOnTime(13);
         }
     }
     private void initView() {

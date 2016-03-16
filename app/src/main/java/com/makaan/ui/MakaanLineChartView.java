@@ -109,7 +109,7 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
         mAxisXValues = new LinkedHashSet<>();
         mAxisYValues = new ArrayList<>();
         generateDataForAllMonths();
-        changeDataBasedOnTime(6);
+        changeDataBasedOnTime(7);
     }
 
     private void generateDataForChart() {
@@ -197,6 +197,7 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
             y.addAll(mAxisXLabels);
             Axis axisX = Axis.generateAxisFromCollection(x, y);
             axisX.setHasTiltedLabels(true);
+            axisX.setTextSize(10);
             axisX.setMaxLabelChars(5);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 axisX.setTextColor(getResources().getColor(R.color.listingBlack, null));
