@@ -145,7 +145,7 @@ public class ProjectConfigCallback extends JSONGetCallback {
                             sellerCard.rating = company.score;
                         }
                         if(listingDetail.companySeller.user!=null){
-                            if(listingDetail.companySeller.user.contactNumbers!=null && listingDetail.companySeller.user.contactNumbers.size()>0){
+                            if(listingDetail.companySeller.user.contactNumbers!=null && listingDetail.companySeller.user.contactNumbers.size()>0) {
                                 sellerCard.contactNo = listingDetail.companySeller.user.contactNumbers.get(0).contactNumber;
                             }
                         }
@@ -155,14 +155,16 @@ public class ProjectConfigCallback extends JSONGetCallback {
                         sellerCard.noOfProperties = sellerPropCountMap.get(company.id);
                         if(projectConfigItem.topSellerCard == null){
                             projectConfigItem.topSellerCard = sellerCard;
-                        }
-                        else{
-                            if(projectConfigItem.topSellerCard.noOfProperties<sellerCard.noOfProperties){
-                                projectConfigItem.topSellerCard = sellerCard;
-                            }
-                            else if(projectConfigItem.topSellerCard.noOfProperties == sellerCard.noOfProperties
-                                    && projectConfigItem.topSellerCard.rating<sellerCard.rating){
-                                projectConfigItem.topSellerCard = sellerCard;
+                        } else {
+                            if(projectConfigItem.topSellerCard.noOfProperties != null && sellerCard.noOfProperties != null) {
+                                if (projectConfigItem.topSellerCard.noOfProperties < sellerCard.noOfProperties) {
+                                    projectConfigItem.topSellerCard = sellerCard;
+                                } else if (projectConfigItem.topSellerCard.noOfProperties.equals(sellerCard.noOfProperties)) {
+                                    if(projectConfigItem.topSellerCard.rating != null && sellerCard.rating != null
+                                            && projectConfigItem.topSellerCard.rating < sellerCard.rating) {
+                                        projectConfigItem.topSellerCard = sellerCard;
+                                    }
+                                }
                             }
                         }
                     }

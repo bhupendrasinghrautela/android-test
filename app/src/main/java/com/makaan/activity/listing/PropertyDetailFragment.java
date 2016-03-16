@@ -427,22 +427,23 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
                 imagesGetEvent.images.add(getDummyImage());
             }
             mPropertyImageViewPager.setVisibility(View.VISIBLE);
-            if(mListingDetail.currentListingPrice.price!=0 && mListingDetail.currentListingPrice.pricePerUnitArea!=0) {
-                mPropertyImageViewPager.bindView();
-                if (mListingDetail.property != null && mListingDetail.property.project != null && mListingDetail.property.project.locality != null) {
-                    if (mListingDetail.property.project.locality.avgPricePerUnitArea != null &&
-                            mListingDetail.property.project.locality.avgPricePerUnitArea < mListingDetail.currentListingPrice.pricePerUnitArea) {
-                            mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, true,mListingDetail.listingCategory);
+            if(mListingDetail.currentListingPrice != null) {
+                if (mListingDetail.currentListingPrice.price != 0 && mListingDetail.currentListingPrice.pricePerUnitArea != 0) {
+                    mPropertyImageViewPager.bindView();
+                    if (mListingDetail.property != null && mListingDetail.property.project != null && mListingDetail.property.project.locality != null) {
+                        if (mListingDetail.property.project.locality.avgPricePerUnitArea != null &&
+                                mListingDetail.property.project.locality.avgPricePerUnitArea < mListingDetail.currentListingPrice.pricePerUnitArea) {
+                            mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, true, mListingDetail.listingCategory);
+                        } else {
+                            mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false, mListingDetail.listingCategory);
+                        }
                     } else {
-                        mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false,mListingDetail.listingCategory);
+                        mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false, mListingDetail.listingCategory);
                     }
                 } else {
-                    mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false,mListingDetail.listingCategory);
+                    mPropertyImageViewPager.bindView();
+                    mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false, mListingDetail.listingCategory);
                 }
-            }
-            else {
-                mPropertyImageViewPager.bindView();
-                mPropertyImageViewPager.setData(imagesGetEvent.images, mListingDetail.currentListingPrice.price, mListingDetail.currentListingPrice.pricePerUnitArea, false,mListingDetail.listingCategory);
             }
         }
         else if(imagesGetEvent.images!= null && imagesGetEvent.images.size()>0){

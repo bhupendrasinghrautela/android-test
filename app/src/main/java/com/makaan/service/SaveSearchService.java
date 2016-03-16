@@ -189,6 +189,9 @@ public class SaveSearchService implements MakaanService {
         String saveNewSearchUrl = ApiConstants.SAVE_NEW_SEARCH_URL;
         Type saveSearchType = new TypeToken<SaveSearch>() {
         }.getType();
+        if(saveNewSearch.searchQuery != null && saveNewSearch.searchQuery.contains("selector=")) {
+            saveNewSearch.searchQuery = saveNewSearch.searchQuery.replace("selector=", "");
+        }
 
         try {
             JSONObject jsonObject = JsonBuilder.toJson(saveNewSearch);
