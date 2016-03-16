@@ -69,7 +69,7 @@ import butterknife.OnClick;
  * Created by rohitgarg on 1/6/16.
  */
 public class SerpActivity extends MakaanBaseSearchActivity implements SerpRequestCallback,
-        FiltersDialogFragment.FilterDialogFragmentCallback {
+        FiltersDialogFragment.FilterDialogFragmentCallback,FiltersDialogFragment.FilterStringListener {
     public static final String SCREEN_NAME = "serp";
 
     // type of request to open serp, it must be one of the following values
@@ -173,6 +173,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public Selector mSerpSelector = new Selector();
     private ArrayList<FilterGroup> mFilterGroups;
     private boolean mFilterDialogOpened;
+    private Properties properties;
 
     SerpBackStack mSerpBackStack = new SerpBackStack();
 
@@ -461,6 +462,21 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 }
             }
             return;
+        }
+        if(listingGetEvent.listingData == null || listingGetEvent.listingData.totalCount == 0
+                || listingGetEvent.listingData.listings == null || listingGetEvent.listingData.listings.size() == 0) {
+            if((mSerpRequestType & MASK_LISTING_UPDATE_TYPE) == TYPE_FILTER) {
+                if(mListingGetEvent != null && mListingGetEvent.listingData != null
+                        && mListingGetEvent.listingData.listings != null
+                        && mListingGetEvent.listingData.listings.size() > 0) {
+                    if(properties!=null){
+                        Properties properties1=MakaanEventPayload.beginBatch();
+                        properties1.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorUsability);
+                        properties1.put(MakaanEventPayload.LABEL, properties.toString());
+                        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.noPropertyMatchingSearch);
+                    }
+                }
+            }
         }
 
         if(mIsMapFragment) {
@@ -1154,4 +1170,8 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         return !mIsMapFragment;
     }
 
+    @Override
+    public void setFilterString(Properties properties) {
+        this.properties=properties;
+    }
 }

@@ -268,23 +268,24 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/happy_buyers_text_size"
                 android:typeface="sans" />
-            <TextView
+            <!--<TextView
                 android:layout_below="@id/tv_buyers"
                 android:id="@+id/tv_below_buyers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:visibility="invisible"
                 android:gravity="center_horizontal"
                 android:text="@string/happy_below_buyers"
                 android:textColor="@color/white"
                 android:textSize="@dimen/below_happy_buyers_text_size"
-                android:typeface="sans" />
+                android:typeface="sans" />-->
 
             <TextView
                 android:id="@+id/tv_found_home"
+                android:layout_below="@id/tv_buyers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_buyers"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/found_one_margin_top"
                 android:gravity="center"
@@ -331,7 +332,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="9"
-                android:text="booking, possession &amp; registry"
+                android:text="let's close the deal..."
                 android:textColor="#B0000000"
                 android:textSize="@dimen/text_size_small"
                 android:typeface="serif" />

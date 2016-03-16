@@ -78,7 +78,7 @@ public class MakaanTrackerConstants {
         errorPyr("ERROR_PYR"),clickSavedSearches("CLICK_Savedsearches"),clickShortlist("CLICK_Shortlist"),clickSiteVisits("CLICK_Sitevisits"),clickHomeLoan("CLICK_Homeloan"),
         clickUnitBook("CLICK_Unitbook"),clickPossession("CLICK_Possession"),clickRegistration("CLICK_Registration"),clickShortListFavourite("CLICK_Shortlist_Favourite"),
         clickShortListRecentlyViewed("CLICK_Shortlist_Recentlyviewed"),errorLogin("ERROR_Login"),errorPassword("ERROR_Password"),errorSignUp("ERROR_Sign Up"),
-        sorryNoMatchingResultFound("Error_sorry, no matching results found");
+        sorryNoMatchingResultFound("Error_sorry, no matching results found"),errorNa("Error_N.A."),noPropertyMatchingSearch("Error_found no properties matching your search criteria");
 
         private String value;
 
@@ -111,7 +111,7 @@ public class MakaanTrackerConstants {
         city("City"),locality("Locality"),project("Project"),buyerDashBoard("BuyerDashboard"),jarvis("Jarvis"),back("Back"),close("Close"),success("Success"),
         failure("Failure"),resend("Resend"),skip("Skip"),incorrectOtp("Incorrect OTP"),builder("Builder"),enquired("Enquired"),favourite("Favourite"),recent("Recent"),
         phoneNumberRequired("phone number is required"),nameRequired("name is required"),emailRequired("email is required"),phoneNumberInvalid("phone number is invalid"),
-        errorWhileSubmitting("error while submitting"),notRegisteredUser("sorry! you are not a registered user."),searchString("Search string");
+        errorWhileSubmitting("error while submitting"),notRegisteredUser("sorry! you are not a registered user."),searchString("Search string"),leadForm("Lead form");
 
         private String value;
 

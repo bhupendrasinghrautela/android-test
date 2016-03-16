@@ -97,8 +97,8 @@ public class MultipleLeadFormFragment extends MakaanBaseFragment {
         else{
             PyrRequest mPyrRequest = new PyrRequest();
             PyrEnquiryType mPyrEnquiryType = new PyrEnquiryType();
+            mPyrEnquiryType.setId(5);
             mPyrRequest.setEnquiryType(mPyrEnquiryType);
-
             mPyrRequest.setName(mName.getText().toString().trim());
             mPyrRequest.setEmail(mEmail.getText().toString().trim());
             mPyrRequest.setPhone(mNumber.getText().toString().trim());
@@ -220,9 +220,9 @@ public class MultipleLeadFormFragment extends MakaanBaseFragment {
     }
 
     private void setData(){
-        mBhkTextView.setText(mLeadFormPresenter.getBhkAndUnitType());
-        mArea.setText(mLeadFormPresenter.getArea());
-        mLocality.setText(mLeadFormPresenter.getLocality());
+        mBhkTextView.setText(mLeadFormPresenter.getBhkAndUnitType().toLowerCase());
+        mArea.setText(mLeadFormPresenter.getArea().toLowerCase());
+        mLocality.setText(mLeadFormPresenter.getLocality().toLowerCase());
     }
 
     @Override

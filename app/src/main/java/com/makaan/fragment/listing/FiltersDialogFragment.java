@@ -210,6 +210,10 @@ public class FiltersDialogFragment extends MakaanBaseDialogFragment {
         }
     }
 
+    public interface FilterStringListener{
+        public void setFilterString(Properties properties);
+    }
+
     public interface FilterDialogFragmentCallback {
         void dialogDismissed();
     }

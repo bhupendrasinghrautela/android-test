@@ -92,7 +92,7 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mLeadFormPresenter= LeadFormPresenter.getLeadFormPresenter();
-        mTextViewSellerName.setText(mLeadFormPresenter.getName());
+        mTextViewSellerName.setText(mLeadFormPresenter.getName().toLowerCase());
         mRatingBarSeller.setRating(Float.valueOf(mLeadFormPresenter.getScore()));
         mobileFlag=false;
         defaultCountry=false;

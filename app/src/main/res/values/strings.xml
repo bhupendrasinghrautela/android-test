@@ -80,7 +80,7 @@
     <string name="set_alerts">set alerts</string>
     <string name="set_alert">set alert</string>
     <string name="or_text">"or "</string>
-    <string name="select_sellers">select sellers</string>
+    <string name="select_sellers">select from best sellers</string>
     <string name="contact_top_advisors">contact 4 advisors</string>
     <string name="contact_string">contact </string>
     <string name="advisors_string">advisors</string>
@@ -170,7 +170,7 @@
     <string name="locality_available_locality_status">available property status</string>
     <string name="locality_price_trends_label">price trends</string>
     <string name="localities_lifestyle_title">lifestyle in</string>
-    <string name="locality_top_agents_label">top agents</string>
+    <string name="locality_top_agents_label">top sellers</string>
     <string name="locality_top_builders_label">top builders in %s</string>
     <string name="locality_properties_label">properties in</string>
     <string name="locality_switch_buy">buy</string>
@@ -197,7 +197,7 @@
     <string name="more_about_builder">about builder</string>
     <string name="less_about_builder">less about builder</string>
     <string name="makaan">makaan</string>
-    <string name="search_by_location">search by location</string>
+    <string name="search_by_location">find joy…</string>
     <string name="search_default_hint">pick a location, builder or project</string>
     <string name="search_default_rent_hint">pick location or project</string>
     <string name="search_locality_hint">add more localities...</string>
@@ -206,7 +206,7 @@
     <string name="search">search</string>
     <string name="shortlist">shortlist</string>
     <string name="site_visit">property visit</string>
-    <string name="effective_home_search">effective home search</string>
+    <string name="effective_home_search">let\'s go step by step</string>
     <string name="home_loan">home loan</string>
     <string name="booking">booking</string>
     <string name="possession">possession</string>
@@ -223,16 +223,16 @@
     <string name="moving_in">moving in</string>
     <string name="prepare_to_enter">prepare to enter your home</string>
     <string name="booking_subtitle">close the deal with ease</string>
-    <string name="home_loan_subtitle">access your personal finances </string>
-    <string name="search_sub_title">checkout homes chosen for you</string>
+    <string name="home_loan_subtitle">assess your personal finances </string>
+    <string name="search_sub_title">find your saved searches here</string>
     <string name="shortlist_sub_title">view homes that have interested you</string>
-    <string name="site_visit_sub_title">checkin for the joy ride</string>
+    <string name="site_visit_sub_title">track upcoming visits here</string>
     <string name="find_joy">find joy</string>
-    <string name="happy_buyers">a reward</string>
+    <string name="happy_buyers">more joy\nyour way</string>
     <string name="happy_below_buyers">for finding joy</string>
 
-    <string name="found_your_dream_home">celebrate by\n claiming cashback</string>
-    <string name="get_reward">get rs 15,000</string>
+    <string name="found_your_dream_home">celebrate finding your home\n by claiming \u20B9 15000 cash back</string>
+    <string name="get_reward">claim now</string>
 
     <string name="project_specification_view_all_props">view all properties</string>
     <string name="project_description_title">description</string>
@@ -315,10 +315,10 @@
 
     <!-- get rewards strings -->
     <string name="get_upto">get upto</string>
-    <string name="get_15000">\u20B9 15,000 off</string>
-    <string name="on_brokerage">on your brokerage</string>
+    <string name="get_15000">\u20B9 15,000 cashback</string>
+    <string name="on_brokerage">from makaan.com</string>
     <string name="how_it_works_heading">how it works</string>
-    <string name="how_it_works">1. contact makaan seller\n2. provide feedback\n3. share booking details</string>
+    <string name="how_it_works">1. contact seller on makaan.com\n2. provide feedback\n3. share booking details</string>
     <string name="redeem_now">get cashback</string>
 
     <string name="password_recovery">please check your mail for password recovery details</string>
@@ -329,7 +329,7 @@
 
     <!--chart strings-->
     <string name="no_data">data not available</string>
-    <string name="mplus_badge_popup_text">qualified sellers who’ll understand what you want and will help you get it. they have access to a wide variety of properties to match every kind of need. from loans to paperwork to registration they’ll be there to guide you till you get the keys to your home. in other words, till you find joy. these sellers have been personally selected by us. so that you get the best, always.</string>
+    <string name="mplus_badge_popup_text">qualified sellers who’ll understand what you want and will help you get it.\nthey have access to a wide variety of properties to match every kind of need. from loans to paperwork to registration they’ll be there to guide you till you get the keys to your home. in other words, till you find joy.\nthese sellers have been personally selected by us. so that you get the best, always.</string>
     <string name="stay_informed">stay informed</string>
     <string name="save_your_requirement_as">save your requirements as</string>
 

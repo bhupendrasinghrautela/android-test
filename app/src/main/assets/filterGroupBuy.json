@@ -73,7 +73,7 @@
         "type": "",
         "termFilterValues": [
           {
-            "displayName": "apartment/flat",
+            "displayName": "apartment or flat",
             "displayOrder": "1",
             "fieldName": "unitTypeId",
             "value": "1",
