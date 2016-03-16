@@ -179,6 +179,28 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                             overViewItem.value = MasterDataCache.getInstance().getConstructionStatus(mDetail.constructionStatusId).displayName;
                         }
                         break;
+                    case POSSESSION:
+                        if(!ListingUtil.isReadyToMove(mDetail.constructionStatusId)&& mDetail.possessionDate!=null) {
+                            overViewItem.name = "possession";
+                            overViewItem.resourceId = R.drawable.possession;
+                            overViewItem.value = AppUtils.getMMMYYYYDateStringFromEpoch(mDetail.possessionDate);
+                        }
+                        else if(mDetail.minConstructionCompletionDate!=null){
+                            Long age = mDetail.minConstructionCompletionDate;
+                            int ageYrs =age > 0 ? getElapsedYearsFromNow(age) : 0;
+                            overViewItem.name ="age";
+                            overViewItem.resourceId = R.drawable.possession;
+                            if(ageYrs <= 1) {
+                                overViewItem.value =String.format("%d - %d yr",ageYrs, ageYrs + 1);
+                            } else if(ageYrs <= 2) {
+                                overViewItem.value = String.format("%d - %d yrs",ageYrs, ageYrs + 1);
+                            } else if(ageYrs <= 5) {
+                                overViewItem.value = String.format("%d - %d yrs", 2, 5);
+                            } else {
+                                overViewItem.value = String.format(">%d yrs", 5);
+                            }
+                        }
+                        break;
                     case BOOK_AMOUNT:
                         if(mDetail.bookingAmount!=null){
                             overViewItem.name = "booking amount";
