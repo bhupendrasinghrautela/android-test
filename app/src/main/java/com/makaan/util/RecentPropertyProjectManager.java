@@ -139,6 +139,7 @@ public class RecentPropertyProjectManager {
                     this.price = listingDetail.currentListingPrice.price;
                 }
 
+                // todo check for phone no
                 if(listingDetail.mainImageURL != null && !TextUtils.isEmpty(listingDetail.mainImageURL)) {
                     this.imageUrl = listingDetail.mainImageURL;
                 }
