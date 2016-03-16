@@ -55,6 +55,10 @@ public class NotificationsFragment extends MakaanBaseFragment implements LoaderM
 
 
         if(list.size()==0){
+
+            if (mLayoutManager != null) {
+                mRecyclerView.setLayoutManager(mLayoutManager);
+            }
             showNoResults(R.string.no_notifications);
         } else {
 

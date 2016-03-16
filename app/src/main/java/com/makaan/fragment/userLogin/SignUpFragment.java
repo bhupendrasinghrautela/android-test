@@ -18,9 +18,12 @@ import com.google.gson.Gson;
 import com.makaan.R;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.event.user.UserLoginEvent;
 import com.makaan.event.user.UserRegistrationEvent;
+import com.makaan.response.login.OnUserLoginListener;
 import com.makaan.response.login.OnUserRegistrationListener;
 import com.makaan.response.login.UserRegistrationDto;
+import com.makaan.service.user.UserLoginService;
 import com.makaan.service.user.UserRegistrationService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.AppBus;
@@ -56,6 +59,7 @@ public class SignUpFragment extends Fragment {
 
     private OnUserRegistrationListener mOnUserRegistrationListener;
     private UserRegistrationDto userRegistrationDto;
+    private OnUserLoginListener mOnUserLoginListener;
 
     @Nullable
     @Override
@@ -66,8 +70,9 @@ public class SignUpFragment extends Fragment {
         return view;
     }
 
-    public void bindView(OnUserRegistrationListener listener){
+    public void bindView(OnUserRegistrationListener listener, OnUserLoginListener loginListener){
         mOnUserRegistrationListener = listener;
+        mOnUserLoginListener = loginListener;
     }
 
 
@@ -131,14 +136,39 @@ public class SignUpFragment extends Fragment {
 
     @Subscribe
     public void registrationResults(UserRegistrationEvent userRegistrationEvent){
+        if(!isVisible()) {
+            return;
+        }
         if(userRegistrationEvent.error!=null ){
             mOnUserRegistrationListener.onUserRegistrationError(userRegistrationEvent.error);
         }
         else {
             String str = new Gson().toJson(userRegistrationEvent.userResponse);
             mOnUserRegistrationListener.onUserRegistrationSuccess(userRegistrationEvent.userResponse , str);
+
+            ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
+            ))).loginWithMakaanAccount(userRegistrationDto.getEmail(),userRegistrationDto.getPassword());
         }
 
+    }
+
+    @Subscribe
+    public void loginResults(UserLoginEvent userLoginEvent){
+        if(!isVisible()) {
+            return;
+        }
+        Properties properties= MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.userLogin);
+        if(userLoginEvent.error!=null){
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.loginWithEmailFail);
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.login);
+            mOnUserLoginListener.onUserLoginError(userLoginEvent.error);
+        }else {
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.loginWithEmailSuccess);
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.login);
+            String str = new Gson().toJson(userLoginEvent.userResponse);
+            mOnUserLoginListener.onUserLoginSuccess(userLoginEvent.userResponse, str);
+        }
     }
 
 }

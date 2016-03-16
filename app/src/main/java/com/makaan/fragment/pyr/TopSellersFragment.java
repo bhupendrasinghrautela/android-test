@@ -153,6 +153,9 @@ public class TopSellersFragment extends Fragment {
 
     @Subscribe
     public void pyrResponse(PyrPostResponse pyrPostResponse){
+        if(!isVisible()) {
+            return;
+        }
         if(pyrPostResponse.getStatusCode()!=null && pyrPostResponse.getStatusCode().equals("2XX")) {
             if(pyrPostResponse.getData().isOtpVerified()){
                 if (mPyrPagePresenter.isMakkanAssist()) {

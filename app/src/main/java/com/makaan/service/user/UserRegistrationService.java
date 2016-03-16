@@ -1,5 +1,6 @@
 package com.makaan.service.user;
 
+import com.facebook.share.model.AppInviteContent;
 import com.makaan.constants.ApiConstants;
 import com.makaan.event.user.UserRegistrationCallback;
 import com.makaan.network.MakaanNetworkClient;
@@ -32,20 +33,13 @@ public class UserRegistrationService implements MakaanService{
     }
 
     private void makeRegistrationRequest(UserRegistrationDto userRegistrationDto) {
-      String requestUrl = buildRegistrationRequest();
+
         try {
             JSONObject userRegistrationPayload = JsonBuilder.toJson(userRegistrationDto);
-            MakaanNetworkClient.getInstance().loginRegisterPost(requestUrl, userRegistrationPayload,
+            MakaanNetworkClient.getInstance().loginRegisterPost(ApiConstants.REGISTER, userRegistrationPayload,
                     new UserRegistrationCallback(), TAG);
         } catch (JSONException e) {
         }
     }
 
-    public static String buildRegistrationRequest() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(ApiConstants.BASE_URL);
-        builder.append("/userservice/app/v1/register");
-
-        return builder.toString();
-    }
 }

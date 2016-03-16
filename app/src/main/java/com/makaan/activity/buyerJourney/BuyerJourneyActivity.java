@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
@@ -350,6 +349,11 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity implements Noti
 
     @Subscribe
     public void onLogoutResult(UserLogoutEvent userLogoutEvent){
+        if(isActivityDead()){
+            return;
+        }
+
+
         if(null!=userLogoutEvent && userLogoutEvent.isLogoutSuccessfull()){
             CookiePreferences.setUserLoggedOut(this);
             CookiePreferences.setUserInfo(this, null);
@@ -370,6 +374,10 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity implements Noti
 
     @Subscribe
     public void onResults(ClientLeadsByGetEvent clientLeadsByGetEvent){
+        if(isActivityDead()){
+            return;
+        }
+
         if(null == clientLeadsByGetEvent || null != clientLeadsByGetEvent.error){
             return;
         }
@@ -385,11 +393,20 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity implements Noti
 
     @Subscribe
     public void onIncomingMessage(IncomingMessageEvent event){
+        if(isActivityDead()){
+            return;
+        }
+
+
         animateJarvisHead();
     }
 
     @Subscribe
     public void onExposeMessage(OnExposeEvent event) {
+        if(isActivityDead()){
+            return;
+        }
+
         if(null==event.message){
             return;
         }

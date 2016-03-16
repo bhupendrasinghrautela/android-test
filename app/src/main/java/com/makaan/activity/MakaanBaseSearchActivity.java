@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -1050,6 +1051,11 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     }*/
 
     public void onResults(SearchResultEvent searchResultEvent) {
+        if(isActivityDead()){
+            return;
+        }
+
+
         if(null==searchResultEvent || null!=searchResultEvent.error) {
             if(searchResultEvent.error != null && !TextUtils.isEmpty(searchResultEvent.error.msg)) {
                 addErrorSearchItem(searchResultEvent.error.msg);
@@ -1365,6 +1371,11 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         mLoadingProgressBar.setVisibility(View.GONE);
 
         mSearchResultFrameLayout.setVisibility(View.VISIBLE);
+        if(mSearchLayoutFrameLayout != null && mSearchLayoutFrameLayout.getVisibility() != View.VISIBLE) {
+            setShowSearchBar(true, false);
+            mSearchRelativeView.setVisibility(View.VISIBLE);
+        }
+
         if (mSelectedSearchAdapter.getItemCount() > 0) {
             mSearchResultsFlowLayout.setVisibility(View.VISIBLE);
         } else {

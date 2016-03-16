@@ -105,17 +105,26 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         new PriceTrendService().getPriceTrendForLocalities(locality, minTime,maxTime, new LocalityTrendCallback() {
             @Override
             public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
-                if (localityPriceTrendDto.data != null && localityPriceTrendDto.data.size() != 0) {
-                    priceTrendView.setVisibility(View.VISIBLE);
-                    priceTrendView.bindView(localityPriceTrendDto);
-                } else
-                    priceTrendView.setVisibility(View.GONE);
+                if(!isVisible()) {
+                    return;
+                }
+                if(priceTrendView != null) {
+                    if (localityPriceTrendDto.data != null && localityPriceTrendDto.data.size() != 0) {
+                        priceTrendView.setVisibility(View.VISIBLE);
+                        priceTrendView.bindView(localityPriceTrendDto);
+                    } else {
+                        priceTrendView.setVisibility(View.GONE);
+                    }
+                }
             }
         });
     }
 
     @Subscribe
     public void onResults(TrendingSearchLocalityEvent searchResultEvent){
+        if(!isVisible()) {
+            return;
+        }
         if(null== searchResultEvent || null!=searchResultEvent.error){
             //TODO handle error
             return;

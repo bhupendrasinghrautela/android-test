@@ -161,6 +161,9 @@ public class LoginFragment extends Fragment implements TextWatcher {
 
     @Subscribe
     public void loginResults(UserLoginEvent userLoginEvent){
+        if(!isVisible()) {
+            return;
+        }
         Properties properties= MakaanEventPayload.beginBatch();
         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.userLogin);
         if(userLoginEvent.error!=null){

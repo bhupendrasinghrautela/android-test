@@ -372,6 +372,9 @@ public class CityOverViewFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onResults(CityByIdEvent cityByIdEvent){
+        if(!isVisible()) {
+            return;
+        }
         if (null == cityByIdEvent || null != cityByIdEvent.error) {
             Toast.makeText(getActivity(), "city details could not be loaded at this time. please try later.", Toast.LENGTH_LONG).show();
             showNoResults();
@@ -387,6 +390,9 @@ public class CityOverViewFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onTopLocalityResults(CityTopLocalityEvent cityTopLocalityEvent){
+        if(!isVisible()) {
+            return;
+        }
         mCityTopLocalities = cityTopLocalityEvent.topLocalitiesInCity;
         if(mCityTopLocalities != null && mCityTopLocalities.size()>0) {
             mTopLocalityLayout.setVisibility(View.VISIBLE);
@@ -398,6 +404,9 @@ public class CityOverViewFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onPriceTrendResults(CityTrendEvent cityTrendEvent){
+        if(!isVisible()) {
+            return;
+        }
         mPropertyRangeLayout.setVisibility(View.VISIBLE);
         mBarChartView.bindView(cityTrendEvent.cityTrendData);
         mBarChartView.setListener(new OnBarTouchListener() {
@@ -455,6 +464,9 @@ public class CityOverViewFragment extends MakaanBaseFragment{
 
     @Subscribe
     public void onCityPrice(CityPriceTrendEvent cityPriceTrendEvent){
+        if(!isVisible()) {
+            return;
+        }
         if(cityPriceTrendEvent!=null && cityPriceTrendEvent.cityPriceTrendDto!=null && mLocalityPriceTrendDto.data!=null){
             Set<PriceTrendKey> priceTrendKeySet = cityPriceTrendEvent.cityPriceTrendDto.data.keySet();
             for (PriceTrendKey key : priceTrendKeySet) {

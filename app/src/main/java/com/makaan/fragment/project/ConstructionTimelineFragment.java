@@ -62,6 +62,9 @@ public class ConstructionTimelineFragment extends MakaanBaseFragment implements 
 
     @Subscribe
     public void onResult(ImagesGetEvent imagesGetEvent) {
+        if(!isVisible()) {
+            return;
+        }
         if (null == imagesGetEvent || null != imagesGetEvent.error) {
             container.setVisibility(View.GONE);
             return;

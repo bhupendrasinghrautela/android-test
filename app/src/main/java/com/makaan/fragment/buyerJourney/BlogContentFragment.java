@@ -201,6 +201,9 @@ public class BlogContentFragment extends MakaanBaseFragment {
 
     @Subscribe
     public synchronized void onResults(BlogByTagEvent blogByTagGetEvent) {
+        if(!isVisible()) {
+            return;
+        }
         if(null== blogByTagGetEvent || null!=blogByTagGetEvent.error){
             //TODO handle error
             showNoResults();

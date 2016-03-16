@@ -152,7 +152,7 @@ public class GcmRegister{
     private static void sendRegistrationIdToBackend(String regId) {
         try{
             JSONObject jObject = JsonBuilder.toJson(getGcmRegistrationDto(regId));
-            String requestUrl = ApiConstants.BASE_URL+"/madrox/data/v1/entity/gcm-user";
+            String requestUrl = ApiConstants.GCM;
             MakaanNetworkClient.getInstance().post(requestUrl, jObject, null, "Android");
         }catch(IllegalArgumentException e){} catch (JSONException e) {
             // TODO Auto-generated catch block

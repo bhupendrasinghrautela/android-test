@@ -236,6 +236,9 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(SaveSearchGetEvent saveSearchGetEvent){
+        if(!isVisible()) {
+            return;
+        }
         if(null == saveSearchGetEvent || null != saveSearchGetEvent.error){
             if(saveSearchGetEvent != null && !TextUtils.isEmpty(saveSearchGetEvent.error.msg)) {
                 showNoResults(saveSearchGetEvent.error.msg);
@@ -252,6 +255,9 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(NewMatchesGetEvent newMatchesGetEvent){
+        if(!isVisible()) {
+            return;
+        }
         if(null == newMatchesGetEvent || null != newMatchesGetEvent.error){
             /*if(newMatchesGetEvent != null && !TextUtils.isEmpty(newMatchesGetEvent.error.msg)) {
                 showNoResults(newMatchesGetEvent.error.msg);
@@ -272,6 +278,9 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void wishListResponse(WishListResultEvent wishListResultEvent){
+        if(!isVisible()) {
+            return;
+        }
         if(wishListResultEvent == null || wishListResultEvent.error != null) {
             if(wishListResultEvent != null && !TextUtils.isEmpty(wishListResultEvent.error.msg)) {
                 showNoResults(wishListResultEvent.error.msg);
@@ -287,6 +296,9 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(ClientLeadsByGetEvent clientLeadsByGetEvent){
+        if(!isVisible()) {
+            return;
+        }
         if(null == clientLeadsByGetEvent || null != clientLeadsByGetEvent.error){
             if(clientLeadsByGetEvent != null && !TextUtils.isEmpty(clientLeadsByGetEvent.error.msg)) {
                 showNoResults(clientLeadsByGetEvent.error.msg);
@@ -342,6 +354,9 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(ClientEventsByGetEvent clientEventsByGetEvent){
+        if(!isVisible()) {
+            return;
+        }
         if(null == clientEventsByGetEvent || null != clientEventsByGetEvent.error){
             if(clientEventsByGetEvent != null && !TextUtils.isEmpty(clientEventsByGetEvent.error.msg)) {
                 showNoResults(clientEventsByGetEvent.error.msg);

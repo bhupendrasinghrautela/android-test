@@ -184,6 +184,10 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
 
     @Subscribe
     public void pyrResponse(PyrPostResponse pyrPostResponse){
+        if(isActivityDead()){
+            return;
+        }
+
         if(null!=pyrPostResponse.getError()){
             /*Toast.makeText(this, VolleyErrorParser.getMessage(pyrPostResponse.getError()),Toast.LENGTH_SHORT).show();*/
             if(!isFinishing()) {
@@ -224,6 +228,10 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
 
     @Subscribe
     public void instantResponse(InstantCallbackResponse instantCallbackResponse) {
+        if(isActivityDead()){
+            return;
+        }
+
         if(null!=instantCallbackResponse.getError()){
             /*Toast.makeText(this, VolleyErrorParser.getMessage(instantCallbackResponse.getError()),Toast.LENGTH_SHORT).show();*/
             if(!isFinishing()) {

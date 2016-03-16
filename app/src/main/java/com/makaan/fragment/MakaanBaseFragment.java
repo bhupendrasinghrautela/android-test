@@ -110,19 +110,17 @@ public abstract class MakaanBaseFragment extends Fragment {
         showNoResults(null);
     }
     protected void showNoResults(String message) {
-        if(isVisible()) {
-            mContentFrameLayout.setVisibility(View.GONE);
-            mNoResultsLayout.setVisibility(View.VISIBLE);
-            mLoadingProgressBar.setVisibility(View.GONE);
+        mContentFrameLayout.setVisibility(View.GONE);
+        mNoResultsLayout.setVisibility(View.VISIBLE);
+        mLoadingProgressBar.setVisibility(View.GONE);
 
-            if (message == null) {
-                mNoResultsTextView.setText(R.string.generic_error);
-            } else {
-                mNoResultsTextView.setText(message);
-            }
-//        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(mNoResultsImageView);
-            Glide.with(this).load(R.raw.no_result).crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mNoResultsImageView);
+        if (message == null) {
+            mNoResultsTextView.setText(R.string.generic_error);
+        } else {
+            mNoResultsTextView.setText(message);
         }
+//        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(mNoResultsImageView);
+        Glide.with(this).load(R.raw.no_result).crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mNoResultsImageView);
     }
 
     protected void showNoResults(int stringId) {

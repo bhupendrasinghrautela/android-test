@@ -15,13 +15,13 @@ public class UserLogoutService implements MakaanService {
 
     public void makeLogoutRequest() {
         try{
-            MakaanNetworkClient.getInstance().post(buildLogoutUrl(), null, new UserLogoutCallback(), TAG);
+            MakaanNetworkClient.getInstance().post(ApiConstants.LOGOUT, null, new UserLogoutCallback(), TAG);
         }catch (Exception e){
             //TODO Display Error
         }
     }
 
-    private static String buildLogoutUrl() {
-        return ApiConstants.BASE_URL+"/app/v1/logout";
-    }
+    /*private static String buildLogoutUrl() {
+        return ApiConstants.LOGOUT;
+    }*/
 }

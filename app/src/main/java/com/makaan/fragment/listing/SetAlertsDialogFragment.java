@@ -548,6 +548,9 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
 
     @Subscribe
     public void loginResults(UserLoginEvent userLoginEvent) {
+        if(!isVisible()) {
+            return;
+        }
         if (null == userLoginEvent || null != userLoginEvent.error) {
             showNoResults(R.string.generic_error);
 
@@ -566,6 +569,9 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
 
     @Subscribe
     public void onResult(SaveSearchGetEvent event) {
+        if(!isVisible()) {
+            return;
+        }
         if (event == null || event.error != null) {
             if (isSubmitInitiated) {
                 MakaanMessageDialogFragment.showMessage(getFragmentManager(),

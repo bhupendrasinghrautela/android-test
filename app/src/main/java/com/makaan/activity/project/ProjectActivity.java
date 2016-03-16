@@ -3,8 +3,6 @@ package com.makaan.activity.project;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
@@ -70,6 +68,9 @@ public class ProjectActivity extends MakaanBaseSearchActivity implements TotalIm
 
     @Subscribe
     public void onResult(OnSeeOnMapClicked seeOnMapClicked){
+        if(isActivityDead()){
+            return;
+        }
         mNeighborhoodMapFragment = new NeighborhoodMapFragment();
         mNeighborhoodMapFragment.setData(mEntityInfo,seeOnMapClicked.amenityClusters);
         initFragment(R.id.container, mNeighborhoodMapFragment, true);
@@ -102,6 +103,10 @@ public class ProjectActivity extends MakaanBaseSearchActivity implements TotalIm
 
     @Subscribe
     public void onResult(ProjectByIdEvent projectByIdEvent) {
+        if(isActivityDead()){
+            return;
+        }
+
         if (null == projectByIdEvent || null != projectByIdEvent.error) {
             //getActivity().finish();
         } else {
@@ -120,11 +125,18 @@ public class ProjectActivity extends MakaanBaseSearchActivity implements TotalIm
 
     @Subscribe
     public void onIncomingMessage(IncomingMessageEvent event){
+        if(isActivityDead()){
+            return;
+        }
+
         animateJarvisHead();
     }
 
     @Subscribe
     public void onExposeMessage(OnExposeEvent event) {
+        if(isActivityDead()){
+            return;
+        }
         if(null==event.message){
             return;
         }

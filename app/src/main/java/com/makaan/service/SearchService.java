@@ -21,7 +21,7 @@ public class SearchService implements MakaanService {
     private static final String TAG = SearchService.class.getSimpleName();
 
     /*---Typeahead api constants*/
-    public static final String TYPEAHEAD_BASE_URL = ApiConstants.BASE_URL.concat("/columbus/app/v5/typeahead?");
+    public static final String TYPEAHEAD_BASE_URL = ApiConstants.TYPEAHEAD;
     public static final String TYPEAHEAD_QUERY = "query=";
     public static final String TYPEAHEAD_TYPE = "typeAheadType=";
     public static final String TYPEAHEAD_ROWS = "&rows=5";

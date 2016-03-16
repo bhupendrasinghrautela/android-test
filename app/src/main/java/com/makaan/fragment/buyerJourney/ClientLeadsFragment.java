@@ -114,6 +114,9 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(ClientLeadsByGetEvent clientLeadsByGetEvent) {
+        if(!isVisible()) {
+            return;
+        }
         if(clientLeadsByGetEvent == null || clientLeadsByGetEvent.error != null) {
             if(clientLeadsByGetEvent != null && !TextUtils.isEmpty(clientLeadsByGetEvent.error.msg)) {
                 showNoResults(clientLeadsByGetEvent.error.msg);
@@ -139,6 +142,9 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
 
     @Subscribe
     public void onResults(ArrayList<Company> companies) {
+        if(!isVisible()) {
+            return;
+        }
         if(companies == null || companies.size() == 0) {
             showNoResults(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT));
             return;
