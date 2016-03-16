@@ -92,7 +92,7 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
             mEnquiryHashMap = new HashMap<>();
         }
         if(clientEventsByGetEvent.results!=null && clientEventsByGetEvent.results.size()>0) {
-            mAdapter = new SiteVisitUpcommingAdapter(getActivity());
+            mAdapter = new SiteVisitUpcommingAdapter(getActivity(),getActivity());
             mSellerIds = new ArrayList<>();
             for (ClientEvent clientEvent : clientEventsByGetEvent.results) {
                 Enquiry enquiry = mAdapter.new Enquiry();

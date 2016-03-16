@@ -3,7 +3,6 @@ package com.makaan.activity.shortlist;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -18,7 +17,6 @@ import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.wishlist.WishList;
 import com.makaan.util.ImageUtils;
-import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
 
@@ -108,10 +106,20 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
                 }
                 Intent intent = new Intent(mContext, LeadFormActivity.class);
                 try {
-                    intent.putExtra("name", wishList.get(position).listing.companySeller.company.name);
-                    intent.putExtra("score", wishList.get(position).listing.companySeller.company.score.toString());
-                    intent.putExtra("phone", "9090909090");//todo: not available in pojo
-                    intent.putExtra("id", wishList.get(position).listing.companySeller.company.id.toString());
+                    WishList wishListValue = wishList.get(position);
+                    if(wishListValue.listing!=null && wishListValue.listing.companySeller!=null) {
+                        if(wishListValue.listing.companySeller.company!=null) {
+                            intent.putExtra("name", wishList.get(position).listing.companySeller.company.name);
+                            if (wishListValue.listing.companySeller.company.score != null) {
+                                intent.putExtra("score", wishList.get(position).listing.companySeller.company.score.toString());
+                            }
+                            intent.putExtra("id", wishList.get(position).listing.companySeller.company.id.toString());
+                        }
+                        if(wishListValue.listing.companySeller.user!=null && wishListValue.listing.companySeller.user.contactNumbers!=null
+                                && wishListValue.listing.companySeller.user.contactNumbers.size()>0){
+                            intent.putExtra("phone",wishListValue.listing.companySeller.user.contactNumbers.get(0).contactNumber);
+                        }
+                    }
                     if(wishList.get(position).listingId != null) {
                         intent.putExtra("listingId", wishList.get(position).listingId);
                     } else if(wishList.get(position).projectId != null) {
