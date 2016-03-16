@@ -562,7 +562,7 @@ public class DefaultListingView extends AbstractListingView {
                     } else if(mListing.floor == 3) {
                         mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>rd</small></sup> of %d", mListing.floor, mListing.totalFloors).toLowerCase()));
                     } else if(mListing.floor == 0) {
-                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%s<sup><small>th</small></sup> of %d", "gr", mListing.totalFloors).toLowerCase()));
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%s of %d", "gr", mListing.totalFloors).toLowerCase()));
                     } else {
                         mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>th</small></sup> of %d", mListing.floor, mListing.totalFloors).toLowerCase()));
                     }
