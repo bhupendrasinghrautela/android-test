@@ -427,7 +427,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
                 imagesGetEvent.images.add(getDummyImage());
             }
             mPropertyImageViewPager.setVisibility(View.VISIBLE);
-            if(mListingDetail.currentListingPrice != null) {
+            if(mListingDetail != null && mListingDetail.currentListingPrice != null) {
                 if (mListingDetail.currentListingPrice.price != 0 && mListingDetail.currentListingPrice.pricePerUnitArea != 0) {
                     mPropertyImageViewPager.bindView();
                     if (mListingDetail.property != null && mListingDetail.property.project != null && mListingDetail.property.project.locality != null) {

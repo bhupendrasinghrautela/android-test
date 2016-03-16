@@ -216,7 +216,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                             } else if(mDetail.floor == 3) {
                                 overViewItem.value = String.format("%d<sup>rd</sup> of %d", mDetail.floor, mDetail.totalFloors);
                             }else if(mDetail.floor == 0) {
-                                overViewItem.value = String.format("%s<sup>rd</sup> of %d", "gr", mDetail.totalFloors);
+                                overViewItem.value = String.format("%s of %d", "gr", mDetail.totalFloors);
                             }  else {
                                 overViewItem.value = String.format("%d<sup>th</sup> of %d", mDetail.floor, mDetail.totalFloors);
                             }
@@ -229,7 +229,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                             } else if(mDetail.floor == 3) {
                                 overViewItem.value = String.format("%d<sup>rd</sup>", mDetail.floor);
                             }else if(mDetail.floor == 0) {
-                                overViewItem.value = String.format("%s<sup>rd</sup> of %d", "gr", mDetail.totalFloors);
+                                overViewItem.value = String.format("%s of %d", "gr", mDetail.totalFloors);
                             } else {
                                 overViewItem.value = String.format("%d<sup>th</sup>", mDetail.floor);
                             }
