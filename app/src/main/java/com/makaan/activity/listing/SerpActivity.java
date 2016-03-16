@@ -353,6 +353,13 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 }
             }
             request.applySelector(mSerpSelector, mFilterGroups);
+            if(type == TYPE_SUGGESTION || type == TYPE_NOTIFICATION) {
+                if(request.getBuilderId() >= 0) {
+                    type = TYPE_BUILDER;
+                } else if(request.getSellerId() >= 0) {
+                    type = TYPE_SELLER;
+                }
+            }
 
             String title = request.getTitle();
             if(TextUtils.isEmpty(title)) {

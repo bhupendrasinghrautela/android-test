@@ -181,10 +181,42 @@ public class SerpRequest implements Parcelable, Cloneable {
         }
     }
 
+    public long getBuilderId() {
+        if(builderIds != null && builderIds.size() > 0) {
+            return builderIds.get(0);
+        } else if(termMap != null && termMap.size() > 0) {
+            ArrayList<String> builders = termMap.get("builderId");
+            if(builders != null && builders.size() > 0) {
+                try {
+                    return Long.valueOf(builders.get(0));
+                } catch (NumberFormatException ex) {
+                    return -1;
+                }
+            }
+        }
+        return -1;
+    }
+
     public void setSellerId(long sellerId) {
         if(!this.sellerIds.contains(sellerId)) {
             this.sellerIds.add(sellerId);
         }
+    }
+
+    public long getSellerId() {
+        if(sellerIds != null && sellerIds.size() > 0) {
+            return sellerIds.get(0);
+        } else if(termMap != null && termMap.size() > 0) {
+            ArrayList<String> sellers = termMap.get(KeyUtil.SELLER_ID);
+            if(sellers != null && sellers.size() > 0) {
+                try {
+                    return Long.valueOf(sellers.get(0));
+                } catch (NumberFormatException ex) {
+                    return -1;
+                }
+            }
+        }
+        return -1;
     }
 
     public void setBedrooms(int bedroom) {
@@ -1198,6 +1230,24 @@ public class SerpRequest implements Parcelable, Cloneable {
             }
         }
         context.startActivity(intent);
+
+    }
+
+    public Intent getSerpLaunchIntent(Context context, String selector) {
+        SelectorParser.parse(selector, this);
+
+        Intent intent = new Intent(context, SerpActivity.class);
+        intent.putExtra(SerpActivity.REQUEST_TYPE, type);
+        intent.putExtra(SerpActivity.REQUEST_DATA, this);
+
+        if(this.serpContext != UNEXPECTED_VALUE) {
+            if((this.serpContext & CONTEXT_RENT) > 0) {
+                intent.putExtra(SerpActivity.REQUEST_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_RENT);
+            } else {
+                intent.putExtra(SerpActivity.REQUEST_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_BUY);
+            }
+        }
+        return intent;
 
     }
 

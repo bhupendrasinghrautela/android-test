@@ -280,10 +280,13 @@ public class NotificationHelper {
         if (payload == null) {
             return null;
         }
+        if(payload.getSerpFilterUrl() == null) {
+            return null;
+        }
         String serpFilterUrl = payload.getSerpFilterUrl();
         SerpRequest request = new SerpRequest(SerpActivity.TYPE_NOTIFICATION);
-        request.launchSerp(context, serpFilterUrl);
-        return null;
+
+        return request.getSerpLaunchIntent(context, serpFilterUrl);
     }
 
     private static Intent getBuyerJourneyIntent(Context context, NotificationPayload payload) {

@@ -595,9 +595,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
             if (isSubmitInitiated) {
                 if (event.saveSearchArrayList != null && event.saveSearchArrayList.size() > 0) {
                     if (!TextUtils.isEmpty(event.saveSearchArrayList.get(0).name)
-                            && (!event.saveSearchArrayList.get(0).name.contains(";"))
-                            || (mSetAlertsNameEditText.getText().toString().equalsIgnoreCase(
-                            event.saveSearchArrayList.get(0).name.substring(0, event.saveSearchArrayList.get(0).name.indexOf(";"))))) {
+                            && mSetAlertsNameEditText.getText().toString().equalsIgnoreCase(event.saveSearchArrayList.get(0).name)) {
 
                         MasterDataCache.getInstance().clearSavedSearches();
 

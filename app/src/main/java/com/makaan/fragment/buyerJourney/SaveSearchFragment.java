@@ -44,6 +44,7 @@ import com.makaan.response.ResponseError;
 import com.makaan.response.city.City;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Builder;
+import com.makaan.response.project.CompanySeller;
 import com.makaan.response.saveSearch.SaveSearch;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
@@ -308,6 +309,19 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                                 holder.backgroundImageView.setLocalImageBitmap(bitmap);
                                 break;
                             }
+                        } else if (KeyUtil.SELLER_ID.equalsIgnoreCase(key)) {
+                            if (map.get(KeyUtil.SELLER_ID) != null && map.get(KeyUtil.SELLER_ID).size() > 0) {
+                                imageObjects.get(position).requestSellerImage(map.get(KeyUtil.SELLER_ID).get(0));
+                                Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap("seller_placeholder");
+                                if (bitmap == null) {
+                                    int id = R.drawable.seller_placeholder;
+                                    bitmap = BitmapFactory.decodeResource(getResources(), id);
+                                    MakaanBuyerApplication.bitmapCache.putBitmap("seller_placeholder", bitmap);
+                                }
+
+                                holder.backgroundImageView.setLocalImageBitmap(bitmap);
+                                break;
+                            }
                         }
                     }
                 }
@@ -451,7 +465,7 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                 Selector builderSelector = new Selector();
                 builderSelector.fields(new String[]{"imageURL"});
 
-                String builderUrl = ApiConstants.BUILDER_DETAIL.concat("/").concat(builderId.toString()).concat("?").concat(builderSelector.build());
+                String builderUrl = ApiConstants.BUILDER_DETAIL.concat("/").concat(builderId).concat("?").concat(builderSelector.build());
 
                 Type builderType = new TypeToken<Builder>() {
                 }.getType();
@@ -473,40 +487,76 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                 });
             }
         }
+
+        public void requestSellerImage(String sellerId) {
+            if (null != sellerId) {
+                Selector builderSelector = new Selector();
+                builderSelector.fields(new String[]{"sellers", "companyUser", "user", "logo", "coverPicture"});
+
+                String builderUrl = ApiConstants.SELLER_DETAIL.concat("/").concat(sellerId).concat("?").concat(builderSelector.build());
+
+                Type sellerType = new TypeToken<CompanySeller>() {
+                }.getType();
+
+                MakaanNetworkClient.getInstance().get(builderUrl, sellerType, new ObjectGetCallback() {
+                    @Override
+                    public void onError(ResponseError error) {
+                    }
+
+                    @Override
+                    public void onSuccess(Object responseObject) {
+                        CompanySeller seller = (CompanySeller) responseObject;
+
+                        if (seller != null && seller.logo != null) {
+                            ImageObject.this.imageUrl = seller.logo;
+                            mAdapter.notifyDataSetChanged();
+                        } else if(seller!= null && seller.sellers != null && seller.sellers.size() > 0 && seller.sellers.get(0) != null
+                                && seller.sellers.get(0).companyUser != null && seller.sellers.get(0).companyUser.user != null
+                                && !TextUtils.isEmpty(seller.sellers.get(0).companyUser.user.profilePictureURL)) {
+                            ImageObject.this.imageUrl = seller.sellers.get(0).companyUser.user.profilePictureURL;
+                            mAdapter.notifyDataSetChanged();
+                        } else if(seller != null && seller.coverPicture != null) {
+                            ImageObject.this.imageUrl = seller.coverPicture;
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+            }
+        }
     }
 
 
     private void createSaveSearchEvent(List<ImageObject> imageObjects, int position) {
-            HashMap<String, ArrayList<String>> map = imageObjects.get(position).request.getTermMap();
-            if (map != null) {
-                for (String key : map.keySet()) {
-                    if (KeyUtil.LOCALITY_ID.equalsIgnoreCase(key)) {
-                        Properties properties= MakaanEventPayload.beginBatch();
-                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
-                        properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.locality,
-                                   map.get(KeyUtil.LOCALITY_ID).get(0)));
-                        MakaanEventPayload.endBatch(getContext(),MakaanTrackerConstants.Action.clickSavedSearches);
-                        break;
+        HashMap<String, ArrayList<String>> map = imageObjects.get(position).request.getTermMap();
+        if (map != null) {
+            for (String key : map.keySet()) {
+                if (KeyUtil.LOCALITY_ID.equalsIgnoreCase(key)) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                    properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.locality,
+                            map.get(KeyUtil.LOCALITY_ID).get(0)));
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickSavedSearches);
+                    break;
 
-                    } else if (KeyUtil.CITY_ID.equalsIgnoreCase(key)) {
-                        Properties properties= MakaanEventPayload.beginBatch();
-                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
-                        properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.city,
-                                map.get(KeyUtil.CITY_ID).get(0)));
-                        MakaanEventPayload.endBatch(getContext(),MakaanTrackerConstants.Action.clickSavedSearches);
-                        break;
+                } else if (KeyUtil.CITY_ID.equalsIgnoreCase(key)) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                    properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.city,
+                            map.get(KeyUtil.CITY_ID).get(0)));
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickSavedSearches);
+                    break;
 
-                    } else if (KeyUtil.BUILDER_ID.equalsIgnoreCase(key)) {
-                        Properties properties= MakaanEventPayload.beginBatch();
-                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
-                        properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.builder,
-                                map.get(KeyUtil.BUILDER_ID).get(0)));
-                        MakaanEventPayload.endBatch(getContext(),MakaanTrackerConstants.Action.clickSavedSearches);
-                        break;
+                } else if (KeyUtil.BUILDER_ID.equalsIgnoreCase(key)) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                    properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.builder,
+                            map.get(KeyUtil.BUILDER_ID).get(0)));
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickSavedSearches);
+                    break;
 
-                    }
                 }
             }
+        }
     }
 
 
