@@ -101,7 +101,7 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mLeadFormPresenter= LeadFormPresenter.getLeadFormPresenter();
-        mTextViewSellerName.setText(mLeadFormPresenter.getName());
+        mTextViewSellerName.setText(mLeadFormPresenter.getName().toLowerCase());
         mRatingBarSeller.setRating(Float.valueOf(mLeadFormPresenter.getScore()));
         mobileFlag=false;
         nameFlag=false;
@@ -229,8 +229,8 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
 
             PyrRequest mPyrRequest = new PyrRequest();
             PyrEnquiryType mPyrEnquiryType = new PyrEnquiryType();
+            mPyrEnquiryType.setId(2);
             mPyrRequest.setEnquiryType(mPyrEnquiryType);
-
             mPyrRequest.setName(mName.getText().toString().trim());
             mPyrRequest.setEmail(mEmail.getText().toString().trim());
             mPyrRequest.setPhone(mNumber.getText().toString().trim());

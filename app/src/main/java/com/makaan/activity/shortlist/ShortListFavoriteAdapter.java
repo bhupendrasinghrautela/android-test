@@ -120,16 +120,20 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
                             intent.putExtra("phone",wishListValue.listing.companySeller.user.contactNumbers.get(0).contactNumber);
                         }
                     }
+
+                    intent.putExtra("source",ShortListFavoriteAdapter.class.getName());
                     if(wishList.get(position).listingId != null) {
                         intent.putExtra("listingId", wishList.get(position).listingId);
                     } else if(wishList.get(position).projectId != null) {
                         intent.putExtra("listingId", wishList.get(position).projectId);
                     }
-                    if(wishList.get(position).project.locality!=null && wishList.get(position).project.locality.cityId!=null) {
-                        intent.putExtra("cityId", wishList.get(position).project.locality.cityId);
-                    }
-                    if(wishList.get(position).project.locality!=null && wishList.get(position).project.projectId!=null) {
-                        intent.putExtra("localityId", wishList.get(position).project.projectId);
+                    if(wishList.get(position).project != null) {
+                        if (wishList.get(position).project.locality != null && wishList.get(position).project.locality.cityId != null) {
+                            intent.putExtra("cityId", wishList.get(position).project.locality.cityId);
+                        }
+                        if (wishList.get(position).project.locality != null && wishList.get(position).project.projectId != null) {
+                            intent.putExtra("localityId", wishList.get(position).project.projectId);
+                        }
                     }
                     if(wishList.get(position).listing!=null && wishList.get(position).listing.companySeller!=null &&
                             wishList.get(position).listing.companySeller.company!=null && wishList.get(position).listing.companySeller.company.logo!=null) {

@@ -129,7 +129,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     RelativeLayout mSearchRelativeView;
 
     @Bind(R.id.activity_search_base_layout_search_bar_search_edit_text)
-    EditText mSearchEditText;
+    protected EditText mSearchEditText;
 
     @Bind(R.id.activity_search_base_layout_search_bar_back_button)
     Button mBackButton;
@@ -1072,14 +1072,20 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             showSearchResults();
             this.mSearches = searchResultEvent.searchResponse.getData();
             clearSelectedSearches();
-            if(TextUtils.isEmpty(mSearchEditText.getText())) {
-                addNearbyPropertiesSearchItem();
-            } else if(this.mSearches.size() == 0) {
+
+            /* track code [start]*/
+            if(this.mSearches.size() == 0){
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorUsability);
                 properties.put(MakaanEventPayload.LABEL, mSearchEditText.getText());
                 MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.sorryNoMatchingResultFound);
 
+            }
+            /* track code [end]*/
+
+            if(TextUtils.isEmpty(mSearchEditText.getText())) {
+                addNearbyPropertiesSearchItem();
+            } else if(this.mSearches.size() == 0) {
                 addErrorSearchItem(this.getResources().getString(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT, false)));
             }
             mSearchAdapter.setData(mAvailableSearches, false);

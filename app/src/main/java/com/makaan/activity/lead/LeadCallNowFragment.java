@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
@@ -63,13 +64,20 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mLeadFormPresenter= LeadFormPresenter.getLeadFormPresenter();
-        mTextViewSellerName.setText(mLeadFormPresenter.getName());
+        mTextViewSellerName.setText(mLeadFormPresenter.getName().toLowerCase());
         mRatingBarSeller.setRating(Float.valueOf(mLeadFormPresenter.getScore()));
         if(mLeadFormPresenter.getPhone()!=null) {
             mButtonCall.setText("call " + PhoneNumberUtils.formatNumber(mLeadFormPresenter.getPhone()));
         }
         else{
-            mButtonCall.setText("NA");
+            if(mLeadFormPresenter.getId()!=null && !TextUtils.isEmpty(mLeadFormPresenter.getId())){
+                Properties properties= MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorUsability);
+                properties.put(MakaanEventPayload.LABEL, String.format("%s_%s",
+                        MakaanTrackerConstants.Label.leadForm, mLeadFormPresenter.getId()));
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.errorNa);
+            }
+            mButtonCall.setText("na");
             mButtonCall.setClickable(false);
         }
         setSellerImage();

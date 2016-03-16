@@ -261,7 +261,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                         break;
                     case OWNER_TYPE:
                         if(mDetail.ownershipTypeId!=null) {
-                            overViewItem.name = overview.toString();
+                            overViewItem.name = "ownership";
                             overViewItem.resourceId = R.drawable.ownership;
                             overViewItem.value = MasterDataCache.getInstance().getOwnershipType(mDetail.ownershipTypeId);
                         }
@@ -294,7 +294,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                         break;
                     case CATEGORY:
                         if(mDetail.listingCategory!=null) {
-                            overViewItem.name = overview.toString();
+                            overViewItem.name = "new/resale";
                             overViewItem.resourceId = R.drawable.new_resale;
                             if("primary".equalsIgnoreCase(mDetail.listingCategory)) {
                                 overViewItem.value = "new".toLowerCase();
