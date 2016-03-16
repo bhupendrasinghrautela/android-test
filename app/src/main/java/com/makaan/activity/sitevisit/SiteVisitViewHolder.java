@@ -3,6 +3,7 @@ package com.makaan.activity.sitevisit;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
@@ -22,6 +23,8 @@ public class SiteVisitViewHolder extends RecyclerView.ViewHolder {
     public TextView mSiteVisitDate;
     public TextView mSiteVisitTime;
     public TextView mDirection;
+    public ImageView mDirectionImage;
+    public ImageView mCallImage;
     public TextView mCallNow;
     public CustomRatingBar mRating;
     public CircleImageView mSellerImage;
@@ -39,6 +42,8 @@ public class SiteVisitViewHolder extends RecyclerView.ViewHolder {
         mSiteVisitDate = (TextView) itemView.findViewById(R.id.date);
         mSiteVisitTime = (TextView) itemView.findViewById(R.id.time);
         mDirection = (TextView) itemView.findViewById(R.id.direction);
+        mDirectionImage = (ImageView) itemView.findViewById(R.id.direction_image);
+        mCallImage = (ImageView) itemView.findViewById(R.id.call_image);
         mCallNow = (TextView) itemView.findViewById(R.id.call_now);
         mSellerImage = (CircleImageView) itemView.findViewById(R.id.seller_image_view);
         mSellerText = (TextView) itemView.findViewById(R.id.seller_logo_text_view);

@@ -203,6 +203,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/direction_image"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="center"
@@ -215,10 +216,11 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="14dp"
                         android:layout_marginStart="14dp"
+                        android:clickable="true"
                         android:singleLine="true"
                         android:text="@string/directions"
                         android:textAllCaps="false"
-                        android:textColor="@color/appThemeRed"
+                        android:textColor="@color/textview_disabled"
                         android:textSize="@dimen/content_text_size"
                         android:typeface="serif" />
                 </LinearLayout>
@@ -245,6 +247,7 @@
 
 
                     <ImageView
+                        android:id="@+id/call_image"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="center"
@@ -259,8 +262,9 @@
                         android:layout_marginStart="14dp"
                         android:singleLine="true"
                         android:text="call"
+                        android:clickable="true"
                         android:textAllCaps="false"
-                        android:textColor="@color/appThemeRed"
+                        android:textColor="@color/textview_disabled"
                         android:textSize="@dimen/content_text_size"
                         android:typeface="serif" />
                 </LinearLayout>
