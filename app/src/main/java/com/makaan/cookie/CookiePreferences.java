@@ -263,12 +263,6 @@ public class CookiePreferences {
     }
 
 
-    /**
-     * A static method for getting password of user remember me
-     *
-     * @param context the Context of activity
-     * @return selected Index from server
-     * */
     public static void setBuyerJourneyPopupTimestamp(Context context) {
         SharedPreferences.Editor edit = getSharedPref(context).edit();
         edit.putLong(BUYER_JOURNEY_LAST_POPUP_TIMESTAMP, System.currentTimeMillis());
@@ -276,11 +270,6 @@ public class CookiePreferences {
     }
 
 
-    /**
-     * A static method for saving password for user remember me
-     *
-     * @param context the Context of activity
-     * */
     public static boolean shouldDisplayBuyerJourney(Context context) {
         return System.currentTimeMillis()
                 - getSharedPref(context).getLong(BUYER_JOURNEY_LAST_POPUP_TIMESTAMP, 0)
