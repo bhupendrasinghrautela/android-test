@@ -34,6 +34,9 @@ public class CookiePreferences {
 
     private static final String PREF_USER_NAME = "user_name";
     private static final String PREF_PASSWORD = "password";
+
+    private static final long BUYER_JOURNEY_LAST_POPUP_TIMEOUT = 3600 * 60 * 24 * 4;
+    private static final String BUYER_JOURNEY_LAST_POPUP_TIMESTAMP = "buyer_last_timestamp";
     /**
      * A static method for saving user info
      *
@@ -257,6 +260,20 @@ public class CookiePreferences {
         SharedPreferences.Editor edit = getSharedPref(context).edit();
         edit.putString(PREF_PASSWORD, password);
         edit.commit();
+    }
+
+
+    public static void setBuyerJourneyPopupTimestamp(Context context) {
+        SharedPreferences.Editor edit = getSharedPref(context).edit();
+        edit.putLong(BUYER_JOURNEY_LAST_POPUP_TIMESTAMP, System.currentTimeMillis());
+        edit.apply();
+    }
+
+
+    public static boolean shouldDisplayBuyerJourney(Context context) {
+        return System.currentTimeMillis()
+                - getSharedPref(context).getLong(BUYER_JOURNEY_LAST_POPUP_TIMESTAMP, 0)
+                >= BUYER_JOURNEY_LAST_POPUP_TIMEOUT;
     }
 
 }

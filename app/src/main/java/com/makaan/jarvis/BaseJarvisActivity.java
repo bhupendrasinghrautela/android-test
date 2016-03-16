@@ -28,6 +28,7 @@ import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.LeadPhaseConstants;
+import com.makaan.cookie.CookiePreferences;
 import com.makaan.jarvis.analytics.AnalyticsConstants;
 import com.makaan.jarvis.analytics.AnalyticsService;
 import com.makaan.jarvis.analytics.BuyerJourneyMessage;
@@ -330,6 +331,14 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
 
+/*        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(this, mJarvisHead, getString(R.string.jarvis_button_transition));
+            startActivity(intent, options.toBundle());
+        } else {
+            startActivity(intent);
+        }*/
+
         if(mJarvisHead != null) {
             mJarvisHead.setVisibility(View.GONE);
         }
@@ -510,6 +519,12 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         serpRequestTrackMap.put(request, true);
     }
     public void trackBuyerJourney(int phaseId){
+
+        if(CookiePreferences.shouldDisplayBuyerJourney(this)){
+            CookiePreferences.setBuyerJourneyPopupTimestamp(this);
+        }else{
+            return;
+        }
 
         AnalyticsService analyticsService =
                 (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
