@@ -281,24 +281,24 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 
 	@Subscribe
 	public void searchResult(SearchResultEvent searchResultEvent){
-		if (!isVisible()) {
+		if(mCompleteItemsList==null) {
 			return;
 		}
 		mCompleteItemsList.clear();
 		ArrayList<SearchResponseItem> mOriginalList;
 		if(searchResultEvent!=null && searchResultEvent.searchResponse!=null) {
 			mOriginalList = searchResultEvent.searchResponse.getData();
-			if(mOriginalList == null){
+			if(mOriginalList == null && mNoResultsTextView!=null){
 				mNoResultsTextView.setVisibility(View.VISIBLE);
 				return;
 			}
 			mSelectedItemsFlag = new boolean[mOriginalList.size()];
 
-			if (mOriginalList.size() > 0) {
+			if (mOriginalList.size() > 0 && mNoResultsTextView!=null && mMultiChoiceCardView!=null) {
 				mNoResultsTextView.setVisibility(View.GONE);
 				mMultiChoiceCardView.setVisibility(View.VISIBLE);
 			}
-			else if(mOriginalList.size()==0){
+			else if(mOriginalList.size()==0 && mNoResultsTextView!=null && mMultiChoiceCardView!=null){
 				mMultiChoiceCardView.setVisibility(View.VISIBLE);
 				mNoResultsTextView.setVisibility(View.VISIBLE);
 			}
@@ -307,9 +307,11 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 				mCompleteItemsList.add(new Item(mOriginalList.get(i), mSelectedItemsFlag[i]));
 			}
 
-			mSelectedItemsLayout.setVisibility(View.GONE);
-			mMultiselectionListview.setVisibility(View.VISIBLE);
-			mUnselectedItemsAdapter.updateDataItems(mOriginalList);
+			if(mSelectedItemsLayout!=null && mMultiselectionListview!=null && mUnselectedItemsAdapter!=null) {
+				mSelectedItemsLayout.setVisibility(View.GONE);
+				mMultiselectionListview.setVisibility(View.VISIBLE);
+				mUnselectedItemsAdapter.updateDataItems(mOriginalList);
+			}
 		}
 	}
 
