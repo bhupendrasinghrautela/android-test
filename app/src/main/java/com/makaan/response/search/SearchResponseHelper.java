@@ -176,7 +176,7 @@ public class SearchResponseHelper {
 
     public static String getType(SearchResponseItem searchResponseItem){
 
-        if (searchResponseItem == null || TextUtils.isEmpty(searchResponseItem.type)) {
+        if (searchResponseItem == null/* || TextUtils.isEmpty(searchResponseItem.type)*/) {
             return "";
         }
 

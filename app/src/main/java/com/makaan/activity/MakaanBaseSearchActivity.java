@@ -49,6 +49,7 @@ import com.makaan.cookie.Session;
 import com.makaan.fragment.MakaanMessageDialogFragment;
 import com.makaan.location.LocationServiceConnectionListener;
 import com.makaan.location.MakaanLocationManager;
+import com.makaan.response.search.SearchResponse;
 import com.makaan.response.search.SearchResponseHelper;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.SearchSuggestionType;
@@ -1071,6 +1072,23 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             mSearchResultReceived = true;
             showSearchResults();
             this.mSearches = searchResultEvent.searchResponse.getData();
+
+            // todo remove any search result which we cannot handle
+            if(mSearches != null) {
+                for (Iterator<SearchResponseItem> iterator = mSearches.iterator(); iterator.hasNext(); ) {
+                    SearchResponseItem search = iterator.next();
+                    if (search == null) {
+                        iterator.remove();
+                    } else {
+                        try {
+                            SearchResponseHelper.getType(search);
+                        } catch (Exception ex) {
+                            iterator.remove();
+                        }
+                    }
+                }
+            }
+
             clearSelectedSearches();
 
             /* track code [start]*/

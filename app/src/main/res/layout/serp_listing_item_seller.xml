@@ -139,7 +139,8 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/serp_listing_item_seller_address_text_view_text_size"
                 android:typeface="serif"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                android:visibility="invisible"/>
 
             <ImageView
                 android:id="@+id/serp_listing_item_seller_add_image_view"
