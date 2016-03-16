@@ -27,7 +27,7 @@ public class GcmPreferences {
     public static void setGcmRegId(Context context, String gcmId) {
         SharedPreferences.Editor edit = getSharedPref(context).edit();
         edit.putString(PREF_GCM_REGID, gcmId);
-        edit.commit();
+        edit.apply();
     }
 
     /**
@@ -58,7 +58,7 @@ public class GcmPreferences {
     public static void setGcmIdSent(Context context) {
         SharedPreferences.Editor edit = getSharedPref(context).edit();
         edit.putBoolean(PREF_IS_GCM_ID_SENT, true);
-        edit.commit();
+        edit.apply();
     }
 
     /**
@@ -70,7 +70,7 @@ public class GcmPreferences {
     public static void setAppVersion(Context context, int appVersion) {
         SharedPreferences.Editor edit = getSharedPref(context).edit();
         edit.putInt(PREF_APP_VER, appVersion);
-        edit.commit();
+        edit.apply();
     }
 
 
