@@ -167,7 +167,9 @@ public class ViewSellersDialogFragment extends DialogFragment {
 
         AppBus.getInstance().register(this); //TODO: move to base fragment
         ButterKnife.bind(this, view);
-        init();
+        if(mSellerCards !=null && mSellerCards.size()!=0) {
+            init();
+        }
         return view;
     }
 

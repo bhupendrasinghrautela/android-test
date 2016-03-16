@@ -1,11 +1,17 @@
 package com.makaan.activity.sitevisit;
 
+import android.Manifest;
+import android.Manifest.permission;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.net.Uri;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.InflateException;
@@ -27,6 +33,7 @@ import com.makaan.response.user.CompanySeller;
 import com.makaan.response.user.User;
 import com.makaan.service.ClientEventsService;
 import com.makaan.util.ImageUtils;
+import com.makaan.util.PermissionManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,16 +46,18 @@ import java.util.Random;
  */
 public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements SiteVisitCallbacks {
     Context mContext;
+    Activity mActivity;
     ArrayList<Enquiry> mEnquiries;
-    private int width,height;
+    private int width, height;
 
-    public SiteVisitUpcommingAdapter(Context mContext){
-        this.mContext=mContext;
+    public SiteVisitUpcommingAdapter(Context mContext, Activity activity) {
+        this.mContext = mContext;
+        mActivity = activity;
         width = mContext.getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_width);
         height = mContext.getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_height);
     }
 
-    public void setData(HashMap<Long,Enquiry> enquiries){
+    public void setData(HashMap<Long, Enquiry> enquiries) {
         this.mEnquiries = (new ArrayList<Enquiry>(enquiries.values()));
         notifyDataSetChanged();
     }
@@ -61,7 +70,7 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
             SiteVisitViewHolder siteVisitViewHolder = new SiteVisitViewHolder(view);
             siteVisitViewHolder.setCallback(this);
             return siteVisitViewHolder;
-        } catch(InflateException ex) {
+        } catch (InflateException ex) {
             return null;
         }
 
@@ -69,11 +78,20 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        SiteVisitViewHolder shortListEnquiredViewHolder = (SiteVisitViewHolder)holder;
+        SiteVisitViewHolder shortListEnquiredViewHolder = (SiteVisitViewHolder) holder;
         shortListEnquiredViewHolder.setPosition(position);
         Enquiry enquiry = mEnquiries.get(position);
 
-        if(enquiry.time != null) {
+        if (enquiry.latitude == null || enquiry.longitude == null) {
+            shortListEnquiredViewHolder.mDirection.setEnabled(false);
+            shortListEnquiredViewHolder.mDirectionImage.setAlpha(0.5f);
+        } else {
+            shortListEnquiredViewHolder.mDirection.setEnabled(true);
+            shortListEnquiredViewHolder.mDirectionImage.setAlpha(1f);
+        }
+        shortListEnquiredViewHolder.mCallNow.setEnabled(false);
+        shortListEnquiredViewHolder.mCallImage.setAlpha(0.5f);
+        if (enquiry.time != null) {
             Date date = new Date(enquiry.time);
 
             // S is the millisecond
@@ -82,44 +100,39 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
             shortListEnquiredViewHolder.mSiteVisitDate.setText(simpleDateFormat.format(enquiry.time).toLowerCase());
             shortListEnquiredViewHolder.mSiteVisitTime.setText(timeFormat.format(enquiry.time).toLowerCase());
         }
-        if(enquiry.type == EnquiryType.LISTING){
+        if (enquiry.type == EnquiryType.LISTING) {
             shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.property_placeholder);
-            if(enquiry.listingDetail!=null){
+            if (enquiry.listingDetail != null) {
                 populateListingDetail(enquiry.listingDetail, shortListEnquiredViewHolder);
-            }
-            else{
+            } else {
                 shortListEnquiredViewHolder.mAddress.setText("");
                 shortListEnquiredViewHolder.mName.setText("");
             }
-        }
-        else if(enquiry.type == EnquiryType.PROJECT){
+        } else if (enquiry.type == EnquiryType.PROJECT) {
             shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.project_placeholder);
-            if(enquiry.project!=null){
-                populateProjectDetail(enquiry.project,shortListEnquiredViewHolder);
-                if(enquiry.company!=null) {
-                    if(enquiry.company.name != null) {
+            if (enquiry.project != null) {
+                populateProjectDetail(enquiry.project, shortListEnquiredViewHolder);
+                if (enquiry.company != null) {
+                    if (enquiry.company.name != null) {
                         shortListEnquiredViewHolder.mName.setText(enquiry.company.name.toLowerCase());
                     }
                     shortListEnquiredViewHolder.mRating.setRating(enquiry.company.score / 2);
                     showTextAsImage(shortListEnquiredViewHolder, enquiry.company.name);
                 }
-            }
-            else{
+            } else {
                 shortListEnquiredViewHolder.mAddress.setText("");
                 shortListEnquiredViewHolder.mName.setText("");
             }
-        }
-        else if(enquiry.type == EnquiryType.SELLER){
+        } else if (enquiry.type == EnquiryType.SELLER) {
             shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.seller_placeholder);
-            if(enquiry.company!=null) {
+            if (enquiry.company != null) {
                 shortListEnquiredViewHolder.mAddress.setText("");
-                if(enquiry.company.name != null) {
+                if (enquiry.company.name != null) {
                     shortListEnquiredViewHolder.mName.setText(enquiry.company.name.toLowerCase());
                 }
                 shortListEnquiredViewHolder.mRating.setRating(enquiry.company.score / 2);
                 showTextAsImage(shortListEnquiredViewHolder, enquiry.company.name);
-            }
-            else{
+            } else {
                 shortListEnquiredViewHolder.mAddress.setText("");
                 shortListEnquiredViewHolder.mName.setText("");
             }
@@ -128,19 +141,19 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
 
     private void populateProjectDetail(Project project, SiteVisitViewHolder holder) {
         StringBuilder name = new StringBuilder();
-        if(project.builder!=null && project.builder.name!=null) {
+        if (project.builder != null && project.builder.name != null) {
             name.append(project.builder.name).append(" ");
         }
-        if(project.name!=null) {
+        if (project.name != null) {
             name.append(project.name);
         }
         name.append("\n");
-        if(project.locality!=null){
+        if (project.locality != null) {
             Locality locality = project.locality;
-            if(locality.label!=null){
+            if (locality.label != null) {
                 name.append(project.locality.label).append(", ");
             }
-            if(locality.suburb!=null && locality.suburb.city!=null && locality.suburb.city.label!=null){
+            if (locality.suburb != null && locality.suburb.city != null && locality.suburb.city.label != null) {
                 name.append(locality.suburb.city.label);
             }
         }
@@ -150,7 +163,7 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
 
     private void populateListingDetail(ListingDetail listingDetail, final SiteVisitViewHolder holder) {
         StringBuilder name = new StringBuilder();
-        if(listingDetail.property!=null) {
+        if (listingDetail.property != null) {
             Property property = listingDetail.property;
             if (property.bedrooms != null) {
                 name.append(property.bedrooms).append("bhk ");
@@ -159,28 +172,32 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
                 name.append(property.unitType);
             }
             name.append("\n");
-            if(property.project!=null && property.project.locality!=null){
+            if (property.project != null && property.project.locality != null) {
                 Locality locality = property.project.locality;
-                if(locality.label!=null){
+                if (locality.label != null) {
                     name.append(property.project.locality.label).append(", ");
                 }
-                if(locality.suburb!=null && locality.suburb.city!=null && locality.suburb.city.label!=null){
+                if (locality.suburb != null && locality.suburb.city != null && locality.suburb.city.label != null) {
                     name.append(locality.suburb.city.label);
                 }
             }
         }
         populateCompany(listingDetail.companySeller, holder);
         holder.mAddress.setText(name.toString().toLowerCase());
-        int height = (int)Math.ceil(mContext.getResources().getDimension(R.dimen.enq_card_height));
+        int height = (int) Math.ceil(mContext.getResources().getDimension(R.dimen.enq_card_height));
         int width = (int) (mContext.getResources().getConfiguration().screenWidthDp * Resources.getSystem().getDisplayMetrics().density);
         holder.mMainImage.setImageUrl(ImageUtils.getImageRequestUrl(listingDetail.mainImageURL, width, height, false),
                 MakaanNetworkClient.getInstance().getImageLoader());
     }
 
     private void populateCompany(CompanySeller companySeller, final SiteVisitViewHolder holder) {
-        if(companySeller!=null) {
+        if (companySeller != null) {
             final Company company = companySeller.company;
             User user = companySeller.user;
+            if(user!=null && user.contactNumbers!=null && user.contactNumbers.size()>0){
+                holder.mCallNow.setEnabled(true);
+                holder.mCallImage.setAlpha(1f);
+            }
             if (!TextUtils.isEmpty(company.logo)) {
                 holder.mSellerText.setVisibility(View.GONE);
                 holder.mSellerImage.setVisibility(View.VISIBLE);
@@ -197,7 +214,7 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
 
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        showTextAsImage(holder,company.name);
+                        showTextAsImage(holder, company.name);
                     }
                 });
             } else if (user != null && !TextUtils.isEmpty(user.profilePictureURL)) {
@@ -216,23 +233,23 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
 
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        showTextAsImage(holder,company.name);
+                        showTextAsImage(holder, company.name);
                     }
                 });
             } else {
-                showTextAsImage(holder,company.name);
+                showTextAsImage(holder, company.name);
             }
-            holder.mRating.setRating((float)(company.score/2));
+            holder.mRating.setRating((float) (company.score / 2));
             holder.mName.setText(companySeller.company.name.toLowerCase());
         }
     }
 
-    private void showTextAsImage(SiteVisitViewHolder holder,String name) {
-        if(name == null) {
+    private void showTextAsImage(SiteVisitViewHolder holder, String name) {
+        if (name == null) {
             holder.mSellerText.setVisibility(View.INVISIBLE);
             return;
         }
-        if(!TextUtils.isEmpty(name)) {
+        if (!TextUtils.isEmpty(name)) {
             holder.mSellerText.setText(String.valueOf(name.charAt(0)));
         }
         holder.mSellerText.setVisibility(View.VISIBLE);
@@ -265,10 +282,9 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
     @Override
     public void openDirections(int position) {
         Enquiry enquiry = mEnquiries.get(position);
-        if(enquiry.latitude== null || enquiry.longitude == null){
+        if (enquiry.latitude == null || enquiry.longitude == null) {
             return;
-        }
-        else if(enquiry.latitude>0 && enquiry.longitude>0){
+        } else if (enquiry.latitude > 0 && enquiry.longitude > 0) {
             Intent myIntent = new Intent(Intent.ACTION_VIEW, ClientEventsService.buildNavigationIntentUri(
                     enquiry.latitude, enquiry.longitude));
             mContext.startActivity(myIntent);
@@ -277,7 +293,20 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public void callNumber(int position) {
-
+        Enquiry enquiry = mEnquiries.get(position);
+        if (enquiry.listingDetail == null) {
+            return;
+        } else if (enquiry.listingDetail.companySeller != null && enquiry.listingDetail.companySeller.user != null
+                && enquiry.listingDetail.companySeller.user.contactNumbers != null
+                && enquiry.listingDetail.companySeller.user.contactNumbers.size() > 0) {
+            if (PermissionManager.isPermissionRequestRequired(mActivity, Manifest.permission.CALL_PHONE)) {
+                PermissionManager.begin().addRequest(PermissionManager.CALL_PHONE_REQUEST).request(mActivity);
+            } else {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
+                        + enquiry.listingDetail.companySeller.user.contactNumbers.get(0).contactNumber));
+                mActivity.startActivity(intent);
+            }
+        }
     }
 
     public enum  EnquiryType{
