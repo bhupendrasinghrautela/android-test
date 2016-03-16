@@ -351,7 +351,7 @@ public class ProjectFragment extends MakaanBaseFragment{
             imagesGetEvent.images.add(getDummyImage());
         }
         try {
-            Double price = project.minPrice != null ? project.minPrice : project.minResaleOrPrimaryPrice;
+            Double price = project.minResaleOrPrimaryPrice != null ? project.minResaleOrPrimaryPrice : project.minPrice;
             if(imagesGetEvent.images.size() == 0){
                 imagesGetEvent.images.add(getDummyImage());
             }
