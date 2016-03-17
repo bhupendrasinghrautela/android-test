@@ -209,7 +209,7 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
             finalImageUrl.append(dataItem.name);
             finalImageUrl.append(".png");
             int width = getResources().getDimensionPixelSize(R.dimen.amenities_horizontal_scroll_item_dimen);
-            imageView.setImageUrl(ImageUtils.getImageRequestUrl(finalImageUrl.toString(), width, width, false),
+            imageView.setImageUrl(finalImageUrl.toString(),
                     MakaanNetworkClient.getInstance().getImageLoader());
             if(!dataItem.activated){
                 imageView.setAlpha(0.5f);
