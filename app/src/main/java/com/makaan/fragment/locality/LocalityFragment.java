@@ -480,7 +480,11 @@ public class LocalityFragment extends MakaanBaseFragment {
         if(builders != null && builders.size()>0) {
             NearByLocalitiesFragment newFragment = new NearByLocalitiesFragment();
             Bundle bundle = new Bundle();
-            bundle.putString("title", String.format(getResources().getString(R.string.locality_top_builders_label), locality.label));
+            if(null==locality){
+                bundle.putString("title", getResources().getString(R.string.locality_top_builders_no_locality_label));
+            }else {
+                bundle.putString("title", String.format(getResources().getString(R.string.locality_top_builders_label), locality.label));
+            }
             bundle.putInt("placeholder", R.drawable.builder_placeholder);
             bundle.putString("action", "view projects");
             newFragment.setArguments(bundle);

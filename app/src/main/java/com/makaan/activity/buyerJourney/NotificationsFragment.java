@@ -53,27 +53,16 @@ public class NotificationsFragment extends MakaanBaseFragment implements LoaderM
         mLayoutManager = new LinearLayoutManager(getActivity());
         list=new ArrayList<>();
 
-
-        if(list.size()==0){
-
-            if (mLayoutManager != null) {
-                mRecyclerView.setLayoutManager(mLayoutManager);
-            }
-            showNoResults(R.string.no_notifications);
-        } else {
-
-            if (mLayoutManager != null) {
-                mRecyclerView.setLayoutManager(mLayoutManager);
-            }
-
-            mAdapter = new NotificationsAdapter(getActivity(), list);
-
-            mRecyclerView.setAdapter(mAdapter);
-//            mAdapter.setData(list);
-
-            getActivity().getSupportLoaderManager().initLoader(NOTIFICATIONS_LOADER, null, this);
-            showProgress();
+        if (mLayoutManager != null) {
+            mRecyclerView.setLayoutManager(mLayoutManager);
         }
+
+        mAdapter = new NotificationsAdapter(getActivity(), list);
+
+        mRecyclerView.setAdapter(mAdapter);
+
+        getActivity().getSupportLoaderManager().initLoader(NOTIFICATIONS_LOADER, null, this);
+        showProgress();
 
         return view;
     }
@@ -98,7 +87,7 @@ public class NotificationsFragment extends MakaanBaseFragment implements LoaderM
         }
 
         List<NotificationAttributes> notifications = NotificationDbHelper.getNotificationList(data);
-        if(notifications.isEmpty()){
+        if(null==notifications || notifications.isEmpty()){
             showNoResults(R.string.no_notifications);
         } else {
             showContent();
