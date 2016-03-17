@@ -208,25 +208,29 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
             if(builder.images !=null && builder.images.size() >0){
                 url = builder.images.get(0).absolutePath;
             }
-            if(builder.establishedDate!=null) {
+            if (builder.establishedDate != null) {
                 Date date = new Date(Long.parseLong(builder.establishedDate));
                 int experience = DateUtil.getDiffYears(date, new Date());
-                if(builder.projectStatusCount != null && builder.projectStatusCount.underConstruction > 0) {
-                    nearByLocalities.add(new NearByLocalities(url, String.valueOf(builder.projectStatusCount.underConstruction),
-                            "" + builder.projectCount.intValue(), "experience : " + experience+" years", "" + builder.name, builder.id));
-                } else {
-                    nearByLocalities.add(new NearByLocalities(url, "0", "" + builder.projectCount.intValue(),
-                            "experience : " + experience+" years", "" + builder.name, builder.id));
+                if (builder.projectCount != null) {
+                    if (builder.projectStatusCount != null && builder.projectStatusCount.underConstruction > 0) {
+                        nearByLocalities.add(new NearByLocalities(url, String.valueOf(builder.projectStatusCount.underConstruction),
+                                "" + builder.projectCount.intValue(), "experience : " + experience + " years", "" + builder.name, builder.id));
+                    } else {
+                        nearByLocalities.add(new NearByLocalities(url, "0", "" + builder.projectCount.intValue(),
+                                "experience : " + experience + " years", "" + builder.name, builder.id));
+                    }
                 }
-            }else{
-                if(builder.projectStatusCount != null && builder.projectStatusCount.underConstruction > 0) {
-                    nearByLocalities.add(new NearByLocalities(url, String.valueOf(builder.projectStatusCount.underConstruction),
-                            "" + builder.projectCount.intValue(), "", "" + builder.name, builder.id));
-                } else {
-                    nearByLocalities.add(new NearByLocalities(url, "0", "" + builder.projectCount.intValue(), "", "" + builder.name, builder.id));
+            } else {
+                if (builder.projectCount != null) {
+                    if (builder.projectStatusCount != null && builder.projectStatusCount.underConstruction > 0) {
+                        nearByLocalities.add(new NearByLocalities(url, String.valueOf(builder.projectStatusCount.underConstruction),
+                                "" + builder.projectCount.intValue(), "", "" + builder.name, builder.id));
+                    } else {
+                        nearByLocalities.add(new NearByLocalities(url, "0", "" + builder.projectCount.intValue(), "", "" + builder.name, builder.id));
+                    }
                 }
             }
-            }
+        }
 
         return nearByLocalities;
     }

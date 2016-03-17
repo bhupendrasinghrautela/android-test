@@ -107,9 +107,16 @@ public class MultipleLeadFormFragment extends MakaanBaseFragment {
             mPyrRequest.setCountryId(mCountryId);
             mPyrRequest.setApplicationType("MobileAndroidApp");
             mPyrRequest.setCityId(mLeadFormPresenter.getCityId());
+            mPyrRequest.setCityName(mLeadFormPresenter.getCityName());
+            mPyrRequest.setSalesType(mLeadFormPresenter.getSalesType());
             mPyrRequest.setPageType(null);
             mPyrRequest.setSendOtp(true);
             mPyrRequest.setLocalityIds(new int[]{mLeadFormPresenter.getLocalityId().intValue()});
+            mPyrRequest.setListingId(mLeadFormPresenter.getProjectOrListingId());
+            mPyrRequest.setProjectId(mLeadFormPresenter.getProjectId());
+//            mPyrRequest.setPropertyId(mLeadFormPresenter.getPropertyId());
+            mPyrRequest.setProjectName(mLeadFormPresenter.getProjectName());
+            /*
             Bundle bundle =getArguments();
             if(bundle!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
                 mPyrRequest.setListingId(mLeadFormPresenter.getProjectOrListingId());
@@ -122,6 +129,7 @@ public class MultipleLeadFormFragment extends MakaanBaseFragment {
             else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName())) {
                 mPyrRequest.setListingId(mLeadFormPresenter.getProjectOrListingId());
             }
+            */
             mLeadFormPresenter.setName(mName.getText().toString().trim());
             mLeadFormPresenter.setPhone(mNumber.getText().toString().trim());
             mLeadFormPresenter.setPyrRequest(mPyrRequest);

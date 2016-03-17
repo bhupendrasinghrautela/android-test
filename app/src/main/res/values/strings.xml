@@ -172,6 +172,7 @@
     <string name="localities_lifestyle_title">lifestyle in</string>
     <string name="locality_top_agents_label">top sellers</string>
     <string name="locality_top_builders_label">top builders in %s</string>
+    <string name="locality_top_builders_no_locality_label">top builders</string>
     <string name="locality_properties_label">properties in</string>
     <string name="locality_switch_buy">buy</string>
     <string name="locality_switch_rent">rent</string>

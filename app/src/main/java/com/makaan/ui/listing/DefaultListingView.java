@@ -267,7 +267,7 @@ public class DefaultListingView extends AbstractListingView {
         // set price info
         mPropertyPriceTextView.setText(priceString.toLowerCase());
         mPropertyPriceUnitTextView.setText(priceUnit);
-        if(mListing.pricePerUnitArea != 0) {
+        if(mListing.pricePerUnitArea != null && mListing.pricePerUnitArea != 0 && isBuy) {
             mPropertyPriceSqFtTextView.setVisibility(View.VISIBLE);
             mPropertyPriceSqFtTextView.setText(String.format("%s%s/sqft", "\u20B9", StringUtil.getFormattedNumber(mListing.pricePerUnitArea)).toLowerCase());
         } else {
@@ -402,8 +402,12 @@ public class DefaultListingView extends AbstractListingView {
 
                     Bundle bundle = new Bundle();
                     bundle.putLong(KeyUtil.LISTING_ID, mListing.id);
-                    bundle.putDouble(KeyUtil.LISTING_LAT, mListing.latitude);
-                    bundle.putDouble(KeyUtil.LISTING_LON, mListing.longitude);
+                    if(mListing.latitude != null) {
+                        bundle.putDouble(KeyUtil.LISTING_LAT, mListing.latitude);
+                    }
+                    if(mListing.longitude != null) {
+                        bundle.putDouble(KeyUtil.LISTING_LON, mListing.longitude);
+                    }
                     bundle.putString(KeyUtil.LISTING_Image, mListing.mainImageUrl);
 
                     mCallback.requestDetailPage(SerpActivity.REQUEST_PROPERTY_PAGE, bundle);
@@ -568,11 +572,25 @@ public class DefaultListingView extends AbstractListingView {
                     }
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     break;
+                } else if(mListing.floor != null && mListing.floor >= 0) {
+                    if(mListing.floor == 1) {
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>st</small></sup>", mListing.floor).toLowerCase()));
+                    } else if(mListing.floor == 2) {
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>nd</small></sup>", mListing.floor).toLowerCase()));
+                    } else if(mListing.floor == 3) {
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>rd</small></sup> ", mListing.floor).toLowerCase()));
+                    } else if(mListing.floor == 0) {
+                        mPropertyInfoTextViews.get(j).setText("gr");
+                    } else {
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>th</small></sup>", mListing.floor).toLowerCase()));
+                    }
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
+                    break;
                 } else {
                     return false;
                 }
             case "balcony":
-                if(mListing.balcony != null && mListing.balcony >= 0) {
+                if(mListing.balcony != null && mListing.balcony > 0) {
                     mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.balcony).toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     break;
@@ -630,7 +648,7 @@ public class DefaultListingView extends AbstractListingView {
                     return false;
                 }
             case "noOfOpenSides":
-                if(mListing.noOfOpenSides != null && mListing.noOfOpenSides >= 0) {
+                if(mListing.noOfOpenSides != null && mListing.noOfOpenSides > 0) {
                     mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.noOfOpenSides).toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     break;
@@ -704,30 +722,57 @@ public class DefaultListingView extends AbstractListingView {
 
         Bundle bundle = new Bundle();
 
-        bundle.putString("name", mListing.lisitingPostedBy.name);
-        bundle.putString("score", String.valueOf(mListing.lisitingPostedBy.rating));
+        bundle.putString(KeyUtil.NAME_LEAD_FORM, mListing.lisitingPostedBy.name);
+        bundle.putString(KeyUtil.SCORE_LEAD_FORM, String.valueOf(mListing.lisitingPostedBy.rating));
 
         if(mListing.lisitingPostedBy!=null && mListing.lisitingPostedBy.number!=null) {
-            bundle.putString("phone", mListing.lisitingPostedBy.number);
+            bundle.putString(KeyUtil.PHONE_LEAD_FORM, mListing.lisitingPostedBy.number);
         }
-        bundle.putString("id", String.valueOf(mListing.lisitingPostedBy.id));
-        bundle.putLong("listingId", mListing.lisitingId);
-        if(mListing!=null && mListing.cityId!=null) {
-            bundle.putLong("cityId", mListing.cityId);
+        bundle.putString(KeyUtil.SINGLE_SELLER_ID, String.valueOf(mListing.lisitingPostedBy.id));
+        bundle.putLong(KeyUtil.LISTING_ID_LEAD_FORM, mListing.lisitingId);
+
+        if(mListing!=null && mListing.cityName!=null && !TextUtils.isEmpty(mListing.listingCategory)){
+            if(mListing.listingCategory.equalsIgnoreCase("primary")||mListing.listingCategory.equalsIgnoreCase("resale")){
+                bundle.putString(KeyUtil.SALE_TYPE_LEAD_FORM, "buy");
+            }
+            else if(mListing.listingCategory.equalsIgnoreCase("rental")){
+                bundle.putString(KeyUtil.SALE_TYPE_LEAD_FORM, "rent");
+            }
         }
 
-        if(mListing!=null && mListing.project!=null && mListing.project.locality!=null && mListing.project.locality.localityId!=null) {
-            bundle.putLong("localityId", mListing.project.locality.localityId);
+        if(mListing!=null){
+            if( mListing.cityName!=null && !TextUtils.isEmpty(mListing.cityName)){
+                bundle.putString(KeyUtil.CITY_NAME_LEAD_FORM, mListing.cityName);
+            }
+            if(mListing.cityId!=null){
+                bundle.putLong(KeyUtil.CITY_ID_LEAD_FORM, mListing.cityId);
+            }
+        }
+
+        if(mListing != null && mListing.projectId != null && mListing.projectId > 0) {
+            bundle.putLong(KeyUtil.PROJECT_ID_LEAD_FORM, mListing.projectId);
+        } else if(mListing!=null && mListing.project!=null && mListing.project.projectId!=null){
+            bundle.putLong(KeyUtil.PROJECT_ID_LEAD_FORM, mListing.project.projectId);
+        }
+
+        if(mListing!=null && mListing.project!=null && mListing.project.name!=null){
+            bundle.putString(KeyUtil.PROJECT_NAME_LEAD_FORM, mListing.project.name);
+        }
+
+        if(mListing != null && mListing.localityId != null && mListing.localityId > 0) {
+            bundle.putLong(KeyUtil.LOCALITY_ID_LEAD_FORM, mListing.localityId);
+        } else if(mListing!=null && mListing.project!=null && mListing.project.locality!=null && mListing.project.locality.localityId!=null) {
+            bundle.putLong(KeyUtil.LOCALITY_ID_LEAD_FORM, mListing.project.locality.localityId);
         }
 
         if(!TextUtils.isEmpty(mListing.lisitingPostedBy.logo)) {
-            bundle.putString("sellerImageUrl",mListing.lisitingPostedBy.logo);
+            bundle.putString(KeyUtil.SELLER_IMAGE_URL_LEAD_FORM,mListing.lisitingPostedBy.logo);
         }
         else if(!TextUtils.isEmpty(mListing.lisitingPostedBy.profilePictureURL)) {
-            bundle.putString("sellerImageUrl", mListing.lisitingPostedBy.profilePictureURL);
+            bundle.putString(KeyUtil.SELLER_IMAGE_URL_LEAD_FORM, mListing.lisitingPostedBy.profilePictureURL);
         }
 
-        bundle.putString("source", SerpActivity.class.getName());
+        bundle.putString(KeyUtil.SOURCE_LEAD_FORM, SerpActivity.class.getName());
 
         mCallback.requestDetailPage(SerpActivity.REQUEST_LEAD_FORM, bundle);
     }

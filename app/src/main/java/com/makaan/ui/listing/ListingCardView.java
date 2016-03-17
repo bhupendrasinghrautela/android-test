@@ -175,8 +175,12 @@ public class ListingCardView extends AbstractListingView {
                 if (mListing != null) {
                     Bundle bundle = new Bundle();
                     bundle.putLong(KeyUtil.LISTING_ID, mListing.id);
-                    bundle.putDouble(KeyUtil.LISTING_LAT, mListing.latitude);
-                    bundle.putDouble(KeyUtil.LISTING_LON, mListing.longitude);
+                    if(mListing.latitude != null) {
+                        bundle.putDouble(KeyUtil.LISTING_LAT, mListing.latitude);
+                    }
+                    if(mListing.longitude != null) {
+                        bundle.putDouble(KeyUtil.LISTING_LON, mListing.longitude);
+                    }
                     bundle.putString(KeyUtil.LISTING_Image, mListing.mainImageUrl);
 
                     Intent intent = new Intent(mContext, PropertyActivity.class);

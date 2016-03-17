@@ -93,7 +93,7 @@
         },
         {
           "displayName":"floor",
-          "fieldName":"floor",
+          "fieldName":"floor,totalFloors",
           "imageName":"floor"
         },
         {

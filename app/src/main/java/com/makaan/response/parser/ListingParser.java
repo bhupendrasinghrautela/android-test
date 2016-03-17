@@ -1,5 +1,6 @@
 package com.makaan.response.parser;
 
+import android.renderscript.Double2;
 import android.util.Log;
 
 import com.makaan.cache.MasterDataCache;
@@ -88,10 +89,12 @@ public class ListingParser {
 
                     listing.size = property.optDouble(SIZE);
                     listing.measure = property.optString(MEASURE);
-                    if ((listing.size == Math.floor(listing.size)) && !Double.isInfinite(listing.size)) {
-                        listing.sizeInfo = listing.size > 0 ? String.valueOf(StringUtil.getFormattedNumber(listing.size.intValue())).concat(" ").concat(listing.measure) : null;
-                    } else {
-                        listing.sizeInfo = listing.size > 0 ? StringUtil.getFormattedNumber(listing.size).concat(" ").concat(listing.measure) : null;
+                    if(listing.size != null && listing.measure != null) {
+                        if ((listing.size == Math.floor(listing.size)) && !Double.isInfinite(listing.size)) {
+                            listing.sizeInfo = listing.size > 0 ? String.valueOf(StringUtil.getFormattedNumber(listing.size.intValue())).concat(" ").concat(listing.measure) : null;
+                        } else {
+                            listing.sizeInfo = listing.size > 0 ? StringUtil.getFormattedNumber(listing.size).concat(" ").concat(listing.measure) : null;
+                        }
                     }
 
 
@@ -101,8 +104,31 @@ public class ListingParser {
 
                     buildBHKInfo(listing, property);
 
-                    listing.latitude = project.optDouble(LATITUDE);
-                    listing.longitude = project.optDouble(LONGITUDE);
+                    listing.latitude = listingJson.optDouble(LISTING_LATITUDE);
+                    listing.longitude = listingJson.optDouble(LISTING_LONGITUDE);
+
+                    if(listing.latitude == null || listing.longitude == null
+                            || listing.latitude == 0 || listing.longitude == 0
+                            || Double.isNaN(listing.latitude) || Double.isNaN(listing.longitude)) {
+                        listing.latitude = listingJson.optDouble(LATITUDE);
+                        listing.longitude = listingJson.optDouble(LONGITUDE);
+
+                        if(listing.latitude == null || listing.longitude == null
+                                || listing.latitude == 0 || listing.longitude == 0
+                                || Double.isNaN(listing.latitude) || Double.isNaN(listing.longitude)) {
+
+                            listing.latitude = project.optDouble(LATITUDE);
+                            listing.longitude = project.optDouble(LONGITUDE);
+
+                            if(listing.latitude == null || listing.longitude == null
+                                    || listing.latitude == 0 || listing.longitude == 0
+                                    || Double.isNaN(listing.latitude) || Double.isNaN(listing.longitude)) {
+
+                                listing.latitude = listingJson.optDouble(LISTING_LATITUDE);
+                                listing.longitude = listingJson.optDouble(LISTING_LONGITUDE);
+                            }
+                        }
+                    }
 
 
                     listing.pricePerUnitArea = currentListingPrice.optInt(PRICE_PER_UNIT_AREA);
@@ -143,6 +169,7 @@ public class ListingParser {
                     }
                     // }
 
+                    listing.localityId = locality.optLong(LOCALITY_ID);
                     listing.localityName = locality.optString(LABEL);
                     listing.suburbName = suburb.optString(LABEL);
                     listing.cityName = city.optString(LABEL);

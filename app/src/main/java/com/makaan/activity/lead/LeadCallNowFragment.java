@@ -151,17 +151,21 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }
-                    mSellerImage.setVisibility(View.VISIBLE);
-                    mSellerNameProfileText.setVisibility(View.INVISIBLE);
-                    mSellerImage.setImageBitmap(imageContainer.getBitmap());
+                    if(isVisible()) {
+                        mSellerImage.setVisibility(View.VISIBLE);
+                        mSellerNameProfileText.setVisibility(View.INVISIBLE);
+                        mSellerImage.setImageBitmap(imageContainer.getBitmap());
+                    }
                 }
 
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     super.onErrorResponse(volleyError);
-                    mSellerImage.setVisibility(View.INVISIBLE);
-                    mSellerNameProfileText.setVisibility(View.VISIBLE);
-                    mSellerNameProfileText.setText(mLeadFormPresenter.getName());
+                    if(isVisible()) {
+                        mSellerImage.setVisibility(View.INVISIBLE);
+                        mSellerNameProfileText.setVisibility(View.VISIBLE);
+                        mSellerNameProfileText.setText(mLeadFormPresenter.getName());
+                    }
                 }
             });
         }

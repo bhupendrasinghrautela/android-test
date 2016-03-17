@@ -67,11 +67,13 @@ import com.makaan.ui.property.ListingDataOverViewScroll;
 import com.makaan.ui.property.PropertyImageViewPager;
 import com.makaan.ui.view.FontTextView;
 import com.makaan.util.AppUtils;
+import com.makaan.util.KeyUtil;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,15 +130,16 @@ public class ProjectFragment extends MakaanBaseFragment{
                 if(projectConfigItem.topSellerCard == null){
                     continue;
                 }
-                if(sellerCard == null){
+                if (sellerCard == null) {
                     sellerCard = projectConfigItem.topSellerCard;
-                }
-                else if(sellerCard.noOfProperties<projectConfigItem.topSellerCard.noOfProperties){
-                    sellerCard = projectConfigItem.topSellerCard;
-                }
-                else if(sellerCard.noOfProperties == projectConfigItem.topSellerCard.noOfProperties
-                        && sellerCard.rating<projectConfigItem.topSellerCard.rating){
-                    sellerCard = projectConfigItem.topSellerCard;
+                } else if (sellerCard.noOfProperties != null && projectConfigItem.topSellerCard.noOfProperties != null) {
+                    if(sellerCard.noOfProperties < projectConfigItem.topSellerCard.noOfProperties) {
+                        sellerCard = projectConfigItem.topSellerCard;
+                    } else if (sellerCard.noOfProperties.equals(projectConfigItem.topSellerCard.noOfProperties)
+                            && sellerCard.rating != null && projectConfigItem.topSellerCard.rating != null
+                            && sellerCard.rating < projectConfigItem.topSellerCard.rating) {
+                        sellerCard = projectConfigItem.topSellerCard;
+                    }
                 }
             }
         }
@@ -145,39 +148,57 @@ public class ProjectFragment extends MakaanBaseFragment{
                 if(projectConfigItem.topSellerCard == null){
                     continue;
                 }
-                if(sellerCard == null){
+                if (sellerCard == null) {
                     sellerCard = projectConfigItem.topSellerCard;
-                }
-                else if(sellerCard.noOfProperties<projectConfigItem.topSellerCard.noOfProperties){
-                    sellerCard = projectConfigItem.topSellerCard;
-                }
-                else if(sellerCard.noOfProperties==projectConfigItem.topSellerCard.noOfProperties
-                        && sellerCard.rating!=null && projectConfigItem.topSellerCard.rating!=null &&  sellerCard.rating<projectConfigItem.topSellerCard.rating){
-                    sellerCard = projectConfigItem.topSellerCard;
+                } else if (sellerCard.noOfProperties != null && projectConfigItem.topSellerCard.noOfProperties != null) {
+                    if (sellerCard.noOfProperties < projectConfigItem.topSellerCard.noOfProperties) {
+                        sellerCard = projectConfigItem.topSellerCard;
+                    } else if (sellerCard.noOfProperties.equals(projectConfigItem.topSellerCard.noOfProperties)
+                            && sellerCard.rating != null && projectConfigItem.topSellerCard.rating != null
+                            && sellerCard.rating < projectConfigItem.topSellerCard.rating) {
+                        sellerCard = projectConfigItem.topSellerCard;
+                    }
                 }
             }
         }
         if(sellerCard!=null) {
             Intent intent = new Intent(getActivity(), LeadFormActivity.class);
             try {
-                intent.putExtra("name", sellerCard.name);
+                intent.putExtra(KeyUtil.NAME_LEAD_FORM, sellerCard.name);
                 if (sellerCard.rating != null) {
-                    intent.putExtra("score", sellerCard.rating.toString());
+                    intent.putExtra(KeyUtil.SCORE_LEAD_FORM, sellerCard.rating.toString());
                 } else {
-                    intent.putExtra("score", "0");
+                    intent.putExtra(KeyUtil.SCORE_LEAD_FORM, "0");
                 }
-                intent.putExtra("phone",sellerCard.contactNo);//todo: not available in pojo
-                intent.putExtra("id", sellerCard.sellerId.toString());
-                intent.putExtra("source",ProjectFragment.class.getName());
-                intent.putExtra("listingId",project.projectId);
-                if(project!=null && project.locality!=null && project.locality.cityId!=null) {
-                    intent.putExtra("cityId", project.locality.cityId);
+                intent.putExtra(KeyUtil.PHONE_LEAD_FORM, sellerCard.contactNo);//todo: not available in pojo
+                intent.putExtra(KeyUtil.SINGLE_SELLER_ID, sellerCard.sellerId.toString());
+                intent.putExtra(KeyUtil.SOURCE_LEAD_FORM, ProjectFragment.class.getName());
+                intent.putExtra(KeyUtil.PROJECT_ID_LEAD_FORM ,project.projectId);
+                intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, "buy");
+
+                if(project!=null && project.name!=null) {
+                    intent.putExtra(KeyUtil.PROJECT_NAME_LEAD_FORM, project.name);
+                    if (project.projectId != null) {
+                        intent.putExtra(KeyUtil.PROJECT_ID_LEAD_FORM, project.projectId);
+                    }
+                    if(project.locality!=null){
+                        if(project.locality.suburb!=null &&
+                                project.locality.suburb.city!=null && project.locality.suburb.city.label!=null){
+                            intent.putExtra(KeyUtil.CITY_NAME_LEAD_FORM,project.locality.suburb.city.label);
+                        }
+
+                        if(project!=null && project.locality!=null && project.locality.cityId!=null) {
+                            intent.putExtra(KeyUtil.CITY_ID_LEAD_FORM, project.locality.cityId);
+                        }
+
+                        if(project!=null && project.locality!=null && project.locality.localityId!=null) {
+                            intent.putExtra(KeyUtil.LOCALITY_ID_LEAD_FORM, project.locality.localityId);
+                        }
+                    }
                 }
-                if(project!=null && project.locality!=null && project.locality.localityId!=null) {
-                    intent.putExtra("localityId", project.locality.localityId);
-                }
+
                 if(sellerCard.imageUrl!=null){
-                    intent.putExtra("sellerImageUrl", sellerCard.imageUrl);
+                    intent.putExtra(KeyUtil.SELLER_IMAGE_URL_LEAD_FORM, sellerCard.imageUrl);
                 }
                 getActivity().startActivity(intent);
             } catch (NullPointerException e) {
@@ -253,25 +274,44 @@ public class ProjectFragment extends MakaanBaseFragment{
 
                     Bundle bundle=new Bundle();
                     bundle.putString(MakaanEventPayload.PROJECT_ID, String.valueOf(project.projectId));
-                    bundle.putString("source", ProjectFragment.class.getName());
-                    if(project!=null && project.locality!=null && project.locality.cityId!=null) {
-                        bundle.putLong("cityId", project.locality.cityId);
+                    bundle.putString(KeyUtil.SOURCE_LEAD_FORM, ProjectFragment.class.getName());
+                    bundle.putString(KeyUtil.SALE_TYPE_LEAD_FORM, "buy");
+
+                    if(project!=null) {
+                        if(project.projectId!=null) {
+                            bundle.putLong(KeyUtil.PROJECT_ID_LEAD_FORM, project.projectId);
+                        }
+                        if(project.name!=null) {
+                            bundle.putString(KeyUtil.PROJECT_NAME_LEAD_FORM, project.name);
+                        }
+
+                        if(project.locality!=null){
+
+                            if(project.locality.localityId != null){
+                                bundle.putLong(KeyUtil.LOCALITY_ID_LEAD_FORM, project.locality.localityId);
+
+                            }
+                            if(project.locality.label!=null){
+                                bundle.putString("locality", String.valueOf(project.locality.label));
+                            }
+                            if(project.locality.cityId != null){
+                                bundle.putLong(KeyUtil.CITY_ID_LEAD_FORM, project.locality.cityId);
+                            }
+                            if(project.locality.suburb != null
+                                    && project.locality.suburb.city != null && project.locality.suburb.city.label != null){
+                                bundle.putString(KeyUtil.CITY_NAME_LEAD_FORM, project.locality.suburb.city.label);
+                            }
+                        }
+
+                        if(project.builder!=null && project.builder.name!=null) {
+                            bundle.putString("builder", String.valueOf(project.builder.name));
+                        }
                     }
-                    if(project!=null && project.projectId!=null) {
-                        bundle.putLong("listingId", project.projectId);
-                    }
-                    if(project!=null && project.locality!=null && project.locality.label!=null) {
-                        bundle.putString("locality", String.valueOf(project.locality.label));
-                    }
+
                     if(project!=null && project.name!=null) {
-                        bundle.putString("project", String.valueOf(project.name));
+                        bundle.putString(KeyUtil.PROJECT_LEAD_FORM, String.valueOf(project.name));
                     }
-                    if(project.builder!=null && project.builder.name!=null) {
-                        bundle.putString("builder", String.valueOf(project.builder.name));
-                    }
-                    if(project!=null && project.locality!=null && project.locality.localityId != null) {
-                        bundle.putLong("localityId", project.locality.localityId);
-                    }
+
                     viewSellersDialogFragment.setArguments(bundle);
                     viewSellersDialogFragment.bindView(sellerCards);
                     viewSellersDialogFragment.show(ft, "allSellers");
@@ -722,15 +762,17 @@ public class ProjectFragment extends MakaanBaseFragment{
             return;
         }
 
-        ProjectKynFragment fragment = new ProjectKynFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("title", "about " + project.locality.label);
-        bundle.putLong("localityId", project.localityId);
-        bundle.putDouble("score", project.locality.livabilityScore==null?0:project.locality.livabilityScore);
-        bundle.putString("description", project.locality.description);
-        fragment.setArguments(bundle);
-        initFragment(R.id.container_about_locality, fragment, false);
-        fragment.setData(mAmenityClusters);
+        if(project.locality != null || project.localityId != null) {
+            ProjectKynFragment fragment = new ProjectKynFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("title", "about " + project.locality.label);
+            bundle.putLong("localityId", project.localityId);
+            bundle.putDouble("score", project.locality.livabilityScore == null ? 0 : project.locality.livabilityScore);
+            bundle.putString("description", project.locality.description);
+            fragment.setArguments(bundle);
+            initFragment(R.id.container_about_locality, fragment, false);
+            fragment.setData(mAmenityClusters);
+        }
     }
 
     protected void initFragment(int fragmentHolderId, Fragment fragment, boolean shouldAddToBackStack) {

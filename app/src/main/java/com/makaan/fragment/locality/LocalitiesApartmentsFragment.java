@@ -184,67 +184,112 @@ public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
     }
 
     private void calculateMinForOneBhks(DataItem dataItem, ListingAggregation listingAggregation) {
-        if(dataItem.oneBhkMinArea == 0&&listingAggregation.minSize>100)
-            dataItem.oneBhkMinArea= listingAggregation.minSize;
-        else
-        if(dataItem.oneBhkMinArea>listingAggregation.minSize&&listingAggregation.minSize>100){dataItem.oneBhkMinArea=listingAggregation.minSize;}
+        if (dataItem.oneBhkMinArea != null && dataItem.oneBhkMinArea == 0
+                && listingAggregation.minSize != null && listingAggregation.minSize > 100) {
+            dataItem.oneBhkMinArea = listingAggregation.minSize;
+        } else if (dataItem.oneBhkMinArea != null && listingAggregation.minSize != null
+                && dataItem.oneBhkMinArea > listingAggregation.minSize && listingAggregation.minSize > 100) {
+            dataItem.oneBhkMinArea = listingAggregation.minSize;
+        }
 
-        if(dataItem.oneBhkMinPricePerArea == 0&&listingAggregation.minPricePerUnitArea>100)
-            dataItem.oneBhkMinPricePerArea= listingAggregation.minPricePerUnitArea;
-        else
-        if(dataItem.oneBhkMinPricePerArea>listingAggregation.minPricePerUnitArea&&listingAggregation.minPricePerUnitArea>100){dataItem.oneBhkMinPricePerArea=listingAggregation.minPricePerUnitArea;}
+        if (dataItem.oneBhkMinPricePerArea != null && dataItem.oneBhkMinPricePerArea == 0
+                && listingAggregation.minPricePerUnitArea != null && listingAggregation.minPricePerUnitArea > 100) {
+            dataItem.oneBhkMinPricePerArea = listingAggregation.minPricePerUnitArea;
+        } else if (dataItem.oneBhkMinPricePerArea != null && listingAggregation.minPricePerUnitArea != null
+                && dataItem.oneBhkMinPricePerArea > listingAggregation.minPricePerUnitArea && listingAggregation.minPricePerUnitArea > 100) {
+            dataItem.oneBhkMinPricePerArea = listingAggregation.minPricePerUnitArea;
+        }
 
-        if(dataItem.oneBhkMinPrice == 0&&listingAggregation.minPrice>100000)
-            dataItem.oneBhkMinPrice= listingAggregation.minPrice;
-        else
-        if(dataItem.oneBhkMinPrice>listingAggregation.minPrice&&listingAggregation.minPrice>100000){dataItem.oneBhkMinPrice=listingAggregation.minPrice;}
+        if (dataItem.oneBhkMinPrice != null && dataItem.oneBhkMinPrice == 0
+                && listingAggregation.minPrice != null && listingAggregation.minPrice > 100000) {
+            dataItem.oneBhkMinPrice = listingAggregation.minPrice;
+        } else if (dataItem.oneBhkMinPrice != null && listingAggregation.minPrice != null
+                && dataItem.oneBhkMinPrice > listingAggregation.minPrice && listingAggregation.minPrice > 100000) {
+            dataItem.oneBhkMinPrice = listingAggregation.minPrice;
+        }
 
     }
 
     private void calculateMaxForTwoBhks(DataItem dataItem, ListingAggregation listingAggregation) {
-        if(dataItem.twoBhkMaxArea<listingAggregation.maxSize){ dataItem.twoBhkMaxArea = listingAggregation.maxSize;}
-        if(dataItem.twoBhkMaxPrice<listingAggregation.maxPrice){ dataItem.twoBhkMaxPrice = listingAggregation.maxPrice;}
-        if(dataItem.twoBhkMaxAPricePerArea<listingAggregation.maxPricePerUnitArea){ dataItem.twoBhkMaxAPricePerArea = listingAggregation.maxPricePerUnitArea;}
+        if (dataItem.twoBhkMaxArea != null && listingAggregation.maxSize != null
+                && dataItem.twoBhkMaxArea < listingAggregation.maxSize) {
+            dataItem.twoBhkMaxArea = listingAggregation.maxSize;
+        }
+        if (dataItem.twoBhkMaxPrice != null && listingAggregation.maxPrice != null
+                && dataItem.twoBhkMaxPrice < listingAggregation.maxPrice) {
+            dataItem.twoBhkMaxPrice = listingAggregation.maxPrice;
+        }
+        if (dataItem.twoBhkMaxAPricePerArea != null && listingAggregation.maxPricePerUnitArea != null
+                && dataItem.twoBhkMaxAPricePerArea < listingAggregation.maxPricePerUnitArea) {
+            dataItem.twoBhkMaxAPricePerArea = listingAggregation.maxPricePerUnitArea;
+        }
     }
 
     private void calculateMinForTwoBhks(DataItem dataItem, ListingAggregation listingAggregation) {
-        if(dataItem.twoBhkMinArea == 0&&listingAggregation.minSize>100)
-            dataItem.twoBhkMinArea= listingAggregation.minSize;
-        else
-        if(dataItem.twoBhkMinArea>listingAggregation.minSize&&listingAggregation.minSize>100){dataItem.twoBhkMinArea=listingAggregation.minSize;}
+        if (dataItem.twoBhkMinArea != null && dataItem.twoBhkMinArea == 0
+                && listingAggregation.minSize != null && listingAggregation.minSize > 100) {
+            dataItem.twoBhkMinArea = listingAggregation.minSize;
+        } else if (dataItem.twoBhkMinArea != null && listingAggregation.minSize != null
+                && dataItem.twoBhkMinArea > listingAggregation.minSize && listingAggregation.minSize > 100) {
+            dataItem.twoBhkMinArea = listingAggregation.minSize;
+        }
 
-        if(dataItem.twoBhkMinPricePerArea == 0&&listingAggregation.minPrice>100000)
-            dataItem.twoBhkMinPricePerArea= listingAggregation.minPrice;
-        else
-        if(dataItem.twoBhkMinPricePerArea>listingAggregation.minPrice&&listingAggregation.minPrice>100000){dataItem.twoBhkMinPricePerArea=listingAggregation.minPrice;}
+        if (dataItem.twoBhkMinPricePerArea != null && dataItem.twoBhkMinPricePerArea == 0
+                && listingAggregation.minPrice != null && listingAggregation.minPrice > 100000) {
+            dataItem.twoBhkMinPricePerArea = listingAggregation.minPrice;
+        } else if (dataItem.twoBhkMinPricePerArea != null && listingAggregation.minPrice != null
+                && dataItem.twoBhkMinPricePerArea > listingAggregation.minPrice && listingAggregation.minPrice > 100000) {
+            dataItem.twoBhkMinPricePerArea = listingAggregation.minPrice;
+        }
 
-        if(dataItem.twoBhkMinPrice == 0&&listingAggregation.minPricePerUnitArea>100)
-            dataItem.twoBhkMinPrice= listingAggregation.minPricePerUnitArea;
-        else
-        if(dataItem.twoBhkMinPrice>listingAggregation.minPricePerUnitArea&&listingAggregation.minPricePerUnitArea>100){dataItem.twoBhkMinPrice=listingAggregation.minPricePerUnitArea;}
+        if (dataItem.twoBhkMinPrice != null && dataItem.twoBhkMinPrice == 0
+                && listingAggregation.minPricePerUnitArea != null && listingAggregation.minPricePerUnitArea > 100) {
+            dataItem.twoBhkMinPrice = listingAggregation.minPricePerUnitArea;
+        } else if (dataItem.twoBhkMinPrice != null && listingAggregation.minPricePerUnitArea != null
+                && dataItem.twoBhkMinPrice > listingAggregation.minPricePerUnitArea && listingAggregation.minPricePerUnitArea > 100) {
+            dataItem.twoBhkMinPrice = listingAggregation.minPricePerUnitArea;
+        }
     }
 
     private void calculateMaxForThreeBhks(DataItem dataItem, ListingAggregation listingAggregation) {
-        if(dataItem.threeBhkMaxArea<listingAggregation.maxSize){ dataItem.threeBhkMaxArea = listingAggregation.maxSize;}
-        if(dataItem.threeBhkMaxPrice<listingAggregation.maxPrice){ dataItem.threeBhkMaxPrice = listingAggregation.maxPrice;}
-        if(dataItem.threeBhkMaxPricePerArea<listingAggregation.maxPricePerUnitArea){ dataItem.threeBhkMaxPricePerArea = listingAggregation.maxPricePerUnitArea;}
+        if (dataItem.threeBhkMaxArea != null && listingAggregation.maxSize != null
+                && dataItem.threeBhkMaxArea < listingAggregation.maxSize) {
+            dataItem.threeBhkMaxArea = listingAggregation.maxSize;
+        }
+        if (dataItem.threeBhkMaxPrice != null && listingAggregation.maxPrice != null
+                && dataItem.threeBhkMaxPrice < listingAggregation.maxPrice) {
+            dataItem.threeBhkMaxPrice = listingAggregation.maxPrice;
+        }
+        if (dataItem.threeBhkMaxPricePerArea != null && listingAggregation.maxPricePerUnitArea != null
+                && dataItem.threeBhkMaxPricePerArea < listingAggregation.maxPricePerUnitArea) {
+            dataItem.threeBhkMaxPricePerArea = listingAggregation.maxPricePerUnitArea;
+        }
     }
 
     private void calculateMinsForThreeBhks(DataItem dataItem, ListingAggregation listingAggregation) {
-        if(dataItem.threeBhkMinArea == 0&&listingAggregation.minSize>100)
-            dataItem.threeBhkMinArea= listingAggregation.minSize;
-        else
-        if(dataItem.threeBhkMinArea>listingAggregation.minSize&&listingAggregation.minSize>100){dataItem.threeBhkMinArea=listingAggregation.minSize;}
+        if (dataItem.threeBhkMinArea != null && dataItem.threeBhkMinArea == 0
+                && listingAggregation.minSize != null && listingAggregation.minSize > 100) {
+            dataItem.threeBhkMinArea = listingAggregation.minSize;
+        } else if (dataItem.threeBhkMinArea != null && listingAggregation.minSize != null
+                && dataItem.threeBhkMinArea > listingAggregation.minSize && listingAggregation.minSize > 100) {
+            dataItem.threeBhkMinArea = listingAggregation.minSize;
+        }
 
-        if(dataItem.threeBhkMinPricePerArea == 0&&listingAggregation.minPricePerUnitArea>100)
-            dataItem.threeBhkMinPricePerArea= listingAggregation.minPricePerUnitArea;
-        else
-        if(dataItem.threeBhkMinPricePerArea>listingAggregation.minPricePerUnitArea&&listingAggregation.minPricePerUnitArea>100){dataItem.threeBhkMinPricePerArea=listingAggregation.minPricePerUnitArea;}
+        if (dataItem.threeBhkMinPricePerArea != null && dataItem.threeBhkMinPricePerArea == 0
+                && listingAggregation.minPricePerUnitArea != null && listingAggregation.minPricePerUnitArea > 100) {
+            dataItem.threeBhkMinPricePerArea = listingAggregation.minPricePerUnitArea;
+        } else if (dataItem.threeBhkMinPricePerArea != null && listingAggregation.minPricePerUnitArea != null
+                && dataItem.threeBhkMinPricePerArea > listingAggregation.minPricePerUnitArea && listingAggregation.minPricePerUnitArea > 100) {
+            dataItem.threeBhkMinPricePerArea = listingAggregation.minPricePerUnitArea;
+        }
 
-        if(dataItem.threeBhkMinPrice == 0&&listingAggregation.minPrice>100000)
-            dataItem.threeBhkMinPrice= listingAggregation.minPrice;
-        else
-        if(dataItem.threeBhkMinPrice>listingAggregation.minPrice&&listingAggregation.minPrice>100000){dataItem.threeBhkMinPrice=listingAggregation.minPrice;}
+        if (dataItem.threeBhkMinPrice != null && dataItem.threeBhkMinPrice == 0
+                && listingAggregation.minPrice != null && listingAggregation.minPrice > 100000) {
+            dataItem.threeBhkMinPrice = listingAggregation.minPrice;
+        } else if (dataItem.threeBhkMinPrice != null && listingAggregation.minPrice != null
+                && dataItem.threeBhkMinPrice > listingAggregation.minPrice && listingAggregation.minPrice > 100000) {
+            dataItem.threeBhkMinPrice = listingAggregation.minPrice;
+        }
     }
 
     private void filterPrimaryAndSecondary(ArrayList<ListingAggregation> nearByLocalities) {
@@ -311,19 +356,59 @@ public class LocalitiesApartmentsFragment extends MakaanBaseFragment {
             holder.unitTypeTv.setText(property.unitType);
 
             holder.oneBhkLabel.setText("1 bhk");
-            holder.oneBhkAreaRange.setText(property.oneBhkMinArea+" - "+property.oneBhkMaxArea+" sq ft");
-            holder.oneBhkPriceAreaRange.setText(property.oneBhkMinPricePerArea+" - "+property.oneBhkMaxPricePerArea+" / sq ft");
-            holder.oneBhkPriceRange.setText("\u20B9 "+(String.format("%.1f", property.oneBhkMinPrice/100000))+" L"+" - "+(String.format("%.1f", property.oneBhkMaxPrice/100000))+" L");
+            if(property.oneBhkMinArea != null && property.oneBhkMaxArea != null) {
+                holder.oneBhkAreaRange.setVisibility(View.VISIBLE);
+                holder.oneBhkAreaRange.setText(property.oneBhkMinArea + " - " + property.oneBhkMaxArea + " sq ft");
+            } else {
+                holder.oneBhkAreaRange.setVisibility(View.INVISIBLE);
+            }
+            if(property.oneBhkMinPricePerArea != null && property.oneBhkMaxPricePerArea != null) {
+                holder.oneBhkPriceAreaRange.setVisibility(View.VISIBLE);
+                holder.oneBhkPriceAreaRange.setText(property.oneBhkMinPricePerArea + " - " + property.oneBhkMaxPricePerArea + " / sq ft");
+            } else {
+                holder.oneBhkPriceAreaRange.setVisibility(View.INVISIBLE);
+            }
+            if(property.oneBhkMinPrice != null && property.oneBhkMaxPrice != null) {
+                holder.oneBhkPriceRange.setVisibility(View.VISIBLE);
+                holder.oneBhkPriceRange.setText("\u20B9 " + (String.format("%.1f", property.oneBhkMinPrice / 100000)) + " L" + " - " + (String.format("%.1f", property.oneBhkMaxPrice / 100000)) + " L");
+            } else {
+                holder.oneBhkPriceRange.setVisibility(View.INVISIBLE);
+            }
 
 
             holder.twoBhkLabel.setText("2 bhk");
-            holder.twoBhkAreaRange.setText(property.twoBhkMinArea+" - "+property.twoBhkMaxArea+" sq ft");
-            holder.twoBhkPriceRange.setText("\u20B9 "+(String.format("%.1f", property.twoBhkMinPrice/100000))+" L"+" - "+(String.format("%.1f", property.twoBhkMaxPrice/100000))+" L");
+            if(property.twoBhkMinArea != null && property.twoBhkMaxArea != null) {
+                holder.twoBhkAreaRange.setVisibility(View.VISIBLE);
+                holder.twoBhkAreaRange.setText(property.twoBhkMinArea + " - " + property.twoBhkMaxArea + " sq ft");
+            } else {
+                holder.twoBhkAreaRange.setVisibility(View.INVISIBLE);
+            }
+            if(property.twoBhkMinPrice != null && property.twoBhkMaxPrice != null) {
+                holder.twoBhkPriceRange.setVisibility(View.VISIBLE);
+                holder.twoBhkPriceRange.setText("\u20B9 " + (String.format("%.1f", property.twoBhkMinPrice / 100000)) + " L" + " - " + (String.format("%.1f", property.twoBhkMaxPrice / 100000)) + " L");
+            } else {
+                holder.twoBhkPriceRange.setVisibility(View.INVISIBLE);
+            }
 
             holder.threeBhkLabel.setText("3 bhk");
-            holder.threeBhkAreaRange.setText(property.threeBhkMinArea+" - "+property.threeBhkMaxArea+" sq ft");
-            holder.threeBhkPriceAreaRange.setText(property.threeBhkMinPricePerArea+" - "+property.threeBhkMaxPricePerArea+" / sq ft");
-            holder.threeBhkPriceRange.setText("\u20B9 "+(String.format("%.1f", property.threeBhkMinPrice/100000))+" L"+" - "+(String.format("%.1f", property.threeBhkMaxPrice/100000))+" L");
+            if(property.threeBhkMinArea != null && property.threeBhkMaxArea != null) {
+                holder.threeBhkAreaRange.setVisibility(View.VISIBLE);
+                holder.threeBhkAreaRange.setText(property.threeBhkMinArea + " - " + property.threeBhkMaxArea + " sq ft");
+            } else {
+                holder.threeBhkAreaRange.setVisibility(View.INVISIBLE);
+            }
+            if(property.threeBhkMinPricePerArea != null && property.threeBhkMaxPricePerArea != null) {
+                holder.threeBhkPriceAreaRange.setVisibility(View.VISIBLE);
+                holder.threeBhkPriceAreaRange.setText(property.threeBhkMinPricePerArea + " - " + property.threeBhkMaxPricePerArea + " / sq ft");
+            } else {
+                holder.threeBhkPriceAreaRange.setVisibility(View.INVISIBLE);
+            }
+            if(property.threeBhkMinPrice != null && property.threeBhkMaxPrice != null) {
+                holder.threeBhkPriceRange.setVisibility(View.VISIBLE);
+                holder.threeBhkPriceRange.setText("\u20B9 " + (String.format("%.1f", property.threeBhkMinPrice / 100000)) + " L" + " - " + (String.format("%.1f", property.threeBhkMaxPrice / 100000)) + " L");
+            } else {
+                holder.threeBhkPriceRange.setVisibility(View.INVISIBLE);
+            }
         }
 
         @Override

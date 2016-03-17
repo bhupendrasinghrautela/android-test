@@ -295,7 +295,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                     case CATEGORY:
                         if(mDetail.listingCategory!=null) {
                             overViewItem.name = "new/resale";
-                            overViewItem.resourceId = R.drawable.ownership;
+                            overViewItem.resourceId = R.drawable.new_resale;
                             if("primary".equalsIgnoreCase(mDetail.listingCategory)) {
                                 overViewItem.value = "new".toLowerCase();
                             } else if("resale".equalsIgnoreCase(mDetail.listingCategory)) {

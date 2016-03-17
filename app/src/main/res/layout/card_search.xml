@@ -15,7 +15,8 @@
             android:id="@+id/iv_search"
             android:layout_width="match_parent"
             android:layout_height="@dimen/buyer_content_image_height"
-            android:layout_alignParentTop="true"/>
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop"/>
 
         <ImageView
             android:id="@+id/iv_cancel"

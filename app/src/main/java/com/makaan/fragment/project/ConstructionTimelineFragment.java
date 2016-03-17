@@ -2,6 +2,7 @@ package com.makaan.fragment.project;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +72,8 @@ public class ConstructionTimelineFragment extends MakaanBaseFragment implements 
         }
         List<TimelineView.TimelineDataItem> list = new ArrayList<>();
         for (Image image : imagesGetEvent.images) {
-            if(image.imageTypeId != null && image.imageTypeId == 282) {
+            if(image.imageType != null && !TextUtils.isEmpty(image.imageType.type)
+                    && ImageConstants.CONSTRUCTION_STATUS.equals(image.imageType.type)) {
                 list.add(new TimelineView.TimelineDataItem(image.createdAt, image.absolutePath));//TODO: replace createdAt with imageTakenAt when ever it is available
             }
         }

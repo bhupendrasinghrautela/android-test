@@ -268,7 +268,12 @@ public class LocalityFragment extends MakaanBaseFragment {
             mCityCollapseToolbar.setTitle(locality.label.toLowerCase());
             interestedInTv.setText("interested in "+locality.label.toLowerCase()+"?");
         }
-        livinScoreTv.setText("" + locality.livabilityScore);
+        if(locality.livabilityScore != null) {
+            livinScoreTv.setVisibility(View.VISIBLE);
+            livinScoreTv.setText("" + locality.livabilityScore);
+        } else {
+            livinScoreTv.setVisibility(View.INVISIBLE);
+        }
         livingScoreProgress.setProgress(locality.livabilityScore == null ? 0 : (int) (locality.livabilityScore * 10));
         livingScoreProgress.setVisibility(locality.livabilityScore == null ? View.GONE : View.VISIBLE);
         livinScoreTv.setVisibility(locality.livabilityScore == null ? View.GONE : View.VISIBLE);
@@ -475,7 +480,11 @@ public class LocalityFragment extends MakaanBaseFragment {
         if(builders != null && builders.size()>0) {
             NearByLocalitiesFragment newFragment = new NearByLocalitiesFragment();
             Bundle bundle = new Bundle();
-            bundle.putString("title", String.format(getResources().getString(R.string.locality_top_builders_label), locality.label));
+            if(null==locality){
+                bundle.putString("title", getResources().getString(R.string.locality_top_builders_no_locality_label));
+            }else {
+                bundle.putString("title", String.format(getResources().getString(R.string.locality_top_builders_label), locality.label));
+            }
             bundle.putInt("placeholder", R.drawable.builder_placeholder);
             bundle.putString("action", "view projects");
             newFragment.setArguments(bundle);

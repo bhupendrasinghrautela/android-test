@@ -27,7 +27,33 @@ public class PyrRequest {
     private String pageType;
     private Long projectId;
     private Long listingId;
+//    private Long propertyId;
+    private String cityName;
+    private String projectName;
 
+    /*public Long getPropertyId() {
+        return propertyId;
+    }
+
+    public void setPropertyId(Long propertyId) {
+        this.propertyId = propertyId;
+    }*/
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
 
     public Long getProjectId() {
         return projectId;

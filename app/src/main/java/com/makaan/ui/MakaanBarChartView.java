@@ -108,7 +108,9 @@ public class MakaanBarChartView extends BaseLinearLayout<List<CityTrendData>>{
                 mMaxListings = Long.valueOf(cityTrendData.noOfListings);
             }
             mAxisXValues.add(id++);
-            mAxisXLabels.add(StringUtil.getDisplayPrice(cityTrendData.minPrice));
+            if(cityTrendData.minPrice != null) {
+                mAxisXLabels.add(StringUtil.getDisplayPrice(cityTrendData.minPrice));
+            }
             Column column = new Column(values);
             mColumns.add(column);
         }

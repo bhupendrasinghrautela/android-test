@@ -88,7 +88,9 @@ public class SellerListingAdapter extends RecyclerView.Adapter<RecyclerView.View
                 mSellerViewHolder.mSellerName.setText(topAgent.agent.user.fullName.toLowerCase());
                 mSellerViewHolder.mTextSellerImage.setText(topAgent.agent.user.fullName);
                 setAgentImage(agent, mSellerViewHolder.mTextSellerImage, mSellerViewHolder.mSellerImage);
-                mSellerViewHolder.mSellerRatingBar.setRating((float) (agent.company.score/2));        //TODO: change double to int
+                if(agent.company != null && agent.company.score != null) {
+                    mSellerViewHolder.mSellerRatingBar.setRating((float) (agent.company.score / 2));        //TODO: change double to int
+                }
                 mSellerViewHolder.mCheckBoxTick.setOnCheckedChangeListener(null);
                 mPyrPresenter.setSellerIds(agent.company.id, selectedValues.contains(agent.company.id));
                 if (mPyrPresenter.getSellerIdStatus(agent.company.id)) {
