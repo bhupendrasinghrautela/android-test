@@ -29,15 +29,15 @@ public class ScreenLauncherNotification implements MakaanNotification{
 			return;
 		}
 		
-		resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
+/*		resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
 				Intent.FLAG_ACTIVITY_NEW_TASK |
-				Intent.FLAG_ACTIVITY_NO_ANIMATION);
+				Intent.FLAG_ACTIVITY_NO_ANIMATION);*/
 		
         resultIntent.putExtra(NotificationHelper.EXTRA_TITLE, title);
         resultIntent.putExtra(NotificationHelper.EXTRA_MESSAGE, message);
         PendingIntent resultPendingIntent =
         		PendingIntent.getActivity(context, NotificationHelper.REQUEST_CODE_GCM, resultIntent,
-						PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
+						PendingIntent.FLAG_UPDATE_CURRENT);
         
         mBuilder.setContentIntent(resultPendingIntent);
         NotificationHelper.notify(context, attributes, mBuilder);
