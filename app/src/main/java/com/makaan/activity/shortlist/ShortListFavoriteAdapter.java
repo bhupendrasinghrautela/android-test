@@ -46,6 +46,9 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        if(wishList.get(position) == null) {
+            return;
+        }
 
         ShortListFavoriteViewHolder shortListFavoriteViewHolder = (ShortListFavoriteViewHolder)holder;
         if(null!=wishList.get(position).listingId){
@@ -58,7 +61,7 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
                 }
             }
 
-        }else if(null!=wishList.get(position).project.minResaleOrPrimaryPrice) {
+        }else if(wishList.get(position).project != null && wishList.get(position).project.minResaleOrPrimaryPrice != null) {
             shortListFavoriteViewHolder.mLinearLayoutDetails.setVisibility(View.VISIBLE);
             String price = StringUtil.getDisplayPrice(wishList.get(position).project.minResaleOrPrimaryPrice);
             shortListFavoriteViewHolder.mTextViewPriceValue.setText(price);
@@ -81,7 +84,7 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
         String imageUrl= null;
         if(wishList.get(position).listing != null && !TextUtils.isEmpty(wishList.get(position).listing.mainImageURL)) {
             imageUrl = wishList.get(position).listing.mainImageURL;
-        } else if(!TextUtils.isEmpty(wishList.get(position).project.imageURL)) {
+        } else if(wishList.get(position).project != null && !TextUtils.isEmpty(wishList.get(position).project.imageURL)) {
             imageUrl = wishList.get(position).project.imageURL;
         }
         /*if(imageUrl != null && !imageUrl.contains("https")){
