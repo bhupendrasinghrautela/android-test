@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
@@ -185,6 +184,9 @@ public class SimilarPropertyFragment extends MakaanBaseFragment implements View.
                         new CustomImageLoaderListener() {
                     @Override
                     public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
+                        if(!isVisible()){
+                            return;
+                        }
                         if (b && imageContainer.getBitmap() == null) {
                             return;
                         }

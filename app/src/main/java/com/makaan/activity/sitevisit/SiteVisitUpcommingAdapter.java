@@ -207,9 +207,11 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
                         if (b && imageContainer.getBitmap() == null) {
                             return;
                         }
-                        holder.mSellerText.setVisibility(View.GONE);
-                        holder.mSellerImage.setVisibility(View.VISIBLE);
-                        holder.mSellerImage.setImageBitmap(imageContainer.getBitmap());
+                        if(holder!=null && holder.mSellerImage!=null && holder.mSellerText!=null) {
+                            holder.mSellerText.setVisibility(View.GONE);
+                            holder.mSellerImage.setVisibility(View.VISIBLE);
+                            holder.mSellerImage.setImageBitmap(imageContainer.getBitmap());
+                        }
                     }
 
                     @Override
@@ -226,9 +228,11 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
                         if (b && imageContainer.getBitmap() == null) {
                             return;
                         }
-                        holder.mSellerText.setVisibility(View.GONE);
-                        holder.mSellerImage.setVisibility(View.VISIBLE);
-                        holder.mSellerImage.setImageBitmap(imageContainer.getBitmap());
+                        if(holder!=null && holder.mSellerImage!=null && holder.mSellerText!=null) {
+                            holder.mSellerText.setVisibility(View.GONE);
+                            holder.mSellerImage.setVisibility(View.VISIBLE);
+                            holder.mSellerImage.setImageBitmap(imageContainer.getBitmap());
+                        }
                     }
 
                     @Override

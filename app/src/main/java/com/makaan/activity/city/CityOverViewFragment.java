@@ -231,6 +231,9 @@ public class CityOverViewFragment extends MakaanBaseFragment{
                     new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageContainer imageContainer, boolean b) {
+                    if(!isVisible()){
+                        return;
+                    }
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }

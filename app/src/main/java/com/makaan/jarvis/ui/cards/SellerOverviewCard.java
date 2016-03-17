@@ -95,9 +95,11 @@ public class SellerOverviewCard extends BaseView<Message> {
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }
-                    mSellerLogoTextView.setVisibility(View.GONE);
-                    mSellerImageView.setVisibility(View.VISIBLE);
-                    mSellerImageView.setImageBitmap(imageContainer.getBitmap());
+                    if(mSellerImageView!=null && mSellerLogoTextView!=null) {
+                        mSellerLogoTextView.setVisibility(View.GONE);
+                        mSellerImageView.setVisibility(View.VISIBLE);
+                        mSellerImageView.setImageBitmap(imageContainer.getBitmap());
+                    }
                 }
 
                 @Override

@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,7 +19,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
@@ -45,7 +43,6 @@ import com.makaan.util.KeyUtil;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
-import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -346,9 +343,11 @@ public class DefaultListingView extends AbstractListingView {
                         if (b && imageContainer.getBitmap() == null) {
                             return;
                         }
-                        mSellerLogoTextView.setVisibility(View.GONE);
-                        mSellerImageView.setVisibility(View.VISIBLE);
-                        mSellerImageView.setImageBitmap(imageContainer.getBitmap());
+                        if(mSellerImageView!=null && mSellerLogoTextView!=null) {
+                            mSellerLogoTextView.setVisibility(View.GONE);
+                            mSellerImageView.setVisibility(View.VISIBLE);
+                            mSellerImageView.setImageBitmap(imageContainer.getBitmap());
+                        }
                     }
 
                     @Override
@@ -367,9 +366,11 @@ public class DefaultListingView extends AbstractListingView {
                         if (b && imageContainer.getBitmap() == null) {
                             return;
                         }
-                        mSellerLogoTextView.setVisibility(View.GONE);
-                        mSellerImageView.setVisibility(View.VISIBLE);
-                        mSellerImageView.setImageBitmap(imageContainer.getBitmap());
+                        if(mSellerImageView!=null && mSellerLogoTextView!=null) {
+                            mSellerLogoTextView.setVisibility(View.GONE);
+                            mSellerImageView.setVisibility(View.VISIBLE);
+                            mSellerImageView.setImageBitmap(imageContainer.getBitmap());
+                        }
                     }
 
                     @Override

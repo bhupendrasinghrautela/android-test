@@ -322,6 +322,9 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
                     width, height, false), new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
+                    if(!isVisible()){
+                        return;
+                    }
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }
