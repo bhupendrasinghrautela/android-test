@@ -268,7 +268,12 @@ public class LocalityFragment extends MakaanBaseFragment {
             mCityCollapseToolbar.setTitle(locality.label.toLowerCase());
             interestedInTv.setText("interested in "+locality.label.toLowerCase()+"?");
         }
-        livinScoreTv.setText("" + locality.livabilityScore);
+        if(locality.livabilityScore != null) {
+            livinScoreTv.setVisibility(View.VISIBLE);
+            livinScoreTv.setText("" + locality.livabilityScore);
+        } else {
+            livinScoreTv.setVisibility(View.INVISIBLE);
+        }
         livingScoreProgress.setProgress(locality.livabilityScore == null ? 0 : (int) (locality.livabilityScore * 10));
         livingScoreProgress.setVisibility(locality.livabilityScore == null ? View.GONE : View.VISIBLE);
         livinScoreTv.setVisibility(locality.livabilityScore == null ? View.GONE : View.VISIBLE);

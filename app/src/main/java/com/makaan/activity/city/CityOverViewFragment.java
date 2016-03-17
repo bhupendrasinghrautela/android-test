@@ -212,8 +212,10 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     private void initUiUsingCityDetails() {
         int width = getResources().getConfiguration().screenWidthDp;
         int height = getResources().getConfiguration().screenHeightDp;
-        new CityService().getPropertyRangeInCity(mCity.id,null,null,false,mCity.cityBuyMinPrice.intValue(),mCity.cityBuyMaxPrice.intValue(),
-                (mCity.cityBuyMaxPrice.intValue()-mCity.cityBuyMinPrice.intValue())/20);
+        if (mCity.cityBuyMinPrice != null && mCity.cityBuyMaxPrice != null) {
+            new CityService().getPropertyRangeInCity(mCity.id, null, null, false, mCity.cityBuyMinPrice.intValue(), mCity.cityBuyMaxPrice.intValue(),
+                    (mCity.cityBuyMaxPrice.intValue() - mCity.cityBuyMinPrice.intValue()) / 20);
+        }
         if(mCity.label!=null) {
             mCityCollapseToolbar.setTitle(mCity.label.toLowerCase());
             mCityCollapseToolbar.setCollapsedTitleTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/comforta.ttf"));
@@ -350,13 +352,18 @@ public class CityOverViewFragment extends MakaanBaseFragment{
 
     private void makeBarGraphRequest() {
         if(mCity!=null) {
-            if(isRent) {
-                new CityService().getPropertyRangeInCity(mCity.id,mSelectedBedroomTypes,mSelectedPropertyTypes,isRent,mCity.cityRentMinPrice.intValue(),mCity.cityRentMaxPrice.intValue(),
-                        (mCity.cityRentMaxPrice.intValue()-mCity.cityRentMinPrice.intValue())/20);
-            }
-            else{
-                new CityService().getPropertyRangeInCity(mCity.id,mSelectedBedroomTypes,mSelectedPropertyTypes,isRent,mCity.cityBuyMinPrice.intValue(),mCity.cityBuyMaxPrice.intValue(),
-                        (mCity.cityBuyMaxPrice.intValue()-mCity.cityBuyMinPrice.intValue())/20);
+            if (isRent) {
+                if(mCity.cityRentMinPrice != null && mCity.cityRentMaxPrice != null) {
+                    new CityService().getPropertyRangeInCity(mCity.id, mSelectedBedroomTypes, mSelectedPropertyTypes,
+                            isRent, mCity.cityRentMinPrice.intValue(), mCity.cityRentMaxPrice.intValue(),
+                            (mCity.cityRentMaxPrice.intValue() - mCity.cityRentMinPrice.intValue()) / 20);
+                }
+            } else {
+                if(mCity.cityBuyMinPrice != null && mCity.cityBuyMaxPrice != null) {
+                    new CityService().getPropertyRangeInCity(mCity.id, mSelectedBedroomTypes, mSelectedPropertyTypes,
+                            isRent, mCity.cityBuyMinPrice.intValue(), mCity.cityBuyMaxPrice.intValue(),
+                            (mCity.cityBuyMaxPrice.intValue() - mCity.cityBuyMinPrice.intValue()) / 20);
+                }
             }
         }
     }

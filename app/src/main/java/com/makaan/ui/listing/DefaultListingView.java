@@ -267,7 +267,7 @@ public class DefaultListingView extends AbstractListingView {
         // set price info
         mPropertyPriceTextView.setText(priceString.toLowerCase());
         mPropertyPriceUnitTextView.setText(priceUnit);
-        if(mListing.pricePerUnitArea != 0) {
+        if(mListing.pricePerUnitArea != null && mListing.pricePerUnitArea != 0 && isBuy) {
             mPropertyPriceSqFtTextView.setVisibility(View.VISIBLE);
             mPropertyPriceSqFtTextView.setText(String.format("%s%s/sqft", "\u20B9", StringUtil.getFormattedNumber(mListing.pricePerUnitArea)).toLowerCase());
         } else {
@@ -402,8 +402,12 @@ public class DefaultListingView extends AbstractListingView {
 
                     Bundle bundle = new Bundle();
                     bundle.putLong(KeyUtil.LISTING_ID, mListing.id);
-                    bundle.putDouble(KeyUtil.LISTING_LAT, mListing.latitude);
-                    bundle.putDouble(KeyUtil.LISTING_LON, mListing.longitude);
+                    if(mListing.latitude != null) {
+                        bundle.putDouble(KeyUtil.LISTING_LAT, mListing.latitude);
+                    }
+                    if(mListing.longitude != null) {
+                        bundle.putDouble(KeyUtil.LISTING_LON, mListing.longitude);
+                    }
                     bundle.putString(KeyUtil.LISTING_Image, mListing.mainImageUrl);
 
                     mCallback.requestDetailPage(SerpActivity.REQUEST_PROPERTY_PAGE, bundle);
@@ -568,11 +572,25 @@ public class DefaultListingView extends AbstractListingView {
                     }
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     break;
+                } else if(mListing.floor != null && mListing.floor >= 0) {
+                    if(mListing.floor == 1) {
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>st</small></sup>", mListing.floor).toLowerCase()));
+                    } else if(mListing.floor == 2) {
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>nd</small></sup>", mListing.floor).toLowerCase()));
+                    } else if(mListing.floor == 3) {
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>rd</small></sup> ", mListing.floor).toLowerCase()));
+                    } else if(mListing.floor == 0) {
+                        mPropertyInfoTextViews.get(j).setText("gr");
+                    } else {
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>th</small></sup>", mListing.floor).toLowerCase()));
+                    }
+                    mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
+                    break;
                 } else {
                     return false;
                 }
             case "balcony":
-                if(mListing.balcony != null && mListing.balcony >= 0) {
+                if(mListing.balcony != null && mListing.balcony > 0) {
                     mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.balcony).toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     break;
@@ -630,7 +648,7 @@ public class DefaultListingView extends AbstractListingView {
                     return false;
                 }
             case "noOfOpenSides":
-                if(mListing.noOfOpenSides != null && mListing.noOfOpenSides >= 0) {
+                if(mListing.noOfOpenSides != null && mListing.noOfOpenSides > 0) {
                     mPropertyInfoTextViews.get(j).setText(String.valueOf(mListing.noOfOpenSides).toLowerCase());
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     break;

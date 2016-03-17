@@ -19,21 +19,17 @@ public class SellerCard implements Serializable,Comparable<SellerCard> {
 
     @Override
     public int compareTo(SellerCard another) {
-        if(this.rating!=null && another.rating!=null) {
-            if(this.rating-another.rating>0){
+        if (this.rating != null && another.rating != null) {
+            if (this.rating - another.rating > 0) {
                 return -1;
-            }
-            else if(this.rating-another.rating<0){
+            } else if (this.rating - another.rating < 0) {
                 return 1;
-            }
-            else{
+            } else {
                 return 0;
             }
-        }
-        else if(this.rating!=null){
+        } else if (this.rating != null) {
             return -1;
-        }
-        else if(another.rating!=null){
+        } else if (another.rating != null) {
             return 1;
         }
         return 0;

@@ -330,10 +330,10 @@ public class ViewSellersDialogFragment extends DialogFragment {
             } else {
                 showTextAsImage(position,holder);
             }
-            if(sellerCard.noOfProperties!=null) {
+            if (sellerCard.noOfProperties != null) {
                 holder.mSellerTotalProperty.setText(String.valueOf(sellerCard.noOfProperties) + " " + getString(R.string.property));
             }
-            if(sellerCard.rating!=null){
+            if (sellerCard.rating != null) {
                 holder.mSellerRating.setRating(sellerCard.rating.floatValue());
             }
             holder.mSellerCheckBox.setOnCheckedChangeListener(null);

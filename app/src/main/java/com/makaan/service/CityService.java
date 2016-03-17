@@ -80,25 +80,31 @@ public class CityService implements MakaanService {
                 if(listingAggregation.listingCategory!=null) {
                     if (listingAggregation.listingCategory.toLowerCase().equals("primary")
                             || listingAggregation.listingCategory.toLowerCase().equals("resale")) {
-                        if (city.cityBuyMinPrice == null && listingAggregation.minPrice>0) {
+
+                        if (city.cityBuyMinPrice == null && listingAggregation.minPrice != null && listingAggregation.minPrice > 0) {
                             city.cityBuyMinPrice = listingAggregation.minPrice;
-                        } else if (city.cityBuyMinPrice > listingAggregation.minPrice && listingAggregation.minPrice>0) {
+                        } else if (city.cityBuyMinPrice != null && listingAggregation.minPrice != null
+                                && city.cityBuyMinPrice > listingAggregation.minPrice && listingAggregation.minPrice > 0) {
                             city.cityBuyMinPrice = listingAggregation.minPrice;
                         }
+
                         if (city.cityBuyMaxPrice == null) {
                             city.cityBuyMaxPrice = listingAggregation.maxPrice;
-                        } else if (city.cityBuyMaxPrice < listingAggregation.maxPrice) {
+                        } else if (listingAggregation.maxPrice != null && city.cityBuyMaxPrice < listingAggregation.maxPrice) {
                             city.cityBuyMaxPrice = listingAggregation.maxPrice;
                         }
                     } else {
-                        if (city.cityRentMinPrice == null && listingAggregation.minPrice>0) {
+                        if (city.cityRentMinPrice == null && listingAggregation.minPrice != null
+                                && listingAggregation.minPrice > 0) {
                             city.cityRentMinPrice = listingAggregation.minPrice;
-                        } else if (city.cityRentMinPrice > listingAggregation.minPrice && listingAggregation.minPrice>0) {
+                        } else if (city.cityRentMinPrice != null && listingAggregation.minPrice != null
+                                && city.cityRentMinPrice > listingAggregation.minPrice && listingAggregation.minPrice > 0) {
                             city.cityRentMinPrice = listingAggregation.minPrice;
                         }
+
                         if (city.cityRentMaxPrice == null) {
                             city.cityRentMaxPrice = listingAggregation.maxPrice;
-                        } else if (city.cityRentMaxPrice < listingAggregation.maxPrice) {
+                        } else if (listingAggregation.maxPrice != null && city.cityRentMaxPrice < listingAggregation.maxPrice) {
                             city.cityRentMaxPrice = listingAggregation.maxPrice;
                         }
                     }
@@ -106,10 +112,10 @@ public class CityService implements MakaanService {
             }
         }
         //Hardcoded values for bar as per site
-        city.cityBuyMaxPrice = city.cityBuyMaxPrice == null?20000000d:(city.cityBuyMaxPrice>20000000d?20000000d:city.cityBuyMaxPrice);
-        city.cityBuyMinPrice = city.cityBuyMinPrice == null?1500000d:(city.cityBuyMinPrice<1500000d?1500000d:city.cityBuyMinPrice);
-        city.cityRentMaxPrice = city.cityRentMaxPrice == null?1500000d:(city.cityRentMaxPrice>1500000d?1500000d:city.cityRentMaxPrice);
-        city.cityRentMinPrice = city.cityRentMinPrice == null?2000d:(city.cityRentMinPrice<2000d?2000d:city.cityRentMinPrice);
+        city.cityBuyMaxPrice = city.cityBuyMaxPrice == null ? 20000000d : (city.cityBuyMaxPrice > 20000000d ? 20000000d : city.cityBuyMaxPrice);
+        city.cityBuyMinPrice = city.cityBuyMinPrice == null ? 1500000d : (city.cityBuyMinPrice < 1500000d ? 1500000d : city.cityBuyMinPrice);
+        city.cityRentMaxPrice = city.cityRentMaxPrice == null ? 1500000d : (city.cityRentMaxPrice > 1500000d ? 1500000d : city.cityRentMaxPrice);
+        city.cityRentMinPrice = city.cityRentMinPrice == null ? 2000d : (city.cityRentMinPrice < 2000d ? 2000d : city.cityRentMinPrice);
     }
 
     /**

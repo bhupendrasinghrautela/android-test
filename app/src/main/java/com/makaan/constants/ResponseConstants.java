@@ -39,6 +39,8 @@ public class ResponseConstants {
     public static final String SIZE = "size";
     public static final String MEASURE = "measure";
     public static final String LATITUDE = "latitude";
+    public static final String LISTING_LONGITUDE = "listingLongitude";
+    public static final String LISTING_LATITUDE = "listingLatitude";
     public static final String LONGITUDE = "longitude";
     public static final String SERVANT_ROOM = "servantRoom";
     public static final String POOJA_ROOM = "poojaRoom";
