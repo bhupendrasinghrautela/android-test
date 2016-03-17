@@ -114,7 +114,7 @@ public class MultipleLeadFormFragment extends MakaanBaseFragment {
             mPyrRequest.setLocalityIds(new int[]{mLeadFormPresenter.getLocalityId().intValue()});
             mPyrRequest.setListingId(mLeadFormPresenter.getProjectOrListingId());
             mPyrRequest.setProjectId(mLeadFormPresenter.getProjectId());
-            mPyrRequest.setPropertyId(mLeadFormPresenter.getPropertyId());
+//            mPyrRequest.setPropertyId(mLeadFormPresenter.getPropertyId());
             mPyrRequest.setProjectName(mLeadFormPresenter.getProjectName());
             /*
             Bundle bundle =getArguments();

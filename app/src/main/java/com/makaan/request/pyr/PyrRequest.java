@@ -27,17 +27,17 @@ public class PyrRequest {
     private String pageType;
     private Long projectId;
     private Long listingId;
-    private Long propertyId;
+//    private Long propertyId;
     private String cityName;
     private String projectName;
 
-    public Long getPropertyId() {
+    /*public Long getPropertyId() {
         return propertyId;
     }
 
     public void setPropertyId(Long propertyId) {
         this.propertyId = propertyId;
-    }
+    }*/
 
     public String getProjectName() {
         return projectName;
