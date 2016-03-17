@@ -9,6 +9,7 @@ import com.makaan.MakaanBuyerApplication;
 import com.makaan.event.project.ProjectConfigEvent;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.project.Project;
+import com.makaan.response.user.ContactNumber;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -111,6 +112,8 @@ public class RecentPropertyProjectManager {
         public long sellerId;
         public long cityId;
         public long localityId;
+        public String listingCategory;
+        public String cityName;
 
         public DataObject() {}
 
@@ -139,7 +142,10 @@ public class RecentPropertyProjectManager {
                     this.price = listingDetail.currentListingPrice.price;
                 }
 
-                // todo check for phone no
+                if(listingDetail.listingCategory != null) {
+                    this.listingCategory = listingDetail.listingCategory;
+                }
+
                 if(listingDetail.mainImageURL != null && !TextUtils.isEmpty(listingDetail.mainImageURL)) {
                     this.imageUrl = listingDetail.mainImageURL;
                 }
@@ -159,6 +165,15 @@ public class RecentPropertyProjectManager {
                         }
                         if(listingDetail.companySeller.company.score != null) {
                             this.rating = listingDetail.companySeller.company.score;
+                        }
+                    }
+                    if(listingDetail.companySeller.user != null && listingDetail.companySeller.user.contactNumbers != null
+                            && listingDetail.companySeller.user.contactNumbers.size() > 0) {
+                        for(ContactNumber number : listingDetail.companySeller.user.contactNumbers) {
+                            if(number != null && !TextUtils.isEmpty(number.contactNumber)) {
+                                this.phoneNo = number.contactNumber;
+                                break;
+                            }
                         }
                     }
                 }
@@ -181,6 +196,7 @@ public class RecentPropertyProjectManager {
                             if(listingDetail.property.project.locality.suburb != null) {
                                 if(listingDetail.property.project.locality.suburb.city != null) {
                                     if(!TextUtils.isEmpty(listingDetail.property.project.locality.suburb.city.label)) {
+                                        this.cityName = listingDetail.property.project.locality.suburb.city.label;
                                         if(this.addressLine2 == null) {
                                             this.addressLine2 = listingDetail.property.project.locality.suburb.city.label;
                                         } else {

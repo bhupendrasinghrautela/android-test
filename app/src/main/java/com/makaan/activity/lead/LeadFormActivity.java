@@ -51,22 +51,27 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String name=this.getIntent().getExtras().getString("name");
-        String id=this.getIntent().getExtras().getString("id");
-        ArrayList<Integer> multipleSellerids=this.getIntent().getExtras().getIntegerArrayList("multipleSellerIds");
-        String score=this.getIntent().getExtras().getString("score");
-        String phone=this.getIntent().getExtras().getString("phone");
-        String area=this.getIntent().getExtras().getString("area");
-        String bhk=this.getIntent().getExtras().getString("bhkAndUnitType");
-        String locality=this.getIntent().getExtras().getString("locality");
-        String project=this.getIntent().getExtras().getString("project");
-        String builder=this.getIntent().getExtras().getString("builder");
-        boolean assist=this.getIntent().getExtras().getBoolean("assist");
-        source=this.getIntent().getExtras().getString("source");
-        int cityId= (int) this.getIntent().getExtras().getLong("cityId");
-        Long projectOrListingId=this.getIntent().getExtras().getLong("listingId");
-        Long localityId=this.getIntent().getExtras().getLong("localityId");
-        String sellerImgUrl=this.getIntent().getExtras().getString("sellerImageUrl");
+        String name=this.getIntent().getExtras().getString(KeyUtil.NAME_LEAD_FORM);
+        String id=this.getIntent().getExtras().getString(KeyUtil.SINGLE_SELLER_ID);
+        ArrayList<Integer> multipleSellerids=this.getIntent().getExtras().getIntegerArrayList(KeyUtil.MULTIPLE_SELLER_IDS);
+        String score=this.getIntent().getExtras().getString(KeyUtil.SCORE_LEAD_FORM);
+        String phone=this.getIntent().getExtras().getString(KeyUtil.PHONE_LEAD_FORM);
+        String area=this.getIntent().getExtras().getString(KeyUtil.AREA_LEAD_FORM);
+        String bhk=this.getIntent().getExtras().getString(KeyUtil.BHK_UNIT_TYPE);
+        String locality=this.getIntent().getExtras().getString(KeyUtil.LOCALITY_LEAD_FORM);
+        String project=this.getIntent().getExtras().getString(KeyUtil.PROJECT_LEAD_FORM);
+        String builder=this.getIntent().getExtras().getString(KeyUtil.BUILDER_LEAD_FORM);
+        boolean assist=this.getIntent().getExtras().getBoolean(KeyUtil.ASSIST_LEAD_FORM);
+        source=this.getIntent().getExtras().getString(KeyUtil.SOURCE_LEAD_FORM);
+        int cityId= (int) this.getIntent().getExtras().getLong(KeyUtil.CITY_ID_LEAD_FORM);
+        Long projectOrListingId=this.getIntent().getExtras().getLong(KeyUtil.LISTING_ID_LEAD_FORM);
+        Long localityId=this.getIntent().getExtras().getLong(KeyUtil.LOCALITY_ID_LEAD_FORM);
+        Long projectId=this.getIntent().getExtras().getLong(KeyUtil.PROJECT_ID_LEAD_FORM);
+        Long propertyId=this.getIntent().getExtras().getLong(KeyUtil.PROPERTY_Id_LEAD_FORM);;
+        String sellerImgUrl=this.getIntent().getExtras().getString(KeyUtil.SELLER_IMAGE_URL_LEAD_FORM);
+        String cityName=this.getIntent().getExtras().getString(KeyUtil.CITY_NAME_LEAD_FORM);
+        String salesType=this.getIntent().getExtras().getString(KeyUtil.SALE_TYPE_LEAD_FORM);
+        String projectName=this.getIntent().getExtras().getString(KeyUtil.PROJECT_NAME_LEAD_FORM);
         mLeadFormPresenter = LeadFormPresenter.getLeadFormPresenter();
         mLeadFormPresenter.setId(id);
         mLeadFormPresenter.setName(name);
@@ -74,6 +79,20 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
         mLeadFormPresenter.setScore(score);
         mLeadFormPresenter.setReplaceFragment(this);
         mLeadFormPresenter.setLocalityId(localityId);
+        mLeadFormPresenter.setProjectId(projectId);
+        mLeadFormPresenter.setPropertyId(propertyId);
+
+        if(null!=projectName){
+            mLeadFormPresenter.setProjectName(projectName);
+        }
+
+        if(null!=salesType){
+            mLeadFormPresenter.setSalesType(salesType);
+        }
+
+        if(cityName!=null){
+            mLeadFormPresenter.setCityName(cityName);
+        }
 
         if(null!=sellerImgUrl){
             mLeadFormPresenter.setSellerImageUrl(sellerImgUrl);
