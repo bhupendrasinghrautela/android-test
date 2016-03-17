@@ -39,6 +39,7 @@ import com.makaan.pojo.SellerCard;
 import com.makaan.ui.view.CustomRatingBar;
 import com.makaan.util.AppBus;
 import com.makaan.util.ImageUtils;
+import com.makaan.util.KeyUtil;
 import com.makaan.util.PermissionManager;
 import com.segment.analytics.Properties;
 
@@ -135,14 +136,18 @@ public class ViewSellersDialogFragment extends DialogFragment {
             //intent.putExtra("id", sellerCard.sellerId.toString());
             intent.putIntegerArrayListExtra("multipleSellerIds", ids);
             if(bundle!=null){
-                intent.putExtra("cityId", bundle.getLong("cityId"));
-                intent.putExtra("listingId", bundle.getLong("listingId"));
-                intent.putExtra("locality", bundle.getString("locality"));
-                intent.putExtra("area", bundle.getString("area"));
-                intent.putExtra("bhkAndUnitType", bundle.getString("bhkAndUnitType"));
-                intent.putExtra("localityID", bundle.getLong("localityId"));
-                intent.putExtra("source", bundle.getString("source"));
-                intent.putExtra("project", bundle.getString("project"));
+                intent.putExtra(KeyUtil.CITY_NAME_LEAD_FORM,bundle.getString(KeyUtil.CITY_NAME_LEAD_FORM));
+                intent.putExtra(KeyUtil.CITY_ID_LEAD_FORM, bundle.getLong(KeyUtil.CITY_ID_LEAD_FORM));
+                intent.putExtra(KeyUtil.LISTING_ID, bundle.getLong(KeyUtil.LISTING_ID));
+                intent.putExtra(KeyUtil.LOCALITY_LEAD_FORM, bundle.getString(KeyUtil.LOCALITY_LEAD_FORM));
+                intent.putExtra(KeyUtil.AREA_LEAD_FORM, bundle.getString(KeyUtil.AREA_LEAD_FORM));
+                intent.putExtra(KeyUtil.BHK_UNIT_TYPE, bundle.getString(KeyUtil.BHK_UNIT_TYPE));
+                intent.putExtra(KeyUtil.LOCALITY_ID_LEAD_FORM, bundle.getLong(KeyUtil.LOCALITY_ID_LEAD_FORM));
+                intent.putExtra(KeyUtil.SOURCE_LEAD_FORM, bundle.getString(KeyUtil.SOURCE_LEAD_FORM));
+                intent.putExtra(KeyUtil.PROJECT_LEAD_FORM, bundle.getString(KeyUtil.PROJECT_LEAD_FORM));
+                intent.putExtra(KeyUtil.PROJECT_ID_LEAD_FORM, bundle.getString(KeyUtil.PROJECT_ID_LEAD_FORM));
+                intent.putExtra(KeyUtil.PROJECT_NAME_LEAD_FORM, bundle.getString(KeyUtil.PROJECT_NAME_LEAD_FORM));
+                intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, bundle.getString(KeyUtil.SALE_TYPE_LEAD_FORM));
                 intent.putExtra("builder", bundle.getString("builder"));
                 //intent.putExtra("sellerImageUrl", bundle.getString("sellerImageUrl"));
 

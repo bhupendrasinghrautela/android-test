@@ -401,6 +401,9 @@ public class PyrPagePresenter {
 
     public boolean makePartialPyrRequest(Context context, PyrRequest pyrRequest, ArrayList<FilterGroup> groups){
 
+        if(mCityContext!=null && !TextUtils.isEmpty(mCityContext)){
+            pyrRequest.setCityName(mCityContext);
+        }
         if(null!=userName && !userName.isEmpty()){
             pyrRequest.setName(userName);
         }

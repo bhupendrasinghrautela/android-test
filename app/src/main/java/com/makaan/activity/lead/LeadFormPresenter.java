@@ -36,8 +36,51 @@ public class LeadFormPresenter {
     Long multipleSellerIds[];
     PyrRequest pyrRequest;
     String sellerImageUrl;
+    String cityName,salesType;
+    String projectName;
     Long localityId;
+    Long projectId;
+    Long propertyId;
 
+    public Long getPropertyId() {
+        return propertyId;
+    }
+
+    public void setPropertyId(Long propertyId) {
+        this.propertyId = propertyId;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public String getSalesType() {
+        return salesType;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public void setSalesType(String salesType) {
+        this.salesType = salesType;
+    }
     public Long getLocalityId() {
         return localityId;
     }

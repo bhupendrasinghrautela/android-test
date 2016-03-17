@@ -194,37 +194,71 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
             Bundle args = getArguments();
             Bundle bundle=new Bundle();
             bundle.putString(MakaanEventPayload.PROJECT_ID, String.valueOf(args.getLong(KeyUtil.LISTING_ID)));
-            bundle.putString("source", PropertyDetailFragment.class.getName());
-            if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.project!=null &&
-                    mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.cityId!=null) {
-                bundle.putLong("cityId", mListingDetail.property.project.locality.cityId);
-            }
-            if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.propertyId!=null ) {
-                bundle.putLong("listingId", mListingDetail.property.propertyId);
-            }
-            if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.project!=null &&
-                    mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.label!=null) {
-                bundle.putString("locality", String.valueOf(mListingDetail.property.project.locality.label));
-            }
-            if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.project!=null &&
-                    mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.localityId != null) {
-                bundle.putLong("localityId", mListingDetail.property.project.locality.localityId);
-            }
-            if(mListingDetail!=null && mListingDetail.property != null && mListingDetail.property.project != null) {
-                if(mListingDetail.property.project.builder != null) {
-                    bundle.putString("builder", mListingDetail.property.project.builder.name);
+            bundle.putString(KeyUtil.SOURCE_LEAD_FORM, PropertyDetailFragment.class.getName());
+
+            if(mListingDetail!=null && mListingDetail.listingCategory!=null && !TextUtils.isEmpty(mListingDetail.listingCategory)){
+                if(mListingDetail.listingCategory.equalsIgnoreCase("primary")||mListingDetail.listingCategory.equalsIgnoreCase("resale")){
+                    bundle.putString(KeyUtil.SALE_TYPE_LEAD_FORM, "buy");
                 }
-                bundle.putString("project", mListingDetail.property.project.name);
+                else if(mListingDetail.listingCategory.equalsIgnoreCase("rental")){
+                    bundle.putString(KeyUtil.SALE_TYPE_LEAD_FORM, "rent");
+                }
             }
+
+            if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.project!=null &&
+                    mListingDetail.property.project.locality!=null ) {
+
+                if(mListingDetail.property.project.locality.cityId!=null) {
+                    bundle.putLong(KeyUtil.CITY_ID_LEAD_FORM, mListingDetail.property.project.locality.cityId);
+                }
+
+                if(mListingDetail.property.project.locality.suburb!=null
+                        && mListingDetail.property.project.locality.suburb.city!=null && mListingDetail.property.project.locality.suburb.city.label!=null){
+                    bundle.putString(KeyUtil.CITY_NAME_LEAD_FORM, mListingDetail.property.project.locality.suburb.city.label);
+                }
+
+                if(mListingDetail.property.project.locality.label!=null){
+                    bundle.putString("locality", String.valueOf(mListingDetail.property.project.locality.label));
+                }
+
+                if(mListingDetail.property.project.locality.localityId != null){
+                    bundle.putLong(KeyUtil.LOCALITY_ID_LEAD_FORM, mListingDetail.property.project.locality.localityId);
+                }
+            }
+
+            if(mListingDetail!=null && mListingDetail.property != null) {
+
+                if(mListingDetail.property.propertyId!=null ){
+                    bundle.putLong(KeyUtil.PROPERTY_Id_LEAD_FORM, mListingDetail.property.propertyId);
+                }
+
+                if(mListingDetail.property.project != null) {
+                    if (mListingDetail.property.project.builder != null) {
+                        bundle.putString("builder", mListingDetail.property.project.builder.name);
+                    }
+                    if (mListingDetail.property.project.name != null) {
+                        bundle.putString(KeyUtil.PROJECT_NAME_LEAD_FORM, mListingDetail.property.project.name);
+                    }
+                }
+            }
+
+            if(mListingDetail!=null && mListingDetail.projectId!=null) {
+                bundle.putLong(KeyUtil.PROJECT_ID_LEAD_FORM, mListingDetail.projectId);
+            }
+
+            if(mListingDetail!=null && mListingDetail.id!=null) {
+                bundle.putLong(KeyUtil.LISTING_ID_LEAD_FORM, mListingDetail.id);
+            }
+
             if(Area!=null){
-                bundle.putString("area", Area);
+                bundle.putString(KeyUtil.AREA_LEAD_FORM, Area);
             }
             if(bhkAndUnitType!=null){
-                bundle.putString("bhkAndUnitType", bhkAndUnitType);
+                bundle.putString(KeyUtil.BHK_UNIT_TYPE, bhkAndUnitType);
             }
             if(mListingDetail!=null && mListingDetail.companySeller!=null && mListingDetail.companySeller.company!=null
                     && mListingDetail.companySeller.company.logo != null) {
-                bundle.putString("sellerImageUrl", mListingDetail.companySeller.company.logo);
+                bundle.putString(KeyUtil.SELLER_IMAGE_URL_LEAD_FORM, mListingDetail.companySeller.company.logo);
             }
             viewSellersDialogFragment.setArguments(bundle);
             viewSellersDialogFragment.bindView(mSellerCards);
@@ -247,47 +281,79 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
             Company company = mListingDetail.companySeller.company;
             try {
                 if(company.name!=null) {
-                    intent.putExtra("name", company.name);
+                    intent.putExtra(KeyUtil.NAME_LEAD_FORM, company.name);
                 }
                 else if(user.fullName!=null){
-                    intent.putExtra("name",user.fullName);
+                    intent.putExtra(KeyUtil.NAME_LEAD_FORM, user.fullName);
                 }
                 else{
-                    intent.putExtra("name","");
+                    intent.putExtra(KeyUtil.NAME_LEAD_FORM,"");
                 }
                 if (company!=null && company.score != null) {
-                    intent.putExtra("score", company.score.toString());
+                    intent.putExtra(KeyUtil.SCORE_LEAD_FORM, company.score.toString());
                 } else {
-                    intent.putExtra("score", "0");
+                    intent.putExtra(KeyUtil.SCORE_LEAD_FORM, "0");
                 }
                 if(user.contactNumbers!=null && !user.contactNumbers.isEmpty()) {
-                    intent.putExtra("phone", user.contactNumbers.get(0).contactNumber);
+                    intent.putExtra(KeyUtil.PHONE_LEAD_FORM, user.contactNumbers.get(0).contactNumber);
                 }
-                intent.putExtra("source",PropertyDetailFragment.class.getName());
-                intent.putExtra("id",String.valueOf(company.id));
+                intent.putExtra(KeyUtil.SOURCE_LEAD_FORM, PropertyDetailFragment.class.getName());
+                intent.putExtra(KeyUtil.SINGLE_SELLER_ID, String.valueOf(company.id));
+                if(mListingDetail!=null && mListingDetail.id!=null) {
+                    intent.putExtra(KeyUtil.LISTING_ID_LEAD_FORM, mListingDetail.id);
+                }
+                if(mListingDetail!=null && mListingDetail.listingCategory!=null && !TextUtils.isEmpty(mListingDetail.listingCategory)){
+                    if(mListingDetail.listingCategory.equalsIgnoreCase("primary")||mListingDetail.listingCategory.equalsIgnoreCase("resale")){
+                        intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, "buy");
+                    }
+                    else if(mListingDetail.listingCategory.equalsIgnoreCase("rental")){
+                        intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, "rent");
+                    }
+                }
+
                 if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.project!=null &&
-                        mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.cityId!=null) {
-                    intent.putExtra("cityId", mListingDetail.property.project.locality.cityId);
+                        mListingDetail.property.project.locality!=null ) {
+
+                    if(mListingDetail.property.project.locality.cityId!=null) {
+                        intent.putExtra(KeyUtil.CITY_ID_LEAD_FORM, mListingDetail.property.project.locality.cityId);
+                    }
+                    if(mListingDetail.property.project.locality.suburb!=null &&
+                            mListingDetail.property.project.locality.suburb.city!=null && mListingDetail.property.project.locality.suburb.city.label!=null){
+                        intent.putExtra(KeyUtil.CITY_NAME_LEAD_FORM, mListingDetail.property.project.locality.suburb.city.label);
+                    }
+
+                    if(mListingDetail.property.project.locality.localityId!=null){
+                        intent.putExtra(KeyUtil.LOCALITY_ID_LEAD_FORM, mListingDetail.property.project.locality.localityId);
+                    }
                 }
-                if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.propertyId!=null) {
-                    intent.putExtra("listingId", mListingDetail.property.propertyId);
+
+                if(mListingDetail!=null && mListingDetail.propertyId!=null){
+                    intent.putExtra(KeyUtil.PROPERTY_Id_LEAD_FORM, mListingDetail.propertyId);
                 }
-                if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.project!=null &&
-                        mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.label!=null) {
-                    intent.putExtra("locality", mListingDetail.property.project.locality.cityId);
+                else if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.propertyId!=null){
+                    intent.putExtra(KeyUtil.PROPERTY_Id_LEAD_FORM, mListingDetail.property.propertyId);
                 }
-                if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.project!=null &&
-                        mListingDetail.property.project.locality!=null && mListingDetail.property.project.locality.localityId!=null) {
-                    intent.putExtra("localityId", mListingDetail.property.project.locality.localityId);
+
+                if(mListingDetail!=null && mListingDetail.projectId!=null){
+                    intent.putExtra(KeyUtil.PROJECT_ID_LEAD_FORM, mListingDetail.projectId);
                 }
+                else if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.project!=null &&
+                        mListingDetail.property.project.projectId!=null) {
+
+                    intent.putExtra(KeyUtil.PROJECT_ID_LEAD_FORM, mListingDetail.property.project.projectId);
+                    if(mListingDetail.property.project.name!=null){
+                        intent.putExtra(KeyUtil.PROJECT_NAME_LEAD_FORM, mListingDetail.property.project.name);
+                    }
+                }
+
                 if(Area!=null){
-                    intent.putExtra("area",Area);
+                    intent.putExtra(KeyUtil.AREA_LEAD_FORM, Area);
                 }
                 if(bhkAndUnitType!=null){
-                    intent.putExtra("bhkAndUnitType", bhkAndUnitType);
+                    intent.putExtra(KeyUtil.BHK_UNIT_TYPE, bhkAndUnitType);
                 }
                 if(!TextUtils.isEmpty(company.logo)){
-                    intent.putExtra("sellerImageUrl", company.logo);
+                    intent.putExtra(KeyUtil.SELLER_IMAGE_URL_LEAD_FORM, company.logo);
                 }
 
                 getActivity().startActivity(intent);

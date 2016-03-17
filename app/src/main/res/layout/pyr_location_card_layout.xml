@@ -33,12 +33,14 @@
                     android:src="@drawable/location_icon" />
 
                 <TextView
-                    android:layout_width="@dimen/pyr_locality_text_width"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/pyr_locality_text_height"
                     android:layout_marginLeft="@dimen/pyr_locality_text_left_margin"
                     android:text="@string/pyr_location_string"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/pyr_locality_text_text_size" />
+                    android:textSize="@dimen/pyr_locality_text_text_size"
+                    android:singleLine="true"
+                    android:ellipsize="end"/>
             </LinearLayout>
 
             <View

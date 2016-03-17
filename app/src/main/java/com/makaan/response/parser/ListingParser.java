@@ -143,6 +143,7 @@ public class ListingParser {
                     }
                     // }
 
+                    listing.localityId = locality.optLong(LOCALITY_ID);
                     listing.localityName = locality.optString(LABEL);
                     listing.suburbName = suburb.optString(LABEL);
                     listing.cityName = city.optString(LABEL);

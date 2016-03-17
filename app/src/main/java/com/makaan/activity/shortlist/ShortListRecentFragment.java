@@ -27,6 +27,7 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.WishListService;
 import com.makaan.util.ErrorUtil;
 import com.makaan.util.ImageUtils;
+import com.makaan.util.KeyUtil;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
@@ -161,12 +162,23 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
 
                             Intent intent = new Intent(getActivity(), LeadFormActivity.class);
                             try {
-                                intent.putExtra("name", dataObject.sellerName);
-                                intent.putExtra("score", String.valueOf(dataObject.rating));
-                                intent.putExtra("phone", "9090909090");//todo: not available in pojo
-                                intent.putExtra("id", String.valueOf(dataObject.sellerId));
+                                intent.putExtra(KeyUtil.NAME_LEAD_FORM, dataObject.sellerName);
+                                intent.putExtra(KeyUtil.SCORE_LEAD_FORM, String.valueOf(dataObject.rating));
+                                intent.putExtra(KeyUtil.PHONE_LEAD_FORM, dataObject.phoneNo);//todo: not available in pojo
+                                intent.putExtra(KeyUtil.SINGLE_SELLER_ID, String.valueOf(dataObject.sellerId));
+                                intent.putExtra(KeyUtil.CITY_NAME_LEAD_FORM, dataObject.cityName);
+                                intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, dataObject.listingCategory);
+
+                                if(dataObject.listingCategory!=null && !TextUtils.isEmpty(dataObject.listingCategory)){
+                                    if(dataObject.listingCategory.equalsIgnoreCase("primary")||dataObject.listingCategory.equalsIgnoreCase("resale")){
+                                        intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, "buy");
+                                    }
+                                    else if(dataObject.listingCategory.equalsIgnoreCase("rental")){
+                                        intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, "rent");
+                                    }
+                                }
                                 if(dataObject.cityId != 0) {
-                                    intent.putExtra("cityId", dataObject.cityId);
+                                    intent.putExtra(KeyUtil.CITY_ID_LEAD_FORM, dataObject.cityId);
                                 }
                                 getActivity().startActivity(intent);
                             } catch (NullPointerException npe) {
