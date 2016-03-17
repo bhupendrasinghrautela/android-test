@@ -22,25 +22,28 @@ public class WrappingViewPager extends ViewPager {
 
         boolean wrapHeight = MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.AT_MOST;
 
-        final View tab = getChildAt(0);
-        int width = getMeasuredWidth();
-        int tabHeight = 0;
-        if(tab !=null) {
-             tabHeight = tab.getMeasuredHeight();
-        }
-        if (wrapHeight) {
-            // Keep the current measured width.
-            widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY);
-        }
+        maxHeight = 0;
+        for(int currentItem = 0;currentItem<getChildCount();currentItem++) {
+            final View tab = getChildAt(currentItem);
+            int width = getMeasuredWidth();
+            int tabHeight = 0;
+            if (tab != null) {
+                tabHeight = tab.getMeasuredHeight();
+            }
+            if (wrapHeight) {
+                // Keep the current measured width.
+                widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY);
+            }
 
-        int fragmentHeight = 0;
-        if(getAdapter() != null) {
-            fragmentHeight = measureFragment(((Fragment) getAdapter().instantiateItem(this, getCurrentItem())).getView());
+            int fragmentHeight = 0;
+            if (getAdapter() != null) {
+                fragmentHeight = measureFragment(((Fragment) getAdapter().instantiateItem(this,currentItem)).getView());
+            }
+            int height = tabHeight + fragmentHeight + (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
+            if(maxHeight<height){
+                maxHeight = height;
+            }
         }
-        int height = tabHeight + fragmentHeight + (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
-        //if(maxHeight<height){
-            maxHeight = height;
-        //}
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(maxHeight, MeasureSpec.AT_MOST);
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);

@@ -3,7 +3,6 @@ package com.makaan.activity.city;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,7 +28,6 @@ import android.widget.Toast;
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader.ImageContainer;
 import com.makaan.R;
-import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.analytics.MakaanEventPayload;
@@ -62,7 +60,6 @@ import com.makaan.ui.MultiSelectionSpinner;
 import com.makaan.ui.MultiSelectionSpinner.OnSelectionChangeListener;
 import com.makaan.ui.PriceTrendView;
 import com.makaan.ui.city.TopLocalityView;
-import com.makaan.util.Blur;
 import com.makaan.util.DateUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.LocalityUtil;
@@ -148,15 +145,18 @@ public class CityOverViewFragment extends MakaanBaseFragment{
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerCity);
             properties.put(MakaanEventPayload.LABEL, "rent");
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.selectCityPropertyRange);
-
+            List<Integer> previousSelectedIds = mPropertyTypeSpinner.getSelectedIds();
             mPropertyTypeSpinner.setItems(MasterDataCache.getInstance().getRentPropertyTypes());
+            mPropertyTypeSpinner.setSelectedIds(previousSelectedIds);
         }
         else{
             Properties properties= MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerCity);
             properties.put(MakaanEventPayload.LABEL, "buy");
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.selectCityPropertyRange);
+            List<Integer> previousSelectedIds = mPropertyTypeSpinner.getSelectedIds();
             mPropertyTypeSpinner.setItems(MasterDataCache.getInstance().getBuyPropertyTypes());
+            mPropertyTypeSpinner.setSelectedIds(previousSelectedIds);
             isRent = false;
         }
         mSelectedPropertyTypes = (ArrayList<Integer>) mPropertyTypeSpinner.getSelectedIds();
