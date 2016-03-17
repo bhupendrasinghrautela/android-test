@@ -3,8 +3,6 @@ package com.makaan.ui.listing;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -13,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
@@ -23,7 +20,6 @@ import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.project.Builder;
 import com.makaan.util.AppBus;
-import com.makaan.util.Blur;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.StringUtil;
 import com.squareup.otto.Subscribe;
@@ -156,7 +152,9 @@ public class BuilderListingView extends AbstractCardListingView {
                         return;
                     }
                     final Bitmap image = imageContainer.getBitmap();
-                    mBuilderImageView.setImageBitmap(image);
+                    if(mBuilderImageView!=null) {
+                        mBuilderImageView.setImageBitmap(image);
+                    }
                 }
             });
         }

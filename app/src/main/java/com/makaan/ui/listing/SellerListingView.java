@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -15,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
@@ -26,7 +23,6 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.project.CompanySeller;
 import com.makaan.util.AppBus;
-import com.makaan.util.Blur;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.StringUtil;
 import com.squareup.otto.Subscribe;
@@ -211,7 +207,9 @@ public class SellerListingView extends AbstractCardListingView {
                         return;
                     }
                     final Bitmap image = imageContainer.getBitmap();
-                    mSellerImageView.setImageBitmap(image);
+                    if(mSellerImageView!=null) {
+                        mSellerImageView.setImageBitmap(image);
+                    }
                 }
             });
         } else if(seller.sellers != null && seller.sellers.size() > 0 && seller.sellers.get(0).companyUser != null

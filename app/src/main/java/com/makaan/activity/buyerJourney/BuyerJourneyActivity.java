@@ -229,6 +229,9 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity implements Noti
 
                                     @Override
                                     public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
+                                        if(isActivityDead()){
+                                            return;
+                                        }
                                         if (b && imageContainer.getBitmap() == null) {
                                             return;
                                         }

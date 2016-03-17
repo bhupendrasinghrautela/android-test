@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
@@ -94,6 +93,9 @@ public class BuyerAccountSettingActivity extends MakaanFragmentActivity {
 
                             @Override
                             public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
+                                if(isActivityDead()){
+                                    return;
+                                }
                                 mProfileImageView.setImageBitmap(imageContainer.getBitmap());
                             }
                         }

@@ -8,28 +8,22 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
-import com.makaan.event.locality.OnNearByLocalityClickEvent;
 import com.makaan.event.project.OnSimilarProjectClickedEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
-import com.makaan.response.image.Image;
 import com.makaan.response.project.Project;
-import com.makaan.ui.view.ParallexScrollview;
 import com.makaan.util.AppBus;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.StringUtil;
@@ -197,6 +191,9 @@ public class SimilarProjectFragment extends MakaanBaseFragment implements View.O
                     new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
+                    if(!isVisible()){
+                        return;
+                    }
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }

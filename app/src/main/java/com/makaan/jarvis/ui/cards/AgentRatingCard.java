@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
 
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.jarvis.JarvisClient;
@@ -69,7 +68,9 @@ public class AgentRatingCard extends BaseView<Message> {
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }
-                    mAgentImage.setImageBitmap(imageContainer.getBitmap());
+                    if(mAgentImage!=null) {
+                        mAgentImage.setImageBitmap(imageContainer.getBitmap());
+                    }
                 }
             });
         }

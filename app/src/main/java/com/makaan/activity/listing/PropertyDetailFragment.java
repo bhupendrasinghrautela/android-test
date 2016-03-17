@@ -696,6 +696,9 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
             MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(company.logo, width, height, false), new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
+                    if(!isVisible()){
+                        return;
+                    }
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }
@@ -716,6 +719,9 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
             MakaanNetworkClient.getInstance().getImageLoader().get(ImageUtils.getImageRequestUrl(user.profilePictureURL, width, height, false), new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
+                    if(!isVisible()){
+                        return;
+                    }
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }
