@@ -81,7 +81,7 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
         String imageUrl= null;
         if(wishList.get(position).listing != null && !TextUtils.isEmpty(wishList.get(position).listing.mainImageURL)) {
             imageUrl = wishList.get(position).listing.mainImageURL;
-        } else if(!TextUtils.isEmpty(wishList.get(position).project.imageURL)) {
+        } else if(wishList.get(position).project != null && !TextUtils.isEmpty(wishList.get(position).project.imageURL)) {
             imageUrl = wishList.get(position).project.imageURL;
         }
         /*if(imageUrl != null && !imageUrl.contains("https")){
