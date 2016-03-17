@@ -573,7 +573,13 @@ public class DefaultListingView extends AbstractListingView {
                     mPropertyInfoNameTextViews.get(j).setText(infoMap.displayName.toLowerCase());
                     break;
                 } else if(mListing.floor != null && mListing.floor >= 0) {
-                    if(mListing.floor == 0) {
+                    if(mListing.floor == 1) {
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>st</small></sup>", mListing.floor).toLowerCase()));
+                    } else if(mListing.floor == 2) {
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>nd</small></sup>", mListing.floor).toLowerCase()));
+                    } else if(mListing.floor == 3) {
+                        mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>rd</small></sup> ", mListing.floor).toLowerCase()));
+                    } else if(mListing.floor == 0) {
                         mPropertyInfoTextViews.get(j).setText("gr");
                     } else {
                         mPropertyInfoTextViews.get(j).setText(Html.fromHtml(String.format("%d<sup><small>th</small></sup>", mListing.floor).toLowerCase()));
