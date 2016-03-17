@@ -130,15 +130,16 @@ public class ProjectFragment extends MakaanBaseFragment{
                 if(projectConfigItem.topSellerCard == null){
                     continue;
                 }
-                if(sellerCard == null){
+                if (sellerCard == null) {
                     sellerCard = projectConfigItem.topSellerCard;
-                }
-                else if(sellerCard.noOfProperties<projectConfigItem.topSellerCard.noOfProperties){
-                    sellerCard = projectConfigItem.topSellerCard;
-                }
-                else if(sellerCard.noOfProperties == projectConfigItem.topSellerCard.noOfProperties
-                        && sellerCard.rating<projectConfigItem.topSellerCard.rating){
-                    sellerCard = projectConfigItem.topSellerCard;
+                } else if (sellerCard.noOfProperties != null && projectConfigItem.topSellerCard.noOfProperties != null) {
+                    if(sellerCard.noOfProperties < projectConfigItem.topSellerCard.noOfProperties) {
+                        sellerCard = projectConfigItem.topSellerCard;
+                    } else if (sellerCard.noOfProperties.equals(projectConfigItem.topSellerCard.noOfProperties)
+                            && sellerCard.rating != null && projectConfigItem.topSellerCard.rating != null
+                            && sellerCard.rating < projectConfigItem.topSellerCard.rating) {
+                        sellerCard = projectConfigItem.topSellerCard;
+                    }
                 }
             }
         }
@@ -147,15 +148,16 @@ public class ProjectFragment extends MakaanBaseFragment{
                 if(projectConfigItem.topSellerCard == null){
                     continue;
                 }
-                if(sellerCard == null){
+                if (sellerCard == null) {
                     sellerCard = projectConfigItem.topSellerCard;
-                }
-                else if(sellerCard.noOfProperties<projectConfigItem.topSellerCard.noOfProperties){
-                    sellerCard = projectConfigItem.topSellerCard;
-                }
-                else if(sellerCard.noOfProperties==projectConfigItem.topSellerCard.noOfProperties
-                        && sellerCard.rating!=null && projectConfigItem.topSellerCard.rating!=null &&  sellerCard.rating<projectConfigItem.topSellerCard.rating){
-                    sellerCard = projectConfigItem.topSellerCard;
+                } else if (sellerCard.noOfProperties != null && projectConfigItem.topSellerCard.noOfProperties != null) {
+                    if (sellerCard.noOfProperties < projectConfigItem.topSellerCard.noOfProperties) {
+                        sellerCard = projectConfigItem.topSellerCard;
+                    } else if (sellerCard.noOfProperties.equals(projectConfigItem.topSellerCard.noOfProperties)
+                            && sellerCard.rating != null && projectConfigItem.topSellerCard.rating != null
+                            && sellerCard.rating < projectConfigItem.topSellerCard.rating) {
+                        sellerCard = projectConfigItem.topSellerCard;
+                    }
                 }
             }
         }

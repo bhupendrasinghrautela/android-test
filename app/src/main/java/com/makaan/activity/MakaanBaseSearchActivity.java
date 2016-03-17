@@ -996,7 +996,8 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                     if(Session.phoneLocation != null) {
                         LocationService service = (LocationService) MakaanServiceFactory.getInstance().getService(LocationService.class);
                         service.getTopLocalitiesAsSearchResult(Session.phoneLocation.getLatitude(), Session.phoneLocation.getLongitude(), 0);
-                    } else if(Session.apiLocation != null) {
+                    } else if(Session.apiLocation != null && Session.apiLocation.centerLatitude != null
+                            && Session.apiLocation.centerLongitude != null) {
                         LocationService service = (LocationService) MakaanServiceFactory.getInstance().getService(LocationService.class);
                         service.getTopLocalitiesAsSearchResult(Session.apiLocation.centerLatitude, Session.apiLocation.centerLongitude, Session.apiLocation.id);
                     }

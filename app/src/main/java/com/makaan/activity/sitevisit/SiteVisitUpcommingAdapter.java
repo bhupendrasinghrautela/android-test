@@ -239,7 +239,9 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
             } else {
                 showTextAsImage(holder, company.name);
             }
-            holder.mRating.setRating((float) (company.score / 2));
+            if(company.score != null) {
+                holder.mRating.setRating((float) (company.score / 2));
+            }
             holder.mName.setText(companySeller.company.name.toLowerCase());
         }
     }

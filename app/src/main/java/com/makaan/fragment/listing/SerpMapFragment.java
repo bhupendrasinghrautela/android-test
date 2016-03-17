@@ -266,8 +266,8 @@ public class SerpMapFragment extends MakaanBaseFragment {
             mLatLngBoundsBuilder = new LatLngBounds.Builder();
 
             for (int i = 0; i < this.listings.size(); i++) {
-                double lat = this.listings.get(i).latitude;
-                double lng = this.listings.get(i).longitude;
+                double lat = this.listings.get(i).latitude != null ? this.listings.get(i).latitude : 0;
+                double lng = this.listings.get(i).longitude != null ? this.listings.get(i).longitude : 0;
                 if (lat != 0.0 && !Double.isNaN(lat) && lng != 0.0 && !Double.isNaN(lng)) {
                     addMarker(mLatLngBoundsBuilder, lat, lng, this.listings.get(i));
                 } else {
@@ -477,10 +477,13 @@ public class SerpMapFragment extends MakaanBaseFragment {
                 setMarkerIcon(markers.get(selectedMarkerPosition),
                         getMarkerBitmap(true, listings.get(selectedMarkerPosition)));
 
-                LatLng projectLocation = new LatLng(listings.get(selectedMarkerPosition).latitude, listings.get(selectedMarkerPosition).longitude);
-                mPropertyMap.animateCamera(CameraUpdateFactory.newLatLng(projectLocation));
+                if(listings.get(selectedMarkerPosition).latitude != null
+                        && listings.get(selectedMarkerPosition).longitude != null) {
+                    LatLng projectLocation = new LatLng(listings.get(selectedMarkerPosition).latitude, listings.get(selectedMarkerPosition).longitude);
+                    mPropertyMap.animateCamera(CameraUpdateFactory.newLatLng(projectLocation));
 
-                handleMarkerAlpha(markers.get(selectedMarkerPosition));
+                    handleMarkerAlpha(markers.get(selectedMarkerPosition));
+                }
             }
 
         }
