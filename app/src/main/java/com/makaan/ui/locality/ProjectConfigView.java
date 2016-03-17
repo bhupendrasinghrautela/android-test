@@ -71,15 +71,9 @@ public class ProjectConfigView extends LinearLayout implements ViewPager.OnPageC
 
 
     public void bindView(ProjectConfigEvent projectConfigEvent, FragmentActivity compatActivity) {
-        if(projectConfigEvent.buyProjectConfigItems.size()==0 && projectConfigEvent.rentProjectConfigItems.size()==0){
-            this.setVisibility(GONE);
-            return;
-        }
-        else {
             this.setVisibility(VISIBLE);
             this.projectConfigEvent = projectConfigEvent;
             initView(compatActivity);
-        }
     }
 
     private void initView(FragmentActivity compatActivity){
@@ -90,8 +84,7 @@ public class ProjectConfigView extends LinearLayout implements ViewPager.OnPageC
     private void setupViewPager(final ViewPager viewPager, FragmentActivity compatActivity) {
             ViewPagerAdapter adapter = new ViewPagerAdapter(compatActivity.getSupportFragmentManager());
             viewPager.addOnPageChangeListener(this);
-        viewPager.setOffscreenPageLimit(2);
-            if(projectConfigEvent.buyProjectConfigItems !=null && projectConfigEvent.buyProjectConfigItems.size()>0) {
+            if(projectConfigEvent!=null &&projectConfigEvent.buyProjectConfigItems !=null && projectConfigEvent.buyProjectConfigItems.size()>0) {
                 //buy
                 ArrayList<ProjectConfigItem> projectConfigItems = projectConfigEvent.buyProjectConfigItems;
                 ProjectConfigFragment fragment = new ProjectConfigFragment();
@@ -109,7 +102,7 @@ public class ProjectConfigView extends LinearLayout implements ViewPager.OnPageC
                 adapter.addFrag(fragment,"buy");
             }
 
-            if(projectConfigEvent.rentProjectConfigItems !=null && projectConfigEvent.rentProjectConfigItems.size()>0) {
+            if(projectConfigEvent != null &&projectConfigEvent.rentProjectConfigItems !=null && projectConfigEvent.rentProjectConfigItems.size()>0) {
                 //rent
                 ArrayList<ProjectConfigItem> projectConfigItemsrent = projectConfigEvent.rentProjectConfigItems;
                 ProjectConfigFragment fragmentrent = new ProjectConfigFragment();

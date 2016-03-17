@@ -225,6 +225,18 @@ public class MultiSelectionSpinner extends Spinner implements  OnMultiChoiceClic
         return ids;
     }
 
+    public void setSelectedIds(List<Integer> ids){
+        for (int id:ids) {
+                for(int i = 0;i<_ids.length;i++){
+                    if(_ids[i] == id){
+                        mSelection[i] = true;
+                    }
+                }
+        }
+        simple_adapter.clear();
+        simple_adapter.add(buildSelectedItemString());
+    }
+
     private String buildSelectedItemString() {
         StringBuilder sb = new StringBuilder();
         int count = 0;
