@@ -46,6 +46,9 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        if(wishList.get(position) == null) {
+            return;
+        }
 
         ShortListFavoriteViewHolder shortListFavoriteViewHolder = (ShortListFavoriteViewHolder)holder;
         if(null!=wishList.get(position).listingId){
