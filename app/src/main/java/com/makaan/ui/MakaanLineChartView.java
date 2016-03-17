@@ -287,7 +287,7 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
                     MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickProjectPriceTrends);
                 }
                 generateDataForChart();
-                if (mLines.size() == 0) {
+                if (mLines.size() == 1) {
                     view.performClick();
 
                 }
