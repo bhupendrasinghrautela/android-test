@@ -9,11 +9,11 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
+import com.makaan.constants.ApiConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.amenity.Amenity;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.ui.listing.BaseCardView;
-import com.makaan.util.ImageUtils;
 
 import butterknife.Bind;
 
@@ -25,7 +25,7 @@ public class AmenityCardView extends BaseCardView<AmenityCluster> {
     @Bind(R.id.amenity_title)TextView mAmenityTitle;
     @Bind(R.id.amenity_logo)FadeInNetworkImageView mAmenityLogo;
     @Bind(R.id.amenity_list)LinearLayout mAmenityListLayout;
-    private final static String URL = "http://content.makaan.com.s3.amazonaws.com/app/icons/amenities";
+    private final static String URL = ApiConstants.HOSTED_IMAGE_URL;
 
     private Context mContext;
 
