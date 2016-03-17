@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Build;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 
@@ -97,7 +98,112 @@ public class ImageUtils {
             width = (int) (width * Resources.getSystem().getDisplayMetrics().density);
             height = (int) (height * Resources.getSystem().getDisplayMetrics().density);
         }
-        return url.concat(String.format("?width=%d&height=%d", width, height));
+        //return url.concat(String.format("?width=%d&height=%d", width, height));
+		return getScaledImageUrl(url);
     }
+
+	public static String getScaledImageUrl(String imageUrl) {
+		//TODO host this in config file
+
+		if(TextUtils.isEmpty(imageUrl)){
+			//TODO show some default imageurl
+			return imageUrl;
+		}
+
+		try {
+			String imageDimen = "";
+
+			switch (Resources.getSystem().getDisplayMetrics().densityDpi) {
+				case DisplayMetrics.DENSITY_LOW:
+					imageDimen = "?width=220&height=120";
+					break;
+				case DisplayMetrics.DENSITY_MEDIUM:
+					imageDimen = "?width=280&height=200";
+					break;
+				case DisplayMetrics.DENSITY_HIGH:
+				case DisplayMetrics.DENSITY_280:
+					imageDimen = "?width=320&height=220";
+					break;
+				case DisplayMetrics.DENSITY_XHIGH:
+				case DisplayMetrics.DENSITY_360:
+					imageDimen = "?width=360&height=240";
+					break;
+				case DisplayMetrics.DENSITY_XXHIGH:
+				case DisplayMetrics.DENSITY_400:
+				case DisplayMetrics.DENSITY_420:
+					imageDimen = "?width=420&height=280";
+					break;
+				case DisplayMetrics.DENSITY_XXXHIGH:
+				case DisplayMetrics.DENSITY_560:
+					imageDimen = "?width=520&height=340";
+					break;
+				default:
+					imageDimen = "?width=280&height=200";
+					break;
+			}
+
+			//TODO this is a temp code, remove after redirection issue is fixed
+			if(imageUrl.contains("http") && !imageUrl.contains("https")){
+				imageUrl = imageUrl.replace("http","https");
+			}
+
+			return imageUrl.concat(imageDimen);
+
+		} catch (Exception e) {
+			return imageUrl.concat("?width=380&height=280");
+		}
+	}
+
+	public static String getFullScreenImageUrl(String imageUrl) {
+		//TODO host this in config file
+
+		if(TextUtils.isEmpty(imageUrl)){
+			//TODO show some default imageurl
+			return imageUrl;
+		}
+
+		try {
+			String imageDimen = "";
+
+			switch (Resources.getSystem().getDisplayMetrics().densityDpi) {
+				case DisplayMetrics.DENSITY_LOW:
+					imageDimen = "?WIDTH=320&HEIGHT=240";
+					break;
+				case DisplayMetrics.DENSITY_MEDIUM:
+					imageDimen = "?WIDTH=380&HEIGHT=280";
+					break;
+				case DisplayMetrics.DENSITY_HIGH:
+				case DisplayMetrics.DENSITY_280:
+					imageDimen = "?WIDTH=520&HEIGHT=400";
+					break;
+				case DisplayMetrics.DENSITY_XHIGH:
+				case DisplayMetrics.DENSITY_360:
+					imageDimen = "?WIDTH=680&HEIGHT=580";
+					break;
+				case DisplayMetrics.DENSITY_XXHIGH:
+				case DisplayMetrics.DENSITY_400:
+				case DisplayMetrics.DENSITY_420:
+					imageDimen = "?WIDTH=800&HEIGHT=620";
+					break;
+				case DisplayMetrics.DENSITY_XXXHIGH:
+				case DisplayMetrics.DENSITY_560:
+					imageDimen = "?WIDTH=940&HEIGHT=720";
+					break;
+				default:
+					imageDimen = "?WIDTH=380&HEIGHT=280";
+					break;
+			}
+
+			//TODO this is a temp code, remove after redirection issue is fixed
+			if(imageUrl.contains("http") && !imageUrl.contains("https")){
+				imageUrl = imageUrl.replace("http","https");
+			}
+
+			return imageUrl.concat(imageDimen);
+
+		} catch (Exception e) {
+			return imageUrl.concat("?WIDTH=380&HEIGHT=280");
+		}
+	}
 
 }

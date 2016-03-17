@@ -42,17 +42,26 @@ public class VolleyErrorParser {
         }
         if (error instanceof TimeoutError) {
             return WEAK_NETWORK_ERROR;
+
         } else if (error instanceof ServerError) {
-            if(((VolleyError)error).networkResponse != null && ((VolleyError)error).networkResponse.statusCode == 503) {
-                return SERVICE_UNAVAILABLE_ERROR;
+            if(((VolleyError)error).networkResponse != null) {
+                if(((VolleyError)error).networkResponse.statusCode == 503) {
+                    return SERVICE_UNAVAILABLE_ERROR;
+                }else if(((VolleyError)error).networkResponse.statusCode == 400){
+                    return getErrorMessage(error);
+                }
             }
             return SERVER_ERROR;
+
         } else if(isNoInternetConnection(error)) {
             return NETWORK_ERROR;
+
         } else if (isNetworkProblem(error)) {
             return WEAK_NETWORK_ERROR;
+
         } else if (error instanceof AuthFailureError) {
-            return AUTH_ERROR;
+            return getAuthErrorMessage(error);
+
         } else if(error instanceof VolleyError) {
             NetworkResponse response = ((VolleyError)error).networkResponse;
             if(response != null) {
@@ -125,6 +134,24 @@ public class VolleyErrorParser {
             }
         }else{
             return GENERIC_ERROR;
+        }
+    }
+
+    private static String getAuthErrorMessage(Object err) {
+        VolleyError error = (VolleyError) err;
+        NetworkResponse response = error.networkResponse;
+
+        if (response != null && response.data!=null && response.data.length>0) {
+            BaseResponse baseResponse = (BaseResponse) JsonParser.parseJson(new String(response.data), BaseResponse.class);
+            if(baseResponse!=null && baseResponse.getError()!=null &&
+                    !TextUtils.isEmpty(baseResponse.getError().msg)){
+
+                return baseResponse.getError().msg;
+            }else{
+                return AUTH_ERROR;
+            }
+        }else{
+            return AUTH_ERROR;
         }
     }
 
