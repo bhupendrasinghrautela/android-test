@@ -151,7 +151,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                     String ageYrs = String.valueOf((age > 0 ? getElapsedYearsFromNow(age) : 0));
                     HorizontalScrollItem overViewItem = new HorizontalScrollItem();
                     overViewItem.name = "age";
-                    overViewItem.resourceId = R.drawable.possession;
+                    overViewItem.resourceId = R.drawable.age_property;
                     overViewItem.value = ageYrs.concat(" yrs");
                 }
             }catch (NumberFormatException e){}
@@ -189,7 +189,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                             Long age = mDetail.minConstructionCompletionDate;
                             int ageYrs =age > 0 ? getElapsedYearsFromNow(age) : 0;
                             overViewItem.name ="age";
-                            overViewItem.resourceId = R.drawable.possession;
+                            overViewItem.resourceId = R.drawable.age_property;
                             if(ageYrs <= 1) {
                                 overViewItem.value =String.format("%d - %d yr",ageYrs, ageYrs + 1);
                             } else if(ageYrs <= 2) {
@@ -295,7 +295,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                     case CATEGORY:
                         if(mDetail.listingCategory!=null) {
                             overViewItem.name = "new/resale";
-                            overViewItem.resourceId = R.drawable.new_resale;
+                            overViewItem.resourceId = R.drawable.ownership;
                             if("primary".equalsIgnoreCase(mDetail.listingCategory)) {
                                 overViewItem.value = "new".toLowerCase();
                             } else if("resale".equalsIgnoreCase(mDetail.listingCategory)) {
@@ -308,7 +308,7 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                     case ENTRY_ROAD_WIDTH:
                         if(mDetail.mainEntryRoadWidth!=null) {
                             overViewItem.name = overview.toString();
-                            overViewItem.resourceId = R.drawable.possession;
+                            overViewItem.resourceId = R.drawable.road_width;
                             overViewItem.value = String.valueOf(mDetail.mainEntryRoadWidth);
                         }
                         break;

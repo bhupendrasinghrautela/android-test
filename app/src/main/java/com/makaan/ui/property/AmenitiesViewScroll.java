@@ -10,13 +10,13 @@ import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.adapter.listing.CustomAbstractHorizontalScrollViewAdapter;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.constants.ApiConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.HorizontalScrollItem;
 import com.makaan.response.listing.detail.ListingAmenity;
 import com.makaan.response.project.ProjectAmenity;
 import com.makaan.ui.BaseLinearLayout;
 import com.makaan.ui.listing.CustomHorizontalScrollView;
-import com.makaan.util.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -181,7 +181,7 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
         TextView nameText;
         @Bind(R.id.value)
         TextView valueText;
-        private final static String URL = "http://content.makaan.com.s3.amazonaws.com/app/icons/amenities";
+        private final static String URL = ApiConstants.HOSTED_IMAGE_URL;
 
         public ListingOverViewAdapter(Context context, List<HorizontalScrollItem> dataList) {
             super(context, dataList);
