@@ -171,9 +171,11 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
         mIsUserLoggedIn = CookiePreferences.isUserLoggedIn(getActivity());
         setupData();
 
-        mViews[0] = view.findViewById(R.id.ll_search);
-        mViews[1] = view.findViewById(R.id.ll_shortlist);
-        mViews[2] = view.findViewById(R.id.ll_site_visit);
+        if(view != null) {
+            mViews[0] = view.findViewById(R.id.ll_search);
+            mViews[1] = view.findViewById(R.id.ll_shortlist);
+            mViews[2] = view.findViewById(R.id.ll_site_visit);
+        }
         return view;
     }
 
@@ -189,7 +191,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
                 mSavedSearchesReceived = false;
             }
 
-            ((ClientLeadsService) MakaanServiceFactory.getInstance().getService(ClientLeadsService.class)).requestClientLeadsActivity();
+            ((ClientLeadsService) MakaanServiceFactory.getInstance().getService(ClientLeadsService.class)).requestpropertyRequirements();
             ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).getSavedSearchesNewMatches();
             ((ClientEventsService) MakaanServiceFactory.getInstance().getService(ClientEventsService.class)).getClientEvents(1);
             ((WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class)).get();
