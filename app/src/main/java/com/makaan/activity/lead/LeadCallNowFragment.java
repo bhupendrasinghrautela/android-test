@@ -81,19 +81,19 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
     @OnClick(R.id.btn_call)
     void callClick(){
         Bundle bundle =getArguments();
-        if(bundle!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
+        if(bundle!=null && SerpActivity.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.callNow);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickSerpCallConnect);
         }
-        else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName())) {
+        else if(bundle!=null && ProjectFragment.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.callNow);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectCallConnect);
         }
-        else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName())) {
+        else if(bundle!=null && PropertyDetailFragment.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.callNow);
@@ -112,19 +112,19 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
     @OnClick(R.id.tv_share_your_deatils)
     void getCallBackClick(){
         Bundle bundle =getArguments();
-        if(bundle!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
+        if(bundle!=null && SerpActivity.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBackFromSeller);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickSerpCallConnect);
         }
-        else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName())) {
+        else if(bundle!=null && ProjectFragment.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBackFromSeller);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectCallConnect);
         }
-        else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName())) {
+        else if(bundle!=null && PropertyDetailFragment.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBackFromSeller);
@@ -143,13 +143,10 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
                     width, height, false), new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
-                    if(!isVisible()){
-                        return;
-                    }
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }
-                    if(isVisible()) {
+                    if(isFragmentVisible()) {
                         mSellerImage.setVisibility(View.VISIBLE);
                         mSellerNameProfileText.setVisibility(View.INVISIBLE);
                         mSellerImage.setImageBitmap(imageContainer.getBitmap());
@@ -159,7 +156,7 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     super.onErrorResponse(volleyError);
-                    if(isVisible()) {
+                    if(isFragmentVisible()) {
                         mSellerImage.setVisibility(View.INVISIBLE);
                         mSellerNameProfileText.setVisibility(View.VISIBLE);
                         mSellerNameProfileText.setText(mLeadFormPresenter.getName());
