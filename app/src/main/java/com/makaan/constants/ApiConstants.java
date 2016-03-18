@@ -99,6 +99,7 @@ public class ApiConstants {
     public static final String MAKAAN_LOGIN = MICROSERVICE_MADROX.concat("/app/v1/login");
     public static final String LOGOUT = MICROSERVICE_MADROX.concat("/app/v1/logout");
     public static final String REGISTER = MICROSERVICE_MADROX.concat("/app/v1/register");
+    public static final String PROPERTY_REQUIREMENTS = MICROSERVICE_SAPPHIRE.concat("/v1/property-requiements");
 
     //public static final String SIMILAR_LISTING = BASE_URL.concat("/app/v1/similar/listing/");
 

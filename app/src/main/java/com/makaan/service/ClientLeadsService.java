@@ -52,9 +52,9 @@ public class ClientLeadsService implements MakaanService {
         });
     }
 
-    public void requestClientLeadsActivity() {
+    public void requestpropertyRequirements() {
 //        String detailsURL = ApiConstants.ICRM_CLIENT_LEADS.concat("?sort=-clientActivity.phaseId&fields=clientActivity.phaseId&rows=1");
-        String detailsURL = ApiConstants.ICRM_CLIENT_LEADS.concat("?rows=1");
+        String detailsURL = ApiConstants.PROPERTY_REQUIREMENTS.concat("?fields=id&rows=1");
         MakaanNetworkClient.getInstance().get(detailsURL, new JSONGetCallback() {
             @Override
             public void onSuccess(JSONObject responseObject) {

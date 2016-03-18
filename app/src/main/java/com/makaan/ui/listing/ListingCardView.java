@@ -1,5 +1,7 @@
 package com.makaan.ui.listing;
 
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +21,7 @@ import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 
 import com.makaan.activity.listing.PropertyActivity;
+import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.constants.PreferenceConstants;
@@ -26,6 +29,7 @@ import com.makaan.constants.PreferenceConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.listing.Listing;
 import com.makaan.ui.CustomNetworkImageView;
+import com.makaan.ui.view.MPlusBadgePopupDialog;
 import com.makaan.ui.view.WishListButton;
 import com.makaan.ui.view.WishListButton.WishListDto;
 import com.makaan.ui.view.WishListButton.WishListType;
@@ -204,6 +208,16 @@ public class ListingCardView extends AbstractListingView {
                 intent.putExtras(bundle);
                 getContext().startActivity(intent);
             }
+        }
+    }
+
+    @OnClick(R.id.listing_brief_view_layout_assist_button)
+    public void onAssistClicked(View view) {
+
+        if(mContext != null && mContext instanceof Activity) {
+            FragmentTransaction ft = ((Activity)mContext).getFragmentManager().beginTransaction();
+            MPlusBadgePopupDialog dialog = new MPlusBadgePopupDialog();
+            dialog.show(ft, "MPlus");
         }
     }
 }
