@@ -586,6 +586,8 @@
     <dimen name="jarvis_chat_card_subtitle_text_size">16sp</dimen>
     <dimen name="jarvis_chat_button_layout_margin_side">50dp</dimen>
     <dimen name="jarvis_chat_button_layout_margin_bottom">20dp</dimen>
+    <dimen name="jarvis_chat_button_layout_margin_small_bottom">10dp</dimen>
+    <dimen name="jarvis_chat_button_layout_margin_top">4dp</dimen>
 
 
     <!---Amenities-->
@@ -692,7 +694,7 @@
     <dimen name="listing_brief_view_layout_assist_button_width">39dp</dimen>
     <dimen name="listing_brief_view_layout_assist_button_height">13dp</dimen>
     <dimen name="listing_brief_view_layout_assist_button_right_margin">10dp</dimen>
-    <dimen name="listing_brief_view_layout_assist_button_top_margin">2dp</dimen>
+    <dimen name="listing_brief_view_layout_assist_button_top_margin">4dp</dimen>
     <dimen name="listing_brief_view_layout_assist_button_left_padding">0dp</dimen>
 
     <dimen name="listing_brief_view_layout_property_address_text_view_left_margin">6dp</dimen>

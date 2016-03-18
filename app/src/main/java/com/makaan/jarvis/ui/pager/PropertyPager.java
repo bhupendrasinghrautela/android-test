@@ -76,6 +76,7 @@ public class PropertyPager extends ViewPager {
             message.chatObj.image = property.property.project.imageURL;
             message.chatObj.locality = property.property.project.builder.name + " " + property.property.project.name;
             message.chatObj.area = property.property.project.locality.label + " " + property.property.project.locality.suburb.city.label;
+            message.chatObj.propertyId = property.id;
             if(null!=property.currentListingPrice){
                 message.chatObj.price = property.currentListingPrice.price;
             }

@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="@dimen/map_pointer_width"
+    android:orientation="horizontal" android:layout_width="@dimen/map_pointer_width"
     android:layout_height="@dimen/map_pointer_height"
-    android:background="@drawable/map_1">
+    android:background="@drawable/map_single_normal"
+    android:gravity="center">
 
     <TextView
         android:id="@+id/map_pointer_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1"
-        android:textSize="10sp"
+        android:text="14.55"
+        android:textSize="9sp"
         android:textColor="@color/map_pointer_text_selected"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="-4dp"
         android:typeface="serif"
         android:maxLength="4"/>
+
+    <TextView
+        android:id="@+id/map_pointer_text_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cr"
+        android:textSize="9sp"
+        android:textColor="@color/map_pointer_text_selected"
+        android:layout_marginTop="-4dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        android:typeface="serif"
+        android:maxLength="2"/>
 </LinearLayout>
