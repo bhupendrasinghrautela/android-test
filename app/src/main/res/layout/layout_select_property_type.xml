@@ -39,7 +39,7 @@
                         android:layout_height="@dimen/property_icon_width_height"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="0.2"
-                        android:src="@drawable/house_icon" />
+                        android:src="@drawable/property_type" />
 
                     <TextView
                         android:layout_width="wrap_content"
