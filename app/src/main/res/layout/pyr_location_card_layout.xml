@@ -30,7 +30,7 @@
                     android:layout_width="@dimen/pyr_locality_icon_width"
                     android:layout_height="@dimen/pyr_locality_icon_height"
                     android:layout_marginLeft="@dimen/pyr_locality_icon_left_margin"
-                    android:src="@drawable/location_icon" />
+                    android:src="@drawable/location" />
 
                 <TextView
                     android:layout_width="match_parent"

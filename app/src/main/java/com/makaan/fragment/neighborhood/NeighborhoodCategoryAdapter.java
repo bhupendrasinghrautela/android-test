@@ -2,19 +2,17 @@ package com.makaan.fragment.neighborhood;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
+import com.makaan.constants.ApiConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.amenity.AmenityCluster;
-import com.makaan.util.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +27,7 @@ public class NeighborhoodCategoryAdapter extends RecyclerView.Adapter<RecyclerVi
     private CheckBox lastAmenityView;
     private int selectedPosition=0;
 
-    private final static String URL = "http://content.makaan.com.s3.amazonaws.com/app/icons/amenities";
+    private final static String URL = ApiConstants.HOSTED_IMAGE_URL;
 
     public NeighborhoodCategoryAdapter(Context context,
                                        CategoryClickListener categoryClickListener){
@@ -110,7 +108,7 @@ public class NeighborhoodCategoryAdapter extends RecyclerView.Adapter<RecyclerVi
             finalImageUrl.append(amenityCluster.amenityId);
             finalImageUrl.append(".png");
             int width = mContext.getResources().getDimensionPixelSize(R.dimen.neighbor_category_icon_width_height);
-            icon.setImageUrl(ImageUtils.getImageRequestUrl(finalImageUrl.toString(), width, width, false), MakaanNetworkClient.getInstance().getImageLoader());
+            icon.setImageUrl(finalImageUrl.toString(), MakaanNetworkClient.getInstance().getImageLoader());
             label.setText(amenityCluster.name);
         }
 
