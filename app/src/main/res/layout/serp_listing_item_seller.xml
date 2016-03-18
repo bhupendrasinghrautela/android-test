@@ -28,13 +28,31 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/serp_listing_item_seller_image_view"
+        <FrameLayout
+            android:id="@+id/serp_default_listing_seller_image_frame_layout"
             android:layout_width="@dimen/serp_listing_item_seller_image_view_width"
             android:layout_height="@dimen/serp_listing_item_seller_image_view_height"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/serp_listing_item_seller_image_view_margin_top"
-            android:src="@drawable/builder" />
+            android:layout_marginTop="@dimen/serp_listing_item_seller_image_view_margin_top">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/serp_listing_item_seller_image_view"
+                android:layout_width="@dimen/serp_listing_item_seller_image_view_width"
+                android:layout_height="@dimen/serp_listing_item_seller_image_view_height"
+                android:layout_gravity="center"
+                android:src="@drawable/builder" />
+
+            <TextView
+                android:id="@+id/serp_listing_item_seller_logo_text_view"
+                android:layout_width="@dimen/serp_listing_item_seller_image_view_width"
+                android:layout_height="@dimen/serp_listing_item_seller_image_view_height"
+                android:gravity="center"
+                android:text="R"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="40sp" />
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/serp_listing_item_seller_name_text_view"

@@ -155,4 +155,8 @@ public abstract class MakaanBaseFragment extends Fragment {
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
+
+    protected boolean isFragmentVisible() {
+        return isAdded() && !isHidden() && getActivity() != null && !getActivity().isFinishing();
+    }
 }
