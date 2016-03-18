@@ -123,12 +123,14 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerHome);
         properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.facebook);
         MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.signUpSocial);
-        if(AccessToken.getCurrentAccessToken()==null) {
+        /*if(AccessToken.getCurrentAccessToken()==null) {
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email","public_profile", "user_friends"));
         }else {
             ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
             ))).loginWithFacebookAccount(AccessToken.getCurrentAccessToken().getToken());
-        }
+        }*/
+
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email","public_profile", "user_friends"));
     }
 
     @OnClick(R.id.gmail_login)
