@@ -1,6 +1,7 @@
 package com.makaan.ui.listing;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -64,25 +65,33 @@ public class GroupListingItemView extends RelativeLayout implements View.OnClick
         for(GroupListing.GroupingAttributes attribute : item.groupingAttributes) {
             switch (attribute.type) {
                 case "minBudget":
-                    mMinBudget = Long.valueOf(attribute.value);
+                    if(!TextUtils.isEmpty(attribute.value)) {
+                        mMinBudget = Long.valueOf(attribute.value);
+                    }
                     break;
                 case "maxBudget":
-                    mMaxBudget = Long.valueOf(attribute.value);
+                    if(!TextUtils.isEmpty(attribute.value)) {
+                        mMaxBudget = Long.valueOf(attribute.value);
+                    }
                     break;
                 case "bedrooms":
-                    mBedrooms = Integer.valueOf(attribute.value);
+                    if(!TextUtils.isEmpty(attribute.value)) {
+                        mBedrooms = Integer.valueOf(attribute.value);
+                    }
                     break;
                 case "locality":
                     mLocality = attribute.value;
                     break;
                 case "unitTypeId":
-                    mUnitId = Integer.valueOf(attribute.value);
+                    if(!TextUtils.isEmpty(attribute.value)) {
+                        mUnitId = Integer.valueOf(attribute.value);
+                    }
                     break;
             }
         }
 
-        String minString = StringUtil.getDisplayPrice(mMinBudget);
-        String maxString = StringUtil.getDisplayPrice(mMaxBudget);
+        String minString = mMinBudget != null ? StringUtil.getDisplayPrice(mMinBudget) : "";
+        String maxString = mMaxBudget != null ? StringUtil.getDisplayPrice(mMaxBudget) : "";
 
         if(minString.indexOf("\u20B9") == 0) {
             minString = minString.replace("\u20B9", "");
@@ -93,7 +102,12 @@ public class GroupListingItemView extends RelativeLayout implements View.OnClick
         }
 
         mPropertyPriceRangeTextView.setText(String.format(PRICE_RANGE_STRING, minString, maxString));
-        mPropertySizeTextView.setText(String.format(PROPERTY_SIZE_STRING, mBedrooms));
+        if( mBedrooms != null) {
+            mPropertySizeTextView.setVisibility(VISIBLE);
+            mPropertySizeTextView.setText(String.format(PROPERTY_SIZE_STRING, mBedrooms));
+        } else {
+            mPropertySizeTextView.setVisibility(INVISIBLE);
+        }
         for(ApiIntLabel intLabel : MasterDataCache.getInstance().getBuyPropertyTypes()) {
             if(intLabel.id.equals(mUnitId)) {
                 if(intLabel.name != null) {

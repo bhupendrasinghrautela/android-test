@@ -173,7 +173,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public Selector mSerpSelector = new Selector();
     private ArrayList<FilterGroup> mFilterGroups;
     private boolean mFilterDialogOpened;
-    private Properties properties;
+    private Properties mProperties;
 
     SerpBackStack mSerpBackStack = new SerpBackStack();
 
@@ -476,10 +476,22 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 if(mListingGetEvent != null && mListingGetEvent.listingData != null
                         && mListingGetEvent.listingData.listings != null
                         && mListingGetEvent.listingData.listings.size() > 0) {
-                    if(properties!=null){
+                    if(mProperties !=null){
+                        StringBuilder stringBuilder=new StringBuilder();
+                        String space=" ";
                         Properties properties1=MakaanEventPayload.beginBatch();
                         properties1.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorUsability);
-                        properties1.put(MakaanEventPayload.LABEL, properties.toString());
+                        if(mSerpBackStack != null && mSerpBackStack.peek() != null
+                                && mSerpBackStack.peek().getSearches() != null
+                                && mSerpBackStack.peek().getSearches().size() >= 0) {
+                            for(SearchResponseItem item : mSerpBackStack.peek().getSearches()) {
+                                if(item != null && item.displayText!=null && !TextUtils.isEmpty(item.displayText)) {
+                                    stringBuilder.append(item.displayText);
+                                    stringBuilder.append(space);
+                                }
+                            }
+                        }
+                        properties1.put(MakaanEventPayload.LABEL, String.format("%s_%s", stringBuilder.toString(), mProperties.toString()));
                         MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.noPropertyMatchingSearch);
                     }
                 }
@@ -1179,6 +1191,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     @Override
     public void setFilterString(Properties properties) {
-        this.properties=properties;
+        this.mProperties =properties;
     }
 }

@@ -23,6 +23,8 @@ import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
 import com.makaan.activity.project.ProjectActivity;
 import com.makaan.activity.pyr.PyrPageActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.buyerjourney.ClientLead;
@@ -31,6 +33,7 @@ import com.makaan.service.ClientLeadsService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.AppUtils;
 import com.makaan.util.ErrorUtil;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -92,6 +95,16 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
     void onNextClicked(View view) {
         if(getActivity() instanceof BuyerDashboardCallbacks) {
             if(mSelected < mClientLeadsObjects.size()) {
+
+                /*----------------------- track events-------------------------*/
+                if(mClientLeadsObjects.get(mSelected).clientLead!=null &&  mClientLeadsObjects.get(mSelected).clientLead.companyId!=null) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                    properties.put(MakaanEventPayload.LABEL, mClientLeadsObjects.get(mSelected).clientLead.companyId);
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickCashBackSeller);
+                }
+                /*-----------------------------------------------------------------*/
+
                 Bundle bundle = new Bundle();
                 bundle.putLong(ClientCompanyLeadFragment.COMPANY_ID, mClientLeadsObjects.get(mSelected).clientLead.companyId);
                 ArrayList<Long> listingIds = new ArrayList<>();

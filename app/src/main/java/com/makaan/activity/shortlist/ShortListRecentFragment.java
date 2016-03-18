@@ -154,11 +154,15 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
                     view.findViewById(R.id.txt_get_call_back).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Properties properties= MakaanEventPayload.beginBatch();
-                            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
-                            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", dataObject.localityId ,
-                                    MakaanTrackerConstants.Label.getCallBack ));
-                            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickShortListRecentlyViewed);
+                            /*--------------------------- track events--------------------------------------*/
+                            if(dataObject.id!=0) {
+                                Properties properties = MakaanEventPayload.beginBatch();
+                                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                                properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", dataObject.id,
+                                        MakaanTrackerConstants.Label.getCallBack));
+                                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickShortListRecentlyViewed);
+                            }
+                            /*------------------------------------------------------*/
 
                             Intent intent = new Intent(getActivity(), LeadFormActivity.class);
                             try {

@@ -458,14 +458,17 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         }
         final String minTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(0));
         final String maxTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(37));
-        new PriceTrendService().getPriceTrendForLocalities(localityIds,minTime,maxTime, new LocalityTrendCallback() {
+        new PriceTrendService().getPriceTrendForLocalities(localityIds, minTime, maxTime, new LocalityTrendCallback() {
             @Override
             public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
                 if (localityPriceTrendDto.data != null && localityPriceTrendDto.data.size() != 0) {
                     mPriceTrendView.setVisibility(View.VISIBLE);
+                    if (mCity!= null && mCity.id != 0) {
+                        mPriceTrendView.setCityId(mCity.id);
+                    }
                     mPriceTrendView.bindView(localityPriceTrendDto);
                     mLocalityPriceTrendDto = localityPriceTrendDto;
-                    new PriceTrendService().getCityPriceTrendForCity(mCity.id,minTime,maxTime);
+                    new PriceTrendService().getCityPriceTrendForCity(mCity.id, minTime, maxTime);
                 } else
                     mPriceTrendView.setVisibility(View.GONE);
             }
@@ -481,6 +484,9 @@ public class CityOverViewFragment extends MakaanBaseFragment{
             Set<PriceTrendKey> priceTrendKeySet = cityPriceTrendEvent.cityPriceTrendDto.data.keySet();
             for (PriceTrendKey key : priceTrendKeySet) {
                 mLocalityPriceTrendDto.data.put(key, cityPriceTrendEvent.cityPriceTrendDto.data.get(key));
+            }
+            if (mCity!= null && mCity.id != 0) {
+                mPriceTrendView.setCityId(mCity.id);
             }
             mPriceTrendView.bindView(mLocalityPriceTrendDto);
         }

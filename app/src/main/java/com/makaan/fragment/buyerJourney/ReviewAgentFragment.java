@@ -171,9 +171,11 @@ public class ReviewAgentFragment extends MakaanBaseFragment {
                     // TODO
                 } else {
                     AgentRating rating = new AgentRating();
+                    Long sellerId = null;
                     if(mObj.clientLeadObject != null && mObj.clientLeadObject.company != null
                             && mObj.clientLeadObject.company.id != null) {
                         rating.sellerId = mObj.clientLeadObject.company.id;
+                        sellerId=rating.sellerId;
                     }
                     rating.rating = (int)mRatingBar.getRating();
                     if(mObj.listingDetail != null) {
@@ -226,7 +228,8 @@ public class ReviewAgentFragment extends MakaanBaseFragment {
 
                     try {
                         ((ClientLeadsService) MakaanServiceFactory.getInstance().getService(ClientLeadsService.class))
-                                .postSellerRating(JsonBuilder.toJson(rating));
+                                .postSellerRating(JsonBuilder.toJson(rating), getActivity(), mRatingBar.getRating(),
+                                        mCommentEditText.getText().toString(), sellerId);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

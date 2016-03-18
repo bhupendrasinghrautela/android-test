@@ -1,7 +1,13 @@
 package com.makaan.service;
 
+import android.app.Activity;
+import android.content.Context;
+import android.support.v4.app.FragmentActivity;
+
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.constants.ApiConstants;
 import com.makaan.constants.ResponseConstants;
 import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
@@ -12,6 +18,7 @@ import com.makaan.response.ResponseError;
 import com.makaan.response.buyerjourney.AgentRating;
 import com.makaan.response.buyerjourney.Company;
 import com.makaan.util.AppBus;
+import com.segment.analytics.Properties;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -114,18 +121,42 @@ public class ClientLeadsService implements MakaanService {
         });
     }
 
-    public void postSellerRating(JSONObject jsonObject) {
+    public void postSellerRating(JSONObject jsonObject, final Context context, final float ratingValue, final String comment, final Long sellerId) {
         Type type = new TypeToken<AgentRating>() {}.getType();
         MakaanNetworkClient.getInstance().post(ApiConstants.SELLER_RATING, type, jsonObject, new ObjectGetCallback() {
 
             @Override
             public void onSuccess(Object responseObject) {
                 AgentRating rating = (AgentRating) responseObject;
+                if(context != null && context instanceof Activity) {
+                    if(!((Activity)context).isFinishing()) {
+                        /*----------------------- track events-------------------------*/
+                        Properties properties = MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                        properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ratingValue, sellerId));
+                        MakaanEventPayload.endBatch(context, MakaanTrackerConstants.Action.clickCashBackSellerRating);
+
+                        Properties propertis = MakaanEventPayload.beginBatch();
+                        propertis.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                        propertis.put(MakaanEventPayload.LABEL, String.format("%s_%s_%s", comment, "Feedback", sellerId));
+                        MakaanEventPayload.endBatch(context, MakaanTrackerConstants.Action.clickCashBackSellerRating);
+                        /*-----------------------------------------------------------------*/
+                    }
+                }
             }
 
             @Override
             public void onError(ResponseError error) {
-                //TODO handle error
+                if(context != null && context instanceof Activity) {
+                    if(!((Activity)context).isFinishing()) {
+                        /*----------------------- track events-------------------------*/
+                        Properties properties = MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                        properties.put(MakaanEventPayload.LABEL, String.format("%s_%s_%s", comment, "Feedback", sellerId));
+                        MakaanEventPayload.endBatch(context, MakaanTrackerConstants.Action.clickCashBackSellerRating);
+                        /*-----------------------------------------------------------------*/
+                    }
+                }
             }
         }, TAG, false);
     }

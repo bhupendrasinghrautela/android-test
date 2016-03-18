@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.view.View;
@@ -46,19 +47,12 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
     TextView mSellerNameProfileText;
     @Bind(R.id.iv_seller_image_call_now)
     de.hdodenhof.circleimageview.CircleImageView mSellerImage;
+    private boolean mAlreadyLoaded=false;
 
     @Override
     protected int getContentViewId() {
         return R.layout.layout_lead_call_now;
     }
-
-   /* @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_lead_call_now, container, false);
-        ButterKnife.bind(this, view);
-        return view;
-    }*/
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -70,12 +64,13 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
             mButtonCall.setText("call " + PhoneNumberUtils.formatNumber(mLeadFormPresenter.getPhone()));
         }
         else{
-            if(mLeadFormPresenter.getId()!=null && !TextUtils.isEmpty(mLeadFormPresenter.getId())){
+            if(mLeadFormPresenter.getId()!=null && !TextUtils.isEmpty(mLeadFormPresenter.getId()) && !mAlreadyLoaded){
                 Properties properties= MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorUsability);
                 properties.put(MakaanEventPayload.LABEL, String.format("%s_%s",
                         MakaanTrackerConstants.Label.leadForm, mLeadFormPresenter.getId()));
                 MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.errorNa);
+                mAlreadyLoaded=true;
             }
             mButtonCall.setText("na");
             mButtonCall.setClickable(false);
