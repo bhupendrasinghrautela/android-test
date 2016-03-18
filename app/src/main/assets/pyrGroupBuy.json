@@ -67,7 +67,7 @@
         "layoutType": "3",
         "termFilterValues": [
           {
-            "displayName": "apartment",
+            "displayName": "apartment or flat",
             "displayOrder": "1",
             "fieldName": "unitTypeId",
             "value": "Apartment",
@@ -95,7 +95,7 @@
             "selected": false
           },
           {
-            "displayName": "independent floor",
+            "displayName": "builder floor",
             "displayOrder": "5",
             "fieldName": "unitTypeId",
             "value": "BuilderFloor",
@@ -116,15 +116,8 @@
             "selected": false
           },
           {
-            "displayName": "independent floor",
-            "displayOrder": "8",
-            "fieldName": "unitTypeId",
-            "value": "IndependentFloor",
-            "selected": false
-          },
-          {
             "displayName": "penthouse",
-            "displayOrder": "9",
+            "displayOrder": "8",
             "fieldName": "unitTypeId",
             "value": "Penthouse",
             "selected": false

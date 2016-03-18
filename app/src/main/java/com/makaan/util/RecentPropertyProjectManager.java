@@ -100,7 +100,7 @@ public class RecentPropertyProjectManager {
     }
 
     public class DataObject {
-        long id;
+        public long id;
         public String addressLine1;
         public String addressLine2;
         public double price, minPrice, maxPrice;

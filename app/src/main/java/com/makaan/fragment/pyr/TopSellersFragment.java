@@ -72,10 +72,6 @@ public class TopSellersFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        /*if (savedInstanceState == null && !mAlreadyLoaded) {
-            mAlreadyLoaded = true;
-        }*/
-
     }
 
     @Override

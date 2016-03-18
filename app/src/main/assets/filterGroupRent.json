@@ -94,7 +94,7 @@
             "selected": false
           },
           {
-            "displayName": "independent floor",
+            "displayName": "builder floor",
             "displayOrder": "4",
             "fieldName": "unitTypeId",
             "value": "7",
