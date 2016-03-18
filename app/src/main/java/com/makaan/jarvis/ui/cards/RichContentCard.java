@@ -88,6 +88,13 @@ public class RichContentCard extends BaseCtaView<ExposeMessage> {
         }
     }
 
+    @OnClick(R.id.btn_cancel)
+    public void onCacelClick(){
+        if(null!=mOnCancelClickListener){
+            mOnCancelClickListener.onCancelClick();
+        }
+    }
+
     private static class Content {
         public String guid;
         public String postTitle;

@@ -128,7 +128,7 @@ public class AskReqCard extends BaseView<Message> {
                 }
 
                 if(BED_INTERNAL_NAME.equalsIgnoreCase(filterGroup.internalName)){
-                    if(null!=filterGroup.termFilterValues || !filterGroup.termFilterValues.isEmpty()){
+                    if(null!=filterGroup.termFilterValues && !filterGroup.termFilterValues.isEmpty()){
                         StringBuilder bhkBuilder = new StringBuilder();
                         int i=0;
                         for(TermFilter termFilter : filterGroup.termFilterValues){
