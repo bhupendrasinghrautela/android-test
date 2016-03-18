@@ -403,7 +403,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                         });
                     }
 
-                    card.setOnCancelClickListener(new SerpFilterCard.OnCancelClickListener() {
+                    card.setOnCancelClickListener(new BaseCtaView.OnCancelClickListener() {
                         @Override
                         public void onCancelClick() {
                             dismissPopupWithAnim();

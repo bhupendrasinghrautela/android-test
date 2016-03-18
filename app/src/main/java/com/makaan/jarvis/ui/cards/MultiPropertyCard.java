@@ -8,6 +8,7 @@ import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.jarvis.ui.pager.PropertyPager;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by sunil on 27/01/16.
@@ -32,5 +33,12 @@ public class MultiPropertyCard extends BaseCtaView<ExposeMessage> {
     @Override
     public void bindView(Context context, ExposeMessage item) {
         mPropertyPager.bindView(context, item.properties.content);
+    }
+
+    @OnClick(R.id.btn_cancel)
+    public void onCacelClick(){
+        if(null!=mOnCancelClickListener){
+            mOnCancelClickListener.onCancelClick();
+        }
     }
 }
