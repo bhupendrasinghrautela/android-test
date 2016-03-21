@@ -38,6 +38,8 @@ public class ApiConstants {
     public static final String MASTER_SPECIFICATIONS = BASE_URL.concat("/data/v1/entity/master-specifications?filters=masterSpecificationCategory.masterSpecParentCat.masterSpecParentCatId==1&fields=masterSpecId,masterSpecificationCategory,masterSpecClassName,masterSpecCatId,masterSpecCatName,masterSpecCatDisplayName,masterSpecParentCat,masterSpecParentCatId,masterSpecParentDisplayName,masterSpecificationCategory.masterSpecParentCat,masterSpecificationCategory.masterSpecParentCat.masterSpecParentCatId,masterSpecificationCategory.masterSpecParentCat.masterSpecParentDisplayName");
     public static final String DIRECTIONS = BASE_URL.concat("/data/v1/entity/direction");
     public static final String OWNERSHIP_TYPE = BASE_URL.concat("/data/v1/entity/master-ownership-types");
+    //TODO change path
+    public static final String VERSION_UPDATE_URL = "http://content.makaan.com.s3.amazonaws.com/app/assets/seller/versionUpdate.json";
 
     public static final String COMPANY_USERS = BASE_URL.concat("/userservice/data/v1/entity/company-users");
     public static final String IMAGE = MICROSERVICE_PETRA.concat("/data/v4/entity/image");

@@ -1,5 +1,6 @@
 package com.makaan.service;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
@@ -7,6 +8,7 @@ import com.makaan.MakaanBuyerApplication;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ApiConstants;
 import com.makaan.constants.ResponseConstants;
+import com.makaan.cookie.CookiePreferences;
 import com.makaan.jarvis.analytics.BuyerJourneyMessage;
 import com.makaan.jarvis.analytics.SerpFilterMessageMap;
 import com.makaan.network.JSONGetCallback;
@@ -648,5 +650,27 @@ public class MasterDataService implements MakaanService {
                 }
             }
         }, null);
+    }
+
+    public void checkMandatoryVersion(final Context context) {
+        final Type type = new TypeToken<HashMap<String, Integer>>() {
+        }.getType();
+        MakaanNetworkClient.getInstance().get(ApiConstants.VERSION_UPDATE_URL, type, new ObjectGetCallback() {
+            @Override
+            public void onError(ResponseError error) {
+
+            }
+
+            @Override
+            public void onSuccess(Object responseObject) {
+
+                try {
+                    HashMap<String, Integer> map = (HashMap<String, Integer>) responseObject;
+                    Integer version = map.get("mandatoryVersionCode");
+                    CookiePreferences.saveMandatoryVersion(context, version);
+                } catch (Exception e) {
+                }
+            }
+        });
     }
 }

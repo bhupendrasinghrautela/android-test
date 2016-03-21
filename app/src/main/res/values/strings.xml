@@ -2,7 +2,9 @@
     <string name="app_name">makaan.com</string>
     <string name="action_settings">Settings</string>
     <string name="item_settings">account settings</string>
+    <string name="app_upgrade">please update your app?</string>
     <string name="item_logout">logout</string>
+    <string name="upgrade">Upgrade</string>
     <string name="gps_network_not_enabled">Location settings disabled</string>
     <string name="gps_network_enable_prompt">Would you like to enable location settings?</string>
 

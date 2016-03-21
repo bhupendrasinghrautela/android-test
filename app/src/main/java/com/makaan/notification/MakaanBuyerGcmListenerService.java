@@ -1,6 +1,8 @@
 package com.makaan.notification;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.google.android.gms.gcm.GcmListenerService;
+import com.makaan.cookie.CookiePreferences;
 import com.makaan.database.NotificationDbHelper;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.util.CommonUtil;
@@ -41,7 +44,15 @@ public class MakaanBuyerGcmListenerService extends GcmListenerService {
             title = data.getString("title", "Makaan");
         }
 
-        generateNotification(getApplicationContext(), title, message, data);
+        try {
+            PackageInfo pInfo = null;
+            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            if (pInfo.versionCode >= CookiePreferences.getMandatoryVersion(this)) {
+                generateNotification(getApplicationContext(), title, message, data);
+            }
+        }catch (NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 

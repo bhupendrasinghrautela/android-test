@@ -2,10 +2,10 @@ package com.makaan.cookie;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Build;
 import android.text.TextUtils;
 
-import com.google.gson.Gson;
 import com.makaan.response.user.UserResponse;
 import com.makaan.util.JsonParser;
 
@@ -34,6 +34,7 @@ public class CookiePreferences {
 
     private static final String PREF_USER_NAME = "user_name";
     private static final String PREF_PASSWORD = "password";
+    private static final String PREF_MANDATORY_VERSION = "pref_mandatory_version";
 
     private static final long BUYER_JOURNEY_LAST_POPUP_TIMEOUT = 3600 * 60 * 24 * 4;
     private static final String BUYER_JOURNEY_LAST_POPUP_TIMESTAMP = "buyer_last_timestamp";
@@ -276,4 +277,13 @@ public class CookiePreferences {
                 >= BUYER_JOURNEY_LAST_POPUP_TIMEOUT;
     }
 
+    public static void saveMandatoryVersion(Context context,Integer version) {
+        Editor edit = getSharedPref(context).edit();
+        edit.putInt(PREF_MANDATORY_VERSION, version);
+        edit.apply();
+    }
+
+    public static Integer getMandatoryVersion(Context context){
+        return getSharedPref(context).getInt(PREF_MANDATORY_VERSION,1);
+    }
 }
