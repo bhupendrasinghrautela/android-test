@@ -106,6 +106,7 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
         shortListFavoriteViewHolder.mTextViewGetCallBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*----- track events--------*/
                 if(wishList.get(position).project!=null && wishList.get(position).project.projectId!=null) {
                     Properties properties= MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
@@ -113,6 +114,7 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
                             MakaanTrackerConstants.Label.getCallBack ));
                     MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickShortListFavourite);
                 }
+                /*-------------------------*/
                 Intent intent = new Intent(mContext, LeadFormActivity.class);
                 try {
                     WishList wishListValue = wishList.get(position);

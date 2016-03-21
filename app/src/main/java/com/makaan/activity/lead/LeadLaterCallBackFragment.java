@@ -250,18 +250,6 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
             mPyrRequest.setProjectName(mLeadFormPresenter.getProjectName());
 
             Bundle bundle =getArguments();
-            /*if(bundle!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
-                mPyrRequest.setListingId(mLeadFormPresenter.getProjectOrListingId());
-
-            }
-            else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName())) {
-                mPyrRequest.setProjectId(mLeadFormPresenter.getProjectOrListingId());
-
-            }
-            else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName())) {
-                mPyrRequest.setListingId(mLeadFormPresenter.getProjectOrListingId());
-            }*/
-
             String str = new Gson().toJson(mPyrRequest);
          //   Log.e("string==>> ", str);
             JSONObject jsonObject = null;

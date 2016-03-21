@@ -28,7 +28,7 @@ public class PriceTrendView extends BaseLinearLayout<LocalityPriceTrendDto> {
     TabLayout mPriceRangeTabs;
     @Bind(R.id.line_chart_layout)
     MakaanLineChartView mTrendsChart;
-
+    private Long cityId, localityId;
 
 
     private enum TRENDS_MONTH{
@@ -76,18 +76,20 @@ public class PriceTrendView extends BaseLinearLayout<LocalityPriceTrendDto> {
         mPriceRangeTabs.setOnTabSelectedListener(new OnTabSelectedListener() {
             @Override
             public void onTabSelected(Tab tab) {
+                /*----- track events----------------------------*/
                 if (getContext() instanceof LocalityActivity) {
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
-                    properties.put(MakaanEventPayload.LABEL,TRENDS_MONTH.values()[tab.getPosition()].toString().replace("\n","") );
+                    properties.put(MakaanEventPayload.LABEL, TRENDS_MONTH.values()[tab.getPosition()].toString().replace("\n", ""));
                     MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickLocalityPriceTrends);
-                }
-                else if (getContext() instanceof CityActivity) {
+                } else if (getContext() instanceof CityActivity) {
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerCity);
-                    properties.put(MakaanEventPayload.LABEL,TRENDS_MONTH.values()[tab.getPosition()].toString().replace("\n","") );
+                    properties.put(MakaanEventPayload.LABEL, TRENDS_MONTH.values()[tab.getPosition()].toString().replace("\n", ""));
                     MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickCityPriceTrends);
                 }
+                /*----------------------------------------------*/
+
                 mTrendsChart.changeDataBasedOnTime(
                         TRENDS_MONTH.values()[tab.getPosition()].getValue());
             }
@@ -107,6 +109,12 @@ public class PriceTrendView extends BaseLinearLayout<LocalityPriceTrendDto> {
     @Override
     public void bindView(LocalityPriceTrendDto item) {
         mTrendsChart.bindView(item.data);
+        if(cityId!=null&& cityId!=0){
+            mTrendsChart.setCityId(cityId);
+        }
+        if(localityId!=null&& localityId!=0){
+            mTrendsChart.setCityId(localityId);
+        }
     }
 
     private void initView() {
@@ -120,5 +128,13 @@ public class PriceTrendView extends BaseLinearLayout<LocalityPriceTrendDto> {
             tab.setCustomView(text);
             mPriceRangeTabs.addTab(tab);
         }
+    }
+
+    public void setCityId(Long cityId){
+        this.cityId=cityId;
+    }
+
+    public void setLocalityId(Long localityId){
+        this.localityId=localityId;
     }
 }

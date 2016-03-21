@@ -102,15 +102,18 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         }
         final String minTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(0));
         final String maxTime = new SimpleDateFormat("yyyy-MM-dd").format(DateUtil.getDateMonthsBack(37));
-        new PriceTrendService().getPriceTrendForLocalities(locality, minTime,maxTime, new LocalityTrendCallback() {
+        new PriceTrendService().getPriceTrendForLocalities(locality, minTime, maxTime, new LocalityTrendCallback() {
             @Override
             public void onTrendReceived(LocalityPriceTrendDto localityPriceTrendDto) {
-                if(!isVisible()) {
+                if (!isVisible()) {
                     return;
                 }
-                if(priceTrendView != null) {
+                if (priceTrendView != null) {
                     if (localityPriceTrendDto.data != null && localityPriceTrendDto.data.size() != 0) {
                         priceTrendView.setVisibility(View.VISIBLE);
+                        if (localityId != null && localityId != 0) {
+                            priceTrendView.setLocalityId(localityId);
+                        }
                         priceTrendView.bindView(localityPriceTrendDto);
                     } else {
                         priceTrendView.setVisibility(View.GONE);
@@ -248,12 +251,15 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
 
     @OnClick(R.id.button_show_properties)
     public void showAllPropertiesClick(){
-        if(localityId!=null){
+        /*------------------------- track events------------------------*/
+        if(localityId!=null && localityId!=0){
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.propertiesForSale+String.valueOf(localityId));
             MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickLocalityPriceTrends);
         }
+        /*------------------------------------------------------------------*/
+
         SerpRequest request = new SerpRequest(SerpActivity.TYPE_LOCALITY);
         request.setLocalityId(localityId);
         request.launchSerp(getActivity());

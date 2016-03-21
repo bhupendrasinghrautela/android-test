@@ -64,6 +64,7 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
     private ArrayList<Long> mAllMonthsTime;
     private Long mMaxPrice;
     private Long projectId = null;
+    private Long cityId, localityId;
 
     public MakaanLineChartView(Context context) {
         this(context, null);
@@ -280,13 +281,36 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
         adapter.setLegendTouchListener(new OnLegendsTouchListener() {
             @Override
             public void legendTouched(View view, int position) {
-                if (projectId != null) {
+                /*-------------------------------- track events------------------------------------*/
+                if (projectId != null && projectId!=0) {
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
-                    properties.put(MakaanEventPayload.LABEL, projectId + "_" + priceTrendKeyList.get(position).label);
+                    properties.put(MakaanEventPayload.LABEL,
+                                    String.format("%s_%s_%s",projectId ,priceTrendKeyList.get(position).label,
+                                    (priceTrendKeyList.get(position).isActive?"select":"UnSelect")));
                     MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickProjectPriceTrends);
                 }
-                generateDataForChart();
+
+                if(localityId!=null && localityId!=0){
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+                    properties.put(MakaanEventPayload.LABEL,
+                            String.format("%s_%s_%s",localityId ,priceTrendKeyList.get(position).label,
+                                    (priceTrendKeyList.get(position).isActive?"select":"UnSelect")));
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickProjectPriceTrends);
+                }
+
+                if(cityId!=null && cityId!=0) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+                    properties.put(MakaanEventPayload.LABEL,
+                            String.format("%s_%s_%s", cityId, priceTrendKeyList.get(position).label,
+                                    (priceTrendKeyList.get(position).isActive ? "select" : "UnSelect")));
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickProjectPriceTrends);
+                }
+                /*-----------------------------------------------------------------------------*/
+
+                    generateDataForChart();
                 if (mLines.size() == 1) {
                     view.performClick();
 
@@ -305,6 +329,14 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
         c.add(Calendar.DAY_OF_MONTH, -c.get(Calendar.DAY_OF_MONTH) + 1);
         timeFrom = c.getTimeInMillis();
         generateDataForChart();
+    }
+
+    public void setCityId(Long cityId){
+        this.cityId=cityId;
+    }
+
+    public void setLocalityId(Long localityId){
+        this.localityId=localityId;
     }
 
     public void setProjectId(Long projectId) {

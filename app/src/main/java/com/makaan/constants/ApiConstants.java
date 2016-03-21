@@ -10,7 +10,6 @@ public class ApiConstants {
     //public static final String BASE_URL = "https://mp-qa1.makaan-ws.com";
     public static final String BASE_URL = "https://preprod.makaan-ws.com";
     //public static final String BASE_URL = "https://beta.makaan-ws.com";
-
     private static final String MICROSERVICE_MADELYNE = BASE_URL.concat("/madelyne");
     private static final String MICROSERVICE_COMPASS = BASE_URL.concat("/compass");
     private static final String MICROSERVICE_PIXIE = BASE_URL.concat("/pixie");
@@ -20,8 +19,6 @@ public class ApiConstants {
     private static final String MICROSERVICE_DOWNSTAR = BASE_URL.concat("/dawnstar");
     private static final String MICROSERVICE_SAPPHIRE = BASE_URL.concat("/sapphire");
     private static final String MICROSERVICE_KIRA = BASE_URL.concat("/kira");
-
-
     public static final String FILTER_GROUP = BASE_URL.concat("/data/v1/entity/filter-group");           //TODO: need to implement this on server side
     public static final String LISTING_INFO_MAP = BASE_URL.concat("/data/v1/entity/listing-info-map");           //TODO: need to implement this on server side
     public static final String API_LABEL = BASE_URL.concat("/data/v1/entity/api-label");

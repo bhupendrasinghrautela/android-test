@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.view.View;
@@ -46,19 +47,12 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
     TextView mSellerNameProfileText;
     @Bind(R.id.iv_seller_image_call_now)
     de.hdodenhof.circleimageview.CircleImageView mSellerImage;
+    private boolean mAlreadyLoaded=false;
 
     @Override
     protected int getContentViewId() {
         return R.layout.layout_lead_call_now;
     }
-
-   /* @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_lead_call_now, container, false);
-        ButterKnife.bind(this, view);
-        return view;
-    }*/
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -70,12 +64,13 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
             mButtonCall.setText("call " + PhoneNumberUtils.formatNumber(mLeadFormPresenter.getPhone()));
         }
         else{
-            if(mLeadFormPresenter.getId()!=null && !TextUtils.isEmpty(mLeadFormPresenter.getId())){
+            if(mLeadFormPresenter.getId()!=null && !TextUtils.isEmpty(mLeadFormPresenter.getId()) && !mAlreadyLoaded){
                 Properties properties= MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorUsability);
                 properties.put(MakaanEventPayload.LABEL, String.format("%s_%s",
                         MakaanTrackerConstants.Label.leadForm, mLeadFormPresenter.getId()));
                 MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.errorNa);
+                mAlreadyLoaded=true;
             }
             mButtonCall.setText("na");
             mButtonCall.setClickable(false);
@@ -86,19 +81,19 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
     @OnClick(R.id.btn_call)
     void callClick(){
         Bundle bundle =getArguments();
-        if(bundle!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
+        if(bundle!=null && SerpActivity.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.callNow);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickSerpCallConnect);
         }
-        else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName())) {
+        else if(bundle!=null && ProjectFragment.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.callNow);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectCallConnect);
         }
-        else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName())) {
+        else if(bundle!=null && PropertyDetailFragment.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.callNow);
@@ -117,19 +112,19 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
     @OnClick(R.id.tv_share_your_deatils)
     void getCallBackClick(){
         Bundle bundle =getArguments();
-        if(bundle!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
+        if(bundle!=null && SerpActivity.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBackFromSeller);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickSerpCallConnect);
         }
-        else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName())) {
+        else if(bundle!=null && ProjectFragment.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBackFromSeller);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectCallConnect);
         }
-        else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName())) {
+        else if(bundle!=null && PropertyDetailFragment.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBackFromSeller);
@@ -148,13 +143,10 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
                     width, height, false), new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
-                    if(!isVisible()){
-                        return;
-                    }
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }
-                    if(isVisible()) {
+                    if(isFragmentVisible()) {
                         mSellerImage.setVisibility(View.VISIBLE);
                         mSellerNameProfileText.setVisibility(View.INVISIBLE);
                         mSellerImage.setImageBitmap(imageContainer.getBitmap());
@@ -164,7 +156,7 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     super.onErrorResponse(volleyError);
-                    if(isVisible()) {
+                    if(isFragmentVisible()) {
                         mSellerImage.setVisibility(View.INVISIBLE);
                         mSellerNameProfileText.setVisibility(View.VISIBLE);
                         mSellerNameProfileText.setText(mLeadFormPresenter.getName());

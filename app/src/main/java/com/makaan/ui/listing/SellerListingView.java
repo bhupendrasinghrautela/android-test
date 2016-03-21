@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -28,6 +30,7 @@ import com.makaan.util.StringUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.Calendar;
+import java.util.Random;
 
 import butterknife.Bind;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -47,6 +50,9 @@ public class SellerListingView extends AbstractCardListingView {
     TextView mSellerCompanyNameTextView;
     @Bind(R.id.serp_listing_item_seller_not_rated_text_view)
     TextView mNotRatedTextView;
+
+    @Bind(R.id.serp_listing_item_seller_logo_text_view)
+    TextView mSellerLogoTextView;
 
     @Bind(R.id.serp_listing_item_seller_operates_in_text_view)
     TextView mSellerOperatesInTextView;
@@ -124,15 +130,15 @@ public class SellerListingView extends AbstractCardListingView {
             if(seller.sellers.get(0).cities != null) {
                 if(seller.sellers.get(0).cities.size() > 1) {
                     mSellerOperatesInTextView.setText(String.format("operates in - %d localities in %d cities",
-                            seller.sellers.get(0).companyUser.sellerListingData.localityCount, seller.sellers.get(0).cities.size()));
+                            seller.sellers.get(0).companyUser.sellerListingData.localityCount, seller.sellers.get(0).cities.size()).toLowerCase());
                 } else if(seller.sellers.get(0).cities.size() == 1) {
                     mSellerOperatesInTextView.setText(String.format("operates in - %d localities in %s",
-                            seller.sellers.get(0).companyUser.sellerListingData.localityCount, seller.sellers.get(0).cities.get(0).label));
+                            seller.sellers.get(0).companyUser.sellerListingData.localityCount, seller.sellers.get(0).cities.get(0).label).toLowerCase());
                 } else {
-                    mSellerOperatesInTextView.setText(String.format("operates in - %d localities", seller.sellers.get(0).companyUser.sellerListingData.localityCount));
+                    mSellerOperatesInTextView.setText(String.format("operates in - %d localities", seller.sellers.get(0).companyUser.sellerListingData.localityCount).toLowerCase());
                 }
             } else {
-                mSellerOperatesInTextView.setText(String.format("operates in - %d localities", seller.sellers.get(0).companyUser.sellerListingData.localityCount));
+                mSellerOperatesInTextView.setText(String.format("operates in - %d localities", seller.sellers.get(0).companyUser.sellerListingData.localityCount).toLowerCase());
             }
 
             if(seller.sellers.get(0).companyUser.sellerListingData.categoryWiseCount != null
@@ -206,9 +212,11 @@ public class SellerListingView extends AbstractCardListingView {
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }
-                    final Bitmap image = imageContainer.getBitmap();
-                    if(mSellerImageView!=null) {
+                    if(mSellerImageView != null && mSellerLogoTextView != null) {
+                        final Bitmap image = imageContainer.getBitmap();
                         mSellerImageView.setImageBitmap(image);
+                        mSellerImageView.setVisibility(VISIBLE);
+                        mSellerLogoTextView.setVisibility(GONE);
                     }
                 }
             });
@@ -225,10 +233,16 @@ public class SellerListingView extends AbstractCardListingView {
                     if (b && imageContainer.getBitmap() == null) {
                         return;
                     }
-                    final Bitmap image = imageContainer.getBitmap();
-                    mSellerImageView.setImageBitmap(image);
+                    if(mSellerImageView != null && mSellerLogoTextView != null) {
+                        final Bitmap image = imageContainer.getBitmap();
+                        mSellerImageView.setImageBitmap(image);
+                        mSellerImageView.setVisibility(VISIBLE);
+                        mSellerLogoTextView.setVisibility(GONE);
+                    }
                 }
             });
+        } else {
+            showTextAsImage(seller);
         }
 
         if(seller.coverPicture != null) {
@@ -268,5 +282,30 @@ public class SellerListingView extends AbstractCardListingView {
         mSellerContentLinearLayout.setVisibility(View.VISIBLE);
 
         AppBus.getInstance().unregister(this);
+    }
+
+
+    private void showTextAsImage(CompanySeller seller) {
+        if(seller == null || seller.name == null
+                || seller.name.length() == 0) {
+            mSellerLogoTextView.setVisibility(View.INVISIBLE);
+            return;
+        }
+        mSellerLogoTextView.setText(String.valueOf(seller.name.charAt(0)));
+        mSellerLogoTextView.setVisibility(View.VISIBLE);
+        mSellerImageView.setVisibility(View.GONE);
+        // show seller first character as logo
+
+        int[] bgColorArray = getResources().getIntArray(R.array.bg_colors);
+
+        Random random = new Random();
+        ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+//        int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
+        drawable.getPaint().setColor(bgColorArray[random.nextInt(bgColorArray.length)]);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mSellerLogoTextView.setBackground(drawable);
+        } else {
+            mSellerLogoTextView.setBackgroundDrawable(drawable);
+        }
     }
 }

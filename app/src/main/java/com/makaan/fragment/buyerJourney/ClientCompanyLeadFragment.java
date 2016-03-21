@@ -19,6 +19,8 @@ import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.listing.ListingByIdsGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
@@ -30,6 +32,7 @@ import com.makaan.service.ListingService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.StringUtil;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -91,6 +94,18 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
     @OnClick(R.id.fragment_client_company_leads_next_button)
     void onNextClicked(View view) {
         if(getActivity() instanceof BuyerDashboardCallbacks) {
+
+            /*----------------------- track events-------------------------*/
+            if(mItems != null &&  mItems.size()> 0 && mItems.get(mSelected)!=null
+                    && mItems.get(mSelected).listing!=null &&  mItems.get(mSelected).listing.id!=null
+                    && mItems.get(mSelected).listing.id!=0) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                properties.put(MakaanEventPayload.LABEL, mItems.get(mSelected).listing.id);
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickCashBackListing);
+            }
+            /*-----------------------------------------------------------------*/
+
             if(mItems != null && mSelected < mItems.size()) {
                 if(mObj != null) {
                     mObj.listingDetail = mItems.get(mSelected).listing;
@@ -217,6 +232,9 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
                     mSelected = position;
                     notifyDataSetChanged();
                 } else if(viewType == TYPE_ADD) {
+
+
+
                     if(getActivity() instanceof BuyerDashboardCallbacks) {
                         if(mObj != null) {
 //                            mObj.listingDetail = mItems.get(position).listing;

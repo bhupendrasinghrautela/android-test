@@ -287,7 +287,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
             mContentLinearLayout.addView(view);
             ((TextView) view.findViewById(R.id.fragment_set_alerts_list_item_display_text_view)).setText("location");
 
-            ((ImageView) view.findViewById(R.id.fragment_set_alerts_list_item_image_view)).setImageResource(R.drawable.location_icon);
+            ((ImageView) view.findViewById(R.id.fragment_set_alerts_list_item_image_view)).setImageResource(R.drawable.location);
 
             if (location != null) {
                 ((TextView) view.findViewById(R.id.fragment_set_alerts_list_item_content_text_view)).setText(location.toLowerCase());
@@ -300,7 +300,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 mContentLinearLayout.addView(view);
                 ((TextView) view.findViewById(R.id.fragment_set_alerts_list_item_display_text_view)).setText("location");
 
-                ((ImageView) view.findViewById(R.id.fragment_set_alerts_list_item_image_view)).setImageResource(R.drawable.location_icon);
+                ((ImageView) view.findViewById(R.id.fragment_set_alerts_list_item_image_view)).setImageResource(R.drawable.location);
 
                 ((TextView) view.findViewById(R.id.fragment_set_alerts_list_item_content_text_view)).setText(location);
             }

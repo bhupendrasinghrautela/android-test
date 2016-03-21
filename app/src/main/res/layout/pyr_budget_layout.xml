@@ -25,7 +25,7 @@
                 android:layout_width="@dimen/pyr_budget_icon_width"
                 android:layout_height="@dimen/pyr_budget_icon_height"
                 android:layout_marginLeft="@dimen/pyr_budget_icon_left_margin"
-                android:src="@drawable/money_icon" />
+                android:src="@drawable/money" />
 
             <TextView
                 android:layout_width="@dimen/pyr_budget_text_width"

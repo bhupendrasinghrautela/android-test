@@ -12,9 +12,12 @@ import android.widget.EditText;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.service.ListingService;
 import com.makaan.service.MakaanServiceFactory;
+import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
 
@@ -64,6 +67,13 @@ public class ClientCompanyLeadsAddProperty extends MakaanBaseFragment {
             mCityNameEditText.setError("enter some data");
         } else if(getActivity() instanceof BuyerDashboardCallbacks) {
             if(mObj != null) {
+            /*----------------------- track events-------------------------*/
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.addAnotherListing);
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickCashBackListing);
+            /*-----------------------------------------------------------------*/
+
                 ((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_REVIEW_AGENT,
                         true, null, null, mObj);
             }

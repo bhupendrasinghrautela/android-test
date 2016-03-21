@@ -138,9 +138,11 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
             else if(mContext instanceof SerpActivity && mWishListDto.serpItemPosition != null && mWishListDto.listingId != null) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 if (isChecked) {
-                    properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_" + (mWishListDto.serpItemPosition + 1));
+                    properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_" +
+                            (mWishListDto.serpItemPosition + 1)+"_Shortlist");
                 } else {
-                    properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_" + (mWishListDto.serpItemPosition + 1));
+                    properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_" +
+                            (mWishListDto.serpItemPosition + 1)+"_UnShortlist");
                 }
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
                 MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickSerpPropertyShortList);

@@ -10,6 +10,8 @@ import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.shortlist.ShortListFragment;
 import com.makaan.activity.sitevisit.SiteVisitFragment;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.LeadPhaseConstants;
 import com.makaan.fragment.WebViewFragment;
@@ -22,10 +24,13 @@ import com.makaan.fragment.buyerJourney.RewardsFragment;
 import com.makaan.fragment.buyerJourney.SaveSearchFragment;
 import com.makaan.fragment.buyerJourney.UploadDocumentsFragment;
 import com.makaan.fragment.pyr.ThankYouScreenFragment;
+import com.makaan.fragment.userLogin.LoginSocialFragment;
+import com.makaan.fragment.userLogin.SignUpFragment;
 import com.makaan.request.buyerjourney.PhaseChange;
 import com.makaan.service.ClientEventsService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
+import com.segment.analytics.Properties;
 
 import java.util.Date;
 
@@ -235,6 +240,40 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
 
     @OnClick(R.id.activity_base_buyer_journey_layout_back_button)
     public void onBackPressed(View view) {
+
+        ClientLeadsFragment clientLeadsFragment = (ClientLeadsFragment)getSupportFragmentManager(
+        ).findFragmentByTag(ClientLeadsFragment.class.getName());
+
+        if(clientLeadsFragment!=null && clientLeadsFragment.isVisible()){
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.back);
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickCashBackSeller);
+            clientLeadsFragment=null;
+        }
+
+        ClientCompanyLeadFragment clientCompanyLeadFragment = (ClientCompanyLeadFragment)getSupportFragmentManager(
+        ).findFragmentByTag(ClientCompanyLeadFragment.class.getName());
+
+        if(clientCompanyLeadFragment!=null && clientCompanyLeadFragment.isVisible()){
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.back);
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickCashBackListing);
+            clientCompanyLeadFragment=null;
+        }
+
+        ClientCompanyLeadsAddProperty clientCompanyLeadsAddProperty = (ClientCompanyLeadsAddProperty)getSupportFragmentManager(
+        ).findFragmentByTag(ClientCompanyLeadsAddProperty.class.getName());
+
+        if(clientCompanyLeadsAddProperty!=null && clientCompanyLeadsAddProperty.isVisible()){
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.back);
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickCashBackListing);
+            clientCompanyLeadsAddProperty=null;
+        }
+
         onBackPressed();
     }
 

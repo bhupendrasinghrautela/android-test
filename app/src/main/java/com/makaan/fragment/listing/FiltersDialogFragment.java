@@ -44,7 +44,7 @@ public class FiltersDialogFragment extends MakaanBaseDialogFragment {
 
     @Bind(R.id.fragment_dialog_filters_filter_linear_layout)
     LinearLayout mFiltersLinearLayout;
-
+    private FilterStringListener filterStringListener;
 
     public static FiltersDialogFragment init() {
         return new FiltersDialogFragment();
@@ -165,6 +165,10 @@ public class FiltersDialogFragment extends MakaanBaseDialogFragment {
             for (ExpandableHeightGridView gridView : mFilterGridViews) {
                 FiltersViewAdapter adapter = (FiltersViewAdapter) (gridView.getAdapter());
                 adapter.applyFilters(selector, filterGroups);
+            }
+            Properties properties=MakaanEventPayload.beginBatch();
+            if (getActivity() instanceof FilterStringListener) {
+                ((FilterStringListener) getActivity()).setFilterString(properties);
             }
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.selectFilterMore);
         }

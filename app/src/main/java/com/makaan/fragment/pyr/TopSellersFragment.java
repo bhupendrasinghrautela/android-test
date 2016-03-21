@@ -72,10 +72,6 @@ public class TopSellersFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        /*if (savedInstanceState == null && !mAlreadyLoaded) {
-            mAlreadyLoaded = true;
-        }*/
-
     }
 
     @Override
@@ -101,19 +97,20 @@ public class TopSellersFragment extends Fragment {
                 MakaanEventPayload.endBatch(getContext(), mPyrPagePresenter.getViewSellersAction(mPyrPagePresenter.getSourceScreenName()));
                 mAlreadyLoaded=true;
             }
-        }
+            if(mTopAgentsDatas.size()<=DEFAULT_SELECTED_COUNT){
+                changeSellerCount(mTopAgentsDatas.size());
+            }
 
-        if(mTopAgentsDatas!=null && mTopAgentsDatas.size()<=DEFAULT_SELECTED_COUNT){
-            changeSellerCount(mTopAgentsDatas.size());
-        }
-        else{
+            if(mTopAgentsDatas.size()>0)
+            {
+                mSellerListingAdapter = new SellerListingAdapter(getActivity(),mTopAgentsDatas, this);
+                mSellerRecyclerView.setAdapter(mSellerListingAdapter);
+            }
+
+        }else{
             changeSellerCount(DEFAULT_SELECTED_COUNT);
         }
-        if(mTopAgentsDatas.size()>0)
-        {
-            mSellerListingAdapter = new SellerListingAdapter(getActivity(),mTopAgentsDatas, this);
-            mSellerRecyclerView.setAdapter(mSellerListingAdapter);
-        }
+
 
     }
 
