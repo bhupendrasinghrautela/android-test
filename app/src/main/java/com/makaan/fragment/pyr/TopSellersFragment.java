@@ -103,7 +103,7 @@ public class TopSellersFragment extends Fragment {
             }
         }
 
-        if(mTopAgentsDatas.size()<=DEFAULT_SELECTED_COUNT){
+        if(mTopAgentsDatas!=null && mTopAgentsDatas.size()<=DEFAULT_SELECTED_COUNT){
             changeSellerCount(mTopAgentsDatas.size());
         }
         else{
