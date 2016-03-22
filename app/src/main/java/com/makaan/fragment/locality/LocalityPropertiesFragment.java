@@ -1,5 +1,7 @@
 package com.makaan.fragment.locality;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
@@ -117,28 +120,44 @@ public class LocalityPropertiesFragment extends MakaanBaseFragment {
                 ((BitmapDrawable)holder.localityIv.getDrawable()).getBitmap().recycle();
             }*/
 
-            holder.localityIv.setImageResource(getImage(position));
+
+
+            holder.localityIv.setImageBitmap(getImage(position));
         }
-        private int getImage(int position) {
+        private Bitmap getImage(int position) {
             int id = R.drawable.locality_placeholder;
+            String imageName = "locality_placeholder";
             switch (position) {
                 case 0:
                     id = R.drawable.luxury_properties;
+                    imageName = "luxury_properties";
                     break;
                 case 1:
                     id = R.drawable.recent_properties;
+                    imageName = "recent_properties";
                     break;
                 case 2:
                     id = R.drawable.budget_homes;
+                    imageName = "budget_homes";
                     break;
                 case 3:
                     id = R.drawable.popular_properties;
+                    imageName = "popular_properties";
                     break;
                 case 4:
                     id = R.drawable.new_rental_properties;
+                    imageName = "new_rental_properties";
                     break;
             }
-            return id;
+
+            Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap(imageName);
+            if (bitmap != null) {
+                return bitmap;
+            } else {
+                Bitmap b = BitmapFactory.decodeResource(getResources(), id);
+                MakaanBuyerApplication.bitmapCache.putBitmap(imageName, b);
+                return b;
+            }
         }
 
             @Override

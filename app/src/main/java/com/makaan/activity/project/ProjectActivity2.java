@@ -6,10 +6,10 @@ import android.text.TextUtils;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
-import com.makaan.activity.listing.TotalImagesCount;
+import com.makaan.activity.listing.TotalImagesCount1;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
-import com.makaan.event.project.OnSeeOnMapClicked;
+//import com.makaan.event.project.OnSeeOnMapClicked;
 import com.makaan.event.project.ProjectByIdEvent;
 import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
 import com.makaan.fragment.project.ProjectFragment;
@@ -24,9 +24,9 @@ import com.squareup.otto.Subscribe;
 /**
  * Created by tusharchaudhary on 1/26/16.
  */
-public class ProjectActivity extends MakaanBaseSearchActivity implements TotalImagesCount {
+public class ProjectActivity2 extends MakaanBaseSearchActivity implements TotalImagesCount1 {
 
-    public static final String PROJECT_ID = "projectId";
+    public static final String PROJECT_ID = "id";
     private Long projectId;
     private ProjectFragment projectFragment;
     private NeighborhoodMapFragment mNeighborhoodMapFragment;
@@ -66,7 +66,7 @@ public class ProjectActivity extends MakaanBaseSearchActivity implements TotalIm
         }
     }
 
-    @Subscribe
+    /*@Subscribe
     public void onResult(OnSeeOnMapClicked seeOnMapClicked){
         if(isActivityDead()){
             return;
@@ -74,7 +74,7 @@ public class ProjectActivity extends MakaanBaseSearchActivity implements TotalIm
         mNeighborhoodMapFragment = new NeighborhoodMapFragment();
         mNeighborhoodMapFragment.setData(mEntityInfo,seeOnMapClicked.amenityClusters);
         initFragment(R.id.container, mNeighborhoodMapFragment, true);
-    }
+    }*/
 
     @Override
     public boolean isJarvisSupported() {

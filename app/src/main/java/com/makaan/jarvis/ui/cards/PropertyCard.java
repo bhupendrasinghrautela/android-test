@@ -11,12 +11,11 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
-import com.makaan.activity.listing.PropertyActivity;
-import com.makaan.activity.listing.SerpActivity;
-import com.makaan.activity.project.ProjectActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.jarvis.message.Message;
 import com.makaan.jarvis.message.MessageType;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.ui.view.BaseView;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
@@ -84,13 +83,17 @@ public class PropertyCard extends BaseView<Message> {
 
                 if(MessageType.propertyOverview==message.messageType) {
                     Bundle bundle = new Bundle();
-                    bundle.putLong(KeyUtil.LISTING_ID, message.chatObj.propertyId);
-                    Intent intent = new Intent(context, PropertyActivity.class);
+                    bundle.putLong(OverviewActivity.ID, message.chatObj.propertyId);
+                    bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROPERTY.ordinal());
+                    Intent intent = new Intent(context, OverviewActivity.class);
                     intent.putExtras(bundle);
                     context.startActivity(intent);
                 }else if(MessageType.projectOverview==message.messageType) {
-                    Intent intent = new Intent(context,ProjectActivity.class);
-                    intent.putExtra(ProjectActivity.PROJECT_ID, Long.valueOf(message.chatObj.projectId));
+                    Bundle bundle = new Bundle();
+                    bundle.putLong(OverviewActivity.ID, message.chatObj.projectId);
+                    bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROJECT.ordinal());
+                    Intent intent = new Intent(context,OverviewActivity.class);
+                    intent.putExtras(bundle);
                     context.startActivity(intent);
                 }
 

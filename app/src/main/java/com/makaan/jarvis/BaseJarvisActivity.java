@@ -19,11 +19,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.makaan.R;
-import com.makaan.activity.city.CityActivity;
 import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.listing.SerpActivity;
-import com.makaan.activity.locality.LocalityActivity;
-import com.makaan.activity.project.ProjectActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
@@ -471,8 +469,9 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     }
 
     private boolean shouldTrackUserActiveness(){
-        return this instanceof SerpActivity || this instanceof ProjectActivity ||
-                this instanceof LocalityActivity || this instanceof CityActivity;
+        // todo discuss if we need to omit PropertyActivity
+        return this instanceof SerpActivity || (this instanceof OverviewActivity
+                && !OverviewActivity.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(getScreenName()));
 
     }
 

@@ -20,13 +20,12 @@ import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 
-import com.makaan.activity.listing.PropertyActivity;
-import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
-import com.makaan.activity.project.ProjectActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.constants.PreferenceConstants;
 
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.response.listing.Listing;
 import com.makaan.ui.CustomNetworkImageView;
 import com.makaan.ui.view.MPlusBadgePopupDialog;
@@ -178,7 +177,7 @@ public class ListingCardView extends AbstractListingView {
             public void onClick(View v) {
                 if (mListing != null) {
                     Bundle bundle = new Bundle();
-                    bundle.putLong(KeyUtil.LISTING_ID, mListing.id);
+                    bundle.putLong(OverviewActivity.ID, mListing.id);
                     if(mListing.latitude != null) {
                         bundle.putDouble(KeyUtil.LISTING_LAT, mListing.latitude);
                     }
@@ -186,8 +185,9 @@ public class ListingCardView extends AbstractListingView {
                         bundle.putDouble(KeyUtil.LISTING_LON, mListing.longitude);
                     }
                     bundle.putString(KeyUtil.LISTING_Image, mListing.mainImageUrl);
+                    bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROPERTY.ordinal());
 
-                    Intent intent = new Intent(mContext, PropertyActivity.class);
+                    Intent intent = new Intent(mContext, OverviewActivity.class);
                     intent.putExtras(bundle);
                     mContext.startActivity(intent);
                     //mCallback.requestDetailPage(SerpActivity.REQUEST_PROPERTY_PAGE, bundle);
@@ -202,9 +202,10 @@ public class ListingCardView extends AbstractListingView {
                 && (mListing.project.activeStatus == null || !"dummy".equalsIgnoreCase(mListing.project.activeStatus))) {
             if (mListing.projectId != null && mListing.projectId != 0) {
                 Bundle bundle = new Bundle();
-                bundle.putLong(ProjectActivity.PROJECT_ID, mListing.projectId);
+                bundle.putLong(OverviewActivity.ID, mListing.projectId);
+                bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROJECT.ordinal());
 
-                Intent intent = new Intent(getContext(), ProjectActivity.class);
+                Intent intent = new Intent(getContext(), OverviewActivity.class);
                 intent.putExtras(bundle);
                 getContext().startActivity(intent);
             }

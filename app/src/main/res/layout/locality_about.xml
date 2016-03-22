@@ -1,153 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:font="http://schemas.android.com/apk/res-auto">
+
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal">
+
         <ProgressBar
+            android:id="@+id/locality_score_progress"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="@dimen/locality_circular_progress_dimen"
             android:layout_height="@dimen/locality_circular_progress_dimen"
-            android:id="@+id/locality_score_progress"
-            android:progress="78"
-            android:secondaryProgress="100"
+            android:layout_gravity="center_vertical"
             android:indeterminate="false"
+            android:progress="78"
             android:progressDrawable="@drawable/circular_progress_drawable"
-            android:layout_gravity="center_vertical" />
+            android:secondaryProgress="100" />
+
         <com.makaan.ui.view.FontTextView
             android:id="@+id/locality_score_text"
-            android:layout_gravity="center"
-            font:fontName="proxima.otf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:textColor="@color/white"
-            android:textSize="@dimen/locality_text_big"/>
+            android:textSize="@dimen/locality_text_big"
+            font:fontName="proxima.otf" />
     </FrameLayout>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_marginTop="@dimen/locality_about_top_margin"
-    android:layout_height="wrap_content">
-    <com.makaan.ui.view.FontTextView
-        font:fontName="proxima.otf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textSize="@dimen/locality_text_big"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="@dimen/locality_about_median_left_margin"
-        android:id="@+id/tv_locality_per_sqr_ft_median_price"
-        />
-    <ImageView
-        android:id="@+id/iv_avg_price"
-        android:layout_toRightOf="@+id/tv_locality_per_sqr_ft_median_price"
-        android:layout_width="@dimen/trend_image_height_width"
-        android:layout_height="@dimen/trend_image_height_width" />
 
-    <com.makaan.ui.view.FontTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/locality_about_median_top_margin"
-        android:textColor="@color/white"
-        font:fontName="proxima.otf"
-        android:text="@string/locality_about_median_price"
-        android:id="@+id/tv_locality_per_sqr_ft_median_price_label"
-        android:visibility="invisible"
-        android:layout_alignLeft="@+id/tv_locality_per_sqr_ft_median_price"
-        android:textSize="@dimen/locality_text_small"
-        android:layout_below="@id/tv_locality_per_sqr_ft_median_price"
-        />
-
-    <com.makaan.ui.view.FontTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textSize="@dimen/locality_text_big"
-        font:fontName="proxima.otf"
-        android:visibility="invisible"
-        android:layout_alignLeft="@+id/tv_locality_annual_growth_label"
-        android:id="@+id/tv_locality_annual_growth"
-        />
-    <com.makaan.ui.view.FontTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/locality_about_annual_growth"
-        android:visibility="invisible"
-        android:id="@+id/tv_locality_annual_growth_label"
-        android:layout_marginTop="@dimen/locality_about_median_top_margin"
-        font:fontName="proxima.otf"
-        android:textColor="@color/white"
-        android:layout_alignParentRight="true"
-        android:textSize="@dimen/locality_text_v_small"
-        android:layout_marginRight="@dimen/locality_about_median_left_margin"
-        android:layout_below="@id/tv_locality_annual_growth"
-        />
-
-    <View
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/locality_seperator_height"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/tv_locality_per_sqr_ft_median_price_label"
-        android:layout_marginLeft="@dimen/locality_seperator_left_margin"
-        android:visibility="gone"
-        android:id="@+id/view_locality_seperator"
-        android:background="@color/locality_seprator"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/locality_about_top_margin">
 
-    <com.makaan.ui.view.FontTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/view_locality_seperator"
-        android:layout_marginTop="@dimen/locality_about_median_rent_top_margin"
-        android:textColor="@color/white"
-        android:textSize="@dimen/locality_text_big"
-        font:fontName="proxima.otf"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="@dimen/locality_about_median_left_margin"
-        android:visibility="invisible"
-        android:id="@+id/tv_locality_per_sqr_ft_median_price_rent"
-        />
-    <com.makaan.ui.view.FontTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/locality_about_median_rent"
-        android:layout_marginTop="@dimen/locality_about_median_top_margin"
-        android:layout_marginBottom="@dimen/locality_about_median_top_margin"
-        font:fontName="proxima.otf"
-        android:visibility="invisible"
-        android:id="@+id/tv_locality_per_sqr_ft_median_price_rent_label"
-        android:textColor="@color/white"
-        android:layout_alignLeft="@+id/tv_locality_per_sqr_ft_median_price_rent"
-        android:textSize="@dimen/locality_text_small"
-        android:layout_below="@id/tv_locality_per_sqr_ft_median_price_rent"
-        />
+        <com.makaan.ui.view.FontTextView
+            android:id="@+id/tv_locality_per_sqr_ft_median_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/locality_about_median_left_margin"
+            android:textColor="@color/white"
+            android:textSize="@dimen/locality_text_big"
+            font:fontName="proxima.otf" />
 
-    <com.makaan.ui.view.FontTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/locality_about_median_rent_top_margin"
-        android:layout_below="@id/view_locality_seperator"
-        android:textColor="@color/white"
-        android:textSize="@dimen/locality_text_big"
-        font:fontName="proxima.otf"
-        android:visibility="invisible"
-        android:layout_alignLeft="@+id/tv_locality_annual_growth_label_rent"
-        android:id="@+id/tv_locality_annual_growth_rent"
-        />
-    <com.makaan.ui.view.FontTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/locality_rental_demand"
-        android:id="@+id/tv_locality_annual_growth_label_rent"
-        android:layout_marginTop="@dimen/locality_about_median_top_margin"
-        font:fontName="proxima.otf"
-        android:visibility="invisible"
-        android:textColor="@color/white"
-        android:layout_alignParentRight="true"
-        android:textSize="@dimen/locality_text_small"
-        android:layout_marginRight="@dimen/locality_about_median_left_margin"
-        android:layout_below="@id/tv_locality_annual_growth_rent"
-        />
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/iv_avg_price"
+            android:layout_width="@dimen/trend_image_height_width"
+            android:layout_height="@dimen/trend_image_height_width"
+            android:layout_toRightOf="@+id/tv_locality_per_sqr_ft_median_price" />
 
-    <include layout="@layout/compressed_text_layout_for_black"/>
+        <com.makaan.ui.view.FontTextView
+            android:id="@+id/tv_locality_per_sqr_ft_median_price_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_locality_per_sqr_ft_median_price"
+            android:layout_below="@id/tv_locality_per_sqr_ft_median_price"
+            android:layout_marginTop="@dimen/locality_about_median_top_margin"
+            android:text="@string/locality_about_median_price"
+            android:textColor="@color/white"
+            android:textSize="@dimen/locality_text_small"
+            android:visibility="invisible"
+            font:fontName="proxima.otf" />
+
+        <com.makaan.ui.view.FontTextView
+            android:id="@+id/tv_locality_annual_growth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_locality_annual_growth_label"
+            android:textColor="@color/white"
+            android:textSize="@dimen/locality_text_big"
+            android:visibility="invisible"
+            font:fontName="proxima.otf" />
+
+        <com.makaan.ui.view.FontTextView
+            android:id="@+id/tv_locality_annual_growth_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/tv_locality_annual_growth"
+            android:layout_marginRight="@dimen/locality_about_median_left_margin"
+            android:layout_marginTop="@dimen/locality_about_median_top_margin"
+            android:text="@string/locality_about_annual_growth"
+            android:textColor="@color/white"
+            android:textSize="@dimen/locality_text_v_small"
+            android:visibility="invisible"
+            font:fontName="proxima.otf" />
+
+        <View
+            android:id="@+id/view_locality_seperator"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/locality_seperator_height"
+            android:layout_below="@id/tv_locality_per_sqr_ft_median_price_label"
+            android:layout_marginLeft="@dimen/locality_seperator_left_margin"
+            android:layout_marginTop="10dp"
+            android:background="@color/locality_seprator"
+            android:visibility="gone" />
+
+        <com.makaan.ui.view.FontTextView
+            android:id="@+id/tv_locality_per_sqr_ft_median_price_rent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/view_locality_seperator"
+            android:layout_marginLeft="@dimen/locality_about_median_left_margin"
+            android:layout_marginTop="@dimen/locality_about_median_rent_top_margin"
+            android:textColor="@color/white"
+            android:textSize="@dimen/locality_text_big"
+            android:visibility="invisible"
+            font:fontName="proxima.otf" />
+
+        <com.makaan.ui.view.FontTextView
+            android:id="@+id/tv_locality_per_sqr_ft_median_price_rent_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_locality_per_sqr_ft_median_price_rent"
+            android:layout_below="@id/tv_locality_per_sqr_ft_median_price_rent"
+            android:layout_marginBottom="@dimen/locality_about_median_top_margin"
+            android:layout_marginTop="@dimen/locality_about_median_top_margin"
+            android:text="@string/locality_about_median_rent"
+            android:textColor="@color/white"
+            android:textSize="@dimen/locality_text_small"
+            android:visibility="invisible"
+            font:fontName="proxima.otf" />
+
+        <com.makaan.ui.view.FontTextView
+            android:id="@+id/tv_locality_annual_growth_rent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_locality_annual_growth_label_rent"
+            android:layout_below="@id/view_locality_seperator"
+            android:layout_marginTop="@dimen/locality_about_median_rent_top_margin"
+            android:textColor="@color/white"
+            android:textSize="@dimen/locality_text_big"
+            android:visibility="invisible"
+            font:fontName="proxima.otf" />
+
+        <com.makaan.ui.view.FontTextView
+            android:id="@+id/tv_locality_annual_growth_label_rent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/tv_locality_annual_growth_rent"
+            android:layout_marginRight="@dimen/locality_about_median_left_margin"
+            android:layout_marginTop="@dimen/locality_about_median_top_margin"
+            android:text="@string/locality_rental_demand"
+            android:textColor="@color/white"
+            android:textSize="@dimen/locality_text_small"
+            android:visibility="invisible"
+            font:fontName="proxima.otf" />
+    </RelativeLayout>
+
+    <include layout="@layout/compressed_text_layout_for_black" />
 </merge>

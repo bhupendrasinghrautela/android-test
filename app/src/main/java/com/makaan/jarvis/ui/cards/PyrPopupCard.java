@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.makaan.R;
-import com.makaan.activity.locality.LocalityActivity;
 import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.jarvis.message.Message;

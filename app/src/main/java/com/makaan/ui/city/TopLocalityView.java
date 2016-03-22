@@ -2,6 +2,7 @@ package com.makaan.ui.city;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -12,8 +13,9 @@ import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
-import com.makaan.activity.locality.LocalityActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.pojo.SerpRequest;
+import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.response.locality.Locality;
 import com.makaan.ui.BaseLinearLayout;
 import com.makaan.util.CommonUtil;
@@ -134,8 +136,13 @@ public class TopLocalityView extends BaseLinearLayout<List<Locality>> {
     }
 
     private void launchLocalityScreen(final long localityId){
-        Intent intent = new Intent(mContext, LocalityActivity.class);
-        intent.putExtra(LocalityActivity.LOCALITY_ID, localityId);
+        Intent intent = new Intent(mContext, OverviewActivity.class);
+        Bundle bundle = new Bundle();
+
+        bundle.putLong(OverviewActivity.ID, localityId);
+        bundle.putInt(OverviewActivity.TYPE, OverviewItemType.LOCALITY.ordinal());
+
+        intent.putExtras(bundle);
         mContext.startActivity(intent);
     }
 }

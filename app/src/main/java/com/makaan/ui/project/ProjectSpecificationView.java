@@ -12,10 +12,11 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 import com.makaan.R;
-import com.makaan.activity.project.ProjectActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.fragment.project.ProjectSpecificationPagerFragment;
+import com.makaan.jarvis.BaseJarvisActivity;
 import com.makaan.pojo.SpecificaitonsUI;
 import com.makaan.ui.WrappingViewPager;
 import com.segment.analytics.Properties;
@@ -98,7 +99,7 @@ public class ProjectSpecificationView extends LinearLayout{
             @Override
             public void onPageSelected(int position) {
                 if(tabNames.size()>0) {
-                    if(mContext instanceof ProjectActivity) {
+                    if (OverviewActivity.SCREEN_NAME_LOCALITY.equalsIgnoreCase(((BaseJarvisActivity)mContext).getScreenName())) {
                         Properties properties = MakaanEventPayload.beginBatch();
                         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
                         properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.specifications+"_"+tabNames.get(position));

@@ -153,6 +153,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     private boolean mSearchResultReceived;
     private MakaanLocationManager mMakaanLocationManager;
     private LocationManager mLocationManager;
+    private boolean mSearchEditTextVisible;
 
     @Override
     protected abstract int getContentViewId();
@@ -719,7 +720,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         showKeypad(mSearchEditText, false);
 
         // TODO need to handle all cases
-        SearchResponseHelper.resolveSearch(mSelectedSearches, this, supportsListing());
+        SearchResponseHelper.resolveSearch(mSelectedSearches, this);
 
         // clear the search adapter to show empty results
         mSearchAdapter.clear();
@@ -777,7 +778,11 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
         }
 //        onBackPressed();
-        finish();
+        if(this instanceof SerpActivity) {
+            finish();
+        } else {
+            onBackPressed();
+        }
     }
 
     @Override
@@ -844,6 +849,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         // show animation for the glass icon according to visibility sent
         if(searchViewVisible) {
             mSearchDescriptionRelativeView.setVisibility(View.GONE);
+            mSearchEditTextVisible = true;
             mSearchRelativeView.setVisibility(View.VISIBLE);
             mSearchEditText.requestFocus();
             if(TextUtils.isEmpty(mSearchEditText.getText().toString())) {
@@ -896,6 +902,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                     }
                 }, 800);
             } else {
+                mSearchEditTextVisible = true;
                 mDeleteButton.setBackgroundResource(R.drawable.close_white);
                 mSearchImageView.setVisibility(View.GONE);
             }
@@ -903,6 +910,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             if(TextUtils.isEmpty(mSearchEditText.getText().toString())) {
                 mSearchImageView.setVisibility(View.VISIBLE);
                 mDeleteButton.setVisibility(View.GONE);
+                mSearchEditTextVisible = false;
                 mSearchImageView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -919,11 +927,13 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
                             @Override
                             public void onAnimationEnd(Animator animation) {
-                                if (mSearchDescriptionRelativeView != null) {
-                                    mSearchDescriptionRelativeView.setVisibility(View.VISIBLE);
-                                }
-                                if (mSearchRelativeView != null) {
-                                    mSearchRelativeView.setVisibility(View.GONE);
+                                if(!mSearchEditTextVisible) {
+                                    if (mSearchDescriptionRelativeView != null) {
+                                        mSearchDescriptionRelativeView.setVisibility(View.VISIBLE);
+                                    }
+                                    if (mSearchRelativeView != null) {
+                                        mSearchRelativeView.setVisibility(View.GONE);
+                                    }
                                 }
                             }
 
@@ -941,6 +951,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 }, 800);
             } else {
                 mSearchDescriptionRelativeView.setVisibility(View.VISIBLE);
+                mSearchEditTextVisible = false;
                 mSearchRelativeView.setVisibility(View.GONE);
             }
         }
@@ -1149,7 +1160,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         if (editable != null && !TextUtils.isEmpty(editable.toString())) {
             SearchService service = (SearchService) MakaanServiceFactory.getInstance().getService(SearchService.class);
             try {
-                Log.d("DEBUG", editable.toString());
+//                Log.d("DEBUG", editable.toString());
                 // if selected search adapter has items already, then it means there is some locality already selected
                 // so we need to search for localities only in the selected city
                 if(mSelectedSearchAdapter != null) {
@@ -1236,7 +1247,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
      */
     @OnClick(R.id.activity_search_toolbar_profile_icon)
     public void click(){
-        Log.e("screen ","name"+getScreenName());
+//        Log.e("screen ","name"+getScreenName());
         switch(getScreenName()){
             case "Project":{
                 Properties properties= MakaanEventPayload.beginBatch();
@@ -1398,6 +1409,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         mSearchResultFrameLayout.setVisibility(View.VISIBLE);
         if(mSearchLayoutFrameLayout != null && mSearchLayoutFrameLayout.getVisibility() != View.VISIBLE) {
             setShowSearchBar(true, false);
+            mSearchEditTextVisible = true;
             mSearchRelativeView.setVisibility(View.VISIBLE);
         }
 

@@ -24,7 +24,7 @@ import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
-import com.makaan.activity.project.ProjectActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
@@ -32,6 +32,7 @@ import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.pojo.SerpRequest;
+import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.serp.ListingInfoMap;
 import com.makaan.ui.CustomNetworkImageView;
@@ -402,7 +403,8 @@ public class DefaultListingView extends AbstractListingView {
                     MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickSerpPropertyView);
 
                     Bundle bundle = new Bundle();
-                    bundle.putLong(KeyUtil.LISTING_ID, mListing.id);
+                    bundle.putLong(OverviewActivity.ID, mListing.id);
+                    bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROPERTY.ordinal());
                     if(mListing.latitude != null) {
                         bundle.putDouble(KeyUtil.LISTING_LAT, mListing.latitude);
                     }
@@ -710,7 +712,8 @@ public class DefaultListingView extends AbstractListingView {
                 MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickProject);
 
                 Bundle bundle = new Bundle();
-                bundle.putLong(ProjectActivity.PROJECT_ID, mListing.projectId);
+                bundle.putLong(OverviewActivity.ID, mListing.projectId);
+                bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROJECT.ordinal());
                 mCallback.requestDetailPage(SerpActivity.REQUEST_PROJECT_PAGE, bundle);
             }
         }
