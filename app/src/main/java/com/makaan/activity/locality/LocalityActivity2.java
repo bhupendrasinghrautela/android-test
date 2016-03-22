@@ -10,7 +10,7 @@ import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.locality.LocalityByIdEvent;
-import com.makaan.event.project.OnSeeOnMapClicked;
+//import com.makaan.event.project.OnSeeOnMapClicked;
 import com.makaan.fragment.locality.LocalityFragment;
 import com.makaan.fragment.neighborhood.NeighborhoodMapFragment;
 import com.makaan.jarvis.event.IncomingMessageEvent;
@@ -23,7 +23,7 @@ import com.squareup.otto.Subscribe;
 /**
  * Created by tusharchaudhary on 1/18/16.
  */
-public class LocalityActivity extends MakaanFragmentActivity {
+public class LocalityActivity2 extends MakaanFragmentActivity {
     public static final String LOCALITY_ID = "localityId";
     private Long localityId;
     private LocalityFragment localityFragment;
@@ -43,7 +43,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
         addLocalityFragment();
     }
 
-    @Subscribe
+    /*@Subscribe
     public void onResult(OnSeeOnMapClicked onSeeOnMapClicked){
         if(isActivityDead()){
             return;
@@ -52,7 +52,7 @@ public class LocalityActivity extends MakaanFragmentActivity {
         mNeighborhoodMapFragment = new NeighborhoodMapFragment();
         mNeighborhoodMapFragment.setData(mEntityInfo,onSeeOnMapClicked.amenityClusters);
         initFragment(R.id.container, mNeighborhoodMapFragment, true);
-    }
+    }*/
 
     private void addLocalityFragment() {
         localityFragment = new LocalityFragment();

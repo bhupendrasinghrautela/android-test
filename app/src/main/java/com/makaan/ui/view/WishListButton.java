@@ -13,8 +13,8 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.makaan.R;
-import com.makaan.activity.listing.PropertyActivity;
 import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
@@ -22,6 +22,7 @@ import com.makaan.cache.MasterDataCache;
 import com.makaan.event.user.UserLoginEvent;
 import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.fragment.MakaanMessageDialogFragment;
+import com.makaan.jarvis.BaseJarvisActivity;
 import com.makaan.network.VolleyErrorParser;
 import com.makaan.response.ResponseError;
 import com.makaan.response.wishlist.WishListResponse;
@@ -124,7 +125,7 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
     public void onCheckedChanged(CompoundButton compoundButton, final boolean isChecked) {
 
         if(null!=MasterDataCache.getInstance().getUserData()) {
-            if(mContext instanceof PropertyActivity && mWishListDto.listingId != null) {
+            if (OverviewActivity.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity)mContext).getScreenName()) && mWishListDto.listingId != null) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 if(isChecked) {
                     properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_Shortlist");

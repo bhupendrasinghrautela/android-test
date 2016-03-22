@@ -23,10 +23,10 @@ import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
+import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.listing.SerpActivity;
-import com.makaan.activity.locality.LocalityActivity;
-import com.makaan.activity.project.ProjectActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.adapter.project.KeyDetailsAdapter;
 import com.makaan.analytics.MakaanEventPayload;
@@ -42,12 +42,14 @@ import com.makaan.event.project.ProjectByIdEvent;
 import com.makaan.event.project.ProjectConfigEvent;
 import com.makaan.event.project.ProjectConfigItemClickListener;
 import com.makaan.event.project.SimilarProjectGetEvent;
-import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.fragment.overview.OverviewFragment;
 import com.makaan.fragment.property.ViewSellersDialogFragment;
+import com.makaan.jarvis.BaseJarvisActivity;
 import com.makaan.pojo.KeyDetail;
 import com.makaan.pojo.ProjectConfigItem;
 import com.makaan.pojo.SellerCard;
 import com.makaan.pojo.SerpRequest;
+import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.image.Image;
 import com.makaan.response.locality.Locality;
@@ -73,7 +75,6 @@ import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +84,7 @@ import butterknife.OnClick;
 /**
  * Created by tusharchaudhary on 1/26/16.
  */
-public class ProjectFragment extends MakaanBaseFragment{
+public class ProjectFragment extends OverviewFragment{
     @Bind(R.id.project_specification_view) ProjectSpecificationView projectSpecificationView;
     @Bind(R.id.project_config_view) ProjectConfigView projectConfigView;
     @Bind(R.id.property_image_viewpager) PropertyImageViewPager mPropertyImageViewPager;
@@ -118,6 +119,7 @@ public class ProjectFragment extends MakaanBaseFragment{
     private RecentPropertyProjectManager.DataObject mDataObject;
     private boolean mProjectReceived;
     private boolean mConfigReceived;
+    private OverviewActivityCallbacks mActivityCallbacks;
 
     @OnClick(R.id.contact_top_seller)
     public void openTopSeller(){
@@ -217,7 +219,7 @@ public class ProjectFragment extends MakaanBaseFragment{
         mContext = getActivity();
         Bundle args = getArguments();
         if(args!=null)
-            this.projectId = args.getLong(ProjectActivity.PROJECT_ID);
+            this.projectId = args.getLong(OverviewActivity.ID);
         showProgress();
         fetchData();
         return view;
@@ -334,7 +336,7 @@ public class ProjectFragment extends MakaanBaseFragment{
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_NAME, project.locality.label);
         pyrIntent.putExtra(PyrPageActivity.BEDROOM_AND_BUDGET, configItemClickListener.projectConfigItem);
         pyrIntent.putExtra(PyrPageActivity.BUY_SELECTED, !configItemClickListener.isRent);
-        pyrIntent.putExtra(PyrPageActivity.SOURCE_SCREEN_NAME, ((ProjectActivity) getActivity()).getScreenName());
+        pyrIntent.putExtra(PyrPageActivity.SOURCE_SCREEN_NAME, ((BaseJarvisActivity) getActivity()).getScreenName());
         getActivity().startActivity(pyrIntent);
     }
 
@@ -615,7 +617,7 @@ public class ProjectFragment extends MakaanBaseFragment{
             scoreFrameLayout.setVisibility(View.GONE);
             mScoreLabel.setVisibility(View.GONE);
         }
-        projectNameTv.setText(project.name.toLowerCase());
+        projectNameTv.setText(project.getFullName().toLowerCase());
         if(getActivity() instanceof MakaanBaseSearchActivity) {
             if(project.builder != null && !TextUtils.isEmpty(project.builder.name)) {
                 getActivity().setTitle(project.builder.name.toLowerCase() + " " + project.name.toLowerCase());
@@ -694,8 +696,13 @@ public class ProjectFragment extends MakaanBaseFragment{
         properties.put(MakaanEventPayload.LABEL, onSimilarProjectClickedEvent.id + "_" + onSimilarProjectClickedEvent.clickedPosition);
         MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectSimilarProjects);
 
-        Intent i = new Intent(getActivity(),ProjectActivity.class);
-        i.putExtra(ProjectActivity.PROJECT_ID, onSimilarProjectClickedEvent.id);
+        Intent i = new Intent(getActivity(),OverviewActivity.class);
+        Bundle bundle = new Bundle();
+
+        bundle.putLong(OverviewActivity.ID, onSimilarProjectClickedEvent.id);
+        bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROJECT.ordinal());
+
+        i.putExtras(bundle);
         startActivity(i);
     }
 
@@ -771,13 +778,13 @@ public class ProjectFragment extends MakaanBaseFragment{
             bundle.putString("description", project.locality.description);
             fragment.setArguments(bundle);
             initFragment(R.id.container_about_locality, fragment, false);
-            fragment.setData(mAmenityClusters);
+            fragment.setData(mAmenityClusters, mActivityCallbacks);
         }
     }
 
     protected void initFragment(int fragmentHolderId, Fragment fragment, boolean shouldAddToBackStack) {
         // reference fragment transaction
-        FragmentTransaction fragmentTransaction =((ProjectActivity) mContext).getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction =((MakaanFragmentActivity) mContext).getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(fragmentHolderId, fragment, fragment.getClass().getName());
         // if need to be added to the backstack, then do so
         if (shouldAddToBackStack) {
@@ -790,5 +797,11 @@ public class ProjectFragment extends MakaanBaseFragment{
         Image image = new Image();
         image.absolutePath = project.imageURL;
         return image;
+    }
+
+    @Override
+    public void bindView(OverviewActivityCallbacks activityCallbacks) {
+
+        mActivityCallbacks = activityCallbacks;
     }
 }

@@ -28,8 +28,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
+import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.lead.LeadFormActivity;
-import com.makaan.activity.locality.LocalityActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.constants.ImageConstants;
@@ -39,12 +40,13 @@ import com.makaan.event.listing.ListingByIdGetEvent;
 import com.makaan.event.listing.OtherSellersGetEvent;
 import com.makaan.event.listing.SimilarListingGetEvent;
 import com.makaan.event.listing.SimilarListingGetEvent.ListingItems;
-import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.fragment.overview.OverviewFragment;
 import com.makaan.fragment.property.SimilarPropertyFragment;
 import com.makaan.fragment.property.ViewSellersDialogFragment;
 import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SellerCard;
+import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.image.Image;
 import com.makaan.response.listing.detail.ListingDetail;
@@ -88,7 +90,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by sunil on 18/01/16.
  */
-public class PropertyDetailFragment extends MakaanBaseFragment implements OpenListingListener {
+public class PropertyDetailFragment extends OverviewFragment implements OpenListingListener {
 
     @Bind(R.id.amenity_viewpager)
     AmenityViewPager mAmenityViewPager;
@@ -176,8 +178,11 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
         MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyOverview);
 
-        Intent intent = new Intent(getActivity(), LocalityActivity.class);
-        intent.putExtra(KeyUtil.LOCALITY_ID,mListingDetail.property.project.localityId);
+        Intent intent = new Intent(getActivity(), OverviewActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putLong(OverviewActivity.ID,mListingDetail.property.project.localityId);
+        bundle.putInt(OverviewActivity.TYPE,OverviewItemType.LOCALITY.ordinal());
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
@@ -369,7 +374,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
 
     private ListingDetail mListingDetail;
     private List<AmenityCluster> mAmenityClusters = new ArrayList<>();
-    private ShowMapCallBack mShowMapCallback;
+    private OverviewActivityCallbacks mShowMapCallback;
     private Long listingId;
     private String listingMainUrl;
     private Context mContext;
@@ -385,7 +390,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mListingId = getArguments().getLong(KeyUtil.LISTING_ID);
+        mListingId = getArguments().getLong(OverviewActivity.ID);
         fetchPropertytDetail();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -771,7 +776,7 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
 
     protected void initFragment(int fragmentHolderId, Fragment fragment, boolean shouldAddToBackStack) {
         // reference fragment transaction
-        FragmentTransaction fragmentTransaction =((PropertyActivity) mContext).getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction =((MakaanFragmentActivity) mContext).getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(fragmentHolderId, fragment, fragment.getClass().getName());
         // if need to be added to the backstack, then do so
         if (shouldAddToBackStack) {
@@ -780,14 +785,19 @@ public class PropertyDetailFragment extends MakaanBaseFragment implements OpenLi
         fragmentTransaction.commitAllowingStateLoss();
     }
 
-    public void bindView(ShowMapCallBack showMapCallBack) {
+    public void bindView(OverviewActivityCallbacks showMapCallBack) {
         mShowMapCallback = showMapCallBack;
     }
 
     @Override
     public void openPropertyPage(Long listingId, Double longitude, Double latitude) {
-        Intent intent = new Intent(getActivity(), PropertyActivity.class);
-        intent.putExtra(KeyUtil.LISTING_ID, listingId);
+        Intent intent = new Intent(getActivity(), OverviewActivity.class);
+        Bundle bundle = new Bundle();
+
+        bundle.putLong(OverviewActivity.ID, listingId);
+        bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROPERTY.ordinal());
+
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 }

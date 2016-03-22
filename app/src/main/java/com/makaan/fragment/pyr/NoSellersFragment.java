@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.makaan.R;
-import com.makaan.activity.project.ProjectActivity;
 import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.event.saveSearch.SaveSearchGetEvent;
 import com.makaan.fragment.listing.SetAlertsDialogFragment;
