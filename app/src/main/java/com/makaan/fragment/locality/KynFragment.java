@@ -12,8 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
-import com.makaan.event.project.OnSeeOnMapClicked;
+//import com.makaan.event.project.OnSeeOnMapClicked;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.fragment.overview.OverviewFragment;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.ui.amenity.AmenityCardView;
 import com.makaan.util.AppBus;
@@ -38,6 +39,7 @@ public class KynFragment extends MakaanBaseFragment {
     private String title;
     private Context context ;
     private List<AmenityCluster> amenityClusters;
+    private OverviewFragment.OverviewActivityCallbacks mActivityCallbacks;
 
     @Override
     protected int getContentViewId() {
@@ -53,9 +55,9 @@ public class KynFragment extends MakaanBaseFragment {
 
     @OnClick(R.id.amenity_see_on_map)
     public void onSeeMapClicked(){
-        OnSeeOnMapClicked onSeeOnMapClicked = new OnSeeOnMapClicked();
-        onSeeOnMapClicked.amenityClusters = amenityClusters;
-        AppBus.getInstance().post(onSeeOnMapClicked);
+        if(mActivityCallbacks != null) {
+            mActivityCallbacks.showMapFragment();
+        }
     }
 
     private void initView() {
@@ -67,8 +69,9 @@ public class KynFragment extends MakaanBaseFragment {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    public void setData(List<AmenityCluster> amenityClusters) {
+    public void setData(List<AmenityCluster> amenityClusters, OverviewFragment.OverviewActivityCallbacks overviewActivityCallbacks) {
         this.amenityClusters = amenityClusters;
+        this.mActivityCallbacks = overviewActivityCallbacks;
         if(amenityClusters.size()==0)
             seeOnMapLl.setVisibility(View.GONE);
         mAdapter = new KnowYourNeighbourhoodAdapter(amenityClusters);

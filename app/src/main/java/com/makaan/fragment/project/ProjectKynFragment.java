@@ -17,14 +17,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
-import com.makaan.activity.locality.LocalityActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
-import com.makaan.event.project.OnSeeOnMapClicked;
+//import com.makaan.event.project.OnSeeOnMapClicked;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.fragment.overview.OverviewFragment;
+import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.ui.amenity.AmenityCardView;
-import com.makaan.util.AppBus;
 import com.makaan.util.KeyUtil;
 import com.segment.analytics.Properties;
 
@@ -60,6 +61,7 @@ public class ProjectKynFragment extends MakaanBaseFragment{
     private Context context;
     private List<AmenityCluster> amenityClusters;
     private long localityId;
+    private OverviewFragment.OverviewActivityCallbacks mActivityCallbacks;
 
     @Override
     protected int getContentViewId() {
@@ -80,8 +82,13 @@ public class ProjectKynFragment extends MakaanBaseFragment{
         properties.put(MakaanEventPayload.LABEL, "Know More About "+localityId);
         MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectOverView);
 
-        Intent intent = new Intent(getActivity(), LocalityActivity.class);
-        intent.putExtra(KeyUtil.LOCALITY_ID, localityId);
+        Intent intent = new Intent(getActivity(), OverviewActivity.class);
+        Bundle bundle = new Bundle();
+
+        bundle.putLong(OverviewActivity.ID, localityId);
+        bundle.putInt(OverviewActivity.TYPE, OverviewItemType.LOCALITY.ordinal());
+
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
@@ -116,8 +123,9 @@ public class ProjectKynFragment extends MakaanBaseFragment{
         }
     }
 
-    public void setData(List<AmenityCluster> amenityClusters) {
+    public void setData(List<AmenityCluster> amenityClusters, OverviewFragment.OverviewActivityCallbacks activityCallbacks) {
         this.amenityClusters = amenityClusters;
+        this.mActivityCallbacks = activityCallbacks;
         if(amenityClusters.size()==0) {
             seeOnMapLl.setVisibility(View.GONE);
         }
@@ -168,9 +176,9 @@ public class ProjectKynFragment extends MakaanBaseFragment{
 
     @OnClick(R.id.amenity_see_on_map)
     public void showMap(){
-        OnSeeOnMapClicked onSeeOnMapClicked = new OnSeeOnMapClicked();
-        onSeeOnMapClicked.amenityClusters = amenityClusters;
-        AppBus.getInstance().post(onSeeOnMapClicked);
+        if(mActivityCallbacks != null) {
+            mActivityCallbacks.showMapFragment();
+        }
     }
 
 

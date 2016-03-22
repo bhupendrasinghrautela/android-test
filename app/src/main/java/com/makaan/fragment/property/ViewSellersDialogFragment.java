@@ -29,10 +29,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.lead.LeadFormActivity;
-import com.makaan.activity.listing.PropertyActivity;
-import com.makaan.activity.project.ProjectActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.jarvis.BaseJarvisActivity;
 import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SellerCard;
@@ -73,13 +73,13 @@ public class ViewSellersDialogFragment extends DialogFragment {
         if(selectSeller.isChecked()){
             Bundle bundle=this.getArguments();
             for(SellerCard sellerCard : mSellerCards){
-                if(getActivity() instanceof ProjectActivity) {
+                if (OverviewActivity.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity)getActivity()).getScreenName())) {
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
                     properties.put(MakaanEventPayload.LABEL, bundle.get(MakaanEventPayload.PROJECT_ID) + "_" + sellerCard.sellerId + "_all");
                     MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectViewOtherSellers);
                 }
-                else if(getActivity() instanceof PropertyActivity) {
+                else if (OverviewActivity.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity)getActivity()).getScreenName())) {
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                     properties.put(MakaanEventPayload.LABEL, bundle.get(MakaanEventPayload.PROJECT_ID) + "_" + sellerCard.sellerId + "_all");
@@ -346,14 +346,14 @@ public class ViewSellersDialogFragment extends DialogFragment {
             holder.mSellerCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked && getActivity() instanceof ProjectActivity) {
+                    if (isChecked && OverviewActivity.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity)getActivity()).getScreenName())) {
                         Bundle bundle = getArguments();
                         Properties properties = MakaanEventPayload.beginBatch();
                         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
                         properties.put(MakaanEventPayload.LABEL, bundle.get(MakaanEventPayload.PROJECT_ID) + "_" +
                                 mSellerCards.get((int) buttonView.getTag() - 1).sellerId + "_" + buttonView.getTag() + "_" + MakaanTrackerConstants.Label.checked);
                         MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectViewOtherSellers);
-                    } else if (getActivity() instanceof PropertyActivity) {
+                    } else if (OverviewActivity.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity)getActivity()).getScreenName())) {
                         Bundle bundle = getArguments();
                         Properties properties = MakaanEventPayload.beginBatch();
                         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);

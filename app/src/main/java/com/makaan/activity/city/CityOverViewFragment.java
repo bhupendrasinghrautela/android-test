@@ -28,7 +28,9 @@ import android.widget.Toast;
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader.ImageContainer;
 import com.makaan.R;
+import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
@@ -41,6 +43,8 @@ import com.makaan.event.trend.callback.LocalityTrendCallback;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.locality.LocalityLifestyleFragment;
 import com.makaan.fragment.locality.LocalityPropertiesFragment;
+import com.makaan.fragment.overview.OverviewFragment;
+import com.makaan.jarvis.BaseJarvisActivity;
 import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpRequest;
@@ -80,7 +84,7 @@ import butterknife.OnClick;
 /**
  * Created by aishwarya on 01/01/16.
  */
-public class CityOverViewFragment extends MakaanBaseFragment{
+public class CityOverViewFragment extends OverviewFragment {
 
     @Bind(R.id.main_city_image)
     FadeInNetworkImageView mMainCityImage;
@@ -136,6 +140,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
 
     @Bind(R.id.iv_annual_growth)
     ImageView mIvAnnual;
+    private long mCityId;
 
     @OnCheckedChanged(R.id.city_property_buy_rent_switch)
     public void onBuyRentSwitched(){
@@ -183,6 +188,8 @@ public class CityOverViewFragment extends MakaanBaseFragment{
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = getActivity();
+        setCityId();
+        fetchData();
         initToolbar();
         initView();
         initListeners();
@@ -195,6 +202,15 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         View view = super.onCreateView(inflater, container, savedInstanceState);
 //        mMainCityImage.setDefaultImageResId(R.drawable.city_background_placeholder);
         return view;
+    }
+
+    private void fetchData() {
+        new CityService().getCityById(mCityId);
+        new CityService().getTopLocalitiesInCity(mCityId, 4);
+    }
+
+    private void setCityId() {
+        mCityId = getArguments().getLong("id");
     }
 
     private void initToolbar() {
@@ -407,7 +423,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         if(mCityTopLocalities != null && mCityTopLocalities.size()>0) {
             mTopLocalityLayout.setVisibility(View.VISIBLE);
             mTopLocalityLayout.bindView(mCityTopLocalities);
-            mTopLocalityLayout.setShowAllPropertiesClickListener(getActivity().getIntent().getLongExtra(CityActivity.CITY_ID, 1l), isRent);
+            mTopLocalityLayout.setShowAllPropertiesClickListener(mCityId, isRent);
             fetchPriceTrendData(mCityTopLocalities);
         }
     }
@@ -529,7 +545,7 @@ public class CityOverViewFragment extends MakaanBaseFragment{
 
     protected void initFragment(int fragmentHolderId, Fragment fragment, boolean shouldAddToBackStack) {
         // reference fragment transaction
-        FragmentTransaction fragmentTransaction =((CityActivity) mContext).getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction =((MakaanFragmentActivity) mContext).getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(fragmentHolderId, fragment, fragment.getClass().getName());
         // if need to be added to the backstack, then do so
         if (shouldAddToBackStack) {
@@ -544,9 +560,14 @@ public class CityOverViewFragment extends MakaanBaseFragment{
         if(mCity!=null && mCity.label!=null) {
             pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, mCity.label);
             pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, mCity.id);
-            pyrIntent.putExtra(PyrPageActivity.SOURCE_SCREEN_NAME, ((CityActivity) getActivity()).getScreenName());
+            pyrIntent.putExtra(PyrPageActivity.SOURCE_SCREEN_NAME, ((BaseJarvisActivity) getActivity()).getScreenName());
 
         }
         getActivity().startActivity(pyrIntent);
+    }
+
+    @Override
+    public void bindView(OverviewActivityCallbacks activityCallbacks) {
+
     }
 }

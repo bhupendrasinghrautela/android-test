@@ -20,7 +20,7 @@ import com.squareup.otto.Subscribe;
 /**
  * Created by aishwarya on 19/01/16.
  */
-public class CityActivity extends MakaanFragmentActivity {
+public class CityActivity2 extends MakaanFragmentActivity {
     public static final String CITY_ID = "city_id";
 
     private CityOverViewFragment mCityOverViewFragment;
