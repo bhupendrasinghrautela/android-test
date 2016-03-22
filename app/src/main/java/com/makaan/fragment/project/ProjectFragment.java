@@ -617,7 +617,7 @@ public class ProjectFragment extends OverviewFragment{
             scoreFrameLayout.setVisibility(View.GONE);
             mScoreLabel.setVisibility(View.GONE);
         }
-        projectNameTv.setText(project.name.toLowerCase());
+        projectNameTv.setText(project.getFullName().toLowerCase());
         if(getActivity() instanceof MakaanBaseSearchActivity) {
             if(project.builder != null && !TextUtils.isEmpty(project.builder.name)) {
                 getActivity().setTitle(project.builder.name.toLowerCase() + " " + project.name.toLowerCase());
