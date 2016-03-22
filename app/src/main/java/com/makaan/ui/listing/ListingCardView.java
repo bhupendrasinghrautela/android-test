@@ -32,11 +32,13 @@ import com.makaan.ui.view.MPlusBadgePopupDialog;
 import com.makaan.ui.view.WishListButton;
 import com.makaan.ui.view.WishListButton.WishListDto;
 import com.makaan.ui.view.WishListButton.WishListType;
+import com.makaan.util.DateUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
 
+import java.util.Calendar;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -95,16 +97,21 @@ public class ListingCardView extends AbstractListingView {
 
             mBadgeImageView.setImageResource(R.drawable.badge_seen);
             mBadgeTextView.setText("seen");
+        } else if(DateUtil.isNewListing(mListing.postedDate)) {
+            mBadgeImageView.setVisibility(View.VISIBLE);
+            mBadgeTextView.setVisibility(View.VISIBLE);
+
+            mBadgeImageView.setImageResource(R.drawable.badge_new);
+            mBadgeTextView.setText("new");
         } else {
             mBadgeImageView.setVisibility(View.GONE);
             mBadgeTextView.setVisibility(View.GONE);
         }
-        // TODO implement new
+
         mPreferences = mContext.getSharedPreferences(
                 PreferenceConstants.PREF_SHORTLISTED_PROPERTIES, Context.MODE_PRIVATE);
         mPropertyWishListCheckbox.bindView(new WishListDto(mListing.lisitingId.longValue(), mListing.projectId.longValue(), WishListType.listing));
 
-        // TODO check for unit info
         String priceString = StringUtil.getDisplayPrice(mListing.price);
         String priceUnit = "";
         if(priceString.indexOf("\u20B9") == 0) {

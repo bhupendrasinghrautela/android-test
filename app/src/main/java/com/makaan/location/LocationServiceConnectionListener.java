@@ -1,9 +1,11 @@
 package com.makaan.location;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 /**
@@ -34,6 +36,8 @@ public class LocationServiceConnectionListener implements
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-
+        if(mContext instanceof Activity && connectionResult != null) {
+            GooglePlayServicesUtil.getErrorDialog(connectionResult.getErrorCode(), (Activity) mContext, connectionResult.getErrorCode()).show();
+        }
     }
 }

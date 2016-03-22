@@ -134,14 +134,7 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
         Bundle extras = intent.getExtras();
 
         if (extras.containsKey(TYPE) && extras.containsKey(ID)) {
-
-            // todo handle diff type cases
-            if (mTotalImagesSeen > 0) {
-                Properties properties = MakaanEventPayload.beginBatch();
-                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
-                properties.put(MakaanEventPayload.LABEL, mTotalImagesSeen);
-                MakaanEventPayload.endBatch(getApplicationContext(), MakaanTrackerConstants.Action.clickPropertyImages);
-            }
+            trackEvents();
             if(mType != null) {
                 if(mType == OverviewItemType.CITY || mType == OverviewItemType.LOCALITY
                         || mType == OverviewItemType.PROJECT || mType == OverviewItemType.PROPERTY) {
@@ -328,16 +321,11 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
 
     @Override
     public void onBackPressed() {
+        trackEvents();
+
         if (needBackProcessing()) {
             super.onBackPressed();
         } else {
-            // todo handle diff type cases
-            if (mTotalImagesSeen > 0) {
-                Properties properties = MakaanEventPayload.beginBatch();
-                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
-                properties.put(MakaanEventPayload.LABEL, mTotalImagesSeen);
-                MakaanEventPayload.endBatch(getApplicationContext(), MakaanTrackerConstants.Action.clickPropertyImages);
-            }
             OverviewBackStack.SingleOverviewItem item = mOverviewBackStack.pop();
             if(item != null) {
                 clearCurrentState(true);
@@ -361,6 +349,35 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
                 super.onBackPressed();
             }
         }
+    }
+
+    private void trackEvents() {
+    /* track event code [start] */
+        if (mTotalImagesSeen > 0) {
+            if(SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(getScreenName())) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                properties.put(MakaanEventPayload.LABEL, mTotalImagesSeen);
+                MakaanEventPayload.endBatch(getApplicationContext(), MakaanTrackerConstants.Action.clickPropertyImages);
+            } else if(SCREEN_NAME_PROJECT.equalsIgnoreCase(getScreenName())) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                properties.put(MakaanEventPayload.LABEL, mTotalImagesSeen);
+                MakaanEventPayload.endBatch(getApplicationContext(), MakaanTrackerConstants.Action.clickPropertyImages);
+            }
+        }
+        if(SCREEN_NAME_LOCALITY.equalsIgnoreCase(getScreenName())) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.backToHome);
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickLocality);
+        } else if(SCREEN_NAME_CITY.equalsIgnoreCase(getScreenName())) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.backToHome);
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickCity);
+        }
+        /* track event code [end] */
     }
 
     @Subscribe
@@ -439,7 +456,11 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        onBackPressed();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
         return true;
     }
 }

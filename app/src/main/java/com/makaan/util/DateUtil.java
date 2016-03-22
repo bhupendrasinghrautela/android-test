@@ -108,4 +108,9 @@ public class DateUtil {
 
         return "";
     }
+
+    public static boolean isNewListing(Long time) {
+        // 2 days time
+        return time != null && ((Calendar.getInstance().getTime().getTime() - time) < 2 * 24 * 60 * 60 * 1000);
+    }
 }
