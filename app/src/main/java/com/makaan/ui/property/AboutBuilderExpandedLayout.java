@@ -10,11 +10,13 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
+import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.jarvis.BaseJarvisActivity;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.pojo.SerpRequest;
 import com.makaan.response.project.Builder;
 import com.makaan.response.project.Project;
 import com.makaan.response.project.ProjectStatusCount;
@@ -65,6 +67,7 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
     private Context mContext;
     private boolean mProjectNameVisible;
     private boolean mProjectAddressVisible;
+    private Builder mItem;
 
     @OnClick(R.id.about_builder)
     public void onChange(){
@@ -118,6 +121,13 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
         }
     }
 
+    @OnClick(R.id.read_more)
+    public void openBuilderSerp(){
+        SerpRequest serpRequest = new SerpRequest(SerpActivity.TYPE_BUILDER);
+        serpRequest.setBuilderId(mItem.id);
+        serpRequest.launchSerp(mContext);
+    }
+
     public AboutBuilderExpandedLayout(Context context) {
         super(context);
         mContext = context;
@@ -135,6 +145,7 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
 
     @Override
     public void bindView(Builder item) {
+        mItem = item;
         if(item != null) {
             boolean isDataPresent = false;
             mAboutBuilderTv.setText(getResources().getString(R.string.more_about_builder));

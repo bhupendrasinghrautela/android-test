@@ -27,12 +27,14 @@ import com.makaan.cookie.Session;
 import com.makaan.event.location.LocationGetEvent;
 import com.makaan.event.user.UserLoginEvent;
 import com.makaan.notification.GcmRegister;
+import com.makaan.pojo.VersionUpdate;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.response.user.UserResponse;
 import com.makaan.service.LocationService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
 import com.makaan.service.WishListService;
+import com.makaan.util.JsonParser;
 import com.makaan.util.PermissionManager;
 import com.makaan.util.Preference;
 import com.squareup.otto.Subscribe;
@@ -155,9 +157,10 @@ public class HomeActivity extends MakaanBaseSearchActivity {
         PackageInfo pInfo = null;
         try {
             pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            if (pInfo.versionCode < CookiePreferences.getMandatoryVersion(this)) {
+            VersionUpdate versionUpdate = (VersionUpdate) JsonParser.parseJson(CookiePreferences.getMandatoryVersion(this),VersionUpdate.class);
+            if(versionUpdate!=null && pInfo.versionCode< versionUpdate.getMandatoryVersionCode()){
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.app_upgrade);
+                builder.setMessage(versionUpdate.getMessage());
                 builder.setCancelable(false);
                 builder.setPositiveButton(getString(R.string.upgrade), new OnClickListener() {
                     @Override
@@ -177,6 +180,28 @@ public class HomeActivity extends MakaanBaseSearchActivity {
                         }
                     }
                 });
+            }
+            else if(versionUpdate!= null && pInfo.versionCode<versionUpdate.getCurrentVersionCode()){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(versionUpdate.getMessage());
+                builder.setPositiveButton(getString(R.string.upgrade), new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+                        try {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                        }
+                        catch (android.content.ActivityNotFoundException anfe) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appPackageName)));
+                        }
+                    }
+                });
+                builder.setNegativeButton(getString(R.string.cancel), new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                builder.show();
             }
         }catch (Exception e){}
     }

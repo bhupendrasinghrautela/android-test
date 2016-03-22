@@ -17,6 +17,7 @@ import com.google.android.gms.gcm.GcmListenerService;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.database.NotificationDbHelper;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.pojo.VersionUpdate;
 import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonParser;
 
@@ -44,15 +45,14 @@ public class MakaanBuyerGcmListenerService extends GcmListenerService {
             title = data.getString("title", "Makaan");
         }
 
+        PackageInfo pInfo = null;
         try {
-            PackageInfo pInfo = null;
             pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            if (pInfo.versionCode >= CookiePreferences.getMandatoryVersion(this)) {
+            VersionUpdate versionUpdate = (VersionUpdate) JsonParser.parseJson(CookiePreferences.getMandatoryVersion(this),VersionUpdate.class);
+            if (versionUpdate!=null && pInfo.versionCode >= versionUpdate.getMandatoryVersionCode() ) {
                 generateNotification(getApplicationContext(), title, message, data);
             }
-        }catch (NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        }catch (NameNotFoundException e){}
     }
 
 

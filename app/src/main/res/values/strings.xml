@@ -128,7 +128,8 @@
     <string name="overview">an overview</string>
     <string name="properties_in">properties in</string>
     <string name="price_trends">price trends</string>
-    <string name="read_more">more</string>
+    <string name="more">more</string>
+    <string name="read_more">read more</string>
     <string name="contact_top_sellers">contact top sellers</string>
     <string name="contact_top_seller">contact top seller</string>
     <string name="contact_all_seller">contact all sellers</string>

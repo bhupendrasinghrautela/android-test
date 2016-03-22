@@ -15,6 +15,7 @@ import com.makaan.network.JSONGetCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.pojo.ConstructionStatus;
+import com.makaan.pojo.VersionUpdate;
 import com.makaan.response.ResponseError;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.master.ApiIntLabel;
@@ -24,6 +25,7 @@ import com.makaan.response.master.MasterSpecification;
 import com.makaan.response.master.PropertyAmenity;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.response.serp.ListingInfoMap;
+import com.makaan.util.JsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -653,8 +655,7 @@ public class MasterDataService implements MakaanService {
     }
 
     public void checkMandatoryVersion(final Context context) {
-        final Type type = new TypeToken<HashMap<String, Integer>>() {
-        }.getType();
+        final Type type = VersionUpdate.class;
         MakaanNetworkClient.getInstance().get(ApiConstants.VERSION_UPDATE_URL, type, new ObjectGetCallback() {
             @Override
             public void onError(ResponseError error) {
@@ -665,9 +666,9 @@ public class MasterDataService implements MakaanService {
             public void onSuccess(Object responseObject) {
 
                 try {
-                    HashMap<String, Integer> map = (HashMap<String, Integer>) responseObject;
-                    Integer version = map.get("mandatoryVersionCode");
-                    CookiePreferences.saveMandatoryVersion(context, version);
+                    VersionUpdate versionUpdate = (VersionUpdate) responseObject;
+                    JSONObject  jsonObject = JsonBuilder.toJson(versionUpdate);
+                    CookiePreferences.saveMandatoryVersion(context, jsonObject.toString());
                 } catch (Exception e) {
                 }
             }

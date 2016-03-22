@@ -82,7 +82,7 @@ public class CompressedTextView extends BaseLinearLayout<String> {
                 MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickLocalityOverView);
             }
 
-            mReadMore.setText(mContext.getString(R.string.read_more));
+            mReadMore.setText(mContext.getString(R.string.more));
             mContentText.setMaxLines(MAX_LINE);
         }
         isCollapsed=!isCollapsed;

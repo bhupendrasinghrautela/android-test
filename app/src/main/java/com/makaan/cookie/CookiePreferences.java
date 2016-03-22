@@ -6,8 +6,13 @@ import android.content.SharedPreferences.Editor;
 import android.os.Build;
 import android.text.TextUtils;
 
+import com.makaan.pojo.VersionUpdate;
 import com.makaan.response.user.UserResponse;
+import com.makaan.util.JsonBuilder;
 import com.makaan.util.JsonParser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.HttpCookie;
 import java.net.URI;
@@ -277,13 +282,22 @@ public class CookiePreferences {
                 >= BUYER_JOURNEY_LAST_POPUP_TIMEOUT;
     }
 
-    public static void saveMandatoryVersion(Context context,Integer version) {
+    public static void saveMandatoryVersion(Context context,String version) {
         Editor edit = getSharedPref(context).edit();
-        edit.putInt(PREF_MANDATORY_VERSION, version);
+        edit.putString(PREF_MANDATORY_VERSION, version);
         edit.apply();
     }
 
-    public static Integer getMandatoryVersion(Context context){
-        return getSharedPref(context).getInt(PREF_MANDATORY_VERSION,1);
+    public static String getMandatoryVersion(Context context){
+        VersionUpdate versionUpdate = new VersionUpdate();
+        versionUpdate.setCurrentVersionCode(1);
+        versionUpdate.setMandatoryVersionCode(1);
+        try {
+            JSONObject jsonObject = JsonBuilder.toJson(versionUpdate);
+            return getSharedPref(context).getString(PREF_MANDATORY_VERSION,jsonObject.toString());
+        } catch (JSONException e) {
+            return getSharedPref(context).getString(PREF_MANDATORY_VERSION,null);
+        }
+
     }
 }
