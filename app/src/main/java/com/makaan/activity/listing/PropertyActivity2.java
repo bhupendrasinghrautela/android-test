@@ -20,9 +20,9 @@ import com.squareup.otto.Subscribe;
 /**
  * Created by sunil on 17/01/16.
  */
-public class PropertyActivity extends MakaanBaseSearchActivity implements ShowMapCallBack ,TotalImagesCount{
+public class PropertyActivity2 extends MakaanBaseSearchActivity implements ShowMapCallBack ,TotalImagesCount1{
 
-    public static final String LISTING_ID = "listingId";
+    public static final String LISTING_ID = "id";
 
     private PropertyDetailFragment mPropertyDeatilFragment;
     private NeighborhoodMapFragment mNeighborhoodMapFragment;
@@ -50,7 +50,7 @@ public class PropertyActivity extends MakaanBaseSearchActivity implements ShowMa
             mListingLat = extras.getDouble(KeyUtil.LISTING_LAT);
             mPropertyDeatilFragment = new PropertyDetailFragment();
             mPropertyDeatilFragment.setArguments(extras);
-            mPropertyDeatilFragment.bindView(this);
+//            mPropertyDeatilFragment.bindView(this);
             initFragment(R.id.container, mPropertyDeatilFragment, false);
         }
         initUi(true);
@@ -98,7 +98,7 @@ public class PropertyActivity extends MakaanBaseSearchActivity implements ShowMa
     public void showMapFragment() {
         if(mAmenityGetEvent!=null) {
             mNeighborhoodMapFragment = new NeighborhoodMapFragment();
-            mNeighborhoodMapFragment.setData(mEntityInfo, mAmenityGetEvent.amenityClusters);
+            mNeighborhoodMapFragment.setData(mEntityInfo, mAmenityGetEvent.amenityClusters, true);
             initFragment(R.id.container, mNeighborhoodMapFragment, true);
         }
         //produceAmenityEvent();

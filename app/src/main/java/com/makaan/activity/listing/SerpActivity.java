@@ -16,10 +16,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
-import com.makaan.activity.city.CityActivity;
 import com.makaan.activity.lead.LeadFormActivity;
-import com.makaan.activity.locality.LocalityActivity;
-import com.makaan.activity.project.ProjectActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
@@ -39,6 +37,7 @@ import com.makaan.pojo.GroupCluster;
 import com.makaan.pojo.SerpBackStack;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.pojo.SerpRequest;
+import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
@@ -456,7 +455,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         }
 
         if(null==listingGetEvent|| null!=listingGetEvent.error){
-            //TODO handle error
             mSerpReceived = true;
             if(listingGetEvent.error != null && listingGetEvent.error.error != null
                     && listingGetEvent.error.error.networkResponse != null) {
@@ -577,7 +575,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
 
         if(null==groupListingGetEvent|| null!=groupListingGetEvent.error){
-            //TODO handle error
             mGroupReceived = true;
             return;
         }
@@ -731,7 +728,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             return;
         }
         if(null==gpIdResultEvent|| null!=gpIdResultEvent.error){
-            //TODO handle error
             return;
         }
 
@@ -956,11 +952,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     @Override
     public void requestDetailPage(int type, Bundle bundle) {
         if(type == REQUEST_PROPERTY_PAGE) {
-            Intent intent = new Intent(this, PropertyActivity.class);
+            Intent intent = new Intent(this, OverviewActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
         } else if(type == REQUEST_PROJECT_PAGE) {
-            Intent intent = new Intent(this, ProjectActivity.class);
+            Intent intent = new Intent(this, OverviewActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
         } else if(type == REQUEST_LEAD_FORM) {
@@ -1060,25 +1056,41 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public void requestOverviewPage() {
         switch (mSerpRequestType & MASK_LISTING_TYPE) {
             case TYPE_CITY:
-            case TYPE_GPID:
-                Intent cityIntent = new Intent(this, CityActivity.class);
-                cityIntent.putExtra(CityActivity.CITY_ID, Long.valueOf(mSerpBackStack.peek().getCityId()));
+            case TYPE_GPID: {
+                Intent cityIntent = new Intent(this, OverviewActivity.class);
+                Bundle bundle = new Bundle();
+
+                bundle.putLong(OverviewActivity.ID, Long.valueOf(mSerpBackStack.peek().getCityId()));
+                bundle.putInt(OverviewActivity.TYPE, OverviewItemType.CITY.ordinal());
+
+                cityIntent.putExtras(bundle);
                 startActivity(cityIntent);
                 break;
+            }
             case TYPE_LOCALITY:
             case TYPE_SUBURB:
-            case TYPE_SEARCH:
-                Intent localityIntent = new Intent(this, LocalityActivity.class);
-                localityIntent.putExtra(LocalityActivity.LOCALITY_ID, Long.valueOf(mSerpBackStack.peek().getLocalityId()));
+            case TYPE_SEARCH: {
+                Intent localityIntent = new Intent(this, OverviewActivity.class);
+                Bundle bundle = new Bundle();
+
+                localityIntent.putExtra(OverviewActivity.ID, Long.valueOf(mSerpBackStack.peek().getLocalityId()));
+                bundle.putInt(OverviewActivity.TYPE, OverviewItemType.LOCALITY.ordinal());
+
+                localityIntent.putExtras(bundle);
                 startActivity(localityIntent);
                 break;
-            case TYPE_PROJECT:
-                Intent projectIntent = new Intent(this, ProjectActivity.class);
+            }
+            case TYPE_PROJECT: {
+                Intent projectIntent = new Intent(this, OverviewActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putLong(ProjectActivity.PROJECT_ID, Long.valueOf(mSerpBackStack.peek().getProjectId()));
+
+                bundle.putLong(OverviewActivity.ID, Long.valueOf(mSerpBackStack.peek().getProjectId()));
+                bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROJECT.ordinal());
+
                 projectIntent.putExtras(bundle);
                 startActivity(projectIntent);
                 break;
+            }
         }
     }
 

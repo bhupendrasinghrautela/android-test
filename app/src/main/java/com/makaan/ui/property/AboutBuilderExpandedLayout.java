@@ -10,10 +10,10 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
-import com.makaan.activity.listing.PropertyActivity;
-import com.makaan.activity.project.ProjectActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.jarvis.BaseJarvisActivity;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.project.Builder;
 import com.makaan.response.project.Project;
@@ -73,13 +73,13 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
             mProjectNameVisible = projectNameTv.getVisibility() == VISIBLE;
             mProjectAddressVisible = projectAddressTv.getVisibility() == VISIBLE;
 
-            if(mContext instanceof PropertyActivity) {
+            if (OverviewActivity.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity)mContext).getScreenName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.builderMore);
                 MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyOverview);
             }
-            else if(mContext instanceof ProjectActivity) {
+            else if (OverviewActivity.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity)mContext).getScreenName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.builderMore);
@@ -91,13 +91,13 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
             projectAddressTv.setVisibility(View.GONE);
         }
         else{
-            if(mContext instanceof PropertyActivity) {
+            if (OverviewActivity.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity)mContext).getScreenName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.builderLess);
                 MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyOverview);
             }
-            else if(mContext instanceof ProjectActivity) {
+            else if (OverviewActivity.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity)mContext).getScreenName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.builderLess);

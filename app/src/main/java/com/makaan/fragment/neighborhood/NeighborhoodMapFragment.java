@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,15 +26,18 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
 import com.makaan.R;
-import com.makaan.activity.listing.PropertyActivity;
-import com.makaan.activity.locality.LocalityActivity;
-import com.makaan.activity.project.ProjectActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.jarvis.BaseJarvisActivity;
 import com.makaan.response.amenity.Amenity;
 import com.makaan.response.amenity.AmenityCluster;
+import com.makaan.service.AmenityService;
+import com.makaan.service.MakaanServiceFactory;
 import com.segment.analytics.Properties;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +66,7 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
 
     @Bind(R.id.neighborhood_category)
     RecyclerView mNeighborhoodCategoryView;
+    private boolean mIsLocality;
 
     @Override
     protected int getContentViewId() {
@@ -112,11 +117,14 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
         mMapView.onLowMemory();
     }
 
-    public void setData(EntityInfo entityInfo, List<AmenityCluster> amenityClusters){
+    public void setData(EntityInfo entityInfo, List<AmenityCluster> amenityClusters, boolean isLocality){
         mEntityInfo = entityInfo;
-        for(AmenityCluster cluster : amenityClusters){
-            if(null!=cluster && null!=cluster.cluster && cluster.cluster.size()>0){
-                mAmenityClusters.add(cluster);
+        mIsLocality = isLocality;
+        if(amenityClusters != null) {
+            for (AmenityCluster cluster : amenityClusters) {
+                if (null != cluster && null != cluster.cluster && cluster.cluster.size() > 0) {
+                    mAmenityClusters.add(cluster);
+                }
             }
         }
     }
@@ -161,6 +169,45 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
                 return false;
             }
         });
+        if(mAmenityClusters != null && mAmenityClusters.size() > 0) {
+            mapAmenityCluster();
+        } else {
+            if(mEntityInfo != null) {
+                ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class))
+                        .getAmenitiesByLocation(mEntityInfo.mPlaceLat, mEntityInfo.mPlaceLon, 3,
+                                mIsLocality ? AmenityService.EntityType.LOCALITY :AmenityService.EntityType.PROJECT);
+                showProgress();
+            } else {
+                showNoResults();
+            }
+        }
+        if(mEntityInfo != null && !TextUtils.isEmpty(mEntityInfo.mPlaceName)) {
+            getActivity().setTitle(mEntityInfo.mPlaceName);
+        }
+    }
+
+    @Subscribe
+    public void onResults(AmenityGetEvent amenityGetEvent) {
+        if (!isVisible()) {
+            return;
+        }
+
+        if (amenityGetEvent == null || amenityGetEvent.amenityClusters == null) {
+            return;
+        }
+        mAmenityClusters = amenityGetEvent.amenityClusters;
+        mapAmenityCluster();
+        showContent();
+        /*if(mType == OverviewItemType.LOCALITY_MAP || mType == OverviewItemType.PROJECT_MAP
+                || mType == OverviewItemType.PROPERTY_MAP) {
+            NeighborhoodMapFragment fragment = new NeighborhoodMapFragment();
+            fragment.setData(mEntityInfo, mAmenityGetEvent.amenityClusters);
+            initFragment(R.id.container, fragment, false);
+            showContent();
+        }*/
+    }
+
+    private void mapAmenityCluster() {
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
 
         mNeighborhoodCategoryView.setLayoutManager(mLayoutManager);
@@ -303,19 +350,19 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
 
     @Override
     public void onItemClick(int position, View v) {
-        if(getActivity() instanceof PropertyActivity) {
+        if (OverviewActivity.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity) getActivity()).getScreenName())) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
             properties.put(MakaanEventPayload.LABEL, mAmenityClusters.get(position).name);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.mapPropertyLocality);
         }
-        else if(getActivity() instanceof ProjectActivity) {
+        if (OverviewActivity.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity) getActivity()).getScreenName())) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
             properties.put(MakaanEventPayload.LABEL, mAmenityClusters.get(position).name);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.mapProjectLocality);
         }
-        else if(getActivity() instanceof LocalityActivity) {
+        if (OverviewActivity.SCREEN_NAME_LOCALITY.equalsIgnoreCase(((BaseJarvisActivity) getActivity()).getScreenName())) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
             properties.put(MakaanEventPayload.LABEL, mAmenityClusters.get(position).name);
@@ -340,9 +387,9 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
     }
 
     public static class EntityInfo{
-        private String mPlaceName;
-        private double mPlaceLat;
-        private double mPlaceLon;
+        public String mPlaceName;
+        public double mPlaceLat;
+        public double mPlaceLon;
 
         public EntityInfo(String name, double lat, double lon){
             mPlaceName = name;

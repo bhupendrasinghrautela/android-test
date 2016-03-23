@@ -56,7 +56,6 @@ public class GroupListingItemView extends RelativeLayout implements View.OnClick
         super(context, attrs, defStyleAttr);
     }
 
-    // TODO need to map data from web based data
     public void populateView(GroupListing item, final SerpRequestCallback callback) {
         ButterKnife.bind(this, this);
         this.mCallback = callback;

@@ -92,7 +92,6 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
         if (shouldAddToBackStack) {
             fragmentTransaction.addToBackStack(fragment.getClass().getName());
         }
-        // TODO
         // check if we this can be called from any background thread or after background to ui thread communication
         // then we need to make use of commitAllowingStateLoss()
         fragmentTransaction.commitAllowingStateLoss();
@@ -111,7 +110,6 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
         if (shouldAddToBackStack) {
             fragmentTransaction.addToBackStack(fragment.getClass().getName());
         }
-        // TODO
         // check if we this can be called from any background thread or after background to ui thread communication
         // then we need to make use of commitAllowingStateLoss()
         fragmentTransaction.commitAllowingStateLoss();

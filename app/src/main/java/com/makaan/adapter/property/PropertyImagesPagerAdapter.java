@@ -9,11 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.makaan.R;
-import com.makaan.activity.listing.PropertyActivity;
-import com.makaan.activity.listing.TotalImagesCount;
-import com.makaan.activity.project.ProjectActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.fragment.overview.OverviewFragment;
+import com.makaan.jarvis.BaseJarvisActivity;
 import com.makaan.response.image.Image;
 import com.makaan.ui.property.PropertyImageCardView;
 import com.segment.analytics.Properties;
@@ -49,20 +49,20 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
 
             @Override
             public void onPageSelected(int position) {
-                mTotalCount=mTotalCount+1;
-                TotalImagesCount totalImagesCount=(TotalImagesCount)mContext;
-                totalImagesCount.ImageCount(mTotalCount);
+                mTotalCount = mTotalCount + 1;
+                OverviewFragment.OverviewActivityCallbacks totalImagesCount = (OverviewFragment.OverviewActivityCallbacks) mContext;
+                totalImagesCount.imagesSeenCount(mTotalCount);
                 Properties properties = MakaanEventPayload.beginBatch();
-                if(mContext instanceof PropertyActivity) {
+                if (OverviewActivity.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity)mContext).getScreenName())) {
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                 }
-                else if(mContext instanceof ProjectActivity){
+                else if (OverviewActivity.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity)mContext).getScreenName())) {
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
                 }
 
                 if (position == 0) {
                     //left
-                    if(mContext instanceof PropertyActivity) {
+                    if (OverviewActivity.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity)mContext).getScreenName())) {
                         properties.put(MakaanEventPayload.LABEL, String.format("%s_%s",mItems.get(position).imageType.displayName!=null?
                                 mItems.get(position).imageType.displayName:"" , MakaanTrackerConstants.Label.left));
                         MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyImages);
@@ -70,7 +70,7 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
                     pager.setCurrentItem(mCount - 2, false);
                 } else if (position == mCount - 1) {
                     //right
-                    if(mContext instanceof ProjectActivity) {
+                    if (OverviewActivity.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity)mContext).getScreenName())) {
                         properties.put(MakaanEventPayload.LABEL, String.format("%s_%s",mItems.get(position).imageType.displayName!=null?
                                 mItems.get(position).imageType.displayName:"" , MakaanTrackerConstants.Label.right));
                         MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickProjectImages);
@@ -80,12 +80,12 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
                 else{
                     if(previousPosition!=-1 && previousPosition<position){
                         //right
-                        if(mContext instanceof ProjectActivity) {
+                        if (OverviewActivity.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity)mContext).getScreenName())) {
                             properties.put(MakaanEventPayload.LABEL,  String.format("%s_%s",mItems.get(position).imageType.displayName!=null?
                                     mItems.get(position).imageType.displayName:"" , MakaanTrackerConstants.Label.left));
                             MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickProjectImages);
                         }
-                        else if(mContext instanceof PropertyActivity) {
+                        else if (OverviewActivity.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity)mContext).getScreenName())) {
                             properties.put(MakaanEventPayload.LABEL,  String.format("%s_%s",mItems.get(position).imageType.displayName!=null?
                                     mItems.get(position).imageType.displayName:"" , MakaanTrackerConstants.Label.left));
                             MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyImages);
@@ -93,12 +93,12 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
                     }
                     else if(previousPosition!=-1 && previousPosition>position){
                         //left
-                        if(mContext instanceof ProjectActivity) {
+                        if (OverviewActivity.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity)mContext).getScreenName())) {
                             properties.put(MakaanEventPayload.LABEL,  String.format("%s_%s",mItems.get(position).imageType.displayName!=null?
                                     mItems.get(position).imageType.displayName:"" , MakaanTrackerConstants.Label.right));
                             MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickProjectImages);
                         }
-                        else if(mContext instanceof PropertyActivity) {
+                        else if (OverviewActivity.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity)mContext).getScreenName())) {
                             properties.put(MakaanEventPayload.LABEL,  String.format("%s_%s",mItems.get(position).imageType.displayName!=null?
                                     mItems.get(position).imageType.displayName:"" , MakaanTrackerConstants.Label.right));
                             MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyImages);

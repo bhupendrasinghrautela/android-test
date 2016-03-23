@@ -29,7 +29,7 @@ import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
-import com.makaan.activity.locality.LocalityActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.event.agents.callback.TopAgentsCallback;
 import com.makaan.event.amenity.AmenityGetEvent;
@@ -39,11 +39,13 @@ import com.makaan.event.locality.OnNearByLocalityClickEvent;
 import com.makaan.event.locality.OnTopAgentClickEvent;
 import com.makaan.event.locality.OnTopBuilderClickEvent;
 import com.makaan.event.locality.TopBuilderInLocalityEvent;
-import com.makaan.fragment.MakaanBaseFragment;
+import com.makaan.fragment.overview.OverviewFragment;
+import com.makaan.jarvis.BaseJarvisActivity;
 import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.pojo.TaxonomyCard;
+import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.response.agents.TopAgent;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.city.EntityDesc;
@@ -72,7 +74,7 @@ import butterknife.OnClick;
 /**
  * Created by tusharchaudhary on 1/21/16.
  */
-public class LocalityFragment extends MakaanBaseFragment {
+public class LocalityFragment extends OverviewFragment {
     @Bind(R.id.main_city_image)
     FadeInNetworkImageView mMainCityImage;
     @Bind(R.id.blurred_city_image)
@@ -124,6 +126,7 @@ public class LocalityFragment extends MakaanBaseFragment {
     private Context mContext ;
     private Integer meadianRental, meadianSale;
     private List<AmenityCluster> mAmenityClusters = new ArrayList<>();
+    private OverviewActivityCallbacks mActivityCallbacks;
 
     @Override
     protected int getContentViewId() {
@@ -162,7 +165,7 @@ public class LocalityFragment extends MakaanBaseFragment {
     }
 
     private void setLocalityId() {
-        localityId = getArguments().getLong("localityId");
+        localityId = getArguments().getLong("id");
     }
 
     private void fetchData() {
@@ -195,7 +198,9 @@ public class LocalityFragment extends MakaanBaseFragment {
                 ((AgentService) MakaanServiceFactory.getInstance().getService(AgentService.class)).getTopAgentsForLocality(locality.cityId, locality.localityId, 15, false, new TopAgentsCallback() {
                     @Override
                     public void onTopAgentsRcvd(ArrayList<TopAgent> topAgents) {
-                        addTopAgentsFragment(topAgents);
+                        if(isVisible()) {
+                            addTopAgentsFragment(topAgents);
+                        }
                     }
                 });
                 ((LocalityService) MakaanServiceFactory.getInstance().getService(LocalityService.class)).getTopBuildersInLocality(locality.localityId, 15);
@@ -288,8 +293,8 @@ public class LocalityFragment extends MakaanBaseFragment {
             
         }
         else{
-            salesMedianPrice.setVisibility(View.GONE);
-            salesMedianPriceLabel.setVisibility(View.GONE);
+            salesMedianPrice.setVisibility(View.INVISIBLE);
+            salesMedianPriceLabel.setVisibility(View.INVISIBLE);
         }
         if(meadianRental != null && meadianRental.intValue() != 0) {
             showSecondSection = true;
@@ -374,7 +379,7 @@ public class LocalityFragment extends MakaanBaseFragment {
             bundle.putString("title", getResources().getString(R.string.locality_kyn_title));
             newFragment.setArguments(bundle);
             initFragment(R.id.container_nearby_localities_kyn, newFragment, false);
-            newFragment.setData(amenityClusters);
+            newFragment.setData(amenityClusters, mActivityCallbacks);
         }
     }
 
@@ -555,8 +560,13 @@ public class LocalityFragment extends MakaanBaseFragment {
             return;
         }
         Toast.makeText(getActivity(), "Nearby clicked, locality id :" + nearByLocalityClickEvent.localityId, Toast.LENGTH_SHORT);
-        Intent intent = new Intent(getActivity(),LocalityActivity.class);
-        intent.putExtra(LocalityActivity.LOCALITY_ID, nearByLocalityClickEvent.localityId);
+        Intent intent = new Intent(getActivity(),OverviewActivity.class);
+        Bundle bundle = new Bundle();
+
+        bundle.putLong(OverviewActivity.ID, nearByLocalityClickEvent.localityId);
+        bundle.putInt(OverviewActivity.TYPE, OverviewItemType.LOCALITY.ordinal());
+
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
@@ -587,8 +597,12 @@ public class LocalityFragment extends MakaanBaseFragment {
         pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, locality.suburb.city.id);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_ID, locality.localityId);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_NAME, locality.label);
-        pyrIntent.putExtra(PyrPageActivity.SOURCE_SCREEN_NAME, ((LocalityActivity) getActivity()).getScreenName());
+        pyrIntent.putExtra(PyrPageActivity.SOURCE_SCREEN_NAME, ((BaseJarvisActivity) getActivity()).getScreenName());
         getActivity().startActivity(pyrIntent);
     }
 
+    @Override
+    public void bindView(OverviewActivityCallbacks activityCallbacks) {
+        mActivityCallbacks = activityCallbacks;
+    }
 }

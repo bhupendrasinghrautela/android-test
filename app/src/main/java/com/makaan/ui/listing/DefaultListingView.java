@@ -24,7 +24,7 @@ import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
-import com.makaan.activity.project.ProjectActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
@@ -32,12 +32,14 @@ import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.pojo.SerpRequest;
+import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.serp.ListingInfoMap;
 import com.makaan.ui.CustomNetworkImageView;
 import com.makaan.ui.view.WishListButton;
 import com.makaan.ui.view.WishListButton.WishListDto;
 import com.makaan.ui.view.WishListButton.WishListType;
+import com.makaan.util.DateUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.RecentPropertyProjectManager;
@@ -45,6 +47,7 @@ import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Random;
 
 import butterknife.Bind;
@@ -183,11 +186,16 @@ public class DefaultListingView extends AbstractListingView {
 
             mBadgeImageView.setImageResource(R.drawable.badge_seen);
             mBadgeTextView.setText("seen");
+        } else if(DateUtil.isNewListing(mListing.postedDate)) {
+            mBadgeImageView.setVisibility(View.VISIBLE);
+            mBadgeTextView.setVisibility(View.VISIBLE);
+
+            mBadgeImageView.setImageResource(R.drawable.badge_new);
+            mBadgeTextView.setText("new");
         } else {
             mBadgeImageView.setVisibility(View.GONE);
             mBadgeTextView.setVisibility(View.GONE);
         }
-        // TODO implement new
 
         WishListDto wishListDto=new WishListButton.WishListDto(mListing.lisitingId.longValue(), mListing.projectId.longValue(), WishListType.listing);
         wishListDto.setSerpItemPosition((long) mPosition);
@@ -248,8 +256,6 @@ public class DefaultListingView extends AbstractListingView {
         }
         mapPropertyInfo(isBuy);
 
-
-        // TODO check for unit info
         String priceString = StringUtil.getDisplayPrice(mListing.price);
         String priceUnit = "";
         if(priceString.indexOf("\u20B9") == 0) {
@@ -317,7 +323,6 @@ public class DefaultListingView extends AbstractListingView {
         if(callback.needSellerInfoInSerp()) {
             mSellerInfoRelativeLayout.setVisibility(View.VISIBLE);
 
-            // TODO check seller name
             if(mListing.lisitingPostedBy != null) {
                 if("broker".equalsIgnoreCase(mListing.lisitingPostedBy.type)) {
                     mPropertySellerNameTextView.setText(Html.fromHtml(String.format("<font color=\"#E71C28\">%s</font> (%s)",
@@ -402,7 +407,8 @@ public class DefaultListingView extends AbstractListingView {
                     MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickSerpPropertyView);
 
                     Bundle bundle = new Bundle();
-                    bundle.putLong(KeyUtil.LISTING_ID, mListing.id);
+                    bundle.putLong(OverviewActivity.ID, mListing.id);
+                    bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROPERTY.ordinal());
                     if(mListing.latitude != null) {
                         bundle.putDouble(KeyUtil.LISTING_LAT, mListing.latitude);
                     }
@@ -490,7 +496,6 @@ public class DefaultListingView extends AbstractListingView {
         }
 
         // set bathroom info of property
-        // TODO check if need to be replaced by any other value if bathroom value is 0 or negative
         mPropertyBathroomNumberTextView.setText(String.valueOf(mListing.bathrooms));*/
     }
 
@@ -517,7 +522,6 @@ public class DefaultListingView extends AbstractListingView {
         }
     }
 
-    // TODO use lru cache for image mapping
     private boolean mapPropertyInfo(ListingInfoMap.InfoMap infoMap, int j) {
         switch (infoMap.fieldName) {
             case "propertyStatus":
@@ -710,7 +714,8 @@ public class DefaultListingView extends AbstractListingView {
                 MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickProject);
 
                 Bundle bundle = new Bundle();
-                bundle.putLong(ProjectActivity.PROJECT_ID, mListing.projectId);
+                bundle.putLong(OverviewActivity.ID, mListing.projectId);
+                bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROJECT.ordinal());
                 mCallback.requestDetailPage(SerpActivity.REQUEST_PROJECT_PAGE, bundle);
             }
         }

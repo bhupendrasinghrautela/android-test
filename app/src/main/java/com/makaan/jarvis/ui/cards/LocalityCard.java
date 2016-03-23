@@ -2,6 +2,7 @@ package com.makaan.jarvis.ui.cards;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -10,11 +11,12 @@ import android.widget.TextView;
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
-import com.makaan.activity.locality.LocalityActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.jarvis.message.Message;
 import com.makaan.jarvis.message.MessageType;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpRequest;
+import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.ui.view.BaseView;
 import com.makaan.util.ImageUtils;
 
@@ -82,8 +84,13 @@ public class LocalityCard extends BaseView<Message> {
                     return;
                 }
                 if(MessageType.localityOverview==message.messageType) {
-                    Intent localityIntent = new Intent(context, LocalityActivity.class);
-                    localityIntent.putExtra(LocalityActivity.LOCALITY_ID, Long.valueOf(item.chatObj.localityId));
+                    Intent localityIntent = new Intent(context, OverviewActivity.class);
+                    Bundle bundle = new Bundle();
+
+                    bundle.putLong(OverviewActivity.ID, Long.valueOf(item.chatObj.localityId));
+                    bundle.putInt(OverviewActivity.TYPE, OverviewItemType.LOCALITY.ordinal());
+
+                    localityIntent.putExtras(bundle);
                     context.startActivity(localityIntent);
                 }else if(MessageType.localityBuy==message.messageType) {
                     SerpRequest serpRequest = new SerpRequest(SerpActivity.TYPE_LOCALITY);

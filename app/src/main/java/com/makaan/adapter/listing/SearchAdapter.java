@@ -126,7 +126,6 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             } else {
                 view.findViewById(R.id.search_result_item_progress_bar).setVisibility(View.GONE);
 
-                // TODO need to check which kind of data we should map
                 if (TextUtils.isEmpty(SearchResponseHelper.getType(searchResponseItem))) {
                     view.findViewById(R.id.search_result_item_type_text_view).setVisibility(View.GONE);
                 } else {
@@ -142,7 +141,12 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     view.findViewById(R.id.search_result_item_name_2_text_view).setVisibility(View.VISIBLE);
                 } else {
                     view.findViewById(R.id.search_result_item_image_view).setVisibility(View.VISIBLE);
-                    ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setText(searchResponseItem.displayText.toLowerCase());
+                    if(SearchSuggestionType.GOOGLE_PLACE.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                        ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setText(
+                                String.format("properties near %s", searchResponseItem.displayText.toLowerCase()));
+                    } else {
+                        ((TextView) view.findViewById(R.id.search_result_item_name_text_view)).setText(searchResponseItem.displayText.toLowerCase());
+                    }
                     view.findViewById(R.id.search_result_item_name_text_view).setVisibility(View.VISIBLE);
                     view.findViewById(R.id.search_result_item_name_2_text_view).setVisibility(View.GONE);
                 }

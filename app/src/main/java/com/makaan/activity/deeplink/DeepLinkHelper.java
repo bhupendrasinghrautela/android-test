@@ -2,15 +2,14 @@ package com.makaan.activity.deeplink;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.makaan.activity.HomeActivity;
-import com.makaan.activity.city.CityActivity;
-import com.makaan.activity.listing.PropertyActivity;
 import com.makaan.activity.listing.SerpActivity;
-import com.makaan.activity.locality.LocalityActivity;
-import com.makaan.activity.project.ProjectActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.pojo.SerpRequest;
+import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.response.seo.SeoUrlResponse;
 
 
@@ -44,28 +43,48 @@ public class DeepLinkHelper {
         }
 
         if(TemplateId.MAKAAN_CITY_OVERVIEW.name().equalsIgnoreCase(seoUrlResponse.data.templateId)){
-            Intent intent = new Intent(context, CityActivity.class);
-            intent.putExtra(CityActivity.CITY_ID, seoUrlResponse.data.urlDetail.cityId);
+            Intent intent = new Intent(context, OverviewActivity.class);
+
+            Bundle bundle = new Bundle();
+            bundle.putLong(OverviewActivity.ID, seoUrlResponse.data.urlDetail.cityId);
+            bundle.putInt(OverviewActivity.TYPE, OverviewItemType.CITY.ordinal());
+
+            intent.putExtras(bundle);
             context.startActivity(intent);
             return true;
 
         }else if(TemplateId.MAKAAN_LOCALITY_OVERVIEW.name().equalsIgnoreCase(seoUrlResponse.data.templateId)||
                 TemplateId.MAKAAN_SUBURB_OVERVIEW.name().equalsIgnoreCase(seoUrlResponse.data.templateId)){
-            Intent intent = new Intent(context, CityActivity.class);
-            intent.putExtra(LocalityActivity.LOCALITY_ID, seoUrlResponse.data.urlDetail.localityId);
+            Intent intent = new Intent(context, OverviewActivity.class);
+
+            Bundle bundle = new Bundle();
+            intent.putExtra(OverviewActivity.ID, seoUrlResponse.data.urlDetail.localityId);
+            bundle.putInt(OverviewActivity.TYPE, OverviewItemType.LOCALITY.ordinal());
+
+            intent.putExtras(bundle);
             context.startActivity(intent);
             return true;
 
         }else if(TemplateId.MAKAAN_PROJECT_OVERVIEW.name().equalsIgnoreCase(seoUrlResponse.data.templateId)){
-            Intent intent = new Intent(context, CityActivity.class);
-            intent.putExtra(ProjectActivity.PROJECT_ID, seoUrlResponse.data.urlDetail.projectId);
+            Intent intent = new Intent(context, OverviewActivity.class);
+
+            Bundle bundle = new Bundle();
+            intent.putExtra(OverviewActivity.ID, seoUrlResponse.data.urlDetail.projectId);
+            bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROJECT.ordinal());
+
+            intent.putExtras(bundle);
             context.startActivity(intent);
             return true;
 
         }else if(TemplateId.MAKAAN_PROPERTY_BUY.name().equalsIgnoreCase(seoUrlResponse.data.templateId)||
                 TemplateId.MAKAAN_PROPERTY_RENT.name().equalsIgnoreCase(seoUrlResponse.data.templateId)){
-            Intent intent = new Intent(context, CityActivity.class);
-            intent.putExtra(PropertyActivity.LISTING_ID, seoUrlResponse.data.urlDetail.listingId);
+            Intent intent = new Intent(context, OverviewActivity.class);
+
+            Bundle bundle = new Bundle();
+            intent.putExtra(OverviewActivity.ID, seoUrlResponse.data.urlDetail.listingId);
+            bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROPERTY.ordinal());
+
+            intent.putExtras(bundle);
             context.startActivity(intent);
             return true;
 

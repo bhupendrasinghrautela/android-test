@@ -64,7 +64,7 @@ public class ListingParser {
                     JSONArray images = listingJson.optJSONArray(IMAGES);
                     JSONArray contactNumbers=null!= seller?user.optJSONArray(CONTACT_NUMBERS):null;
 
-                    listing.postedDate = getDateStringFromEpoch(listingJson.optString(POSTED_DATE));
+                    listing.postedDate = listingJson.optLong(POSTED_DATE);
                     listing.lisitingId = listingJson.optInt(ID);
                     listing.projectId = project.optInt(PROJECT_ID);
 

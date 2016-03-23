@@ -5,13 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import com.makaan.activity.city.CityActivity;
 import com.makaan.activity.listing.SerpActivity;
-import com.makaan.activity.locality.LocalityActivity;
-import com.makaan.activity.project.ProjectActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.cookie.Session;
 import com.makaan.pojo.SerpRequest;
+import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.response.master.ApiLabel;
 import com.makaan.util.KeyUtil;
 
@@ -25,7 +24,7 @@ public class SearchResponseHelper {
 
     //WIP
 
-    public static void resolveSearch(ArrayList<SearchResponseItem> searchResponseArrayList, Context context, boolean supportsListing){
+    public static void resolveSearch(ArrayList<SearchResponseItem> searchResponseArrayList, Context context){
 
         if (searchResponseArrayList == null || searchResponseArrayList.size() == 0) {
             return;
@@ -53,39 +52,46 @@ public class SearchResponseHelper {
 
         // handle overview cases
         if(SearchSuggestionType.CITY_OVERVIEW.getValue().equalsIgnoreCase(searchItem.type)) {
-            Intent cityIntent = new Intent(context, CityActivity.class);
+            Intent cityIntent = new Intent(context, OverviewActivity.class);
 
+            Bundle bundle = new Bundle();
             // check from id if entity id is not present
             if(TextUtils.isEmpty(searchItem.entityId)) {
-                cityIntent.putExtra(CityActivity.CITY_ID, Long.valueOf(searchItem.id.replace("TYPEAHEAD-CITY-OVERVIEW-", "")));
+                bundle.putLong(OverviewActivity.ID, Long.valueOf(searchItem.id.replace("TYPEAHEAD-CITY-OVERVIEW-", "")));
             } else {
-                cityIntent.putExtra(CityActivity.CITY_ID, Long.valueOf(searchItem.entityId));
+                bundle.putLong(OverviewActivity.ID, Long.valueOf(searchItem.entityId));
             }
+            bundle.putInt(OverviewActivity.TYPE, OverviewItemType.CITY.ordinal());
+            cityIntent.putExtras(bundle);
 
             context.startActivity(cityIntent);
             return;
         } else if(SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchItem.type)) {
-            Intent localityIntent = new Intent(context, LocalityActivity.class);
+            Intent localityIntent = new Intent(context, OverviewActivity.class);
 
+            Bundle bundle = new Bundle();
             // check from id if entity id is not present
             if(TextUtils.isEmpty(searchItem.entityId)) {
-                localityIntent.putExtra(LocalityActivity.LOCALITY_ID, Long.valueOf(searchItem.id.replace("TYPEAHEAD-LOCALITY-OVERVIEW-", "")));
+                bundle.putLong(OverviewActivity.ID, Long.valueOf(searchItem.id.replace("TYPEAHEAD-LOCALITY-OVERVIEW-", "")));
             } else {
-                localityIntent.putExtra(LocalityActivity.LOCALITY_ID, Long.valueOf(searchItem.entityId));
+                bundle.putLong(OverviewActivity.ID, Long.valueOf(searchItem.entityId));
             }
+            bundle.putInt(OverviewActivity.TYPE, OverviewItemType.LOCALITY.ordinal());
+            localityIntent.putExtras(bundle);
 
             context.startActivity(localityIntent);
             return;
         } else if(SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searchItem.type)) {
-            Intent projectIntent = new Intent(context, ProjectActivity.class);
+            Intent projectIntent = new Intent(context, OverviewActivity.class);
             Bundle bundle = new Bundle();
 
             // check from id if entity id is not present
             if(TextUtils.isEmpty(searchItem.entityId)) {
-                bundle.putLong(ProjectActivity.PROJECT_ID, Long.valueOf(searchItem.id.replace("TYPEAHEAD-PROJECT-", "")));
+                bundle.putLong(OverviewActivity.ID, Long.valueOf(searchItem.id.replace("TYPEAHEAD-PROJECT-", "")));
             } else {
-                bundle.putLong(ProjectActivity.PROJECT_ID, Long.valueOf(searchItem.entityId));
+                bundle.putLong(OverviewActivity.ID, Long.valueOf(searchItem.entityId));
             }
+            bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROJECT.ordinal());
             projectIntent.putExtras(bundle);
             context.startActivity(projectIntent);
             return;
