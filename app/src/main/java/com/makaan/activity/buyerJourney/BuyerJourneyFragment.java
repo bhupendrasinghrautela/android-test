@@ -101,8 +101,6 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
 
     @OnClick(R.id.ll_site_visit)
     public void onSiteVisitClick() {
-        //TODO
-
         if (mIsUserLoggedIn && mClientEventsReceived && mClientEventsCount > 0) {
             onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_SITE_VISIT);
         } else {

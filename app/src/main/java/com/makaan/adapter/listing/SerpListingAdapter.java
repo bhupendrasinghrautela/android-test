@@ -171,7 +171,6 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
                         extraCount = tens;
                     }
                 }
-                // TODO handle when group clusters are more than required
                 if(position - extraCount == 5 && !mEventSent) {
                     mEventSent = true;
                     mCallback.trackScroll(mRequestType, position - extraCount);

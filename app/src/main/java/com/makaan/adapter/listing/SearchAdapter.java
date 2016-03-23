@@ -126,7 +126,6 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             } else {
                 view.findViewById(R.id.search_result_item_progress_bar).setVisibility(View.GONE);
 
-                // TODO need to check which kind of data we should map
                 if (TextUtils.isEmpty(SearchResponseHelper.getType(searchResponseItem))) {
                     view.findViewById(R.id.search_result_item_type_text_view).setVisibility(View.GONE);
                 } else {

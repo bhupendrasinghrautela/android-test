@@ -455,7 +455,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         }
 
         if(null==listingGetEvent|| null!=listingGetEvent.error){
-            //TODO handle error
             mSerpReceived = true;
             if(listingGetEvent.error != null && listingGetEvent.error.error != null
                     && listingGetEvent.error.error.networkResponse != null) {
@@ -576,7 +575,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
 
         if(null==groupListingGetEvent|| null!=groupListingGetEvent.error){
-            //TODO handle error
             mGroupReceived = true;
             return;
         }
@@ -730,7 +728,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             return;
         }
         if(null==gpIdResultEvent|| null!=gpIdResultEvent.error){
-            //TODO handle error
             return;
         }
 

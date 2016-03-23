@@ -88,7 +88,7 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
             imageUrl = wishList.get(position).project.imageURL;
         }
         /*if(imageUrl != null && !imageUrl.contains("https")){
-            imageUrl=imageUrl.replace("http","https");//TODO : handle it in volley
+            imageUrl=imageUrl.replace("http","https");
         }*/
         if(imageUrl != null) {
             int height = (int)Math.ceil(mContext.getResources().getDimension(R.dimen.fav_card_height));
@@ -180,7 +180,7 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
                 }
             }
         });
-       // shortListFavoriteViewHolder.mTextViewArea.setText();//todo
+       // shortListFavoriteViewHolder.mTextViewArea.setText();
     }
 
     @Override

@@ -47,7 +47,6 @@ public class ChildSerpGroupListingItemView extends RelativeLayout implements Vie
         super(context, attrs, defStyleAttr);
     }
 
-    // TODO need to map data from web based data
     public void populateView(GroupListing item, final SerpRequestCallback callback) {
         ButterKnife.bind(this, this);
         this.mCallback = callback;
@@ -85,7 +84,6 @@ public class ChildSerpGroupListingItemView extends RelativeLayout implements Vie
         }
 
         mPropertyPriceRangeTextView.setText(String.format(PRICE_RANGE_STRING, minString, maxString));
-        // TODO check for city name
         mPropertyAddressTextView.setText(String.format(PROPERTY_ADDRESS_STRING, mLocality, ""));
 
         setOnClickListener(this);

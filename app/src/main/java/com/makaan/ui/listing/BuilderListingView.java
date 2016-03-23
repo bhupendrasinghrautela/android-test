@@ -82,7 +82,6 @@ public class BuilderListingView extends AbstractCardListingView {
         callback.requestApi(SerpActivity.REQUEST_BUILDER_API, "builderId");
         mSellerContentLinearLayout.setVisibility(View.GONE);
 
-        // TODO need to use original data
         /*Bitmap bitmap = null;
 
         final Drawable image = mContext.getResources().getDrawable(R.drawable.temp_bulding);
@@ -123,7 +122,6 @@ public class BuilderListingView extends AbstractCardListingView {
         try {
             mBuilderExperienceTextView.setText(StringUtil.getAgeFromTimeStamp(Long.valueOf(builder.establishedDate), Calendar.YEAR));
         } catch(NumberFormatException ex) {
-            // TODO
             ex.printStackTrace();
         }
 
