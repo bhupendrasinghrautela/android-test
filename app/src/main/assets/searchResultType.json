@@ -8,7 +8,8 @@
     "BUILDERCITY": {"key":"cityId", "value":"builder-city"},
     "GP": {"key":"googlePlaceId", "value":"landmark"},
     "CITY-OVERVIEW": {"key":"cityId", "value":"overview"},
-    "LOCALITY-OVERVIEW": {"key":"localityId", "value":"overview"}
+    "LOCALITY-OVERVIEW": {"key":"localityId", "value":"overview"},
+    "PROJECT-OVERVIEW": {"key":"projectId", "value":"overview"}
   }
 
 }

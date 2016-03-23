@@ -90,15 +90,28 @@ public class SelectorParser {
                         while (keyIterator.hasNext()) {
                             String key = keyIterator.next();
                             JSONObject keyObj = range.getJSONObject(key);
-                            Long from = null, to = null;
+                            Long fromLong = null, toLong = null;
+                            Double fromDouble = null, toDouble = null;
                             if (keyObj.has("from")) {
-                                from = keyObj.getLong("from");
+                                fromLong = keyObj.getLong("from");
+                                fromDouble = keyObj.getDouble("from");
                             }
                             if (keyObj.has("to")) {
-                                to = keyObj.getLong("to");
+                                toLong = keyObj.getLong("to");
+                                toDouble = keyObj.getDouble("to");
                             }
-                            if (request != null) {
-                                request.addRange(key, from, to);
+                            if(fromLong != null && fromDouble != null && toLong != null && toDouble != null) {
+                                if(((double)fromLong) == fromDouble && ((double)toLong) == toDouble) {
+                                    if (request != null) {
+                                        request.addRange(key, fromLong, toLong);
+                                    }
+                                } else {
+                                    if(!Double.isNaN(fromDouble) && !Double.isNaN(toDouble)) {
+                                        if (request != null) {
+                                            request.addRange(key, fromDouble, toDouble);
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
