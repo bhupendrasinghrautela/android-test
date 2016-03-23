@@ -12,6 +12,8 @@ import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.listing.FiltersViewAdapter;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.jarvis.analytics.SerpFilterMessageMap;
 import com.makaan.jarvis.message.ExposeMessage;
@@ -22,6 +24,7 @@ import com.makaan.request.selector.Selector;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.ui.view.BaseView;
 import com.makaan.ui.view.ExpandableHeightGridView;
+import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -41,6 +44,7 @@ public class SerpFilterCard extends BaseCtaView<ExposeMessage>{
     TextView mAlertTitle;
 
     private Context mContext;
+    private ExposeMessage item;
 
     public SerpFilterCard(Context context) {
         super(context);
@@ -61,7 +65,7 @@ public class SerpFilterCard extends BaseCtaView<ExposeMessage>{
     @Override
     public void bindView(Context context, ExposeMessage item) {
         try {
-
+            this.item=item;
             String internalName = getFilterType(item);
             if(TextUtils.isEmpty(internalName)){
                 return;
@@ -108,14 +112,16 @@ public class SerpFilterCard extends BaseCtaView<ExposeMessage>{
     public void onFilterApply(){
         ArrayList<FilterGroup> filterGroups = SerpObjects.getFilterGroups(getContext());
         Selector selector = SerpObjects.getSerpSelector(getContext());
-
+        /*--- track ---event---*/
+        MakaanEventPayload.beginBatch();
+        /*------*/
         FiltersViewAdapter adapter = (FiltersViewAdapter) (mFilterGridView.getAdapter());
         adapter.applyFilters(selector, filterGroups);
 
         SerpRequest request = new SerpRequest(SerpActivity.TYPE_FILTER);
         request.launchSerp(getContext());
 
-
+        createSerpScrollClickEvent();
         if(null!=mOnApplyClickListener){
             mOnApplyClickListener.onApplyClick();
         }
@@ -139,5 +145,26 @@ public class SerpFilterCard extends BaseCtaView<ExposeMessage>{
         }else {
             return "";
         }
+    }
+
+    public void createSerpScrollClickEvent(){
+        Map<String, SerpFilterMessageMap> serpFilterMessageMap = MasterDataCache.getInstance().getSerpFilterMessageMap();
+        SerpFilterMessageMap serpFilterMessageMap1 = serpFilterMessageMap.get(item.properties.suggest_filter);
+        String labelEnd;
+
+        if(serpFilterMessageMap1!=null) {
+            labelEnd = serpFilterMessageMap1.filter;
+        }else {
+            labelEnd="";
+        }
+
+        /* ----------track--------event-------------*/
+        Properties properties=MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.LABEL, String.format("%s_%s_%s_%s",MakaanTrackerConstants.Label.mAutoClick,
+                MakaanTrackerConstants.Label.serpScroll, labelEnd, properties.toString()));
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMAuto);
+        MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.click);
+        /* -----------------------------------------*/
+
     }
 }

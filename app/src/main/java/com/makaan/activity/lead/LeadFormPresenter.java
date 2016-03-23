@@ -226,9 +226,7 @@ public class LeadFormPresenter {
 
 
     public void showLeadCallNowFragment() {
-        if(mLeadCallNowFragment==null) {
-            mLeadCallNowFragment = new LeadCallNowFragment();
-        }
+        mLeadCallNowFragment = new LeadCallNowFragment();
         mLeadFormReplaceFragment.replaceFragment(mLeadCallNowFragment, true);
     }
 

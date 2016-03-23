@@ -98,7 +98,7 @@
             "displayName": "farmhouse",
             "displayOrder": "6",
             "fieldName": "unitTypeId",
-            "value": "Farmhouse",
+            "value": "FarmHouse",
             "selected": false
           },
           {
