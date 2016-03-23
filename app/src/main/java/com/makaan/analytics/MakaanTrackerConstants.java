@@ -16,7 +16,8 @@ public class MakaanTrackerConstants {
         buyerPropertyDetails("Buyer_Property_Details"),buyerPropertyCall("Buyer_Property_Call"),buyerPropertyGetCallBack("Buyer_Property_Call_Get Callback"),
         buyerProjectCall("Buyer_Project_Call"),buyerProjectGetCallBack("Buyer_Project_Call_Get Callback"),buyerSerp("Buyer_Serp"),buyerProject("Buyer_Project"),
         buyerHome("Buyer_Home"), buyerCity("Buyer_City"),searchMap("Search_Map"),searchFilter("Search_Filter"),buyerLocality("Buyer_Locality"),userLogin("User_Login"),
-        buyerPyr("Buyer_PYR"),errorBuyer("Error_Buyer"),buyerDashboard("Buyer_Dashboard"),errorUsability("Error_Usability");
+        buyerPyr("Buyer_PYR"),errorBuyer("Error_Buyer"),buyerDashboard("Buyer_Dashboard"),errorUsability("Error_Usability"),buyerMAuto("Buyer_M_Auto"),
+        buyerMManual("Buyer_M_Manual");
 
         private String value;
 
@@ -80,7 +81,7 @@ public class MakaanTrackerConstants {
         clickShortListRecentlyViewed("CLICK_Shortlist_Recentlyviewed"),errorLogin("ERROR_Login"),errorPassword("ERROR_Password"),errorSignUp("ERROR_Sign Up"),
         sorryNoMatchingResultFound("Error_sorry, no matching results found"),errorNa("Error_N.A."),noPropertyMatchingSearch("Error_found no properties matching your search criteria"),
         clickCashback("CLICK_CashBack"),clickCashBackSeller("CLICK_Cashback_Seller"),clickCashBackListing("CLICK_Cashback_Listing"),
-        clickCashBackSellerRating("CLICK_Cashback_Seller Rating ");
+        clickCashBackSellerRating("CLICK_Cashback_Seller Rating "),close("CLOSE"), click("CLICK"), view("VIEW");
 
         private String value;
 
@@ -114,7 +115,9 @@ public class MakaanTrackerConstants {
         failure("Failure"),resend("Resend"),skip("Skip"),incorrectOtp("Incorrect OTP"),builder("Builder"),enquired("Enquired"),favourite("Favourite"),recent("Recent"),
         phoneNumberRequired("phone number is required"),nameRequired("name is required"),emailRequired("email is required"),phoneNumberInvalid("phone number is invalid"),
         errorWhileSubmitting("error while submitting"),notRegisteredUser("sorry! you are not a registered user."),searchString("Search string"),leadForm("Lead form"),
-        getCashBack("Get Cashback"),addAnotherListing("Add Another Listing");
+        getCashBack("Get Cashback"),addAnotherListing("Add Another Listing"),mAutoView("M_Auto_VIEW"),mAutoClick("M_Auto_CLICK"),serpScroll("SERP_SCROLL"),
+        enquiryDroppedSimilarSuggestion("ENQUIRY_DROPPED_SIMLAR_LISTING_SUGGESTION"),contentPyr("Content_Pyr"),mAutoViewPyr("M_Auto_VIEW_Pyr"),
+        mAutoViewPyrYes("M_Auto_VIEW_Pyr_Yes");
 
         private String value;
 

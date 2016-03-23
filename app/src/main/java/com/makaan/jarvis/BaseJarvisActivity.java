@@ -18,6 +18,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.google.gson.reflect.TypeToken;
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.listing.SerpActivity;
@@ -30,6 +32,7 @@ import com.makaan.cookie.CookiePreferences;
 import com.makaan.jarvis.analytics.AnalyticsConstants;
 import com.makaan.jarvis.analytics.AnalyticsService;
 import com.makaan.jarvis.analytics.BuyerJourneyMessage;
+import com.makaan.jarvis.analytics.SerpFilterMessageMap;
 import com.makaan.jarvis.event.JarvisTrackExtraData;
 import com.makaan.jarvis.event.PageTag;
 import com.makaan.jarvis.message.CtaType;
@@ -48,16 +51,21 @@ import com.makaan.util.JsonParser;
 import com.makaan.util.KeyUtil;
 import com.segment.analytics.Properties;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+
+import static com.makaan.jarvis.message.CtaType.*;
 
 /**
  * Created by sunil on 13/01/16.
@@ -98,6 +106,8 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
     private Map<SerpRequest, Boolean> serpRequestTrackMap = new HashMap<>();
     private SerpRequest currentSerpRequest = null;
+    private String contentPyrUrl=null;
+    private String buyerJourneyMessageString=null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -287,45 +297,25 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     @Nullable
     @OnClick(R.id.jarvis_head)
     public void onJarvisClicked() {
-        switch(getScreenName()){
-            case "Project":{
-                Properties properties= MakaanEventPayload.beginBatch();
-                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
-                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.chat);
-                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProject);
-                break;
+        String launchPage=getScreenName();
+        if(!TextUtils.isEmpty(launchPage)) {
+            switch (launchPage.toLowerCase()) {
+                case "project":
+                case "listing detail":
+                case "serp":
+                case "city":
+                case "locality":
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMManual);
+                    properties.put(MakaanEventPayload.LABEL, launchPage.toLowerCase());
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.view);
+                    break;
             }
-            case "Listing detail":{
-                Properties properties=MakaanEventPayload.beginBatch();
-                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
-                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.chat);
-                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProperty);
-                break;
-            }
-            case "serp":{
-                Properties properties=MakaanEventPayload.beginBatch();
-                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
-                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.chat);
-                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickSerp);
-                break;
-            }
-            case "City":{
-                Properties properties=MakaanEventPayload.beginBatch();
-                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerCity);
-                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.chat);
-                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickCity);
-                break;
-            }
-            case "Locality":{
-                Properties properties=MakaanEventPayload.beginBatch();
-                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
-                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.chat);
-                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickLocality);
-                break;
-            }
-
         }
         Intent intent = new Intent(this, ChatActivity.class);
+        if(!TextUtils.isEmpty(launchPage)){
+            intent.putExtra(ChatActivity.LAUNCH_PAGE, launchPage);
+        }
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
 
@@ -404,13 +394,15 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                     card.setOnCancelClickListener(new BaseCtaView.OnCancelClickListener() {
                         @Override
                         public void onCancelClick() {
+                            createPopUpCardCloseTrackEvent(message.properties.ctaType, message);
                             dismissPopupWithAnim();
                         }
                     });
 
                     mPopupDismissHandler.postDelayed(mPopupDismissRunnable,
                             JarvisConstants.JARVIS_ACTION_DISMISS_TIMEOUT);
-                }catch (Exception e){
+                    createPopUpCardViewTrackEvent(message.properties.ctaType, message);
+                } catch (Exception e) {
                     //Some error with jarvis payload data, don't do anything
                     e.printStackTrace();
                 }
@@ -623,4 +615,171 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     protected boolean needBackProcessing() {
         return (mJarvisPopupCard !=null && mJarvisPopupCard.getVisibility()==View.VISIBLE);
     }
+
+    public void createPopUpCardViewTrackEvent(CtaType ctaType, ExposeMessage message) {
+        switch (ctaType) {
+            case serpScroll: {
+                createSerpScrollEvent(message, MakaanTrackerConstants.Action.view);
+                break;
+            }
+            case enquiryDropped:{
+                Properties properties=MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMAuto);
+                properties.put(MakaanEventPayload.LABEL, String.format("%s_%s",MakaanTrackerConstants.Label.mAutoView,
+                        MakaanTrackerConstants.Label.enquiryDroppedSimilarSuggestion));
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.view);
+                break;
+            }
+            case childSerp:{
+                if(message.properties!=null && message.properties.content==null && message.city!=null) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMAuto);
+                    properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.mAutoViewPyr,
+                            message.city.toLowerCase()));
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.view);
+                }
+                break;
+            }
+            case contentPyr:{
+
+                if(message.properties!=null && message.properties.content==null && message.city!=null) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMAuto);
+                    properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.mAutoViewPyr,
+                            message.city.toLowerCase()));
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.view);
+                }
+                else {
+                    JSONArray jsonArray = null;
+                    try {
+                        jsonArray = JsonBuilder.toJsonArray(message.properties.content);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    ArrayList<Content> contents=new ArrayList<Content>();
+                    if(jsonArray!=null) {
+                        contents = MakaanBuyerApplication.gson.fromJson(jsonArray.toString(), new TypeToken<List<Content>>() {
+                        }.getType());
+                    }
+                    Content content=null;
+                    if(contents!=null && contents.size()>0){
+                        content = contents.get(0);
+                    }
+                    if(content!=null && content.guid!=null && !TextUtils.isEmpty(content.guid)) {
+                        contentPyrUrl=content.guid;
+                        Properties properties = MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMAuto);
+                        properties.put(MakaanEventPayload.LABEL, String.format("%s_%s",MakaanTrackerConstants.Label.mAutoView, content.guid));
+                        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.view);
+                    }
+                }
+                    break;
+            }
+            case pageVisits:{
+                Map<String, BuyerJourneyMessage> jarvisBuyerJourneyMessageMap =
+                        MasterDataCache.getInstance().getJarvisBuyerJourneyMessageMap();
+
+                if(null!=jarvisBuyerJourneyMessageMap && !jarvisBuyerJourneyMessageMap.isEmpty()){
+                    if(message.properties!=null && message.properties.message_type!=null &&
+                            !TextUtils.isEmpty(message.properties.message_type)){
+                        BuyerJourneyMessage buyerJourneyMessage = jarvisBuyerJourneyMessageMap.get(message.properties.message_type);
+                        if(buyerJourneyMessage.message!=null && !TextUtils.isEmpty(buyerJourneyMessage.message)){
+                            buyerJourneyMessageString=buyerJourneyMessage.message;
+                            Properties properties = MakaanEventPayload.beginBatch();
+                            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMAuto);
+                            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s",MakaanTrackerConstants.Label.mAutoView, buyerJourneyMessage.message));
+                            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.view);
+                        }
+                    }
+                }
+
+                break;
+            }
+        }
+    }
+
+    public void createSerpScrollEvent(ExposeMessage item, MakaanTrackerConstants.Action action){
+        Map<String, SerpFilterMessageMap> serpFilterMessageMap = MasterDataCache.getInstance().getSerpFilterMessageMap();
+        SerpFilterMessageMap serpFilterMessageMap1 = serpFilterMessageMap.get(item.properties.suggest_filter);
+        String labelEnd;
+        if(serpFilterMessageMap1!=null) {
+            labelEnd = serpFilterMessageMap1.filter;
+        }else {
+            labelEnd="";
+        }
+        Properties properties=MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMAuto);
+        if(action.getValue().equalsIgnoreCase(MakaanTrackerConstants.Action.view.getValue())){
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s_%s",MakaanTrackerConstants.Label.mAutoView,
+                MakaanTrackerConstants.Label.serpScroll,labelEnd));
+        }
+        else if(action.getValue().equalsIgnoreCase(MakaanTrackerConstants.Action.close.getValue())){
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s_%s",MakaanTrackerConstants.Label.mAutoClick,
+                    MakaanTrackerConstants.Label.serpScroll,labelEnd));
+        }
+        MakaanEventPayload.endBatch(this, action);
+
+    }
+
+
+    private void createPopUpCardCloseTrackEvent(CtaType ctaType, ExposeMessage message) {
+        switch (ctaType) {
+            case serpScroll: {
+                createSerpScrollEvent(message, MakaanTrackerConstants.Action.close);
+                break;
+            }
+            case enquiryDropped:{
+                Properties properties=MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMAuto);
+                properties.put(MakaanEventPayload.LABEL, String.format("%s_%s",MakaanTrackerConstants.Label.mAutoClick,
+                        MakaanTrackerConstants.Label.enquiryDroppedSimilarSuggestion));
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.close);
+                break;
+            }
+            case childSerp:{
+                if(message.properties!=null && message.properties.content==null && message.city!=null) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMAuto);
+                    properties.put(MakaanEventPayload.LABEL,  String.format("%s_%s", MakaanTrackerConstants.Label.mAutoViewPyr,
+                            message.city.toLowerCase()));
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.close);
+                }
+
+                break;
+            }
+            case contentPyr:{
+                if(message.properties!=null && message.properties.content==null && message.city!=null) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMAuto);
+                    properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.mAutoViewPyr,
+                            message.city.toLowerCase()));
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.close);
+                }else {
+                    if(contentPyrUrl!=null&& !TextUtils.isEmpty(contentPyrUrl)) {
+                        Properties properties = MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMAuto);
+                        properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.mAutoClick, contentPyrUrl));
+                        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.close);
+                    }
+                }
+                break;
+            }
+            case pageVisits:{
+                if(buyerJourneyMessageString!=null && !TextUtils.isEmpty(buyerJourneyMessageString)) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMAuto);
+                    properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.mAutoClick, buyerJourneyMessageString));
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.close);
+                }
+                break;
+            }
+        }
+    }
+    private static class Content {
+        public String guid;
+        public String postTitle;
+        public String primaryImageUrl;
+
+    }
+
 }

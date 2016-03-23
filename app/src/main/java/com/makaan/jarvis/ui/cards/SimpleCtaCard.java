@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.LeadPhaseConstants;
 import com.makaan.jarvis.analytics.BuyerJourneyMessage;
@@ -18,6 +20,7 @@ import com.makaan.jarvis.message.PageVisitType;
 import com.makaan.request.buyerjourney.PhaseChange;
 import com.makaan.service.ClientEventsService;
 import com.makaan.service.MakaanServiceFactory;
+import com.segment.analytics.Properties;
 
 import java.util.Date;
 import java.util.Map;
@@ -81,6 +84,16 @@ public class SimpleCtaCard extends BaseCtaView<ExposeMessage> {
         mApplyButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                /*----track---------events------------*/
+                if(buyerJourneyMessage.message != null && !TextUtils.isEmpty(buyerJourneyMessage.message)) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMAuto);
+                    properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.mAutoClick, buyerJourneyMessage.message));
+                    MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.click);
+                }
+                /*------------------------------------*/
+
                 if(buyerJourneyMessage.phaseId < LeadPhaseConstants.LEAD_PHASE_BOOKING) {
                     Intent intent = new Intent(context, BuyerDashboardActivity.class);
                     intent.putExtra(BuyerDashboardActivity.KEY_PHASE_ID, buyerJourneyMessage.phaseId);
