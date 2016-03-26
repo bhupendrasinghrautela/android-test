@@ -15,5 +15,6 @@ public class SaveSearch {
         public String sellerName;
         public String priceRange;
         public String bhk;
+        public String projectName;
     }
 }

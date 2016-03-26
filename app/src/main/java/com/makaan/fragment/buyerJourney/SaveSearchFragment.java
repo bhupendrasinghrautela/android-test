@@ -45,6 +45,7 @@ import com.makaan.response.city.City;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.project.Builder;
 import com.makaan.response.project.CompanySeller;
+import com.makaan.response.project.Project;
 import com.makaan.response.saveSearch.SaveSearch;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
@@ -231,6 +232,9 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                     } else if(jsonDump.cityName != null) {
                         holder.saveSearchPlace.setVisibility(View.VISIBLE);
                         holder.saveSearchPlace.setText(jsonDump.cityName.toLowerCase());
+                    } else if(jsonDump.projectName != null) {
+                        holder.saveSearchPlace.setVisibility(View.VISIBLE);
+                        holder.saveSearchPlace.setText(jsonDump.projectName.toLowerCase());
                     } else if (jsonDump.builderName != null) {
                         holder.saveSearchPlace.setVisibility(View.VISIBLE);
                         holder.saveSearchPlace.setText(jsonDump.builderName.toLowerCase());
@@ -317,6 +321,19 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                                     int id = R.drawable.seller_placeholder;
                                     bitmap = BitmapFactory.decodeResource(getResources(), id);
                                     MakaanBuyerApplication.bitmapCache.putBitmap("seller_placeholder", bitmap);
+                                }
+
+                                holder.backgroundImageView.setLocalImageBitmap(bitmap);
+                                break;
+                            }
+                        } else if (KeyUtil.PROJECT_ID.equalsIgnoreCase(key)) {
+                            if (map.get(KeyUtil.PROJECT_ID) != null && map.get(KeyUtil.PROJECT_ID).size() > 0) {
+                                imageObjects.get(position).requestProjectImage(map.get(KeyUtil.PROJECT_ID).get(0));
+                                Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap("project_placeholder");
+                                if (bitmap == null) {
+                                    int id = R.drawable.project_placeholder;
+                                    bitmap = BitmapFactory.decodeResource(getResources(), id);
+                                    MakaanBuyerApplication.bitmapCache.putBitmap("project_placeholder", bitmap);
                                 }
 
                                 holder.backgroundImageView.setLocalImageBitmap(bitmap);
@@ -523,8 +540,35 @@ public class SaveSearchFragment extends MakaanBaseFragment {
                 });
             }
         }
-    }
 
+        public void requestProjectImage(String projectId) {
+            if (null != projectId) {
+                Selector projectSelector = new Selector();
+                projectSelector.fields(new String[]{"imageURL"});
+
+                String projectUrl = ApiConstants.PROJECT.concat("/").concat(projectId).concat("?").concat(projectSelector.build());
+
+                Type projectType = new TypeToken<Project>() {
+                }.getType();
+
+                MakaanNetworkClient.getInstance().get(projectUrl, projectType, new ObjectGetCallback() {
+                    @Override
+                    public void onError(ResponseError error) {
+                    }
+
+                    @Override
+                    public void onSuccess(Object responseObject) {
+                        Project project = (Project) responseObject;
+
+                        if (project != null && project.imageURL != null) {
+                            ImageObject.this.imageUrl = project.imageURL;
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+            }
+        }
+    }
 
     private void createSaveSearchEvent(List<ImageObject> imageObjects, int position) {
         HashMap<String, ArrayList<String>> map = imageObjects.get(position).request.getTermMap();

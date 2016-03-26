@@ -52,7 +52,7 @@ public class UploadDocumentsFragment extends MakaanBaseFragment {
         if(mObj != null) {
             if(mObj.clientLeadObject != null && mObj.clientLeadObject.clientLead != null
                     && mObj.clientLeadObject.clientLead.id != null
-                    && mObj.listingDetail.id != null) {
+                    && mObj.listingDetail != null && mObj.listingDetail.id != null) {
                 PhaseChange change = new PhaseChange();
                 change.agentId = mObj.clientLeadObject.clientLead.companyId;
                 change.eventTypeId = LeadPhaseConstants.LEAD_EVENT_BOOKING_DONE;

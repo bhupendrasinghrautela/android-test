@@ -81,7 +81,7 @@ public class SearchResponseHelper {
 
             context.startActivity(localityIntent);
             return;
-        } else if(SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searchItem.type)) {
+        } else if(SearchSuggestionType.PROJECT_OVERVIEW.getValue().equalsIgnoreCase(searchItem.type)) {
             Intent projectIntent = new Intent(context, OverviewActivity.class);
             Bundle bundle = new Bundle();
 
@@ -146,6 +146,14 @@ public class SearchResponseHelper {
         } else if (SearchSuggestionType.CITY.getValue().equalsIgnoreCase(searchItem.type)) {
             SerpRequest request = new SerpRequest(SerpActivity.TYPE_CITY);
             request.setCityId(Long.valueOf(searchItem.entityId));
+            request.setTitle(searchItem.displayText);
+            request.setSearch(searchItem);
+            request.launchSerp(context);
+            return;
+
+        } else if (SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searchItem.type)) {
+            SerpRequest request = new SerpRequest(SerpActivity.TYPE_PROJECT);
+            request.setProjectId(Long.valueOf(searchItem.entityId));
             request.setTitle(searchItem.displayText);
             request.setSearch(searchItem);
             request.launchSerp(context);
