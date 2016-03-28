@@ -70,7 +70,6 @@ public class ListingPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
 
         if(mNeedMoreItem && position == getCount() - 1) {
-            // TODO add load more item
             LayoutInflater mLayoutInflater =
                     (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 

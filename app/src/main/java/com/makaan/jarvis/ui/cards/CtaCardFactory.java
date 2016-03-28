@@ -51,7 +51,6 @@ public class CtaCardFactory {
                 return pyrPopupCard;
 
             }else{
-
                 RichContentCard richContentCard =
                         (RichContentCard) LayoutInflater.from(context).inflate(
                                 R.layout.jarvis_card_content_cancel, null);

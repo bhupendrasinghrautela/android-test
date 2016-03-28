@@ -154,6 +154,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     private MakaanLocationManager mMakaanLocationManager;
     private LocationManager mLocationManager;
     private boolean mSearchEditTextVisible;
+    private boolean mNearByLocalitiesClicked;
 
     @Override
     protected abstract int getContentViewId();
@@ -204,8 +205,10 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     protected void onStart() {
         super.onStart();
         setUserData();
-        if(getLocationAvailabilty()) {
-            connectLocationApiClient(MakaanLocationManager.LocationUpdateMode.ONCE);
+        if(this instanceof HomeActivity) {
+            if (getLocationAvailabilty()) {
+                connectLocationApiClient(MakaanLocationManager.LocationUpdateMode.ONCE);
+            }
         }
     }
 
@@ -303,6 +306,16 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             mSearchAdapter.notifyDataSetChanged();
             Session.locationRequested = false;
         }
+        if(mNearByLocalitiesClicked) {
+            SearchResponseItem item = new SearchResponseItem();
+            item.type = SearchSuggestionType.NEARBY_PROPERTIES.getValue();
+            item.displayText = "properties near my location";
+            if(Session.phoneLocation != null) {
+                item.latitude = Session.phoneLocation.getLatitude();
+                item.longitude = Session.phoneLocation.getLongitude();
+                onSearchItemClick(item);
+            }
+        }
     }
 
     private void initializeViewData() {
@@ -327,7 +340,6 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     protected void initUi(boolean showSearchBar) {
         setShowSearchBar(showSearchBar, false);
 
-        // TODO need to check about text style for the search view
         /*int id = mSearchView.getContext().getResources()
                 .getIdentifier("android:id/search_src_text", null, null);
         TextView textView = (TextView) mSearchView.findViewById(id);
@@ -612,10 +624,11 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 if (PermissionManager.isPermissionRequestRequired(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                     // if yes, then request for permission and cancel current search request
                     PermissionManager.begin().addRequest(PermissionManager.FINE_LOCATION_REQUEST).request(this);
+                    mNearByLocalitiesClicked = true;
                     return;
                 } else if(!getLocationAvailabilty()) {
+                    mNearByLocalitiesClicked = true;
                     // location provider is not enabled
-                    // todo get message from product team and discuss if we should use only mobile location
                     MakaanMessageDialogFragment.showMessage(getFragmentManager(), "please enable location provider to use this option", "ok",
                             new MakaanMessageDialogFragment.MessageDialogCallbacks() {
                         @Override
@@ -633,6 +646,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 } else if(Session.phoneLocation == null/* && Session.apiLocation == null*/) {
                     // if we don't need to request permission for gps
                     // and api location is also not available, then reject
+                    mNearByLocalitiesClicked = true;
                     if(getLocationAvailabilty()) {
                         connectLocationApiClient(MakaanLocationManager.LocationUpdateMode.ONCE);
                     }
@@ -641,6 +655,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 }
             }
         }
+        mNearByLocalitiesClicked = false;
         showContent();
 
         if(supportsListing()  && (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(searchResponseItem.type)
@@ -708,7 +723,6 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
     private void handleSearch() {
 
-        //TODO test
         /*Analytics.with(this).track(MakaanTrackerConstants.Action.searchPropertyBuy.getValue(), new Properties()
                 .putValue("Category", MakaanTrackerConstants.Category.property.getValue())
                 .putValue(MakaanTrackerConstants.KEYWORD, mSearchEditText.getText().toString())
@@ -719,7 +733,6 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         // hide the keypad
         showKeypad(mSearchEditText, false);
 
-        // TODO need to handle all cases
         SearchResponseHelper.resolveSearch(mSelectedSearches, this);
 
         // clear the search adapter to show empty results
@@ -840,7 +853,9 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
         // show keypad id we need to show search view
         if(searchViewVisible) {
-            showKeypad(mSearchEditText, true);
+            if(mSelectedSearches.size() >= 0 && mSelectedSearches.size() < mMaxSearchClubCount) {
+                showKeypad(mSearchEditText, true);
+            }
         }
 
         // make sure search bar is not  collapsing on scrolling when search results are available
@@ -970,11 +985,18 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     private void showEmptySearchResults() {
         if(mSelectedSearches.size() > 0 && (SearchSuggestionType.LOCALITY.getValue().equalsIgnoreCase(mSelectedSearches.get(0).type)
                 || SearchSuggestionType.SUBURB.getValue().equalsIgnoreCase(mSelectedSearches.get(0).type))) {
-            mSearchEditText.setHint(this.getResources().getString(R.string.search_locality_hint));
-            LocationService service = (LocationService) MakaanServiceFactory.getInstance().getService(LocationService.class);
-            service.getTopNearbyLocalitiesAsSearchResult(mSelectedSearches.get(mSelectedSearches.size() - 1));
-            showSearchResults();
+            if(mSelectedSearches.size() < mMaxSearchClubCount) {
+                mSearchEditText.setHint(this.getResources().getString(R.string.search_locality_hint));
+                LocationService service = (LocationService) MakaanServiceFactory.getInstance().getService(LocationService.class);
+                service.getTopNearbyLocalitiesAsSearchResult(mSelectedSearches.get(mSelectedSearches.size() - 1));
+                showSearchResults();
+            } else {
+                mSearchEditText.setHint("");
+                mSearchEditText.setEnabled(false);
+                showSearchResults();
+            }
         } else {
+            mSearchEditText.setEnabled(true);
             if(mSerpContext == SERP_CONTEXT_BUY) {
                 mSearchEditText.setHint(this.getResources().getString(R.string.search_default_hint));
             } else {
@@ -1216,6 +1238,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             mSearchEditText.setEnabled(true);
 
             // show search edittext hint based on current no of selected searches
+            mSearchEditText.setEnabled(true);
             if(mSelectedSearches.size() > 0) {
                 mSearchEditText.setHint(this.getResources().getString(R.string.search_locality_hint));
             } else {
@@ -1411,6 +1434,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
             setShowSearchBar(true, false);
             mSearchEditTextVisible = true;
             mSearchRelativeView.setVisibility(View.VISIBLE);
+            mSearchDescriptionRelativeView.setVisibility(View.GONE);
         }
 
         if (mSelectedSearchAdapter.getItemCount() > 0) {

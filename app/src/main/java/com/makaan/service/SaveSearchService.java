@@ -211,7 +211,6 @@ public class SaveSearchService implements MakaanService {
 
                 @Override
                 public void onError(ResponseError error) {
-                    //TODO handle error
                     SaveSearchGetEvent event = new SaveSearchGetEvent();
                     event.error = error;
                     AppBus.getInstance().post(event);
@@ -259,7 +258,6 @@ public class SaveSearchService implements MakaanService {
                     SaveSearchGetEvent saveSearchGetEvent = new SaveSearchGetEvent();
                     saveSearchGetEvent.error = error;
                     AppBus.getInstance().post(saveSearchGetEvent);
-                    //TODO handle error
                 }
             }, TAG, false);
         } catch (JSONException e) {

@@ -455,7 +455,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         }
 
         if(null==listingGetEvent|| null!=listingGetEvent.error){
-            //TODO handle error
             mSerpReceived = true;
             if(listingGetEvent.error != null && listingGetEvent.error.error != null
                     && listingGetEvent.error.error.networkResponse != null) {
@@ -576,7 +575,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
 
         if(null==groupListingGetEvent|| null!=groupListingGetEvent.error){
-            //TODO handle error
             mGroupReceived = true;
             return;
         }
@@ -730,7 +728,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             return;
         }
         if(null==gpIdResultEvent|| null!=gpIdResultEvent.error){
-            //TODO handle error
             return;
         }
 
@@ -1040,11 +1037,11 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                                 return null;
                             } else {
 
-                                if(!TextUtils.isEmpty(selectedSearches.get(0).city)) {
+                                /*if(!TextUtils.isEmpty(selectedSearches.get(0).city)) {
                                     return String.format("more about %s", String.format("%s, %s", search.entityName.toLowerCase(), selectedSearches.get(0).city.toLowerCase()));
                                 } else {
-                                    return String.format("more about %s", search.entityName.toLowerCase());
-                                }
+                                    */return String.format("more about %s", search.displayText.toLowerCase());
+                                //}
                             }
                         }
                     }
@@ -1087,7 +1084,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 Intent projectIntent = new Intent(this, OverviewActivity.class);
                 Bundle bundle = new Bundle();
 
-                bundle.putLong(OverviewActivity.ID, Long.valueOf(mSerpBackStack.peek().getProjectId()));
+                bundle.putLong(OverviewActivity.ID, mSerpBackStack.peek().getProjectId());
                 bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROJECT.ordinal());
 
                 projectIntent.putExtras(bundle);

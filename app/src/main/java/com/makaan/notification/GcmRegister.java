@@ -14,6 +14,8 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
+import com.makaan.activity.HomeActivity;
+import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.constants.ApiConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.jarvis.JarvisClient;
@@ -72,7 +74,8 @@ public class GcmRegister{
         if (resultCode != ConnectionResult.SUCCESS) {
             if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
                 try {
-                    if(context==null || ((Activity) context).isFinishing()){
+                    if(context==null || ((Activity) context).isFinishing()
+                            || context instanceof MakaanBaseSearchActivity){
                         return false;
                     }
                     GooglePlayServicesUtil.getErrorDialog(resultCode, (Activity) context,

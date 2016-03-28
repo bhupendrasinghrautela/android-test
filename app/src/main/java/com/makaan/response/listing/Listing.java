@@ -26,7 +26,8 @@ public class Listing {
 
     public String unitType,unitName;
 
-    public String postedDate, mainImageUrl;
+    public Long postedDate;
+    public String mainImageUrl;
     public Integer lisitingId,propertyId,projectId;
     public Long sellerId;
     public Long cityId, localityId;

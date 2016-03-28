@@ -2,6 +2,7 @@ package com.makaan.jarvis.ui.cards;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -9,9 +10,12 @@ import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.activity.pyr.PyrPageActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.jarvis.message.Message;
 import com.makaan.ui.view.BaseView;
+import com.segment.analytics.Properties;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -54,7 +58,7 @@ public class PyrPopupCard extends BaseCtaView<ExposeMessage> {
     }
 
     @Override
-    public void bindView(final Context context, ExposeMessage item) {
+    public void bindView(final Context context, final ExposeMessage item) {
         if(item.city != null) {
             mTitle.setText("interested in " + item.city.toLowerCase());
         }
@@ -66,6 +70,15 @@ public class PyrPopupCard extends BaseCtaView<ExposeMessage> {
                 Intent pyrIntent = new Intent(context, PyrPageActivity.class);
                 pyrIntent.putExtra(PyrPageActivity.SOURCE_SCREEN_NAME, "Jarvis");
                 context.startActivity(pyrIntent);
+
+                /*----track -------------event--------- */
+                if(item.city!=null && !TextUtils.isEmpty(item.city)) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMAuto);
+                    properties.put(MakaanEventPayload.LABEL, String.format("%s_%s",MakaanTrackerConstants.Label.mAutoViewPyrYes,item.city));
+                    MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.click);
+                }
+                /*--------------------------------------*/
 
                 if(null!=mOnApplyClickListener){
                     mOnApplyClickListener.onApplyClick();

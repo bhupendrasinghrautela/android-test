@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
@@ -12,10 +13,13 @@ import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.util.JsonBuilder;
 import com.makaan.util.JsonParser;
+import com.segment.analytics.Properties;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +41,7 @@ public class RichContentCard extends BaseCtaView<ExposeMessage> {
 
     @Bind(R.id.image)
     FadeInNetworkImageView mImage;
+    private Context mContext;
 
     public RichContentCard(Context context) {
         super(context);
@@ -53,6 +58,7 @@ public class RichContentCard extends BaseCtaView<ExposeMessage> {
     @Override
     public void bindView(final Context context, final ExposeMessage item) {
         try {
+            mContext=context;
             JSONArray jsonArray = JsonBuilder.toJsonArray(item.properties.content);
 
             List<Content> contents = MakaanBuyerApplication.gson.fromJson(jsonArray.toString(), new TypeToken<List<Content>>(){}.getType());
@@ -72,6 +78,12 @@ public class RichContentCard extends BaseCtaView<ExposeMessage> {
             setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if(content.guid!=null && !TextUtils.isEmpty(content.guid)) {
+                        Properties properties = MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMAuto);
+                        properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.mAutoClick, content.guid));
+                        MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.click);
+                    }
                     try {
                         String link = content.guid;
                         Uri uri = Uri.parse(link);

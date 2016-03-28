@@ -204,8 +204,7 @@ public class BlogContentFragment extends MakaanBaseFragment {
         if(!isVisible()) {
             return;
         }
-        if(null== blogByTagGetEvent || null!=blogByTagGetEvent.error){
-            //TODO handle error
+        if(null== blogByTagGetEvent || null!=blogByTagGetEvent.error) {
             showNoResults();
             return;
         }

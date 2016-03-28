@@ -126,7 +126,6 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
     }
 
     private String handleSearchName(SaveSearch.JSONDump jsonDump) {
-        // TODO handle builder and seller name cases
         String name = "";
         if (mSerpRequest != null) {
             ArrayList<SearchResponseItem> searches = mSerpRequest.getSearches();
@@ -143,6 +142,8 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                         jsonDump.builderName = searches.get(0).entityName;
                     } else if (SearchSuggestionType.SELLER.getValue().equalsIgnoreCase(searches.get(0).type)) {
                         jsonDump.sellerName = searches.get(0).entityName;
+                    } else if (SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searches.get(0).type)) {
+                        jsonDump.projectName = searches.get(0).displayText;
                     }
                 }
                 name = searches.get(0).displayText;
@@ -331,8 +332,8 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 RangeFilter filter = grp.rangeFilterValues.get(0);
                 if (filter.selectedMinValue > filter.minValue || filter.selectedMaxValue < filter.maxValue) {
                     if ("i_budget".equalsIgnoreCase(grp.internalName)) {
-                        jsonDump.priceRange = StringUtil.getDisplayPrice(grp.rangeFilterValues.get(0).selectedMinValue)
-                                + "-" + StringUtil.getDisplayPrice(grp.rangeFilterValues.get(0).selectedMaxValue);
+                        jsonDump.priceRange = StringUtil.getDisplayPrice(grp.rangeFilterValues.get(0).selectedMinValue).replace("\u20B9", "")
+                                + "-" + StringUtil.getDisplayPrice(grp.rangeFilterValues.get(0).selectedMaxValue).replace("\u20B9", "");
                     }
 
                     selector.range(grp.rangeFilterValues.get(0).fieldName, grp.rangeFilterValues.get(0).selectedMinValue, grp.rangeFilterValues.get(0).selectedMaxValue);
