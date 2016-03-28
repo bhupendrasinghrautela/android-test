@@ -1,5 +1,6 @@
 package com.makaan.service;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
@@ -13,6 +14,7 @@ import com.makaan.network.JSONGetCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.pojo.ConstructionStatus;
+import com.makaan.pojo.VersionUpdate;
 import com.makaan.response.ResponseError;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.response.master.ApiIntLabel;
@@ -22,6 +24,8 @@ import com.makaan.response.master.MasterSpecification;
 import com.makaan.response.master.PropertyAmenity;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.response.serp.ListingInfoMap;
+import com.makaan.util.CommonPreference;
+import com.makaan.util.JsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -648,5 +652,26 @@ public class MasterDataService implements MakaanService {
                 }
             }
         }, null);
+    }
+
+    public void checkMandatoryVersion(final Context context) {
+        final Type type = VersionUpdate.class;
+        MakaanNetworkClient.getInstance().get(ApiConstants.VERSION_UPDATE_URL, type, new ObjectGetCallback() {
+            @Override
+            public void onError(ResponseError error) {
+
+            }
+
+            @Override
+            public void onSuccess(Object responseObject) {
+
+                try {
+                    VersionUpdate versionUpdate = (VersionUpdate) responseObject;
+                    JSONObject  jsonObject = JsonBuilder.toJson(versionUpdate);
+                    CommonPreference.saveMandatoryVersion(context, jsonObject.toString());
+                } catch (Exception e) {
+                }
+            }
+        });
     }
 }

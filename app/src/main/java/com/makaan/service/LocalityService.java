@@ -9,7 +9,6 @@ import com.makaan.event.locality.TopBuilderInLocalityEvent;
 import com.makaan.event.locality.TrendingSearchLocalityEvent;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
-import com.makaan.pojo.SerpObjects;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.ResponseError;
 import com.makaan.response.locality.GpDetail;
@@ -25,6 +24,7 @@ import static com.makaan.constants.RequestConstants.BUILDER_DB_STATUS;
 import static com.makaan.constants.RequestConstants.GEO_DISTANCE;
 import static com.makaan.constants.RequestConstants.LABEL;
 import static com.makaan.constants.RequestConstants.LISTING_AGGREGATIONS;
+import static com.makaan.constants.RequestConstants.LIVABILITY_SCORE;
 import static com.makaan.constants.RequestConstants.LOCALITY_HEROSHOT_IMAGE_URL;
 import static com.makaan.constants.RequestConstants.LOCALITY_ID;
 import static com.makaan.constants.RequestConstants.SORT_ASC;
@@ -76,7 +76,7 @@ public class LocalityService implements MakaanService {
     public void getNearByLocalities(double lat, double lon, int noOfLocalities) {
 
         Selector nearByLocalitySelector = new Selector();
-        nearByLocalitySelector.nearby(10, lat, lon, false).fields(new String[]{LOCALITY_ID, LABEL, LISTING_AGGREGATIONS, LOCALITY_HEROSHOT_IMAGE_URL})
+        nearByLocalitySelector.nearby(10, lat, lon, false).fields(new String[]{LOCALITY_ID, LABEL, LISTING_AGGREGATIONS, LOCALITY_HEROSHOT_IMAGE_URL,LIVABILITY_SCORE})
                 .sort(GEO_DISTANCE, SORT_ASC).page(0, noOfLocalities);
 
         String nearbyLocalityUrl = ApiConstants.LOCALITY_DATA.concat("?").concat(nearByLocalitySelector.build());

@@ -39,7 +39,7 @@ public class CityTrendCallback extends JSONGetCallback {
                     }.getType();
                     ArrayList<HashMap<Double, Integer>> priceFacetsArray = MakaanBuyerApplication.gson.fromJson(priceJsonArray.toString(), cityTrendType);
 
-                    Double fromKey = null;
+                    Double fromKey = 0d;
 
                     for (HashMap<Double, Integer> priceFacet : priceFacetsArray) {
                         for (Map.Entry<Double, Integer> facetEntry : priceFacet.entrySet()) {

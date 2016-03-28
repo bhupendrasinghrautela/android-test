@@ -145,4 +145,25 @@
             android:singleLine="true"
             android:textAllCaps="false"/>
     </RelativeLayout>
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="@dimen/locality_circular_progress_dimen"
+        android:layout_height="@dimen/locality_circular_progress_dimen"
+        android:id="@+id/score_progress"
+        android:progress="0"
+        android:layout_marginTop="200dp"
+        android:secondaryProgress="100"
+        android:indeterminate="false"
+        android:progressDrawable="@drawable/circular_progress_drawable"
+        android:layout_gravity="end" />
+    <com.makaan.ui.view.FontTextView
+        android:id="@+id/score_text"
+        android:layout_gravity="end"
+        font:fontName="proxima.otf"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="216dp"
+        android:layout_marginRight="14dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/appThemeRed"
+        android:textSize="@dimen/locality_text_big"/>
 </android.support.v7.widget.CardView>
