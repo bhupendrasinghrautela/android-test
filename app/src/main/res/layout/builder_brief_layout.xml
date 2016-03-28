@@ -38,7 +38,7 @@
             android:layout_marginBottom="@dimen/property_page_builder_margin_bottom"
             android:padding="5dp"
             android:layout_gravity="center"
-            android:text="@string/read_more"
+            android:text="@string/more"
             android:typeface="serif"/>
         <RelativeLayout
             android:layout_marginBottom="@dimen/property_page_builder_margin_bottom"

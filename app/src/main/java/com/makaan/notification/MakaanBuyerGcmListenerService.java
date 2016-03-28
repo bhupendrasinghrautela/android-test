@@ -14,10 +14,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.google.android.gms.gcm.GcmListenerService;
-import com.makaan.cookie.CookiePreferences;
 import com.makaan.database.NotificationDbHelper;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.VersionUpdate;
+import com.makaan.util.CommonPreference;
 import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonParser;
 
@@ -48,7 +48,7 @@ public class MakaanBuyerGcmListenerService extends GcmListenerService {
         PackageInfo pInfo = null;
         try {
             pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            VersionUpdate versionUpdate = (VersionUpdate) JsonParser.parseJson(CookiePreferences.getMandatoryVersion(this),VersionUpdate.class);
+            VersionUpdate versionUpdate = (VersionUpdate) JsonParser.parseJson(CommonPreference.getMandatoryVersion(this),VersionUpdate.class);
             if (versionUpdate!=null && pInfo.versionCode >= versionUpdate.getMandatoryVersionCode() ) {
                 generateNotification(getApplicationContext(), title, message, data);
             }

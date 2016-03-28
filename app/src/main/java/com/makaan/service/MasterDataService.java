@@ -8,7 +8,6 @@ import com.makaan.MakaanBuyerApplication;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ApiConstants;
 import com.makaan.constants.ResponseConstants;
-import com.makaan.cookie.CookiePreferences;
 import com.makaan.jarvis.analytics.BuyerJourneyMessage;
 import com.makaan.jarvis.analytics.SerpFilterMessageMap;
 import com.makaan.network.JSONGetCallback;
@@ -25,6 +24,7 @@ import com.makaan.response.master.MasterSpecification;
 import com.makaan.response.master.PropertyAmenity;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.response.serp.ListingInfoMap;
+import com.makaan.util.CommonPreference;
 import com.makaan.util.JsonBuilder;
 
 import org.json.JSONArray;
@@ -668,7 +668,7 @@ public class MasterDataService implements MakaanService {
                 try {
                     VersionUpdate versionUpdate = (VersionUpdate) responseObject;
                     JSONObject  jsonObject = JsonBuilder.toJson(versionUpdate);
-                    CookiePreferences.saveMandatoryVersion(context, jsonObject.toString());
+                    CommonPreference.saveMandatoryVersion(context, jsonObject.toString());
                 } catch (Exception e) {
                 }
             }

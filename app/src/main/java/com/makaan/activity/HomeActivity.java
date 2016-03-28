@@ -34,6 +34,7 @@ import com.makaan.service.LocationService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
 import com.makaan.service.WishListService;
+import com.makaan.util.CommonPreference;
 import com.makaan.util.JsonParser;
 import com.makaan.util.PermissionManager;
 import com.makaan.util.Preference;
@@ -157,7 +158,7 @@ public class HomeActivity extends MakaanBaseSearchActivity {
         PackageInfo pInfo = null;
         try {
             pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            VersionUpdate versionUpdate = (VersionUpdate) JsonParser.parseJson(CookiePreferences.getMandatoryVersion(this),VersionUpdate.class);
+            VersionUpdate versionUpdate = (VersionUpdate) JsonParser.parseJson(CommonPreference.getMandatoryVersion(this),VersionUpdate.class);
             if(versionUpdate!=null && pInfo.versionCode< versionUpdate.getMandatoryVersionCode()){
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage(versionUpdate.getMessage());

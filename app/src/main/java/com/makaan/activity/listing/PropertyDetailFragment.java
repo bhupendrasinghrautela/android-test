@@ -375,8 +375,6 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
     private ListingDetail mListingDetail;
     private List<AmenityCluster> mAmenityClusters = new ArrayList<>();
     private OverviewActivityCallbacks mShowMapCallback;
-    private Long listingId;
-    private String listingMainUrl;
     private Context mContext;
     private ArrayList<ImagesGetEvent> mImagesGetEventArrayList;
     private ArrayList<SellerCard> mSellerCards;
@@ -409,8 +407,6 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
         mContext = getActivity();
         Bundle args = getArguments();
         showProgress();
-        listingId = args.getLong(KeyUtil.LISTING_ID);
-        listingMainUrl = args.getString(KeyUtil.LISTING_Image);
     }
 
     @Subscribe
@@ -464,9 +460,9 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
                     mListingDetail.property.projectId, mListingDetail.property.bedrooms, mListingDetail.property.bathrooms, mListingDetail.property.studyRoom
                     , mListingDetail.property.poojaRoom, mListingDetail.property.servantRoom, 5
             );
-            ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId);
-            ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId, ImageConstants.THREED_FLOOR_PLAN);
-            ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(listingId, ImageConstants.FLOOR_PLAN);
+            ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(mListingId);
+            ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(mListingId, ImageConstants.THREED_FLOOR_PLAN);
+            ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(mListingId, ImageConstants.FLOOR_PLAN);
         }
     }
 
@@ -541,10 +537,10 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
 
         if(similarListingGetEvent.data!=null && similarListingGetEvent.data.items!=null
                 && similarListingGetEvent.data.items.size() > 0){
-            if(listingId != null && listingId > 0) {
+            if(mListingId != null && mListingId > 0) {
                 for (Iterator<ListingItems> iterator = similarListingGetEvent.data.items.iterator(); iterator.hasNext(); ) {
                     ListingItems item = iterator.next();
-                    if(item != null && item.listing != null && item.listing.id != null && item.listing.id.equals(listingId)) {
+                    if(item != null && item.listing != null && item.listing.id != null && item.listing.id.equals(mListingId)) {
                         iterator.remove();
                     }
                 }

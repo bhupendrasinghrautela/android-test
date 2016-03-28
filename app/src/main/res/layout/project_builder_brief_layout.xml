@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <TextView
-            android:id="@+id/read_more"
+            android:id="@+id/more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/appThemeRed"
@@ -32,7 +32,7 @@
             android:padding="5dp"
             android:layout_marginBottom="@dimen/property_page_builder_margin_bottom"
             android:layout_gravity="center"
-            android:text="@string/read_more"
+            android:text="@string/more"
             android:typeface="serif"/>
     <LinearLayout
         android:layout_width="match_parent"
