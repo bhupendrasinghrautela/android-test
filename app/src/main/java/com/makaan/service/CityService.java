@@ -114,7 +114,7 @@ public class CityService implements MakaanService {
         //Hardcoded values for bar as per site
         city.cityBuyMaxPrice = city.cityBuyMaxPrice == null ? 20000000d : (city.cityBuyMaxPrice > 20000000d ? 20000000d : city.cityBuyMaxPrice);
         city.cityBuyMinPrice = city.cityBuyMinPrice == null ? 1500000d : (city.cityBuyMinPrice < 1500000d ? 1500000d : city.cityBuyMinPrice);
-        city.cityRentMaxPrice = city.cityRentMaxPrice == null ? 1500000d : (city.cityRentMaxPrice > 1500000d ? 1500000d : city.cityRentMaxPrice);
+        city.cityRentMaxPrice = city.cityRentMaxPrice == null ? 200000d : (city.cityRentMaxPrice > 200000d ? 200000d : city.cityRentMaxPrice);
         city.cityRentMinPrice = city.cityRentMinPrice == null ? 2000d : (city.cityRentMinPrice < 2000d ? 2000d : city.cityRentMinPrice);
     }
 
