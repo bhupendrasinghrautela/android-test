@@ -1,34 +1,20 @@
 <resources>
     <string name="app_name">makaan.com</string>
-    <string name="action_settings">Settings</string>
-    <string name="item_settings">account settings</string>
-    <string name="app_upgrade">please update your app?</string>
-    <string name="item_logout">logout</string>
     <string name="upgrade">Upgrade</string>
     <string name="gps_network_not_enabled">Location settings disabled</string>
     <string name="gps_network_enable_prompt">Would you like to enable location settings?</string>
 
     <!--pyr strings -->
-    <dimen name="pyr_normal_text">20sp</dimen>
-    <dimen name="pyr_average_text">16sp</dimen>
-    <dimen name= "pyr_medium_text">14sp</dimen>
-    <dimen name= "pyr_small_text">10sp</dimen>
-    <dimen name= "pyr_very_small_text">5sp</dimen>
     <string name="no_matching_results">sorry, no matching locality found</string>
     
     <!-- jarvis strings-->
     <string name="sign_up">sign up</string>
     <string name="get_call_back">get call back</string>
-    <string name="indian_code">+91</string>
-    <string name="instantly">instantly</string>
-    <string name="jarvis_apply_button_string">ok</string>
     <string name="jarvis_apply_filter_string">would you like to apply filter?</string>
     <string name="bhk_string">bhk</string>
-    <string name="et_type_hint">property type</string>
     <string name="et_price_hint">\u20B9 price</string>
     <string name="et_locality_hint">locality</string>
     <string name="btn_apply_string">apply</string>
-    <string name="give_you_call_back_string">we\'ll give you a call back</string>
 
     <string name="call_now">call now</string>
     <string name="get_callback">get callBack</string>
@@ -42,16 +28,10 @@
     <string name="select_locality_text">Select Locality</string>
     <string name="select_locality_search_hint">Search Location</string>
     <string name="selected_items_count_text">See your selection below</string>
-    <string name="clear_button_text">Clear All</string>
     <string name="empty_selection_text">search items for addition</string>
-    <string name="add_text">ADD</string>
     <string name="pyr_locality_value_string">select locality</string>
     <string name="pyr_location_string">location</string>
     <string name="pyr_bedroom_string">bedrooms</string>
-    <string name="pyr_one_bhk_text">1</string>
-    <string name="pyr_two_bhk_text">2</string>
-    <string name="pyr_three_bhk_text">3</string>
-    <string name="pyr_four_bhk_text">4</string>
     <string name="pyr_property_string">property</string>
     <string name="pyr_property_value_string">residential property apartment</string>
     <string name="search_locality">search locality in </string>
@@ -68,22 +48,17 @@
     <string name="no_matchin_sellers">no sellers offering matching properties.</string>
     <string name="hurray">hurray</string>
     <string name="joy_ride">and the joy ride begins</string>
-    <string name="contacting_makaan_assist">for contacting makaan assists</string>
     <string name="sellers">sellers</string>
     <string name="seller">seller</string>
-    <string name="sellr">seller</string>
     <string name="contact_you">will contact you shortly</string>
     <string name="thank_you_continue">done</string>
     <string name="receive_expert">you will shortly receive a call from makaan assist </string>
-    <string name="consultations">consultations, end to end services</string>
-    <string name="privacy">and assured privacy</string>
     <string name="new_listings">new listings are added daily..</string>
     <string name="alerts_msg">set alerts to get the latest in your inbox</string>
     <string name="set_alerts">set alerts</string>
     <string name="set_alert">set alert</string>
     <string name="or_text">"or "</string>
     <string name="select_sellers">select from best sellers</string>
-    <string name="contact_top_advisors">contact 4 advisors</string>
     <string name="contact_string">contact </string>
     <string name="advisors_string">advisors</string>
     <string name="view_all_sellers">view all sellers</string>
@@ -101,7 +76,6 @@
     <string name="skip_string">skip</string>
     <string name="property_string">property</string>
     <string name="select_property_type_string">select property type</string>
-    <string name="apply_string">apply</string>
     <string name="contact_top_advisors_string">contact top advisors</string>
     <string name="no_sellers_assist_string">you will receive properties in your inbox for given requirements</string>
 
@@ -122,14 +96,10 @@
     <string name="ongoing_projects_string">ongoing projects</string>
     <string name="view_projects_string">view projects</string>
 
-    <string name="city_title">mumbai</string>
-    <string name="city_sub_title">city of seven islands</string>
-    <string name="city_connect_header_text">connect with the best sellers of</string>
     <string name="overview">an overview</string>
     <string name="properties_in">properties in</string>
     <string name="price_trends">price trends</string>
     <string name="more">more</string>
-    <string name="read_more">read more</string>
     <string name="contact_top_sellers">contact top sellers</string>
     <string name="contact_top_seller">contact top seller</string>
     <string name="contact_all_seller">contact all sellers</string>
@@ -138,7 +108,6 @@
     <string name="more_about">more about</string>
     <string name="more_about_locality">read more about locality</string>
     <string name="read_less">less</string>
-    <string name="intrested_in">interested in</string>
     <string name="know_more">know more about</string>
     <string name="name">name</string>
     <string name="projects">projects</string>
@@ -149,11 +118,7 @@
     <string name="buy">buy</string>
     <string name="rent">rent</string>
     <string name="email">email</string>
-    <string name="phone">phone</string>
-    <string name="submit">submit</string>
     <string name="show_properties">show all properties</string>
-    <string name="price_growth">price growth</string>
-    <string name="demand_supply">demand &amp; supply</string>
     <string name="annual_growth">annual price growth</string>
     <string name="rental_yield">annual rental yield</string>
     <string name="avg_price_prefix">avg. price</string>
@@ -162,15 +127,12 @@
     <string name="emi_rs">emi from  \u20B9</string>
     <string name="floor_plan">floor plan</string>
     <string name="top_localities">top localities</string>
-    <string name="view_properties">view properties</string>
-    <string name="locality_title" />
     <string name="locality_about_median_price">avg price</string>
     <string name="locality_about_annual_growth">annual growth</string>
     <string name="locality_about_median_rent">avg rent</string>
     <string name="locality_rental_demand">rental demand</string>
     <string name="locality_kyn_title">know your neighbourhood</string>
     <string name="locality_nearby_localities_title">nearby localities</string>
-    <string name="locality_available_locality_status">available property status</string>
     <string name="locality_price_trends_label">price trends</string>
     <string name="localities_lifestyle_title">lifestyle in</string>
     <string name="locality_top_agents_label">top sellers</string>
@@ -180,11 +142,6 @@
     <string name="locality_switch_buy">buy</string>
     <string name="locality_switch_rent">rent</string>
 
-    <string name="locality_nearby_localities_view_details">view details</string>
-    <string name="locality_top_builders_view_details">view seller details</string>
-    <string name="locality_top_agents_view_details">view projects</string>
-
-    <string name="assist">assist</string>
     <string name="similar_properties">similar properties</string>
     <string name="login">login</string>
     <string name="project_button_contact_seller_text">contact seller</string>
@@ -194,13 +151,8 @@
     <string name="project_specification_title">specifications</string>
     <string name="project_config_title">configurations</string>
     <string name="project_score">project score</string>
-    <string name="project_experience_label">experience</string>
-    <string name="project_average_delay_label">avg delay</string>
-    <string name="project_ongoing_label">ongoing</string>
-    <string name="project_past_label">past</string>
     <string name="more_about_builder">about builder</string>
     <string name="less_about_builder">less about builder</string>
-    <string name="makaan">makaan</string>
     <string name="search_by_location">find joy…</string>
     <string name="search_default_hint">pick a location, builder or project</string>
     <string name="search_default_rent_hint">pick location or project</string>
@@ -213,9 +165,7 @@
     <string name="effective_home_search">let\'s go step by step</string>
     <string name="home_loan">home loan</string>
     <string name="booking">booking</string>
-    <string name="possession">possession</string>
     <string name="pre_launch_date">pre-launch date</string>
-    <string name="date_added">date added</string>
     <string name="launch_date">launch date</string>
     <string name="new_resale">new,resale</string>
     <string name="availability">availability</string>
@@ -233,7 +183,6 @@
     <string name="site_visit_sub_title">track upcoming visits here</string>
     <string name="find_joy">find joy</string>
     <string name="happy_buyers">more joy\nyour way</string>
-    <string name="happy_below_buyers">for finding joy</string>
 
     <string name="found_your_dream_home">celebrate finding your home\n by claiming \u20B9 15000 cash back</string>
     <string name="get_reward">claim now</string>
@@ -242,14 +191,10 @@
     <string name="project_description_title">description</string>
 
     <!--Lead Form Strings-->
-    <string name="call">call</string>
     <string name="connect_now">connect now</string>
-    <string name="or_later">or later</string>
     <string name="get_call_later">get call later</string>
     <string name="submitting_info">submitting info</string>
-    <string name="or_now">or now</string>
     <string name="connecting">connecting…</string>
-    <string name="instant_call">instant call back request successful</string>
     <string name="seller_not_available">seller number not available</string>
     <string name="please_enter_phone_no">please enter phone no.</string>
 
@@ -270,7 +215,6 @@
     <string name="timeout_error">oops! looks like a connection issue. let\'s get you back on the joyride</string>
     <string name="enter_valid_email">please provide a valid email (3-50 chars)</string>
     <string name="enter_password">please provide a valid password (6-32 chars)</string>
-    <string name="wrong_username_password">oops! your username or password is incorrect</string>
 
     <string name="personal_info">personal information</string>
     <string name="Password">password</string>
@@ -279,26 +223,20 @@
     <string name="signup">new to makaan? sign up!</string>
     <string name="enter_username">please provide your name (2-100 chars)</string>
 
-    <string name="no_network_connection">your network connection seems to be lost. please enable internet connection and try again.</string>
     <string name="no_network_connection_short">your network connection seems to be lost</string>
-    <string name="weak_network_connection">your network connection seems to be weak, please check and try again.</string>
     <string name="chat_initializing">chat initialing, please wait</string>
 
     <string name= "connect_with" >connect with </string>
     <string name="forgot_paswrd_heading">forgot password</string>
     <string name="send_reset">send reset link</string>
     <string name="user_name">user name</string>
-    <string name="guest_text">hi guest,\nlog into makaan for benefits</string>
     <string name="personalized_assistance">personalized assistance</string>
     <string name="start_to_finish">from start to finish</string>
     <string name="log_in">login</string>
-    <string name="others">others</string>
 
 
 
     <!--notifications strings -->
-    <string name="title_txt">title</string>
-    <string name="sub_title_txt">sub title</string>
 
     <!--edit profile strings -->
     <string name="my_account">my account</string>
@@ -309,11 +247,6 @@
     <string name="save">save</string>
 
     <!-- shortlist strings -->
-    <string name="rupee">\u20B9</string>
-    <string name="no_shortlisting">no shortlisted available</string>
-
-    <string name="no_enquiries_available">no enquiries available</string>
-    <string name="no_favorite_available">no favorites available</string>
 
     <string name="no_notifications">you do not have any notifications</string>
 
@@ -328,7 +261,6 @@
     <string name="password_recovery">please check your mail for password recovery details</string>
     <string name="app_FB_id">1048400568534787</string>
     <string name="contact_all_sellers">contact all sellers</string>
-    <string name="app_appsflyer_id">W3Jyb4NpTyqAGjENS3tM7Q</string>
 
 
     <!--chart strings-->
@@ -351,16 +283,13 @@
     <string name="blog_content_home_booking_action">home booking guidance</string>
     <string name="blog_content_home_possession_action">home possession advice</string>
     <string name="blog_content_home_registration_action">home registration guidance</string>
-    <string name="no_site_visits">no site visit available</string>
 
 
     <!--analytics-->
     <string name="similar_project_clicked_position">similar project clicked position</string>
-    <string name="adapter_position">adapter position</string>
 
     <string name="search_residential_plot_string">residential plot</string>
 
-    <string name="call_sellers">call sellers</string>
     <string name="add_to_fav_login_prompt">please signin to be able to add this property to your wishlist </string>
     <string name="user_already_logged_in">already logged in, please signout if you want to sign in with different account</string>
 
@@ -369,8 +298,6 @@
 
     <string name="notification_deleted">Notification Deleted</string>
     <string name="notification_deletion_error">unable to delete notification, please try again later</string>
-
-    <string name="please_wait">please wait...</string>
 
 
 </resources>
