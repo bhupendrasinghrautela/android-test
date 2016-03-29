@@ -160,6 +160,14 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     protected void onDestroy() {
         super.onDestroy();
         SerpObjects.removeSerpObject(this);
+
+        if(null!=mUserActivityTrackerRenewHandler && null!=mUserActivityTrackerRunnable) {
+            mUserActivityTrackerRenewHandler.removeCallbacks(mUserActivityTrackerRunnable);
+        }
+
+        if(null!=mPopupDismissHandler && null!=mPopupDismissRunnable) {
+            mPopupDismissHandler.removeCallbacks(mPopupDismissRunnable);
+        }
     }
 
     protected SerpObjects getSerpObjects() {
