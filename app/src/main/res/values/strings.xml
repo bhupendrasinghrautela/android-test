@@ -386,6 +386,8 @@
     <string name="sdcard_unmounted">We are sorry. SD card seems to be unavailable!</string>
     <string name="image_saved">Image saved successfully.</string>
 
+    <string name="score_message">calculated based on presence of project amenities, builder credentials and location advantages</string>
 
+    <string name="got_it">got it</string>
 </resources>
 
