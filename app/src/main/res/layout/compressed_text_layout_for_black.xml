@@ -42,5 +42,5 @@
         android:textStyle="bold"
         font:fontName="proxima.otf"
         android:textSize="@dimen/locality_text_medium"
-        android:text="@string/read_more"/>
+        android:text="@string/more"/>
 </com.makaan.ui.CompressedTextView>

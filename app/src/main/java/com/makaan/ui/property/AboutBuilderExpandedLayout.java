@@ -65,6 +65,8 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
     private Context mContext;
     private boolean mProjectNameVisible;
     private boolean mProjectAddressVisible;
+    private Builder mItem;
+    private Boolean textIsCollapsed = true;
 
     @OnClick(R.id.about_builder)
     public void onChange(){
@@ -118,6 +120,19 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
         }
     }
 
+    @OnClick(R.id.read_more)
+    public void openBuilderSerp(TextView v){
+        if(textIsCollapsed){
+            mBuilderDescription.setMaxLines(Integer.MAX_VALUE);
+            v.setText("less");
+        }
+        else{
+            mBuilderDescription.setMaxLines(5);
+            v.setText("more");
+        }
+        textIsCollapsed =!textIsCollapsed;
+    }
+
     public AboutBuilderExpandedLayout(Context context) {
         super(context);
         mContext = context;
@@ -135,6 +150,7 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
 
     @Override
     public void bindView(Builder item) {
+        mItem = item;
         if(item != null) {
             boolean isDataPresent = false;
             mAboutBuilderTv.setText(getResources().getString(R.string.more_about_builder));

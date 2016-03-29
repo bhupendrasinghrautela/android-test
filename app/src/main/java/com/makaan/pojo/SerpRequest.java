@@ -17,7 +17,6 @@ import com.makaan.response.serp.RangeMinMaxFilter;
 import com.makaan.response.serp.TermFilter;
 import com.makaan.util.KeyUtil;
 
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -57,8 +56,10 @@ public class SerpRequest implements Parcelable, Cloneable {
     private ArrayList<SearchResponseItem> searchItems = new ArrayList<>();
 
     private HashMap<String, ArrayList<String>> termMap = new HashMap<>();
-    private HashMap<String, Long[]> rangeMap = new HashMap<>();
-    private HashMap<String, Long[]> minMaxRangeMap = new HashMap<>();
+    private HashMap<String, Long[]> rangeMapLong = new HashMap<>();
+    private HashMap<String, Double[]> rangeMapDouble = new HashMap<>();
+    private HashMap<String, Long[]> minMaxRangeMapLong = new HashMap<>();
+    private HashMap<String, Double[]> minMaxRangeMapDouble = new HashMap<>();
 
     private long minBudget = UNEXPECTED_VALUE;
     private long maxBudget = UNEXPECTED_VALUE;
@@ -339,15 +340,32 @@ public class SerpRequest implements Parcelable, Cloneable {
     public void addRange(String fieldName, Long from, Long to) {
         HashMap<String, Long[]> map;
         if(from == null || to == null) {
-            map = minMaxRangeMap;
+            map = minMaxRangeMapLong;
         } else {
-            map = rangeMap;
+            map = rangeMapLong;
         }
         Long[] terms = map.get(fieldName);
         if(terms != null) {
             map.remove(fieldName);
         }
         terms = new Long[2];
+        terms[0] = from;
+        terms[1] = to;
+        map.put(fieldName, terms);
+    }
+
+    public void addRange(String fieldName, Double from, Double to) {
+        HashMap<String, Double[]> map;
+        if(from == null || to == null) {
+            map = minMaxRangeMapDouble;
+        } else {
+            map = rangeMapDouble;
+        }
+        Double[] terms = map.get(fieldName);
+        if(terms != null) {
+            map.remove(fieldName);
+        }
+        terms = new Double[2];
         terms[0] = from;
         terms[1] = to;
         map.put(fieldName, terms);
@@ -388,8 +406,10 @@ public class SerpRequest implements Parcelable, Cloneable {
         setTitle(source.readString());
 
         readTermMap(source);
-        readRangeMap(source);
-        readRangeMap(source);
+        readLongRangeMap(source);
+        readLongRangeMap(source);
+        readDoubleRangeMap(source);
+        readDoubleRangeMap(source);
     }
 
     public SerpRequest(SerpRequest request) {
@@ -427,8 +447,10 @@ public class SerpRequest implements Parcelable, Cloneable {
         setTitle(request.getTitle());
 
         this.termMap = new HashMap<> (request.termMap);
-        this.rangeMap = new HashMap<> (request.rangeMap);
-        this.minMaxRangeMap = new HashMap<> (request.minMaxRangeMap);
+        this.rangeMapLong = new HashMap<> (request.rangeMapLong);
+        this.rangeMapDouble = new HashMap<> (request.rangeMapDouble);
+        this.minMaxRangeMapLong = new HashMap<> (request.minMaxRangeMapLong);
+        this.minMaxRangeMapDouble = new HashMap<> (request.minMaxRangeMapDouble);
     }
 
     @Override
@@ -476,15 +498,16 @@ public class SerpRequest implements Parcelable, Cloneable {
         dest.writeString(displayText);
 
         writeTermMap(dest);
-        writeRangeMap(dest);
+        writeLongRangeMap(dest);
+        writeDoubleRangeMap(dest);
     }
 
-    private void writeRangeMap(Parcel dest) {
-        int keySize = rangeMap.keySet().size();
+    private void writeLongRangeMap(Parcel dest) {
+        int keySize = rangeMapLong.keySet().size();
         dest.writeInt(keySize);
-        for(String key : rangeMap.keySet()) {
+        for(String key : rangeMapLong.keySet()) {
             dest.writeString(key);
-            Long[] values = rangeMap.get(key);
+            Long[] values = rangeMapLong.get(key);
             if(values[0] == null) {
                 dest.writeLong(Long.MIN_VALUE);
             } else {
@@ -497,11 +520,11 @@ public class SerpRequest implements Parcelable, Cloneable {
             }
         }
 
-        keySize = minMaxRangeMap.keySet().size();
+        keySize = minMaxRangeMapLong.keySet().size();
         dest.writeInt(keySize);
-        for(String key : minMaxRangeMap.keySet()) {
+        for(String key : minMaxRangeMapLong.keySet()) {
             dest.writeString(key);
-            Long[] values = minMaxRangeMap.get(key);
+            Long[] values = minMaxRangeMapLong.get(key);
             if(values[0] == null) {
                 dest.writeLong(Long.MIN_VALUE);
             } else {
@@ -515,7 +538,7 @@ public class SerpRequest implements Parcelable, Cloneable {
         }
     }
 
-    private void readRangeMap(Parcel source) {
+    private void readLongRangeMap(Parcel source) {
         int keySize = source.readInt();
         for(int i = 0; i < keySize; i++) {
             String key = source.readString();
@@ -529,9 +552,66 @@ public class SerpRequest implements Parcelable, Cloneable {
                 values[1] = null;
             }
             if(values[0] == null || values[1] == null) {
-                minMaxRangeMap.put(key, values);
+                minMaxRangeMapLong.put(key, values);
             } else {
-                rangeMap.put(key, values);
+                rangeMapLong.put(key, values);
+            }
+        }
+    }
+
+    private void writeDoubleRangeMap(Parcel dest) {
+        int keySize = rangeMapDouble.keySet().size();
+        dest.writeInt(keySize);
+        for(String key : rangeMapDouble.keySet()) {
+            dest.writeString(key);
+            Double[] values = rangeMapDouble.get(key);
+            if(values[0] == null) {
+                dest.writeDouble(Double.MIN_VALUE);
+            } else {
+                dest.writeDouble(values[0]);
+            }
+            if(values[1] == null) {
+                dest.writeDouble(Double.MIN_VALUE);
+            } else {
+                dest.writeDouble(values[1]);
+            }
+        }
+
+        keySize = minMaxRangeMapDouble.keySet().size();
+        dest.writeInt(keySize);
+        for(String key : minMaxRangeMapDouble.keySet()) {
+            dest.writeString(key);
+            Double[] values = minMaxRangeMapDouble.get(key);
+            if(values[0] == null) {
+                dest.writeDouble(Double.MIN_VALUE);
+            } else {
+                dest.writeDouble(values[0]);
+            }
+            if(values[1] == null) {
+                dest.writeDouble(Double.MIN_VALUE);
+            } else {
+                dest.writeDouble(values[1]);
+            }
+        }
+    }
+
+    private void readDoubleRangeMap(Parcel source) {
+        int keySize = source.readInt();
+        for(int i = 0; i < keySize; i++) {
+            String key = source.readString();
+            Double[] values = new Double[2];
+            values[0] = source.readDouble();
+            values[1] = source.readDouble();
+            if(values[0] == Double.MIN_VALUE) {
+                values[0] = null;
+            }
+            if(values[1] == Double.MIN_VALUE) {
+                values[1] = null;
+            }
+            if(values[0] == null || values[1] == null) {
+                minMaxRangeMapDouble.put(key, values);
+            } else {
+                rangeMapDouble.put(key, values);
             }
         }
     }
@@ -1005,12 +1085,14 @@ public class SerpRequest implements Parcelable, Cloneable {
             }
         }
 
-        if(rangeMap.keySet().size() > 0) {
-            for (String key : rangeMap.keySet()) {
+        if(rangeMapLong.keySet().size() > 0) {
+            for (String key : rangeMapLong.keySet()) {
+                boolean isApplied = false;
                 if(filterGroup != null) {
                     for (FilterGroup grp : filterGroup) {
                         if (grp.rangeFilterValues.size() > 0 && grp.rangeFilterValues.get(0).fieldName.equals(key)) {
-                            Long[] value = rangeMap.get(key);
+                            isApplied = true;
+                            Long[] value = rangeMapLong.get(key);
                             if (FiltersViewAdapter.RADIO_BUTTON_RANGE == grp.layoutType) {
                                 for (RangeFilter filter : grp.rangeFilterValues) {
                                     if (value[0] == filter.minValue && value[1] == filter.maxValue) {
@@ -1081,18 +1163,59 @@ public class SerpRequest implements Parcelable, Cloneable {
                         }
                     }
                 }
+                if(!isApplied) {
+                    selector.range(key, rangeMapLong.get(key)[0], rangeMapLong.get(key)[1]);
+                }
             }
         }
 
-        if(minMaxRangeMap.keySet().size() > 0) {
+        if(rangeMapDouble.keySet().size() > 0) {
+            for (String key : rangeMapDouble.keySet()) {
+                boolean isApplied = false;
+                if(filterGroup != null) {
+                    for (FilterGroup grp : filterGroup) {
+                        if (grp.rangeFilterValues.size() > 0 && grp.rangeFilterValues.get(0).fieldName.equals(key)) {
+                            isApplied = true;
+                            Double[] value = rangeMapDouble.get(key);
+                            if (FiltersViewAdapter.RADIO_BUTTON_RANGE == grp.layoutType) {
+                                for (RangeFilter filter : grp.rangeFilterValues) {
+                                    if (value[0] == filter.minValue && value[1] == filter.maxValue) {
+                                        filter.selected = true;
+                                        grp.isSelected = true;
+
+                                        selector.range(filter.fieldName, filter.minValue, filter.maxValue);
+                                    }
+                                }
+                            } else {
+                                for (RangeFilter filter : grp.rangeFilterValues) {
+                                    filter.selectedMinValue = value[0];
+                                    filter.selectedMaxValue = value[1];
+                                    if (filter.selectedMinValue != filter.minValue || filter.selectedMaxValue != filter.maxValue) {
+                                        filter.selected = true;
+                                        grp.isSelected = true;
+                                    }
+                                }
+
+                                selector.range(key, value[0], value[1]);
+                            }
+                        }
+                    }
+                }
+                if(!isApplied) {
+                    selector.range(key, rangeMapDouble.get(key)[0], rangeMapDouble.get(key)[1]);
+                }
+            }
+        }
+
+        if(minMaxRangeMapDouble.keySet().size() > 0) {
             ArrayList<Double> minFieldMap = new ArrayList<>();
             ArrayList<Double> maxFieldMap = new ArrayList<>();
-            for (String key : minMaxRangeMap.keySet()) {
+            for (String key : minMaxRangeMapDouble.keySet()) {
                 if(filterGroup != null) {
                     for (FilterGroup grp : filterGroup) {
                         if (grp.rangeMinMaxFilterValues.size() > 0) {
                             if (grp.rangeMinMaxFilterValues.get(0).minFieldName.equals(key)) {
-                                Long[] value = minMaxRangeMap.get(key);
+                                Long[] value = minMaxRangeMapLong.get(key);
                                 for (RangeMinMaxFilter filter : grp.rangeMinMaxFilterValues) {
                                     if (filter.minValue == value[0]) {
                                         if (maxFieldMap.contains(filter.maxValue)) {
@@ -1105,7 +1228,7 @@ public class SerpRequest implements Parcelable, Cloneable {
                                     }
                                 }
                             } else if (grp.rangeMinMaxFilterValues.get(0).maxFieldName.equals(key)) {
-                                Long[] value = minMaxRangeMap.get(key);
+                                Long[] value = minMaxRangeMapLong.get(key);
                                 for (RangeMinMaxFilter filter : grp.rangeMinMaxFilterValues) {
                                     if (filter.maxValue == value[1]) {
                                         if (minFieldMap.contains(filter.minValue)) {

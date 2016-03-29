@@ -14,10 +14,10 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.analytics.MakaanEventPayload;
@@ -141,7 +141,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         for(Locality locality:nearbyLocalities){
             int[] counts = getCountOfNumberOfListingsBasedOnType(locality.listingAggregations);
             int[] medians = calculateMedianForListings(locality.listingAggregations);
-            nearByLocalities.add(new NearByLocalitiesFragment.NearByLocalities(""+locality.localityHeroshotImageUrl,"" + counts[1],"" + counts[0],medians[0] == 0?"":"average price: "+ StringUtil.getFormattedNumber(medians[0])+"/ sq ft",locality.label, locality.localityId));
+            nearByLocalities.add(new NearByLocalitiesFragment.NearByLocalities(""+locality.localityHeroshotImageUrl,"" + counts[1],"" + counts[0],medians[0] == 0?"":"average price: "+ StringUtil.getFormattedNumber(medians[0])+"/ sq ft",locality.label, locality.localityId,locality.livabilityScore));
         }
         return nearByLocalities;
     }
@@ -181,16 +181,20 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         List<NearByLocalities> nearByLocalities = new ArrayList<>();
         this.cardType = CardType.TOPAGENTS;
         for(TopAgent agent:topAgents){
+            Double score = 0d;
+            if(agent.agent.company.score!=null){
+                score = agent.agent.company.score;
+            }
             if(agent.agent != null && agent.agent.company != null && agent.agent.user != null) {
                 if (!TextUtils.isEmpty(agent.agent.company.logo)) {
-                    nearByLocalities.add(new NearByLocalities(agent.agent.company.logo, "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, agent.agent.company.id));
+                    nearByLocalities.add(new NearByLocalities(agent.agent.company.logo, "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, agent.agent.company.id,score));
                 } else if (!TextUtils.isEmpty(agent.agent.user.profilePictureURL)) {
-                    nearByLocalities.add(new NearByLocalities(agent.agent.user.profilePictureURL, "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, agent.agent.company.id));
+                    nearByLocalities.add(new NearByLocalities(agent.agent.user.profilePictureURL, "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, agent.agent.company.id,score));
                 } else {
-                    nearByLocalities.add(new NearByLocalities("", "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, agent.agent.company.id));
+                    nearByLocalities.add(new NearByLocalities("", "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, agent.agent.company.id,score));
                 }
             } else {
-                nearByLocalities.add(new NearByLocalities("", "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, agent.agent.company.id));
+                nearByLocalities.add(new NearByLocalities("", "0", "" + agent.listingCount, "" + agent.agent.company.name, "" + agent.agent.user.fullName, agent.agent.company.id,score));
             }
         }
         return nearByLocalities;
@@ -214,19 +218,19 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                 if (builder.projectCount != null) {
                     if (builder.projectStatusCount != null && builder.projectStatusCount.underConstruction > 0) {
                         nearByLocalities.add(new NearByLocalities(url, String.valueOf(builder.projectStatusCount.underConstruction),
-                                "" + builder.projectCount.intValue(), "experience : " + experience + " years", "" + builder.name, builder.id));
+                                "" + builder.projectCount.intValue(), "experience : " + experience + " years", "" + builder.name, builder.id,null));
                     } else {
                         nearByLocalities.add(new NearByLocalities(url, "0", "" + builder.projectCount.intValue(),
-                                "experience : " + experience + " years", "" + builder.name, builder.id));
+                                "experience : " + experience + " years", "" + builder.name, builder.id,null));
                     }
                 }
             } else {
                 if (builder.projectCount != null) {
                     if (builder.projectStatusCount != null && builder.projectStatusCount.underConstruction > 0) {
                         nearByLocalities.add(new NearByLocalities(url, String.valueOf(builder.projectStatusCount.underConstruction),
-                                "" + builder.projectCount.intValue(), "", "" + builder.name, builder.id));
+                                "" + builder.projectCount.intValue(), "", "" + builder.name, builder.id,null));
                     } else {
-                        nearByLocalities.add(new NearByLocalities(url, "0", "" + builder.projectCount.intValue(), "", "" + builder.name, builder.id));
+                        nearByLocalities.add(new NearByLocalities(url, "0", "" + builder.projectCount.intValue(), "", "" + builder.name, builder.id,null));
                     }
                 }
             }
@@ -292,7 +296,9 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
             public CustomNetworkImageView localityIv;
             public LinearLayout rentLl;
             public CardView cardView;
+            public ProgressBar score;
             public TextView primarySaleLabelTv;
+            public TextView scoreText;
             public TextView secondarySaleLabelTv;
             public TextView viewDetails;
             public ViewHolder(View v) {
@@ -308,12 +314,16 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                 secondarySaleLabelTv = (TextView) v.findViewById(R.id.tv_nearby_localities_secondary_sale_label);
                 viewDetails = (TextView) v.findViewById(R.id.tv_nearby_localities_view_details);
                 cardView = (CardView) v.findViewById(R.id.card_view_nearby_locality);
+                score = (ProgressBar) v.findViewById(R.id.score_progress);
+                scoreText = (TextView) v.findViewById(R.id.score_text);
                 cardView.setOnClickListener(onClickListener);
 
                 if(cardType == CardType.LOCALITY) {
                     localityIv.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 }
-
+                if(cardType == CardType.TOPBUILDERS){
+                    score.setVisibility(View.GONE);
+                }
             }
         }
 
@@ -385,10 +395,26 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                 case LOCALITY:
                     holder.localityIv.setDefaultImageResId(R.drawable.locality_placeholder);
                     holder.rentLl.setVisibility(View.VISIBLE);
+                    if(nearByLocality.score>0) {
+                        holder.score.setProgress((int) (nearByLocality.score * 10));
+                        holder.scoreText.setText(String.valueOf(nearByLocality.score));
+                    }
+                    else{
+                        holder.score.setVisibility(View.GONE);
+                        holder.scoreText.setVisibility(View.GONE);
+                    }
                     removeZeroData(holder, nearByLocality);
                     break;
                 case TOPAGENTS:
                     holder.localityIv.setDefaultImageResId(R.drawable.seller_placeholder);
+                    if(nearByLocality.score>0) {
+                        holder.score.setProgress((int) (nearByLocality.score * 10));
+                        holder.scoreText.setText(String.valueOf(nearByLocality.score/2));
+                    }
+                    else{
+                        holder.score.setVisibility(View.GONE);
+                        holder.scoreText.setVisibility(View.GONE);
+                    }
                     if(isRentSelected)
                         holder.primarySaleLabelTv.setText("properties for rent");
                     else
@@ -493,15 +519,20 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
         String imgUrl;
         String localityName;
         String medianPrice;
+        Double score;
         Long id;
 
-        public NearByLocalities(String imgUrl, String numberOfPropsForRent, String numberOfPropsForSale, String medianPrice, String localityName, Long id) {
+        public NearByLocalities(String imgUrl, String numberOfPropsForRent, String numberOfPropsForSale, String medianPrice, String localityName, Long id,Double score) {
             this.imgUrl = imgUrl;
             this.numberOfPropsForRent = numberOfPropsForRent;
             this.numberOfPropsForSale = numberOfPropsForSale;
             this.medianPrice = medianPrice;
             this.localityName = localityName;
             this.id = id;
+            this.score = score;
+            if(this.score == null){
+                this.score = 0d;
+            }
         }
 
         String numberOfPropsForSale;

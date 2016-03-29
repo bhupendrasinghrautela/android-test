@@ -39,20 +39,27 @@ public class CityTrendCallback extends JSONGetCallback {
                     }.getType();
                     ArrayList<HashMap<Double, Integer>> priceFacetsArray = MakaanBuyerApplication.gson.fromJson(priceJsonArray.toString(), cityTrendType);
 
-                    Double fromKey = null;
-
+                    CityTrendData lastTrendData = null;
+                    Double diff= null;
                     for (HashMap<Double, Integer> priceFacet : priceFacetsArray) {
                         for (Map.Entry<Double, Integer> facetEntry : priceFacet.entrySet()) {
-                            Double toKey = facetEntry.getKey();
+                            Double fromKey = facetEntry.getKey();
                             if (null != fromKey) {
-                                Integer noOfListings = facetEntry.getValue();
-                                CityTrendData cityTrendData = new CityTrendData(fromKey, toKey, noOfListings);
+                                if(lastTrendData!=null){
+                                    lastTrendData.maxPrice = fromKey;
+                                    diff = lastTrendData.maxPrice-lastTrendData.minPrice;
+                                }
+                                CityTrendData cityTrendData = new CityTrendData();
+                                cityTrendData.minPrice = fromKey;
+                                cityTrendData.noOfListings = facetEntry.getValue();
                                 cityTrendDataList.add(cityTrendData);
+                                lastTrendData = cityTrendData;
                             }
-                            fromKey = toKey;
                         }
                     }
-
+                    if(lastTrendData!=null && diff!=null) {
+                        lastTrendData.maxPrice = lastTrendData.minPrice + diff;
+                    }
                 }
                 AppBus.getInstance().post(new CityTrendEvent(cityTrendDataList));
             }

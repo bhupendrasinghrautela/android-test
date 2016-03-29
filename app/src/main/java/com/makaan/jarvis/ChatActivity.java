@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.makaan.R;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.jarvis.event.ChatHistoryEvent;
 import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.OutgoingMessageEvent;
@@ -30,6 +32,7 @@ import com.makaan.jarvis.ui.ConversationAdapter;
 import com.makaan.jarvis.message.*;
 import com.makaan.util.AppBus;
 import com.makaan.util.NetworkUtil;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -56,7 +59,7 @@ public class ChatActivity extends AppCompatActivity {
 
     @Bind(R.id.compose)
     EditText mCompose;
-
+    public static final String LAUNCH_PAGE="launchPage";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -280,8 +283,33 @@ public class ChatActivity extends AppCompatActivity {
         snackbar.show();
     }
 
+    @Override
+    public void onBackPressed() {
+        String launchPage=null;
+        if(getIntent()!=null && getIntent().getExtras()!=null && !TextUtils.isEmpty(getIntent().getExtras().getString(LAUNCH_PAGE))) {
+            launchPage = getIntent().getExtras().getString(LAUNCH_PAGE);
+        }
+        if(launchPage!=null && !TextUtils.isEmpty(launchPage)){
+            Properties properties= MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMManual);
+            properties.put(MakaanEventPayload.LABEL, launchPage);
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.close);
+        }
+        super.onBackPressed();
+    }
+
     @OnClick(R.id.close)
     public void onChatCloseClick(){
+        String launchPage=null;
+        if(getIntent()!=null && getIntent().getExtras()!=null && !TextUtils.isEmpty(getIntent().getExtras().getString(LAUNCH_PAGE))) {
+            launchPage = getIntent().getExtras().getString(LAUNCH_PAGE);
+        }
+        if(launchPage!=null && !TextUtils.isEmpty(launchPage)){
+            Properties properties= MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMManual);
+            properties.put(MakaanEventPayload.LABEL, launchPage);
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.close);
+        }
         finish();
     }
 

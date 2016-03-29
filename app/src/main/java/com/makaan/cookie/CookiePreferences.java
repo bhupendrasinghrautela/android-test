@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.text.TextUtils;
 
-import com.google.gson.Gson;
 import com.makaan.response.user.UserResponse;
 import com.makaan.util.JsonParser;
 
@@ -275,5 +274,4 @@ public class CookiePreferences {
                 - getSharedPref(context).getLong(BUYER_JOURNEY_LAST_POPUP_TIMESTAMP, 0)
                 >= BUYER_JOURNEY_LAST_POPUP_TIMEOUT;
     }
-
 }

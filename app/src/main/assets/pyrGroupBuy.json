@@ -91,7 +91,7 @@
             "displayName": "residential plot",
             "displayOrder": "4",
             "fieldName": "unitTypeId",
-            "value": "ResidentialPlot",
+            "value": "Plot",
             "selected": false
           },
           {
@@ -105,7 +105,7 @@
             "displayName": "farmhouse",
             "displayOrder": "6",
             "fieldName": "unitTypeId",
-            "value": "Farmhouse",
+            "value": "FarmHouse",
             "selected": false
           },
           {

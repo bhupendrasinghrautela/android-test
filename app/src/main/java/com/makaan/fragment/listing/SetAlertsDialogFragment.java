@@ -142,6 +142,8 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                         jsonDump.builderName = searches.get(0).entityName;
                     } else if (SearchSuggestionType.SELLER.getValue().equalsIgnoreCase(searches.get(0).type)) {
                         jsonDump.sellerName = searches.get(0).entityName;
+                    } else if (SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searches.get(0).type)) {
+                        jsonDump.projectName = searches.get(0).displayText;
                     }
                 }
                 name = searches.get(0).displayText;

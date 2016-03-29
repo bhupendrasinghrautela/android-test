@@ -27,5 +27,5 @@
         android:layout_height="wrap_content"
         android:textColor="@color/red"
         android:textStyle="bold"
-        android:text="@string/read_more"/>
+        android:text="@string/more"/>
 </com.makaan.ui.CompressedTextView>
