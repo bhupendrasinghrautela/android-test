@@ -134,6 +134,7 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
     void doNowClicked(){
         //getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         LeadFormPresenter.getLeadFormPresenter().showLeadInstantCallBackFragment();
+        mLeadFormPresenter.setTemporaryPhoneNo(mNumber.getText().toString().trim());
     }
 
     @OnClick(R.id.btn_call_later)
