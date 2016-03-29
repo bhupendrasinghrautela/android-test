@@ -1,11 +1,7 @@
 package com.makaan.pojo;
 
-import android.util.Range;
-
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.reflect.TypeToken;
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.adapter.listing.FiltersViewAdapter;
 import com.makaan.constants.RequestConstants;
 import com.makaan.util.KeyUtil;
@@ -14,7 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
 

@@ -2,7 +2,6 @@ package com.makaan.event.serp;
 
 import com.makaan.event.MakaanEvent;
 import com.makaan.response.listing.ListingData;
-import com.makaan.ui.MakaanProgressDialog;
 
 /**
  * Created by vaibhav on 25/12/15.

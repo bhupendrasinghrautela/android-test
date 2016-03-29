@@ -17,7 +17,6 @@ import com.makaan.jarvis.message.MessageType;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.ui.view.BaseView;
-import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
 
 import butterknife.Bind;

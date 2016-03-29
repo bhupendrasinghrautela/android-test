@@ -1,11 +1,9 @@
 package com.makaan.util;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 
 import com.makaan.constants.StringConstants;
-import com.makaan.response.user.UserResponse;
 
 import java.util.Arrays;
 import java.util.HashSet;

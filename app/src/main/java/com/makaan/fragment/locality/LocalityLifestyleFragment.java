@@ -14,7 +14,6 @@ import com.makaan.R;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.city.EntityDesc;
-import com.makaan.response.image.Image;
 import com.makaan.util.ImageUtils;
 
 import java.util.ArrayList;

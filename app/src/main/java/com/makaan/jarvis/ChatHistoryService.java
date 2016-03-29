@@ -2,7 +2,6 @@ package com.makaan.jarvis;
 
 import android.text.TextUtils;
 
-import com.makaan.event.user.UserLoginCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.StringRequestCallback;
 import com.makaan.service.MakaanService;

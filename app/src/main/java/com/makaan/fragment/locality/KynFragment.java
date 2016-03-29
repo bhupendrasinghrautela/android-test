@@ -17,7 +17,6 @@ import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.overview.OverviewFragment;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.ui.amenity.AmenityCardView;
-import com.makaan.util.AppBus;
 
 import java.util.List;
 

@@ -6,7 +6,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
-import com.makaan.ui.listing.BaseCardView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

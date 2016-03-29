@@ -1,8 +1,5 @@
 package com.makaan.event.user;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import com.makaan.network.StringRequestCallback;
 import com.makaan.response.BaseResponse;
 import com.makaan.response.ResponseError;

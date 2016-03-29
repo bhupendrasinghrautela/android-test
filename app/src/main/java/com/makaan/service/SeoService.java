@@ -1,10 +1,8 @@
 package com.makaan.service;
 
-import com.android.volley.Request;
 import com.makaan.constants.ApiConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.StringRequestCallback;
-import com.makaan.response.wishlist.WishListResultCallback;
 
 /**
  * Created by sunil on 11/03/16.

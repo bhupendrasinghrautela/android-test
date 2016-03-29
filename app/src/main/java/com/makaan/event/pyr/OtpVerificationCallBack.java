@@ -5,7 +5,6 @@ import android.util.Log;
 import com.makaan.network.StringRequestCallback;
 import com.makaan.response.ResponseError;
 import com.makaan.response.pyr.OtpVerificationResponse;
-import com.makaan.response.pyr.PyrPostResponse;
 import com.makaan.util.AppBus;
 import com.makaan.util.JsonParser;
 

@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,19 +18,14 @@ import com.makaan.R;
 import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
-import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
-import com.makaan.response.wishlist.WishListResponse;
-import com.makaan.service.MakaanServiceFactory;
-import com.makaan.service.WishListService;
 import com.makaan.util.ErrorUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
-import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 

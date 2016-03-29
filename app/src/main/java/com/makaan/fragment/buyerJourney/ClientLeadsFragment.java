@@ -37,7 +37,6 @@ import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.OnClick;

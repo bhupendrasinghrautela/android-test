@@ -18,7 +18,6 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.ui.view.BaseView;
-import com.makaan.util.ImageUtils;
 
 import butterknife.Bind;
 

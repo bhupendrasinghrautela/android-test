@@ -5,9 +5,6 @@ import android.util.AttributeSet;
 
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.ui.listing.AbstractCardListingView;
-import com.makaan.ui.listing.AbstractListingView;
-
-import butterknife.ButterKnife;
 
 /**
  * Created by rohitgarg on 2/16/16.

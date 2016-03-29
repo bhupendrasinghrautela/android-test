@@ -1,28 +1,19 @@
 package com.makaan.jarvis.ui.cards;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.StringBuilderPrinter;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
-import com.makaan.activity.listing.SerpActivity;
 import com.makaan.adapter.listing.FiltersViewAdapter;
 import com.makaan.cache.MasterDataCache;
-import com.makaan.jarvis.JarvisClient;
 import com.makaan.jarvis.event.SendRequirementEvent;
-import com.makaan.jarvis.message.ChatObject;
 import com.makaan.jarvis.message.Message;
 import com.makaan.jarvis.message.MessageType;
 import com.makaan.pojo.SerpObjects;
@@ -31,7 +22,6 @@ import com.makaan.response.serp.TermFilter;
 import com.makaan.ui.view.BaseView;
 import com.makaan.ui.view.ExpandableHeightGridView;
 import com.makaan.util.AppBus;
-import com.makaan.util.CommonUtil;
 import com.makaan.util.StringUtil;
 
 import java.util.ArrayList;

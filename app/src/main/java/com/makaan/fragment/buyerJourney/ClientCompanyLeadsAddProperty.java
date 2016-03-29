@@ -2,7 +2,6 @@ package com.makaan.fragment.buyerJourney;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +14,7 @@ import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.fragment.MakaanBaseFragment;
-import com.makaan.service.ListingService;
-import com.makaan.service.MakaanServiceFactory;
 import com.segment.analytics.Properties;
-
-import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;

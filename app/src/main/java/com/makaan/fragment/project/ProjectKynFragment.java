@@ -26,7 +26,6 @@ import com.makaan.fragment.overview.OverviewFragment;
 import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.ui.amenity.AmenityCardView;
-import com.makaan.util.KeyUtil;
 import com.segment.analytics.Properties;
 
 import java.util.List;

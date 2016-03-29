@@ -1,6 +1,5 @@
 package com.makaan.network;
 
-import android.content.Context;
 import android.text.TextUtils;
 
 import com.android.volley.AuthFailureError;
@@ -10,7 +9,6 @@ import com.android.volley.NoConnectionError;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.makaan.R;
 import com.makaan.response.BaseResponse;
 import com.makaan.util.JsonParser;
 

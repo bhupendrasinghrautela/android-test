@@ -7,7 +7,6 @@ import com.makaan.pojo.TaxonomyCard;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.makaan.constants.StringConstants.RECENT_PROPERTIES;
 import static com.makaan.constants.StringConstants.*;
 
 /**

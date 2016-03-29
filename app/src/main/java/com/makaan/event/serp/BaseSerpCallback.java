@@ -7,7 +7,6 @@ import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ResponseConstants;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.response.ResponseError;
-import com.makaan.response.agents.TopAgent;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.listing.ListingData;
 import com.makaan.response.listing.ListingFacets;
@@ -22,7 +21,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 /**
  * Created by vaibhav on 24/12/15.

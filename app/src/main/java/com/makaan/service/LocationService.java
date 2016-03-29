@@ -13,8 +13,6 @@ import com.makaan.network.JSONGetCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.ResponseError;
-import com.makaan.response.agents.TopAgent;
-import com.makaan.response.locality.Locality;
 import com.makaan.response.location.MyLocation;
 import com.makaan.response.search.SearchResponse;
 import com.makaan.response.search.SearchResponseItem;
@@ -25,21 +23,16 @@ import com.makaan.util.AppBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import static com.makaan.constants.RequestConstants.CITY;
 import static com.makaan.constants.RequestConstants.CITY_ID;
-import static com.makaan.constants.RequestConstants.GEO_DISTANCE;
 import static com.makaan.constants.RequestConstants.LABEL;
 import static com.makaan.constants.RequestConstants.LATITUDE;
-import static com.makaan.constants.RequestConstants.LISTING_AGGREGATIONS;
-import static com.makaan.constants.RequestConstants.LOCALITY_HEROSHOT_IMAGE_URL;
 import static com.makaan.constants.RequestConstants.LOCALITY_ID;
 import static com.makaan.constants.RequestConstants.LONGITUDE;
-import static com.makaan.constants.RequestConstants.SORT_ASC;
 import static com.makaan.constants.RequestConstants.SUBURB;
 
 /**

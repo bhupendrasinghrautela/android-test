@@ -36,11 +36,11 @@ public class CustomHttpStack implements HttpStack {
     private final SSLSocketFactory mSslSocketFactory;
 
     public CustomHttpStack() {
-        this((HurlStack.UrlRewriter)null);
+        this(null);
     }
 
     public CustomHttpStack(HurlStack.UrlRewriter urlRewriter) {
-        this(urlRewriter, (SSLSocketFactory)null);
+        this(urlRewriter, null);
     }
 
     public CustomHttpStack(HurlStack.UrlRewriter urlRewriter, SSLSocketFactory sslSocketFactory) {

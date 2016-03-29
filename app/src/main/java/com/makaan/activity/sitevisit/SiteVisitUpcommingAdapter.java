@@ -1,17 +1,14 @@
 package com.makaan.activity.sitevisit;
 
 import android.Manifest;
-import android.Manifest.permission;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.InflateException;
@@ -40,7 +37,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Random;
 
 /**
  * Created by aishwarya on 18/02/16.

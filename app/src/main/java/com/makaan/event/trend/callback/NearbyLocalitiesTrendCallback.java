@@ -2,7 +2,6 @@ package com.makaan.event.trend.callback;
 
 import com.makaan.constants.MessageConstants;
 import com.makaan.event.trend.NearByLocalitiesTrendEvent;
-import com.makaan.event.trend.TopLocalitiesTrendEvent;
 import com.makaan.response.trend.LocalityPriceTrendDto;
 import com.makaan.util.AppBus;
 

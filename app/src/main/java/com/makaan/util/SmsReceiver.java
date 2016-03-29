@@ -9,8 +9,6 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.makaan.activity.pyr.PyrOtpVerification;
-
 /**
  * Created by aishwarya on 24/12/15.
  */

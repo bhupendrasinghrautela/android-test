@@ -3,25 +3,20 @@ package com.makaan.fragment.pyr;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.event.saveSearch.SaveSearchGetEvent;
-import com.makaan.fragment.listing.SetAlertsDialogFragment;
 import com.makaan.network.VolleyErrorParser;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.response.serp.RangeFilter;
-import com.makaan.response.serp.RangeMinMaxFilter;
 import com.makaan.response.serp.TermFilter;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
@@ -31,16 +26,11 @@ import com.makaan.util.StringUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.makaan.adapter.listing.FiltersViewAdapter.RADIO_BUTTON;
-import static com.makaan.adapter.listing.FiltersViewAdapter.RADIO_BUTTON_MIN_MAX;
-import static com.makaan.adapter.listing.FiltersViewAdapter.RADIO_BUTTON_RANGE;
 import static com.makaan.adapter.listing.FiltersViewAdapter.SEEKBAR;
-import static com.makaan.adapter.listing.FiltersViewAdapter.UNEXPECTED_VALUE;
 
 /**
  * Created by proptiger on 24/1/16.

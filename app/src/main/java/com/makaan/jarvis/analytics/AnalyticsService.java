@@ -2,18 +2,14 @@ package com.makaan.jarvis.analytics;
 
 import android.text.TextUtils;
 
-import com.makaan.activity.listing.SerpActivity;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ApiConstants;
 import com.makaan.jarvis.JarvisClient;
 import com.makaan.jarvis.JarvisConstants;
 import com.makaan.jarvis.event.JarvisTrackExtraData;
 import com.makaan.network.MakaanNetworkClient;
-import com.makaan.pojo.SerpObjects;
 import com.makaan.service.MakaanService;
-import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.JsonBuilder;
-import com.segment.analytics.Analytics;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -6,12 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
-import com.makaan.R;
 import com.makaan.adapter.listing.ListingPagerAdapter;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by rohitgarg on 2/10/16.

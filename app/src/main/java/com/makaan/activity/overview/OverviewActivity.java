@@ -28,8 +28,6 @@ import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.project.Project;
 import com.makaan.response.search.event.SearchResultEvent;
-import com.makaan.service.AmenityService;
-import com.makaan.service.MakaanServiceFactory;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 

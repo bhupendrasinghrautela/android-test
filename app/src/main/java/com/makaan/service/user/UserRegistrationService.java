@@ -1,6 +1,5 @@
 package com.makaan.service.user;
 
-import com.facebook.share.model.AppInviteContent;
 import com.makaan.constants.ApiConstants;
 import com.makaan.event.user.UserRegistrationCallback;
 import com.makaan.network.MakaanNetworkClient;

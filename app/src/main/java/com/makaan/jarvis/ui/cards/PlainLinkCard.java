@@ -14,7 +14,6 @@ import com.makaan.jarvis.message.Message;
 import com.makaan.ui.view.BaseView;
 
 import butterknife.Bind;
-import butterknife.OnClick;
 
 /**
  * Created by sunil on 25/01/16.

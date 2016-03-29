@@ -2,12 +2,9 @@ package com.makaan.jarvis;
 
 import android.text.TextUtils;
 
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.jarvis.event.ChatHistoryEvent;
-import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.OutgoingMessageEvent;
-import com.makaan.jarvis.message.ChatHistoryData;
 import com.makaan.jarvis.message.ChatMessages;
 import com.makaan.jarvis.message.Message;
 import com.makaan.jarvis.message.MessageType;
@@ -16,7 +13,6 @@ import com.makaan.network.StringRequestCallback;
 import com.makaan.response.ResponseError;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.AppBus;
-import com.makaan.util.JsonParser;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
