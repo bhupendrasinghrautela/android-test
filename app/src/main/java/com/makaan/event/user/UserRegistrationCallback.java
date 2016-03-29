@@ -1,6 +1,5 @@
 package com.makaan.event.user;
 
-import com.makaan.cache.MasterDataCache;
 import com.makaan.network.StringRequestCallback;
 import com.makaan.response.ResponseError;
 import com.makaan.response.user.UserResponse;

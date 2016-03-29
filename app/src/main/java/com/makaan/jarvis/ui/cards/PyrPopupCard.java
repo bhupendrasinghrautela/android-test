@@ -13,8 +13,6 @@ import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.jarvis.message.ExposeMessage;
-import com.makaan.jarvis.message.Message;
-import com.makaan.ui.view.BaseView;
 import com.segment.analytics.Properties;
 
 import butterknife.Bind;

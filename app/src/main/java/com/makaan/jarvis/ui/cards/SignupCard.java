@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.makaan.R;
 import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.cache.MasterDataCache;
-import com.makaan.cookie.CookiePreferences;
 import com.makaan.jarvis.message.Message;
 import com.makaan.response.login.UserLoginPresenter;
 import com.makaan.ui.view.BaseView;

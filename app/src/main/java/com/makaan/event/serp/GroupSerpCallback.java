@@ -9,10 +9,6 @@ import com.makaan.network.JSONGetCallback;
 import com.makaan.response.ResponseError;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.GroupListingData;
-import com.makaan.response.listing.Listing;
-import com.makaan.response.listing.ListingData;
-import com.makaan.response.parser.ListingParser;
-import com.makaan.response.serp.FilterGroup;
 import com.makaan.util.AppBus;
 
 import org.json.JSONArray;
@@ -24,7 +20,6 @@ import java.util.ArrayList;
 
 import static com.makaan.constants.MessageConstants.SERP_NO_LISITINGS_AVAILABLE;
 import static com.makaan.constants.ResponseConstants.ITEMS;
-import static com.makaan.constants.ResponseConstants.LISTING;
 import static com.makaan.constants.ResponseConstants.TOTAL_COUNT;
 
 /**

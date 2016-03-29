@@ -9,7 +9,6 @@ import android.view.Gravity;
 import android.widget.TextView;
 
 import com.makaan.jarvis.message.Message;
-import com.makaan.jarvis.ui.cards.InTextCard;
 import com.makaan.jarvis.ui.cards.OutTextCard;
 import com.makaan.ui.view.BaseView;
 import com.makaan.util.DateUtil;

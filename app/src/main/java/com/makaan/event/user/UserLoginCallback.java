@@ -1,12 +1,8 @@
 package com.makaan.event.user;
 
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.cache.MasterDataCache;
-import com.makaan.cookie.CookiePreferences;
 import com.makaan.network.StringRequestCallback;
 import com.makaan.response.ResponseError;
-import com.makaan.response.search.SearchResponse;
-import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.response.user.UserResponse;
 import com.makaan.util.AppBus;
 import com.makaan.util.JsonParser;

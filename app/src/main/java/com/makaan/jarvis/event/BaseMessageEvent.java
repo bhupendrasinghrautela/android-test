@@ -1,6 +1,5 @@
 package com.makaan.jarvis.event;
 
-import com.makaan.jarvis.message.Message;
 import com.makaan.jarvis.message.SocketMessage;
 
 /**

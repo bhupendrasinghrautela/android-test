@@ -5,14 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.fragment.MakaanBaseFragment;
-import com.makaan.network.VolleyErrorParser;
 import com.makaan.response.wishlist.WishListResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.WishListService;

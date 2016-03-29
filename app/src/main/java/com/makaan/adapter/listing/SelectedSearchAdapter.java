@@ -8,7 +8,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.makaan.R;
-import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.ui.listing.CustomFlowLayout;
 

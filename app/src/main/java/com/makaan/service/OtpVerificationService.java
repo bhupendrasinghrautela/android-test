@@ -3,13 +3,10 @@ package com.makaan.service;
 import com.makaan.activity.pyr.PyrOtpVerification;
 import com.makaan.constants.ApiConstants;
 import com.makaan.event.pyr.OtpVerificationCallBack;
-import com.makaan.event.pyr.PyrPostCallBack;
 import com.makaan.network.MakaanNetworkClient;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import static com.makaan.constants.ApiConstants.TOP_AGENTS_CITY;
 
 /**
  * Created by proptiger on 21/1/16.

@@ -2,7 +2,6 @@ package com.makaan.request.selector;
 
 import com.makaan.MakaanBuyerApplication;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import static com.makaan.constants.RequestConstants.*;

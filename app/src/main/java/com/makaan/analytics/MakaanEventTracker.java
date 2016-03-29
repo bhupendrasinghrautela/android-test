@@ -8,8 +8,6 @@ import com.makaan.jarvis.JarvisConstants;
 import com.segment.analytics.Analytics;
 import com.segment.analytics.Properties;
 
-import java.util.Map;
-
 /**
  * Created by sunil on 17/02/16.
  */

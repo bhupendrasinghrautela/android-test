@@ -4,9 +4,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.ArrayRes;
 import android.support.annotation.Nullable;
-import android.support.v4.text.TextUtilsCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +29,6 @@ import com.makaan.util.JsonBuilder;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.OnClick;

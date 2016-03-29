@@ -1,15 +1,12 @@
 package com.makaan.adapter.listing;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.RadioButton;
 import android.widget.ToggleButton;
 
 import com.makaan.R;

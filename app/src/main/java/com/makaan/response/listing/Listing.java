@@ -3,7 +3,6 @@ package com.makaan.response.listing;
 import com.makaan.response.project.Project;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by vaibhav on 24/12/15.

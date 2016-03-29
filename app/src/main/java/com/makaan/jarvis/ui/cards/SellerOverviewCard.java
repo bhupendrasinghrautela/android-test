@@ -22,8 +22,6 @@ import com.makaan.ui.view.CustomRatingBar;
 import com.makaan.util.CommonUtil;
 import com.makaan.util.ImageUtils;
 
-import java.util.Random;
-
 import butterknife.Bind;
 import de.hdodenhof.circleimageview.CircleImageView;
 

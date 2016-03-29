@@ -1,6 +1,5 @@
 package com.makaan.response.amenity;
 
-import android.content.Intent;
 import android.util.Log;
 
 import com.makaan.cache.MasterDataCache;
@@ -16,11 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import static com.makaan.constants.MessageConstants.SERP_NO_LISITINGS_AVAILABLE;
 
 /**
  * Created by sunil on 17/01/16.

@@ -2,7 +2,6 @@ package com.makaan.ui.locality;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;

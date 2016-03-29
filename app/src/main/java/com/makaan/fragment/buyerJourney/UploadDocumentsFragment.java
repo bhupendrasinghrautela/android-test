@@ -2,7 +2,6 @@ package com.makaan.fragment.buyerJourney;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.view.View;
 
 import com.makaan.R;
@@ -10,13 +9,9 @@ import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
 import com.makaan.constants.LeadPhaseConstants;
 import com.makaan.fragment.MakaanBaseFragment;
-import com.makaan.fragment.pyr.ThankYouScreenFragment;
 import com.makaan.request.buyerjourney.PhaseChange;
-import com.makaan.response.buyerjourney.ClientLead;
 import com.makaan.service.ClientEventsService;
-import com.makaan.service.ClientLeadsService;
 import com.makaan.service.MakaanServiceFactory;
-import com.makaan.service.MasterDataService;
 
 import java.util.Date;
 

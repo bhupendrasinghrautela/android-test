@@ -1,7 +1,6 @@
 package com.makaan.ui.listing;
 
 import android.content.Context;
-import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

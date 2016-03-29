@@ -17,7 +17,6 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HttpClientStack;
 import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.HurlStack;
-import com.android.volley.toolbox.ImageRequest;
 import com.makaan.constants.ApiConstants;
 
 import java.io.File;

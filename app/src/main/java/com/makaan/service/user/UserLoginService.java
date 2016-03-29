@@ -7,8 +7,6 @@ import com.makaan.event.user.UserLoginCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.service.MakaanService;
 
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 

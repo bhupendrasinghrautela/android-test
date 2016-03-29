@@ -7,15 +7,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.GoogleAuthUtil;
@@ -37,7 +32,6 @@ import com.makaan.service.user.GoogleTokenInteractor;
 import com.makaan.service.user.OnFacebookTokenListener;
 import com.makaan.service.user.OnGoogleTokenListener;
 import com.makaan.service.user.UserLoginService;
-import com.makaan.ui.CommonProgressDialog;
 import com.makaan.util.NetworkUtil;
 import com.makaan.util.PermissionManager;
 import com.segment.analytics.Properties;
@@ -46,7 +40,6 @@ import com.squareup.otto.Subscribe;
 import java.util.Arrays;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

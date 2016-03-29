@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -24,10 +23,7 @@ import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.listing.ListingByIdsGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
-import com.makaan.response.buyerjourney.ClientLead;
-import com.makaan.response.buyerjourney.Company;
 import com.makaan.response.listing.detail.ListingDetail;
-import com.makaan.service.ClientLeadsService;
 import com.makaan.service.ListingService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.ImageUtils;

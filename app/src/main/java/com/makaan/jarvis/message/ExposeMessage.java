@@ -1,9 +1,6 @@
 package com.makaan.jarvis.message;
 
 import com.makaan.jarvis.event.JarvisTrackExtraData;
-import com.makaan.jarvis.ui.pager.Property;
-
-import java.util.List;
 
 /**
  * Created by sunil on 23/01/16.

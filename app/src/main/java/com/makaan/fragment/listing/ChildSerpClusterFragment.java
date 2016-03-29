@@ -13,7 +13,6 @@ import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.listing.HorizontalScrollFragmentAdapter;
-import com.makaan.event.serp.GroupSerpGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.pojo.GroupCluster;
 import com.makaan.response.listing.GroupListing;

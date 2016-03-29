@@ -8,11 +8,9 @@ import android.view.View;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
-import com.makaan.adapter.listing.ListingPagerAdapter;
 import com.makaan.jarvis.message.ChatObject;
 import com.makaan.jarvis.message.Message;
 import com.makaan.jarvis.message.MessageType;
-import com.makaan.response.listing.Listing;
 import com.makaan.util.JsonBuilder;
 
 import org.json.JSONArray;
