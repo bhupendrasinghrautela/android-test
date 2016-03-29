@@ -19,6 +19,7 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.ui.view.BaseView;
 import com.makaan.ui.view.CustomRatingBar;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.ImageUtils;
 
 import java.util.Random;
@@ -134,12 +135,13 @@ public class SellerOverviewCard extends BaseView<Message> {
         mSellerImageView.setVisibility(View.GONE);
         // show seller first character as logo
 
-        int[] bgColorArray = getResources().getIntArray(R.array.bg_colors);
+//        int[] bgColorArray = getResources().getIntArray(R.array.bg_colors);
 
-        Random random = new Random();
+//        Random random = new Random();
         ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
         // int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
-        drawable.getPaint().setColor(bgColorArray[random.nextInt(bgColorArray.length)]);
+//        drawable.getPaint().setColor(bgColorArray[random.nextInt(bgColorArray.length)]);
+        drawable.getPaint().setColor(CommonUtil.getColor(sellerName, getContext()));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             mSellerLogoTextView.setBackground(drawable);
         } else {

@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/buyer_dashboard_background"
         android:paddingBottom="14dp"
         android:paddingEnd="20dp"
@@ -31,110 +31,119 @@
             android:textColor="@color/app_red"
             android:textSize="16sp" />
 
-        <FrameLayout
-            android:id="@+id/fragment_review_agent_image_frame_layout"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true">
+        <RelativeLayout
+            android:id="@+id/fragment_review_agent_top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/fragment_review_agent_image_view"
+            <FrameLayout
+                android:id="@+id/fragment_review_agent_image_frame_layout"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/map"
-                android:visibility="gone"
-                app:civ_border_color="@color/serp_listing_card_seller_mask_color"
-                app:civ_border_width="@dimen/border_width" />
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/fragment_review_agent_image_view"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/map"
+                    android:visibility="gone"
+                    app:civ_border_color="@color/serp_listing_card_seller_mask_color"
+                    app:civ_border_width="@dimen/border_width" />
+
+                <TextView
+                    android:id="@+id/fragment_review_agent_logo_text_view"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:text="R"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+            </FrameLayout>
 
             <TextView
-                android:id="@+id/fragment_review_agent_logo_text_view"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:id="@+id/fragment_review_agent_name_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_review_agent_image_frame_layout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="6dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="sunil chowdhary"
+                android:textAllCaps="false"
+                android:textColor="@color/listingBlack"
+                android:textSize="16sp"
+                android:typeface="sans" />
+
+            <TextView
+                android:id="@+id/fragment_review_agent_type_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_review_agent_name_text_view"
+                android:layout_centerHorizontal="true"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="grace consultant"
+                android:textAllCaps="false"
+                android:textColor="#555555"
+                android:textSize="15sp"
+                android:typeface="serif" />
+
+            <com.makaan.ui.view.CustomRatingBar
+                android:id="@+id/fragment_review_agent_rating_bar"
+                style="?android:attr/ratingBarStyle"
+                android:layout_width="150dp"
+                android:layout_height="24dp"
+                android:layout_below="@id/fragment_review_agent_type_text_view"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="26dp"
                 android:gravity="center"
-                android:text="R"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="24sp" />
-        </FrameLayout>
+                android:numStars="5"
+                android:stepSize="1"
+                app:itemHeight="24dp"
+                app:itemMarginLeft="3dp"
+                app:itemMarginRight="3dp"
+                app:itemProgressIcon="@drawable/m_fill"
+                app:itemSecondaryProgressIcon="@drawable/m_outline"
+                app:itemWidth="24dp" />
 
-        <TextView
-            android:id="@+id/fragment_review_agent_name_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fragment_review_agent_image_frame_layout"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="6dp"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="sunil chowdhary"
-            android:textAllCaps="false"
-            android:textColor="@color/listingBlack"
-            android:textSize="16sp"
-            android:typeface="sans" />
+            <TextView
+                android:id="@+id/fragment_review_agent_review_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_review_agent_rating_bar"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="rate your experience"
+                android:textAllCaps="false"
+                android:textColor="#444444"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:typeface="serif" />
 
-        <TextView
-            android:id="@+id/fragment_review_agent_type_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fragment_review_agent_name_text_view"
-            android:layout_centerHorizontal="true"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="grace consultant"
-            android:textAllCaps="false"
-            android:textColor="#555555"
-            android:textSize="15sp"
-            android:typeface="serif" />
-
-        <com.makaan.ui.view.CustomRatingBar
-            android:id="@+id/fragment_review_agent_rating_bar"
-            style="?android:attr/ratingBarStyle"
-            android:layout_width="150dp"
-            android:layout_height="24dp"
-            android:layout_below="@id/fragment_review_agent_type_text_view"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="26dp"
-            android:gravity="center"
-            android:numStars="5"
-            android:stepSize="1"
-            app:itemHeight="24dp"
-            app:itemMarginLeft="3dp"
-            app:itemMarginRight="3dp"
-            app:itemProgressIcon="@drawable/m_fill"
-            app:itemSecondaryProgressIcon="@drawable/m_outline"
-            app:itemWidth="24dp" />
-
-        <TextView
-            android:id="@+id/fragment_review_agent_review_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fragment_review_agent_rating_bar"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="rate your experience"
-            android:textAllCaps="false"
-            android:textColor="#444444"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:typeface="serif" />
-
-        <View
-            android:id="@+id/fragment_review_agent_empty_view"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/fragment_review_agent_review_text_view"
-            android:layout_marginTop="26dp"
-            android:background="#B0979797" />
+            <View
+                android:id="@+id/fragment_review_agent_empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/fragment_review_agent_review_text_view"
+                android:layout_marginTop="26dp"
+                android:background="#B0979797" />
+        </RelativeLayout>
 
         <ScrollView
+            android:id="@+id/fragment_review_agent_feedback_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/fragment_review_agent_next_button"
-            android:layout_below="@id/fragment_review_agent_empty_view">
+            android:layout_below="@id/fragment_review_agent_top_layout"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"

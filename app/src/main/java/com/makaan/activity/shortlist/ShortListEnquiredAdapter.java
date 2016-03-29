@@ -31,6 +31,7 @@ import com.makaan.response.user.Company;
 import com.makaan.response.user.CompanySeller;
 import com.makaan.response.user.User;
 import com.makaan.service.ClientEventsService;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.JsonBuilder;
 
@@ -242,12 +243,13 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
         holder.mSellerImage.setVisibility(View.GONE);
         // show seller first character as logo
 
-        int[] bgColorArray = mContext.getResources().getIntArray(R.array.bg_colors);
+//        int[] bgColorArray = mContext.getResources().getIntArray(R.array.bg_colors);
 
-        Random random = new Random();
+//        Random random = new Random();
         ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
 //        int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
-        drawable.getPaint().setColor(bgColorArray[random.nextInt(bgColorArray.length)]);
+//        drawable.getPaint().setColor(bgColorArray[random.nextInt(bgColorArray.length)]);
+        drawable.getPaint().setColor(CommonUtil.getColor(name, mContext));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             holder.mSellerText.setBackground(drawable);
         } else {

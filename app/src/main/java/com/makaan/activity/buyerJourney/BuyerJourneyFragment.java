@@ -19,6 +19,7 @@ import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.buyerjourney.ClientEventsByGetEvent;
 import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
 import com.makaan.event.buyerjourney.NewMatchesGetEvent;
+import com.makaan.event.buyerjourney.PropertyRequirementsByGetEvent;
 import com.makaan.event.saveSearch.SaveSearchGetEvent;
 import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.fragment.MakaanBaseFragment;
@@ -190,6 +191,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             }
 
             ((ClientLeadsService) MakaanServiceFactory.getInstance().getService(ClientLeadsService.class)).requestpropertyRequirements();
+            ((ClientLeadsService) MakaanServiceFactory.getInstance().getService(ClientLeadsService.class)).requestClientLeadsActivity();
             ((SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class)).getSavedSearchesNewMatches();
             ((ClientEventsService) MakaanServiceFactory.getInstance().getService(ClientEventsService.class)).getClientEvents(1);
             ((WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class)).get();
@@ -300,14 +302,13 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             return;
         }
         if(null == clientLeadsByGetEvent || null != clientLeadsByGetEvent.error){
-            if(clientLeadsByGetEvent != null && !TextUtils.isEmpty(clientLeadsByGetEvent.error.msg)) {
+            /*if(clientLeadsByGetEvent != null && !TextUtils.isEmpty(clientLeadsByGetEvent.error.msg)) {
                 showNoResults(clientLeadsByGetEvent.error.msg);
             } else {
                 showNoResults();
-            }
+            }*/
             return;
         }
-        mClientLeadsCount = clientLeadsByGetEvent.totalCount;
         if(clientLeadsByGetEvent.results != null && clientLeadsByGetEvent.results.size() > 0) {
             if(clientLeadsByGetEvent.results.get(0).clientActivity != null) {
                 mPhaseId = clientLeadsByGetEvent.results.get(0).clientActivity.phaseId;
@@ -316,6 +317,22 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
         if(mPhaseId >= 0) {
             updateStage(mPhaseId);
         }
+    }
+
+    @Subscribe
+    public void onResults(PropertyRequirementsByGetEvent propertyRequirementsByGetEvent){
+        if(!isVisible()) {
+            return;
+        }
+        if(null == propertyRequirementsByGetEvent || null != propertyRequirementsByGetEvent.error){
+            if(propertyRequirementsByGetEvent != null && !TextUtils.isEmpty(propertyRequirementsByGetEvent.error.msg)) {
+                showNoResults(propertyRequirementsByGetEvent.error.msg);
+            } else {
+                showNoResults();
+            }
+            return;
+        }
+        mClientLeadsCount = propertyRequirementsByGetEvent.totalCount;
         mClientLeadsReceived = true;
         updateUi();
     }
