@@ -372,6 +372,8 @@
 
     <string name="please_wait">please wait...</string>
 
+    <string name="score_message">calculated based on presence of project amenities, builder credentials and location advantages</string>
 
+    <string name="got_it">got it</string>
 </resources>
 
