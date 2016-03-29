@@ -2,8 +2,6 @@ package com.makaan.response.assets;
 
 import android.content.Context;
 
-import com.makaan.service.download.DownloadAssetService;
-
 import java.io.File;
 import java.util.ArrayList;
 

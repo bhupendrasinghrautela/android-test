@@ -18,12 +18,10 @@ import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.util.JsonBuilder;
-import com.makaan.util.JsonParser;
 import com.segment.analytics.Properties;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 

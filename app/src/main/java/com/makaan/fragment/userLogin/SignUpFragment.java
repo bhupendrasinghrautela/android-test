@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.makaan.R;
@@ -147,7 +146,7 @@ public class SignUpFragment extends Fragment {
             mOnUserRegistrationListener.onUserRegistrationSuccess(userRegistrationEvent.userResponse , str);
 
             ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
-            ))).loginWithMakaanAccount(userRegistrationDto.getEmail(),userRegistrationDto.getPassword());
+            ))).loginWithMakaanAccount(userRegistrationDto.getEmail(), userRegistrationDto.getPassword());
         }
 
     }
@@ -170,5 +169,11 @@ public class SignUpFragment extends Fragment {
             mOnUserLoginListener.onUserLoginSuccess(userLoginEvent.userResponse, str);
         }
     }
+
+    @OnClick(R.id.iv_back)
+    public void onBackPressed(){
+        getActivity().onBackPressed();
+    }
+
 
 }

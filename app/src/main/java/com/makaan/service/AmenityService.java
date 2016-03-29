@@ -1,17 +1,8 @@
 package com.makaan.service;
 
-import com.google.gson.reflect.TypeToken;
 import com.makaan.constants.ApiConstants;
-import com.makaan.event.city.CityByIdEvent;
 import com.makaan.network.MakaanNetworkClient;
-import com.makaan.network.ObjectGetCallback;
-import com.makaan.request.selector.Selector;
 import com.makaan.response.amenity.AmenityCallback;
-import com.makaan.response.city.City;
-import com.makaan.util.AppBus;
-
-import java.lang.reflect.Type;
-
 
 
 /**

@@ -4,9 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import com.makaan.util.AppBus;
-import com.squareup.otto.Bus;
-
 /**
  * Created by sunil on 11/01/16.
  */

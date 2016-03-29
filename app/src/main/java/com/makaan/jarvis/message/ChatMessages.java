@@ -7,11 +7,7 @@ import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.util.AppBus;
 import com.squareup.otto.Bus;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 /**

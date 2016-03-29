@@ -10,7 +10,6 @@ import com.makaan.response.search.SearchResponseItem;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by rohitgarg on 1/19/16.

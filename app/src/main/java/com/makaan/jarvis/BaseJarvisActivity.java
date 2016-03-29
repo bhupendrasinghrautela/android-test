@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -27,7 +26,6 @@ import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
-import com.makaan.constants.LeadPhaseConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.jarvis.analytics.AnalyticsConstants;
 import com.makaan.jarvis.analytics.AnalyticsService;
@@ -39,15 +37,11 @@ import com.makaan.jarvis.message.CtaType;
 import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.jarvis.ui.cards.BaseCtaView;
 import com.makaan.jarvis.ui.cards.CtaCardFactory;
-import com.makaan.jarvis.ui.cards.PyrPopupCard;
 import com.makaan.jarvis.ui.cards.SerpFilterCard;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.pojo.SerpRequest;
-import com.makaan.request.buyerjourney.PhaseChange;
-import com.makaan.response.project.Project;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.JsonBuilder;
-import com.makaan.util.JsonParser;
 import com.makaan.util.KeyUtil;
 import com.segment.analytics.Properties;
 
@@ -57,7 +51,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -602,11 +595,8 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     }
 
     public boolean isActivityDead(){
-        if(isFinishing() || isActivityDestroyed()){
-            return true;
-        }
+        return isFinishing() || isActivityDestroyed();
 
-        return false;
     }
 
     private boolean isActivityDestroyed(){

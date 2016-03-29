@@ -25,12 +25,12 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.project.CompanySeller;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.StringUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.Calendar;
-import java.util.Random;
 
 import butterknife.Bind;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -296,12 +296,13 @@ public class SellerListingView extends AbstractCardListingView {
         mSellerImageView.setVisibility(View.GONE);
         // show seller first character as logo
 
-        int[] bgColorArray = getResources().getIntArray(R.array.bg_colors);
+//        int[] bgColorArray = getResources().getIntArray(R.array.bg_colors);
 
-        Random random = new Random();
+//        Random random = new Random();
         ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
 //        int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
-        drawable.getPaint().setColor(bgColorArray[random.nextInt(bgColorArray.length)]);
+//        drawable.getPaint().setColor(bgColorArray[random.nextInt(bgColorArray.length)]);
+        drawable.getPaint().setColor(CommonUtil.getColor(seller.name, getContext()));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             mSellerLogoTextView.setBackground(drawable);
         } else {

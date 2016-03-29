@@ -31,12 +31,12 @@ import com.makaan.response.buyerjourney.Company;
 import com.makaan.service.ClientLeadsService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.AppUtils;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.ErrorUtil;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -274,20 +274,21 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
                 radioButton.setChecked(position == mSelected);
                 radioButton.setOnCheckedChangeListener(this);
 
-                if(clientLeadsObject.company.name != null) {
+                if(!TextUtils.isEmpty(clientLeadsObject.company.name)) {
                     logoTextView.setText(String.valueOf(clientLeadsObject.company.name.charAt(0)));
-                    logoTextView.setVisibility(View.VISIBLE);
+                }
+                logoTextView.setVisibility(View.VISIBLE);
 
-                    int[] bgColorArray = getResources().getIntArray(R.array.bg_colors);
+//                    int[] bgColorArray = getResources().getIntArray(R.array.bg_colors);
 
-                    Random random = new Random();
-                    ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
-                    drawable.getPaint().setColor(bgColorArray[random.nextInt(bgColorArray.length)]);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        logoTextView.setBackground(drawable);
-                    } else {
-                        logoTextView.setBackgroundDrawable(drawable);
-                    }
+//                    Random random = new Random();
+                ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+//                    drawable.getPaint().setColor(bgColorArray[random.nextInt(bgColorArray.length)]);
+                drawable.getPaint().setColor(CommonUtil.getColor(clientLeadsObject.company.name, getContext()));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    logoTextView.setBackground(drawable);
+                } else {
+                    logoTextView.setBackgroundDrawable(drawable);
                 }
             }
 

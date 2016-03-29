@@ -1,7 +1,6 @@
 package com.makaan.response.wishlist;
 
 import com.makaan.response.BaseResponse;
-import com.makaan.response.project.Project;
 
 import java.util.List;
 

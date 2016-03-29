@@ -9,15 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.pyr.PropertyTypeListingAdapter;
-import com.makaan.cache.MasterDataCache;
 import com.makaan.fragment.pyr.PyrPagePresenter;
-import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.serp.TermFilter;
 
 import java.util.ArrayList;

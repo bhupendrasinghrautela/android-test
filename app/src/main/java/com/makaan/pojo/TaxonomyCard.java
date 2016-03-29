@@ -1,7 +1,5 @@
 package com.makaan.pojo;
 
-import com.makaan.request.selector.Selector;
-
 /**
  * Created by vaibhav on 18/01/16.
  */

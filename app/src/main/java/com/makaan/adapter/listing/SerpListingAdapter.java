@@ -11,20 +11,11 @@ import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
 import com.makaan.adapter.PaginatedBaseAdapter;
 import com.makaan.adapter.RecycleViewMode;
-import com.makaan.jarvis.analytics.AnalyticsConstants;
-import com.makaan.jarvis.analytics.AnalyticsService;
-import com.makaan.jarvis.event.JarvisTrackExtraData;
 import com.makaan.pojo.GroupCluster;
-import com.makaan.pojo.SerpObjects;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.Listing;
-import com.makaan.service.MakaanServiceFactory;
 import com.makaan.ui.listing.ListingViewHolderFactory;
 import com.makaan.ui.listing.BaseListingAdapterViewHolder;
-import com.makaan.util.JsonBuilder;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;

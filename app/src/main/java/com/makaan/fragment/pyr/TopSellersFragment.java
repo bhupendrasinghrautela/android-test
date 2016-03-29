@@ -22,7 +22,6 @@ import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.network.VolleyErrorParser;
 import com.makaan.request.pyr.PyrEnquiryType;
 import com.makaan.request.pyr.PyrRequest;
-import com.makaan.response.agents.Agent;
 import com.makaan.response.agents.TopAgent;
 import com.makaan.response.pyr.PyrPostResponse;
 import com.makaan.service.MakaanServiceFactory;

@@ -1,7 +1,6 @@
 package com.makaan.fragment;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;

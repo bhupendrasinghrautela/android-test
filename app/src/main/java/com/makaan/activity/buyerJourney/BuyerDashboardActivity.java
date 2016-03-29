@@ -24,8 +24,6 @@ import com.makaan.fragment.buyerJourney.RewardsFragment;
 import com.makaan.fragment.buyerJourney.SaveSearchFragment;
 import com.makaan.fragment.buyerJourney.UploadDocumentsFragment;
 import com.makaan.fragment.pyr.ThankYouScreenFragment;
-import com.makaan.fragment.userLogin.LoginSocialFragment;
-import com.makaan.fragment.userLogin.SignUpFragment;
 import com.makaan.request.buyerjourney.PhaseChange;
 import com.makaan.service.ClientEventsService;
 import com.makaan.service.MakaanServiceFactory;

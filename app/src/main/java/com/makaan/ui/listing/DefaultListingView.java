@@ -39,6 +39,7 @@ import com.makaan.ui.CustomNetworkImageView;
 import com.makaan.ui.view.WishListButton;
 import com.makaan.ui.view.WishListButton.WishListDto;
 import com.makaan.ui.view.WishListButton.WishListType;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.DateUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
@@ -47,8 +48,6 @@ import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -435,12 +434,12 @@ public class DefaultListingView extends AbstractListingView {
         mSellerImageView.setVisibility(View.GONE);
         // show seller first character as logo
 
-        int[] bgColorArray = getResources().getIntArray(R.array.bg_colors);
+//        int[] bgColorArray = getResources().getIntArray(R.array.bg_colors);
 
-        Random random = new Random();
+//        Random random = new Random();
         ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
 //        int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
-        drawable.getPaint().setColor(bgColorArray[random.nextInt(bgColorArray.length)]);
+        drawable.getPaint().setColor(CommonUtil.getColor(mListing.lisitingPostedBy.name, getContext()));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             mSellerLogoTextView.setBackground(drawable);
         } else {

@@ -4,17 +4,13 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
-import com.makaan.jarvis.ui.cards.BaseCtaView;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.notification.NotificationAttributes;
 import com.makaan.ui.BaseLinearLayout;
-import com.makaan.ui.listing.BaseCardView;
 import com.makaan.util.DateUtil;
 
 import butterknife.Bind;

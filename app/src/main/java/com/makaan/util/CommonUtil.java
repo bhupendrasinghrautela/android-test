@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.makaan.BuildConfig;
 import com.makaan.gallery.GalleryActivity;
+import com.makaan.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -165,4 +167,19 @@ public class CommonUtil {
         //mActivity.overridePendingTransition(R.anim.slide_in_from_bottom_with_alpha_transition, 0);
     }
 
+    public static int getColor(String name, Context context) {
+        int[] bgColorArray = context.getResources().getIntArray(R.array.bg_colors);
+        if(bgColorArray.length <= 0) {
+            // #FD434C
+            return Color.argb(255, 253, 67, 76);
+        }
+        if(TextUtils.isEmpty(name)) {
+            return bgColorArray[0];
+        }
+        int code = 0;
+        for(int i = 0; i < name.length(); i++) {
+            code += name.charAt(i);
+        }
+        return bgColorArray[code % bgColorArray.length];
+    }
 }

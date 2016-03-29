@@ -2,7 +2,6 @@ package com.makaan.adapter.listing;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import com.makaan.R;
 import com.makaan.ui.listing.ListingCardView;
 import com.makaan.response.listing.Listing;
-import com.makaan.ui.listing.LoadMoreListingCardView;
 
 import java.util.ArrayList;
 import java.util.List;

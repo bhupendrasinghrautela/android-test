@@ -13,11 +13,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.makaan.R;
-import com.makaan.activity.listing.PropertyDetailFragment;
-import com.makaan.activity.listing.SerpActivity;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.MakaanMessageDialogFragment;
-import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.request.pyr.PyrEnquiryType;
 import com.makaan.request.pyr.PyrRequest;
 import com.makaan.response.country.CountryCodeResponse;

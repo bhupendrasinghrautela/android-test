@@ -3,17 +3,14 @@ package com.makaan.fragment.pyr;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.pyr.PyrOtpVerification;
 
 import com.makaan.analytics.MakaanEventPayload;
-import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.pojo.ProjectConfigItem;
-import com.makaan.pojo.SerpObjects;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.response.agents.TopAgent;
 import com.makaan.response.search.SearchResponseItem;

@@ -93,7 +93,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
                 }
 
                 if(mTotalCount == 0) {
-                    showNoResults("no results found");
+                    showNoResults("no results found","set an alert");
                 } else {
                     showContent();
                 }
@@ -216,7 +216,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
             }
             mListingRecyclerView.setIsLoading(false);
             if(listingTotalCount == 0) {
-                showNoResults(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT, true));
+                showNoResults(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT, true), "set an alert");
             } else {
                 showContent();
             }
@@ -239,5 +239,13 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
     public void onResume() {
         mListingAdapter.notifyDataSetChanged();
         super.onResume();
+    }
+
+    @Override
+    protected boolean onActionButtonClick() {
+        if(mSerpRequestCallback != null) {
+            mSerpRequestCallback.requestDetailPage(SerpActivity.REQUEST_SET_ALERT, null);
+        }
+        return true;
     }
 }

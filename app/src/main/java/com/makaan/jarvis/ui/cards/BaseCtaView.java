@@ -4,9 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-import com.makaan.jarvis.message.ExposeMessage;
-import com.makaan.ui.view.BaseView;
-
 import butterknife.ButterKnife;
 
 /**

@@ -16,7 +16,6 @@ import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.LeadPhaseConstants;
 import com.makaan.jarvis.analytics.BuyerJourneyMessage;
 import com.makaan.jarvis.message.ExposeMessage;
-import com.makaan.jarvis.message.PageVisitType;
 import com.makaan.request.buyerjourney.PhaseChange;
 import com.makaan.service.ClientEventsService;
 import com.makaan.service.MakaanServiceFactory;

@@ -2,7 +2,6 @@ package com.makaan.service;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
 
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
@@ -11,6 +10,7 @@ import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.constants.ApiConstants;
 import com.makaan.constants.ResponseConstants;
 import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
+import com.makaan.event.buyerjourney.PropertyRequirementsByGetEvent;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
@@ -62,6 +62,33 @@ public class ClientLeadsService implements MakaanService {
     public void requestpropertyRequirements() {
 //        String detailsURL = ApiConstants.ICRM_CLIENT_LEADS.concat("?sort=-clientActivity.phaseId&fields=clientActivity.phaseId&rows=1");
         String detailsURL = ApiConstants.PROPERTY_REQUIREMENTS.concat("?fields=id&rows=1");
+        MakaanNetworkClient.getInstance().get(detailsURL, new JSONGetCallback() {
+            @Override
+            public void onSuccess(JSONObject responseObject) {
+                if(responseObject != null) {
+                    try {
+                        JSONObject data = responseObject.getJSONObject(ResponseConstants.DATA);
+                        Type propertyRequirementsType = new TypeToken<PropertyRequirementsByGetEvent>() {}.getType();
+                        PropertyRequirementsByGetEvent propertyRequirementsByGetEvent = MakaanBuyerApplication.gson.fromJson(data.toString(), propertyRequirementsType);
+                        AppBus.getInstance().post(propertyRequirementsByGetEvent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(ResponseError error) {
+                PropertyRequirementsByGetEvent event = new PropertyRequirementsByGetEvent();
+                event.error = error;
+                AppBus.getInstance().post(event);
+            }
+        });
+    }
+
+    public void requestClientLeadsActivity() {
+        String detailsURL = ApiConstants.ICRM_CLIENT_LEADS.concat("?sort=-clientActivity.phaseId&fields=clientActivity.phaseId&rows=1");
+//        String detailsURL = ApiConstants.PROPERTY_REQUIREMENTS.concat("?fields=id&rows=1");
         MakaanNetworkClient.getInstance().get(detailsURL, new JSONGetCallback() {
             @Override
             public void onSuccess(JSONObject responseObject) {

@@ -19,8 +19,6 @@ import com.makaan.response.wishlist.WishListResponse;
 import com.makaan.service.ImageService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PriceTrendService;
-import com.makaan.service.WishListService;
-import com.makaan.service.user.UserLoginService;
 import com.makaan.util.DateUtil;
 import com.makaan.util.JsonBuilder;
 import com.squareup.otto.Subscribe;

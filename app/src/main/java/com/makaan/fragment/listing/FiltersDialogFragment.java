@@ -5,7 +5,6 @@ import android.app.DialogFragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -215,7 +213,7 @@ public class FiltersDialogFragment extends MakaanBaseDialogFragment {
     }
 
     public interface FilterStringListener{
-        public void setFilterString(Properties properties);
+        void setFilterString(Properties properties);
     }
 
     public interface FilterDialogFragmentCallback {

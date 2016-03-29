@@ -1,6 +1,5 @@
 package com.makaan.activity.pyr;
 
-import android.app.Activity;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -9,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,17 +26,13 @@ import com.makaan.request.pyr.PyrRequest;
 import com.makaan.response.pyr.OnOtpVerificationListener;
 import com.makaan.response.pyr.OtpVerificationResponse;
 import com.makaan.response.pyr.PyrData;
-import com.makaan.response.pyr.PyrPostResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.OtpVerificationService;
 import com.makaan.service.PyrService;
-import com.makaan.service.SearchService;
 import com.makaan.util.AppBus;
 import com.makaan.util.SmsReceiver;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
-
-import java.util.Arrays;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -260,6 +254,10 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
             }else {
                 mEditTextFirstDigit.requestFocus();
             }
+            /*set focus to first editext*/
+            if (mEditTextFirstDigit.getText().length() == 0) {
+                mEditTextFirstDigit.requestFocus();
+            }
         }
 
         @Override
@@ -284,6 +282,10 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
             }else{
                 mEditTextSecondDigit.requestFocus();
             }
+            /*set focus to first editext*/
+            if (mEditTextFirstDigit.getText().length() == 0) {
+                mEditTextFirstDigit.requestFocus();
+            }
         }
 
         @Override
@@ -304,6 +306,10 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
             if(s.length()==0)
             {
                 mEditTextThirdDigit.requestFocus();
+            }
+            /*set focus to first editext*/
+            if (mEditTextFirstDigit.getText().length() == 0) {
+                mEditTextFirstDigit.requestFocus();
             }
         }
 

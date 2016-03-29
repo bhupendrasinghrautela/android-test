@@ -5,23 +5,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.android.volley.Request.Method;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
-import com.makaan.activity.HomeActivity;
 import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.constants.ApiConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.jarvis.JarvisClient;
 import com.makaan.jarvis.JarvisConstants;
 import com.makaan.network.MakaanNetworkClient;
-import com.makaan.response.ResponseError;
 import com.makaan.response.user.UserResponse;
 import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
@@ -30,7 +26,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.prefs.Preferences;
 
 /**
  * Created by sunil on 05/12/15.

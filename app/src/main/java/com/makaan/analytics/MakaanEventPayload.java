@@ -4,8 +4,6 @@ import android.content.Context;
 
 import com.segment.analytics.Properties;
 
-import org.json.JSONObject;
-
 /**
  * Created by sunil on 17/02/16.
  */
