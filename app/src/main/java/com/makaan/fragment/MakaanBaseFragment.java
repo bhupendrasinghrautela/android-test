@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,6 +37,8 @@ public abstract class MakaanBaseFragment extends Fragment {
     ImageView mLoadingProgressBar;
     @Bind(R.id.fragment_makaan_base_content_frame_layout)
     FrameLayout mContentFrameLayout;
+    @Bind(R.id.fragment_makaan_base_no_result_action_button)
+    Button mActionButton;
 
     protected abstract int getContentViewId();
 
@@ -137,6 +140,26 @@ public abstract class MakaanBaseFragment extends Fragment {
         Glide.with(this).load(R.raw.no_result).crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mNoResultsImageView);
     }
 
+    protected void showNoResults(int stringId, String errorButtonText) {
+        if(stringId <= 0) {
+            showNoResults(R.string.generic_error, errorButtonText);
+        } else {
+            showNoResults(getString(stringId), errorButtonText);
+        }
+    }
+
+    protected void showNoResults(String text, String errorButtonText) {
+        mContentFrameLayout.setVisibility(View.GONE);
+        mNoResultsLayout.setVisibility(View.VISIBLE);
+        mLoadingProgressBar.setVisibility(View.GONE);
+
+        mNoResultsTextView.setText(text);
+        mActionButton.setText(errorButtonText);
+
+//        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(mNoResultsImageView);
+        Glide.with(this).load(R.raw.no_result).crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mNoResultsImageView);
+    }
+
     protected void showContent() {
         mContentFrameLayout.setVisibility(View.VISIBLE);
         mNoResultsLayout.setVisibility(View.GONE);
@@ -149,11 +172,17 @@ public abstract class MakaanBaseFragment extends Fragment {
         AppBus.getInstance().register(this);
     }
 
+    protected boolean onActionButtonClick() {
+        return false;
+    }
+
     @OnClick(R.id.fragment_makaan_base_no_result_action_button)
-    public void onGoHomePressed(View view) {
-        Intent intent = new Intent(getActivity(), HomeActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+    public void onActionButtonPressed(View view) {
+        if(!onActionButtonClick()) {
+            Intent intent = new Intent(getActivity(), HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
     }
 
     protected boolean isFragmentVisible() {

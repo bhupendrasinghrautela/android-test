@@ -21,6 +21,7 @@ public class LeadFormPresenter {
     private LeadLaterCallBackFragment mLeadLaterCallBackFragment;
     private ThankYouScreenFragment mThankYouFragment;
     private PyrOtpVerification mPyrOtpVerification;
+    private String temporaryPhoneNo;
     public static String MAKAAN_ASSIST_VALUE = "makaan_assist";
     public static String NO_SELLERS_FRAGMENT = "no_seller";
 
@@ -285,5 +286,14 @@ public class LeadFormPresenter {
             mLeadInstantCallBackFragment.errorInInstantResponse();
         }
     }
+
+    public String getTemporaryPhoneNo() {
+        return temporaryPhoneNo;
+    }
+
+    public void setTemporaryPhoneNo(String temporaryPhoneNo) {
+        this.temporaryPhoneNo = temporaryPhoneNo;
+    }
+
 
 }

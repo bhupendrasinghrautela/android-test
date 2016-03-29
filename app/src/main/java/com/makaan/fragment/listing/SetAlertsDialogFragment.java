@@ -52,7 +52,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 import static com.makaan.adapter.listing.FiltersViewAdapter.RADIO_BUTTON;
-import static com.makaan.adapter.listing.FiltersViewAdapter.RADIO_BUTTON_MIN_MAX;
+import static com.makaan.adapter.listing.FiltersViewAdapter.CHECKBOX_MIN_MAX;
 import static com.makaan.adapter.listing.FiltersViewAdapter.RADIO_BUTTON_RANGE;
 import static com.makaan.adapter.listing.FiltersViewAdapter.SEEKBAR;
 import static com.makaan.adapter.listing.FiltersViewAdapter.UNEXPECTED_VALUE;
@@ -397,45 +397,42 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                         }
                     }
                 }
-            } else if (type == RADIO_BUTTON_MIN_MAX) {
+            } else if (type == CHECKBOX_MIN_MAX) {
 
+                long minValue = Long.MAX_VALUE;
+                long maxValue = Long.MIN_VALUE;
+                String minFieldName = "";
+                String maxFieldName = "";
+                boolean filterApplied = false;
                 for (RangeMinMaxFilter filter : grp.rangeMinMaxFilterValues) {
                     if (filter.selected) {
-                        // TODO check if there can be other case possible than YEAR case
-                        //if (grp.type.equalsIgnoreCase(TYPE_YEAR)) {
                         Calendar cal = Calendar.getInstance();
-                        long minValue = UNEXPECTED_VALUE;
-                        long maxValue = UNEXPECTED_VALUE;
                         if (filter.minValue != UNEXPECTED_VALUE) {
-                            minValue = (long) filter.minValue;
+                            cal.add(Calendar.YEAR, (int) filter.minValue);
+                            if(cal.getTimeInMillis() < minValue) {
+                                minValue = cal.getTimeInMillis();
+                            }
+                            cal.add(Calendar.YEAR, -(int) filter.minValue);
                         }
                         if (filter.maxValue != UNEXPECTED_VALUE) {
-                            maxValue = (long) filter.maxValue;
-                        }
-                        String s = "";
-                        if (minValue != UNEXPECTED_VALUE) {
-                            selector.range(filter.minFieldName, minValue, null);
-//                                searchNameBuilder.append(minValue);
-                            s = "-";
-                        }
-                        if (maxValue != UNEXPECTED_VALUE) {
-                            selector.range(filter.maxFieldName, null, maxValue);
-//                                searchNameBuilder.append(s);
-//                                searchNameBuilder.append(maxValue);
-                        }
-                        /*} else {
-                            String s = "";
-                            if(filter.minValue != UNEXPECTED_VALUE) {
-                                selector.term(filter.minFieldName, String.valueOf(filter.minValue));
-                                searchNameBuilder.append(String.valueOf(filter.minValue));
-                                s = "-";
+                            cal.add(Calendar.YEAR, (int) filter.maxValue);
+                            if(cal.getTimeInMillis() > maxValue) {
+                                maxValue = cal.getTimeInMillis();
                             }
-                            if(filter.maxValue != UNEXPECTED_VALUE) {
-                                selector.term(filter.maxFieldName, String.valueOf(filter.maxValue));
-                                searchNameBuilder.append(s);
-                                searchNameBuilder.append(String.valueOf(filter.maxValue));
-                            }
-                        }*/
+                        }
+
+                        minFieldName = filter.minFieldName;
+                        maxFieldName = filter.maxFieldName;
+                        filterApplied = true;
+                    }
+                }
+
+                if(filterApplied) {
+                    if (minValue != Long.MAX_VALUE) {
+                        selector.range(minFieldName, minValue, null);
+                    }
+                    if (maxValue != Long.MIN_VALUE) {
+                        selector.range(maxFieldName, null, maxValue);
                     }
                 }
             } else {
