@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,8 +101,13 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
         //User data prefill
         try{
             UserResponse userResponse = CookiePreferences.getLastUserInfo(getContext());
-            if(userResponse!=null && userResponse.getData()!=null && userResponse.getData().contactNumber!=null) {
-                mNumber.setText(userResponse.getData().contactNumber);
+            if(!TextUtils.isEmpty(mLeadFormPresenter.getTemporaryPhoneNo())){
+                mNumber.setText(mLeadFormPresenter.getTemporaryPhoneNo());
+            }
+            else {
+                if (userResponse != null && userResponse.getData() != null && userResponse.getData().contactNumber != null) {
+                    mNumber.setText(userResponse.getData().contactNumber);
+                }
             }
             mobileFlag=true;
         }catch (Exception e){
