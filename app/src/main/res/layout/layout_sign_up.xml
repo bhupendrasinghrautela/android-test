@@ -1,189 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
-    android:orientation="vertical">
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="160dp"
-        android:layout_gravity="center"
-        android:src="@drawable/makaan_banner" />
-
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"
-        android:gravity="top"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/drawable_top_padding">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="160dp"
             android:layout_gravity="center"
-            android:src="@drawable/information" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/personal_info"
-            android:textSize="@dimen/enquiry_medium_text" />
-
-    </LinearLayout>
+            android:src="@drawable/makaan_banner" />
 
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/login_view_height"
-        android:background="@color/view_line_grey" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.4"
-        android:orientation="vertical"
-        android:padding="@dimen/input_top_margin">
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_username"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/drawable_top_padding">
 
-
-        <EditText
-            android:id="@+id/sign_up_username"
-            android:textSize="@dimen/medium_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/input_top_margin"
-            android:hint="@string/user_name"
-            android:paddingBottom="@dimen/edit_internal_padding"
-            android:paddingTop="@dimen/edit_internal_padding"
-            android:singleLine="true"
-            android:maxLength="100"/>
-
-        </android.support.design.widget.TextInputLayout>
-
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_signup_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/drawable_top_padding"
-            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
-
-
-        <EditText
-                android:id="@+id/sign_up_email"
-                android:textSize="@dimen/medium_text"
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/input_top_margin"
-                android:hint="@string/email"
-                android:paddingBottom="@dimen/edit_internal_padding"
-                android:paddingTop="@dimen/edit_internal_padding"
-                android:singleLine="true"
-                android:maxLength="50" />
+                android:layout_gravity="center"
+                android:src="@drawable/information" />
 
-        </android.support.design.widget.TextInputLayout>
-        <RelativeLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/personal_info"
+                android:textSize="@dimen/enquiry_medium_text" />
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/login_view_height"
+            android:background="@color/view_line_grey" />
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
+            android:layout_height="0dp"
+            android:layout_weight="1.4"
+            android:orientation="vertical"
+            android:padding="@dimen/input_top_margin">
+
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/drawable_top_padding"
-                android:id="@+id/til_signup_password"
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
 
-            <EditText
-                    android:id="@+id/sign_up_password"
-                    android:inputType="textPassword"
-                    android:textSize="@dimen/medium_text"
+                <EditText
+                    android:id="@+id/sign_up_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/input_top_margin"
-                    android:hint="@string/Password"
+                    android:hint="@string/user_name"
+                    android:maxLength="100"
                     android:paddingBottom="@dimen/edit_internal_padding"
                     android:paddingTop="@dimen/edit_internal_padding"
                     android:singleLine="true"
-                    android:maxLength="32"/>
+                    android:textSize="@dimen/medium_text" />
+
             </android.support.design.widget.TextInputLayout>
 
-            <CheckBox
-                android:id="@+id/sign_up_password_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:button="@drawable/checkbox_show_hide_pwd"/>
-        </RelativeLayout>
-        <!--<LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/input_top_margin"
-            android:paddingTop="@dimen/drawable_top_padding">
 
-            <CheckBox
-                android:id="@+id/cb_remember_me"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_signup_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/remember_me"
-                android:textSize="@dimen/medium_text"
-                android:paddingLeft="10dp"
-                android:button="@drawable/checkbox_remember_me_selector"/>
+                android:layout_marginTop="@dimen/drawable_top_padding"
+                app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-            <TextView
-                android:id="@+id/tv_forgot_pwd"
-                android:layout_width="@dimen/zero_weight"
+
+                <EditText
+                    android:id="@+id/sign_up_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/input_top_margin"
+                    android:hint="@string/email"
+                    android:maxLength="50"
+                    android:paddingBottom="@dimen/edit_internal_padding"
+                    android:paddingTop="@dimen/edit_internal_padding"
+                    android:singleLine="true"
+                    android:textSize="@dimen/medium_text" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/forgot_pwd"
-                android:textColor="@color/appThemeRed"
-                android:textSize="@dimen/medium_text" />
+                android:layout_marginBottom="20dp">
 
-        </LinearLayout>-->
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_signup_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/drawable_top_padding"
+                    app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/button_background_selector">
 
-            <Button
-                android:id="@+id/sign_up_button"
+                    <EditText
+                        android:id="@+id/sign_up_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/input_top_margin"
+                        android:hint="@string/Password"
+                        android:inputType="textPassword"
+                        android:maxLength="32"
+                        android:paddingBottom="@dimen/edit_internal_padding"
+                        android:paddingTop="@dimen/edit_internal_padding"
+                        android:singleLine="true"
+                        android:textSize="@dimen/medium_text" />
+                </android.support.design.widget.TextInputLayout>
+
+                <CheckBox
+                    android:id="@+id/sign_up_password_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:button="@drawable/checkbox_show_hide_pwd" />
+            </RelativeLayout>
+            <!--<LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/input_top_margin"
+                android:paddingTop="@dimen/drawable_top_padding">
+
+                <CheckBox
+                    android:id="@+id/cb_remember_me"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/remember_me"
+                    android:textSize="@dimen/medium_text"
+                    android:paddingLeft="10dp"
+                    android:button="@drawable/checkbox_remember_me_selector"/>
+
+                <TextView
+                    android:id="@+id/tv_forgot_pwd"
+                    android:layout_width="@dimen/zero_weight"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/forgot_pwd"
+                    android:textColor="@color/appThemeRed"
+                    android:textSize="@dimen/medium_text" />
+
+            </LinearLayout>-->
+
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="?android:selectableItemBackground"
-                android:paddingLeft="@dimen/button_padding_left_right"
-                android:paddingRight="@dimen/button_padding_left_right"
-                android:text="@string/sign_up"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/average_text" />
-        </FrameLayout>
+                android:background="@drawable/button_background_selector">
 
-        <!--<TextView
-            android:id="@+id/tv_signup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/signup"
-            android:layout_gravity="center_horizontal"
-            android:padding="@dimen/signup_text_padding"
-            android:clickable="true"/>-->
+                <Button
+                    android:id="@+id/sign_up_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="?android:selectableItemBackground"
+                    android:paddingLeft="@dimen/button_padding_left_right"
+                    android:paddingRight="@dimen/button_padding_left_right"
+                    android:text="@string/sign_up"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/average_text" />
+            </FrameLayout>
+
+            <!--<TextView
+                android:id="@+id/tv_signup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/signup"
+                android:layout_gravity="center_horizontal"
+                android:padding="@dimen/signup_text_padding"
+                android:clickable="true"/>-->
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="@dimen/login_back_width"
+        android:layout_height="@dimen/login_back_height"
+        android:layout_marginLeft="@dimen/login_back_margin"
+        android:layout_marginTop="@dimen/login_back_margin"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:src="@drawable/back_arrow_white"
+        android:tint="@color/app_grey" />
+</RelativeLayout>

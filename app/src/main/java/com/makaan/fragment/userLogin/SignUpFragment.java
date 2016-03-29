@@ -147,7 +147,7 @@ public class SignUpFragment extends Fragment {
             mOnUserRegistrationListener.onUserRegistrationSuccess(userRegistrationEvent.userResponse , str);
 
             ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
-            ))).loginWithMakaanAccount(userRegistrationDto.getEmail(),userRegistrationDto.getPassword());
+            ))).loginWithMakaanAccount(userRegistrationDto.getEmail(), userRegistrationDto.getPassword());
         }
 
     }
@@ -170,5 +170,11 @@ public class SignUpFragment extends Fragment {
             mOnUserLoginListener.onUserLoginSuccess(userLoginEvent.userResponse, str);
         }
     }
+
+    @OnClick(R.id.iv_back)
+    public void onBackPressed(){
+        getActivity().onBackPressed();
+    }
+
 
 }

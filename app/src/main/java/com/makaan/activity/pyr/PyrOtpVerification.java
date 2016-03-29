@@ -260,6 +260,10 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
             }else {
                 mEditTextFirstDigit.requestFocus();
             }
+            /*set focus to first editext*/
+            if (mEditTextFirstDigit.getText().length() == 0) {
+                mEditTextFirstDigit.requestFocus();
+            }
         }
 
         @Override
@@ -284,6 +288,10 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
             }else{
                 mEditTextSecondDigit.requestFocus();
             }
+            /*set focus to first editext*/
+            if (mEditTextFirstDigit.getText().length() == 0) {
+                mEditTextFirstDigit.requestFocus();
+            }
         }
 
         @Override
@@ -304,6 +312,10 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
             if(s.length()==0)
             {
                 mEditTextThirdDigit.requestFocus();
+            }
+            /*set focus to first editext*/
+            if (mEditTextFirstDigit.getText().length() == 0) {
+                mEditTextFirstDigit.requestFocus();
             }
         }
 
