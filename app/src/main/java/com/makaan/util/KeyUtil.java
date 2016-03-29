@@ -53,4 +53,21 @@ public class KeyUtil {
     public static final String PROJECT_NAME_LEAD_FORM="projectName";
     public static final String PROPERTY_Id_LEAD_FORM="propertyId";
 
+
+    public final static String CLUSTER_PLAN = "clusterPlan";
+    public final static String LOCATION_PLAN = "locationPlan";
+    public final static String MAIN_PHOTO = "main";
+    public final static String MASTER_PLAN = "masterPlan";
+    public final static String SITE_PLAN = "sitePlan";
+    public final static String LAYOUT_PLAN = "layoutPlan";
+    public final static String PAYMENT_PLAN = "paymentPlan";
+    public final static String CONSTRUCTION_STATUS = "constructionStatus";
+    public final static String FLOOR_PLAN = "floorPlan";
+    public final static String NEIGHBOURHOODS = "neighbourhoods";
+    public final static String KEY_LAUNCH_FULL_SCREEN_GALLERY_DIRECTLY = "launch_full_screen_gallery_directly";
+    public final static String IMAGE_DATA_LIST = "imageDataList";
+    public static final String KEY_PROJECT_ID = "Project_id";
+    public static final String KEY_FULL_SCREEN_SRC_NAME = "full_screen_src_name";
+    public static final String KEY_PROJECT_IMAGES_CLICKED_POSITION = "project_image_clicked_position";
+
 }

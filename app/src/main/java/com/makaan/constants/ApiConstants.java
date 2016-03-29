@@ -56,9 +56,9 @@ public class ApiConstants {
     public static final String LOCALITY = MICROSERVICE_PETRA.concat("/app/v3/locality/");
 
     public static final String TREND_URL = MICROSERVICE_COMPASS.concat("/data/v1/trend");
-    public static final String LOCALITY_TREND_URL = TREND_URL.concat("?fields=avgBuyPricePerUnitArea,localityName,projectName&group=localityId,month");
-    public static final String CITY_TREND_URL = TREND_URL.concat("?fields=avgBuyPricePerUnitArea,localityName,projectName,cityName&group=cityId,month");
-    public static final String PROJECT_TREND_URL = TREND_URL.concat("?fields=avgBuyPricePerUnitArea,localityName,projectName&group=projectId,month");
+    public static final String LOCALITY_TREND_URL = TREND_URL.concat("?fields=avgBuyPricePerUnitArea,localityName&group=localityId,month");
+    public static final String CITY_TREND_URL = TREND_URL.concat("?fields=avgBuyPricePerUnitArea&group=month");
+    public static final String PROJECT_TREND_URL = TREND_URL.concat("?fields=avgBuyPricePerUnitArea&group=month");
 
     public static final String SAVED_SEARCH_URL = MICROSERVICE_PETRA.concat("/data/v1/entity/user/saved-searches/");
     public static final String SAVE_NEW_SEARCH_URL = MICROSERVICE_PETRA.concat("/data/v1/entity/saved-searches");

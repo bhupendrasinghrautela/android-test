@@ -30,7 +30,6 @@ import com.android.volley.toolbox.ImageLoader.ImageContainer;
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.listing.SerpActivity;
-import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
@@ -40,7 +39,6 @@ import com.makaan.event.city.CityTopLocalityEvent;
 import com.makaan.event.city.CityTrendEvent;
 import com.makaan.event.trend.CityPriceTrendEvent;
 import com.makaan.event.trend.callback.LocalityTrendCallback;
-import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.locality.LocalityLifestyleFragment;
 import com.makaan.fragment.locality.LocalityPropertiesFragment;
 import com.makaan.fragment.overview.OverviewFragment;
@@ -499,6 +497,7 @@ public class CityOverViewFragment extends OverviewFragment {
         if(cityPriceTrendEvent!=null && cityPriceTrendEvent.cityPriceTrendDto!=null && mLocalityPriceTrendDto.data!=null){
             Set<PriceTrendKey> priceTrendKeySet = cityPriceTrendEvent.cityPriceTrendDto.data.keySet();
             for (PriceTrendKey key : priceTrendKeySet) {
+                key.label = mCity.label;
                 mLocalityPriceTrendDto.data.put(key, cityPriceTrendEvent.cityPriceTrendDto.data.get(key));
             }
             if (mCity!= null && mCity.id != 0) {

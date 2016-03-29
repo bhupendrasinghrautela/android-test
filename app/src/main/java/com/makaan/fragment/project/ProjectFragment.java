@@ -719,6 +719,7 @@ public class ProjectFragment extends OverviewFragment{
         bundle.putLong("localityId", project.localityId);
         bundle.putLong("projectId", project.projectId);
         bundle.putSerializable("localities", localities);
+        bundle.putString("projectName",project.name);
         if(project.minPricePerUnitArea != null) {
             bundle.putInt("price", project.minPricePerUnitArea.intValue());
             if (project.locality != null && project.locality.avgPricePerUnitArea!=null

@@ -31,8 +31,8 @@ public class ProjectTrendChartCallback  extends JSONGetCallback {
 
         ProjectPriceTrendDto projectPriceTrendDto = new ProjectPriceTrendDto();
 
-        HashMap<Long, HashMap<String, List<ApiPriceTrendData>>> data;
-        Type apiPriceTrendType = new TypeToken<HashMap<Long, HashMap<String, List<ApiPriceTrendData>>>>() {
+        HashMap<String, List<ApiPriceTrendData>> data;
+        Type apiPriceTrendType = new TypeToken<HashMap<String, List<ApiPriceTrendData>>>() {
         }.getType();
 
         try {
@@ -40,12 +40,12 @@ public class ProjectTrendChartCallback  extends JSONGetCallback {
 
 
             if (null != data) {
-                for (Map.Entry<Long, HashMap<String, List<ApiPriceTrendData>>> entry : data.entrySet()) {
+/*                for (Map.Entry<Long, HashMap<String, List<ApiPriceTrendData>>> entry : data.entrySet()) {
                     Long projectId = entry.getKey();
                     HashMap<String, List<ApiPriceTrendData>> localityTrendData = entry.getValue();
 
-                    if (null != localityTrendData) {
-                        for (Map.Entry<String, List<ApiPriceTrendData>> trendEntry : localityTrendData.entrySet()) {
+                    if (null != localityTrendData) {*/
+                        for (Map.Entry<String, List<ApiPriceTrendData>> trendEntry : data.entrySet()) {
                             Long epochDataDate = Long.valueOf(trendEntry.getKey());
                             // Date dataDate = AppUtils.getDateFromEpoch(epochDataDate);
 
@@ -54,13 +54,9 @@ public class ProjectTrendChartCallback  extends JSONGetCallback {
                                 ApiPriceTrendData apiPriceTrendData = apiPriceTrendList.get(0);
                                 Double minPricePerUnitArea = apiPriceTrendData.extraAttributes.get("avgBuyPricePerUnitArea");
                                 if (null != minPricePerUnitArea) {
-                                    projectPriceTrendDto.addPriceTrendData(projectId, apiPriceTrendData.projectName, epochDataDate, minPricePerUnitArea.longValue());
+                                    projectPriceTrendDto.addPriceTrendData(1l, apiPriceTrendData.projectName, epochDataDate, minPricePerUnitArea.longValue());
                                 }
                             }
-
-                        }
-
-                    }
 
                 }
                 AppBus.getInstance().post(new ProjectPriceTrendEvent(projectPriceTrendDto));
