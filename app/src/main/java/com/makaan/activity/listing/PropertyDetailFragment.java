@@ -71,6 +71,7 @@ import com.makaan.ui.view.CustomRatingBar;
 import com.makaan.ui.view.WishListButton;
 import com.makaan.ui.view.WishListButton.WishListDto;
 import com.makaan.ui.view.WishListButton.WishListType;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.RecentPropertyProjectManager;
@@ -81,7 +82,6 @@ import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -691,6 +691,7 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
         if(!TextUtils.isEmpty(name)) {
             mSellerLogoTextView.setText(String.valueOf(name.charAt(0)));
         }
+        final String finalName = name;
         if(!TextUtils.isEmpty(company.logo)) {
             mSellerLogoTextView.setVisibility(View.GONE);
             mSellerImageView.setVisibility(View.VISIBLE);
@@ -711,7 +712,7 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     super.onErrorResponse(volleyError);
-                    showTextAsImage();
+                    showTextAsImage(finalName);
                 }
             });
         } else if(user!=null && !TextUtils.isEmpty(user.profilePictureURL)) {
@@ -733,24 +734,25 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
 
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    showTextAsImage();
+                    showTextAsImage(finalName);
                 }
             });
         } else {
-            showTextAsImage();
+            showTextAsImage(finalName);
         }
     }
 
-    private void showTextAsImage() {
+    private void showTextAsImage(String finalName) {
         mSellerImageView.setVisibility(View.GONE);
         // show seller first character as logo
 
-        int[] bgColorArray = getResources().getIntArray(R.array.bg_colors);
+//        int[] bgColorArray = getResources().getIntArray(R.array.bg_colors);
 
-        Random random = new Random();
+//        Random random = new Random();
         ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
 //        int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
-        drawable.getPaint().setColor(bgColorArray[random.nextInt(bgColorArray.length)]);
+//        drawable.getPaint().setColor(bgColorArray[random.nextInt(bgColorArray.length)]);
+        drawable.getPaint().setColor(CommonUtil.getColor(finalName, getContext()));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             mSellerLogoTextView.setBackground(drawable);
         } else {

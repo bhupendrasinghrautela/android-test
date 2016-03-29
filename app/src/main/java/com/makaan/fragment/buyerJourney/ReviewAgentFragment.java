@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -24,6 +25,7 @@ import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.request.buyerjourney.AgentRating;
 import com.makaan.service.ClientLeadsService;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
 
 import org.json.JSONException;
@@ -60,13 +62,20 @@ public class ReviewAgentFragment extends MakaanBaseFragment {
     ToggleButton mUnprofessionalBehaviourToggleButton;
     @Bind(R.id.fragment_review_agent_other_toggle_button)
     ToggleButton mOtherToggleButton;
-    private ClientCompanyLeadFragment.ClientCompanyLeadsObject mObj;
+
+    @Bind(R.id.fragment_review_agent_feedback_scroll_view)
+    View mFeedbackScrollView;
 
     @Bind(R.id.fragment_review_agent_rating_bar)
     RatingBar mRatingBar;
 
     @Bind(R.id.fragment_review_agent_comment_edit_text)
     EditText mCommentEditText;
+
+    @Bind(R.id.fragment_review_agent_top_layout)
+    View mReviewTopLayout;
+
+    private ClientCompanyLeadFragment.ClientCompanyLeadsObject mObj;
 
     @Override
     protected int getContentViewId() {
@@ -85,41 +94,68 @@ public class ReviewAgentFragment extends MakaanBaseFragment {
         mAgentNameTextView.setText(mObj.clientLeadObject.company.name.toLowerCase());
         mAgentImageView.setVisibility(View.GONE);
 
-        if(mObj.clientLeadObject.company.name != null) {
+        if(!TextUtils.isEmpty(mObj.clientLeadObject.company.name)) {
             mLogoTextView.setText(String.valueOf(mObj.clientLeadObject.company.name.charAt(0)));
+        }
 
-            mLogoTextView.setVisibility(View.VISIBLE);
+        mLogoTextView.setVisibility(View.VISIBLE);
 
-            int[] bgColorArray = getResources().getIntArray(R.array.bg_colors);
+//            int[] bgColorArray = getResources().getIntArray(R.array.bg_colors);
 
-            Random random = new Random();
-            ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
-            drawable.getPaint().setColor(bgColorArray[random.nextInt(bgColorArray.length)]);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                mLogoTextView.setBackground(drawable);
-            } else {
-                mLogoTextView.setBackgroundDrawable(drawable);
-            }
+//            Random random = new Random();
+        ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+//            drawable.getPaint().setColor(bgColorArray[random.nextInt(bgColorArray.length)]);
+        drawable.getPaint().setColor(CommonUtil.getColor(mObj.clientLeadObject.company.name, getContext()));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mLogoTextView.setBackground(drawable);
+        } else {
+            mLogoTextView.setBackgroundDrawable(drawable);
         }
 
         mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mReviewTopLayout.getLayoutParams();
                 switch((int)rating) {
                     case 1:
+                        mFeedbackScrollView.setVisibility(View.VISIBLE);
                         mAgentReviewTextView.setText("it was worst");
+
+                        params.addRule(RelativeLayout.ALIGN_TOP);
+                        params.addRule(RelativeLayout.CENTER_IN_PARENT, 0);
+                        mReviewTopLayout.setLayoutParams(params);
                         break;
                     case 2:
+                        mFeedbackScrollView.setVisibility(View.VISIBLE);
                         mAgentReviewTextView.setText("it was bad");
+
+                        params.addRule(RelativeLayout.ALIGN_TOP);
+                        params.addRule(RelativeLayout.CENTER_IN_PARENT, 0);
+                        mReviewTopLayout.setLayoutParams(params);
                         break;
                     case 3:
+                        mFeedbackScrollView.setVisibility(View.VISIBLE);
                         mAgentReviewTextView.setText("it was okay");
+
+                        params.addRule(RelativeLayout.ALIGN_TOP);
+                        params.addRule(RelativeLayout.CENTER_IN_PARENT, 0);
+                        mReviewTopLayout.setLayoutParams(params);
                         break;
                     case 4:
+                        mFeedbackScrollView.setVisibility(View.GONE);
                         mAgentReviewTextView.setText("it was good");
+
+                        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+                        params.addRule(RelativeLayout.ALIGN_TOP, 0);
+                        mReviewTopLayout.setLayoutParams(params);
                         break;
                     case 5:
+                        mFeedbackScrollView.setVisibility(View.GONE);
                         mAgentReviewTextView.setText("it was awesome");
+
+                        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+                        params.addRule(RelativeLayout.ALIGN_TOP, 0);
+                        mReviewTopLayout.setLayoutParams(params);
                         break;
                 }
             }
@@ -161,8 +197,8 @@ public class ReviewAgentFragment extends MakaanBaseFragment {
 
     @OnClick(R.id.fragment_review_agent_next_button)
     void onNextClicked(View view) {
-        if(mOtherToggleButton.isChecked() && TextUtils.isEmpty(mCommentEditText.getText().toString())) {
-            mCommentEditText.setText("enter some data");
+        if(mOtherToggleButton.isChecked() && mRatingBar.getRating() <= 3 && TextUtils.isEmpty(mCommentEditText.getText().toString())) {
+            mCommentEditText.setError("please enter specific feedback");
         } else if(getActivity() instanceof BuyerDashboardCallbacks) {
             if(mObj != null) {
                 /*((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_REVIEW_AGENT,
@@ -195,35 +231,37 @@ public class ReviewAgentFragment extends MakaanBaseFragment {
                         rating.reviewComment = mCommentEditText.getText().toString();
                     }
 
-                    if(mListedPropertyToggleButton.isChecked()) {
-                        if(rating.sellerRatingParameters == null) {
-                            rating.sellerRatingParameters = new ArrayList<>();
+                    if(rating.rating <= 3) {
+                        if (mListedPropertyToggleButton.isChecked()) {
+                            if (rating.sellerRatingParameters == null) {
+                                rating.sellerRatingParameters = new ArrayList<>();
+                            }
+                            rating.sellerRatingParameters.add(rating.new SellerRatingParameter(1));
                         }
-                        rating.sellerRatingParameters.add(rating.new SellerRatingParameter(1));
-                    }
-                    if(mUnreachableToggleButton.isChecked()) {
-                        if(rating.sellerRatingParameters == null) {
-                            rating.sellerRatingParameters = new ArrayList<>();
+                        if (mUnreachableToggleButton.isChecked()) {
+                            if (rating.sellerRatingParameters == null) {
+                                rating.sellerRatingParameters = new ArrayList<>();
+                            }
+                            rating.sellerRatingParameters.add(rating.new SellerRatingParameter(2));
                         }
-                        rating.sellerRatingParameters.add(rating.new SellerRatingParameter(2));
-                    }
-                    if(mPoorKnowledgeToggleButton.isChecked()) {
-                        if(rating.sellerRatingParameters == null) {
-                            rating.sellerRatingParameters = new ArrayList<>();
+                        if (mPoorKnowledgeToggleButton.isChecked()) {
+                            if (rating.sellerRatingParameters == null) {
+                                rating.sellerRatingParameters = new ArrayList<>();
+                            }
+                            rating.sellerRatingParameters.add(rating.new SellerRatingParameter(3));
                         }
-                        rating.sellerRatingParameters.add(rating.new SellerRatingParameter(3));
-                    }
-                    if(mUnprofessionalBehaviourToggleButton.isChecked()) {
-                        if(rating.sellerRatingParameters == null) {
-                            rating.sellerRatingParameters = new ArrayList<>();
+                        if (mUnprofessionalBehaviourToggleButton.isChecked()) {
+                            if (rating.sellerRatingParameters == null) {
+                                rating.sellerRatingParameters = new ArrayList<>();
+                            }
+                            rating.sellerRatingParameters.add(rating.new SellerRatingParameter(4));
                         }
-                        rating.sellerRatingParameters.add(rating.new SellerRatingParameter(4));
-                    }
-                    if(mOtherToggleButton.isChecked()) {
-                        if(rating.sellerRatingParameters == null) {
-                            rating.sellerRatingParameters = new ArrayList<>();
+                        if (mOtherToggleButton.isChecked()) {
+                            if (rating.sellerRatingParameters == null) {
+                                rating.sellerRatingParameters = new ArrayList<>();
+                            }
+                            rating.sellerRatingParameters.add(rating.new SellerRatingParameter(5));
                         }
-                        rating.sellerRatingParameters.add(rating.new SellerRatingParameter(5));
                     }
 
                     try {
