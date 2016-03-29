@@ -2,7 +2,6 @@ package com.makaan.service;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
 
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
@@ -17,7 +16,6 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.ObjectGetCallback;
 import com.makaan.response.ResponseError;
 import com.makaan.response.buyerjourney.AgentRating;
-import com.makaan.response.buyerjourney.ClientLead;
 import com.makaan.response.buyerjourney.Company;
 import com.makaan.util.AppBus;
 import com.segment.analytics.Properties;

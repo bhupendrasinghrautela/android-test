@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
@@ -12,8 +11,6 @@ import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.fragment.pyr.NoSellersFragment;
 import com.makaan.fragment.pyr.TopSellersFragment;
-import com.makaan.fragment.userLogin.LoginSocialFragment;
-import com.makaan.fragment.userLogin.SignUpFragment;
 import com.makaan.pojo.ProjectConfigItem;
 import com.makaan.ui.pyr.FilterableMultichoiceDialogFragment;
 import com.makaan.fragment.pyr.PyrPagePresenter;

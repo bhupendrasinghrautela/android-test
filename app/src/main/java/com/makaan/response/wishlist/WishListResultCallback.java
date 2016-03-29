@@ -1,7 +1,5 @@
 package com.makaan.response.wishlist;
 
-import android.util.Log;
-
 import com.android.volley.Request;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.event.wishlist.WishListResultEvent;

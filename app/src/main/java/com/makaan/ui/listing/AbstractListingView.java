@@ -1,13 +1,10 @@
 package com.makaan.ui.listing;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
 import com.makaan.activity.listing.SerpRequestCallback;
-
-import java.util.List;
 
 import butterknife.ButterKnife;
 

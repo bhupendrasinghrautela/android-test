@@ -144,7 +144,7 @@ public class JarvisSocket {
                         message.message = reason;
                         message.isAgentAvailableMessage = true;
                         message.timestamp = System.currentTimeMillis();
-                        JarvisClient.getInstance().getChatMessages().add((Message) message);
+                        JarvisClient.getInstance().getChatMessages().add(message);
 
                     }
                 });

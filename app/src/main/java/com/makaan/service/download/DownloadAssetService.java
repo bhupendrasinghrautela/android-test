@@ -9,10 +9,8 @@ import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
-import com.makaan.constants.ResponseConstants;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.network.MakaanNetworkClient;
-import com.makaan.network.ObjectGetCallback;
 import com.makaan.response.ResponseError;
 import com.makaan.response.assets.VersionCodes;
 

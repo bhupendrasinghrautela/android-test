@@ -1,18 +1,11 @@
 package com.makaan.jarvis.ui.cards;
 
-import android.app.Activity;
 import android.content.Context;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.makaan.R;
-import com.makaan.jarvis.JarvisConstants;
 import com.makaan.jarvis.message.CtaType;
 import com.makaan.jarvis.message.ExposeMessage;
-import com.makaan.jarvis.message.MessageType;
-import com.makaan.ui.view.BaseView;
 
 /**
  * Created by sunil on 07/01/16.

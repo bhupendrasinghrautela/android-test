@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 
@@ -37,9 +36,6 @@ import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
-
-import java.util.Calendar;
-import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

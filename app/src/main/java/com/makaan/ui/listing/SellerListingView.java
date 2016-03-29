@@ -31,7 +31,6 @@ import com.makaan.util.StringUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.Calendar;
-import java.util.Random;
 
 import butterknife.Bind;
 import de.hdodenhof.circleimageview.CircleImageView;

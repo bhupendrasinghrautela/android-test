@@ -2,15 +2,11 @@ package com.makaan.event.pyr;
 
 import android.util.Log;
 
-import com.makaan.fragment.pyr.PyrPagePresenter;
-import com.makaan.network.JSONGetCallback;
 import com.makaan.network.StringRequestCallback;
 import com.makaan.response.ResponseError;
 import com.makaan.response.pyr.PyrPostResponse;
 import com.makaan.util.AppBus;
 import com.makaan.util.JsonParser;
-
-import org.json.JSONObject;
 
 /**
  * Created by makaanuser on 9/1/16.

@@ -1,7 +1,5 @@
 package com.makaan.network;
 
-import org.json.JSONObject;
-
 /**
  * Created by vaibhav on 29/12/15.
  */

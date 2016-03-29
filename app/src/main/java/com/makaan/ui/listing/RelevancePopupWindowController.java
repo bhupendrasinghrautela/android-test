@@ -8,9 +8,7 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
-import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
-import com.makaan.service.ListingService;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.makaan.R;
 import com.makaan.activity.listing.SerpRequestCallback;
-import com.makaan.pojo.GroupCluster;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.ui.listing.ChildSerpGroupListingItemView;
 import com.makaan.ui.listing.GroupListingItemView;

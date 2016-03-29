@@ -106,8 +106,7 @@ public class DeepLinkHelper {
 
     private static boolean isSerpPage(SeoUrlResponse seoUrlResponse){
 
-        if(
-                ((seoUrlResponse.data.templateId.contains("MAKAAN") &&
+        return ((seoUrlResponse.data.templateId.contains("MAKAAN") &&
                 seoUrlResponse.data.templateId.contains("RENT") &&
                 seoUrlResponse.data.templateId.contains("BUY"))
 
@@ -119,12 +118,7 @@ public class DeepLinkHelper {
 
                 || (TemplateId.MAKAAN_COMPANY_URL.name().equalsIgnoreCase(seoUrlResponse.data.templateId)))
 
-              && !TextUtils.isEmpty(seoUrlResponse.data.urlDetail.listingFilter)
+                && !TextUtils.isEmpty(seoUrlResponse.data.urlDetail.listingFilter);
 
-        ){
-            return true;
-        }
-
-        return false;
     }
 }

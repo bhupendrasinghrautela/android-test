@@ -1,7 +1,6 @@
 package com.makaan.event.listing;
 
 import com.makaan.event.MakaanEvent;
-import com.makaan.response.listing.Listing;
 import com.makaan.response.listing.detail.ListingDetail;
 
 import java.util.ArrayList;

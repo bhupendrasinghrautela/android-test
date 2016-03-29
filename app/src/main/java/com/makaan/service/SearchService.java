@@ -3,11 +3,9 @@ package com.makaan.service;
 import android.text.TextUtils;
 
 import com.makaan.constants.ApiConstants;
-import com.makaan.constants.StringConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.search.SearchResultCallback;
 import com.makaan.response.search.SearchType;
-import com.makaan.util.StringUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

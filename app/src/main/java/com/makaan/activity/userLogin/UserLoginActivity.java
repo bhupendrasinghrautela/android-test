@@ -8,11 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.makaan.R;
-import com.makaan.activity.HomeActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cookie.CookiePreferences;
-import com.makaan.fragment.userLogin.LoginFragment;
 import com.makaan.fragment.userLogin.LoginSocialFragment;
 import com.makaan.fragment.userLogin.ReplaceFragment;
 import com.makaan.fragment.userLogin.SignUpFragment;
@@ -24,10 +22,8 @@ import com.makaan.response.login.UserLoginPresenter;
 import com.makaan.response.user.UserResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.WishListService;
-import com.makaan.service.user.UserLoginService;
 import com.makaan.ui.CommonProgressDialog;
 import com.makaan.util.AppBus;
-import com.makaan.util.Preference;
 import com.segment.analytics.Properties;
 
 

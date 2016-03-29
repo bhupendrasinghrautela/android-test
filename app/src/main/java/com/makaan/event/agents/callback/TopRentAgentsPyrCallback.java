@@ -1,6 +1,5 @@
 package com.makaan.event.agents.callback;
 
-import com.makaan.event.agents.TopBuyAgentsPyrEvent;
 import com.makaan.event.agents.TopRentAgentsPyrEvent;
 import com.makaan.response.ResponseError;
 import com.makaan.response.agents.TopAgent;

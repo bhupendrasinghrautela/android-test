@@ -1,6 +1,5 @@
 package com.makaan.response.parser;
 
-import android.renderscript.Double2;
 import android.util.Log;
 
 import com.makaan.cache.MasterDataCache;

@@ -4,7 +4,6 @@ import com.makaan.request.selector.Selector;
 import com.makaan.util.KeyUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 

@@ -19,7 +19,6 @@ import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
-import com.makaan.event.user.UserLoginEvent;
 import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.fragment.MakaanMessageDialogFragment;
 import com.makaan.jarvis.BaseJarvisActivity;

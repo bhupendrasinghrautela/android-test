@@ -1,8 +1,5 @@
 package com.makaan.response.project;
 
-import com.google.gson.annotations.SerializedName;
-import com.makaan.response.image.Image;
-
 import java.util.ArrayList;
 
 /**

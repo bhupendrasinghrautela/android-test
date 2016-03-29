@@ -1,7 +1,6 @@
 package com.makaan.ui.locality;
 
 import android.content.Context;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.GestureDetector;

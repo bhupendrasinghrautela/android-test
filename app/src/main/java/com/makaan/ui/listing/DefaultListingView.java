@@ -48,8 +48,6 @@ import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.OnClick;

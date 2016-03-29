@@ -1,7 +1,5 @@
 package com.makaan.response.login;
 
-import java.util.List;
-
 public class UserRegistrationDto {
 
 	private Integer domainId;

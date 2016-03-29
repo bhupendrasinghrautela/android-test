@@ -8,12 +8,6 @@ import java.util.ArrayList;
 
 import static com.makaan.constants.ApiConstants.TOP_AGENTS;
 import static com.makaan.constants.ApiConstants.TOP_AGENTS_CITY;
-import static com.makaan.constants.RequestConstants.BEDROOMS;
-import static com.makaan.constants.RequestConstants.LISTING_CATEGORY;
-import static com.makaan.constants.RequestConstants.LOCALITY_ID;
-import static com.makaan.constants.RequestConstants.PRIMARY;
-import static com.makaan.constants.RequestConstants.RENTAL;
-import static com.makaan.constants.RequestConstants.RESALE;
 import static com.makaan.constants.RequestConstants.*;
 
 /**
