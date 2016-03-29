@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +18,7 @@ import android.widget.ToggleButton;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.analytics.MakaanEventPayload;
-import com.makaan.analytics.MakaanTrackerConstants;
-import com.makaan.event.MakaanEvent;
 import com.makaan.request.selector.Selector;
-import com.makaan.response.image.Image;
 import com.makaan.response.serp.AbstractFilterValue;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.response.serp.RangeMinMaxFilter;
@@ -34,7 +30,6 @@ import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by root on 5/1/16.
@@ -44,7 +39,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
     public static final int SEEKBAR = 2;
     public static final int CHECKBOX = 3;
     public static final int RADIO_BUTTON = 4;
-    public static final int RADIO_BUTTON_MIN_MAX = 5;
+    public static final int CHECKBOX_MIN_MAX = 5;
     public static final int RADIO_BUTTON_RANGE = 6;
     public static final int SINGLE_CHECKBOX = 7;
 
@@ -76,7 +71,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
     public int getCount() {
         if(type == SEEKBAR || type == RADIO_BUTTON_RANGE) {
             return rangeValues.size();
-        } else if(type == RADIO_BUTTON_MIN_MAX) {
+        } else if(type == CHECKBOX_MIN_MAX) {
             return rangeMinMaxValues.size();
         } else {
             return termValues.size();
@@ -87,7 +82,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
     public AbstractFilterValue getItem(int position) {
         if(type == SEEKBAR || type == RADIO_BUTTON_RANGE) {
             return rangeValues.get(position);
-        } else if(type == RADIO_BUTTON_MIN_MAX) {
+        } else if(type == CHECKBOX_MIN_MAX) {
             return rangeMinMaxValues.get(position);
         } else {
             return termValues.get(position);
@@ -98,7 +93,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
     public long getItemId(int position) {
         if(type == SEEKBAR || type == RADIO_BUTTON_RANGE) {
             return rangeValues.size();
-        } else if(type == RADIO_BUTTON_MIN_MAX) {
+        } else if(type == CHECKBOX_MIN_MAX) {
             return rangeMinMaxValues.size();
         } else {
             return termValues.size();
@@ -109,7 +104,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if (convertView == null) {
-            if (type == CHECKBOX) {
+            if (type == CHECKBOX || type == CHECKBOX_MIN_MAX) {
                 convertView = LayoutInflater.from(context).inflate(R.layout.fragment_dialog_filters_checkbox_item_view, parent, false);
                 holder = new ViewHolder();
                 holder.view = convertView;
@@ -119,7 +114,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                 holder = new ViewHolder();
                 holder.view = convertView;
                 ((ToggleButton) holder.view).setOnCheckedChangeListener(this);
-            } else if(type == RADIO_BUTTON || type == RADIO_BUTTON_MIN_MAX || type == RADIO_BUTTON_RANGE) {
+            } else if(type == RADIO_BUTTON || type == RADIO_BUTTON_RANGE) {
                 convertView = LayoutInflater.from(context).inflate(R.layout.fragment_dialog_filters_radio_button_item_view, parent, false);
                 holder = new ViewHolder();
                 holder.view = convertView;
@@ -142,7 +137,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
             holder.pos = position;
         }
 
-        if (type == CHECKBOX) {
+        if (type == CHECKBOX || type == CHECKBOX_MIN_MAX) {
             ((CheckBox) holder.view).setText(this.getItem(position).displayName);
             ((CheckBox) holder.view).setChecked(this.getItem(position).selected);
         } else if (type == TOGGLE_BUTTON) {
@@ -150,7 +145,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
             ((ToggleButton) holder.view).setTextOff(this.getItem(position).displayName);
             ((ToggleButton) holder.view).setText(this.getItem(position).displayName);
             ((ToggleButton) holder.view).setChecked(this.getItem(position).selected);
-        } else if (type == RADIO_BUTTON || type == RADIO_BUTTON_MIN_MAX || type == RADIO_BUTTON_RANGE) {
+        } else if (type == RADIO_BUTTON || type == RADIO_BUTTON_RANGE) {
             ((RadioButton) holder.view).setOnCheckedChangeListener(null);
             ((RadioButton) holder.view).setText(this.getItem(position).displayName);
             ((RadioButton) holder.view).setChecked(this.getItem(position).selected);
@@ -205,11 +200,6 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                     filter.selected = false;
                 }
                 termValues.get(pos).selected = true;
-            } else if(type == RADIO_BUTTON_MIN_MAX) {
-                for (RangeMinMaxFilter filter : rangeMinMaxValues) {
-                    filter.selected = false;
-                }
-                rangeMinMaxValues.get(pos).selected = true;
             } else if(type == RADIO_BUTTON_RANGE) {
                 for (RangeFilter filter : rangeValues) {
                     filter.selected = false;
@@ -218,7 +208,11 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
             }
             notifyDataSetChanged();
         } else {
-            termValues.get(pos).selected = isChecked;
+            if(type == CHECKBOX_MIN_MAX) {
+                rangeMinMaxValues.get(pos).selected = isChecked;
+            } else {
+                termValues.get(pos).selected = isChecked;
+            }
         }
     }
 
@@ -346,42 +340,35 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                     }
                 }
             }
-        } else if(type == RADIO_BUTTON_MIN_MAX) {
+        } else if(type == CHECKBOX_MIN_MAX) {
             selector.removeRange(rangeMinMaxValues.get(0).minFieldName);
             selector.removeRange(rangeMinMaxValues.get(0).maxFieldName);
 
+            long minValue = Long.MAX_VALUE;
+            long maxValue = Long.MIN_VALUE;
+            String minFieldName = "";
+            String maxFieldName = "";
+            boolean filterApplied = false;
             for(RangeMinMaxFilter filter : rangeMinMaxValues) {
                 if(filter.selected) {
                     if(currentGroup != null) {
                         currentGroup.isSelected = true;
                     }
+                    filterApplied = true;
                     if (filterGroup.type.equalsIgnoreCase(TYPE_YEAR)) {
                         Calendar cal = Calendar.getInstance();
-                        long minValue = UNEXPECTED_VALUE;
-                        long maxValue = UNEXPECTED_VALUE;
                         if(filter.minValue != UNEXPECTED_VALUE) {
                             cal.add(Calendar.YEAR, (int) filter.minValue);
-                            minValue = cal.getTimeInMillis();
+                            if(cal.getTimeInMillis() < minValue) {
+                                minValue = cal.getTimeInMillis();
+                            }
                             cal.add(Calendar.YEAR, -(int) filter.minValue);
                         }
                         if(filter.maxValue != UNEXPECTED_VALUE) {
                             cal.add(Calendar.YEAR, (int) filter.maxValue);
-                            maxValue = cal.getTimeInMillis();
-                        }
-                        if(minValue != UNEXPECTED_VALUE) {
-                            Long temp = null;
-                            selector.range(filter.minFieldName, minValue, temp);
-                        }
-                        if(maxValue != UNEXPECTED_VALUE) {
-                            Long temp = null;
-                            selector.range(filter.maxFieldName, temp, maxValue);
-                        }
-                    } else {
-                        if(filter.minValue != UNEXPECTED_VALUE) {
-                            selector.term(filter.minFieldName, String.valueOf(filter.minValue));
-                        }
-                        if(filter.maxValue != UNEXPECTED_VALUE) {
-                            selector.term(filter.maxFieldName, String.valueOf(filter.maxValue));
+                            if(cal.getTimeInMillis() > maxValue) {
+                                maxValue = cal.getTimeInMillis();
+                            }
                         }
                     }
                     if(currentGroup!=null && currentGroup.internalName.equalsIgnoreCase("i_ready_to_move")){
@@ -389,6 +376,17 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                     } else {
                         properties.put(filterGroup.displayName, filter.displayName);
                     }
+                    minFieldName = filter.minFieldName;
+                    maxFieldName = filter.maxFieldName;
+                }
+            }
+
+            if(filterApplied) {
+                if (minValue != Long.MAX_VALUE) {
+                    selector.range(minFieldName, minValue, null);
+                }
+                if (maxValue != Long.MIN_VALUE) {
+                    selector.range(maxFieldName, null, maxValue);
                 }
             }
         } else {
@@ -472,7 +470,7 @@ public class FiltersViewAdapter extends BaseAdapter implements CompoundButton.On
                 filter.selectedMaxValue = filter.maxValue;
                 filter.selected = false;
             }
-        } else if(type == RADIO_BUTTON_MIN_MAX) {
+        } else if(type == CHECKBOX_MIN_MAX) {
             for(RangeMinMaxFilter filter : rangeMinMaxValues) {
                 filter.selected = false;
             }
