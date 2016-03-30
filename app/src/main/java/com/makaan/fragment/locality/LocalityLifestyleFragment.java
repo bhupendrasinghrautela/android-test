@@ -102,7 +102,13 @@ public class LocalityLifestyleFragment extends MakaanBaseFragment{
             if(nearByLocalitu != null && nearByLocalitu.entityDescriptionCategories != null
                     && nearByLocalitu.entityDescriptionCategories.masterDescriptionCategory != null
                     && nearByLocalitu.entityDescriptionCategories.masterDescriptionCategory.name != null) {
-                holder.descriptionTv.setText(nearByLocalitu.entityDescriptionCategories.masterDescriptionCategory.name.toLowerCase());
+                if(nearByLocalitu.entityDescriptionCategories.masterDescriptionCategory.name.equalsIgnoreCase(
+                        getResources().getString(R.string.nightlife_string))){
+                    holder.descriptionTv.setText(getResources().getString(R.string.nightclubs_string));
+                }
+                else {
+                    holder.descriptionTv.setText(nearByLocalitu.entityDescriptionCategories.masterDescriptionCategory.name.toLowerCase());
+                }
             }
             if(nearByLocalitu != null && nearByLocalitu.description != null) {
                 holder.descriptionFullTv.setText(nearByLocalitu.description.toLowerCase());

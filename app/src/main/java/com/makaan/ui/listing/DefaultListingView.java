@@ -271,7 +271,7 @@ public class DefaultListingView extends AbstractListingView {
         mPropertyPriceUnitTextView.setText(priceUnit);
         if(mListing.pricePerUnitArea != null && mListing.pricePerUnitArea != 0 && isBuy) {
             mPropertyPriceSqFtTextView.setVisibility(View.VISIBLE);
-            mPropertyPriceSqFtTextView.setText(String.format("%s%s/sqft", "\u20B9", StringUtil.getFormattedNumber(mListing.pricePerUnitArea)).toLowerCase());
+            mPropertyPriceSqFtTextView.setText(String.format("%s %s / sq ft", "\u20B9", StringUtil.getFormattedNumber(mListing.pricePerUnitArea)).toLowerCase());
         } else {
             mPropertyPriceSqFtTextView.setVisibility(View.INVISIBLE);
         }
@@ -281,7 +281,7 @@ public class DefaultListingView extends AbstractListingView {
             mPropertyBhkInfoTextView.setVisibility(View.GONE);
         } else {
             mPropertyBhkInfoTextView.setVisibility(View.VISIBLE);
-            mPropertyBhkInfoTextView.setText(mListing.bhkInfo.toLowerCase());
+            mPropertyBhkInfoTextView.setText(mListing.bhkInfo.toLowerCase().replace("builderfloor","builder floor"));
         }
 
         if(mListing.sizeInfo == null || TextUtils.isEmpty(mListing.sizeInfo) || "0".equals(mListing.sizeInfo)) {
