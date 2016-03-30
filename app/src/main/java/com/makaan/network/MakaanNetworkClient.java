@@ -584,7 +584,7 @@ public class MakaanNetworkClient {
     }
 
 
-    private void addToRequestQueue(Request req, String tag) {
+    public void addToRequestQueue(Request req, String tag) {
         if (null == tag) {
             tag = requestUrlToTag.get(req.getUrl());
             if (null == tag) {

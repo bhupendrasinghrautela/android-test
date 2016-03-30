@@ -33,6 +33,7 @@ import butterknife.Bind;
  */
 public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
     private String title;
+    private String projectName;
     private Long localityId;
     private Boolean hasIncreased;
     private Integer pricePerUnit;
@@ -103,6 +104,7 @@ public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
         if(projectPriceTrendEvent.projectPriceTrendDto!=null && projectPriceTrendEvent.projectPriceTrendDto.data!=null) {
             Set<PriceTrendKey> priceTrendKeySet = projectPriceTrendEvent.projectPriceTrendDto.data.keySet();
             for (PriceTrendKey key : priceTrendKeySet) {
+                key.label = projectName;
                 localityPriceTrendsData.put(key, projectPriceTrendEvent.projectPriceTrendDto.data.get(key));
             }
             priceTrendView.bindView(localityPriceTrendsData);
@@ -116,6 +118,7 @@ public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
         localityId = getArguments().getLong("localityId");
         projectId = getArguments().getLong("projectId");
         title = getArguments().getString("title");
+        projectName = getArguments().getString("projectName");
         localities = (ArrayList<Long>) getArguments().getSerializable("localities");
         pricePerUnit = getArguments().getInt("price");
         hasIncreased = getArguments().getBoolean("increased");
