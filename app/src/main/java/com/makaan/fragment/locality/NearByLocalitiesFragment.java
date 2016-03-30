@@ -35,6 +35,7 @@ import com.makaan.response.project.Builder;
 import com.makaan.service.AgentService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.ui.CustomNetworkImageView;
+import com.makaan.ui.view.CustomRatingBar;
 import com.makaan.util.AppBus;
 import com.makaan.util.DateUtil;
 import com.makaan.util.ImageUtils;
@@ -301,6 +302,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
             public TextView scoreText;
             public TextView secondarySaleLabelTv;
             public TextView viewDetails;
+            public CustomRatingBar ratingBar;
             public ViewHolder(View v) {
                 super(v);
                 this.view = v;
@@ -316,13 +318,17 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                 cardView = (CardView) v.findViewById(R.id.card_view_nearby_locality);
                 score = (ProgressBar) v.findViewById(R.id.score_progress);
                 scoreText = (TextView) v.findViewById(R.id.score_text);
+                ratingBar = (CustomRatingBar) v.findViewById(R.id.seller_rating);
                 cardView.setOnClickListener(onClickListener);
 
                 if(cardType == CardType.LOCALITY) {
                     localityIv.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 }
-                if(cardType == CardType.TOPBUILDERS){
+                if(cardType == CardType.TOPBUILDERS || cardType == CardType.TOPAGENTS){
                     score.setVisibility(View.GONE);
+                }
+                if(cardType == CardType.TOPBUILDERS || cardType == CardType.LOCALITY){
+                    ratingBar.setVisibility(View.GONE);
                 }
             }
         }
@@ -408,8 +414,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                 case TOPAGENTS:
                     holder.localityIv.setDefaultImageResId(R.drawable.seller_placeholder);
                     if(nearByLocality.score>0) {
-                        holder.score.setProgress((int) (nearByLocality.score * 10));
-                        holder.scoreText.setText(String.valueOf(nearByLocality.score/2));
+                        holder.ratingBar.setRating((float) (nearByLocality.score/2));
                     }
                     else{
                         holder.score.setVisibility(View.GONE);
