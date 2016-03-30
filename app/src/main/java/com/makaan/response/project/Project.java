@@ -7,7 +7,6 @@ import com.makaan.response.property.Property;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by vaibhav on 24/12/15.
@@ -47,14 +46,14 @@ public class Project {
 
     public ArrayList<Property> properties = new ArrayList<>();
     public ArrayList<ProjectAmenity> projectAmenities = new ArrayList<>();
-    //public ArrayList<ProjectSpecification> resiProjectSpecifications;
+    public ArrayList<ProjectSpecification> resiProjectSpecifications;
 
     public HashMap<String, Object> specifications;
     public String activeStatus;
     public Long preLaunchDate;
 
 
-    public HashMap<String, ArrayList<SpecificaitonsUI>> getFormattedSpecifications() {
+/*    public HashMap<String, ArrayList<SpecificaitonsUI>> getFormattedSpecifications() {
         if(specifications == null){
             return null;
         }
@@ -83,6 +82,26 @@ public class Project {
             result.put(key, specificaitons);
         }
 
+        return result;
+    }*/
+
+    public HashMap<String, ArrayList<SpecificaitonsUI>> getFormattedSpecifications() {
+        if(resiProjectSpecifications == null){
+            return null;
+        }
+        HashMap<String, ArrayList<SpecificaitonsUI>> result = new HashMap<>();
+        for(ProjectSpecification projectSpecification:resiProjectSpecifications){
+            String categoryName = projectSpecification.masterSpecification.masterSpecificationCategory.masterSpecParentCat.masterSpecParentDisplayName;
+            ArrayList<SpecificaitonsUI> specificaitonsUIArrayList = new ArrayList<>();
+            if(result.get(categoryName)!=null){
+                specificaitonsUIArrayList = result.get(categoryName);
+            }
+            SpecificaitonsUI specificaitonsUI = new SpecificaitonsUI();
+            specificaitonsUI.label2 = projectSpecification.masterSpecification.masterSpecificationCategory.masterSpecCatDisplayName;
+            specificaitonsUI.label1 = projectSpecification.masterSpecification.masterSpecClassName;
+            specificaitonsUIArrayList.add(specificaitonsUI);
+            result.put(categoryName,specificaitonsUIArrayList);
+        }
         return result;
     }
 

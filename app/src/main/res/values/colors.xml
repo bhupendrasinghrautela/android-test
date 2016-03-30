@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="colorPrimary">#E71C28</color>
     <color name="colorAccent">#E71C28</color>
     <color name="listingGray">#666666</color>
     <color name="emiGray">#979797</color>

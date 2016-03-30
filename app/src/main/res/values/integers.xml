@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="max_search_count">4</integer>
+    <integer name="portrait_mode_num_columns">2</integer>
+    <integer name="landscape_mode_num_columns">3</integer>
 </resources>

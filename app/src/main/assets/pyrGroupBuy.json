@@ -107,8 +107,8 @@
             "fieldName": "unitTypeId",
             "value": "FarmHouse",
             "selected": false
-          },
-          {
+          }
+          /*{
             "displayName": "studio apartment",
             "displayOrder": "7",
             "fieldName": "unitTypeId",
@@ -121,7 +121,7 @@
             "fieldName": "unitTypeId",
             "value": "Penthouse",
             "selected": false
-          }
+          }*/
         ],
         "rangeFilterValues": [
         ],

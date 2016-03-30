@@ -460,7 +460,7 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
                     mListingDetail.property.projectId, mListingDetail.property.bedrooms, mListingDetail.property.bathrooms, mListingDetail.property.studyRoom
                     , mListingDetail.property.poojaRoom, mListingDetail.property.servantRoom, 5
             );
-            ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(mListingId);
+            ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(mListingId,mListingDetail.property.projectId);
             ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(mListingId, ImageConstants.THREED_FLOOR_PLAN);
             ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(mListingId, ImageConstants.FLOOR_PLAN);
         }
@@ -489,7 +489,7 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
             mFloorPlanLayout.setVisibility(View.GONE);
         }
 
-        if(imagesGetEvent.imageType == null) {
+        if(imagesGetEvent.imageType.equals(ImageService.COMBINED_IMAGES)) {
             if(imagesGetEvent.images.size()==0){
                 imagesGetEvent.images.add(getDummyImage());
             }

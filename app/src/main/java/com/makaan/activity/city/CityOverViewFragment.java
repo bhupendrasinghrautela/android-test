@@ -497,6 +497,7 @@ public class CityOverViewFragment extends OverviewFragment {
         if(cityPriceTrendEvent!=null && cityPriceTrendEvent.cityPriceTrendDto!=null && mLocalityPriceTrendDto.data!=null){
             Set<PriceTrendKey> priceTrendKeySet = cityPriceTrendEvent.cityPriceTrendDto.data.keySet();
             for (PriceTrendKey key : priceTrendKeySet) {
+                key.label = mCity.label;
                 mLocalityPriceTrendDto.data.put(key, cityPriceTrendEvent.cityPriceTrendDto.data.get(key));
             }
             if (mCity!= null && mCity.id != 0) {

@@ -157,6 +157,8 @@
     <string name="search_default_hint">pick a location, builder or project</string>
     <string name="search_default_rent_hint">pick location or project</string>
     <string name="search_locality_hint">add more localities...</string>
+    <string name="nightlife_string">nightlife</string>
+    <string name="nightclubs_string">nightclubs</string>
 
     <!--buyer journey-->
     <string name="search">search</string>
@@ -299,6 +301,20 @@
     <string name="notification_deleted">Notification Deleted</string>
     <string name="notification_deletion_error">unable to delete notification, please try again later</string>
     <string name="please_wait">please wait...</string>
+
+    <string name="gallery">Gallery</string>
+    <string name="tab_projectgallery_photo">Photo Gallery</string>
+    <string name="all_photos">All Photos</string>
+    <string name="tab_projectgallery_floor_plan">Floor Plan</string>
+    <string name="tab_projectgallery_master_plan">Master Plan</string>
+    <string name="tab_projectgallery_project_plan">Project Plan</string>
+    <string name="tab_projectgallery_payment_plan">Payment Plan</string>
+    <string name="tab_projectgallery_neighbourhood">Neighbourhood</string>
+    <string name="tab_projectgallery_site_plan">Site plan</string>
+    <string name="tab_projectgallery_construction_update">Construction Status</string>
+    <string name="image_already_exits">Image already exists in gallery.</string>
+    <string name="sdcard_unmounted">We are sorry. SD card seems to be unavailable!</string>
+    <string name="image_saved">Image saved successfully.</string>
 
     <string name="score_message">calculated based on presence of project amenities, builder credentials and location advantages</string>
 

@@ -1,15 +1,21 @@
 package com.makaan.util;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
+import android.widget.Toast;
 
 import com.makaan.BuildConfig;
+import com.makaan.gallery.GalleryActivity;
 import com.makaan.R;
 
 import org.json.JSONException;
@@ -117,6 +123,48 @@ public class CommonUtil {
         } else {
             return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
         }
+    }
+
+    public static int getScreenWidthInPixels(Activity activity) {
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+        int pixels = outMetrics.widthPixels;
+        return pixels;
+    }
+
+    public static int getScreenHeightInPixels(Activity activity) {
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+        int pixels = outMetrics.heightPixels;
+        return pixels;
+    }
+
+    public static boolean isIcsAndAbove() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
+    }
+
+    public static void createToast(Activity activity, int messageId, boolean durationLong, boolean visibility) {
+        try {
+            if (activity == null || activity.isFinishing()) {
+                return;
+            }
+            if(!visibility){
+                return;
+            }
+            Toast toast = Toast.makeText(activity, messageId, durationLong ? Toast.LENGTH_LONG
+                    : Toast.LENGTH_SHORT);
+            toast.show();
+        } catch (Exception e) {
+        }
+    }
+
+    public static void launchGallery(Activity mActivity, Bundle bundle) {
+        Intent intent = new Intent(mActivity, GalleryActivity.class);
+        intent.putExtras(bundle);
+        mActivity.startActivity(intent);
+        //mActivity.overridePendingTransition(R.anim.slide_in_from_bottom_with_alpha_transition, 0);
     }
 
     public static int getColor(String name, Context context) {
