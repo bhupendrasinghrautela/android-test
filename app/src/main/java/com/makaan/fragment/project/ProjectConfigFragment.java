@@ -25,6 +25,11 @@ public class ProjectConfigFragment extends MakaanBaseFragment{
         return R.layout.fragment_project_config_pager_item;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
