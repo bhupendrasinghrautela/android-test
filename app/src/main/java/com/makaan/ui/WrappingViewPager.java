@@ -23,7 +23,14 @@ public class WrappingViewPager extends ViewPager {
         boolean wrapHeight = MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.AT_MOST;
 
         maxHeight = 0;
-        for(int currentItem = 0;currentItem<getChildCount();currentItem++) {
+        int count;
+        if(getChildCount() == 0){
+            count = getAdapter()!=null?getAdapter().getCount():0;
+        }
+        else{
+            count = getChildCount();
+        }
+        for(int currentItem = 0;currentItem<count;currentItem++) {
             final View tab = getChildAt(currentItem);
             int width = getMeasuredWidth();
             int tabHeight = 0;
