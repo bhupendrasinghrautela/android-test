@@ -205,6 +205,8 @@
     <string name="search_default_hint">pick a location, builder or project</string>
     <string name="search_default_rent_hint">pick location or project</string>
     <string name="search_locality_hint">add more localities...</string>
+    <string name="nightlife_string">nightlife</string>
+    <string name="nightclubs_string">nightclubs</string>
 
     <!--buyer journey-->
     <string name="search">search</string>
