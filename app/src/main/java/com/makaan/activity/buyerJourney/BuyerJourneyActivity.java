@@ -258,7 +258,7 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity implements Noti
         //set up button
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.mipmap.back_black);
+        actionBar.setHomeAsUpIndicator(R.mipmap.back_white);
         actionBar.setTitle("");
 
     }
