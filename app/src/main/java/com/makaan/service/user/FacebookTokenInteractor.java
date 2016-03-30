@@ -92,7 +92,6 @@ public class FacebookTokenInteractor {
 
                     @Override
                     public void onCancel() {
-                        mOnFacebookTokenListener.onFacebookTokenFail();
 
                     }
 

@@ -3,17 +3,13 @@ package com.makaan.fragment.project;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Html;
 import android.text.Layout;
-import android.text.SpannableString;
 import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +19,6 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -50,7 +45,6 @@ import com.makaan.event.project.ProjectByIdEvent;
 import com.makaan.event.project.ProjectConfigEvent;
 import com.makaan.event.project.ProjectConfigItemClickListener;
 import com.makaan.event.project.SimilarProjectGetEvent;
-import com.makaan.fragment.MakaanMessageDialogFragment;
 import com.makaan.fragment.overview.OverviewFragment;
 import com.makaan.fragment.property.ViewSellersDialogFragment;
 import com.makaan.jarvis.BaseJarvisActivity;
@@ -400,6 +394,10 @@ public class ProjectFragment extends OverviewFragment{
             imagesGetEvent = new ImagesGetEvent();
             imagesGetEvent.images = new ArrayList<>();
             imagesGetEvent.images.add(getDummyImage());
+            imagesGetEvent.imageType = ImageService.COMBINED_IMAGES;
+        }
+        if(imagesGetEvent.imageType==null ||!imagesGetEvent.imageType.equals(ImageService.COMBINED_IMAGES)){
+            return;
         }
         try {
             Double price = project.minResaleOrPrimaryPrice != null ? project.minResaleOrPrimaryPrice : project.minPrice;
@@ -478,7 +476,7 @@ public class ProjectFragment extends OverviewFragment{
                         LocalityService.class)).getNearByLocalities(project.locality.latitude, project.locality.longitude, 1);
             }
             addConstructionTimelineFragment();
-            ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getProjectTimelineImages(project.projectId);
+            ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getProjectTimelineImages(project.projectId,project.locality.localityId);
             //handler.sendEmptyMessageDelayed(0, 500);
             showContent();
         }

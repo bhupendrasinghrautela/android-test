@@ -21,12 +21,46 @@ import static com.makaan.constants.ImageConstants.*;
 public class ImageService implements MakaanService {
 
 
-    public void getListingImages(final Long listingId) {
-        getImages(listingId, ENTITY_MAP.get(ImageConstants.LISTING));
+    public static String COMBINED_IMAGES = "combined";
+    public void getListingImages(final Long listingId,final Long projectId) {
+        getImages(listingId, ENTITY_MAP.get(ImageConstants.LISTING),projectId,ENTITY_MAP.get(ImageConstants.PROJECT));
 
     }
     public void getListingImages(final Long listingId,String imageType){
         getImages(listingId, ENTITY_MAP.get(ImageConstants.LISTING),imageType);
+    }
+    public void getImages(final Long listingObjectId, final Integer listingObjectType,final Long projectObjectId,final Integer projectObjectType) {
+        if (null != listingObjectId) {
+            Type listingDetailImageList = new TypeToken<ArrayList<Image>>() {
+            }.getType();
+            String detailImageListUrl = ApiConstants.IMAGE;
+            detailImageListUrl = detailImageListUrl.concat("?filters=(objectId==OBJ_ID;imageTypeObj.objectTypeId==OBJ_TYPE_ID),(objectId==PRO_ID;imageTypeObj.objectTypeId==PRO_TYPE_ID)&sourceDomain=Makaan");
+            detailImageListUrl = detailImageListUrl.replaceAll("OBJ_ID", listingObjectId.toString());
+            detailImageListUrl = detailImageListUrl.replaceAll("OBJ_TYPE_ID", listingObjectType.toString());
+            detailImageListUrl = detailImageListUrl.replaceAll("PRO_ID",projectObjectId.toString());
+            detailImageListUrl = detailImageListUrl.replaceAll("PRO_TYPE_ID",projectObjectType.toString());
+
+
+            MakaanNetworkClient.getInstance().get(detailImageListUrl, listingDetailImageList, new ObjectGetCallback() {
+                @Override
+                public void onError(ResponseError error) {
+                    ImagesGetEvent imagesGetEvent = new ImagesGetEvent();
+                    imagesGetEvent.error = error;
+                    AppBus.getInstance().post(imagesGetEvent);
+                }
+
+                @Override
+                public void onSuccess(Object responseObject) {
+                    ArrayList<Image> images = (ArrayList<Image>) responseObject;
+                    ImagesGetEvent imagesGetEvent = new ImagesGetEvent();
+                    imagesGetEvent.objectId = listingObjectId;
+                    imagesGetEvent.objectType = listingObjectType;
+                    imagesGetEvent.imageType = COMBINED_IMAGES;
+                    imagesGetEvent.images = images;
+                    AppBus.getInstance().post(imagesGetEvent);
+                }
+            }, true);
+        }
     }
     public void getImages(final Long objectId, final Integer objectType) {
         if (null != objectId) {
@@ -96,5 +130,9 @@ public class ImageService implements MakaanService {
 
     public void getProjectTimelineImages(Long projectId) {
         getImages(projectId, ENTITY_MAP.get(ImageConstants.PROJECT));
+    }
+
+    public void getProjectTimelineImages(Long projectId,Long localityId) {
+        getImages(projectId, ENTITY_MAP.get(ImageConstants.PROJECT),localityId,ENTITY_MAP.get(ImageConstants.LOCALITY));
     }
 }

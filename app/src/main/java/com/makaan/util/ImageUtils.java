@@ -2,6 +2,7 @@ package com.makaan.util;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
@@ -10,6 +11,10 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.Surface;
+import android.view.WindowManager;
+
+import com.makaan.R;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,6 +23,8 @@ import java.io.IOException;
 
 public class ImageUtils {
 	private static final String TAG = "ImageUtils";
+	private static final String THUMBNAIL_IMAGE_DIMEN = "?WIDTH=220&HEIGHT=120";
+	public static final float THUMBNAIL_ASPECT_RATIO = 8f/10f;
 
 	/**
 	 * Stores an image on the storage
@@ -205,5 +212,47 @@ public class ImageUtils {
 			return imageUrl.concat("?WIDTH=380&HEIGHT=280");
 		}
 	}
+	public static String getThumbnailUrl(String imageUrl) {
+		try {
+			return imageUrl+ THUMBNAIL_IMAGE_DIMEN;
+		} catch (Exception e) {
+			return imageUrl;
+		}
+	}
 
+	public static int getNumColumns(Context context) {
+
+		int numColumns = 2;
+		int orientation = getOrientation(context);
+
+		if (orientation == Surface.ROTATION_90
+				|| orientation == Surface.ROTATION_270) {
+			// landscape mode
+			numColumns = context.getResources().getInteger(R.integer.landscape_mode_num_columns);
+		} else {
+			// portrait mode
+			numColumns = context.getResources().getInteger(R.integer.portrait_mode_num_columns);
+		}
+
+		return numColumns;
+	}
+
+	public static int getOrientation(Context context) {
+
+		Activity activity = (Activity) context;
+
+		Display display = ((WindowManager) activity.getSystemService(Activity.WINDOW_SERVICE)).getDefaultDisplay();
+		int orientation = display.getRotation();
+
+		return orientation;
+	}
+
+	public static int getGridItemWidth(Activity activity) {
+
+		int width = CommonUtil.getScreenWidthInPixels(activity);
+		int numOfColumns = getNumColumns(activity);
+		width = width / numOfColumns;
+
+		return width;
+	}
 }

@@ -13,7 +13,7 @@ import com.makaan.R;
 import com.makaan.gallery.GalleryActivity.CategorizedImage;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.util.CommonUtil;
-import com.makaan.util.PhotoUtil;
+import com.makaan.util.ImageUtils;
 
 import java.util.List;
 
@@ -69,7 +69,7 @@ public class CategorizedGalleryThumbnailAdapter extends BaseAdapter {
 		}
 		
 		CategorizedImage data = getItem(position);
-		String url = PhotoUtil.getThumbnailUrl(data.overViewImage.getAbsolutePath());
+		String url = ImageUtils.getThumbnailUrl(data.overViewImage.getAbsolutePath());
 		CommonUtil.TLog("Image Url: " + url);
         h.imageView.setImageUrl(url, mImageLoader);
         h.categoryName.setText(mContext.getString(data.titleId));

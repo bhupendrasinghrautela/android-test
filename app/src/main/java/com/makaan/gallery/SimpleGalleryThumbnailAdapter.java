@@ -18,7 +18,7 @@ import com.makaan.R;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.image.Image;
 import com.makaan.util.CommonUtil;
-import com.makaan.util.PhotoUtil;
+import com.makaan.util.ImageUtils;
 
 import java.util.List;
 
@@ -99,7 +99,7 @@ public class SimpleGalleryThumbnailAdapter extends BaseAdapter {
 		}
 		
 		Image data = getItem(position);
-		String url = PhotoUtil.getThumbnailUrl(data.getAbsolutePath());
+		String url = ImageUtils.getThumbnailUrl(data.getAbsolutePath());
         h.imageView.setImageUrl(url, mImageLoader);
         
         String title = data.getTitle();
@@ -183,7 +183,7 @@ public class SimpleGalleryThumbnailAdapter extends BaseAdapter {
 	
 	private int getX(int position) {
 		
-		int numColumns = PhotoUtil.getNumColumns(mContext);    	
+		int numColumns = ImageUtils.getNumColumns(mContext);
     	int p = position % numColumns;    	
     	int cellWidth = mScreenWidth / numColumns;    	
     	
@@ -192,10 +192,10 @@ public class SimpleGalleryThumbnailAdapter extends BaseAdapter {
     
     private int getY(int position) {
     	
-    	int numColumns = PhotoUtil.getNumColumns(mContext);   	
+    	int numColumns = ImageUtils.getNumColumns(mContext);
     	int p = position / numColumns;
     	int cellWidth = mScreenWidth / numColumns;   
-    	int cellHeight = (int) (cellWidth*PhotoUtil.THUMBNAIL_ASPECT_RATIO);
+    	int cellHeight = (int) (cellWidth*ImageUtils.THUMBNAIL_ASPECT_RATIO);
     	
     	int h = p*cellHeight;
     	
@@ -207,9 +207,9 @@ public class SimpleGalleryThumbnailAdapter extends BaseAdapter {
     }
     
 	private int getVisibleCellCount() {
-		int numColumns = PhotoUtil.getNumColumns(mContext);
+		int numColumns = ImageUtils.getNumColumns(mContext);
 		int cellWidth = mScreenWidth / numColumns;
-		int cellHeight = (int) (cellWidth*PhotoUtil.THUMBNAIL_ASPECT_RATIO);
+		int cellHeight = (int) (cellWidth*ImageUtils.THUMBNAIL_ASPECT_RATIO);
 		
 		int gridViewHieght = mGridView.getHeight();
 		

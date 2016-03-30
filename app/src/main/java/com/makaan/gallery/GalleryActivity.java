@@ -22,8 +22,8 @@ import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.gallery.BasePagerAdapter.OnItemChangeListener;
 import com.makaan.response.image.Image;
 import com.makaan.util.CommonUtil;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
-import com.makaan.util.PhotoUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,7 +150,7 @@ public class GalleryActivity extends MakaanFragmentActivity {
 		
 		mGridViewContainer = findViewById(R.id.grid_container);
 		
-		int numOfColumns = PhotoUtil.getNumColumns(mContext);
+		int numOfColumns = ImageUtils.getNumColumns(mContext);
 		
 		setupSimpleGridView(numOfColumns);
 		setupCategorizedGridView(numOfColumns);	
@@ -211,7 +211,7 @@ public class GalleryActivity extends MakaanFragmentActivity {
 		for (Image image : ImageList) {
 			StringBuilder urlBuilder = new StringBuilder();
 			urlBuilder.append(image.getAbsolutePath());
-			urls.add(PhotoUtil.getFullScreenImageUrl(this, image.getAbsolutePath()));
+			urls.add(ImageUtils.getFullScreenImageUrl(image.getAbsolutePath()));
 			CommonUtil.TLog("Image Full Screen Urls: " + urlBuilder.toString());
 		}
 		
@@ -373,6 +373,9 @@ public class GalleryActivity extends MakaanFragmentActivity {
 	private void setProjectImages(List<Image> images) {
 
 		for (Image Image : images) {
+			if(Image.getImageType()==null || Image.getImageType().getType() == null){
+				continue;
+			}
 			if (Image.getImageType().getType().equalsIgnoreCase(KeyUtil.CLUSTER_PLAN)) {
 				mProjectImagesProjectPlansList.add(Image);
 			} else if (Image.getImageType().getType().equalsIgnoreCase(KeyUtil.LOCATION_PLAN)) {
@@ -503,7 +506,7 @@ public class GalleryActivity extends MakaanFragmentActivity {
 		
 		mSimpleGridView.setSelection(mSimpleGridScrollPosition);
 		
-		int numOfColumns = PhotoUtil.getNumColumns(mContext);
+		int numOfColumns = ImageUtils.getNumColumns(mContext);
 		
 		mSimpleGridView.setNumColumns(numOfColumns);
 		mCategorizedGridView.setNumColumns(numOfColumns);

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
-import com.makaan.util.PhotoUtil;
+import com.makaan.util.ImageUtils;
 
 public class SquareFadingNetworkImageView extends FadeInNetworkImageView {
 	
@@ -32,8 +32,8 @@ public class SquareFadingNetworkImageView extends FadeInNetworkImageView {
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		
-		int width = PhotoUtil.getGridItemWidth(mActivity);		
-		setMeasuredDimension(width, (int) (width* PhotoUtil.THUMBNAIL_ASPECT_RATIO));
+		int width = ImageUtils.getGridItemWidth(mActivity);
+		setMeasuredDimension(width, (int) (width* ImageUtils.THUMBNAIL_ASPECT_RATIO));
 	}
 
 }

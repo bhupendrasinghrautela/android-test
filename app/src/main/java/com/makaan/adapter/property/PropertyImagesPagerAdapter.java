@@ -33,6 +33,7 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
 
     private Context mContext;
     private ArrayList<Image> mItems = new ArrayList<>();
+    private ArrayList<Image> mGalleryItems = new ArrayList<>();
     private int mCount = 0;
     private ViewPager pager;
     private Double price;
@@ -125,6 +126,8 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
             return;
         }
         mItems.clear();
+        mGalleryItems.clear();
+        mGalleryItems.addAll(list);
         this.price = price;
         this.size = size;
         this.hasIncreased = hasIncreased;
@@ -176,7 +179,7 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString(KeyUtil.KEY_FULL_SCREEN_SRC_NAME,"Test");
-                bundle.putParcelableArrayList(KeyUtil.IMAGE_DATA_LIST, mItems);
+                bundle.putParcelableArrayList(KeyUtil.IMAGE_DATA_LIST, mGalleryItems);
                 CommonUtil.launchGallery((Activity) mContext, bundle);
             }
         });
