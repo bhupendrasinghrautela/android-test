@@ -16,7 +16,6 @@ import com.makaan.jarvis.event.IncomingMessageEvent;
 import com.makaan.jarvis.event.OnExposeEvent;
 import com.makaan.response.locality.Locality;
 import com.makaan.response.wishlist.WishListResponse;
-import com.makaan.service.ImageService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PriceTrendService;
 import com.makaan.util.DateUtil;
@@ -89,7 +88,7 @@ public class ListingDetailActivity extends MakaanFragmentActivity {
         //((BlogService) (MakaanServiceFactory.getInstance().getService(BlogService.class))).getBlogs("Home");
         //((ListingService) (MakaanServiceFactory.getInstance().getService(ListingService.class))).getOtherSellersOnListingDetail(654368L,3,3,0,0,0,5);
         //((PriceTrendService) (MakaanServiceFactory.getInstance().getService(PriceTrendService.class))).getPriceTrendForProject(500773L,12);
-        ((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(562194L);
+        //((ImageService) (MakaanServiceFactory.getInstance().getService(ImageService.class))).getListingImages(562194L);
 
 
 

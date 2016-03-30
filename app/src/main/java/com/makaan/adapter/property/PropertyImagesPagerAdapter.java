@@ -1,11 +1,14 @@
 package com.makaan.adapter.property;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.makaan.R;
@@ -16,6 +19,8 @@ import com.makaan.fragment.overview.OverviewFragment;
 import com.makaan.jarvis.BaseJarvisActivity;
 import com.makaan.response.image.Image;
 import com.makaan.ui.property.PropertyImageCardView;
+import com.makaan.util.CommonUtil;
+import com.makaan.util.KeyUtil;
 import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
@@ -27,7 +32,8 @@ import java.util.List;
 public class PropertyImagesPagerAdapter extends PagerAdapter {
 
     private Context mContext;
-    private List<Image> mItems = new ArrayList<>();
+    private ArrayList<Image> mItems = new ArrayList<>();
+    private ArrayList<Image> mGalleryItems = new ArrayList<>();
     private int mCount = 0;
     private ViewPager pager;
     private Double price;
@@ -120,6 +126,8 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
             return;
         }
         mItems.clear();
+        mGalleryItems.clear();
+        mGalleryItems.addAll(list);
         this.price = price;
         this.size = size;
         this.hasIncreased = hasIncreased;
@@ -166,6 +174,15 @@ public class PropertyImagesPagerAdapter extends PagerAdapter {
         else {
             mCurrentPropertyImageCardView.bindView(mContext, mItems.get(position), position, price,size,hasIncreased,category);
         }
+        mCurrentPropertyImageCardView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString(KeyUtil.KEY_FULL_SCREEN_SRC_NAME,"Test");
+                bundle.putParcelableArrayList(KeyUtil.IMAGE_DATA_LIST, mGalleryItems);
+                CommonUtil.launchGallery((Activity) mContext, bundle);
+            }
+        });
         container.addView(mCurrentPropertyImageCardView,0);
         return mCurrentPropertyImageCardView;
 

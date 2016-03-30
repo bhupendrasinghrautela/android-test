@@ -164,7 +164,7 @@
     <string name="top_localities">top localities</string>
     <string name="view_properties">view properties</string>
     <string name="locality_title" />
-    <string name="locality_about_median_price">avg price</string>
+    <string name="locality_about_median_price">avg buy price</string>
     <string name="locality_about_annual_growth">annual growth</string>
     <string name="locality_about_median_rent">avg rent</string>
     <string name="locality_rental_demand">rental demand</string>
@@ -371,6 +371,20 @@
     <string name="notification_deletion_error">unable to delete notification, please try again later</string>
 
     <string name="please_wait">please wait...</string>
+
+    <string name="gallery">Gallery</string>
+    <string name="tab_projectgallery_photo">Photo Gallery</string>
+    <string name="all_photos">All Photos</string>
+    <string name="tab_projectgallery_floor_plan">Floor Plan</string>
+    <string name="tab_projectgallery_master_plan">Master Plan</string>
+    <string name="tab_projectgallery_project_plan">Project Plan</string>
+    <string name="tab_projectgallery_payment_plan">Payment Plan</string>
+    <string name="tab_projectgallery_neighbourhood">Neighbourhood</string>
+    <string name="tab_projectgallery_site_plan">Site plan</string>
+    <string name="tab_projectgallery_construction_update">Construction Status</string>
+    <string name="image_already_exits">Image already exists in gallery.</string>
+    <string name="sdcard_unmounted">We are sorry. SD card seems to be unavailable!</string>
+    <string name="image_saved">Image saved successfully.</string>
 
     <string name="score_message">calculated based on presence of project amenities, builder credentials and location advantages</string>
 
