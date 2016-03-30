@@ -172,7 +172,7 @@ public class SignUpFragment extends Fragment {
 
     @OnClick(R.id.iv_back)
     public void onBackPressed(){
-        getActivity().onBackPressed();
+        getActivity().finish(); 
     }
 
 
