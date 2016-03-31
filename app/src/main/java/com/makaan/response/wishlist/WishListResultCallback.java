@@ -56,17 +56,19 @@ public class WishListResultCallback extends StringRequestCallback {
 
             if(Request.Method.GET==requestMethod || Request.Method.POST==requestMethod) {
                 wishListResultEvent.wishListResponse = wishListResponse;
-                MasterDataCache.getInstance().clearWishList();
+                //MasterDataCache.getInstance().clearWishList();
                 for (WishList wishList : wishListResponse.data) {
                     if (null != wishList) {
                         if (null != wishList.listingId) {
-                            MasterDataCache.getInstance().addShortlistedProperty(wishList.listingId, wishList.wishListId);
+                            MasterDataCache.getInstance().addShortlistedProperty(wishList.listingId, wishList);
                         } else if (null != wishList.projectId) {
-                            MasterDataCache.getInstance().addShortlistedProperty(wishList.projectId, wishList.wishListId);
+                            MasterDataCache.getInstance().addShortlistedProperty(wishList.projectId, wishList);
                         }
                     }
                 }
 
+                WishListService wishListService = (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
+                wishListService.syncWishList();
 
             }else  if (Request.Method.DELETE==requestMethod){
                 MasterDataCache.getInstance().removeShortlistedProperty(itemId);

@@ -37,6 +37,8 @@ import com.makaan.jarvis.message.CtaType;
 import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.jarvis.ui.cards.BaseCtaView;
 import com.makaan.jarvis.ui.cards.CtaCardFactory;
+import com.makaan.jarvis.ui.cards.InterceptedLinearLayout;
+import com.makaan.jarvis.ui.cards.PyrPopupCard;
 import com.makaan.jarvis.ui.cards.SerpFilterCard;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.pojo.SerpRequest;
@@ -77,7 +79,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
 
     @Nullable
     @Bind(R.id.card_cta)
-    LinearLayout mJarvisPopupCard;
+    InterceptedLinearLayout mJarvisPopupCard;
 
     @Nullable
     @Bind(R.id.jarvis_container)
@@ -258,7 +260,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         }
 
         if(null== mJarvisPopupCard){
-            mJarvisPopupCard = (LinearLayout) findViewById(R.id.card_cta);
+            mJarvisPopupCard = (InterceptedLinearLayout) findViewById(R.id.card_cta);
         }
 
         mPopupDismissRunnable=new Runnable() {
@@ -269,6 +271,14 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
             }
         };
 
+        mJarvisPopupCard.setOnInterceptTouchListener(new InterceptedLinearLayout.OnInterceptTouchListener() {
+            @Override
+            public void OnInterceptTouch() {
+                mPopupDismissHandler.removeCallbacks(mPopupDismissRunnable);
+            }
+        });
+
+
         mJarvisPopupCard.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -276,6 +286,10 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                 return true;
             }
         });
+
+
+
+
     }
 
     public void startActivity(Intent intent){
@@ -438,7 +452,11 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
             return;
         }
 
-        if(mJarvisPopupCard !=null && mJarvisPopupCard.getVisibility()==View.VISIBLE){
+        if(null!=mPopupDismissHandler && null!=mPopupDismissRunnable) {
+            mPopupDismissHandler.removeCallbacks(mPopupDismissRunnable);
+        }
+
+        if(mJarvisPopupCard != null && mJarvisPopupCard.getVisibility()==View.VISIBLE){
             mJarvisPopupCard.removeAllViews();
             mJarvisPopupCard.setVisibility(View.GONE);
         }

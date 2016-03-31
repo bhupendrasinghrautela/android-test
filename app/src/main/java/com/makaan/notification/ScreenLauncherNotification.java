@@ -29,7 +29,7 @@ public class ScreenLauncherNotification implements MakaanNotification{
 			return;
 		}
 		
-/*		resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
+		/*resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
 				Intent.FLAG_ACTIVITY_NEW_TASK |
 				Intent.FLAG_ACTIVITY_NO_ANIMATION);*/
 		

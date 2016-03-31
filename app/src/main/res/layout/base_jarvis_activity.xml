@@ -27,7 +27,7 @@
             android:src="@drawable/jarvis"
             android:transitionName="@string/jarvis_button_transition" />
 
-        <LinearLayout
+        <com.makaan.jarvis.ui.cards.InterceptedLinearLayout
             android:id="@+id/card_cta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
