@@ -24,14 +24,6 @@
     <style name="MyAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/app_red</item>
     </style>
-    <style name="SpinnerItem">
-        <item name="android:textColor">#993399</item>
-        <item name="android:background">@drawable/spinner_background</item>
-    </style>
-    <style name="SpinnerDropDownItem">
-        <item name="android:textColor">#993399</item>
-        <item name="android:background">@drawable/spinner_background</item>
-    </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -112,16 +104,6 @@
         <item name="colorControlNormal">@color/my_account_grey</item>
         <item name="colorControlActivated">@color/my_account_grey</item>
         <item name="android:typeface">monospace</item>
-    </style>
-
-    <style name="abc">
-        <item name="android:layout_marginTop">0dp</item>
-        <item name="android:background">@drawable/buy_radio_button_background_selector</item>
-    </style>
-
-    <style name="def">
-        <item name="android:layout_marginTop">3dp</item>
-        <item name="android:background">@drawable/rent_radio_button_background_selector</item>
     </style>
 
 

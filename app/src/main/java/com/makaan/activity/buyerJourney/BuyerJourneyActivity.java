@@ -258,7 +258,7 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity implements Noti
         //set up button
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.mipmap.back_black);
+        actionBar.setHomeAsUpIndicator(R.mipmap.back_white);
         actionBar.setTitle("");
 
     }
@@ -320,19 +320,19 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity implements Noti
                 Intent intent = new Intent(this, BuyerAccountSettingActivity.class);
                 startActivity(intent);
                 break;*/
-            case R.id.item_logout:
+            /*case R.id.item_logout:
                 try{
                     onLogoutClick();
                 }catch (Exception e){
-                    /*Toast.makeText(BuyerJourneyActivity.this,getResources()
-                            .getString(R.string.generic_error), Toast.LENGTH_SHORT).show();*/
+                    *//*Toast.makeText(BuyerJourneyActivity.this,getResources()
+                            .getString(R.string.generic_error), Toast.LENGTH_SHORT).show();*//*
 
                     if(!isFinishing()) {
                         MakaanMessageDialogFragment.showMessage(getFragmentManager(),
                                 getString(R.string.generic_error), "ok");
                     }
                 }
-                break;
+                break;*/
             case android.R.id.home:
                 onBackPressed();
                 break;

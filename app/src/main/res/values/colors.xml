@@ -3,9 +3,7 @@
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="colorPrimary">#E71C28</color>
-    <color name="colorPrimaryDark">#691717</color>
     <color name="colorAccent">#E71C28</color>
-    <color name="listingBgColor">#f1f1f1</color>
     <color name="listingGray">#666666</color>
     <color name="emiGray">#979797</color>
     <color name="transparent">#00000000</color>
@@ -14,7 +12,6 @@
     <color name= "light_gray">#d3d3d3 </color>
 
     <color name="app_grey">#80000000</color>
-    <color name="app_pink">#E72989</color>
     <color name="status_bar_color">#B82929</color>
 
     <!--Pyr-->
@@ -24,9 +21,7 @@
     <color name="pyr_light_grey">#e0e0e0</color>
     <color name="pyr_grey">#666666</color>
     <color name="selected_list_view_background">#F2F2F2</color>
-    <color name="selected_list_item_color">#f7941e</color>
     <color name="selected_list_cancel_icon_tint">#f7941e</color>
-    <color name="list_filter_button_background_color">#FFFFFF</color>
     <color name="bedroom_circular_stroke">#D3D3D3</color>
     <color name="pyr_main_page_background">#f6f6f6</color>
 
@@ -37,7 +32,6 @@
     <color name="serp_listing_background">#F0F0F0</color>
     <color name="serp_listing_card_background">#FFFFFF</color>
     <color name="serp_listing_view_empty_view_color">#33979797</color>
-    <color name="serp_listing_cluster_card_background">#FBA511</color>
 
     <color name="serp_listing_cluster_card_group_background">#ADE62489</color>
 
@@ -54,33 +48,20 @@
 
     <color name="fragment_dialog_filters_toggle_button_normal_text_color">#444444</color>
     <color name="fragment_dialog_filters_toggle_button_disabled_text_color">#80444444</color>
-    <color name="fragment_dialog_filters_toggle_button_normal_stroke_color">#757575</color>
     <color name="fragment_dialog_filters_item_empty_view_background_color">#33979797</color>
 
     <!---Jarvis work in progress to be refactored-->
-    <color name="body_background">#e8e8e8</color>
-    <color name="body_background_green">#82e783</color>
-    <color name="server_status_bar">#2b2b2b</color>
-    <color name="title_gray">#434343</color>
     <color name="bg_msg_you">#eb4433</color>
-    <color name="bg_msg_from">#1e6258</color>
-    <color name="msg_border_color">#a1a1a1</color>
-    <color name="bg_btn_join">#1e6258</color>
-    <color name="bg_msg_input">#e8e8e8</color>
     <color name="text_msg_input">#626262</color>
-    <color name="lblFromName">#777777</color>
     <color name="chat_divider">#e0e0e0</color>
     <color name="chat_card_stroke">#cccccc</color>
 
     <!--PropertyAmenity-->
     <color name="amenity_title_color">#353535</color>
-    <color name="amenity_name_color">#444444</color>
-    <color name="amenity_distance_color">#e71c28</color>
     <color name="amenity_item_bg">#f2f2f2</color>
 
 
     <!-- relevance popup color values -->
-    <color name="relevance_popup_window_selected_bac">#DE000000</color>
 
 
     <!-- Search result item color values -->
@@ -100,22 +81,17 @@
     <color name="city_empty_view_color">#90979797</color>
 
     <color name="grayDivider">#e0e0e0</color>
-    <color name="pink">#E62489</color>
     <color name="red">#FF0000</color>
 
     <!-- Serp Builder Item Dimens -->
     <color name="serp_listing_item_builder_empty_view_background_color">#4CFFFFFF</color>
     <color name="serp_listing_item_seller_empty_view_background_color">#4CFFFFFF</color>
-    <color name="dark_grey">#888</color>
-    <color name="locality_light_grey">#90979797</color>
     <color name="locality_seprator">#90979797</color>
     <color name="project_similar_projects_default_color">#444444</color>
     <color name="project_similar_projects_red">#e71c28</color>
-    <color name="project_specification_dark_color">#444</color>
     <color name="project_specification_default_color">#888</color>
     <color name="tab_stroke">#ccc</color>
     <color name="project_config_item_stroke_color">#cecece</color>
-    <color name="project_similar_projects_light_color">#999</color>
 
     <!-- Home Activity colors -->
     <color name="activity_home_search_background">#E6ffffff</color>
@@ -127,12 +103,10 @@
 
     <!--buyer journey-->
     <color name="dark_grey_text">#555555</color>
-    <color name="light_grey_text">#999999</color>
     <color name="project_config_item_seperator">#dedede</color>
     <color name="project_config_item_selected_stroke_color">#e71c28</color>
     <color name="buyer_journey_view_grey_color">#b7b7b7</color>
     <color name="buyer_journey_light_grey_color">#8a8a8a</color>
-    <color name="non_logged_user_background">#C8C6C6</color>
 
 
     <!-- Lead form Colors-->
@@ -169,7 +143,6 @@
 
     <!--my account colors-->
     <color name="my_account_grey">#444444</color>
-    <color name="button_grey">#a2a2a2</color>
     <color name="submit_button_grey">#a2a2a2</color>
 
 
