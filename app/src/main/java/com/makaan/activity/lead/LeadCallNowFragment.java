@@ -58,7 +58,9 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
         super.onActivityCreated(savedInstanceState);
         mLeadFormPresenter= LeadFormPresenter.getLeadFormPresenter();
         mTextViewSellerName.setText(mLeadFormPresenter.getName().toLowerCase());
-        mRatingBarSeller.setRating(Float.valueOf(mLeadFormPresenter.getScore()));
+        if(!TextUtils.isEmpty(mLeadFormPresenter.getScore())) {
+            mRatingBarSeller.setRating(Float.valueOf(mLeadFormPresenter.getScore()));
+        }
         if(mLeadFormPresenter.getPhone()!=null) {
             mButtonCall.setText("call " + PhoneNumberUtils.formatNumber(mLeadFormPresenter.getPhone()));
         }

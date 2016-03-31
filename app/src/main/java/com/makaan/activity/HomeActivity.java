@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
 import com.makaan.constants.PreferenceConstants;
@@ -26,6 +28,8 @@ import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.Session;
 import com.makaan.event.location.LocationGetEvent;
 import com.makaan.event.user.UserLoginEvent;
+import com.makaan.network.CustomImageLoaderListener;
+import com.makaan.network.MakaanNetworkClient;
 import com.makaan.notification.GcmRegister;
 import com.makaan.pojo.VersionUpdate;
 import com.makaan.response.search.event.SearchResultEvent;
@@ -35,6 +39,7 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
 import com.makaan.service.WishListService;
 import com.makaan.util.CommonPreference;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.JsonParser;
 import com.makaan.util.PermissionManager;
 import com.makaan.util.Preference;
@@ -42,6 +47,7 @@ import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends MakaanBaseSearchActivity {
     boolean isBottom = true;
@@ -55,7 +61,7 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     @Bind(R.id.makaan_toolbar_login_text_view)
     TextView tvUserName;
     @Bind(R.id.makaan_toolbar_profile_icon_image_view)
-    ImageView mImageViewBuyer;
+    CircleImageView mImageViewBuyer;
     @Bind(R.id.makaan_toolbar_profile_icon_text_view)
     TextView  mTextViewBuyerInitials;
 
@@ -237,11 +243,37 @@ public class HomeActivity extends MakaanBaseSearchActivity {
             mTextViewBuyerInitials.setText(info.getData().getFirstName());
             mTextViewBuyerInitials.setVisibility(View.VISIBLE);
             mImageViewBuyer.setVisibility(View.GONE);
+
+            if (!TextUtils.isEmpty(info.getData().getProfileImageUrl())) {
+                int width = getResources().getDimensionPixelSize(R.dimen.profile_image_width);
+                int height = getResources().getDimensionPixelSize(R.dimen.profile_image_height);
+                MakaanNetworkClient.getInstance().getImageLoader().get(
+                        ImageUtils.getImageRequestUrl(info.getData().getProfileImageUrl(), width, height, false),
+                        new CustomImageLoaderListener() {
+
+                            @Override
+                            public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
+                                if(isActivityDead()){
+                                    return;
+                                }
+                                if (b && imageContainer.getBitmap() == null) {
+                                    return;
+                                }
+                                if(mImageViewBuyer != null) {
+                                    mTextViewBuyerInitials.setVisibility(View.INVISIBLE);
+                                    mImageViewBuyer.setVisibility(View.VISIBLE);
+                                    mImageViewBuyer.setImageBitmap(imageContainer.getBitmap());
+                                }
+                            }
+                        }
+                );
+            }
         }else{
             tvUserName.setVisibility(View.VISIBLE);
             tvUserName.setText(R.string.login);
             mTextViewBuyerInitials.setVisibility(View.GONE);
             mImageViewBuyer.setVisibility(View.VISIBLE);
+            mImageViewBuyer.setImageResource(R.drawable.edit_avatar);
         }
     }
 
