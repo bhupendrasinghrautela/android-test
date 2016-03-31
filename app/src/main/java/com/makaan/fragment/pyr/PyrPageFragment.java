@@ -28,6 +28,7 @@ import com.makaan.event.agents.TopRentAgentsPyrEvent;
 import com.makaan.event.agents.callback.TopBuyAgentsPyrCallback;
 import com.makaan.event.agents.callback.TopRentAgentsPyrCallback;
 import com.makaan.network.VolleyErrorParser;
+import com.makaan.notification.GcmPreferences;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.request.pyr.PyrRequest;
 import com.makaan.response.agents.TopAgent;
@@ -213,6 +214,7 @@ public class PyrPageFragment extends Fragment {
 
         PyrRequest pyrRequest=new PyrRequest();
         boolean makeRequest=pyrPagePresenter.makePartialPyrRequest(getActivity() ,pyrRequest, (mIsBuySelected ? mGroupsBuy : mGroupsRent));
+        pyrRequest.setJsonDump(GcmPreferences.getGcmRegId(getContext()));
 
         if(null!=pyrRequest.getLocalityIds() && pyrRequest.getLocalityIds().length>0) {
             for (int value : pyrRequest.getLocalityIds()) {

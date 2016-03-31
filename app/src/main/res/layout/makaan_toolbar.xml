@@ -54,7 +54,7 @@
             android:layout_marginRight="10dp"
             android:clickable="false">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/makaan_toolbar_profile_icon_image_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
