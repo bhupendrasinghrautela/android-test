@@ -383,11 +383,17 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:id="@id/iv_stage"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/arrow_right_small" />
+            <View
+                android:id="@id/iv_view"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/app_red"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
@@ -435,68 +441,24 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:id="@id/iv_stage"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/arrow_right_small" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_registration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_unit_booking"
-            android:layout_marginLeft="@dimen/view_left_padding_layout"
-            android:gravity="center_vertical"
-            android:paddingBottom="@dimen/padding_layout"
-            android:paddingTop="@dimen/padding_layout">
-
-            <ImageView
-                android:layout_width="36dp"
-                android:layout_marginLeft="1dp"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/journey_registration" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="9"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="@string/registration"
-                    android:textColor="@color/dark_grey_text"
-                    android:textSize="@dimen/text_size_medium"
-                    android:typeface="monospace" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="@string/make_home_yours"
-                    android:textColor="@color/buyer_journey_light_grey_color"
-                    android:textSize="@dimen/medium_text"
-                    android:typeface="serif" />
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/arrow_right_small" />
+            <View
+                android:id="@id/iv_view"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/app_red"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_possession"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_registration"
+            android:layout_below="@+id/ll_unit_booking"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/padding_layout"
             android:paddingLeft="@dimen/view_left_padding_layout"
@@ -537,11 +499,73 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:id="@id/iv_stage"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/arrow_right_small" />
+            <View
+                android:id="@id/iv_view"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/app_red"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_registration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_possession"
+            android:layout_marginLeft="@dimen/view_left_padding_layout"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/padding_layout"
+            android:paddingTop="@dimen/padding_layout">
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_marginLeft="1dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/journey_registration" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/registration"
+                    android:textColor="@color/dark_grey_text"
+                    android:textSize="@dimen/text_size_medium"
+                    android:typeface="monospace" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/make_home_yours"
+                    android:textColor="@color/buyer_journey_light_grey_color"
+                    android:textSize="@dimen/medium_text"
+                    android:typeface="serif" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@id/iv_stage"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/arrow_right_small" />
+            <View
+                android:id="@id/iv_view"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/app_red"
+                android:visibility="gone" />
         </LinearLayout>
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>
