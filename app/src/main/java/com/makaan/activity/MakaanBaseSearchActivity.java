@@ -32,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.location.LocationListener;
@@ -47,6 +48,8 @@ import com.makaan.cookie.Session;
 import com.makaan.fragment.MakaanMessageDialogFragment;
 import com.makaan.location.LocationServiceConnectionListener;
 import com.makaan.location.MakaanLocationManager;
+import com.makaan.network.CustomImageLoaderListener;
+import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.search.SearchResponseHelper;
 import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.SearchSuggestionType;
@@ -58,6 +61,7 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SearchService;
 import com.makaan.ui.listing.CustomFlowLayout;
 import com.makaan.util.ErrorUtil;
+import com.makaan.util.ImageUtils;
 import com.makaan.util.PermissionManager;
 import com.makaan.util.RecentSearchManager;
 import com.segment.analytics.Properties;
@@ -69,6 +73,7 @@ import java.util.Iterator;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by rohitgarg on 1/10/16.
@@ -93,7 +98,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     FrameLayout mSearchResultFrameLayout;
 
     @Bind(R.id.activity_search_toolbar_profile_icon_image_view)
-    ImageView mImageViewBuyer;
+    CircleImageView mImageViewBuyer;
     @Bind(R.id.activity_search_toolbar_profile_icon_text_view)
     TextView  mTextViewBuyerInitials;
 
@@ -1359,10 +1364,37 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     private void setUserData() {
         UserResponse info= CookiePreferences.getUserInfo(this);
         if(null!=info && null!=info.getData()) {
+            mImageViewBuyer.setVisibility(View.GONE);
             mTextViewBuyerInitials.setText(info.getData().getFirstName());
+
+            if (!TextUtils.isEmpty(info.getData().getProfileImageUrl())) {
+                int width = getResources().getDimensionPixelSize(R.dimen.profile_image_width);
+                int height = getResources().getDimensionPixelSize(R.dimen.profile_image_height);
+                MakaanNetworkClient.getInstance().getImageLoader().get(
+                        ImageUtils.getImageRequestUrl(info.getData().getProfileImageUrl(), width, height, false),
+                        new CustomImageLoaderListener() {
+
+                            @Override
+                            public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
+                                if(isActivityDead()){
+                                    return;
+                                }
+                                if (b && imageContainer.getBitmap() == null) {
+                                    return;
+                                }
+                                if(mImageViewBuyer != null) {
+                                    mTextViewBuyerInitials.setVisibility(View.INVISIBLE);
+                                    mImageViewBuyer.setVisibility(View.VISIBLE);
+                                    mImageViewBuyer.setImageBitmap(imageContainer.getBitmap());
+                                }
+                            }
+                        }
+                );
+            }
         }else{
             mTextViewBuyerInitials.setVisibility(View.GONE);
             mImageViewBuyer.setVisibility(View.VISIBLE);
+            mImageViewBuyer.setImageResource(R.drawable.edit_avatar);
         }
     }
 

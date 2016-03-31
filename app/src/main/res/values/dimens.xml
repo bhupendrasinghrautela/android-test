@@ -415,6 +415,7 @@
     <dimen name="activity_search_base_layout_search_bar_search_image_button_height">24dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_search_image_button_margin_right">18dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_search_image_button_margin_top">14dp</dimen>
+    <dimen name="base_search_profile_image_width_height">35dp</dimen>
 
     <!-- filter fragment bar dimen values -->
     <dimen name="fragment_filters_filter_image_view_width">24dp</dimen>

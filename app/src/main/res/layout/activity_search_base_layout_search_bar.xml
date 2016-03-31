@@ -42,10 +42,10 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/activity_search_toolbar_profile_icon_image_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="@dimen/base_search_profile_image_width_height"
+                    android:layout_height="@dimen/base_search_profile_image_width_height"
                     android:clickable="false"
                     android:src="@drawable/edit_avatar"
                     android:visibility="gone" />
