@@ -75,6 +75,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
 
 
     private View[] mViews = new View[3];
+    private View[] mArticleViews = new View[3];
     private ArrayList<SaveSearch> savedSearches;
 
     @OnClick(R.id.ll_search)
@@ -174,6 +175,10 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             mViews[0] = view.findViewById(R.id.ll_search);
             mViews[1] = view.findViewById(R.id.ll_shortlist);
             mViews[2] = view.findViewById(R.id.ll_site_visit);
+
+            mArticleViews[0] = view.findViewById(R.id.ll_unit_booking);
+            mArticleViews[1] = view.findViewById(R.id.ll_possession);
+            mArticleViews[2] = view.findViewById(R.id.ll_registration);
         }
         return view;
     }
@@ -342,6 +347,10 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             mViews[i].findViewById(R.id.iv_view).setVisibility(View.VISIBLE);
             mViews[i].findViewById(R.id.iv_stage).setVisibility(View.INVISIBLE);
         }
+        if(i - 3 < mArticleViews.length && i - 3 >= 0) {
+            mArticleViews[i - 3].findViewById(R.id.iv_view).setVisibility(View.VISIBLE);
+            mArticleViews[i - 3].findViewById(R.id.iv_stage).setVisibility(View.INVISIBLE);
+        }
 
         if(i >= LeadPhaseConstants.LEAD_PHASE_BOOKING) {
             Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap("journey_makaan");
@@ -366,6 +375,17 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             mViews[j].findViewById(R.id.iv_view).setVisibility(View.INVISIBLE);
             mViews[j].findViewById(R.id.iv_stage).setVisibility(View.VISIBLE);
             ((ImageView)mViews[j].findViewById(R.id.iv_stage)).setImageResource(R.drawable.arrow_right_small);
+        }
+
+        for(int j = 0; j < i - 3 && j < mArticleViews.length; j++) {
+            mArticleViews[j].findViewById(R.id.iv_view).setVisibility(View.INVISIBLE);
+            mArticleViews[j].findViewById(R.id.iv_stage).setVisibility(View.VISIBLE);
+            ((ImageView)mArticleViews[j].findViewById(R.id.iv_stage)).setImageResource(R.drawable.check_tick_red);
+        }
+        for(int j = (i - 3) + 1; j >=0 && j < mArticleViews.length; j++) {
+            mArticleViews[j].findViewById(R.id.iv_view).setVisibility(View.INVISIBLE);
+            mArticleViews[j].findViewById(R.id.iv_stage).setVisibility(View.VISIBLE);
+            ((ImageView)mArticleViews[j].findViewById(R.id.iv_stage)).setImageResource(R.drawable.arrow_right_small);
         }
     }
 
