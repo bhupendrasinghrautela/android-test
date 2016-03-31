@@ -36,6 +36,7 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.user.UserResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.user.UserLogoutService;
+import com.makaan.util.CommonPreference;
 import com.makaan.util.ImageUtils;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
@@ -363,6 +364,7 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity implements Noti
             MasterDataCache.getInstance().clearSavedSearches();
             MasterDataCache.getInstance().setUserData(null);
             MasterDataCache.getInstance().clearWishList();
+            CommonPreference.clearWishList(this);
             //TODO also clear metadata and userinfo
             finish();
         }else{

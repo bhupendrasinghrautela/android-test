@@ -3,6 +3,7 @@ package com.makaan.activity.shortlist;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,9 +13,11 @@ import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.lead.LeadFormActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.response.wishlist.WishList;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
@@ -103,6 +106,32 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
         if(wishList.get(position).project != null && wishList.get(position).project.address != null) {
             shortListFavoriteViewHolder.mTextViewLocality.setText(wishList.get(position).project.address.toLowerCase());
         }
+
+        shortListFavoriteViewHolder.mImageViewBackground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(null!=wishList.get(position)) {
+                    if (wishList.get(position).listingId != null) {
+                        Intent intent = new Intent(mContext, OverviewActivity.class);
+                        Bundle bundle = new Bundle();
+
+                        bundle.putLong(OverviewActivity.ID, wishList.get(position).listingId);
+                        bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROPERTY.ordinal());
+                        intent.putExtras(bundle);
+                        mContext.startActivity(intent);
+                    }else if(wishList.get(position).projectId != null){
+                        Intent intent = new Intent(mContext, OverviewActivity.class);
+                        Bundle bundle = new Bundle();
+
+                        bundle.putLong(OverviewActivity.ID, wishList.get(position).projectId);
+                        bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROJECT.ordinal());
+                        intent.putExtras(bundle);
+                        mContext.startActivity(intent);
+                    }
+                }
+            }
+        });
+
         shortListFavoriteViewHolder.mTextViewGetCallBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

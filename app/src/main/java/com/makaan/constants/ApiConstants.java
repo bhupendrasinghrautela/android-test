@@ -94,6 +94,7 @@ public class ApiConstants {
     public static final String GCM = MICROSERVICE_MADROX.concat("/data/v1/entity/gcm-user");
     public static final String TYPEAHEAD = MICROSERVICE_COLUMBUS.concat("/app/v5/typeahead?");
     public static final String WISHLIST = MICROSERVICE_PETRA.concat("/data/v1/entity/user/wish-list");
+    public static final String WISHLIST_V2 = MICROSERVICE_PETRA.concat("/data/v2/entity/user/123/wish-list"); //dummy user id is ignored at server but required in url;
     public static final String FACEBOOK_LOGIN = MICROSERVICE_MADROX.concat("/app/v1/login/facebook?access_token=");
     public static final String GOOGLE_LOGIN = MICROSERVICE_MADROX.concat("/app/v1/login/google?access_token=");
     public static final String MAKAAN_LOGIN = MICROSERVICE_MADROX.concat("/app/v1/login");

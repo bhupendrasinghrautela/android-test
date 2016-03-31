@@ -17,6 +17,7 @@ import com.makaan.response.serp.FilterGroup;
 import com.makaan.response.serp.ListingInfoMap;
 import com.makaan.response.serp.RangeFilter;
 import com.makaan.response.user.UserResponse.UserData;
+import com.makaan.response.wishlist.WishList;
 import com.makaan.service.AmenityService;
 
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class MasterDataCache {
     private Map<String, SerpFilterMessageMap> jarvisSerpFilterMessageMap = new HashMap<>();
     private Map<String, BuyerJourneyMessage> jarvisBuyerJourneyMessageMap = new HashMap<>();
 
-    private HashMap<Long, Long> userWishListMap;
+    private HashMap<Long, WishList> userWishListMap;
     private ArrayList<SaveSearch> userSavedSearches;
     private ListingInfoMap listingInfoMap;
     private SparseArray<String> directionApiList = new SparseArray<>();
@@ -353,13 +354,29 @@ public class MasterDataCache {
         return constructionStatusMap.get(status);
     }
 
-    public void addShortlistedProperty(Long id, Long wishlistId) {
+    public void bulkAddShortlistedProperty(List<WishList> wishLists) {
 
         if(null==userWishListMap) {
             userWishListMap = new HashMap<>();
         }
 
-        userWishListMap.put(id, wishlistId);
+        for(WishList wishList : wishLists) {
+            if(null!=wishList.listingId) {
+                userWishListMap.put(wishList.listingId, wishList);
+            }else if(null!=wishList.projectId){
+                userWishListMap.put(wishList.projectId, wishList);
+            }
+        }
+
+    }
+
+    public void addShortlistedProperty(Long id, WishList wishlist) {
+
+        if(null==userWishListMap) {
+            userWishListMap = new HashMap<>();
+        }
+
+        userWishListMap.put(id, wishlist);
 
     }
 
@@ -373,6 +390,47 @@ public class MasterDataCache {
         if(null!=userWishListMap) {
             userWishListMap.clear();
         }
+    }
+
+    public boolean isShortlistedProperty(Long id) {
+
+        if(null!=userWishListMap) {
+            if (userWishListMap.containsKey(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Long getWishListId(Long id) {
+
+        if(null!=userWishListMap) {
+            if (userWishListMap.containsKey(id)) {
+                return userWishListMap.get(id).wishListId;
+            }
+        }
+        return null;
+    }
+
+    public WishList getWishList(Long id) {
+
+        if(null!=userWishListMap) {
+            if (userWishListMap.containsKey(id)) {
+                return userWishListMap.get(id);
+            }
+        }
+        return null;
+    }
+
+    public List<WishList> getAllWishList() {
+        List<WishList> list = new ArrayList<>();
+        Iterator it = userWishListMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            list.add((WishList) pair.getValue());
+        }
+
+        return list;
     }
 
     public void clearSavedSearches(){
@@ -397,25 +455,7 @@ public class MasterDataCache {
         return null;
     }
 
-    public boolean isShortlistedProperty(Long id) {
 
-        if(null!=userWishListMap) {
-            if (userWishListMap.containsKey(id)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Long getWishlistId(Long id) {
-
-        if(null!=userWishListMap) {
-            if (userWishListMap.containsKey(id)) {
-                return userWishListMap.get(id);
-            }
-        }
-        return null;
-    }
 
     public List<String> getDisplayOrder(String category, String type, String card) {
         if(propertyDisplayOrder.get(category)==null){

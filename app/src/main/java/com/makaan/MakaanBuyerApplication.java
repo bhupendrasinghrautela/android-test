@@ -25,6 +25,7 @@ import com.makaan.jarvis.analytics.AnalyticsService;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.notification.GcmRegister;
 import com.makaan.pojo.SerpObjects;
+import com.makaan.response.wishlist.WishList;
 import com.makaan.service.AgentService;
 import com.makaan.service.AmenityService;
 import com.makaan.service.BlogService;
@@ -54,6 +55,7 @@ import com.makaan.service.user.ForgotPasswordService;
 import com.makaan.service.user.UserLoginService;
 import com.makaan.service.user.UserLogoutService;
 import com.makaan.service.user.UserRegistrationService;
+import com.makaan.util.CommonPreference;
 import com.makaan.util.FontTypeface;
 import com.makaan.util.RandomString;
 import com.segment.analytics.Analytics;
@@ -197,6 +199,10 @@ public class MakaanBuyerApplication extends Application {
         }
 
         JarvisServiceCreator.create(this);
+
+        if(null==MasterDataCache.getInstance().getUserData()) {
+            MasterDataCache.getInstance().bulkAddShortlistedProperty(CommonPreference.getWishList(this));
+        }
 
         // TODO verify after update
 //        setPeriodicUpdateRequest();

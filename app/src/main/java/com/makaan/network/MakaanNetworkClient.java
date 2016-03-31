@@ -368,6 +368,33 @@ public class MakaanNetworkClient {
         addToRequestQueue(stringRequest, tag);
     }
 
+    public void postWithArray(final String url, JSONArray jsonArray,
+                     final StringRequestCallback stringRequestCallback, String tag) {
+
+        final String urlToHit = appendSourceDomain(url);
+
+        JsonObjectRequest stringRequest = new JsonObjectRequest
+                (Request.Method.POST, jsonArray, urlToHit, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        completeRequestInQueue(urlToHit);
+                        if(null!=stringRequestCallback) {
+                            stringRequestCallback.onSuccess(response.toString());
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        completeRequestInQueue(urlToHit);
+                        if(null!=stringRequestCallback) {
+                            stringRequestCallback.onError(getResponseError(error));
+                        }
+                    }
+                });
+        addToRequestQueue(stringRequest, tag);
+    }
+
     public void post(final String url, final Type type,JSONObject jsonObject,
                        final ObjectGetCallback objectGetCallback, String tag, final boolean isDataArr) {
 
@@ -613,7 +640,7 @@ public class MakaanNetworkClient {
             }
         }
 
-        return url;
+        return url.concat("&debug=true");
     }
 
     private void cancelFromRequestQueue(Request req, String tag) {

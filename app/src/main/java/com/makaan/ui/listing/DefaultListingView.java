@@ -196,7 +196,10 @@ public class DefaultListingView extends AbstractListingView {
             mBadgeTextView.setVisibility(View.GONE);
         }
 
-        WishListDto wishListDto=new WishListButton.WishListDto(mListing.lisitingId.longValue(), mListing.projectId.longValue(), WishListType.listing);
+        WishListDto wishListDto =
+                new WishListButton.WishListDto(
+                        mListing.lisitingId.longValue(), mListing.projectId.longValue(), WishListType.listing);
+
         wishListDto.setSerpItemPosition((long) mPosition);
         mPropertyWishListCheckbox.bindView(wishListDto);
 

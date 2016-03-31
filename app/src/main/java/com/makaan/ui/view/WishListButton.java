@@ -24,14 +24,18 @@ import com.makaan.fragment.MakaanMessageDialogFragment;
 import com.makaan.jarvis.BaseJarvisActivity;
 import com.makaan.network.VolleyErrorParser;
 import com.makaan.response.ResponseError;
+import com.makaan.response.wishlist.WishList;
 import com.makaan.response.wishlist.WishListResponse;
 import com.makaan.response.wishlist.WishListResponseUICallback;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.WishListService;
 import com.makaan.ui.BaseLinearLayout;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonPreference;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
+
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -43,6 +47,10 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
 
     public enum WishListType{
         listing, project
+    }
+
+    public enum WishListStatusFlag{
+        synced, toAdd, toDelete
     }
 
     @Bind(R.id.shortlist_checkbox)
@@ -77,19 +85,13 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
             AppBus.getInstance().register(this);
         }catch(Exception e){}
         mWishListDto = item;
-        if(MasterDataCache.getInstance().getUserData()!=null) {
-            boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(
-                    mWishListDto.type == WishListType.listing ? mWishListDto.listingId : mWishListDto.projectId);
+        boolean isShortlisted = MasterDataCache.getInstance().isShortlistedProperty(
+                mWishListDto.type == WishListType.listing ? mWishListDto.listingId : mWishListDto.projectId);
 
-            mShortlistCheckBox.setOnCheckedChangeListener(null);
-            if (isShortlisted) {
-                mShortlistCheckBox.setChecked(true);
-            } else {
-                mShortlistCheckBox.setChecked(false);
-            }
-        }
-        else {
-            mShortlistCheckBox.setOnCheckedChangeListener(null);
+        mShortlistCheckBox.setOnCheckedChangeListener(null);
+        if (isShortlisted) {
+            mShortlistCheckBox.setChecked(true);
+        } else {
             mShortlistCheckBox.setChecked(false);
         }
 
@@ -168,47 +170,40 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
             mShortlistCheckBox.setVisibility(View.GONE);
             mLoadingProgressBar.setVisibility(View.VISIBLE);
 
-        }else{
-            setChecked(!isChecked);
+        } else{
+            if (isChecked) {
+                WishList wishList = new WishList();
+                wishList.projectId = mWishListDto.projectId;
 
-            if(getContext() instanceof Activity) {
-                Activity activity = (Activity) getContext();
-                MakaanMessageDialogFragment.showMessage(activity.getFragmentManager(),
-                        activity.getResources().getString(R.string.add_to_fav_login_prompt),
-                        mContext.getResources().getString(R.string.ok),
-                        mContext.getResources().getString(R.string.cancel),
-                        new MakaanMessageDialogFragment.MessageDialogCallbacks() {
-                            @Override
-                            public void onPositiveClicked() {
-                                addEntityToQueue();
-                                Intent intent = new Intent(mContext, UserLoginActivity.class);
-                                mContext.startActivity(intent);
-                            }
-
-                            @Override
-                            public void onNegativeClicked() {
-
-                            }
-                        });
-            }else {
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(mContext);
-                builder.setMessage(R.string.add_to_fav_login_prompt);
-                builder.setPositiveButton(mContext.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        addEntityToQueue();
-                        Intent intent = new Intent(mContext, UserLoginActivity.class);
-                        mContext.startActivity(intent);
+                if(mWishListDto.type==WishListType.listing) {
+                    wishList.listingId = mWishListDto.listingId;
+                    WishList cachedWishList = MasterDataCache.getInstance().getWishList(wishList.listingId);
+                    if(null!=cachedWishList){
+                        return;
                     }
-                });
-                builder.setNegativeButton(mContext.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+
+                    wishList.dirtyFlag = WishListStatusFlag.toAdd;
+                    MasterDataCache.getInstance().addShortlistedProperty(mWishListDto.listingId, wishList);
+
+
+                }else{
+                    WishList cachedWishList = MasterDataCache.getInstance().getWishList(wishList.listingId);
+                    if(null!=cachedWishList){
+                        return;
                     }
-                });
-                builder.show();
+
+                    wishList.dirtyFlag = WishListStatusFlag.toAdd;
+                    MasterDataCache.getInstance().addShortlistedProperty(mWishListDto.projectId, wishList);
+                }
+                CommonPreference.saveWishList(mContext, wishList);
+
+            } else {
+                Long itemId = mWishListDto.type==WishListType.listing?mWishListDto.listingId:mWishListDto.projectId;
+                if(null!=itemId) {
+                    WishList cachedWishList = MasterDataCache.getInstance().getWishList(itemId);
+                    CommonPreference.removeWishList(mContext, cachedWishList);
+                    MasterDataCache.getInstance().removeShortlistedProperty(itemId);
+                }
             }
         }
     }
