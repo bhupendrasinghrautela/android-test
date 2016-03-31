@@ -39,7 +39,7 @@ public class UploadDocumentsFragment extends MakaanBaseFragment {
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                 "mailto", "cashback@makaan.com", null));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "cashback request");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Body");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "");
         startActivity(Intent.createChooser(emailIntent, "Send email"));
     }
 
