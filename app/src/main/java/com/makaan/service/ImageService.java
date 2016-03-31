@@ -9,9 +9,12 @@ import com.makaan.network.ObjectGetCallback;
 import com.makaan.response.ResponseError;
 import com.makaan.response.image.Image;
 import com.makaan.util.AppBus;
+import com.makaan.util.KeyUtil;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import static com.makaan.constants.ImageConstants.*;
 
@@ -56,12 +59,44 @@ public class ImageService implements MakaanService {
                     imagesGetEvent.objectId = listingObjectId;
                     imagesGetEvent.objectType = listingObjectType;
                     imagesGetEvent.imageType = COMBINED_IMAGES;
-                    imagesGetEvent.images = images;
+                    imagesGetEvent.images = getMainImagesFirst(images,listingObjectId);
                     AppBus.getInstance().post(imagesGetEvent);
                 }
             }, true);
         }
     }
+
+    private ArrayList<Image> getMainImagesFirst(ArrayList<Image> images, Long listingObjectId) {
+        ArrayList<Image> resultImages = new ArrayList<>();
+        ArrayList<Image> projectImages = new ArrayList<>();
+        for(Image image:images){
+            if(image.objectId.equals(listingObjectId)){
+                resultImages.add(image);
+            }
+            else{
+                projectImages.add(image);
+            }
+        }
+        Collections.sort(resultImages, new Comparator<Image>() {
+            @Override
+            public int compare(Image lhs, Image rhs) {
+                if(lhs.getImageType().getType().equalsIgnoreCase(KeyUtil.MAIN_PHOTO)
+                        && !rhs.getImageType().getType().equalsIgnoreCase(KeyUtil.MAIN_PHOTO)){
+                    return -1;
+                }
+                else if(lhs.getImageType().getType().equalsIgnoreCase(KeyUtil.MAIN_PHOTO)
+                        && rhs.getImageType().getType().equalsIgnoreCase(KeyUtil.MAIN_PHOTO)){
+                    return 0;
+                }
+                else{
+                    return 1;
+                }
+            }
+        });
+        resultImages.addAll(projectImages);
+        return resultImages;
+    }
+
     public void getImages(final Long objectId, final Integer objectType) {
         if (null != objectId) {
             Type listingDetailImageList = new TypeToken<ArrayList<Image>>() {

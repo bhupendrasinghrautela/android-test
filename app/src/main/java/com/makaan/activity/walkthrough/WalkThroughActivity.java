@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.makaan.R;
 import com.makaan.activity.HomeActivity;
@@ -24,6 +26,8 @@ public class WalkThroughActivity extends MakaanFragmentActivity {
     @Bind(R.id.walkthrough_pager)
     ViewPager mWalkThroughPager;
     Context mContext;
+    @Bind(R.id.skip_tv)
+    TextView mSkipTV;
 
     @Override
     protected int getContentViewId() {
@@ -41,6 +45,27 @@ public class WalkThroughActivity extends MakaanFragmentActivity {
         mWalkThroughPager.setAdapter(new WalkThroughAdapter());
         mWalkThroughPager.setOffscreenPageLimit(2);
         mWalkThroughPager.setPageTransformer(true,new WalkThroughTransformer());
+        mWalkThroughPager.addOnPageChangeListener(new OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position==3){
+                    mSkipTV.setText(getResources().getString(R.string.done));
+                }
+                else{
+                    mSkipTV.setText(getResources().getString(R.string.skip_string));
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override

@@ -14,7 +14,7 @@
         android:typeface="monospace"
         android:layout_gravity="end|bottom"
         android:layout_width="wrap_content"
-        android:text="SKIP"
+        android:text="@string/skip_string"
         android:textSize="20sp"
         android:padding="10dp"
         android:layout_height="wrap_content"/>
