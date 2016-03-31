@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:background="@color/white"
+             android:layout_height="match_parent">
+    <android.support.v4.view.ViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/walkthrough_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <TextView
+        android:id="@+id/skip_tv"
+        android:clickable="true"
+        android:typeface="monospace"
+        android:layout_gravity="end|bottom"
+        android:layout_width="wrap_content"
+        android:text="SKIP"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:layout_height="wrap_content"/>
+</FrameLayout>

@@ -23,6 +23,7 @@ public class CommonPreference {
     private static final String PREF_MANDATORY_VERSION = "pref_mandatory_version";
     private static final String PREF_WISHLIST = "pref_wishlist";
     private static final String PREF_WISHLIST_SERVER = "pref_wishlist_server";
+    private static final String SKIP_WALK_THROUGH = "pref_walk_through";
 
 
     public static void saveMandatoryVersion(Context context, String version) {
@@ -30,6 +31,17 @@ public class CommonPreference {
         edit.putString(PREF_MANDATORY_VERSION, version);
         edit.apply();
     }
+
+    public static void setWalkThroughSeen(Context context) {
+        Editor edit = getSharedPref(context).edit();
+        edit.putBoolean(SKIP_WALK_THROUGH, true);
+        edit.apply();
+    }
+
+    public static boolean isWalkThroughSeen(Context context) {
+        return getSharedPref(context).getBoolean(SKIP_WALK_THROUGH,false);
+    }
+
 
     public static String getMandatoryVersion(Context context){
         VersionUpdate versionUpdate = new VersionUpdate();
