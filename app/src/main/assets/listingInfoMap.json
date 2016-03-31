@@ -42,7 +42,7 @@
         {
           "displayName":"age",
           "fieldName":"propertyAge",
-          "imageName":"ready_to_move"
+          "imageName":"age_property"
         },
         {
           "displayName":"possession",

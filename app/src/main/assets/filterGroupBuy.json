@@ -226,7 +226,7 @@
         "internalName": "i_ready_to_move",
         "displayOrder": "6",
         "layoutType": "5",
-        "imageName":"ready_to_move",
+        "imageName":"age_property",
         "type": "Year",
         "termFilterValues": [
         ],

@@ -35,6 +35,7 @@ public class ClientLeadsService implements MakaanService {
 
     public void requestClientLeads() {
         String detailsURL = ApiConstants.ICRM_CLIENT_LEADS;
+        detailsURL = detailsURL.concat("?sort=-createdAt");
         MakaanNetworkClient.getInstance().get(detailsURL, new JSONGetCallback() {
             @Override
             public void onSuccess(JSONObject responseObject) {
