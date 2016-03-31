@@ -30,6 +30,7 @@ public class PyrRequest {
 //    private Long propertyId;
     private String cityName;
     private String projectName;
+    private String jsonDump;
 
     /*public Long getPropertyId() {
         return propertyId;
@@ -38,6 +39,14 @@ public class PyrRequest {
     public void setPropertyId(Long propertyId) {
         this.propertyId = propertyId;
     }*/
+
+    public String getJsonDump() {
+        return jsonDump;
+    }
+
+    public void setJsonDump(String jsonDump) {
+        this.jsonDump = jsonDump;
+    }
 
     public String getProjectName() {
         return projectName;

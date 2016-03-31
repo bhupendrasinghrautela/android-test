@@ -106,8 +106,8 @@
             "fieldName": "unitTypeId",
             "value": "8",
             "selected": false
-          },
-          {
+          }
+          /*{
             "displayName": "studio apartment",
             "displayOrder": "6",
             "fieldName": "unitTypeId",
@@ -120,7 +120,7 @@
             "fieldName": "unitTypeId",
             "value": "20",
             "selected": false
-          }
+          }*/
         ],
         "rangeFilterValues": [
         ],
