@@ -65,7 +65,7 @@ public class ApiConstants {
     public static final String SAVED_SEARCH_NEW_MATCHES_URL = MICROSERVICE_PETRA.concat("/data/v1/entity/user/saved-searches/new-matches");
     public static final String TOP_AGENTS_CITY = MICROSERVICE_PETRA.concat("/data/v1/entity/city/");
     public static final String TOP_AGENTS = "/top-agents";
-    public static final String PYR = BASE_URL.concat("/data/v1/entity/enquiry");
+    public static final String PYR = BASE_URL.concat("/petra/data/v1/entity/enquiry");
     public static final String TOP_BUILDER = MICROSERVICE_PETRA.concat("/data/v2/entity/builder/top");
     public static final String BUILDER_DETAIL = MICROSERVICE_PETRA.concat("/app/v1/builder-detail");
     public static final String SELLER_DETAIL = MICROSERVICE_PETRA.concat("/app/v1/company");
