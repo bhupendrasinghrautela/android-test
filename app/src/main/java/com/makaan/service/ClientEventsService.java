@@ -7,13 +7,13 @@ import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ApiConstants;
 import com.makaan.constants.ResponseConstants;
 import com.makaan.event.buyerjourney.ClientEventsByGetEvent;
+import com.makaan.event.buyerjourney.SiteVisitEventGetEvent;
 import com.makaan.network.JSONGetCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.network.StringRequestCallback;
 import com.makaan.request.buyerjourney.PhaseChange;
 import com.makaan.response.ResponseError;
 import com.makaan.util.AppBus;
-import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
 
 import org.json.JSONException;
@@ -73,12 +73,16 @@ public class ClientEventsService implements MakaanService {
 
             @Override
             public void onError(ResponseError error) {
-                CommonUtil.TLog("error");
+                SiteVisitEventGetEvent siteVisitEventGetEvent = new SiteVisitEventGetEvent();
+                siteVisitEventGetEvent.error =error;
+                AppBus.getInstance().post(siteVisitEventGetEvent);
             }
 
             @Override
             public void onSuccess(String response) {
-                CommonUtil.TLog("success");
+                SiteVisitEventGetEvent siteVisitEventGetEvent = new SiteVisitEventGetEvent();
+                siteVisitEventGetEvent.isScheduled = true;
+                AppBus.getInstance().post(siteVisitEventGetEvent);
             }
         }, TAG);
     }

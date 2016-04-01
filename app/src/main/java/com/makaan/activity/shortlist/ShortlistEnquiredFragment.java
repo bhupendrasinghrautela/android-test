@@ -5,11 +5,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.shortlist.ShortListEnquiredAdapter.Enquiry;
 import com.makaan.activity.shortlist.ShortListEnquiredAdapter.EnquiryType;
 import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
+import com.makaan.event.buyerjourney.SiteVisitEventGetEvent;
 import com.makaan.event.listing.ListingByIdGetEvent;
 import com.makaan.event.project.ProjectByIdEvent;
 import com.makaan.fragment.MakaanBaseFragment;
@@ -210,6 +212,23 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
             }
             if(mAdapter!=null) {
                 mAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    @Subscribe
+    public void showSitevisitMessage(SiteVisitEventGetEvent siteVisitEventGetEvent){
+        if(!isVisible()){
+            return;
+        }
+        if(siteVisitEventGetEvent!=null){
+            if(siteVisitEventGetEvent.error!=null){
+                Toast.makeText(getActivity(),siteVisitEventGetEvent.error.msg
+                        , Toast.LENGTH_SHORT).show();
+            }
+            else if(siteVisitEventGetEvent.isScheduled){
+                Toast.makeText(getActivity(),getString(R.string.site_visit_scheduled)
+                        , Toast.LENGTH_SHORT).show();
             }
         }
     }
