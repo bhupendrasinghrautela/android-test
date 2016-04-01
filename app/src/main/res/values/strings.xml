@@ -52,6 +52,7 @@
     <string name="seller">seller</string>
     <string name="contact_you">will contact you shortly</string>
     <string name="thank_you_continue">done</string>
+    <string name="site_visit_scheduled">congratulations! you have booked your site visit</string>
     <string name="receive_expert">you will shortly receive a call from makaan assist </string>
     <string name="new_listings">new listings are added daily..</string>
     <string name="alerts_msg">set alerts to get the latest in your inbox</string>
@@ -299,7 +300,7 @@
     <string name="ok">ok</string>
     <string name="cancel">cancel</string>
 
-    <string name="notification_deleted">Notification Deleted</string>
+    <string name="notification_deleted">notification deleted</string>
     <string name="notification_deletion_error">unable to delete notification, please try again later</string>
     <string name="please_wait">please wait...</string>
 
