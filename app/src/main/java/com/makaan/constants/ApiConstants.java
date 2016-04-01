@@ -41,7 +41,7 @@ public class ApiConstants {
     //TODO change path
     public static final String VERSION_UPDATE_URL = "http://content.makaan.com.s3.amazonaws.com/app/assets/seller/versionUpdate.json";
 
-    public static final String COMPANY_USERS = BASE_URL.concat("/userservice/data/v1/entity/company-users");
+    public static final String COMPANY_USERS = BASE_URL.concat("/madrox/data/v1/entity/company-users");
     public static final String IMAGE = MICROSERVICE_PETRA.concat("/data/v4/entity/image");
     public static final String HOSTED_IMAGE_URL = "http://content.makaan.com.s3.amazonaws.com/app/assets/buyer/icons";
 
