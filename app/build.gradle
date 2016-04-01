@@ -42,12 +42,14 @@ android {
             shrinkResources true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "java.lang.String", "SEGMENT_KEY", "\"m37g10u0GEffT4tStFFsvSVnej9vkncO\""
         }
         debug {
             minifyEnabled false
             shrinkResources false
             //signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "java.lang.String", "SEGMENT_KEY", "\"xMHqomsTMdGwOiJByBsKUbH78Akhbaku\""
         }
     }
     lintOptions {

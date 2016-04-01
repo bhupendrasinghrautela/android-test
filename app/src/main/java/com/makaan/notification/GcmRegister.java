@@ -38,8 +38,8 @@ public class GcmRegister{
     private static Context sContext;
     private static String sUserKey;
     private static final String[] TOPICS = {"global"};
-    public static final String SENDER_ID = "932056553907";
-    public static final String SERVER_KEY = "AIzaSyAmIOPyinzdnppptXicSXDL79Jz1tLZrhQ";
+    public static final String SENDER_ID = "202123122479";
+    public static final String SERVER_KEY = "AIzaSyB-4LwT5q2xljIhzUJ81d13wHJhpQuGFBE";
 
 
 

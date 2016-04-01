@@ -1,11 +1,13 @@
 package com.makaan.analytics;
 
+import com.makaan.BuildConfig;
+
 /**
  * Created by sunil on 17/02/16.
  */
 public class MakaanTrackerConstants {
 
-    public static final String segmentSdkKey = "xMHqomsTMdGwOiJByBsKUbH78Akhbaku";
+    public static final String segmentSdkKey = BuildConfig.SEGMENT_KEY;
 
     public static final String SCREEN_NAME = "Screen name";
     public static final String KEYWORD = "Keywords";
