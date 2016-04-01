@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_id": "makaan-a7281",
-    "project_number": "932056553907",
-    "name": "Makaan"
+    "project_id": "makaanbuyer-33dc7",
+    "project_number": "202123122479",
+    "name": "MakaanBuyer"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:932056553907:android:72b718118a3cd680",
+        "mobilesdk_app_id": "1:202123122479:android:72b718118a3cd680",
         "client_id": "android:com.makaan",
         "client_type": 1,
         "android_client_info": {
