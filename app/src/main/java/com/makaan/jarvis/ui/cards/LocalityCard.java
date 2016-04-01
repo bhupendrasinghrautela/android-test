@@ -126,7 +126,7 @@ public class LocalityCard extends BaseView<Message> {
                     }
 
                     if(null!=serpRequest) {
-                        serpRequest.setSerpContext(SerpActivity.SERP_CONTEXT_BUY);
+                        serpRequest.setSerpContext(SerpRequest.CONTEXT_BUY);
                         serpRequest.launchSerp(context);
                     }
                 }
@@ -149,7 +149,7 @@ public class LocalityCard extends BaseView<Message> {
                     }
 
                     if(null!=serpRequest) {
-                        serpRequest.setSerpContext(SerpActivity.SERP_CONTEXT_RENT);
+                        serpRequest.setSerpContext(SerpRequest.CONTEXT_RENT);
                         serpRequest.launchSerp(context);
                     }
                 }
