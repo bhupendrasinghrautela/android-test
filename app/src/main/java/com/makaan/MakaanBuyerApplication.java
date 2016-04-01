@@ -1,11 +1,7 @@
 package com.makaan;
 
-import android.app.AlarmManager;
 import android.app.Application;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.SparseArray;
 
@@ -15,18 +11,15 @@ import com.google.gson.GsonBuilder;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.LruBitmapCache;
 import com.makaan.cache.MasterDataCache;
-import com.makaan.constants.PreferenceConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.MakaanCookieStore;
 import com.makaan.jarvis.ChatHistoryService;
 import com.makaan.jarvis.JarvisClient;
 import com.makaan.jarvis.JarvisConstants;
-import com.makaan.jarvis.JarvisServiceCreator;
 import com.makaan.jarvis.analytics.AnalyticsService;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.notification.GcmRegister;
 import com.makaan.pojo.SerpObjects;
-import com.makaan.response.wishlist.WishList;
 import com.makaan.service.AgentService;
 import com.makaan.service.AmenityService;
 import com.makaan.service.BlogService;
@@ -210,13 +203,21 @@ public class MakaanBuyerApplication extends Application {
         }
 
         // TODO verify after update
-//        setPeriodicUpdateRequest();
+        setPeriodicUpdateRequest();
 
     }
 
     private void setPeriodicUpdateRequest() {
 
-        SharedPreferences preferences = getSharedPreferences(PreferenceConstants.PREF, MODE_PRIVATE);
+        //if(firstTime) {
+
+//            Log.d("DEBUG", "setPeriodicUpdateRequest");
+        // Construct an intent that will execute the AlarmReceiver
+        Intent intent = new Intent(getApplicationContext(), DownloadAssetService.class);
+        // Create a PendingIntent to be triggered when the alarm goes off
+        startService(intent);
+
+/*        SharedPreferences preferences = getSharedPreferences(PreferenceConstants.PREF, MODE_PRIVATE);
         Boolean firstTime = preferences.getBoolean(PreferenceConstants.PREF_FIRST_TIME, true);
 
         if(firstTime) {
@@ -232,8 +233,7 @@ public class MakaanBuyerApplication extends Application {
             AlarmManager alarm = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
             alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillis,
                     60 * 1000, pIntent);
-            preferences.edit().putBoolean(PreferenceConstants.PREF_FIRST_TIME, false).apply();
-        }
+            preferences.edit().putBoolean(PreferenceConstants.PREF_FIRST_TIME, false).apply();*/
     }
 
     @Override
