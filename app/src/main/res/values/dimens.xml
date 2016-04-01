@@ -488,7 +488,7 @@
     <dimen name="fragment_dialog_filters_seekbar_item_right_margin">5dp</dimen>
 
     <!---Jarvis-->
-    <dimen name="jarvis_client_dimen">56dp</dimen>
+    <dimen name="jarvis_client_dimen">64dp</dimen>
     <dimen name="jarvis_send_dimen">40dp</dimen>
     <dimen name="jarvis_seller_card_profile_pic_dimen">42dp</dimen>
     <dimen name="jarvis_seller_card_agent_name_text_size">20sp</dimen>

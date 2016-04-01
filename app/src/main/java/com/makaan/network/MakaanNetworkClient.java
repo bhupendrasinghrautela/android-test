@@ -640,7 +640,7 @@ public class MakaanNetworkClient {
             }
         }
 
-        return url.concat("&debug=true");
+        return url;
     }
 
     private void cancelFromRequestQueue(Request req, String tag) {

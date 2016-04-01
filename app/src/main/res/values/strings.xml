@@ -47,7 +47,7 @@
     <string name="oops">oops!</string>
     <string name="no_matchin_sellers">no sellers offering matching properties.</string>
     <string name="hurray">hurray</string>
-    <string name="joy_ride">and the joy ride begins</string>
+    <string name="joy_ride">and the journey begins</string>
     <string name="sellers">sellers</string>
     <string name="seller">seller</string>
     <string name="contact_you">will contact you shortly</string>
@@ -208,14 +208,14 @@
 
 
     <!--login strings-->
-    <string name="generic_error">"oops! something went wrong. let\'s get you back on the joyride</string>
-    <string name="no_connection_error">oops! looks like a connection issue. let\'s get you back on the joyride</string>
+    <string name="generic_error">"oops! something went wrong. let\'s get you back on the journey</string>
+    <string name="no_connection_error">oops! looks like a connection issue. let\'s get you back on the journey</string>
     <string name="no_content_error">no matching results!</string>
     <string name="no_content_serp_error">no matching results!\nrefine your search or set an alert and we will keep you posted</string>
     <string name="not_found_error">such a kill joy!\nthe page you were looking for is sitting at home.\nto find joy, find home</string>
-    <string name="internal_server_error">"oops! something went wrong. let\'s get you back on the joyride"</string>
-    <string name="service_unavailable_error">oops! something went wrong. let\'s get you back on the joyride</string>
-    <string name="timeout_error">oops! looks like a connection issue. let\'s get you back on the joyride</string>
+    <string name="internal_server_error">"oops! something went wrong. let\'s get you back on the journey"</string>
+    <string name="service_unavailable_error">oops! something went wrong. let\'s get you back on the journey</string>
+    <string name="timeout_error">oops! looks like a connection issue. let\'s get you back on the journey</string>
     <string name="enter_valid_email">please provide a valid email (3-50 chars)</string>
     <string name="enter_password">please provide a valid password (6-32 chars)</string>
 
