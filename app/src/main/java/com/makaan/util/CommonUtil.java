@@ -182,18 +182,4 @@ public class CommonUtil {
         }
         return bgColorArray[code % bgColorArray.length];
     }
-    public final static int getScreenWidth(Context context){
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int width = displaymetrics.widthPixels;
-        return width;
-    }
-
-    public final static int getScreenHeight(Context context){
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int heightPixels = displaymetrics.heightPixels;
-        return heightPixels;
-    }
-
 }
