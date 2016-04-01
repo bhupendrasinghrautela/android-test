@@ -17,6 +17,7 @@ public class ChatObject {
     public int propertyId;
     public int projectId;
     public int suburbId;
+    public int cityId;
     public int suburbName;
     public String cityName;
     public String link;
@@ -27,6 +28,7 @@ public class ChatObject {
     public String area;
     public String name;
     public String age;
+    public String label;
     public int id;
     public int localitiesCount;
     public String cityCountText;

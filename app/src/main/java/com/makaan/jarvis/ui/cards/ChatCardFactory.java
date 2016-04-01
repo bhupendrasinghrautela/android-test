@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
@@ -94,7 +95,13 @@ public class ChatCardFactory {
 
         }else if(messageType == MessageType.localityOverview.value ||
                 messageType == MessageType.localityBuy.value ||
-                messageType == MessageType.localityRent.value){
+                messageType == MessageType.localityRent.value ||
+                messageType == MessageType.cityBuy.value ||
+                messageType == MessageType.cityRent.value ||
+                messageType == MessageType.suburbBuy.value ||
+                messageType == MessageType.suburbRent.value ||
+                messageType == MessageType.suburbResidentialBuy.value){
+
             param.rightMargin=margin;
             param.leftMargin=defaultLeftMargin;
             param.topMargin=defaultTopBottomMargin;
@@ -134,7 +141,13 @@ public class ChatCardFactory {
             return agentRatingCard;
 
         }else{
-            return null;
+            param.leftMargin=margin;
+            param.rightMargin=defaultLeftMargin;
+            OutTextCard outTextCard=(OutTextCard) LayoutInflater.from(context)
+                    .inflate(R.layout.text_message_right, parent, false);
+            outTextCard.setLayoutParams(param);
+            outTextCard.setVisibility(View.GONE);
+            return outTextCard;
         }
     }
 }

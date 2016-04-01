@@ -141,7 +141,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     protected void onPause() {
         super.onPause();
         if(shouldTrackUserActiveness()){
-            mUserActivityTrackerRenewHandler.removeCallbacks(mUserActivityTrackerRunnable);
+            //mUserActivityTrackerRenewHandler.removeCallbacks(mUserActivityTrackerRunnable);
         }
     }
 

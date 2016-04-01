@@ -136,7 +136,10 @@ public class JarvisClient {
                                 message.messageType = MessageType.fromInt(type);
 
                             }
-                            messages.add(message);
+
+                            if(null!=message.chatObj) {
+                                messages.add(message);
+                            }
                         }
 
                         if(!messages.isEmpty()) {
