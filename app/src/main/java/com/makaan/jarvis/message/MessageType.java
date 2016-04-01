@@ -9,7 +9,8 @@ public enum MessageType {
 
     outText(0), inText(1), projectOverview(2), sellerOverView(3), askReq(4), sendReq(5),
     signUp(6), propertyOverview(7), localityOverview(8), localityBuy(9), localityRent(10),
-    plainLink(11), sellerSerp(12), sellerSerpMap(13), agentRating(14);
+    plainLink(11), sellerSerp(12), sellerSerpMap(13), agentRating(14), suburbResidentialBuy(15),
+    suburbRent(16), suburbBuy(17), cityRent(18), cityBuy(19);
 
     public int value;
 
