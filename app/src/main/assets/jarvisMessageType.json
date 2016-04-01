@@ -10,7 +10,12 @@
     "signup":6,
     "details":4,
     "plainLink":11,
-    "rating":14
+    "rating":14,
+    "MAKAAN_SUBURB_RESIDENTIAL_BUY": 15,
+    "MAKAAN_SUBURB_LISTING_RENT": 16,
+    "MAKAAN_SUBURB_LISTING_BUY":17,
+    "MAKAAN_CITY_LISTING_RENT": 18,
+    "MAKAAN_CITY_LISTING_BUY":19
   }
 
 }

@@ -55,24 +55,39 @@ public class LocalityCard extends BaseView<Message> {
     @Override
     public void bindView(final Context context, final Message item) {
 
-        message = item;
-        if(MessageType.localityOverview==item.messageType){
-            textViewTitle.setVisibility(View.GONE);
-        }else if(MessageType.localityBuy==item.messageType) {
-            textViewTitle.setText("property for buy near");
-        }
-        else if(MessageType.localityRent==item.messageType) {
-            textViewTitle.setText("property for rent near");
+        if(item==null || item.chatObj==null){
+            return;
         }
 
-        if(item.chatObj.localityName != null) {
+        message = item;
+/*        if(MessageType.localityOverview==item.messageType){
+            textViewTitle.setVisibility(View.GONE);
+        }else if(MessageType.localityBuy==item.messageType ||
+                MessageType.suburbBuy==item.messageType) {
+            textViewTitle.setText("property for buy near");
+        }
+        else if(MessageType.localityRent==item.messageType ||
+                MessageType.suburbRent==item.messageType) {
+            textViewTitle.setText("property for rent near");
+        }*/
+
+        if(!TextUtils.isEmpty(item.chatObj.label)) {
+            textViewTitle.setText(item.chatObj.label);
+        }else {
+            textViewTitle.setVisibility(View.GONE);
+        }
+
+        textViewSubTitle.setVisibility(View.GONE);
+        textViewSubTitle2.setVisibility(View.GONE);
+
+        /*if(item.chatObj.localityName != null) {
             textViewSubTitle.setText(item.chatObj.localityName.toLowerCase());
         }
         if(item.chatObj.cityName != null) {
             textViewSubTitle2.setText(item.chatObj.cityName.toLowerCase());
-        }
+        }*/
 
-        if(!TextUtils.isEmpty(item.chatObj.image)){
+        if(!TextUtils.isEmpty(item.chatObj.image)) {
             imageView.setImageUrl(item.chatObj.image + "?WIDTH=220&HEIGHT=120", MakaanNetworkClient.getInstance().getImageLoader());
         }
 
@@ -91,17 +106,52 @@ public class LocalityCard extends BaseView<Message> {
 
                     localityIntent.putExtras(bundle);
                     context.startActivity(localityIntent);
-                }else if(MessageType.localityBuy==message.messageType) {
-                    SerpRequest serpRequest = new SerpRequest(SerpActivity.TYPE_LOCALITY);
-                    serpRequest.setSerpContext(SerpActivity.SERP_CONTEXT_BUY);
-                    serpRequest.setLocalityId(message.chatObj.localityId);
-                    serpRequest.launchSerp(context);
+                }else if(MessageType.localityBuy==message.messageType ||
+                        MessageType.cityBuy==message.messageType ||
+                        MessageType.suburbBuy==message.messageType ||
+                        MessageType.suburbResidentialBuy==message.messageType) {
+
+                    SerpRequest serpRequest = null;
+                    if(MessageType.localityBuy==message.messageType) {
+                        serpRequest = new SerpRequest(SerpActivity.TYPE_LOCALITY);
+                        serpRequest.setLocalityId(message.chatObj.localityId);
+
+                    }else if(MessageType.cityBuy==message.messageType){
+                        serpRequest = new SerpRequest(SerpActivity.TYPE_CITY);
+                        serpRequest.setCityId(message.chatObj.cityId);
+
+                    }else{
+                        serpRequest = new SerpRequest(SerpActivity.TYPE_SUBURB);
+                        serpRequest.setSuburbId(message.chatObj.suburbId);
+                    }
+
+                    if(null!=serpRequest) {
+                        serpRequest.setSerpContext(SerpRequest.CONTEXT_BUY);
+                        serpRequest.launchSerp(context);
+                    }
                 }
-                else if(MessageType.localityRent==message.messageType) {
-                    SerpRequest serpRequest = new SerpRequest(SerpActivity.TYPE_LOCALITY);
-                    serpRequest.setSerpContext(SerpActivity.SERP_CONTEXT_RENT);
-                    serpRequest.setLocalityId(message.chatObj.localityId);
-                    serpRequest.launchSerp(context);
+                else if(MessageType.localityRent==message.messageType ||
+                        MessageType.cityRent==message.messageType ||
+                        MessageType.suburbRent==message.messageType) {
+
+                    SerpRequest serpRequest = null;
+                    if(MessageType.localityRent==message.messageType) {
+                        serpRequest = new SerpRequest(SerpActivity.TYPE_LOCALITY);
+                        serpRequest.setLocalityId(message.chatObj.localityId);
+
+                    }else if(MessageType.cityRent==message.messageType){
+                        serpRequest = new SerpRequest(SerpActivity.TYPE_CITY);
+                        serpRequest.setCityId(message.chatObj.cityId);
+
+                    }else{
+                        serpRequest = new SerpRequest(SerpActivity.TYPE_SUBURB);
+                        serpRequest.setSuburbId(message.chatObj.suburbId);
+                    }
+
+                    if(null!=serpRequest) {
+                        serpRequest.setSerpContext(SerpRequest.CONTEXT_RENT);
+                        serpRequest.launchSerp(context);
+                    }
                 }
             }
         });
