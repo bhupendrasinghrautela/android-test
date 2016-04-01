@@ -2,6 +2,7 @@ package com.makaan.activity.lead;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -225,9 +226,15 @@ public class MultipleLeadFormFragment extends MakaanBaseFragment {
     }
 
     private void setData(){
-        mBhkTextView.setText(mLeadFormPresenter.getBhkAndUnitType().toLowerCase());
-        mArea.setText(mLeadFormPresenter.getArea().toLowerCase());
-        mLocality.setText(mLeadFormPresenter.getLocality().toLowerCase());
+        if(!TextUtils.isEmpty(mLeadFormPresenter.getBhkAndUnitType())) {
+            mBhkTextView.setText(mLeadFormPresenter.getBhkAndUnitType().toLowerCase());
+        }
+        if(!TextUtils.isEmpty(mLeadFormPresenter.getArea())) {
+            mArea.setText(mLeadFormPresenter.getArea().toLowerCase());
+        }
+        if(!TextUtils.isEmpty(mLeadFormPresenter.getLocality())) {
+            mLocality.setText(mLeadFormPresenter.getLocality().toLowerCase());
+        }
     }
 
     @Override
