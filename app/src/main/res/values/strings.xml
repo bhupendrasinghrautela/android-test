@@ -74,6 +74,7 @@
     <string name="verification_code_string">verification code</string>
     <string name="resend_string">resend?</string>
     <string name="skip_string">skip</string>
+    <string name="done">done</string>
     <string name="property_string">property</string>
     <string name="select_property_type_string">select property type</string>
     <string name="contact_top_advisors_string">contact top advisors</string>

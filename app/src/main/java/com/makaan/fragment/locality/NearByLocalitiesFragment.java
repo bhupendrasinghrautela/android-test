@@ -402,6 +402,8 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                     holder.localityIv.setDefaultImageResId(R.drawable.locality_placeholder);
                     holder.rentLl.setVisibility(View.VISIBLE);
                     if(nearByLocality.score>0) {
+                        holder.score.setVisibility(View.VISIBLE);
+                        holder.scoreText.setVisibility(View.VISIBLE);
                         holder.score.setProgress((int) (nearByLocality.score * 10));
                         holder.scoreText.setText(String.valueOf(nearByLocality.score));
                     }
