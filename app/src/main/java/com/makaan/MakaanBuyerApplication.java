@@ -19,6 +19,7 @@ import com.makaan.constants.PreferenceConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.MakaanCookieStore;
 import com.makaan.jarvis.ChatHistoryService;
+import com.makaan.jarvis.JarvisClient;
 import com.makaan.jarvis.JarvisConstants;
 import com.makaan.jarvis.JarvisServiceCreator;
 import com.makaan.jarvis.analytics.AnalyticsService;
@@ -82,6 +83,8 @@ public class MakaanBuyerApplication extends Application {
     public static LruBitmapCache bitmapCache;
 
     public static Gson gson;
+
+    private static JarvisClient mJarvisClient;
 /*    private static RefWatcher refWatcher;
 
     public static RefWatcher getRefWatcher() {
@@ -198,7 +201,9 @@ public class MakaanBuyerApplication extends Application {
             MasterDataCache.getInstance().setUserData(CookiePreferences.getUserInfo(this).getData());
         }
 
-        JarvisServiceCreator.create(this);
+        //JarvisServiceCreator.create(this);
+        mJarvisClient = JarvisClient.getInstance();
+
 
         if(null==MasterDataCache.getInstance().getUserData()) {
             MasterDataCache.getInstance().bulkAddShortlistedProperty(CommonPreference.getWishList(this));
@@ -246,5 +251,11 @@ public class MakaanBuyerApplication extends Application {
                 bitmapCache.evictAll();
                 break;
         }
+    }
+
+    @Override
+    public void onTerminate() {
+        mJarvisClient.destroy();
+        super.onTerminate();
     }
 }

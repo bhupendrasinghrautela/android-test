@@ -98,9 +98,9 @@ public class ChatActivity extends AppCompatActivity {
         int height = size.y;
 
         if (height > width) {
-            getWindow().setLayout((int) (width * .90), (int) (height * .90));
+            getWindow().setLayout((int) (width * .95), (int) (height * .95));
         } else {
-            getWindow().setLayout((int) (width * .90), (int) (height * .90));
+            getWindow().setLayout((int) (width * .95), (int) (height * .95));
         }
     }
 

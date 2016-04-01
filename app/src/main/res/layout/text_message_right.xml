@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:background="@null"
     android:paddingBottom="@dimen/out_text_card_padding_top_bottom"
-    android:paddingRight="@dimen/out_text_card_padding_right"
     android:paddingTop="@dimen/out_text_card_padding_top_bottom" >
 
 
