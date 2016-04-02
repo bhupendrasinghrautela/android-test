@@ -497,11 +497,17 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
     }
 
     public void successfulResponse(){
+        if(!isVisible()){
+            return;
+        }
         mCallLaterButton.setText(getResources().getString(R.string.get_call_later));
         mCallLaterButton.setClickable(true);
     }
 
     public void errorInResponse(){
+        if(!isVisible()){
+            return;
+        }
         mCallLaterButton.setText(getResources().getString(R.string.get_call_later));
         mCallLaterButton.setClickable(true);
     }
