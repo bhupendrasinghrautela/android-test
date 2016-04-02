@@ -60,6 +60,8 @@ import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -214,7 +216,11 @@ public class PyrPageFragment extends Fragment {
 
         PyrRequest pyrRequest=new PyrRequest();
         boolean makeRequest=pyrPagePresenter.makePartialPyrRequest(getActivity() ,pyrRequest, (mIsBuySelected ? mGroupsBuy : mGroupsRent));
-        pyrRequest.setJsonDump(GcmPreferences.getGcmRegId(getContext()));
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("gcm_id", GcmPreferences.getGcmRegId(getContext()));
+            pyrRequest.setJsonDump(jsonObject.toString());
+        }catch (Exception e){}
 
         if(null!=pyrRequest.getLocalityIds() && pyrRequest.getLocalityIds().length>0) {
             for (int value : pyrRequest.getLocalityIds()) {
