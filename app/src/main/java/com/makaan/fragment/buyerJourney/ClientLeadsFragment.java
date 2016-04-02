@@ -270,29 +270,36 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
 
             public void bindData(ClientLeadsObject clientLeadsObject, int position) {
                 imageView.setVisibility(View.GONE);
-                if(clientLeadsObject.company.name != null) {
+                if(clientLeadsObject==null){
+                    return;
+                }
+                if(clientLeadsObject.company!=null && clientLeadsObject.company.name != null) {
                     nameTextView.setText(clientLeadsObject.company.name.toLowerCase());
                 }
-                companyNameTextView.setText(AppUtils.getDDMMMYYDateStringFromEpoch(String.valueOf(clientLeadsObject.clientLead.createdAt)).toLowerCase());
+                if(clientLeadsObject.clientLead!=null && clientLeadsObject.clientLead.createdAt!=null) {
+                    companyNameTextView.setText(AppUtils.getDDMMMYYDateStringFromEpoch(String.valueOf(clientLeadsObject.clientLead.createdAt)).toLowerCase());
+                }
                 radioButton.setOnCheckedChangeListener(null);
                 radioButton.setChecked(position == mSelected);
                 radioButton.setOnCheckedChangeListener(this);
 
-                if(!TextUtils.isEmpty(clientLeadsObject.company.name)) {
-                    logoTextView.setText(String.valueOf(clientLeadsObject.company.name.charAt(0)));
-                }
-                logoTextView.setVisibility(View.VISIBLE);
+                if(clientLeadsObject.company != null) {
+                    if (!TextUtils.isEmpty(clientLeadsObject.company.name)) {
+                        logoTextView.setText(String.valueOf(clientLeadsObject.company.name.charAt(0)));
+                    }
+                    logoTextView.setVisibility(View.VISIBLE);
 
 //                    int[] bgColorArray = getResources().getIntArray(R.array.bg_colors);
 
 //                    Random random = new Random();
-                ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+                    ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
 //                    drawable.getPaint().setColor(bgColorArray[random.nextInt(bgColorArray.length)]);
-                drawable.getPaint().setColor(CommonUtil.getColor(clientLeadsObject.company.name, getContext()));
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    logoTextView.setBackground(drawable);
-                } else {
-                    logoTextView.setBackgroundDrawable(drawable);
+                    drawable.getPaint().setColor(CommonUtil.getColor(clientLeadsObject.company.name, getContext()));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        logoTextView.setBackground(drawable);
+                    } else {
+                        logoTextView.setBackgroundDrawable(drawable);
+                    }
                 }
             }
 
