@@ -50,7 +50,9 @@ public class MakaanBuyerGcmListenerService extends GcmListenerService {
             pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             VersionUpdate versionUpdate = (VersionUpdate) JsonParser.parseJson(CommonPreference.getMandatoryVersion(this),VersionUpdate.class);
             if (versionUpdate!=null && pInfo.versionCode >= versionUpdate.getMandatoryVersionCode() ) {
-                generateNotification(getApplicationContext(), title, message, data);
+                if(!TextUtils.isEmpty(title) && !TextUtils.isEmpty(message)) {
+                    generateNotification(getApplicationContext(), title.toLowerCase(), message.toLowerCase(), data);
+                }
             }
         }catch (NameNotFoundException e){}
     }
