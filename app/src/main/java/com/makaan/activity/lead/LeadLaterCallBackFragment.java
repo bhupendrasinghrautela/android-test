@@ -240,7 +240,13 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
             mPyrRequest.setDomainId(1);
             mPyrRequest.setCountryId(mCountryId);
             mPyrRequest.setApplicationType("MobileAndroidApp");
-            mPyrRequest.setJsonDump(GcmPreferences.getGcmRegId(getContext()));
+
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("gcm_id", GcmPreferences.getGcmRegId(getContext()));
+                mPyrRequest.setJsonDump(jsonObject.toString());
+            }catch (Exception e){}
+
             mPyrRequest.setCityId(mLeadFormPresenter.getCityId());
             mPyrRequest.setCityName(mLeadFormPresenter.getCityName());
             mPyrRequest.setSalesType(mLeadFormPresenter.getSalesType());
