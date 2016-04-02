@@ -7,8 +7,9 @@ public class ApiConstants {
 
 
     //public static final String BASE_URL = "https://mp-qa2.makaan-ws.com";
+    public static final String BASE_URL = "http://52.74.216.37";
     //public static final String BASE_URL = "https://mp-qa1.makaan-ws.com";
-    public static final String BASE_URL = "https://preprod.makaan-ws.com";
+    //public static final String BASE_URL = "https://preprod.makaan-ws.com";
     //public static final String BASE_URL = "https://beta.makaan-ws.com";
     private static final String MICROSERVICE_MADELYNE = BASE_URL.concat("/madelyne");
     private static final String MICROSERVICE_COMPASS = BASE_URL.concat("/compass");
@@ -39,7 +40,7 @@ public class ApiConstants {
     public static final String DIRECTIONS = BASE_URL.concat("/data/v1/entity/direction");
     public static final String OWNERSHIP_TYPE = BASE_URL.concat("/data/v1/entity/master-ownership-types");
     //TODO change path
-    public static final String VERSION_UPDATE_URL = "http://content.makaan.com.s3.amazonaws.com/app/assets/seller/versionUpdate.json";
+    public static final String VERSION_UPDATE_URL = "http://content.makaan.com.s3.amazonaws.com/app/assets/buyer/versionUpdate.json";
 
     public static final String COMPANY_USERS = BASE_URL.concat("/madrox/data/v1/entity/company-users");
     public static final String IMAGE = MICROSERVICE_PETRA.concat("/data/v4/entity/image");
