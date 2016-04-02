@@ -1,5 +1,5 @@
 {
-  "totalCount":23,
+  "totalCount":25,
   "data":[
     {
       "name":"allPropertyType.json",
@@ -12,8 +12,13 @@
       "version":1
     },
     {
-      "name":"amenityMap.json",
-      "url":"amenityMap.json",
+      "name":"amenityLocalityMap.json",
+      "url":"amenityLocalityMap.json",
+      "version":1
+    },
+    {
+      "name":"amenityProjectMap.json",
+      "url":"amenityProjectMap.json",
       "version":1
     },
     {
@@ -42,6 +47,16 @@
       "version":1
     },
     {
+      "name":"jarvisBuyerJourneyMessageType.json",
+      "url":"jarvisBuyerJourneyMessageType.json",
+      "version":1
+    },
+    {
+      "name":"jarvisChannels.json",
+      "url":"jarvisChannels.json",
+      "version":1
+    },
+    {
       "name":"jarvisCtaMessageType.json",
       "url":"jarvisCtaMessageType.json",
       "version":1
@@ -49,11 +64,6 @@
     {
       "name":"jarvisMessageType.json",
       "url":"jarvisMessageType.json",
-      "version":1
-    },
-    {
-      "name":"jarvisPropertyDetail.json",
-      "url":"jarvisPropertyDetail.json",
       "version":1
     },
     {
