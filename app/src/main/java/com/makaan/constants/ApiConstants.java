@@ -21,25 +21,25 @@ public class ApiConstants {
     private static final String MICROSERVICE_DOWNSTAR = BASE_URL.concat("/dawnstar");
     private static final String MICROSERVICE_SAPPHIRE = BASE_URL.concat("/sapphire");
     private static final String MICROSERVICE_KIRA = BASE_URL.concat("/kira");
-    public static final String FILTER_GROUP = BASE_URL.concat("/data/v1/entity/filter-group");           //TODO: need to implement this on server side
-    public static final String LISTING_INFO_MAP = BASE_URL.concat("/data/v1/entity/listing-info-map");           //TODO: need to implement this on server side
-    public static final String API_LABEL = BASE_URL.concat("/data/v1/entity/api-label");
-    public static final String PROPERTY_STATUS = BASE_URL.concat("/data/v1/entity/property-status");
-    public static final String PROPERTY_DISPLAY_ORDER = BASE_URL.concat("/data/v1/entity/property-display-order");
-    public static final String DEFAULT_AMENITY = BASE_URL.concat("/data/v1/entity/default-amenity");
-    public static final String UNIT_TYPE = BASE_URL.concat("/data/v1/entity/unit-types");
-    public static final String AMENITY_LOCALITY = BASE_URL.concat("/data/v1/entity/amenities/locality");
-    public static final String AMENITY_PROJECT = BASE_URL.concat("/data/v1/entity/amenities/project");
-    public static final String CONSTRUCTION_STATUS = BASE_URL.concat("/data/v1/entity/master-listing-construction-status");
-    public static final String JARVIS_MESSAGE_TYPE = BASE_URL.concat("/data/v1/entity/jarvis/message-type");
-    public static final String JARVIS_CTA_MESSAGE_TYPE = BASE_URL.concat("/data/v1/entity/jarvis/cta-message-type");
-    public static final String JARVIS_SERP_FILTER_MESSAGE_MAP = BASE_URL.concat("/data/v1/entity/jarvis/serp_filter-message-message");
-    public static final String SEARCH_TYPE = BASE_URL.concat("/data/v1/entity/search-types");
-    public static final String PROPERTY_AMENITY = BASE_URL.concat("/data/v1/entity/master-amenities");
-    public static final String MASTER_FURNISHINGS = BASE_URL.concat("/data/v1/entity/master-furnishings");
-    public static final String MASTER_SPECIFICATIONS = BASE_URL.concat("/data/v1/entity/master-specifications?filters=masterSpecificationCategory.masterSpecParentCat.masterSpecParentCatId==1&fields=masterSpecId,masterSpecificationCategory,masterSpecClassName,masterSpecCatId,masterSpecCatName,masterSpecCatDisplayName,masterSpecParentCat,masterSpecParentCatId,masterSpecParentDisplayName,masterSpecificationCategory.masterSpecParentCat,masterSpecificationCategory.masterSpecParentCat.masterSpecParentCatId,masterSpecificationCategory.masterSpecParentCat.masterSpecParentDisplayName");
-    public static final String DIRECTIONS = BASE_URL.concat("/data/v1/entity/direction");
-    public static final String OWNERSHIP_TYPE = BASE_URL.concat("/data/v1/entity/master-ownership-types");
+    public static final String FILTER_GROUP = BASE_URL.concat("/petra/data/v1/entity/filter-group");           //TODO: need to implement this on server side
+    public static final String LISTING_INFO_MAP = BASE_URL.concat("/petra/data/v1/entity/listing-info-map");           //TODO: need to implement this on server side
+    public static final String API_LABEL = BASE_URL.concat("/petra/data/v1/entity/api-label");
+    public static final String PROPERTY_STATUS = BASE_URL.concat("/petra/data/v1/entity/property-status");
+    public static final String PROPERTY_DISPLAY_ORDER = BASE_URL.concat("/petra/data/v1/entity/property-display-order");
+    public static final String DEFAULT_AMENITY = BASE_URL.concat("/petra/data/v1/entity/default-amenity");
+    public static final String UNIT_TYPE = BASE_URL.concat("/petra/data/v1/entity/unit-types");
+    public static final String AMENITY_LOCALITY = BASE_URL.concat("/petra/data/v1/entity/amenities/locality");
+    public static final String AMENITY_PROJECT = BASE_URL.concat("/petra/data/v1/entity/amenities/project");
+    public static final String CONSTRUCTION_STATUS = BASE_URL.concat("/petra/data/v1/entity/master-listing-construction-status");
+    public static final String JARVIS_MESSAGE_TYPE = BASE_URL.concat("/petra/data/v1/entity/jarvis/message-type");
+    public static final String JARVIS_CTA_MESSAGE_TYPE = BASE_URL.concat("/petra/data/v1/entity/jarvis/cta-message-type");
+    public static final String JARVIS_SERP_FILTER_MESSAGE_MAP = BASE_URL.concat("/petra/data/v1/entity/jarvis/serp_filter-message-message");
+    public static final String SEARCH_TYPE = BASE_URL.concat("/petra/data/v1/entity/search-types");
+    public static final String PROPERTY_AMENITY = BASE_URL.concat("/petra/data/v1/entity/master-amenities");
+    public static final String MASTER_FURNISHINGS = BASE_URL.concat("/petra/data/v1/entity/master-furnishings");
+    public static final String MASTER_SPECIFICATIONS = BASE_URL.concat("/petra/data/v1/entity/master-specifications?filters=masterSpecificationCategory.masterSpecParentCat.masterSpecParentCatId==1&fields=masterSpecId,masterSpecificationCategory,masterSpecClassName,masterSpecCatId,masterSpecCatName,masterSpecCatDisplayName,masterSpecParentCat,masterSpecParentCatId,masterSpecParentDisplayName,masterSpecificationCategory.masterSpecParentCat,masterSpecificationCategory.masterSpecParentCat.masterSpecParentCatId,masterSpecificationCategory.masterSpecParentCat.masterSpecParentDisplayName");
+    public static final String DIRECTIONS = BASE_URL.concat("/petra/data/v1/entity/direction");
+    public static final String OWNERSHIP_TYPE = BASE_URL.concat("/petra/data/v1/entity/master-ownership-types");
     //TODO change path
     public static final String VERSION_UPDATE_URL = "http://content.makaan.com.s3.amazonaws.com/app/assets/buyer/versionUpdate.json";
 
