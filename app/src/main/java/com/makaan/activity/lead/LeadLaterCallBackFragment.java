@@ -136,6 +136,26 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
     void doNowClicked(){
         //getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         LeadFormPresenter.getLeadFormPresenter().showLeadInstantCallBackFragment();
+        //User data prefill
+        try{
+            UserResponse userResponse = CookiePreferences.getLastUserInfo(getContext());
+            if(userResponse == null){
+                userResponse = new UserResponse();
+                userResponse.setData(new UserData());
+            }
+            if(mName.getText()!=null) {
+                userResponse.getData().firstName = mName.getText().toString();
+            }
+            if(mEmail.getText()!=null) {
+                userResponse.getData().email = mEmail.getText().toString();
+            }
+            if(mNumber.getText()!=null) {
+                userResponse.getData().contactNumber = mNumber.getText().toString().trim();
+            }
+            CookiePreferences.setLastUserInfo(getActivity(), JsonBuilder.toJson(userResponse).toString());
+        }catch (Exception e){
+            //No impact don't do anything
+        }
         mLeadFormPresenter.setTemporaryPhoneNo(mNumber.getText().toString().trim());
     }
 

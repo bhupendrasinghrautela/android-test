@@ -414,9 +414,15 @@ public class PyrPageFragment extends Fragment {
         try {
                 UserResponse userResponse = CookiePreferences.getLastUserInfo(getContext());
                 if(userResponse != null) {
-                    mUserName.setText(userResponse.getData().firstName);
-                    mUserEmail.setText(userResponse.getData().email);
-                    mUserMobile.setText(userResponse.getData().contactNumber);
+                    if(userResponse.getData()!=null && userResponse.getData().firstName!=null) {
+                        mUserName.setText(userResponse.getData().firstName);
+                    }
+                    if(userResponse.getData()!=null && userResponse.getData().email!=null) {
+                        mUserEmail.setText(userResponse.getData().email);
+                    }
+                    if(userResponse.getData()!=null && userResponse.getData().contactNumber!=null) {
+                        mUserMobile.setText(userResponse.getData().contactNumber);
+                    }
                 }
                 else{
                     mUserName.setText(pyrPagePresenter.getName());
