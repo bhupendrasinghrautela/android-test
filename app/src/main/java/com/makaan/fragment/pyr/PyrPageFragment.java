@@ -17,8 +17,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.makaan.R;
+import com.makaan.adapter.listing.ViewAdapterRings;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
@@ -37,10 +37,29 @@ import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.response.serp.TermFilter;
 import com.makaan.response.user.UserResponse;
+import com.makaan.response.user.UserResponse.UserData;
 import com.makaan.service.AgentService;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.ui.pyr.PyrBudgetCardView;
+import com.makaan.ui.pyr.PyrPropertyCardView;
+import com.makaan.util.AppBus;
+import com.makaan.util.JsonBuilder;
+import com.makaan.util.JsonParser;
+import com.makaan.util.StringUtil;
+import com.segment.analytics.Properties;
+import com.squareup.otto.Subscribe;
 
-import com.makaan.adapter.listing.ViewAdapterRings;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnTextChanged;
+
 /*
 import com.makaan.event.pyr.TopAgentsGetEvent;
 import com.makaan.request.selector.Selector;
@@ -51,25 +70,6 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.pyr.TopAgentsByLocalityService;
 import com.makaan.ui.pyr.PyrBudgetCardView;
 */
-
-import com.makaan.ui.pyr.PyrBudgetCardView;
-import com.makaan.ui.pyr.PyrPropertyCardView;
-import com.makaan.util.AppBus;
-import com.makaan.util.JsonParser;
-import com.makaan.util.StringUtil;
-import com.segment.analytics.Properties;
-import com.squareup.otto.Subscribe;
-
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-import butterknife.OnTextChanged;
 
 /**
  * Created by proptiger on 8/1/16.
@@ -129,15 +129,7 @@ public class PyrPageFragment extends Fragment {
         ArrayList<FilterGroup> grpsBuy = MasterDataCache.getInstance().getAllBuyPyrGroups();
         ArrayList<FilterGroup> grpsRent = MasterDataCache.getInstance().getAllRentPyrGroups();
 
-
-        //User data prefill
-        try {
-            if (CookiePreferences.isUserLoggedIn(getContext())) {
-                UserResponse userResponse = CookiePreferences.getLastUserInfo(getContext());
-                mUserName.setText(userResponse.getData().firstName);
-                mUserEmail.setText(userResponse.getData().email);
-            }
-        }catch (Exception e){}
+        setUserInfo();
 
         try {
             boolean newGroups = false;
@@ -153,7 +145,6 @@ public class PyrPageFragment extends Fragment {
                 pyrPagePresenter.setBuySelected(SerpObjects.isBuyContext(getActivity()));
             }//pre-fill buy context
             setLocaityInfo();//Pre-fill localities
-
 /*            for(FilterGroup group : mGroupsBuy) {
                 String name = group.internalName;
                 if("i_beds".equals(name)) {
@@ -221,7 +212,19 @@ public class PyrPageFragment extends Fragment {
             jsonObject.put("gcm_id", GcmPreferences.getGcmRegId(getContext()));
             pyrRequest.setJsonDump(jsonObject.toString());
         }catch (Exception e){}
-
+        try {
+        UserResponse userResponse = CookiePreferences.getLastUserInfo(getContext());
+        if(userResponse == null){
+            userResponse = new UserResponse();
+            userResponse.setData(new UserData());
+        }
+        userResponse.getData().firstName = mUserName.getText().toString();
+        userResponse.getData().email = mUserEmail.getText().toString();
+        userResponse.getData().contactNumber = mUserMobile.getText().toString().trim();
+            CookiePreferences.setLastUserInfo(getActivity(), JsonBuilder.toJson(userResponse).toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         if(null!=pyrRequest.getLocalityIds() && pyrRequest.getLocalityIds().length>0) {
             for (int value : pyrRequest.getLocalityIds()) {
                 localities.add(String.valueOf(value));
@@ -328,9 +331,7 @@ public class PyrPageFragment extends Fragment {
         super.onResume();
         setPropertyCount();
         setLocaityInfo();
-        if (CookiePreferences.isUserLoggedIn(getContext())) {
-            setUserInfo();
-        }
+        setUserInfo();
     }
 
     @OnTextChanged(R.id.pyr_page_name)
@@ -410,9 +411,19 @@ public class PyrPageFragment extends Fragment {
     }
 
     public void setUserInfo(){
-        mUserName.setText(pyrPagePresenter.getName());
-        mUserEmail.setText(pyrPagePresenter.getEmail());
-        mUserMobile.setText(pyrPagePresenter.getPhonNumber());
+        try {
+                UserResponse userResponse = CookiePreferences.getLastUserInfo(getContext());
+                if(userResponse != null) {
+                    mUserName.setText(userResponse.getData().firstName);
+                    mUserEmail.setText(userResponse.getData().email);
+                    mUserMobile.setText(userResponse.getData().contactNumber);
+                }
+                else{
+                    mUserName.setText(pyrPagePresenter.getName());
+                    mUserEmail.setText(pyrPagePresenter.getEmail());
+                    mUserMobile.setText(pyrPagePresenter.getPhonNumber());
+                }
+        }catch (Exception e){}
     }
 
     public void setBedroomInfo(){

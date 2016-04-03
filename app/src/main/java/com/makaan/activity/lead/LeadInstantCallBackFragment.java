@@ -33,6 +33,7 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.country.CountryCodeResponse;
 import com.makaan.response.leadForm.InstantCallbackResponse;
 import com.makaan.response.user.UserResponse;
+import com.makaan.response.user.UserResponse.UserData;
 import com.makaan.service.LeadInstantCallbackService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.util.ImageUtils;
@@ -142,6 +143,10 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
             //User data prefill
             try{
                 UserResponse userResponse = CookiePreferences.getLastUserInfo(getContext());
+                if(userResponse == null){
+                    userResponse = new UserResponse();
+                    userResponse.setData(new UserData());
+                }
                 userResponse.getData().contactNumber = mNumber.getText().toString().trim();
                 CookiePreferences.setLastUserInfo(getActivity(), JsonBuilder.toJson(userResponse).toString());
             }catch (Exception e){
