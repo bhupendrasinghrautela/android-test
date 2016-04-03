@@ -34,6 +34,7 @@ import com.makaan.request.pyr.PyrEnquiryType;
 import com.makaan.request.pyr.PyrRequest;
 import com.makaan.response.country.CountryCodeResponse;
 import com.makaan.response.user.UserResponse;
+import com.makaan.response.user.UserResponse.UserData;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PyrService;
 import com.makaan.util.ImageUtils;
@@ -223,6 +224,12 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
             //User data prefill
             try{
                 UserResponse userResponse = CookiePreferences.getLastUserInfo(getContext());
+                if(userResponse == null){
+                    userResponse = new UserResponse();
+                    userResponse.setData(new UserData());
+                }
+                userResponse.getData().firstName = mName.getText().toString();
+                userResponse.getData().email = mEmail.getText().toString();
                 userResponse.getData().contactNumber = mNumber.getText().toString().trim();
                 CookiePreferences.setLastUserInfo(getActivity(), JsonBuilder.toJson(userResponse).toString());
             }catch (Exception e){

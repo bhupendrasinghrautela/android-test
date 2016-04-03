@@ -86,7 +86,7 @@ public class ApiConstants {
     public static final String APP_V1 = "/app/v1";
     public final static int CONNECTION_TIMEOUT = 30000;
     /*public static final String FORGOT_PASSWORD = "/app/v1/reset-password?email=";*/
-    public static final String FORGOT_PASSWORD = BASE_URL.concat("/app/v1/reset-password");
+    public static final String FORGOT_PASSWORD = MICROSERVICE_MADROX.concat("/app/v1/reset-password");
     public static final String GOOGLE_NAV_BASE_STRING = "http://maps.google.com/?daddr=";
     public static final String ICRM_CLIENT_LEADS = MICROSERVICE_SAPPHIRE.concat("/v1/client-leads");
     public static final String USER_SERVICE_ENTITY_COMPANIES = MICROSERVICE_MADROX.concat("/data/v1/entity/companies?filters=");
