@@ -58,6 +58,9 @@ public class GcmRegister{
                 registerInBackground(context);
             }else{
                 JarvisConstants.DELIVERY_ID = sRegid;
+
+                //not required, but just to make sure gcm is registered on makaan server
+                sendRegistrationIdToBackend(sRegid);
             }
         }
     }
