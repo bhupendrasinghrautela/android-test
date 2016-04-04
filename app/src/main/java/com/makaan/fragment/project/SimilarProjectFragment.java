@@ -94,6 +94,8 @@ public class SimilarProjectFragment extends MakaanBaseFragment implements View.O
             public TextView nameTv;
             public TextView addressTv;
             public TextView priceTv;
+            public TextView pricePreTv;
+            public TextView pricePostTv;
             public ImageView projectIv;
             public CardView cardView;
 
@@ -103,6 +105,8 @@ public class SimilarProjectFragment extends MakaanBaseFragment implements View.O
                 addressTv = (TextView) v.findViewById(R.id.tv_similar_project_address);
                 priceTv = (TextView) v.findViewById(R.id.tv_similar_project_price);
                 projectIv = (ImageView) v.findViewById(R.id.iv_similar_project);
+                pricePreTv = (TextView) v.findViewById(R.id.tv_similar_project_price_prefix);
+                pricePostTv = (TextView) v.findViewById(R.id.tv_similar_project_price_postfix);
                 cardView = (CardView) v.findViewById(R.id.card_similar_projects);
             }
         }
@@ -116,7 +120,7 @@ public class SimilarProjectFragment extends MakaanBaseFragment implements View.O
         public SimilarProjectsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                                int viewType) {
             View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.row_project_similar_property, parent, false);
+                    .inflate(R.layout.row_similar_property, parent, false);
             ViewHolder vh = new ViewHolder(v);
             return vh;
         }
@@ -132,17 +136,26 @@ public class SimilarProjectFragment extends MakaanBaseFragment implements View.O
             } else {
                 holder.nameTv.setText("");
             }
-            if(!TextUtils.isEmpty(project.getMinPriceOnwards())) {
-                holder.priceTv.setText(project.getMinPriceOnwards().toLowerCase());
-                holder.priceTv.setVisibility(View.VISIBLE);
-            } else {
-                if(project.minResaleOrPrimaryPrice != null && project.minResaleOrPrimaryPrice > 0) {
-                    holder.priceTv.setText(StringUtil.getDisplayPrice(project.minResaleOrPrimaryPrice) + " onwards");
-                    holder.priceTv.setVisibility(View.VISIBLE);
+            if(project.minResaleOrPrimaryPrice != null && project.minResaleOrPrimaryPrice > 0) {
+                    Double price = project.minResaleOrPrimaryPrice;
+                    String priceString = StringUtil.getDisplayPrice(price);
+                    String priceUnit = "";
+                    if(priceString.indexOf("\u20B9") == 0) {
+                        priceString = priceString.replace("\u20B9", "");
+                    }
+                    String[] priceParts = priceString.split(" ");
+                    priceString = priceParts[0];
+                    if(priceParts.length > 1) {
+                        priceUnit = priceParts[1];
+                    }
+                    holder.priceTv.setText(String.valueOf(priceString)+" ");
+                    holder.pricePostTv.setText(priceUnit+" onwards");
+                    holder.pricePreTv.setText("\u20B9 ");
                 } else {
-                    holder.priceTv.setText("");
+                holder.priceTv.setText("");
+                holder.pricePostTv.setText("");
+                holder.pricePreTv.setText("");
                 }
-            }
 
             if(project.address == null) {
                 if(project.locality != null) {
