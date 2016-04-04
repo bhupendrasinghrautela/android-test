@@ -73,6 +73,10 @@ public class ListingOtherSellersCallback extends JSONGetCallback {
                         sellerCard.sellerId = listingDetail.sellerId;
                     }
                     //sellerCard.assist =
+                    if(listingDetail.companySeller!=null && listingDetail.companySeller.user!=null &&
+                            listingDetail.companySeller.user.id!=null){
+                        sellerCard.userId=listingDetail.companySeller.user.id;
+                    }
                     if(company.name!=null) {
                         sellerCard.name = company.name;
                     }

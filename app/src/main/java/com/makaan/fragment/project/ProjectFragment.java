@@ -180,6 +180,9 @@ public class ProjectFragment extends OverviewFragment{
                 intent.putExtra(KeyUtil.SOURCE_LEAD_FORM, ProjectFragment.class.getName());
                 intent.putExtra(KeyUtil.PROJECT_ID_LEAD_FORM ,project.projectId);
                 intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, "buy");
+                if(sellerCard.userId!=null) {
+                    intent.putExtra(KeyUtil.USER_ID, sellerCard.userId);
+                }
 
                 if(project!=null && project.name!=null) {
                     intent.putExtra(KeyUtil.PROJECT_NAME_LEAD_FORM, project.name);

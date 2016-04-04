@@ -144,6 +144,10 @@ public class ProjectConfigCallback extends JSONGetCallback {
                         if(company.score!=null) {
                             sellerCard.rating = company.score;
                         }
+                        if(listingDetail.companySeller!=null && listingDetail.companySeller.user!=null
+                                && listingDetail.companySeller.user.id!=null){
+                            sellerCard.userId=listingDetail.companySeller.user.id;
+                        }
                         if(listingDetail.companySeller.user!=null){
                             if(listingDetail.companySeller.user.contactNumbers!=null && listingDetail.companySeller.user.contactNumbers.size()>0) {
                                 sellerCard.contactNo = listingDetail.companySeller.user.contactNumbers.get(0).contactNumber;

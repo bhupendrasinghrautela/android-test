@@ -68,6 +68,7 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
         Long localityId=this.getIntent().getExtras().getLong(KeyUtil.LOCALITY_ID_LEAD_FORM);
         Long projectId=this.getIntent().getExtras().getLong(KeyUtil.PROJECT_ID_LEAD_FORM);
         Long propertyId=this.getIntent().getExtras().getLong(KeyUtil.PROPERTY_Id_LEAD_FORM);
+        Long userId=this.getIntent().getExtras().getLong(KeyUtil.USER_ID);
         String sellerImgUrl=this.getIntent().getExtras().getString(KeyUtil.SELLER_IMAGE_URL_LEAD_FORM);
         String cityName=this.getIntent().getExtras().getString(KeyUtil.CITY_NAME_LEAD_FORM);
         String salesType=this.getIntent().getExtras().getString(KeyUtil.SALE_TYPE_LEAD_FORM);
@@ -81,6 +82,7 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
         mLeadFormPresenter.setLocalityId(localityId);
         mLeadFormPresenter.setProjectId(projectId);
         mLeadFormPresenter.setPropertyId(propertyId);
+        mLeadFormPresenter.setUserId(userId);
 
         if(null!=projectName){
             mLeadFormPresenter.setProjectName(projectName);

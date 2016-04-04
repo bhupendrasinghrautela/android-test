@@ -741,7 +741,11 @@ public class DefaultListingView extends AbstractListingView {
         bundle.putString(KeyUtil.SINGLE_SELLER_ID, String.valueOf(mListing.lisitingPostedBy.id));
         bundle.putLong(KeyUtil.LISTING_ID_LEAD_FORM, mListing.lisitingId);
 
-        if(mListing!=null && mListing.cityName!=null && !TextUtils.isEmpty(mListing.listingCategory)){
+        if(mListing.lisitingPostedBy!=null && mListing.lisitingPostedBy.userId>0) {
+            bundle.putLong(KeyUtil.USER_ID, mListing.lisitingPostedBy.userId);
+        }
+
+            if(mListing!=null && mListing.cityName!=null && !TextUtils.isEmpty(mListing.listingCategory)){
             if(mListing.listingCategory.equalsIgnoreCase("primary")||mListing.listingCategory.equalsIgnoreCase("resale")){
                 bundle.putString(KeyUtil.SALE_TYPE_LEAD_FORM, "buy");
             }

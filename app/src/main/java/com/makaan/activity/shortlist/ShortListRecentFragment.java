@@ -166,6 +166,7 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
                                 intent.putExtra(KeyUtil.SINGLE_SELLER_ID, String.valueOf(dataObject.sellerId));
                                 intent.putExtra(KeyUtil.CITY_NAME_LEAD_FORM, dataObject.cityName);
                                 intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, dataObject.listingCategory);
+                                intent.putExtra(KeyUtil.USER_ID, dataObject.userId);
 
                                 if(dataObject.listingCategory!=null && !TextUtils.isEmpty(dataObject.listingCategory)){
                                     if(dataObject.listingCategory.equalsIgnoreCase("primary")||dataObject.listingCategory.equalsIgnoreCase("resale")){
