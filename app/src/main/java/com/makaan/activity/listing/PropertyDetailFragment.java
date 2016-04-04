@@ -451,7 +451,13 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
             RecentPropertyProjectManager manager = RecentPropertyProjectManager.getInstance(getActivity().getApplicationContext());
             manager.addEntryToRecent(manager.new DataObject(mListingDetail), getActivity().getApplicationContext());
 
-            if(mListingDetail.latitude!=0 && mListingDetail.longitude!=0) {
+            if(mListingDetail.listingLatitude != null && !Double.isNaN(mListingDetail.listingLatitude)
+                    && mListingDetail.listingLongitude != null && !Double.isNaN(mListingDetail.listingLongitude)) {
+                ((AmenityService) (MakaanServiceFactory.getInstance().getService(
+                        AmenityService.class))).getAmenitiesByLocation(mListingDetail.listingLatitude,
+                        mListingDetail.listingLongitude, 3, AmenityService.EntityType.PROJECT);
+            } else if(mListingDetail.latitude != null && !Double.isNaN(mListingDetail.latitude)
+                    && mListingDetail.longitude != null && !Double.isNaN(mListingDetail.longitude)) {
                 ((AmenityService) (MakaanServiceFactory.getInstance().getService(
                         AmenityService.class))).getAmenitiesByLocation(mListingDetail.latitude, mListingDetail.longitude, 3, AmenityService.EntityType.PROJECT);
             }

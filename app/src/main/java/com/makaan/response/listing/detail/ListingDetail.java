@@ -14,8 +14,8 @@ public class ListingDetail {
 
 
     public Long id;
-    public double latitude, longitude;
-    public double listingLatitude, listingLongitude;
+    public Double latitude, longitude;
+    public Double listingLatitude, listingLongitude;
     public CurrentListingPrice currentListingPrice;
     public String description, listingCategory;
     public String expiryAt, possessionDate;
