@@ -171,7 +171,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
         mIntent = new Intent(getActivity(), BuyerDashboardActivity.class);
 
         mIsUserLoggedIn = CookiePreferences.isUserLoggedIn(getActivity());
-        setupData();
+//        setupData();
 
         if(view != null) {
             mViews[0] = view.findViewById(R.id.ll_search);
@@ -235,6 +235,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     public void onStart() {
         super.onStart();
         AppBus.getInstance().register(this);
+        setupData();
     }
 
     @Override
@@ -243,7 +244,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
         boolean isUserLoggedIn = CookiePreferences.isUserLoggedIn(getActivity());
         if(isUserLoggedIn != mIsUserLoggedIn) {
             mIsUserLoggedIn = isUserLoggedIn;
-            setupData();
+//            setupData();
         }
         savedSearches = MasterDataCache.getInstance().getSavedSearch();
         if(mIsUserLoggedIn && savedSearches != null && savedSearches.size() == 0) {
