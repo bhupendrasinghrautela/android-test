@@ -51,7 +51,6 @@ android {
             //signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "java.lang.String", "SEGMENT_KEY", "\"xMHqomsTMdGwOiJByBsKUbH78Akhbaku\""
-            ext.enableCrashlytics = true
         }
     }
     lintOptions {
