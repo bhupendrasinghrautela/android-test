@@ -76,11 +76,14 @@ public class MakaanBarChartView extends BaseLinearLayout<List<CityTrendData>>{
     }
 
     private void generateDataForChart() {
-        if(mColumns == null || mAxisXValues == null || mAxisXLabels == null || mChartData == null){
+        if(mColumns == null || mAxisXValues == null || mAxisXLabels == null || mChartData == null
+                || mChartData.size() == 0) {
             mNoDataText.setVisibility(VISIBLE);
+            mColumnChartView.setVisibility(GONE);
             return;
         }
         mNoDataText.setVisibility(GONE);
+        mColumnChartView.setVisibility(VISIBLE);
 
         mColumns.clear();
         mAxisXLabels.clear();

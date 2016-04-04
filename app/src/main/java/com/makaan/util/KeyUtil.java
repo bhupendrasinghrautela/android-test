@@ -52,6 +52,7 @@ public class KeyUtil {
     public static final String PROJECT_ID_LEAD_FORM="projectId";
     public static final String PROJECT_NAME_LEAD_FORM="projectName";
     public static final String PROPERTY_Id_LEAD_FORM="propertyId";
+    public static final String USER_ID="userId";
 
 
     public final static String CLUSTER_PLAN = "clusterPlan";

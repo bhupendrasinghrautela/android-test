@@ -285,6 +285,10 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
             User user = mListingDetail.companySeller.user;
             Company company = mListingDetail.companySeller.company;
             try {
+                if(mListingDetail.companySeller.user!=null&& mListingDetail.companySeller.user.id !=null){
+                    intent.putExtra(KeyUtil.USER_ID, mListingDetail.companySeller.user.id);
+                }
+
                 if(company.name!=null) {
                     intent.putExtra(KeyUtil.NAME_LEAD_FORM, company.name);
                 }
@@ -451,7 +455,13 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
             RecentPropertyProjectManager manager = RecentPropertyProjectManager.getInstance(getActivity().getApplicationContext());
             manager.addEntryToRecent(manager.new DataObject(mListingDetail), getActivity().getApplicationContext());
 
-            if(mListingDetail.latitude!=0 && mListingDetail.longitude!=0) {
+            if(mListingDetail.listingLatitude != null && !Double.isNaN(mListingDetail.listingLatitude)
+                    && mListingDetail.listingLongitude != null && !Double.isNaN(mListingDetail.listingLongitude)) {
+                ((AmenityService) (MakaanServiceFactory.getInstance().getService(
+                        AmenityService.class))).getAmenitiesByLocation(mListingDetail.listingLatitude,
+                        mListingDetail.listingLongitude, 3, AmenityService.EntityType.PROJECT);
+            } else if(mListingDetail.latitude != null && !Double.isNaN(mListingDetail.latitude)
+                    && mListingDetail.longitude != null && !Double.isNaN(mListingDetail.longitude)) {
                 ((AmenityService) (MakaanServiceFactory.getInstance().getService(
                         AmenityService.class))).getAmenitiesByLocation(mListingDetail.latitude, mListingDetail.longitude, 3, AmenityService.EntityType.PROJECT);
             }

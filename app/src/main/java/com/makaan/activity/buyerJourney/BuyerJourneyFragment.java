@@ -25,6 +25,7 @@ import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.buyerJourney.BlogContentFragment;
 import com.makaan.response.saveSearch.SaveSearch;
+import com.makaan.response.wishlist.WishList;
 import com.makaan.service.ClientEventsService;
 import com.makaan.service.ClientLeadsService;
 import com.makaan.service.MakaanServiceFactory;
@@ -34,6 +35,7 @@ import com.makaan.util.AppBus;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -92,7 +94,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
 
     @OnClick(R.id.ll_shortlist)
     public void onShortlistClick() {
-        if (mIsUserLoggedIn && (mClientLeadsCount + mWishlistCount > 0)) {
+        if (/*mIsUserLoggedIn && */(mClientLeadsCount + mWishlistCount > 0)) {
             onViewClick(BuyerDashboardActivity.LOAD_FRAGMENT_SHORTLIST);
         } else {
             mIntent.putExtra(BuyerDashboardActivity.DATA, BlogContentFragment.SHORTLIST);
@@ -169,7 +171,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
         mIntent = new Intent(getActivity(), BuyerDashboardActivity.class);
 
         mIsUserLoggedIn = CookiePreferences.isUserLoggedIn(getActivity());
-        setupData();
+//        setupData();
 
         if(view != null) {
             mViews[0] = view.findViewById(R.id.ll_search);
@@ -207,15 +209,25 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
             mWishListsReceived = false;
             showProgress();
         } else {
+            List<WishList> wishListData = MasterDataCache.getInstance().getAllWishList();
+            if(wishListData != null && wishListData.size() > 0) {
+                mWishlistCount = wishListData.size();
+            } else {
+                mWishlistCount = 0;
+            }
+            mClientEventsReceived = true;
+            mClientLeadsReceived = true;
+            mNewSearchesReceived = true;
+            mSavedSearchesReceived = true;
+            mWishListsReceived = true;
+
             mSavedSearchesCount = 0;
             mNewMatchesCount = 0;
             mClientLeadsCount = 0;
             mPhaseId = 0;
             mClientEventsCount = 0;
 
-            mSearchSubTitle.setText(getResources().getString(R.string.search_sub_title));
-            mShortListSubTitle.setText(getResources().getString(R.string.shortlist_sub_title));
-            mSiteVisitSubTitle.setText(getResources().getString(R.string.site_visit_sub_title));
+            updateUi();
         }
     }
 
@@ -223,6 +235,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
     public void onStart() {
         super.onStart();
         AppBus.getInstance().register(this);
+        setupData();
     }
 
     @Override
@@ -231,7 +244,7 @@ public class BuyerJourneyFragment extends MakaanBaseFragment {
         boolean isUserLoggedIn = CookiePreferences.isUserLoggedIn(getActivity());
         if(isUserLoggedIn != mIsUserLoggedIn) {
             mIsUserLoggedIn = isUserLoggedIn;
-            setupData();
+//            setupData();
         }
         savedSearches = MasterDataCache.getInstance().getSavedSearch();
         if(mIsUserLoggedIn && savedSearches != null && savedSearches.size() == 0) {

@@ -32,22 +32,39 @@ public class ShortlistPagerAdapter extends FragmentStatePagerAdapter implements 
     @Override
     public Fragment getItem(int position) {
 
-        switch (position) {
-            case 0:
-                ShortlistEnquiredFragment enquiredFragment = new ShortlistEnquiredFragment();
-                enquiredFragment.bindView(this,0);
-                return enquiredFragment;
-            case 1:
-                ShortListFavoriteFragment favoriteFragment = new ShortListFavoriteFragment();
-                favoriteFragment.bindView(this, 1);
-                return favoriteFragment;
-            case 2:
-                //TODO change this to recent
-                ShortListRecentFragment recentFragment = new ShortListRecentFragment();
-                recentFragment.bindView(this, 2);
-                return recentFragment;
-            default:
-                return null;
+        if(getCount() == 3) {
+            switch (position) {
+                case 0:
+                    ShortlistEnquiredFragment enquiredFragment = new ShortlistEnquiredFragment();
+                    enquiredFragment.bindView(this, 0);
+                    return enquiredFragment;
+                case 1:
+                    ShortListFavoriteFragment favoriteFragment = new ShortListFavoriteFragment();
+                    favoriteFragment.bindView(this, 1);
+                    return favoriteFragment;
+                case 2:
+                    //TODO change this to recent
+                    ShortListRecentFragment recentFragment = new ShortListRecentFragment();
+                    recentFragment.bindView(this, 2);
+                    return recentFragment;
+                default:
+
+                    return null;
+            }
+        } else {
+            switch (position) {
+                case 0:
+                    ShortListFavoriteFragment favoriteFragment = new ShortListFavoriteFragment();
+                    favoriteFragment.bindView(this, 0);
+                    return favoriteFragment;
+                case 1:
+                    ShortListRecentFragment recentFragment = new ShortListRecentFragment();
+                    recentFragment.bindView(this, 1);
+                    return recentFragment;
+                default:
+
+                    return null;
+            }
         }
     }
 
@@ -65,7 +82,11 @@ public class ShortlistPagerAdapter extends FragmentStatePagerAdapter implements 
         View v = LayoutInflater.from(mContext).inflate(R.layout.custom_tab, null);
         TextView countValue = (TextView) v.findViewById(R.id.tv_count);
         TextView type = (TextView) v.findViewById(R.id.tv_type);
-        type.setText(label[position]);
+        if(getCount() == 3) {
+            type.setText(label[position]);
+        } else if(getCount() == 2 && position + 1 < label.length) {
+            type.setText(label[position + 1]);
+        }
         countValue.setText(count[position]);
         mViews.add(v);
         return v;

@@ -1,5 +1,6 @@
 package com.makaan.service;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.makaan.event.lead.LeadInstantCallback;
@@ -16,15 +17,25 @@ public class LeadInstantCallbackService implements MakaanService {
 
     private String TAG= LeadInstantCallbackService.class.getSimpleName();
 
-    public void makeInstantCallbackRequest(String buyerNumber , String sellerNumber , int countryId , JSONObject jsonDump){
+    public void makeInstantCallbackRequest(String buyerNumber , String sellerNumber , int countryId , JSONObject jsonDump,
+                                           Long userId ,int cityId, String listingCategory){
 
         JSONObject mJsonObject = new JSONObject();
         try {
             mJsonObject.put("fromNo",buyerNumber);
             mJsonObject.put("clientCountryId",countryId);
             mJsonObject.put("toNo",sellerNumber);
+            if(userId!=null && userId!=0) {
+                mJsonObject.put("userId", userId);
+            }
+            if(cityId>0) {
+                mJsonObject.put("cityId", cityId);
+            }
+            if(!TextUtils.isEmpty(listingCategory)) {
+                mJsonObject.put("listingCategory", listingCategory);
+            }
             mJsonObject.put("jsonDump", jsonDump.toString());
-            Log.e("json ","Dump "+jsonDump.toString());
+            Log.e("json ", "Dump " + jsonDump.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

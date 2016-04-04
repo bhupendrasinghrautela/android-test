@@ -32,7 +32,7 @@ public class ListingParser {
 
     public static final String ACTUAL_PROPERTY_STATUS = "ACTUAL",
             POSTED_BY_BROKER = "BROKER",
-            POSTED_BY_OWNER = "PRIVATEEQUITY",
+            POSTED_BY_OWNER = "OWNER",
             POSTED_BY_BUILDER = "BUILDER",
             BHK_STR = " bhk ",
             DAYS = " days";
@@ -186,6 +186,7 @@ public class ListingParser {
                                 || listing.lisitingPostedBy.type.equalsIgnoreCase(POSTED_BY_BUILDER)) {
                             listing.lisitingPostedBy.name = sellerCompany.optString(NAME);
                             listing.lisitingPostedBy.id = sellerCompany.optLong(ID);
+                            listing.lisitingPostedBy.userId = user.optLong(ID);
                             listing.lisitingPostedBy.logo = sellerCompany.optString(LOGO);
                             listing.lisitingPostedBy.rating = sellerCompany.optDouble(COMPANY_SCORE) / 2.0; // devided by 2 to show rating out of 5
                             listing.lisitingPostedBy.assist = sellerCompany.optBoolean(ASSIST);

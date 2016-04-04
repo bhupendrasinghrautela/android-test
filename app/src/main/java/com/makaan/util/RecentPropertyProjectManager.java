@@ -110,6 +110,7 @@ public class RecentPropertyProjectManager {
         public String phoneNo;
         public double rating;
         public long sellerId;
+        public long userId;
         public long cityId;
         public long localityId;
         public String listingCategory;
@@ -151,6 +152,9 @@ public class RecentPropertyProjectManager {
                 }
 
                 if(listingDetail.companySeller != null) {
+                    if(listingDetail.companySeller.user!=null && listingDetail.companySeller.user.id!=null) {
+                        this.userId = listingDetail.companySeller.user.id;
+                    }
                     if(listingDetail.companySeller.company != null) {
                         if(listingDetail.companySeller.company.id != null) {
                             this.sellerId = listingDetail.companySeller.company.id;
@@ -181,7 +185,7 @@ public class RecentPropertyProjectManager {
                 if(listingDetail.property != null) {
                     if(listingDetail.property.project != null) {
                         if(!TextUtils.isEmpty(listingDetail.property.project.name)) {
-                            this.addressLine1 = listingDetail.property.project.name;
+                            this.addressLine1 = listingDetail.property.project.getFullName();
                         }
                         if(listingDetail.property.project.locality != null) {
                             if(!TextUtils.isEmpty(listingDetail.property.project.locality.label)) {
@@ -190,7 +194,7 @@ public class RecentPropertyProjectManager {
                                     this.localityId = listingDetail.property.project.locality.localityId;
                                 }
                                 if(listingDetail.property.project.locality.cityId != null) {
-                                    this.localityId = listingDetail.property.project.locality.cityId;
+                                    this.cityId = listingDetail.property.project.locality.cityId;
                                 }
                             }
                             if(listingDetail.property.project.locality.suburb != null) {

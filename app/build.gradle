@@ -43,6 +43,7 @@ android {
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "java.lang.String", "SEGMENT_KEY", "\"m37g10u0GEffT4tStFFsvSVnej9vkncO\""
+            ext.enableCrashlytics = true
         }
         debug {
             minifyEnabled false
