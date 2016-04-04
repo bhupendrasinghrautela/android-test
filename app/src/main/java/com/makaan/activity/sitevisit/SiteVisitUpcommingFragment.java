@@ -153,8 +153,13 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
             for (Enquiry enquiry:mEnquiryHashMap.values()) {
                 if(enquiry.listingId!=null && enquiry.listingId.equals(listingByIdGetEvent.listingDetail.id)) {
                     enquiry.listingDetail = listingByIdGetEvent.listingDetail;
-                    enquiry.latitude = enquiry.listingDetail.latitude;
-                    enquiry.longitude = enquiry.listingDetail.longitude;
+                    enquiry.latitude = enquiry.listingDetail.listingLatitude;
+                    enquiry.longitude = enquiry.listingDetail.listingLongitude;
+                    if(enquiry.latitude == null || Double.isNaN(enquiry.latitude)
+                            && enquiry.longitude == null || Double.isNaN(enquiry.longitude)) {
+                        enquiry.latitude = enquiry.listingDetail.latitude;
+                        enquiry.longitude = enquiry.listingDetail.longitude;
+                    }
                     mEnquiryHashMap.put(enquiry.id, enquiry);
                 }
             }

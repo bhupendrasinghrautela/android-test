@@ -79,7 +79,8 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
         shortListEnquiredViewHolder.setPosition(position);
         Enquiry enquiry = mEnquiries.get(position);
 
-        if (enquiry.latitude == null || enquiry.longitude == null) {
+        if (enquiry.latitude == null || enquiry.longitude == null
+                || Double.isNaN(enquiry.latitude) || Double.isNaN(enquiry.longitude)) {
             shortListEnquiredViewHolder.mDirection.setEnabled(false);
             shortListEnquiredViewHolder.mDirectionImage.setAlpha(0.5f);
         } else {
@@ -286,7 +287,8 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
     @Override
     public void openDirections(int position) {
         Enquiry enquiry = mEnquiries.get(position);
-        if (enquiry.latitude == null || enquiry.longitude == null) {
+        if (enquiry.latitude == null || enquiry.longitude == null
+                || Double.isNaN(enquiry.latitude) || Double.isNaN(enquiry.longitude)) {
             return;
         } else if (enquiry.latitude > 0 && enquiry.longitude > 0) {
             Intent myIntent = new Intent(Intent.ACTION_VIEW, ClientEventsService.buildNavigationIntentUri(

@@ -196,7 +196,8 @@ public class ListingService implements MakaanService {
                     .field("unitName").field("measure").field("size").field("bathrooms")
                     .field("bedrooms").field("listing").field("id").field("property")
                     .field("project").field("builder").field("locality").field("suburb")
-                    .field("label").field("city").field("imageURL").field("latitude").field("longitude");
+                    .field("label").field("city").field("imageURL").field("latitude").field("longitude")
+                    .field("listingLatitude").field("listingLongitude").field("contactNumbers").field("contactNumber");
             String listingDetailUrl = ApiConstants.LISTING.concat(listingId.toString()).concat("?").concat(listingDetailSelector.build());
             Type listingDetailType = new TypeToken<ListingDetail>() {
             }.getType();
@@ -273,4 +274,36 @@ public class ListingService implements MakaanService {
 
     }
 
+    public void getListingDetail(ArrayList<String> wishListIds) {
+        Selector selector = new Selector();
+        selector.term("listingId", wishListIds);
+        String listingDetailUrl = ApiConstants.LISTING.concat("?").concat(selector.build());
+
+        MakaanNetworkClient.getInstance().get(listingDetailUrl, new JSONGetCallback() {
+            @Override
+            public void onError(ResponseError error) {
+
+                ListingByIdsGetEvent listingByIdsGetEvent = new ListingByIdsGetEvent();
+                listingByIdsGetEvent.error = error;
+                AppBus.getInstance().post(listingByIdsGetEvent);
+            }
+
+            @Override
+            public void onSuccess(JSONObject responseObject) {
+                if (responseObject != null) {
+                    try {
+                        JSONObject data = responseObject.getJSONObject(ResponseConstants.DATA);
+                        Type type = new TypeToken<ListingByIdsGetEvent>() {
+                        }.getType();
+                        ListingByIdsGetEvent listingByIdsGetEvent = MakaanBuyerApplication.gson.fromJson(data.toString(), type);
+                        AppBus.getInstance().post(listingByIdsGetEvent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        ListingByIdsGetEvent listingByIdsGetEvent = new ListingByIdsGetEvent();
+                        AppBus.getInstance().post(listingByIdsGetEvent);
+                    }
+                }
+            }
+        });
+    }
 }

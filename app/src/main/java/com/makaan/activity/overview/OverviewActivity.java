@@ -387,8 +387,13 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
         if (listingByIdGetEvent != null && listingByIdGetEvent.listingDetail != null
                 && null == listingByIdGetEvent.error) {
             ListingDetail listingDetail = listingByIdGetEvent.listingDetail;
-            mEntityInfo = new NeighborhoodMapFragment.EntityInfo(listingDetail.property.project.builder.name + " " + listingDetail.property.project.name,
-                    listingDetail.latitude, listingDetail.longitude);
+            if(listingDetail.listingLatitude != null && !Double.isNaN(listingDetail.listingLatitude) && listingDetail.listingLongitude != null && !Double.isNaN(listingDetail.listingLongitude)) {
+                mEntityInfo = new NeighborhoodMapFragment.EntityInfo(listingDetail.property.project.builder.name + " " + listingDetail.property.project.name,
+                        listingDetail.listingLatitude, listingDetail.listingLongitude);
+            } else if(listingDetail.latitude != null && !Double.isNaN(listingDetail.latitude) && listingDetail.longitude != null && !Double.isNaN(listingDetail.longitude)) {
+                mEntityInfo = new NeighborhoodMapFragment.EntityInfo(listingDetail.property.project.builder.name + " " + listingDetail.property.project.name,
+                        listingDetail.latitude, listingDetail.longitude);
+            }
         }
     }
 

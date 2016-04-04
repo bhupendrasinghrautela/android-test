@@ -33,6 +33,7 @@
     @com.squareup.otto.Subscribe public *;
     @com.squareup.otto.Produce public *;
 }
+-keepattributes SourceFile,LineNumberTable,*Annotation*
 
 -optimizationpasses 3
 -forceprocessing

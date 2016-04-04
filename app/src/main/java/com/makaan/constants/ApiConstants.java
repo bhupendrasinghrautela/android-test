@@ -77,7 +77,7 @@ public class ApiConstants {
     public static final String PROJECT_CONFIG = MICROSERVICE_PETRA.concat("/app/v1/project-configuration");
     public static final String AMENITIES = MICROSERVICE_PETRA.concat("/app/v1/amenity?latitude=");
 
-    public static final String BLOG_URL = "http://makaaniq.com/blog?sort=views-desc&tag=";
+    public static final String BLOG_URL = "http://makaaniq.com/blog?tag=";
 
 
     public static final String LISTING_OTHER_SELLERS = MICROSERVICE_PETRA.concat("/data/v2/entity/domain");

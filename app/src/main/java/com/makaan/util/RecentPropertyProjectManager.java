@@ -181,7 +181,7 @@ public class RecentPropertyProjectManager {
                 if(listingDetail.property != null) {
                     if(listingDetail.property.project != null) {
                         if(!TextUtils.isEmpty(listingDetail.property.project.name)) {
-                            this.addressLine1 = listingDetail.property.project.name;
+                            this.addressLine1 = listingDetail.property.project.getFullName();
                         }
                         if(listingDetail.property.project.locality != null) {
                             if(!TextUtils.isEmpty(listingDetail.property.project.locality.label)) {

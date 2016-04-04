@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.appsflyer.AppsFlyerLib;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
 import com.makaan.constants.PreferenceConstants;
@@ -70,7 +71,9 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        AppsFlyerLib.getInstance().init(this,getString(R.string.app_appsflyer_id));
+        try {
+            AppsFlyerLib.getInstance().init(this, getString(R.string.app_appsflyer_id));
+        } catch (Exception e) {}
 
         PermissionManager.begin().addRequest(PermissionManager.ACCOUNTS_REQUEST).request(this);
 

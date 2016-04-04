@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.makaan.R;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.cookie.CookiePreferences;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.segment.analytics.Properties;
 
@@ -53,7 +54,9 @@ public class ShortListFragment extends MakaanBaseFragment {
 
     private void initViews() {
 
-        mTabLayout.addTab(mTabLayout.newTab().setText(TabType.Enquired.value));
+        if(CookiePreferences.isUserLoggedIn(getActivity())) {
+            mTabLayout.addTab(mTabLayout.newTab().setText(TabType.Enquired.value));
+        }
         mTabLayout.addTab(mTabLayout.newTab().setText(TabType.Favorite.value));
         mTabLayout.addTab(mTabLayout.newTab().setText(TabType.Recent.value));
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -61,11 +64,17 @@ public class ShortListFragment extends MakaanBaseFragment {
         final ShortlistPagerAdapter adapter = new ShortlistPagerAdapter(getActivity(), getChildFragmentManager(), mTabLayout.getTabCount());
 
         mViewPager.setAdapter(adapter);
-        mViewPager.setCurrentItem(1);
+        if(CookiePreferences.isUserLoggedIn(getActivity())) {
+            mViewPager.setCurrentItem(1);
+        } else {
+            mViewPager.setCurrentItem(0);
+        }
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         for (int i = 0; i < mTabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = mTabLayout.getTabAt(i);
-            tab.setCustomView(adapter.getTabView(i));
+            if(tab != null) {
+                tab.setCustomView(adapter.getTabView(i));
+            }
         }
         mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
