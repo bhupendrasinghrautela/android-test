@@ -1,7 +1,6 @@
 package com.makaan.jarvis.ui.cards;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.makaan.R;
-import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.jarvis.message.ExposeMessage;
@@ -65,9 +63,7 @@ public class PyrPopupCard extends BaseCtaView<ExposeMessage> {
             @Override
             public void onClick(View view) {
 
-                Intent pyrIntent = new Intent(context, PyrPageActivity.class);
-                pyrIntent.putExtra(PyrPageActivity.SOURCE_SCREEN_NAME, "Jarvis");
-                context.startActivity(pyrIntent);
+
 
                 /*----track -------------event--------- */
                 if(item.city!=null && !TextUtils.isEmpty(item.city)) {

@@ -60,6 +60,8 @@ public class LocationService implements MakaanService {
                         JSONObject data = responseObject.getJSONObject(ResponseConstants.DATA);
                         Type locationType = new TypeToken<MyLocation>() {}.getType();
                         MyLocation location = MakaanBuyerApplication.gson.fromJson(data.getJSONObject(ResponseConstants.CITY).toString(), locationType);
+
+                        Session.apiLocation = location;
                         AppBus.getInstance().post(new LocationGetEvent(location));
                     } catch (JSONException e) {
                         e.printStackTrace();

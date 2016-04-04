@@ -15,7 +15,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
@@ -23,6 +22,7 @@ import com.makaan.R;
 import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.overview.OverviewActivity;
+import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
@@ -38,7 +38,6 @@ import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.jarvis.ui.cards.BaseCtaView;
 import com.makaan.jarvis.ui.cards.CtaCardFactory;
 import com.makaan.jarvis.ui.cards.InterceptedLinearLayout;
-import com.makaan.jarvis.ui.cards.PyrPopupCard;
 import com.makaan.jarvis.ui.cards.SerpFilterCard;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.pojo.SerpRequest;
@@ -59,8 +58,6 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-
-import static com.makaan.jarvis.message.CtaType.*;
 
 /**
  * Created by sunil on 13/01/16.
@@ -103,6 +100,43 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     private SerpRequest currentSerpRequest = null;
     private String contentPyrUrl=null;
     private String buyerJourneyMessageString=null;
+
+    public String cityName;
+    public Long cityId;
+    public String localityName;
+    public Long localityId;
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public Long getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
+    }
+
+    public Long getLocalityId() {
+        return localityId;
+    }
+
+    public void setLocalityId(Long localityId) {
+        this.localityId = localityId;
+    }
+
+    public String getLocalityName() {
+        return localityName;
+    }
+
+    public void setLocalityName(String localityName) {
+        this.localityName = localityName;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -394,6 +428,18 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                         card.setOnApplyClickListener(new SerpFilterCard.OnApplyClickListener() {
                             @Override
                             public void onApplyClick() {
+                                Intent pyrIntent = new Intent(BaseJarvisActivity.this, PyrPageActivity.class);
+                                pyrIntent.putExtra(PyrPageActivity.SOURCE_SCREEN_NAME, "Jarvis");
+
+                                if(getCityId() != null && getCityName() != null) {
+                                    pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, getCityName());
+                                    pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, getCityId());
+                                }
+                                if(getLocalityId() != null && getLocalityName() != null) {
+                                    pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_ID, getLocalityId());
+                                    pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_NAME, getLocalityName());
+                                }
+                                startActivity(pyrIntent);
                                 dismissPopupWithAnim();
                             }
                         });

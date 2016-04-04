@@ -336,7 +336,11 @@ public class ProjectFragment extends OverviewFragment{
 
     private void startPyrActivity(ProjectConfigItemClickListener configItemClickListener) {
         Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
-        pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id,project.locality.suburb.city.id);
+        if(project.locality.cityId != null && project.locality.cityId > 0) {
+            pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, project.locality.cityId);
+        } else {
+            pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, project.locality.suburb.city.id);
+        }
         pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, project.locality.suburb.city.label);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_ID, project.locality.localityId);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_NAME, project.locality.label);
@@ -350,9 +354,14 @@ public class ProjectFragment extends OverviewFragment{
     public  void openPyr(OpenPyrClicked openPyrClicked){
         if(!isVisible()) {
             return;
+
         }
         Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
-        pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id,project.locality.suburb.city.id);
+        if(project.locality.cityId != null && project.locality.cityId > 0) {
+            pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, project.locality.cityId);
+        } else {
+            pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, project.locality.suburb.city.id);
+        }
         pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, project.locality.suburb.city.label);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_ID, project.locality.localityId);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_NAME, project.locality.label);

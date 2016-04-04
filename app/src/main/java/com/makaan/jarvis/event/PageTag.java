@@ -1,5 +1,7 @@
 package com.makaan.jarvis.event;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,9 @@ public class PageTag {
     public List<String> suburb;
 
     public void addCity(String cityName){
+        if(TextUtils.isEmpty(cityName)) {
+            return;
+        }
         if(null==city){
             city = new ArrayList<>();
         }
@@ -20,6 +25,9 @@ public class PageTag {
     }
 
     public void addLocality(String localityName){
+        if(TextUtils.isEmpty(localityName)) {
+            return;
+        }
         if(null==locality){
             locality = new ArrayList<>();
         }
@@ -27,6 +35,9 @@ public class PageTag {
     }
 
     public void addSuburb(String suburbName){
+        if(TextUtils.isEmpty(suburbName)) {
+            return;
+        }
         if(null==suburb){
             suburb = new ArrayList<>();
         }
@@ -34,6 +45,9 @@ public class PageTag {
     }
 
     public void addProject(String projectName){
+        if(TextUtils.isEmpty(projectName)) {
+            return;
+        }
         if(null==project){
             project = new ArrayList<>();
         }
