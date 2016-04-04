@@ -155,7 +155,8 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
             mInstantCallButton.setText(getResources().getString(R.string.connecting));
             mInstantCallButton.setClickable(false);
             ((LeadInstantCallbackService) MakaanServiceFactory.getInstance().getService(LeadInstantCallbackService.class)).makeInstantCallbackRequest(
-                    mNumber.getText().toString().trim(), mLeadFormPresenter.getPhone(), mCountryId, jsonObject);
+                    mNumber.getText().toString().trim(), mLeadFormPresenter.getPhone(), mCountryId, jsonObject,mLeadFormPresenter.getUserId(),
+                    mLeadFormPresenter.getCityId(),mLeadFormPresenter.getSalesType());
         } else {
             Bundle bundle =getArguments();
             if(bundle!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {

@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by vaibhav on 25/01/16.
  */
 public class SellerCard implements Serializable,Comparable<SellerCard> {
-
+    public Long userId;
     public Long sellerId;
     public Double rating;
     public boolean assist;

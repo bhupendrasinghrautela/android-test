@@ -12,6 +12,7 @@ public class LisitingPostedBy {
     public boolean assist;
     public String number;
     public long id;
+    public long userId;
 
     public String profilePictureURL;
 

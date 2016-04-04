@@ -285,6 +285,10 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
             User user = mListingDetail.companySeller.user;
             Company company = mListingDetail.companySeller.company;
             try {
+                if(mListingDetail.companySeller.user!=null&& mListingDetail.companySeller.user.id !=null){
+                    intent.putExtra(KeyUtil.USER_ID, mListingDetail.companySeller.user.id);
+                }
+
                 if(company.name!=null) {
                     intent.putExtra(KeyUtil.NAME_LEAD_FORM, company.name);
                 }
