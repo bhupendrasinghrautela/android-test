@@ -66,7 +66,12 @@ public class ListingOtherSellersCallback extends JSONGetCallback {
                     sellerCard = new SellerCard();
                     sellerMap.put(listingDetail.sellerId, sellerCard);
                     //sellerMap.put(company.id, sellerCard);
-                    sellerCard.sellerId = listingDetail.sellerId;
+                    if(company.id!=null) {
+                        sellerCard.sellerId = company.id;
+                    }
+                    else {
+                        sellerCard.sellerId = listingDetail.sellerId;
+                    }
                     //sellerCard.assist =
                     if(company.name!=null) {
                         sellerCard.name = company.name;
