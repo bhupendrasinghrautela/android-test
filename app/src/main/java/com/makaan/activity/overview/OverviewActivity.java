@@ -389,6 +389,21 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
             ListingDetail listingDetail = listingByIdGetEvent.listingDetail;
             mEntityInfo = new NeighborhoodMapFragment.EntityInfo(listingDetail.property.project.builder.name + " " + listingDetail.property.project.name,
                     listingDetail.latitude, listingDetail.longitude);
+
+
+            Project project = listingDetail.property != null ? listingDetail.property.project : null;
+            if(project != null && project.locality != null) {
+                if (project.locality.cityId != null) {
+                    setCityId(project.locality.cityId);
+                }
+
+                if (project.locality.suburb != null && project.locality.suburb.city != null) {
+                    setCityName(project.locality.suburb.city.label);
+                    if (project.locality.suburb.city.id != null && getCityId() == null) {
+                        setCityId(project.locality.suburb.city.id);
+                    }
+                }
+            }
         }
     }
 
@@ -409,7 +424,25 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
                 }
                 mEntityInfo = new NeighborhoodMapFragment.EntityInfo(mName, project.latitude, project.longitude);
                 PageTag pageTag = new PageTag();
-                pageTag.addCity(project.name);
+                pageTag.addProject(project.name);
+
+                if(projectByIdEvent.project.locality != null) {
+                    if (projectByIdEvent.project.locality.cityId != null) {
+                        setCityId(projectByIdEvent.project.locality.cityId);
+                    }
+
+                    if (projectByIdEvent.project.locality.suburb != null && projectByIdEvent.project.locality.suburb.city != null) {
+                        setCityName(projectByIdEvent.project.locality.suburb.city.label);
+                        pageTag.addCity(projectByIdEvent.project.locality.suburb.city.label);
+                        pageTag.addSuburb(projectByIdEvent.project.locality.suburb.label);
+                        if (projectByIdEvent.project.locality.suburb.city.id != null && getCityId() == null) {
+                            setCityId(projectByIdEvent.project.locality.suburb.city.id);
+                        }
+                    }
+                    setLocalityId(projectByIdEvent.project.locality.localityId);
+                    setLocalityName(projectByIdEvent.project.locality.label);
+                    pageTag.addLocality(projectByIdEvent.project.locality.label);
+                }
                 super.setCurrentPageTag(pageTag);
             }
         }
@@ -425,6 +458,20 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
 
             PageTag pageTag = new PageTag();
             pageTag.addLocality(localityByIdEvent.locality.label);
+
+            setLocalityId(localityByIdEvent.locality.localityId);
+            setLocalityName(localityByIdEvent.locality.label);
+            if(localityByIdEvent.locality.cityId != null) {
+                setCityId(localityByIdEvent.locality.cityId);
+            }
+            if(localityByIdEvent.locality.suburb != null && localityByIdEvent.locality.suburb.city != null) {
+                setCityName(localityByIdEvent.locality.suburb.city.label);
+                pageTag.addCity(localityByIdEvent.locality.suburb.city.label);
+                pageTag.addSuburb(localityByIdEvent.locality.suburb.label);
+                if(localityByIdEvent.locality.suburb.city.id != null && getCityId() == null) {
+                    setCityId(localityByIdEvent.locality.suburb.city.id);
+                }
+            }
             super.setCurrentPageTag(pageTag);
 
             if(localityByIdEvent.locality.latitude != null && localityByIdEvent.locality.longitude != null) {
@@ -446,6 +493,10 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
 
             PageTag pageTag = new PageTag();
             pageTag.addCity(cityByIdEvent.city.label);
+
+            setCityName(cityByIdEvent.city.label);
+            setCityId(cityByIdEvent.city.id);
+
             super.setCurrentPageTag(pageTag);
 
             mName = cityByIdEvent.city.label;

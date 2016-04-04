@@ -24,7 +24,6 @@ import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
 import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
-import com.makaan.cookie.Session;
 import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.buyerjourney.ClientLead;
@@ -88,9 +87,6 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
     void onBestSellerClicked(View view) {
         Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
         pyrIntent.putExtra(PyrPageActivity.SOURCE_SCREEN_NAME, ((BuyerDashboardActivity) getActivity()).getScreenName());
-        if(Session.apiLocation!=null && !TextUtils.isEmpty(Session.apiLocation.label)) {
-            pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, Session.apiLocation.label);
-        }
         getActivity().startActivity(pyrIntent);
     }
 
