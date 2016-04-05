@@ -360,6 +360,10 @@ public class MasterDataCache {
             userWishListMap = new HashMap<>();
         }
 
+        if(null == wishLists || wishLists.isEmpty()){
+            return;
+        }
+
         for(WishList wishList : wishLists) {
             if(null!=wishList.listingId) {
                 userWishListMap.put(wishList.listingId, wishList);
@@ -374,6 +378,10 @@ public class MasterDataCache {
 
         if(null==userWishListMap) {
             userWishListMap = new HashMap<>();
+        }
+
+        if(null == wishlist || null == id){
+            return;
         }
 
         userWishListMap.put(id, wishlist);
@@ -394,6 +402,10 @@ public class MasterDataCache {
 
     public boolean isShortlistedProperty(Long id) {
 
+        if(null == id){
+            return false;
+        }
+
         if(null!=userWishListMap) {
             if (userWishListMap.containsKey(id)) {
                 return true;
@@ -403,6 +415,10 @@ public class MasterDataCache {
     }
 
     public Long getWishListId(Long id) {
+
+        if(null == id){
+            return null;
+        }
 
         if(null!=userWishListMap) {
             if (userWishListMap.containsKey(id)) {
@@ -414,6 +430,10 @@ public class MasterDataCache {
 
     public WishList getWishList(Long id) {
 
+        if(null == id){
+            return null;
+        }
+
         if(null!=userWishListMap) {
             if (userWishListMap.containsKey(id)) {
                 return userWishListMap.get(id);
@@ -423,7 +443,12 @@ public class MasterDataCache {
     }
 
     public List<WishList> getAllWishList() {
+
         List<WishList> list = new ArrayList<>();
+        if(null == userWishListMap){
+            return list;
+        }
+
         Iterator it = userWishListMap.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();

@@ -62,6 +62,10 @@ public class WishListService implements MakaanService {
     public void syncWishList(){
         try {
             List<WishList> allWishList = MasterDataCache.getInstance().getAllWishList();
+            if(null == allWishList || allWishList.isEmpty()){
+                return;
+            }
+
             JSONArray jsonArray = new JSONArray();
             for (WishList wishList : allWishList) {
                 if (wishList.dirtyFlag == WishListButton.WishListStatusFlag.toAdd) {

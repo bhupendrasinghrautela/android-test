@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -280,10 +281,15 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
             mPyrRequest.setPageType(null);
             mPyrRequest.setSendOtp(false);
             mPyrRequest.setLocalityIds(new int[]{mLeadFormPresenter.getLocalityId().intValue()});
-            mPyrRequest.setListingId(mLeadFormPresenter.getProjectOrListingId());
-            mPyrRequest.setProjectId(mLeadFormPresenter.getProjectId());
-//            mPyrRequest.setPropertyId(mLeadFormPresenter.getPropertyId());
-            mPyrRequest.setProjectName(mLeadFormPresenter.getProjectName());
+            if(mLeadFormPresenter.getProjectOrListingId()!=null && mLeadFormPresenter.getProjectOrListingId()!=0) {
+                mPyrRequest.setListingId(mLeadFormPresenter.getProjectOrListingId());
+            }
+            if(mLeadFormPresenter.getProjectId()!=null && mLeadFormPresenter.getProjectId()!=0) {
+                mPyrRequest.setProjectId(mLeadFormPresenter.getProjectId());
+            }
+            if(!TextUtils.isEmpty(mLeadFormPresenter.getProjectName())) {
+                mPyrRequest.setProjectName(mLeadFormPresenter.getProjectName());
+            }
 
             Bundle bundle =getArguments();
             String str = new Gson().toJson(mPyrRequest);
