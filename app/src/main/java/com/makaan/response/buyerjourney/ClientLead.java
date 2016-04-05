@@ -13,6 +13,7 @@ public class ClientLead {
     public ClientActivity clientActivity;
 
     public class PropertyRequirement {
+        public Long id;
         public Long listingId;
         public Long projectId;
         public Long leadId;
