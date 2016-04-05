@@ -594,7 +594,11 @@ public class LocalityFragment extends OverviewFragment {
     public void onBottomPyrClick(){
         Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
         pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, locality.suburb.city.label);
-        pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, locality.suburb.city.id);
+        if(locality.cityId != null && locality.cityId > 0) {
+            pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, locality.cityId);
+        } else {
+            pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, locality.suburb.city.id);
+        }
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_ID, locality.localityId);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_NAME, locality.label);
         pyrIntent.putExtra(PyrPageActivity.SOURCE_SCREEN_NAME, ((BaseJarvisActivity) getActivity()).getScreenName());

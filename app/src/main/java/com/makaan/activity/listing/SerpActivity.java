@@ -1200,7 +1200,40 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
         PageTag pageTag = new PageTag();
         pageTag.addCity(listing.cityName);
-        pageTag.addLocality(listing.localityName);
+
+        ArrayList<SearchResponseItem> selectedSearches = getSelectedSearches();
+
+        if (selectedSearches != null && selectedSearches.size() > 0) {
+            if (SearchSuggestionType.SUBURB.getValue().equals(selectedSearches.get(0).type)
+                    || SearchSuggestionType.LOCALITY.getValue().equals(selectedSearches.get(0).type)
+                    || SearchSuggestionType.PROJECT.getValue().equals(selectedSearches.get(0).type)) {
+                setLocalityName(listing.localityName);
+                if (listing.localityId != null && listing.localityId > 0) {
+                    setLocalityId(listing.localityId);
+                } else if (listing.project != null && listing.project.locality != null && listing.project.locality.localityId != null) {
+                    setLocalityId(listing.project.locality.localityId);
+                }
+
+                for(SearchResponseItem searchResponseItem : selectedSearches){
+                    if(SearchSuggestionType.LOCALITY.getValue().equals(searchResponseItem.type)) {
+                        pageTag.addLocality(searchResponseItem.entityName);
+                    }else if(SearchSuggestionType.SUBURB.getValue().equals(searchResponseItem.type)) {
+                        pageTag.addSuburb(searchResponseItem.entityName);
+                    }else if(SearchSuggestionType.PROJECT.getValue().equals(searchResponseItem.type)) {
+                        pageTag.addProject(searchResponseItem.entityName);
+                        pageTag.addLocality(listing.localityName);
+                    }else{
+                        pageTag.addLocality(listing.localityName);
+                    }
+                }
+            }
+            setCityName(listing.cityName);
+            if (listing.cityId != null) {
+                setCityId(listing.cityId);
+            }
+        } else {
+            pageTag.addLocality(listing.localityName);
+        }
 
         super.setCurrentPageTag(pageTag);
 

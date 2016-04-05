@@ -198,8 +198,11 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
                 Intent intent = new Intent(mContext, LeadFormActivity.class);
                 try {
                     WishList wishListValue = wishList.get(position);
-                    if (wishListValue.listing != null && wishListValue.listing.companySeller != null) {
-                        if (wishListValue.listing.companySeller.company != null) {
+                    if(wishListValue.listing!=null && wishListValue.listing.companySeller!=null) {
+                        if(wishListValue.listing.companySeller.user!=null && wishListValue.listing.companySeller.user.id!=null) {
+                            intent.putExtra(KeyUtil.USER_ID, wishList.get(position).listing.companySeller.user.id);
+                        }
+                        if(wishListValue.listing.companySeller.company!=null) {
                             intent.putExtra(KeyUtil.NAME_LEAD_FORM, wishList.get(position).listing.companySeller.company.name);
                             if (wishListValue.listing.companySeller.company.score != null) {
                                 intent.putExtra(KeyUtil.SCORE_LEAD_FORM, wishList.get(position).listing.companySeller.company.score.toString());

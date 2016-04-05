@@ -186,6 +186,7 @@ public class ListingParser {
                                 || listing.lisitingPostedBy.type.equalsIgnoreCase(POSTED_BY_BUILDER)) {
                             listing.lisitingPostedBy.name = sellerCompany.optString(NAME);
                             listing.lisitingPostedBy.id = sellerCompany.optLong(ID);
+                            listing.lisitingPostedBy.userId = user.optLong(ID);
                             listing.lisitingPostedBy.logo = sellerCompany.optString(LOGO);
                             Double score = sellerCompany.optDouble(COMPANY_SCORE);
                             if(Double.isNaN(score)) {

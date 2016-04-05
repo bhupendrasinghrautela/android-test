@@ -4,17 +4,22 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.cookie.Session;
 import com.makaan.fragment.pyr.NoSellersFragment;
-import com.makaan.fragment.pyr.TopSellersFragment;
-import com.makaan.pojo.ProjectConfigItem;
-import com.makaan.ui.pyr.FilterableMultichoiceDialogFragment;
 import com.makaan.fragment.pyr.PyrPagePresenter;
 import com.makaan.fragment.pyr.PyrReplaceFragment;
+import com.makaan.fragment.pyr.TopSellersFragment;
+import com.makaan.pojo.ProjectConfigItem;
+import com.makaan.service.LocationService;
+import com.makaan.service.MakaanServiceFactory;
+import com.makaan.ui.pyr.FilterableMultichoiceDialogFragment;
 import com.segment.analytics.Properties;
 
 /**
@@ -58,6 +63,17 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
                 cityId = this.getIntent().getExtras().getLong(KEY_CITY_Id);
                 projectConfigItem = this.getIntent().getExtras().getParcelable(BEDROOM_AND_BUDGET);
                 isBuySelected = this.getIntent().getExtras().getBoolean(BUY_SELECTED);
+            }
+            if(cityId == null || cityId == 0 || TextUtils.isEmpty(cityName)) {
+                if(Session.apiLocation != null && !TextUtils.isEmpty(Session.apiLocation.label) && Session.apiLocation.id > 0) {
+                    cityId = Session.apiLocation.id;
+                    cityName = Session.apiLocation.label;
+                } else {
+                    Toast.makeText(this, "there was some issue detecting your current city, please try again later", Toast.LENGTH_SHORT).show();
+                    ((LocationService) MakaanServiceFactory.getInstance().getService(LocationService.class)).getUserLocation();
+                    finish();
+                    return;
+                }
             }
             mPagePresenter.setCityId(cityId!=null?cityId.intValue():0);
             mPagePresenter.prefillLocality(localityName, localityId, cityName ,

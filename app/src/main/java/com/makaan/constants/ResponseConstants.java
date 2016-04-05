@@ -25,6 +25,7 @@ public class ResponseConstants {
     public static final String COMPANY_SELLER = "companySeller";
     public static final String COMPANY = "company";
     public static final String USER = "user";
+    public static final String USER_ID = "userId";
     public static final String IMAGES = "images";
     public static final String POSTED_DATE = "postedDate";
     public static final String ID = "id";

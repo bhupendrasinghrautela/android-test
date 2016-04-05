@@ -1,11 +1,11 @@
 package com.makaan.activity.pyr;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +21,10 @@ import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.agents.Agent;
 import com.makaan.response.agents.TopAgent;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.ImageUtils;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -63,7 +63,7 @@ public class SellerListingAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         SellerViewHolder mSellerViewHolder = (SellerViewHolder) holder;
-        ShapeDrawable shapeDrawable = new ShapeDrawable(new OvalShape());
+        /*ShapeDrawable shapeDrawable = new ShapeDrawable(new OvalShape());
         Random rnd = new Random();
         int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
         shapeDrawable.getPaint().setColor(color);
@@ -72,7 +72,7 @@ public class SellerListingAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
         else{
             mSellerViewHolder.mTextSellerImage.setBackgroundDrawable(shapeDrawable);
-        }
+        }*/
 
         TopAgent topAgent = topAgentsList.get(position);
         if (null != topAgent) {
@@ -85,9 +85,13 @@ public class SellerListingAdapter extends RecyclerView.Adapter<RecyclerView.View
                         mSellerViewHolder.mPlusBadge.setVisibility(View.INVISIBLE);
                     }
                 }
-                mSellerViewHolder.mSellerName.setText(topAgent.agent.user.fullName.toLowerCase());
-                mSellerViewHolder.mTextSellerImage.setText(topAgent.agent.user.fullName);
-                setAgentImage(agent, mSellerViewHolder.mTextSellerImage, mSellerViewHolder.mSellerImage);
+                if(agent.company != null && !TextUtils.isEmpty(agent.company.name)) {
+                    mSellerViewHolder.mSellerName.setText(agent.company.name.toLowerCase());
+                    setAgentImage(agent, mSellerViewHolder.mTextSellerImage, mSellerViewHolder.mSellerImage, agent.company.name);
+                } else if(agent.user != null && !TextUtils.isEmpty(agent.user.fullName)) {
+                    mSellerViewHolder.mSellerName.setText(topAgent.agent.user.fullName.toLowerCase());
+                    setAgentImage(agent, mSellerViewHolder.mTextSellerImage, mSellerViewHolder.mSellerImage, topAgent.agent.user.fullName);
+                }
                 if(agent.company != null && agent.company.score != null) {
                     mSellerViewHolder.mSellerRatingBar.setRating((float) (agent.company.score / 2));        //TODO: change double to int
                 }
@@ -129,7 +133,7 @@ public class SellerListingAdapter extends RecyclerView.Adapter<RecyclerView.View
         return topAgentsList.size();
     }
 
-    public void setAgentImage(Agent agent, final TextView mNameImage, final CircleImageView imageView){
+    public void setAgentImage(Agent agent, final TextView mNameImage, final CircleImageView imageView, final String name){
         if(agent.user.profilePictureURL!=null && agent.user.profilePictureURL.length()>0 )
         {
             int width = mContext.getResources().getDimensionPixelSize(R.dimen.seller_image_width_height);
@@ -150,12 +154,36 @@ public class SellerListingAdapter extends RecyclerView.Adapter<RecyclerView.View
                 public void onErrorResponse(VolleyError volleyError) {
                     super.onErrorResponse(volleyError);
                     mNameImage.setVisibility(View.VISIBLE);
+                    showTextAsImage(name, mNameImage);
                 }
             });
         }
         else {
             imageView.setVisibility(View.INVISIBLE);
             mNameImage.setVisibility(View.VISIBLE);
+            showTextAsImage(name, mNameImage);
+        }
+    }
+
+    private void showTextAsImage(String text, TextView textView) {
+        if(text == null || text.length() == 0) {
+            textView.setVisibility(View.INVISIBLE);
+            return;
+        }
+        textView.setText(String.valueOf(text.charAt(0)));
+        textView.setVisibility(View.VISIBLE);
+        // show seller first character as logo
+
+//        int[] bgColorArray = getResources().getIntArray(R.array.bg_colors);
+
+//        Random random = new Random();
+        ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+//        int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
+        drawable.getPaint().setColor(CommonUtil.getColor(text, mContext));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            textView.setBackground(drawable);
+        } else {
+            textView.setBackgroundDrawable(drawable);
         }
     }
 

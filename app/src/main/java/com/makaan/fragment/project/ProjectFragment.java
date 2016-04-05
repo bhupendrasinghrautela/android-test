@@ -180,6 +180,9 @@ public class ProjectFragment extends OverviewFragment{
                 intent.putExtra(KeyUtil.SOURCE_LEAD_FORM, ProjectFragment.class.getName());
                 intent.putExtra(KeyUtil.PROJECT_ID_LEAD_FORM ,project.projectId);
                 intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, "buy");
+                if(sellerCard.userId!=null) {
+                    intent.putExtra(KeyUtil.USER_ID, sellerCard.userId);
+                }
 
                 if(project!=null && project.name!=null) {
                     intent.putExtra(KeyUtil.PROJECT_NAME_LEAD_FORM, project.name);
@@ -333,7 +336,11 @@ public class ProjectFragment extends OverviewFragment{
 
     private void startPyrActivity(ProjectConfigItemClickListener configItemClickListener) {
         Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
-        pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id,project.locality.suburb.city.id);
+        if(project.locality.cityId != null && project.locality.cityId > 0) {
+            pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, project.locality.cityId);
+        } else {
+            pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, project.locality.suburb.city.id);
+        }
         pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, project.locality.suburb.city.label);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_ID, project.locality.localityId);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_NAME, project.locality.label);
@@ -347,9 +354,14 @@ public class ProjectFragment extends OverviewFragment{
     public  void openPyr(OpenPyrClicked openPyrClicked){
         if(!isVisible()) {
             return;
+
         }
         Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
-        pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id,project.locality.suburb.city.id);
+        if(project.locality.cityId != null && project.locality.cityId > 0) {
+            pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, project.locality.cityId);
+        } else {
+            pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, project.locality.suburb.city.id);
+        }
         pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, project.locality.suburb.city.label);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_ID, project.locality.localityId);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_NAME, project.locality.label);
