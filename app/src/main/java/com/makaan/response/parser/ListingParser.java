@@ -32,7 +32,7 @@ public class ListingParser {
 
     public static final String ACTUAL_PROPERTY_STATUS = "ACTUAL",
             POSTED_BY_BROKER = "BROKER",
-            POSTED_BY_OWNER = "PRIVATEEQUITY",
+            POSTED_BY_OWNER = "OWNER",
             POSTED_BY_BUILDER = "BUILDER",
             BHK_STR = " bhk ",
             DAYS = " days";
@@ -187,13 +187,17 @@ public class ListingParser {
                             listing.lisitingPostedBy.name = sellerCompany.optString(NAME);
                             listing.lisitingPostedBy.id = sellerCompany.optLong(ID);
                             listing.lisitingPostedBy.logo = sellerCompany.optString(LOGO);
-                            listing.lisitingPostedBy.rating = sellerCompany.optDouble(COMPANY_SCORE) / 2.0; // devided by 2 to show rating out of 5
+                            Double score = sellerCompany.optDouble(COMPANY_SCORE);
+                            if(Double.isNaN(score)) {
+                                listing.lisitingPostedBy.rating = null;
+                            } else {
+                                listing.lisitingPostedBy.rating = score / 2.0; // devided by 2 to show rating out of 5
+                            }
                             listing.lisitingPostedBy.assist = sellerCompany.optBoolean(ASSIST);
                         }
                     }
                     listing.lisitingPostedBy.profilePictureURL = null != user ?
                             (user.optString(PROFILE_PICTURE_URL) != null ? user.optString(PROFILE_PICTURE_URL) : null) : null;
-                    // TODO discuss with prod, that if seller company name is not there, then using user name, e.g. listing id : 538819
                     if(listing.lisitingPostedBy.name == null) {
                         listing.lisitingPostedBy.name = null != user ?
                                 (user.optString(FULL_NAME) != null ? user.optString(FULL_NAME) : null) : null;

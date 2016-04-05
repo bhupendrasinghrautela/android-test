@@ -175,6 +175,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     private Properties mProperties;
 
     SerpBackStack mSerpBackStack = new SerpBackStack();
+    private Long mLastUsedClusterId;
 
     @Override
     protected int getContentViewId() {
@@ -900,9 +901,17 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             mGroupsRequested = false;
             mGroupReceived = true;
             mSerpReceived = false;
+            mLastUsedClusterId = id;
         }
         dismissPopupWithAnim();
         showProgress();
+    }
+
+    @Override
+    public Long getLastUsedClusterId() {
+        Long id = mLastUsedClusterId;
+        mLastUsedClusterId = null;
+        return id;
     }
 
     @Override

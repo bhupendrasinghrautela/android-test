@@ -25,6 +25,9 @@ public class ListingViewHolderFactory {
         } else if(viewType == RecycleViewMode.DATA_TYPE_COUNT.getValue()) {
             view = LayoutInflater.from(context).inflate(R.layout.serp_listing_item_count, parent, false);
             return new CountListingViewHolder(view);
+        } else if(viewType == RecycleViewMode.DATA_TYPE_NO_LISTING.getValue()) {
+            view = LayoutInflater.from(context).inflate(R.layout.serp_listing_item_no_results, parent, false);
+            return new DefaultListingViewHolder(view);
         }
         return new DefaultListingViewHolder(view);
     }

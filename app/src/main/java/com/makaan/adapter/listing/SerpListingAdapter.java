@@ -67,7 +67,11 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
                 } else if(position == 0) {
                     superItemViewType = RecycleViewMode.DATA_TYPE_COUNT.getValue();
                 } else {
-                    superItemViewType = RecycleViewMode.DATA_TYPE_LISTING.getValue();
+                    if(position == 2 && (mItems == null || mItems.size() == 0)) {
+                        superItemViewType = RecycleViewMode.DATA_TYPE_NO_LISTING.getValue();
+                    } else {
+                        superItemViewType = RecycleViewMode.DATA_TYPE_LISTING.getValue();
+                    }
                 }
             } else {
                 if(position == 0) {
@@ -96,6 +100,9 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
         } else if(mRequestType == SerpActivity.TYPE_BUILDER || mRequestType == SerpActivity.TYPE_SELLER) {
             if(mItems == null) {
                 return 1;
+            }
+            if(mItems.size() == 0) {
+                return 3; // 1 for showing item count, 2 for seller/builder card and 3 for no listing
             }
             return (mItems.size() + 2);
         } else {
@@ -142,6 +149,8 @@ public class SerpListingAdapter extends PaginatedBaseAdapter<Listing> {
                 viewHolder.populateData(null, mCallback, position);
                 mBuilderSellerPopulated = true;
             }
+        } else if(type == RecycleViewMode.DATA_TYPE_NO_LISTING.getValue()) {
+            viewHolder.populateData(mContext.getString(R.string.no_content_serp_error), mCallback, position);
         } else {
             if(position == 0) {
                 viewHolder.populateData(mCount, mCallback, position);

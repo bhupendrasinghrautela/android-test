@@ -298,7 +298,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
             return;
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (isJarvisHeadVisible && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptionsCompat options = ActivityOptionsCompat.
                     makeSceneTransitionAnimation(this, mJarvisHead,
                             getString(R.string.jarvis_button_transition));

@@ -180,7 +180,8 @@ public abstract class MakaanBaseFragment extends Fragment {
     public void onActionButtonPressed(View view) {
         if(!onActionButtonClick()) {
             Intent intent = new Intent(getActivity(), HomeActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            // as per discussion with Amit, do not clear stack
+//            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
     }
