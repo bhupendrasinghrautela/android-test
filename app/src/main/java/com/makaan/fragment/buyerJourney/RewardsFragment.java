@@ -50,14 +50,14 @@ public class RewardsFragment extends MakaanBaseFragment {
 
     @OnClick(R.id.fragment_get_rewards_button)
     void onGetRewardsClicked(View view) {
-        if(CookiePreferences.isUserLoggedIn(getActivity())) {
+        if (CookiePreferences.isUserLoggedIn(getActivity())) {
             if (getActivity() instanceof BuyerDashboardCallbacks) {
 
                 /*--------------------- track events------------------------*/
-                Properties properties= MakaanEventPayload.beginBatch();
-                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCashback);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCashBack);
-                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickCashback);
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.click);
                 /*-----------------------------------------------------------*/
 
                 ((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_CLIENT_LEADS, true, null, null, null);
@@ -65,10 +65,10 @@ public class RewardsFragment extends MakaanBaseFragment {
         } else {
 
             /*--------------------- track events------------------------*/
-            Properties properties= MakaanEventPayload.beginBatch();
-            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCashback);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
-            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickCashback);
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.click);
             /*-----------------------------------------------------------*/
 
             Intent intent = new Intent(getActivity(), UserLoginActivity.class);

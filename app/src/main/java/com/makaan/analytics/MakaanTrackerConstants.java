@@ -31,7 +31,9 @@ public class MakaanTrackerConstants {
         buyerLocalityTopBuilders("Buyer_Locality_Top Builders"),buyerLocalityNearbyLocalities("Buyer_Locality_Nearby Localities"),
         buyerProjectConstructionImages("BUYER_Project_Construction Images"),buyerLocalityProperties("Buyer_Locality_Properties"),buyerSerpProject("Buyer_SERP_Project"),
         buyerSerpDetailView("Buyer_SERP_Detail View"),buyerSerpProperty("Buyer_SERP_Property"),buyerLead("Buyer_Lead"),buyerDashboardSavedSearches("Buyer_Dashboard_Saved Searches"),
-        buyerDashboardSiteVisits("Buyer_Dashboard_Site Visits"),buyerDashboardFavourite("Buyer_Dashboard_Favourite"),buyerDashboardRecentlyViewed("Buyer_Dashboard_Recently Viewed");
+        buyerDashboardSiteVisits("Buyer_Dashboard_Site Visits"),buyerDashboardFavourite("Buyer_Dashboard_Favourite"),buyerDashboardRecentlyViewed("Buyer_Dashboard_Recently Viewed"),
+        buyerDashboardCashback("Buyer_Dashboard_Cashback"),buyerDashboardCashbackSeller("Buyer_Dashboard_Cashback Seller"),buyerDashboardCashbackListing("Buyer_Dashboard_Cashback Listing"),
+        buyerDashboardSellerRating("Buyer_Dashboard_seller Rating");
 
         private String value;
 
