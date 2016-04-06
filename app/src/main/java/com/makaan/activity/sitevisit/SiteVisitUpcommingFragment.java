@@ -31,6 +31,7 @@ import org.apache.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import butterknife.Bind;
 
@@ -41,7 +42,7 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
     @Bind(R.id.enquired_recycler_view)
     RecyclerView enquiredRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private HashMap<Long,Enquiry> mEnquiryHashMap;
+    private LinkedHashMap<Long,Enquiry> mEnquiryHashMap;
     private SiteVisitUpcommingAdapter mAdapter;
     private int position;
     private ShortListCallback callback;
@@ -89,7 +90,7 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
             return;
         }
         if(mEnquiryHashMap == null){
-            mEnquiryHashMap = new HashMap<>();
+            mEnquiryHashMap = new LinkedHashMap<>();
         }
         if(clientEventsByGetEvent.results!=null && clientEventsByGetEvent.results.size()>0) {
             mAdapter = new SiteVisitUpcommingAdapter(getActivity(),getActivity());
@@ -148,7 +149,7 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
         }
         else {
             if(mEnquiryHashMap == null){
-                mEnquiryHashMap = new HashMap<>();
+                mEnquiryHashMap = new LinkedHashMap<>();
             }
             for (Enquiry enquiry:mEnquiryHashMap.values()) {
                 if(enquiry.listingId!=null && enquiry.listingId.equals(listingByIdGetEvent.listingDetail.id)) {
@@ -177,7 +178,7 @@ public class SiteVisitUpcommingFragment extends MakaanBaseFragment {
         }
         else {
             if(mEnquiryHashMap == null){
-                mEnquiryHashMap = new HashMap<>();
+                mEnquiryHashMap = new LinkedHashMap<>();
             }
             for(Enquiry enquiry:mEnquiryHashMap.values()) {
                 if (enquiry.projectId != null && enquiry.projectId.equals(projectByIdEvent.project.projectId)) {

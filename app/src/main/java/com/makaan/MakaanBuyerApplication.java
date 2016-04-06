@@ -41,6 +41,7 @@ import com.makaan.service.PyrService;
 import com.makaan.service.SaveSearchService;
 import com.makaan.service.SearchService;
 import com.makaan.service.SellerService;
+import com.makaan.service.SuburbService;
 import com.makaan.service.TaxonomyService;
 import com.makaan.service.UserService;
 import com.makaan.service.WishListService;
@@ -128,6 +129,7 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(UserService.class, new UserService());
         MakaanServiceFactory.getInstance().registerService(ImageService.class, new ImageService());
         MakaanServiceFactory.getInstance().registerService(LocationService.class, new LocationService());
+        MakaanServiceFactory.getInstance().registerService(SuburbService.class, new SuburbService());
         //MakaanServiceFactory.getInstance().registerService(TopAgentsByLocalityService.class , new TopAgentsByLocalityService());
 
         MakaanServiceFactory.getInstance().registerService(BuilderService.class, new BuilderService());

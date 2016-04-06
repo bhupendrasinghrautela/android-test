@@ -18,11 +18,13 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,6 +75,7 @@ import java.util.Iterator;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -1265,6 +1268,17 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
 
     protected int getSearchBarHeight() {
         return mSearchLayoutFrameLayout.getHeight();
+    }
+
+    @OnEditorAction(R.id.activity_search_base_layout_search_bar_search_edit_text)
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if(actionId == EditorInfo.IME_ACTION_SEARCH) {
+            if(mSearchAdapter != null) {
+                mSearchAdapter.onSearchPressed();
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
