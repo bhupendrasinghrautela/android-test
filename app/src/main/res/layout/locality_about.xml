@@ -7,11 +7,12 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal">
 
-        <ProgressBar
+        <com.makaan.ui.view.MakaanProgressBar
             android:id="@+id/locality_score_progress"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="@dimen/locality_circular_progress_dimen"
             android:layout_height="@dimen/locality_circular_progress_dimen"
+            font:isLocality="true"
             android:layout_gravity="center_vertical"
             android:indeterminate="false"
             android:progress="78"

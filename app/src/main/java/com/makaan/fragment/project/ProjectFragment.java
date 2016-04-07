@@ -1,6 +1,5 @@
 package com.makaan.fragment.project;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,11 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,6 +67,7 @@ import com.makaan.ui.property.AmenitiesViewScroll;
 import com.makaan.ui.property.ListingDataOverViewScroll;
 import com.makaan.ui.property.PropertyImageViewPager;
 import com.makaan.ui.view.FontTextView;
+import com.makaan.ui.view.MakaanProgressBar;
 import com.makaan.util.AppUtils;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.RecentPropertyProjectManager;
@@ -97,7 +94,8 @@ public class ProjectFragment extends OverviewFragment{
     @Bind(R.id.key_detail_container) LinearLayout keyDetailContainer;
     @Bind(R.id.key_details_grid)
     FixedGridView mKeyDetailGrid;
-    @Bind(R.id.project_score_progress) ProgressBar projectScoreProgreessBar;
+    @Bind(R.id.project_score_progress)
+    MakaanProgressBar projectScoreProgreessBar;
     @Bind(R.id.locality_score_label)
     FontTextView mScoreLabel;
     @Bind(R.id.listing_over_view_scroll_layout)
@@ -825,24 +823,4 @@ public class ProjectFragment extends OverviewFragment{
         mActivityCallbacks = activityCallbacks;
     }
 
-    @OnClick(R.id.rl_builder_score)
-    public void onRating() {
-        final Dialog dialog = new Dialog(getActivity());
-        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_layout);
-
-        TextView title = (TextView) dialog.findViewById(R.id.tv_dialog_title);
-        title.setText(mContext.getString(R.string.project_score));
-        TextView message = (TextView) dialog.findViewById(R.id.message);
-        message.setText(mContext.getString(R.string.score_message));
-        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-        dialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-    }
 }

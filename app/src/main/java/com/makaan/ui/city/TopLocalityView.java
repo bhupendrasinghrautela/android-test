@@ -8,7 +8,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.makaan.R;
@@ -18,6 +17,7 @@ import com.makaan.pojo.SerpRequest;
 import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.response.locality.Locality;
 import com.makaan.ui.BaseLinearLayout;
+import com.makaan.ui.view.MakaanProgressBar;
 import com.makaan.util.CommonUtil;
 import com.makaan.util.LocalityUtil;
 import com.makaan.util.StringUtil;
@@ -67,7 +67,7 @@ public class TopLocalityView extends BaseLinearLayout<List<Locality>> {
             TextView localityAvgPrice = (TextView) localityItem.findViewById(R.id.city_avg_price);
             TextView localityAvgPriceRise = (TextView) localityItem.findViewById(R.id.city_avg_percent_rise);
             TextView localityScore = (TextView) localityItem.findViewById(R.id.locality_score_text);
-            ProgressBar localityScoreProgress = (ProgressBar) localityItem.findViewById(R.id.locality_score_progress);
+            MakaanProgressBar localityScoreProgress = (MakaanProgressBar) localityItem.findViewById(R.id.locality_score_progress);
             if(!TextUtils.isEmpty(locality.label)) {
                 localityLabel.setText(locality.label.toLowerCase());
                 localityLabel.setVisibility(VISIBLE);
