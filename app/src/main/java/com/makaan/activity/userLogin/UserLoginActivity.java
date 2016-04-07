@@ -22,6 +22,7 @@ import com.makaan.response.login.UserLoginPresenter;
 import com.makaan.response.user.UserResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.WishListService;
+import com.makaan.service.user.OnFacebookTokenListener;
 import com.makaan.ui.CommonProgressDialog;
 import com.makaan.util.AppBus;
 import com.segment.analytics.Properties;
@@ -30,7 +31,7 @@ import com.segment.analytics.Properties;
 /**
  * Created by sunil on 29/12/15.
  */
-public class UserLoginActivity extends AppCompatActivity implements ReplaceFragment, OnUserLoginListener,OnUserRegistrationListener {
+public class UserLoginActivity extends AppCompatActivity implements ReplaceFragment, OnUserLoginListener,OnUserRegistrationListener,OnFacebookTokenListener {
 
     private FragmentTransaction mFragmentTransaction;
     private UserLoginPresenter mUserLoginPresenter;
@@ -64,8 +65,7 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
 
     @Override
     public void onUserLoginSuccess(UserResponse userResponse, String response) {
-        if(mProgressDialog !=null)
-            mProgressDialog.dismissDialog();
+        cancelProgressDialog();
         CookiePreferences.setUserInfo(this, response);
         CookiePreferences.setUserLoggedIn(this);
         refreshWishList();
@@ -75,8 +75,7 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
 
     @Override
     public void onUserLoginError(ResponseError error) {
-        if(mProgressDialog !=null)
-        mProgressDialog.dismissDialog();
+        cancelProgressDialog();
         if(error.msg!=null || !error.msg.isEmpty()) {
             Toast.makeText(this, error.msg.toLowerCase(), Toast.LENGTH_SHORT).show();
         }
@@ -122,10 +121,8 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
         properties.put(MakaanEventPayload.CATEGORY , MakaanTrackerConstants.Category.userLogin);
         properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.registrationSuccess);
         MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.login);
-
-/*        if(mProgressDialog !=null)
-            mProgressDialog.dismissDialog();
-        CookiePreferences.setUserInfo(this, response);
+        cancelProgressDialog();
+        /*CookiePreferences.setUserInfo(this, response);
         CookiePreferences.setUserLoggedIn(this);
         refreshWishList();
         setResult(RESULT_OK);
@@ -138,8 +135,7 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.userLogin);
         properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.registrationFailed);
         MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.login);
-        if(mProgressDialog !=null)
-            mProgressDialog.dismissDialog();
+        cancelProgressDialog();
         Toast.makeText(this,error.msg,Toast.LENGTH_SHORT).show();
     }
 
@@ -164,5 +160,30 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
         WishListService wishListService =
                 (WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class);
         wishListService.get();
+    }
+
+    @Override
+    public void onFacebookTokenSuccess(String token) {
+        cancelProgressDialog();
+    }
+
+    @Override
+    public void onFacebookLoginManagerCallback() {
+        cancelProgressDialog();
+    }
+
+    @Override
+    public void onFacebookTokenFail() {
+        cancelProgressDialog();
+    }
+
+    @Override
+    public void onFaceboookCancel() {
+        cancelProgressDialog();
+    }
+
+    private void cancelProgressDialog(){
+        if(mProgressDialog !=null)
+            mProgressDialog.dismissDialog();
     }
 }
