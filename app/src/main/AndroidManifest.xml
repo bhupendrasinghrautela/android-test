@@ -48,6 +48,7 @@
             android:name=".activity.lead.LeadFormActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
@@ -81,6 +82,7 @@
             android:name=".activity.pyr.PyrPageActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.NoActionBarTheme">
 
         </activity>
@@ -134,6 +136,7 @@
             android:name=".activity.userLogin.UserLoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.NoActionBarTheme">
         </activity>
         <service android:name=".jarvis.JarvisService"/>

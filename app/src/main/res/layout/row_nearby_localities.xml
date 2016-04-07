@@ -166,10 +166,11 @@
             android:singleLine="true"
             android:textAllCaps="false"/>
     </RelativeLayout>
-    <ProgressBar
+    <com.makaan.ui.view.MakaanProgressBar
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="@dimen/locality_circular_progress_dimen"
         android:layout_height="@dimen/locality_circular_progress_dimen"
+        app:isLocality="true"
         android:id="@+id/score_progress"
         android:progress="0"
         android:layout_marginTop="200dp"

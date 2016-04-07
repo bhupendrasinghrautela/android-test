@@ -153,6 +153,7 @@
     <string name="project_specification_title">specifications</string>
     <string name="project_config_title">configurations</string>
     <string name="project_score">project score</string>
+    <string name="locality_score">locality score</string>
     <string name="more_about_builder">about builder</string>
     <string name="less_about_builder">less about builder</string>
     <string name="search_by_location">find joy…</string>
@@ -319,7 +320,8 @@
     <string name="sdcard_unmounted">We are sorry. SD card seems to be unavailable!</string>
     <string name="image_saved">Image saved successfully.</string>
 
-    <string name="score_message">calculated based on presence of project amenities, builder credentials and location advantages</string>
+    <string name="project_score_message">calculated based on presence of project amenities, builder credentials and location advantages</string>
+    <string name="locality_score_message">calculated based on presence of neighborhood amenities like restaurants, schools, hospitals, public transportation and others</string>
 
     <string name="got_it">got it</string>
 </resources>
