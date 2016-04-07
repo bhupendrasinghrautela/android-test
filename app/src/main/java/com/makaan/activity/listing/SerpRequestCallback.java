@@ -24,6 +24,7 @@ public interface SerpRequestCallback {
     void loadMoreItems();
 
     String getOverviewText();
+    Long getLastUsedClusterId();
 
     void requestOverviewPage();
 

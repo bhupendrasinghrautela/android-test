@@ -53,7 +53,7 @@ public class ShortListFavoriteFragment extends MakaanBaseFragment{
         super.onActivityCreated(savedInstanceState);
 
         if(CookiePreferences.isUserLoggedIn(getActivity())) {
-            ((WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class)).get();
+            ((WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class)).getForBuyerJourney();
             showProgress();
         } else {
             List<WishList> wishListData = MasterDataCache.getInstance().getAllWishList();

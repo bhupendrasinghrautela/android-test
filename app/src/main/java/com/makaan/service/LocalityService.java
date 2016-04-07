@@ -205,4 +205,35 @@ public class LocalityService implements MakaanService {
     }
 
 
+    public void getLocalityByIdForEnquiry(Long localityId) {
+
+        if (null != localityId) {
+
+            String localityUrl = ApiConstants.LOCALITY.concat(localityId.toString());
+
+            Selector localitySelector = new Selector();
+
+            localitySelector.fields(new String[]{"localityId", "id", "label", "suburb", "city", "name", "localityHeroshotImageUrl"});
+
+            localityUrl = localityUrl.concat("?").concat(localitySelector.build());
+            Type localityType = new TypeToken<Locality>() {
+            }.getType();
+
+            MakaanNetworkClient.getInstance().get(localityUrl, localityType, new ObjectGetCallback() {
+                @Override
+                public void onError(ResponseError error) {
+                    LocalityByIdEvent localityByIdEvent = new LocalityByIdEvent();
+                    localityByIdEvent.error = error;
+                    AppBus.getInstance().post(localityByIdEvent);
+                }
+
+                @Override
+                public void onSuccess(Object responseObject) {
+                    Locality locality = (Locality) responseObject;
+                    //locality.description = AppUtils.stripHtml(locality.description);
+                    AppBus.getInstance().post(new LocalityByIdEvent(locality));
+                }
+            });
+        }
+    }
 }

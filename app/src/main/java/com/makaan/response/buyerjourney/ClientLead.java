@@ -13,9 +13,20 @@ public class ClientLead {
     public ClientActivity clientActivity;
 
     public class PropertyRequirement {
+        public Long id;
         public Long listingId;
         public Long projectId;
         public Long leadId;
+        public Long localityId;
+        public Long suburbId;
+        public Integer bedroom;
+        public Float latitude;
+        public Float longitude;
+        public Integer radiusKm;
+        public Long minBudget;
+        public Long maxBudget;
+        public Long minSize;
+        public Long maxSize;
     }
 
     public class ClientActivity {

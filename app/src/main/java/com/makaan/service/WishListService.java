@@ -98,6 +98,10 @@ public class WishListService implements MakaanService {
         MakaanNetworkClient.getInstance().post(ApiConstants.WISHLIST, wishListPayload, callback, TAG);
     }
 
+    public void getForBuyerJourney() {
+        MakaanNetworkClient.getInstance().get(ApiConstants.WISHLIST.concat("?sort=-datetime"), new WishListResultCallback(Request.Method.GET), TAG);
+    }
+
     public void get(){
         MakaanNetworkClient.getInstance().get(ApiConstants.WISHLIST, new WishListResultCallback(Request.Method.GET), TAG);
     }
