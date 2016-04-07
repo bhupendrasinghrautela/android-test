@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,18 +19,20 @@ import com.makaan.R;
 import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
-//import com.makaan.event.project.OnSeeOnMapClicked;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.overview.OverviewFragment;
 import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.ui.amenity.AmenityCardView;
+import com.makaan.ui.view.MakaanProgressBar;
 import com.segment.analytics.Properties;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+
+//import com.makaan.event.project.OnSeeOnMapClicked;
 
 /**
  * Created by tusharchaudhary on 1/27/16.
@@ -46,7 +47,7 @@ public class ProjectKynFragment extends MakaanBaseFragment{
     @Bind(R.id.locality_score_text)
     TextView scoreTv;
     @Bind(R.id.locality_score_progress)
-    ProgressBar scoreProgress;
+    MakaanProgressBar scoreProgress;
     @Bind(R.id.rl_locality_score_container)
     RelativeLayout scoreRl;
     @Bind(R.id.kyn_see_on_map_container)

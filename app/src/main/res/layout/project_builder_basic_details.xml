@@ -4,7 +4,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:font="http://schemas.android.com/apk/res-auto">
+    xmlns:font="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools">
         <com.makaan.ui.view.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,10 +40,11 @@
             android:id="@+id/frame_locality_score"
             android:layout_centerHorizontal="true"
             android:layout_height="wrap_content">
-            <ProgressBar
+            <com.makaan.ui.view.MakaanProgressBar
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="@dimen/locality_circular_progress_dimen"
                 android:layout_height="@dimen/locality_circular_progress_dimen"
+                font:isLocality="false"
                 android:id="@+id/project_score_progress"
                 android:progress="78"
                 android:secondaryProgress="100"

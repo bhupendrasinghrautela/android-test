@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +57,7 @@ import com.makaan.service.LocalityService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.TaxonomyService;
 import com.makaan.ui.CompressedTextView;
+import com.makaan.ui.view.MakaanProgressBar;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.LocalityUtil;
 import com.makaan.util.StringUtil;
@@ -88,7 +88,7 @@ public class LocalityFragment extends OverviewFragment {
     @Bind(R.id.locality_score_text)
     TextView livinScoreTv;
     @Bind(R.id.locality_score_progress)
-    ProgressBar livingScoreProgress;
+    MakaanProgressBar livingScoreProgress;
     @Bind(R.id.tv_locality_per_sqr_ft_median_price)
     TextView salesMedianPrice;
     @Bind(R.id.tv_locality_per_sqr_ft_median_price_label)
