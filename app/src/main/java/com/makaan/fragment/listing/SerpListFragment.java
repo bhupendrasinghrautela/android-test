@@ -122,8 +122,7 @@ public class SerpListFragment extends MakaanBaseFragment implements PaginatedLis
         super.onActivityCreated(savedInstanceState);
     }
 
-    public void updateListings(ArrayList<Listing> listings, ArrayList<GroupListing> groupListings,
-                               ArrayList<SearchResponseItem> selectedSearches, SerpRequestCallback serpRequestCallback,
+    public void updateListings(ArrayList<Listing> listings, ArrayList<GroupListing> groupListings, SerpRequestCallback serpRequestCallback,
                                int requestType, int listingTotalCount, boolean isBuyContext) {
         this.mSerpRequestCallback = serpRequestCallback;
         this.mRequestType = requestType;
