@@ -522,14 +522,14 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 // create new listing fragment to show the listings
                 mChildSerpListFragment = SerpListFragment.init(true);
                 updateListings(listingGetEvent, null);
-                mChildSerpListFragment.updateListings(mChildListings, null, getSelectedSearches(), this, mSerpRequestType, mChildListingCount, mSerpContext == SERP_CONTEXT_BUY);
+                mChildSerpListFragment.updateListings(mChildListings, null, this, mSerpRequestType, mChildListingCount, mSerpContext == SERP_CONTEXT_BUY);
 
                 initFragments(new int[]{R.id.activity_serp_similar_properties_frame_layout, R.id.activity_serp_content_frame_layout},
                         new Fragment[]{childSerpClusterFragment, mChildSerpListFragment}, true);
 
             } else {
                 updateListings(listingGetEvent, null);
-                mChildSerpListFragment.updateListings(mChildListings, null, getSelectedSearches(), this, mSerpRequestType, mChildListingCount, mSerpContext == SERP_CONTEXT_BUY);
+                mChildSerpListFragment.updateListings(mChildListings, null, this, mSerpRequestType, mChildListingCount, mSerpContext == SERP_CONTEXT_BUY);
             }
         } else {
             mListingGetEvent = listingGetEvent;
@@ -544,12 +544,12 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                     mListingFragment = SerpListFragment.init(false);
 
                     updateListings(listingGetEvent, mGroupListingGetEvent);
-                    mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, mSerpRequestType, mListingCount, mSerpContext == SERP_CONTEXT_BUY);
+                    mListingFragment.updateListings(mListings, mGroupListings, this, mSerpRequestType, mListingCount, mSerpContext == SERP_CONTEXT_BUY);
                     initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
                 } else {
                     // update already running listing fragment with the new list
                     updateListings(listingGetEvent, mGroupListingGetEvent);
-                    mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, mSerpRequestType, mListingCount, mSerpContext == SERP_CONTEXT_BUY);
+                    mListingFragment.updateListings(mListings, mGroupListings, this, mSerpRequestType, mListingCount, mSerpContext == SERP_CONTEXT_BUY);
 
                     if((mSerpRequestType & MASK_LISTING_UPDATE_TYPE) == 0) {
                         initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
@@ -597,12 +597,12 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 // create new listing fragment to show the listings
                 mListingFragment = SerpListFragment.init(false);
                 updateListings(mListingGetEvent, mGroupListingGetEvent);
-                mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, mSerpRequestType, mListingCount, mSerpContext == SERP_CONTEXT_BUY);
+                mListingFragment.updateListings(mListings, mGroupListings, this, mSerpRequestType, mListingCount, mSerpContext == SERP_CONTEXT_BUY);
                 initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
             } else {
                 // update already running listing fragment with the new list
                 updateListings(mListingGetEvent, mGroupListingGetEvent);
-                mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, mSerpRequestType, mListingCount, mSerpContext == SERP_CONTEXT_BUY);
+                mListingFragment.updateListings(mListings, mGroupListings, this, mSerpRequestType, mListingCount, mSerpContext == SERP_CONTEXT_BUY);
             }
 
 
@@ -769,7 +769,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             if(mListingFragment == null) {
                 mListingFragment = SerpListFragment.init(false);
             }
-            mListingFragment.updateListings(mListings, mGroupListings, getSelectedSearches(), this, (mSerpRequestType & MASK_LISTING_TYPE), mListingCount, mSerpContext == SERP_CONTEXT_BUY);
+            mListingFragment.updateListings(mListings, mGroupListings, this, (mSerpRequestType & MASK_LISTING_TYPE), mListingCount, mSerpContext == SERP_CONTEXT_BUY);
             initFragment(R.id.activity_serp_content_frame_layout, mListingFragment, false);
             setJarvisVisibility(true);
         } else {
@@ -1025,7 +1025,13 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             if((mSerpRequestType & MASK_LISTING_TYPE) == TYPE_SELLER) {
                 return null;
             }
-            ArrayList<SearchResponseItem> selectedSearches = getSelectedSearches();
+
+            ArrayList<SearchResponseItem> selectedSearches;
+            if(mSerpBackStack != null && mSerpBackStack.peek() != null && mSerpBackStack.peek().getSearches() != null) {
+                selectedSearches = mSerpBackStack.peek().getSearches();
+            } else {
+                selectedSearches = getSelectedSearches();
+            }
 
             if(selectedSearches != null && selectedSearches.size() == 1) {
                 if(SearchSuggestionType.CITY.getValue().equals(selectedSearches.get(0).type)) {
@@ -1199,7 +1205,12 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         PageTag pageTag = new PageTag();
         pageTag.addCity(listing.cityName);
 
-        ArrayList<SearchResponseItem> selectedSearches = getSelectedSearches();
+        ArrayList<SearchResponseItem> selectedSearches;
+        if(mSerpBackStack != null && mSerpBackStack.peek() != null && mSerpBackStack.peek().getSearches() != null) {
+            selectedSearches = mSerpBackStack.peek().getSearches();
+        } else {
+            selectedSearches = getSelectedSearches();
+        }
 
         if (selectedSearches != null && selectedSearches.size() > 0) {
             if (SearchSuggestionType.SUBURB.getValue().equals(selectedSearches.get(0).type)

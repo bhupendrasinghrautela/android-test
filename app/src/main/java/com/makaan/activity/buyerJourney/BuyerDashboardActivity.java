@@ -69,7 +69,7 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
 
     @Override
     public boolean isJarvisSupported() {
-        return false;
+        return true;
     }
 
     @Override

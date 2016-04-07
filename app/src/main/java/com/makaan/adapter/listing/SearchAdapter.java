@@ -151,7 +151,8 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 }
 
                 if (SearchSuggestionType.CITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)
-                        || SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                        || SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)
+                        || SearchSuggestionType.PROJECT_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)) {
                     view.findViewById(R.id.search_result_item_image_view).setVisibility(View.GONE);
                     ((TextView) view.findViewById(R.id.search_result_item_name_2_text_view)).setText(searchResponseItem.displayText.toLowerCase());
                     view.findViewById(R.id.search_result_item_name_text_view).setVisibility(View.GONE);
