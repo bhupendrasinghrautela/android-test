@@ -188,13 +188,17 @@ public class ListingParser {
                             listing.lisitingPostedBy.id = sellerCompany.optLong(ID);
                             listing.lisitingPostedBy.userId = user.optLong(ID);
                             listing.lisitingPostedBy.logo = sellerCompany.optString(LOGO);
-                            listing.lisitingPostedBy.rating = sellerCompany.optDouble(COMPANY_SCORE) / 2.0; // devided by 2 to show rating out of 5
+                            Double score = sellerCompany.optDouble(COMPANY_SCORE);
+                            if(Double.isNaN(score)) {
+                                listing.lisitingPostedBy.rating = null;
+                            } else {
+                                listing.lisitingPostedBy.rating = score / 2.0; // devided by 2 to show rating out of 5
+                            }
                             listing.lisitingPostedBy.assist = sellerCompany.optBoolean(ASSIST);
                         }
                     }
                     listing.lisitingPostedBy.profilePictureURL = null != user ?
                             (user.optString(PROFILE_PICTURE_URL) != null ? user.optString(PROFILE_PICTURE_URL) : null) : null;
-                    // TODO discuss with prod, that if seller company name is not there, then using user name, e.g. listing id : 538819
                     if(listing.lisitingPostedBy.name == null) {
                         listing.lisitingPostedBy.name = null != user ?
                                 (user.optString(FULL_NAME) != null ? user.optString(FULL_NAME) : null) : null;

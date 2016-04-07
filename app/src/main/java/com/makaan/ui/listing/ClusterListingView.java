@@ -57,6 +57,14 @@ public class ClusterListingView extends AbstractCardListingView {
                     ((FragmentActivity) mContext).getSupportFragmentManager(), mContext,
                     ((GroupCluster) data).groupListings, false, callback);
             mViewPager.setAdapter(fragmentPagerAdapter);
+            Long lastUsedClusterId = callback.getLastUsedClusterId();
+            if(lastUsedClusterId != null) {
+                for (int i = 0; i < ((GroupCluster) data).groupListings.size(); i++) {
+                    if (((GroupCluster) data).groupListings.get(i).listing.id.equals(lastUsedClusterId)) {
+                        mViewPager.setCurrentItem(i);
+                    }
+                }
+            }
         }
         /*if(data!= null && data instanceof ArrayList<?>) {
             if(((ArrayList<?>)data).size() > 0 && ((ArrayList<?>)data).get(0) instanceof GroupCluster) {

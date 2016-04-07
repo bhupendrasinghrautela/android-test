@@ -175,6 +175,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     private Properties mProperties;
 
     SerpBackStack mSerpBackStack = new SerpBackStack();
+    private Long mLastUsedClusterId;
 
     @Override
     protected int getContentViewId() {
@@ -246,6 +247,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 removeAllSelectors();
                 parseSerpRequest(intent, SerpActivity.TYPE_GPID);
             } else if (type == SerpActivity.TYPE_PROJECT) {
+                removeAllSelectors();
                 parseSerpRequest(intent, SerpActivity.TYPE_PROJECT);
 
             } else if (type == SerpActivity.TYPE_SEARCH) {
@@ -258,9 +260,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 removeAllSelectors();
 
                 parseSerpRequest(intent, SerpActivity.TYPE_BUILDER);
-            } else if (type == SerpActivity.TYPE_UNKNOWN) {
-                // TODO check whether it should be used or not
-                fetchData();
             } else if (type == SerpActivity.TYPE_SELLER) {
 //                mSerpSelector.removeTerm("builderId");
 //                mSerpSelector.removeTerm("projectId");
@@ -900,9 +899,17 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             mGroupsRequested = false;
             mGroupReceived = true;
             mSerpReceived = false;
+            mLastUsedClusterId = id;
         }
         dismissPopupWithAnim();
         showProgress();
+    }
+
+    @Override
+    public Long getLastUsedClusterId() {
+        Long id = mLastUsedClusterId;
+        mLastUsedClusterId = null;
+        return id;
     }
 
     @Override
