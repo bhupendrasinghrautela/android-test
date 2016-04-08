@@ -273,6 +273,9 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public int getItemCount() {
+        if(wishList == null) {
+            return 0;
+        }
         return wishList.size();
     }
 
