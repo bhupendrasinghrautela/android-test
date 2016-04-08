@@ -238,28 +238,6 @@ public class CookiePreferences {
         edit.commit();
     }
 
-    /**
-     * A static method for getting password of user remember me
-     *
-     * @param context the Context of activity
-     * @return selected Index from server
-     * */
-    public static String getPassword(Context context) {
-        return getSharedPref(context).getString(PREF_PASSWORD, "");
-    }
-
-
-    /**
-     * A static method for saving password for user remember me
-     *
-     * @param context the Context of activity
-     * @param password selected Index
-     * */
-    public static void setPassword(Context context, String password) {
-        SharedPreferences.Editor edit = getSharedPref(context).edit();
-        edit.putString(PREF_PASSWORD, password);
-        edit.commit();
-    }
 
 
     public static void setBuyerJourneyPopupTimestamp(Context context) {
