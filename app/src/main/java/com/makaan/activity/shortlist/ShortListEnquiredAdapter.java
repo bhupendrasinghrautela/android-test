@@ -129,17 +129,32 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
             } else {
                 shortListEnquiredViewHolder.mAddress.setText("");
             }
-        } else if (enquiry.type == EnquiryType.BUDGET) {
+        } /*else if (enquiry.type == EnquiryType.UNIT_TYPE) {
+            // todo change this image
+            shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.seller_placeholder);
+            if (enquiry.propertyRequirement != null && enquiry.propertyRequirement.areaUnitTypeId != null) {
+                // todo bedroom value is wrong, need change from icrm team
+                shortListEnquiredViewHolder.mAddress.setText(String.valueOf(enquiry.propertyRequirement.areaUnitTypeId) + "(unit)");
+            } else {
+                shortListEnquiredViewHolder.mAddress.setText("");
+            }
+        }*/ else if (enquiry.type == EnquiryType.BUDGET) {
             // todo change this image
             shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.seller_placeholder);
             if (enquiry.propertyRequirement != null) {
                 if (enquiry.propertyRequirement.minBudget != null
                         && enquiry.propertyRequirement.maxBudget != null) {
-                    shortListEnquiredViewHolder.mAddress.setText(enquiry.propertyRequirement.minBudget + " - " + enquiry.propertyRequirement.maxBudget);
+                    if(enquiry.propertyRequirement.minBudget.equals(enquiry.propertyRequirement.maxBudget)) {
+                        shortListEnquiredViewHolder.mAddress.setText("\u20B9".concat(String.valueOf(enquiry.propertyRequirement.minBudget)));
+                    } else {
+                        shortListEnquiredViewHolder.mAddress.setText(
+                                "\u20B9".concat(String.valueOf(enquiry.propertyRequirement.minBudget))
+                                        .concat(" - ").concat(String.valueOf(enquiry.propertyRequirement.maxBudget)));
+                    }
                 } else if (enquiry.propertyRequirement.minBudget != null) {
-                    shortListEnquiredViewHolder.mAddress.setText(String.valueOf(enquiry.propertyRequirement.minBudget));
+                    shortListEnquiredViewHolder.mAddress.setText("\u20B9".concat(String.valueOf(enquiry.propertyRequirement.minBudget)));
                 } else if (enquiry.propertyRequirement.maxBudget != null) {
-                    shortListEnquiredViewHolder.mAddress.setText(String.valueOf(enquiry.propertyRequirement.maxBudget));
+                    shortListEnquiredViewHolder.mAddress.setText("\u20B9".concat(String.valueOf(enquiry.propertyRequirement.maxBudget)));
                 } else {
                     shortListEnquiredViewHolder.mAddress.setText("");
                 }
@@ -486,7 +501,7 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     public enum EnquiryType {
-        LISTING, PROJECT, SELLER, LOCALITY, SUBURB, BEDROOM, BUDGET, SIZE, LAT_LON, RADIUS
+        LISTING, PROJECT, SELLER, LOCALITY, SUBURB, BEDROOM, UNIT_TYPE, BUDGET, SIZE, LAT_LON, RADIUS
     }
 
     public class Enquiry {

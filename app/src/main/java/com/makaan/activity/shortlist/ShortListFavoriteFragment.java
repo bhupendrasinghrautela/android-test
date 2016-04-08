@@ -123,6 +123,10 @@ public class ShortListFavoriteFragment extends MakaanBaseFragment{
             return;
         }
 
+        if(wishListClonedData == null) {
+            return;
+        }
+
         if(projectByIdEvent.project != null) {
             for(WishList wishList : wishListClonedData) {
                 if(wishList.projectId != null && projectByIdEvent.project.projectId != null
@@ -149,6 +153,10 @@ public class ShortListFavoriteFragment extends MakaanBaseFragment{
             return;
         }
         if (null == listingByIdsGetEvent || null != listingByIdsGetEvent.error) {
+            return;
+        }
+
+        if(wishListClonedData == null) {
             return;
         }
 
