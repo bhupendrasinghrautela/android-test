@@ -96,9 +96,9 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
                     && mItems.get(mSelected).listing!=null &&  mItems.get(mSelected).listing.id!=null
                     && mItems.get(mSelected).listing.id!=0) {
                 Properties properties = MakaanEventPayload.beginBatch();
-                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCashbackListing);
                 properties.put(MakaanEventPayload.LABEL, mItems.get(mSelected).listing.id);
-                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickCashBackListing);
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.click);
             }
             /*-----------------------------------------------------------------*/
 

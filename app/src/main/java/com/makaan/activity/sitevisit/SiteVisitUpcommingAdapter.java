@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.listing.detail.ListingDetail;
@@ -32,6 +34,7 @@ import com.makaan.service.ClientEventsService;
 import com.makaan.util.CommonUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.PermissionManager;
+import com.segment.analytics.Properties;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -287,6 +290,15 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
     @Override
     public void openDirections(int position) {
         Enquiry enquiry = mEnquiries.get(position);
+        /*----- track events--------*/
+        if (mEnquiries.get(position).id != null) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardSiteVisits);
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", mEnquiries.get(position).id,
+                    MakaanTrackerConstants.Label.direction));
+            MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.click);
+        }
+        /*-------------------------*/
         if (enquiry.latitude == null || enquiry.longitude == null
                 || Double.isNaN(enquiry.latitude) || Double.isNaN(enquiry.longitude)) {
             return;
@@ -300,6 +312,15 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
     @Override
     public void callNumber(int position) {
         Enquiry enquiry = mEnquiries.get(position);
+        /*----- track events--------*/
+        if (mEnquiries.get(position).id != null) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardSiteVisits);
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", mEnquiries.get(position).id,
+                    MakaanTrackerConstants.Label.call));
+            MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.click);
+        }
+        /*-------------------------*/
         if (enquiry.listingDetail == null) {
             return;
         } else if (enquiry.listingDetail.companySeller != null && enquiry.listingDetail.companySeller.user != null

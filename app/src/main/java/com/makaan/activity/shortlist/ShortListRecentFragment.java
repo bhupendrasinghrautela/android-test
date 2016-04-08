@@ -16,10 +16,12 @@ import android.widget.Toast;
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.activity.lead.LeadFormActivity;
+import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.util.ErrorUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
@@ -151,10 +153,10 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
                             /*--------------------------- track events--------------------------------------*/
                             if(dataObject.id!=0) {
                                 Properties properties = MakaanEventPayload.beginBatch();
-                                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardRecentlyViewed);
                                 properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", dataObject.id,
                                         MakaanTrackerConstants.Label.getCallBack));
-                                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickShortListRecentlyViewed);
+                                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.click);
                             }
                             /*------------------------------------------------------*/
 
@@ -188,6 +190,22 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
                         }
                     });
                 }
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(dataObject.id > 0) {
+
+                            Intent overviewIntent = new Intent(getActivity(), OverviewActivity.class);
+                            Bundle bundle = new Bundle();
+
+                            bundle.putLong(OverviewActivity.ID, dataObject.id);
+                            bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROPERTY.ordinal());
+
+                            overviewIntent.putExtras(bundle);
+                            getActivity().startActivity(overviewIntent);
+                        }
+                    }
+                });
 //                }
             }
         }

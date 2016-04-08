@@ -253,8 +253,11 @@ public class DefaultListingView extends AbstractListingView {
 
         if(mListing.lisitingPostedBy == null) {
             mSellerRatingBar.setVisibility(View.GONE);
+        } else if(mListing.lisitingPostedBy.rating != null) {
+            mSellerRatingBar.setVisibility(VISIBLE);
+            mSellerRatingBar.setRating(mListing.lisitingPostedBy.rating.floatValue());
         } else {
-            mSellerRatingBar.setRating((float)mListing.lisitingPostedBy.rating);
+            mSellerRatingBar.setVisibility(INVISIBLE);
         }
         mapPropertyInfo(isBuy);
 
@@ -733,7 +736,9 @@ public class DefaultListingView extends AbstractListingView {
         Bundle bundle = new Bundle();
 
         bundle.putString(KeyUtil.NAME_LEAD_FORM, mListing.lisitingPostedBy.name);
-        bundle.putString(KeyUtil.SCORE_LEAD_FORM, String.valueOf(mListing.lisitingPostedBy.rating));
+        if(mListing.lisitingPostedBy.rating != null) {
+            bundle.putString(KeyUtil.SCORE_LEAD_FORM, String.valueOf(mListing.lisitingPostedBy.rating));
+        }
 
         if(mListing.lisitingPostedBy!=null && mListing.lisitingPostedBy.number!=null) {
             bundle.putString(KeyUtil.PHONE_LEAD_FORM, mListing.lisitingPostedBy.number);

@@ -102,6 +102,23 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         notifyDataSetChanged();
     }
 
+    public void onSearchPressed() {
+        if(getItemCount() > 0) {
+            if(mSearches != null && mSearches.size() > 0) {
+                SearchResponseItem searchResponseItem = mSearches.get(0);
+                if(searchResponseItem != null && !SearchSuggestionType.ERROR.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.SUGGESTION_NAME, searchResponseItem.displayText);
+                    properties.put(MakaanEventPayload.SUGGESTION_POSITION, 1);
+                    properties.put(MakaanEventPayload.SUGGESTION_TYPE, searchResponseItem.type);
+                    properties.put(MakaanEventPayload.SUGGESTION_STRING, searchResponseItem.displayText + "_" +
+                            String.valueOf(1) + "_" + searchResponseItem.type);
+                    mCallbacks.onSearchItemClick(searchResponseItem);
+                }
+            }
+        }
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         int viewType;
@@ -134,7 +151,8 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 }
 
                 if (SearchSuggestionType.CITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)
-                        || SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)) {
+                        || SearchSuggestionType.LOCALITY_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)
+                        || SearchSuggestionType.PROJECT_OVERVIEW.getValue().equalsIgnoreCase(searchResponseItem.type)) {
                     view.findViewById(R.id.search_result_item_image_view).setVisibility(View.GONE);
                     ((TextView) view.findViewById(R.id.search_result_item_name_2_text_view)).setText(searchResponseItem.displayText.toLowerCase());
                     view.findViewById(R.id.search_result_item_name_text_view).setVisibility(View.GONE);

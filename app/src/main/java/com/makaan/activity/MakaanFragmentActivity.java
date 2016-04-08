@@ -73,7 +73,9 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
     @OnClick(R.id.activity_makaan_base_no_result_action_button)
     public void onGoHomePressed(View view) {
         Intent intent = new Intent(this, HomeActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        // as per discussion with Amit, do not clear stack
+//        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 

@@ -190,6 +190,11 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
         Toast.makeText(getActivity(), getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onFaceboookCancel() {
+
+    }
+
     private void parseLoginType(int loginType){
         switch (loginType){
             case UserLoginPresenter.LOGIN_FB:

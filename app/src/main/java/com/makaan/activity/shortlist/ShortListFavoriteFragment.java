@@ -53,7 +53,7 @@ public class ShortListFavoriteFragment extends MakaanBaseFragment{
         super.onActivityCreated(savedInstanceState);
 
         if(CookiePreferences.isUserLoggedIn(getActivity())) {
-            ((WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class)).get();
+            ((WishListService) MakaanServiceFactory.getInstance().getService(WishListService.class)).getForBuyerJourney();
             showProgress();
         } else {
             List<WishList> wishListData = MasterDataCache.getInstance().getAllWishList();
@@ -123,6 +123,10 @@ public class ShortListFavoriteFragment extends MakaanBaseFragment{
             return;
         }
 
+        if(wishListClonedData == null) {
+            return;
+        }
+
         if(projectByIdEvent.project != null) {
             for(WishList wishList : wishListClonedData) {
                 if(wishList.projectId != null && projectByIdEvent.project.projectId != null
@@ -149,6 +153,10 @@ public class ShortListFavoriteFragment extends MakaanBaseFragment{
             return;
         }
         if (null == listingByIdsGetEvent || null != listingByIdsGetEvent.error) {
+            return;
+        }
+
+        if(wishListClonedData == null) {
             return;
         }
 

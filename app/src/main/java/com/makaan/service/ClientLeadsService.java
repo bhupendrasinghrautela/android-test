@@ -60,9 +60,12 @@ public class ClientLeadsService implements MakaanService {
         });
     }
 
-    public void requestpropertyRequirements() {
+    public void requestpropertyRequirements(int rows) {
 //        String detailsURL = ApiConstants.ICRM_CLIENT_LEADS.concat("?sort=-clientActivity.phaseId&fields=clientActivity.phaseId&rows=1");
-        String detailsURL = ApiConstants.PROPERTY_REQUIREMENTS.concat("?fields=id&rows=1");
+        String detailsURL = ApiConstants.PROPERTY_REQUIREMENTS.concat("?fields=id");
+        if(rows > 0) {
+            detailsURL = detailsURL.concat("&rows=" + rows);
+        }
         MakaanNetworkClient.getInstance().get(detailsURL, new JSONGetCallback() {
             @Override
             public void onSuccess(JSONObject responseObject) {
@@ -160,14 +163,14 @@ public class ClientLeadsService implements MakaanService {
                     if(!((Activity)context).isFinishing()) {
                         /*----------------------- track events-------------------------*/
                         Properties properties = MakaanEventPayload.beginBatch();
-                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardSellerRating);
                         properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ratingValue, sellerId));
-                        MakaanEventPayload.endBatch(context, MakaanTrackerConstants.Action.clickCashBackSellerRating);
+                        MakaanEventPayload.endBatch(context, MakaanTrackerConstants.Action.click);
 
                         Properties propertis = MakaanEventPayload.beginBatch();
-                        propertis.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                        propertis.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardSellerRating);
                         propertis.put(MakaanEventPayload.LABEL, String.format("%s_%s_%s", comment, "Feedback", sellerId));
-                        MakaanEventPayload.endBatch(context, MakaanTrackerConstants.Action.clickCashBackSellerRating);
+                        MakaanEventPayload.endBatch(context, MakaanTrackerConstants.Action.click);
                         /*-----------------------------------------------------------------*/
                     }
                 }
@@ -179,9 +182,9 @@ public class ClientLeadsService implements MakaanService {
                     if(!((Activity)context).isFinishing()) {
                         /*----------------------- track events-------------------------*/
                         Properties properties = MakaanEventPayload.beginBatch();
-                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardSellerRating);
                         properties.put(MakaanEventPayload.LABEL, String.format("%s_%s_%s", comment, "Feedback", sellerId));
-                        MakaanEventPayload.endBatch(context, MakaanTrackerConstants.Action.clickCashBackSellerRating);
+                        MakaanEventPayload.endBatch(context, MakaanTrackerConstants.Action.click);
                         /*-----------------------------------------------------------------*/
                     }
                 }

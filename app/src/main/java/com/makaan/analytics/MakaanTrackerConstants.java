@@ -19,7 +19,21 @@ public class MakaanTrackerConstants {
         buyerProjectCall("Buyer_Project_Call"),buyerProjectGetCallBack("Buyer_Project_Call_Get Callback"),buyerSerp("Buyer_Serp"),buyerProject("Buyer_Project"),
         buyerHome("Buyer_Home"), buyerCity("Buyer_City"),searchMap("Search_Map"),searchFilter("Search_Filter"),buyerLocality("Buyer_Locality"),userLogin("User_Login"),
         buyerPyr("Buyer_PYR"),errorBuyer("Error_Buyer"),buyerDashboard("Buyer_Dashboard"),errorUsability("Error_Usability"),buyerMAuto("Buyer_M_Auto"),
-        buyerMManual("Buyer_M_Manual");
+        buyerMManual("Buyer_M_Manual"),buyerPropertyImages("Buyer_Property_Images"),buyerProjectImages("Buyer_Project_Images"),buyerPropertyOverView("Buyer_Property_Overview")
+        ,buyerProjectOverView("Buyer_Project_Overview"),buyerCityOverView("Buyer_City_Overview"),buyerLocalityOverView("Buyer_Locality_Overview"),
+        buyerPropertyMap("Buyer_Property_Map"), buyerProjectMap("Buyer_Project_Map"),buyerLocalityMap("Buyer_Locality_Map"),
+        buyerPropertySimilarProperties("Buyer_Property_Similar Properties"),buyerPropertyViewOtherSellers("Buyer_Property_View Other Sellers"),
+        buyerProjectConfiguration("Buyer_Project_Configuration"),buyerProjectPriceTrends("Buyer_Project_Price Trends"),buyerLocalityPriceTrends("Buyer_Locality_Price Trends"),
+        buyerCityPriceTrends("Buyer_City_Price Trends"),buyerProjectViewOtherSellers("Buyer_Project_View Other Sellers"),buyerProjectSimilarProjects("Buyer_Project_Similar Projects"),
+        buyerLocalityAffordableProperties("Buyer_Locality_Affordable Properties"),buyerLocalityLuxuryProperties("Buyer_Locality_Luxury Properties"),
+        buyerLocalityBudgetProperties("Buyer_Locality_Budget Properties"),buyerLocalityBestProperties("Buyer_Locality_Best Properties"),
+        buyerLocalityNewRentalProperties("Buyer_Locality_New Rental Properties"),buyerLocalityTopSellers("Buyer_Locality_Top Sellers"),
+        buyerLocalityTopBuilders("Buyer_Locality_Top Builders"),buyerLocalityNearbyLocalities("Buyer_Locality_Nearby Localities"),
+        buyerProjectConstructionImages("BUYER_Project_Construction Images"),buyerLocalityProperties("Buyer_Locality_Properties"),buyerSerpProject("Buyer_SERP_Project"),
+        buyerSerpDetailView("Buyer_SERP_Detail View"),buyerSerpProperty("Buyer_SERP_Property"),buyerLead("Buyer_Lead"),buyerDashboardSavedSearches("Buyer_Dashboard_Saved Searches"),
+        buyerDashboardSiteVisits("Buyer_Dashboard_Site Visits"),buyerDashboardFavourite("Buyer_Dashboard_Favourite"),buyerDashboardRecentlyViewed("Buyer_Dashboard_Recently Viewed"),
+        buyerDashboardCashback("Buyer_Dashboard_Cashback"),buyerDashboardCashbackSeller("Buyer_Dashboard_Cashback Seller"),buyerDashboardCashbackListing("Buyer_Dashboard_Cashback Listing"),
+        buyerDashboardSellerRating("Buyer_Dashboard_seller Rating");
 
         private String value;
 
@@ -83,7 +97,9 @@ public class MakaanTrackerConstants {
         clickShortListRecentlyViewed("CLICK_Shortlist_Recentlyviewed"),errorLogin("ERROR_Login"),errorPassword("ERROR_Password"),errorSignUp("ERROR_Sign Up"),
         sorryNoMatchingResultFound("Error_sorry, no matching results found"),errorNa("Error_N.A."),noPropertyMatchingSearch("Error_found no properties matching your search criteria"),
         clickCashback("CLICK_CashBack"),clickCashBackSeller("CLICK_Cashback_Seller"),clickCashBackListing("CLICK_Cashback_Listing"),
-        clickCashBackSellerRating("CLICK_Cashback_Seller Rating "),close("CLOSE"), click("CLICK"), view("VIEW");
+        clickCashBackSellerRating("CLICK_Cashback_Seller Rating "),close("CLOSE"), click("CLICK"), view("VIEW"),
+        search("SEARCH"),shortList("SHORTLIST"),map("MAP"),select("SELECT"),filter("FILTER"),sort("SORT"),call("CALL"),errorLeadForm("ERROR_Lead Form"),submit("SUBMIT"),
+        shortlistEnquire("SHORTLIST ENQUIRE");
 
         private String value;
 
@@ -119,7 +135,12 @@ public class MakaanTrackerConstants {
         errorWhileSubmitting("error while submitting"),notRegisteredUser("sorry! you are not a registered user."),searchString("Search string"),leadForm("Lead form"),
         getCashBack("Get Cashback"),addAnotherListing("Add Another Listing"),mAutoView("M_Auto_VIEW"),mAutoClick("M_Auto_CLICK"),serpScroll("SERP_SCROLL"),
         enquiryDroppedSimilarSuggestion("ENQUIRY_DROPPED_SIMLAR_LISTING_SUGGESTION"),contentPyr("Content_Pyr"),mAutoViewPyr("M_Auto_VIEW_Pyr"),
-        mAutoViewPyrYes("M_Auto_VIEW_Pyr_Yes");
+        mAutoViewPyrYes("M_Auto_VIEW_Pyr_Yes"),shareYourDetails("Share your details"),callSeller("Call Seller"),getCallLaterFillCountry("Get_Call_Later_Fill Country"),
+        connectNowFillCountry("Connect_Now_Fill Country"),getCallLaterFillMobile("Get_Call_Later_Fill Mobile"),getCallLaterFillName("Get_Call_Later_Fill Name"),
+        getCallLaterFillEmail("Get_Call_Later_Fill Email"),getCallBackSuccess("Get Callback Success"),connectNowSuccess("Connect Now Success"),
+        connectNowFillMobile("Connect_Now_Fill Mobile"),connectNowFailure("Connect Now Failure"),getCallBackFailure("Get Callback Failure"),call("Call"),seller("Seller"),
+        siteVisit("Site Visit"),siteVisitOk("Site Visit Ok"),direction("Direction"),homeLoan("Home Loan"),unitBook("Unit Book"),possesion("Possesion"),
+        registration("Registration");
 
         private String value;
 

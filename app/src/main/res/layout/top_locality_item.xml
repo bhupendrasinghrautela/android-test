@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:baselineAligned="false"
-    android:orientation="horizontal"
-    android:paddingTop="@dimen/top_locality_internal_padding"
-    android:paddingLeft="@dimen/city_internal_padding"
-    android:paddingRight="@dimen/city_internal_padding"
-    android:paddingBottom="@dimen/top_locality_internal_padding"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@color/white"
+              android:baselineAligned="false"
+              android:orientation="horizontal"
+              android:paddingTop="@dimen/top_locality_internal_padding"
+              android:paddingLeft="@dimen/city_internal_padding"
+              android:paddingRight="@dimen/city_internal_padding"
+              android:paddingBottom="@dimen/top_locality_internal_padding"
 >
 
     <LinearLayout
@@ -46,11 +47,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical">
 
-        <ProgressBar
+        <com.makaan.ui.view.MakaanProgressBar
             android:id="@+id/locality_score_progress"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="@dimen/city_circular_progress_dimen"
             android:layout_height="@dimen/city_circular_progress_dimen"
+            app:isLocality="true"
             android:layout_gravity="center_vertical"
             android:indeterminate="false"
             android:progress="78"

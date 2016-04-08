@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.makaan.ui.listing.NoResultListingItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/serp_listing_item_no_result_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            android:id="@+id/serp_listing_item_no_result_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/serp_listing_item_no_result_image_view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="@dimen/default_error_message_right_margin"
+            android:layout_marginLeft="@dimen/default_error_message_left_margin"
+            android:layout_marginRight="@dimen/default_error_message_right_margin"
+            android:layout_marginStart="@dimen/default_error_message_left_margin"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textColor="@color/app_red"
+            android:textSize="@dimen/default_error_message_text_size"
+            android:typeface="serif" />
+
+        <Button
+            android:id="@+id/serp_listing_item_no_result_action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/serp_listing_item_no_result_text_view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/round_red"
+            android:minHeight="0dp"
+            android:padding="8dp"
+            android:text="go home"
+            android:textAllCaps="false"
+            android:textColor="@color/app_red"
+            android:textSize="16sp"
+            android:typeface="serif"
+            android:layout_marginBottom="20dp"/>
+    </RelativeLayout>
+</com.makaan.ui.listing.NoResultListingItemView>

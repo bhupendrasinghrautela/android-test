@@ -69,7 +69,7 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
 
     @Override
     public boolean isJarvisSupported() {
-        return false;
+        return true;
     }
 
     @Override
@@ -244,9 +244,9 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
 
         if(clientLeadsFragment!=null && clientLeadsFragment.isVisible()){
             Properties properties = MakaanEventPayload.beginBatch();
-            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCashbackSeller);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.back);
-            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickCashBackSeller);
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.click);
             clientLeadsFragment=null;
         }
 
@@ -255,9 +255,9 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
 
         if(clientCompanyLeadFragment!=null && clientCompanyLeadFragment.isVisible()){
             Properties properties = MakaanEventPayload.beginBatch();
-            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCashbackListing);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.back);
-            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickCashBackListing);
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.click);
             clientCompanyLeadFragment=null;
         }
 
@@ -266,9 +266,9 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
 
         if(clientCompanyLeadsAddProperty!=null && clientCompanyLeadsAddProperty.isVisible()){
             Properties properties = MakaanEventPayload.beginBatch();
-            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCashbackListing);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.back);
-            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickCashBackListing);
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.click);
             clientCompanyLeadsAddProperty=null;
         }
 

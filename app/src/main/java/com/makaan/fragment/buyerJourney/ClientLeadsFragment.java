@@ -98,9 +98,9 @@ public class ClientLeadsFragment extends MakaanBaseFragment {
                 /*----------------------- track events-------------------------*/
                 if(mClientLeadsObjects.get(mSelected).clientLead!=null &&  mClientLeadsObjects.get(mSelected).clientLead.companyId!=null) {
                     Properties properties = MakaanEventPayload.beginBatch();
-                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCashbackSeller);
                     properties.put(MakaanEventPayload.LABEL, mClientLeadsObjects.get(mSelected).clientLead.companyId);
-                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickCashBackSeller);
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.click);
                 }
                 /*-----------------------------------------------------------------*/
 

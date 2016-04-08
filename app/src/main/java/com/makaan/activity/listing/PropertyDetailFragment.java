@@ -21,7 +21,6 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -68,6 +67,7 @@ import com.makaan.ui.property.FloorPlanLayout;
 import com.makaan.ui.property.ListingDataOverViewScroll;
 import com.makaan.ui.property.PropertyImageViewPager;
 import com.makaan.ui.view.CustomRatingBar;
+import com.makaan.ui.view.MakaanProgressBar;
 import com.makaan.ui.view.WishListButton;
 import com.makaan.ui.view.WishListButton.WishListDto;
 import com.makaan.ui.view.WishListButton.WishListType;
@@ -154,7 +154,7 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
     TextView mLocalityBrief;
 
     @Bind(R.id.locality_score_progress)
-    ProgressBar mLocalityScoreProgress;
+    MakaanProgressBar mLocalityScoreProgress;
 
     @Bind(R.id.all_seller_layout)
     LinearLayout mAllSellerLayout;

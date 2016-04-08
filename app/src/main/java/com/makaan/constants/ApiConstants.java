@@ -57,6 +57,8 @@ public class ApiConstants {
     public static final String LOCALITY_DATA = MICROSERVICE_PETRA.concat("/data/v3/entity/locality");
     public static final String LOCALITY = MICROSERVICE_PETRA.concat("/app/v3/locality/");
 
+    public static final String SUBURB = MICROSERVICE_PETRA.concat("/data/v1/entity/suburb");
+
     public static final String TREND_URL = MICROSERVICE_COMPASS.concat("/data/v1/trend");
     public static final String LOCALITY_TREND_URL = TREND_URL.concat("?fields=avgBuyPricePerUnitArea,localityName&group=localityId,month");
     public static final String CITY_TREND_URL = TREND_URL.concat("?fields=avgBuyPricePerUnitArea&group=month");
