@@ -27,6 +27,7 @@ public class ClientLead {
         public Long maxBudget;
         public Long minSize;
         public Long maxSize;
+        public Integer areaUnitTypeId;
     }
 
     public class ClientActivity {

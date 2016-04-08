@@ -109,7 +109,9 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
                                 ((SuburbService) MakaanServiceFactory.getInstance().getService(SuburbService.class)).getSuburbByIdForEnquiry(propertyRequirement.suburbId);
                             } else if (propertyRequirement.bedroom != null) {
                                 enquiry.type = EnquiryType.BEDROOM;
-                            } else if (propertyRequirement.minBudget != null || propertyRequirement.maxBudget != null) {
+                            } /*else if (propertyRequirement.areaUnitTypeId != null) {
+                                enquiry.type = EnquiryType.UNIT_TYPE;
+                            }*/ else if (propertyRequirement.minBudget != null || propertyRequirement.maxBudget != null) {
                                 enquiry.type = EnquiryType.BUDGET;
                             } else if (propertyRequirement.minSize != null || propertyRequirement.maxSize != null) {
                                 enquiry.type = EnquiryType.SIZE;
@@ -199,6 +201,7 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
             }
 
             for(Enquiry enquiry : mEnquiryHashMap.values()) {
+
                 if(enquiry.propertyRequirement != null && enquiry.propertyRequirement.localityId != null) {
                     if(enquiry.propertyRequirement.localityId.equals(localityByIdEvent.locality.localityId)) {
                         enquiry.locality = localityByIdEvent.locality;
