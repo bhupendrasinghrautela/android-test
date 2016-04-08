@@ -44,26 +44,30 @@ import butterknife.OnClick;
 public class LoginFragment extends Fragment implements TextWatcher {
 
     public  static String TAG=LoginFragment.class.getSimpleName();
-    /*@Bind(R.id.iv_back)
-    ImageView mImageViewBack;*/
     @Bind(R.id.et_email)
     EditText mEditTextEmail;
+
     @Bind(R.id.et_password)
     EditText mEditTextPassword;
+
     @Bind(R.id.btn_login)
     Button mButtonLogin;
+
     @Bind(R.id.cb_password_login)
     CheckBox mCheckboxPassword;
-    private OnUserLoginListener mOnUserLoginListener;
+
     @Bind(R.id.tv_signup)
     TextView mSignUptext;
-    private OnSignUpSelectedListener mSignUpSelectedListener;
-    boolean mBound = false;
-    private boolean isRemember=false;
+
     @Bind(R.id.til_login_email)
     TextInputLayout mTilEmail;
+
     @Bind(R.id.til_login_password)
     TextInputLayout mTilPassword;
+
+    private OnUserLoginListener mOnUserLoginListener;
+    private OnSignUpSelectedListener mSignUpSelectedListener;
+    boolean mBound = false;
 
 
     @Nullable
@@ -74,16 +78,17 @@ public class LoginFragment extends Fragment implements TextWatcher {
         if(!mBound) {
             AppBus.getInstance().register(this);
             mBound=true;
-        }/*
-        mEditTextEmail=(EditText) view.findViewById(R.id.et_email);
-        mEditTextPassword=(EditText) view.findViewById(R.id.et_password);*/
+        }
+
         mSignUptext=(TextView) view.findViewById(R.id.tv_signup);
         String text = "<font color=#000000>new to makaan?</font><font color=#e71c28> sign up!</font>";
         mSignUptext.setText(Html.fromHtml(text), TextView.BufferType.SPANNABLE);
-        if(CookiePreferences.getUserName(getActivity()).length()>0 && CookiePreferences.getPassword(getActivity()).length()>0){
-            mEditTextEmail.setText(CookiePreferences.getUserName(getActivity()));
-            mEditTextPassword.setText(CookiePreferences.getPassword(getActivity()));
+
+        String lastUserName = CookiePreferences.getUserName(getActivity());
+        if(!TextUtils.isEmpty(lastUserName)){
+            mEditTextEmail.setText(lastUserName);
         }
+
         mEditTextEmail.addTextChangedListener(this);
         mEditTextPassword.addTextChangedListener(this);
         return view;
@@ -111,26 +116,21 @@ public class LoginFragment extends Fragment implements TextWatcher {
             properties.put(MakaanEventPayload.LABEL, getString(R.string.invalid_email));
             MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.errorLogin);
             mTilEmail.setError(getString(R.string.invalid_email));
-            //Toast.makeText(getActivity(), getString(R.string.enter_valid_email), Toast.LENGTH_SHORT).show();
+
         }else if(TextUtils.isEmpty(pwd)) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorBuyer);
             properties.put(MakaanEventPayload.LABEL, getString(R.string.invalid_password));
             MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.errorLogin);
             mTilPassword.setError(getString(R.string.invalid_password));
-            //Toast.makeText(getActivity(),getString(R.string.enter_password),Toast.LENGTH_SHORT).show();
+
         } else {
            ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
             ))).loginWithMakaanAccount(email,pwd);
             mOnUserLoginListener.onUserLoginBegin();
-            //remember me check
-            if(isRemember) {
-                CookiePreferences.setUserName(getActivity(), email);
-                CookiePreferences.setPassword(getActivity(), pwd);
-            }else{
-                CookiePreferences.setUserName(getActivity(), "");
-                CookiePreferences.setPassword(getActivity(),"");
-            }
+
+            //remember just the user name
+            CookiePreferences.setUserName(getActivity(), email);
         }
     }
 
@@ -144,12 +144,6 @@ public class LoginFragment extends Fragment implements TextWatcher {
             // hide password
             mEditTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         }
-    }
-
-    @OnCheckedChanged(R.id.cb_remember_me)
-    public void onRememberMeCheckedChanged( boolean isChecked) {
-        // checkbox status is changed from uncheck to checked.
-        isRemember = isChecked;
     }
 
     @OnClick(R.id.tv_signup)

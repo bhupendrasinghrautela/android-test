@@ -110,34 +110,16 @@
                     android:button="@drawable/checkbox_show_hide_pwd" />
             </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_forgot_pwd"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_gravity="right|center_vertical"
+                android:text="@string/forgot_pwd"
                 android:paddingBottom="@dimen/input_top_margin"
-                android:paddingTop="@dimen/drawable_top_padding">
-
-                <CheckBox
-                    android:id="@+id/cb_remember_me"
-                    android:layout_width="@dimen/zero_weight"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:button="@drawable/checkbox_remember_me_selector"
-                    android:paddingLeft="10dp"
-                    android:text="@string/remember_me"
-                    android:textSize="@dimen/medium_text" />
-
-                <TextView
-                    android:id="@+id/tv_forgot_pwd"
-                    android:layout_width="@dimen/zero_weight"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/forgot_pwd"
-                    android:textColor="@color/appThemeRed"
-                    android:textSize="@dimen/medium_text" />
-
-            </LinearLayout>
+                android:paddingTop="@dimen/drawable_top_padding"
+                android:textColor="@color/appThemeRed"
+                android:textSize="@dimen/medium_text" />
 
             <FrameLayout
                 android:layout_width="wrap_content"
