@@ -139,11 +139,17 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
             if (enquiry.propertyRequirement != null) {
                 if (enquiry.propertyRequirement.minBudget != null
                         && enquiry.propertyRequirement.maxBudget != null) {
-                    shortListEnquiredViewHolder.mAddress.setText(enquiry.propertyRequirement.minBudget + " - " + enquiry.propertyRequirement.maxBudget);
+                    if(enquiry.propertyRequirement.minBudget.equals(enquiry.propertyRequirement.maxBudget)) {
+                        shortListEnquiredViewHolder.mAddress.setText("\u20B9".concat(String.valueOf(enquiry.propertyRequirement.minBudget)));
+                    } else {
+                        shortListEnquiredViewHolder.mAddress.setText(
+                                "\u20B9".concat(String.valueOf(enquiry.propertyRequirement.minBudget))
+                                        .concat(" - ").concat(String.valueOf(enquiry.propertyRequirement.maxBudget)));
+                    }
                 } else if (enquiry.propertyRequirement.minBudget != null) {
-                    shortListEnquiredViewHolder.mAddress.setText(String.valueOf(enquiry.propertyRequirement.minBudget));
+                    shortListEnquiredViewHolder.mAddress.setText("\u20B9".concat(String.valueOf(enquiry.propertyRequirement.minBudget)));
                 } else if (enquiry.propertyRequirement.maxBudget != null) {
-                    shortListEnquiredViewHolder.mAddress.setText(String.valueOf(enquiry.propertyRequirement.maxBudget));
+                    shortListEnquiredViewHolder.mAddress.setText("\u20B9".concat(String.valueOf(enquiry.propertyRequirement.maxBudget)));
                 } else {
                     shortListEnquiredViewHolder.mAddress.setText("");
                 }
