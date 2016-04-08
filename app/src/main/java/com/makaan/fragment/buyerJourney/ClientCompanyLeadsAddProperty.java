@@ -64,9 +64,9 @@ public class ClientCompanyLeadsAddProperty extends MakaanBaseFragment {
             if(mObj != null) {
             /*----------------------- track events-------------------------*/
                 Properties properties = MakaanEventPayload.beginBatch();
-                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCashbackListing);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.addAnotherListing);
-                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickCashBackListing);
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.click);
             /*-----------------------------------------------------------------*/
 
                 ((BuyerDashboardCallbacks) getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_REVIEW_AGENT,

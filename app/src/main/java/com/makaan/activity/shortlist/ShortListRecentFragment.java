@@ -153,10 +153,10 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
                             /*--------------------------- track events--------------------------------------*/
                             if(dataObject.id!=0) {
                                 Properties properties = MakaanEventPayload.beginBatch();
-                                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardRecentlyViewed);
                                 properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", dataObject.id,
                                         MakaanTrackerConstants.Label.getCallBack));
-                                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickShortListRecentlyViewed);
+                                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.click);
                             }
                             /*------------------------------------------------------*/
 

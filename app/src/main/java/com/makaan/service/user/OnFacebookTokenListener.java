@@ -7,4 +7,5 @@ public interface OnFacebookTokenListener {
     void onFacebookTokenSuccess(String token);
     void onFacebookLoginManagerCallback();
     void onFacebookTokenFail();
+    void onFaceboookCancel();
 }

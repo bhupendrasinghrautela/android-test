@@ -351,29 +351,41 @@ public class BlogContentFragment extends MakaanBaseFragment {
 
     public void createDashBoardEvent(Long articleId){
         Properties properties= MakaanEventPayload.beginBatch();
-        properties.put(MakaanEventPayload.CATEGORY , MakaanTrackerConstants.Category.buyerDashboard);
-        properties.put(MakaanEventPayload.LABEL, articleId);
         switch (mType) {
             case SEARCH:
-                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickSavedSearches);
+                properties.put(MakaanEventPayload.CATEGORY , MakaanTrackerConstants.Category.buyerDashboardSavedSearches);
+                properties.put(MakaanEventPayload.LABEL, articleId);
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.click);
                 break;
             case SHORTLIST:
-                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickShortlist);
+                properties.put(MakaanEventPayload.CATEGORY , MakaanTrackerConstants.Category.buyerDashboard);
+                properties.put(MakaanEventPayload.LABEL, articleId);
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.shortList);
                 break;
             case SITE_VISIT:
-                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickSiteVisits);
+                properties.put(MakaanEventPayload.CATEGORY , MakaanTrackerConstants.Category.buyerDashboardSiteVisits);
+                properties.put(MakaanEventPayload.LABEL, articleId);
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.click);
                 break;
             case HOME_LOAN:
-                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickHomeLoan);
+                properties.put(MakaanEventPayload.CATEGORY , MakaanTrackerConstants.Category.buyerDashboard);
+                properties.put(MakaanEventPayload.LABEL, String.format("%s_%s,",articleId,MakaanTrackerConstants.Label.homeLoan.toString()));
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.click);
                 break;
             case UNIT_BOOK:
-                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickUnitBook);
+                properties.put(MakaanEventPayload.CATEGORY , MakaanTrackerConstants.Category.buyerDashboard);
+                properties.put(MakaanEventPayload.LABEL, String.format("%s_%s,",articleId,MakaanTrackerConstants.Label.unitBook.toString()));
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.click);
                 break;
             case POSSESSION:
-                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickPossession);
+                properties.put(MakaanEventPayload.CATEGORY , MakaanTrackerConstants.Category.buyerDashboard);
+                properties.put(MakaanEventPayload.LABEL,  String.format("%s_%s,",articleId,MakaanTrackerConstants.Label.possesion.toString()));
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.click);
                 break;
             case REGISTRATION:
-                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickRegistration);
+                properties.put(MakaanEventPayload.CATEGORY , MakaanTrackerConstants.Category.buyerDashboard);
+                properties.put(MakaanEventPayload.LABEL,  String.format("%s_%s,",articleId,MakaanTrackerConstants.Label.registration.toString()));
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.click);
                 break;
         }
     }

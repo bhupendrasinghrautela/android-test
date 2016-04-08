@@ -103,17 +103,17 @@ public class ShortListFragment extends MakaanBaseFragment {
         switch (position){
             case 0:{
                 properties.put(MakaanEventPayload.LABEL,MakaanTrackerConstants.Label.enquired);
-                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickShortlist);
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.shortList);
                 break;
             }
             case 1:{
                 properties.put(MakaanEventPayload.LABEL,MakaanTrackerConstants.Label.favourite);
-                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickShortlist);
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.shortList);
                 break;
             }
             case 2:{
                 properties.put(MakaanEventPayload.LABEL,MakaanTrackerConstants.Label.recent);
-                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickShortlist);
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.shortList);
                 break;
             }
         }

@@ -21,6 +21,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.activity.shortlist.ShortListEnquiredViewHolder.ScheduleSiteVisit;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.overview.OverviewItemType;
@@ -39,6 +41,7 @@ import com.makaan.service.ClientEventsService;
 import com.makaan.util.CommonUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.JsonBuilder;
+import com.segment.analytics.Properties;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,10 +56,12 @@ import java.util.HashMap;
 public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ScheduleSiteVisit {
     Context mContext;
     ArrayList<Enquiry> mEnquiries;
-    private int width, height;
+    private int width,height;
+    private OnSiteVisitRequestLitener onSiteVisitRequestLitener;
 
-    public ShortListEnquiredAdapter(Context mContext) {
-        this.mContext = mContext;
+    public ShortListEnquiredAdapter(Context mContext, OnSiteVisitRequestLitener onSiteVisitRequestLitener){
+        this.mContext=mContext;
+        this.onSiteVisitRequestLitener=onSiteVisitRequestLitener;
         width = mContext.getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_width);
         height = mContext.getResources().getDimensionPixelSize(R.dimen.serp_listing_card_seller_image_view_height);
     }
@@ -397,6 +402,19 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public void onSiteVisitClicked(final int position) {
+        /*----- track events--------*/
+        if (mEnquiries != null && mEnquiries.get(position).id != null) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", mEnquiries.get(position).id,
+                    MakaanTrackerConstants.Label.siteVisit));
+            MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.shortlistEnquire);
+        }
+        /*-------------------------*/
+        if(onSiteVisitRequestLitener!=null && mEnquiries.get(position).id!=null){
+            onSiteVisitRequestLitener.setEnquiryId( mEnquiries.get(position).id);
+        }
+
         Calendar newCalendar = Calendar.getInstance();
         DatePickerDialog fromDatePickerDialog = new DatePickerDialog(mContext, new OnDateSetListener() {
 
@@ -497,5 +515,9 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
         public com.makaan.response.buyerjourney.Company company;
         public EnquiryType type;
         public Long companyId;
+    }
+
+    public  interface OnSiteVisitRequestLitener{
+        public void setEnquiryId(Long id);
     }
 }

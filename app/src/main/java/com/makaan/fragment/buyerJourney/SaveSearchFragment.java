@@ -571,29 +571,48 @@ public class SaveSearchFragment extends MakaanBaseFragment {
             for (String key : map.keySet()) {
                 if (KeyUtil.LOCALITY_ID.equalsIgnoreCase(key)) {
                     Properties properties = MakaanEventPayload.beginBatch();
-                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardSavedSearches);
                     properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.locality,
                             map.get(KeyUtil.LOCALITY_ID).get(0)));
-                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickSavedSearches);
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.click);
                     break;
 
                 } else if (KeyUtil.CITY_ID.equalsIgnoreCase(key)) {
                     Properties properties = MakaanEventPayload.beginBatch();
-                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardSavedSearches);
                     properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.city,
                             map.get(KeyUtil.CITY_ID).get(0)));
-                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickSavedSearches);
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.click);
                     break;
 
                 } else if (KeyUtil.BUILDER_ID.equalsIgnoreCase(key)) {
                     Properties properties = MakaanEventPayload.beginBatch();
-                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardSavedSearches);
                     properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.builder,
                             map.get(KeyUtil.BUILDER_ID).get(0)));
-                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickSavedSearches);
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.click);
                     break;
 
                 }
+                else if (KeyUtil.SELLER_ID.equalsIgnoreCase(key)) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardSavedSearches);
+                    properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.seller,
+                            map.get(KeyUtil.SELLER_ID).get(0)));
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.click);
+                    break;
+
+                }
+                else if (KeyUtil.PROJECT_ID.equalsIgnoreCase(key)) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardSavedSearches);
+                    properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", MakaanTrackerConstants.Label.project,
+                            map.get(KeyUtil.PROJECT_ID).get(0)));
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.click);
+                    break;
+
+                }
+
             }
         }
     }

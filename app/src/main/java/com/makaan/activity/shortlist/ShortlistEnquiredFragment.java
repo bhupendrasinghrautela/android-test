@@ -10,6 +10,8 @@ import android.widget.Toast;
 import com.makaan.R;
 import com.makaan.activity.shortlist.ShortListEnquiredAdapter.Enquiry;
 import com.makaan.activity.shortlist.ShortListEnquiredAdapter.EnquiryType;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
 import com.makaan.event.buyerjourney.SiteVisitEventGetEvent;
 import com.makaan.event.listing.ListingByIdGetEvent;
@@ -27,6 +29,7 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.ProjectService;
 import com.makaan.service.SuburbService;
 import com.makaan.util.ErrorUtil;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -37,7 +40,7 @@ import butterknife.Bind;
 /**
  * Created by makaanuser on 2/2/16.
  */
-public class ShortlistEnquiredFragment extends MakaanBaseFragment {
+public class ShortlistEnquiredFragment extends MakaanBaseFragment implements ShortListEnquiredAdapter.OnSiteVisitRequestLitener{
     @Bind(R.id.enquired_recycler_view)
     RecyclerView enquiredRecyclerView;
 
@@ -45,7 +48,9 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
     private ShortListEnquiredAdapter mAdapter;
     private int position;
     private ShortListCallback callback;
-    ArrayList<Long> mSellerIds;
+    private ArrayList<Long> mSellerIds;
+    private Long enquiryId;
+
 
     @Override
     protected int getContentViewId() {
@@ -83,8 +88,9 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
         if (mEnquiryHashMap == null) {
             mEnquiryHashMap = new LinkedHashMap<>();
         }
-        if (clientLeadsByGetEvent.results != null && clientLeadsByGetEvent.results.size() > 0) {
-            mAdapter = new ShortListEnquiredAdapter(getActivity());
+
+        if(clientLeadsByGetEvent.results!=null && clientLeadsByGetEvent.results.size()>0) {
+            mAdapter = new ShortListEnquiredAdapter(getActivity(),this);
             mSellerIds = new ArrayList<>();
             for (ClientLead clientLead : clientLeadsByGetEvent.results) {
                 if(clientLead.propertyRequirements != null) {
@@ -265,9 +271,16 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
             if (siteVisitEventGetEvent.error != null) {
                 Toast.makeText(getActivity(), siteVisitEventGetEvent.error.msg
                         , Toast.LENGTH_SHORT).show();
-            } else if (siteVisitEventGetEvent.isScheduled) {
-                Toast.makeText(getActivity(), getString(R.string.site_visit_scheduled)
-                        , Toast.LENGTH_SHORT).show();
+            }
+            else if(siteVisitEventGetEvent.isScheduled){
+                /*----- track events--------*/
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", enquiryId,
+                        MakaanTrackerConstants.Label.siteVisitOk));
+                MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.shortlistEnquire);
+                /*-------------------------*/
+                Toast.makeText(getActivity(),getString(R.string.site_visit_scheduled),Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -275,5 +288,10 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment {
     public void bindView(ShortListCallback shortListCallback, int i) {
         position = i;
         callback = shortListCallback;
+    }
+
+    @Override
+    public void setEnquiryId(Long id) {
+        enquiryId=id;
     }
 }
