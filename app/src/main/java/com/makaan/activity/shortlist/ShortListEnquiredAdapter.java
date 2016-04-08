@@ -388,11 +388,13 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
     @Override
     public void onSiteVisitClicked(final int position) {
         /*----- track events--------*/
+        if (mEnquiries != null && mEnquiries.get(position).id != null) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
             properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", mEnquiries.get(position).id,
                     MakaanTrackerConstants.Label.siteVisit));
             MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.shortlistEnquire);
+        }
         /*-------------------------*/
         if(onSiteVisitRequestLitener!=null && mEnquiries.get(position).id!=null){
             onSiteVisitRequestLitener.setEnquiryId( mEnquiries.get(position).id);

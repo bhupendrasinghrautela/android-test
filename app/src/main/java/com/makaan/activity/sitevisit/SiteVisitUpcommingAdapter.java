@@ -291,11 +291,13 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
     public void openDirections(int position) {
         Enquiry enquiry = mEnquiries.get(position);
         /*----- track events--------*/
-        Properties properties = MakaanEventPayload.beginBatch();
-        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardSiteVisits);
-        properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", mEnquiries.get(position).id,
-                MakaanTrackerConstants.Label.direction));
-        MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.click);
+        if (mEnquiries.get(position).id != null) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardSiteVisits);
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", mEnquiries.get(position).id,
+                    MakaanTrackerConstants.Label.direction));
+            MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.click);
+        }
         /*-------------------------*/
         if (enquiry.latitude == null || enquiry.longitude == null
                 || Double.isNaN(enquiry.latitude) || Double.isNaN(enquiry.longitude)) {
@@ -311,11 +313,13 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
     public void callNumber(int position) {
         Enquiry enquiry = mEnquiries.get(position);
         /*----- track events--------*/
-        Properties properties = MakaanEventPayload.beginBatch();
-        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardSiteVisits);
-        properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", mEnquiries.get(position).id,
-                MakaanTrackerConstants.Label.call));
-        MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.click);
+        if (mEnquiries.get(position).id != null) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardSiteVisits);
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", mEnquiries.get(position).id,
+                    MakaanTrackerConstants.Label.call));
+            MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.click);
+        }
         /*-------------------------*/
         if (enquiry.listingDetail == null) {
             return;
