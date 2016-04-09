@@ -11,6 +11,7 @@ import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.cookie.Session;
 import com.makaan.fragment.pyr.NoSellersFragment;
 import com.makaan.fragment.pyr.PyrPagePresenter;
@@ -47,7 +48,6 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mPagePresenter=PyrPagePresenter.getPyrPagePresenter();
         mPagePresenter.setReplaceFragment(this);
 
@@ -75,6 +75,7 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
                     return;
                 }
             }
+            sendBuyerDashboardEvent(screenName, cityId);
             mPagePresenter.setCityId(cityId!=null?cityId.intValue():0);
             mPagePresenter.prefillLocality(localityName, localityId, cityName ,
                     projectConfigItem, isBuySelected,screenName);
@@ -82,6 +83,17 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
 
         mPagePresenter.showPyrMainPageFragment();
         //mPagePresenter.setBuySelected(getIntent().getBooleanExtra(IS_BUY, false));
+    }
+
+    private void sendBuyerDashboardEvent(String string, Long cityId) {
+        /*-------------------track------------------event-------------------*/
+        if (!TextUtils.isEmpty(string) && string.equalsIgnoreCase(ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD)) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY, cityId));
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCaps);
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.pyrFormOpen);
+        /*-------------------------------------------------------------------*/
+        }
     }
 
     @Override
@@ -155,6 +167,6 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
 
     @Override
     public String getScreenName() {
-        return "Pyr";
+        return ScreenNameConstants.SCREEN_NAME_PYR;
     }
 }

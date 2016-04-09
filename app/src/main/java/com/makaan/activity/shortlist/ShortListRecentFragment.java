@@ -19,6 +19,7 @@ import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.overview.OverviewItemType;
@@ -162,6 +163,7 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
 
                             Intent intent = new Intent(getActivity(), LeadFormActivity.class);
                             try {
+                                intent.putExtra(KeyUtil.SOURCE_LEAD_FORM, ShortListRecentFragment.class.getName());
                                 intent.putExtra(KeyUtil.NAME_LEAD_FORM, dataObject.sellerName);
                                 intent.putExtra(KeyUtil.SCORE_LEAD_FORM, String.valueOf(dataObject.rating));
                                 intent.putExtra(KeyUtil.PHONE_LEAD_FORM, dataObject.phoneNo);//todo: not available in pojo
@@ -169,14 +171,33 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
                                 intent.putExtra(KeyUtil.CITY_NAME_LEAD_FORM, dataObject.cityName);
                                 intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, dataObject.listingCategory);
                                 intent.putExtra(KeyUtil.USER_ID, dataObject.userId);
+                                if(dataObject.id!=0) {
+                                    intent.putExtra(KeyUtil.LISTING_ID_LEAD_FORM, dataObject.id);
+                                }
 
                                 if(dataObject.listingCategory!=null && !TextUtils.isEmpty(dataObject.listingCategory)){
+                                    Properties properties1 = MakaanEventPayload.beginBatch();
+                                    properties1.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCaps);
+
                                     if(dataObject.listingCategory.equalsIgnoreCase("primary")||dataObject.listingCategory.equalsIgnoreCase("resale")){
                                         intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, "buy");
+                                        if(dataObject.id!=0) {
+                                            properties1.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY,
+                                                    dataObject.id));
+                                        }
                                     }
                                     else if(dataObject.listingCategory.equalsIgnoreCase("rental")){
                                         intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, "rent");
+                                        if(dataObject.id!=0) {
+                                            properties1.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.RENT,
+                                                    dataObject.id));
+                                        }
                                     }
+                                    else {
+                                        properties1.put(MakaanEventPayload.LABEL, String.format("%s_%s", "",""));
+                                    }
+                                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.leadFormOpen);
+
                                 }
                                 if(dataObject.cityId != 0) {
                                     intent.putExtra(KeyUtil.CITY_ID_LEAD_FORM, dataObject.cityId);

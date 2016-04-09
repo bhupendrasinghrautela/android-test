@@ -13,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -24,7 +23,10 @@ import com.android.volley.toolbox.ImageLoader;
 import com.appsflyer.AppsFlyerLib;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.constants.PreferenceConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.Session;
 import com.makaan.event.location.LocationGetEvent;
@@ -44,6 +46,7 @@ import com.makaan.util.ImageUtils;
 import com.makaan.util.JsonParser;
 import com.makaan.util.PermissionManager;
 import com.makaan.util.Preference;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
@@ -313,7 +316,7 @@ public class HomeActivity extends MakaanBaseSearchActivity {
 
     @Override
     public String getScreenName() {
-        return "Home";
+        return ScreenNameConstants.SCREEN_NAME_HOME;
     }
 
 

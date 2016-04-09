@@ -33,7 +33,9 @@ public class MakaanTrackerConstants {
         buyerSerpDetailView("Buyer_SERP_Detail View"),buyerSerpProperty("Buyer_SERP_Property"),buyerLead("Buyer_Lead"),buyerDashboardSavedSearches("Buyer_Dashboard_Saved Searches"),
         buyerDashboardSiteVisits("Buyer_Dashboard_Site Visits"),buyerDashboardFavourite("Buyer_Dashboard_Favourite"),buyerDashboardRecentlyViewed("Buyer_Dashboard_Recently Viewed"),
         buyerDashboardCashback("Buyer_Dashboard_Cashback"),buyerDashboardCashbackSeller("Buyer_Dashboard_Cashback Seller"),buyerDashboardCashbackListing("Buyer_Dashboard_Cashback Listing"),
-        buyerDashboardSellerRating("Buyer_Dashboard_seller Rating");
+        buyerDashboardSellerRating("Buyer_Dashboard_seller Rating"),serpLocality("SERP_Locality"),serpChild("SERP_Child"),
+        serpCity("SERP_City"),serpProject("SERP_Project"),serpBuilder("SERP_Builder"),serpSeller("SERP_Seller"),serpMap("SERP_Map"),serpLandMark("SERP_LandMark"),
+        city("City"),locality("Locality"),project("Project"),PropertyInCaps("Property"), buyerDashboardCaps("Buyer Dashboard"),jarvis("Jarvis");
 
         private String value;
 
@@ -97,9 +99,14 @@ public class MakaanTrackerConstants {
         clickShortListRecentlyViewed("CLICK_Shortlist_Recentlyviewed"),errorLogin("ERROR_Login"),errorPassword("ERROR_Password"),errorSignUp("ERROR_Sign Up"),
         sorryNoMatchingResultFound("Error_sorry, no matching results found"),errorNa("Error_N.A."),noPropertyMatchingSearch("Error_found no properties matching your search criteria"),
         clickCashback("CLICK_CashBack"),clickCashBackSeller("CLICK_Cashback_Seller"),clickCashBackListing("CLICK_Cashback_Listing"),
-        clickCashBackSellerRating("CLICK_Cashback_Seller Rating "),close("CLOSE"), click("CLICK"), view("VIEW"),
         search("SEARCH"),shortList("SHORTLIST"),map("MAP"),select("SELECT"),filter("FILTER"),sort("SORT"),call("CALL"),errorLeadForm("ERROR_Lead Form"),submit("SUBMIT"),
-        shortlistEnquire("SHORTLIST ENQUIRE");
+        shortlistEnquire("SHORTLIST ENQUIRE"), clickCashBackSellerRating("CLICK_Cashback_Seller Rating "),close("CLOSE"), click("CLICK"), view("VIEW"),
+        clickShortListFavCallConnect("CLICK_ShortList_Favourite_Call Connect time"), clickShortListRecentCallConnect("CLICK_ShortList_Recent_Call Connect time"),
+        fillShortListFavGetCallBack("FILL_ShortList_Favourite_Get Call Back"), fillShortListRecentGetCallBack("FILL_ShortList_Recent_Get Call Back"),
+        fillShortListFavCall("FILL_ShortList_Favourite_Call"),fillShortListRecentCall("FILL_ShortList_Recent_Call"),
+        screenName("screenName"),leadFormOpen("lead_form_open"),leadSubmitCallNow("lead_submit_call_now"),leadSubmitgetCallBAck("lead_submit_get_callback"),
+        leadSubmitConnectNow("lead_submit_connect_now"),leadStoredConnectNow("lead_stored_connect_now"),leadStoredGetCallBack("lead_stored_get_callback"),
+        pyrFormOpen("pyr_form_open"),pyrSubmit("pyr_submit"),pyrOtpSubmit("pyr_otp_submit"),leadStoredPyr("lead_stored_pyr");
 
         private String value;
 
@@ -135,12 +142,12 @@ public class MakaanTrackerConstants {
         errorWhileSubmitting("error while submitting"),notRegisteredUser("sorry! you are not a registered user."),searchString("Search string"),leadForm("Lead form"),
         getCashBack("Get Cashback"),addAnotherListing("Add Another Listing"),mAutoView("M_Auto_VIEW"),mAutoClick("M_Auto_CLICK"),serpScroll("SERP_SCROLL"),
         enquiryDroppedSimilarSuggestion("ENQUIRY_DROPPED_SIMLAR_LISTING_SUGGESTION"),contentPyr("Content_Pyr"),mAutoViewPyr("M_Auto_VIEW_Pyr"),
-        mAutoViewPyrYes("M_Auto_VIEW_Pyr_Yes"),shareYourDetails("Share your details"),callSeller("Call Seller"),getCallLaterFillCountry("Get_Call_Later_Fill Country"),
+        shareYourDetails("Share your details"),callSeller("Call Seller"),getCallLaterFillCountry("Get_Call_Later_Fill Country"),
         connectNowFillCountry("Connect_Now_Fill Country"),getCallLaterFillMobile("Get_Call_Later_Fill Mobile"),getCallLaterFillName("Get_Call_Later_Fill Name"),
         getCallLaterFillEmail("Get_Call_Later_Fill Email"),getCallBackSuccess("Get Callback Success"),connectNowSuccess("Connect Now Success"),
         connectNowFillMobile("Connect_Now_Fill Mobile"),connectNowFailure("Connect Now Failure"),getCallBackFailure("Get Callback Failure"),call("Call"),seller("Seller"),
         siteVisit("Site Visit"),siteVisitOk("Site Visit Ok"),direction("Direction"),homeLoan("Home Loan"),unitBook("Unit Book"),possesion("Possesion"),
-        registration("Registration");
+        registration("Registration"), mAutoViewPyrYes("M_Auto_VIEW_Pyr_Yes"),connectNowLeadNavigation("Connect_Now_LEAD Navigation");
 
         private String value;
 

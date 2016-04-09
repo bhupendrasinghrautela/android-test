@@ -11,6 +11,7 @@ import com.makaan.activity.city.CityOverViewFragment;
 import com.makaan.activity.listing.PropertyDetailFragment;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.city.CityByIdEvent;
 import com.makaan.event.listing.ListingByIdGetEvent;
@@ -41,10 +42,6 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
     public static final String LONGITUDE = "longitude";
     public static final String PLACE_NAME = "place_name";
 
-    public static final String SCREEN_NAME_LISTING_DETAIL = "listing detail";
-    public static final String SCREEN_NAME_PROJECT = "project";
-    public static final String SCREEN_NAME_LOCALITY = "locality";
-    public static final String SCREEN_NAME_CITY = "city";
     OverviewBackStack mOverviewBackStack = new OverviewBackStack();
 
     Long id;
@@ -82,15 +79,15 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
             switch (mType) {
                 case PROPERTY:
                 case PROPERTY_MAP:
-                    return SCREEN_NAME_LISTING_DETAIL;
+                    return ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL;
                 case PROJECT:
                 case PROJECT_MAP:
-                    return SCREEN_NAME_PROJECT;
+                    return ScreenNameConstants.SCREEN_NAME_PROJECT;
                 case LOCALITY:
                 case LOCALITY_MAP:
-                    return SCREEN_NAME_LOCALITY;
+                    return ScreenNameConstants.SCREEN_NAME_LOCALITY;
                 case CITY:
-                    return SCREEN_NAME_CITY;
+                    return ScreenNameConstants.SCREEN_NAME_CITY;
             }
         } else if(getIntent() != null && getIntent().getExtras() != null) {
             int type = getIntent().getExtras().getInt(TYPE, -1);
@@ -98,19 +95,19 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
                 switch (OverviewItemType.values()[type]) {
                     case PROPERTY:
                     case PROPERTY_MAP:
-                        return SCREEN_NAME_LISTING_DETAIL;
+                        return ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL;
                     case PROJECT:
                     case PROJECT_MAP:
-                        return SCREEN_NAME_PROJECT;
+                        return ScreenNameConstants.SCREEN_NAME_PROJECT;
                     case LOCALITY:
                     case LOCALITY_MAP:
-                        return SCREEN_NAME_LOCALITY;
+                        return ScreenNameConstants.SCREEN_NAME_LOCALITY;
                     case CITY:
-                        return SCREEN_NAME_CITY;
+                        return ScreenNameConstants.SCREEN_NAME_CITY;
                 }
             }
         }
-        return "Overview Activity";
+        return ScreenNameConstants.SCREEN_NAME_OVERVIEW_ACTIVITY;
     }
 
     @Override
@@ -352,24 +349,24 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
     private void trackEvents() {
     /* track event code [start] */
         if (mTotalImagesSeen > 0) {
-            if(SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(getScreenName())) {
+            if(ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(getScreenName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                 properties.put(MakaanEventPayload.LABEL, mTotalImagesSeen);
                 MakaanEventPayload.endBatch(getApplicationContext(), MakaanTrackerConstants.Action.clickPropertyImages);
-            } else if(SCREEN_NAME_PROJECT.equalsIgnoreCase(getScreenName())) {
+            } else if(ScreenNameConstants.SCREEN_NAME_PROJECT.equalsIgnoreCase(getScreenName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
                 properties.put(MakaanEventPayload.LABEL, mTotalImagesSeen);
                 MakaanEventPayload.endBatch(getApplicationContext(), MakaanTrackerConstants.Action.clickPropertyImages);
             }
         }
-        if(SCREEN_NAME_LOCALITY.equalsIgnoreCase(getScreenName())) {
+        if(ScreenNameConstants.SCREEN_NAME_LOCALITY.equalsIgnoreCase(getScreenName())) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.backToHome);
             MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickLocality);
-        } else if(SCREEN_NAME_CITY.equalsIgnoreCase(getScreenName())) {
+        } else if(ScreenNameConstants.SCREEN_NAME_CITY.equalsIgnoreCase(getScreenName())) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.backToHome);

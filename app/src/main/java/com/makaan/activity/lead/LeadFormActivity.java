@@ -10,8 +10,11 @@ import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.listing.PropertyDetailFragment;
 import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.shortlist.ShortListFavoriteAdapter;
+import com.makaan.activity.shortlist.ShortListRecentFragment;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.fragment.MakaanMessageDialogFragment;
 import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.network.VolleyErrorParser;
@@ -22,6 +25,7 @@ import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import butterknife.OnClick;
 
@@ -35,6 +39,8 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
     private long mListingId = -1;
     public String source;
     private boolean multipleSellers=false;
+    private static final int SINGLE_SELLER=1;
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_lead_form;
@@ -73,6 +79,7 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
         String cityName=this.getIntent().getExtras().getString(KeyUtil.CITY_NAME_LEAD_FORM);
         String salesType=this.getIntent().getExtras().getString(KeyUtil.SALE_TYPE_LEAD_FORM);
         String projectName=this.getIntent().getExtras().getString(KeyUtil.PROJECT_NAME_LEAD_FORM);
+        String serpSubCategory=this.getIntent().getExtras().getString(KeyUtil.SERP_SUB_CATEGORY);
         mLeadFormPresenter = LeadFormPresenter.getLeadFormPresenter();
         mLeadFormPresenter.setId(id);
         mLeadFormPresenter.setName(name);
@@ -83,6 +90,7 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
         mLeadFormPresenter.setProjectId(projectId);
         mLeadFormPresenter.setPropertyId(propertyId);
         mLeadFormPresenter.setUserId(userId);
+        mLeadFormPresenter.setSerpSubCategory(serpSubCategory);
 
         if(null!=projectName){
             mLeadFormPresenter.setProjectName(projectName);
@@ -165,7 +173,7 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
 
     @Override
     public String getScreenName() {
-        return "Lead";
+        return ScreenNameConstants.SCREEN_NAME_LEAD_FORM;
     }
 
     @Override
@@ -221,27 +229,65 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
             mLeadFormPresenter.getCallBackSuccess();
             if(source!=null && source.equalsIgnoreCase(SerpActivity.class.getName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
-                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
-                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBack);
-                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickSerpCallConnect);
+                properties.put(MakaanEventPayload.CATEGORY, mLeadFormPresenter.getSerpSubCategory());
+                properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(source));
+                if(multipleSellers){
+                    properties.put(MakaanEventPayload.VALUE, mLeadFormPresenter.getMultipleSellerIds().length);
+                }else {
+                    properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+                }
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.leadStoredGetCallBack);
             }
             else if(source!=null && source.equalsIgnoreCase(ProjectFragment.class.getName())){
                 Properties properties = MakaanEventPayload.beginBatch();
-                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
-                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBack);
-                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProjectCallConnect);
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.project);
+                properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(source));
+                if(multipleSellers){
+                    properties.put(MakaanEventPayload.VALUE, mLeadFormPresenter.getMultipleSellerIds().length);
+                }else {
+                    properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+                }
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.leadStoredGetCallBack);
             }
             else if(source!=null && source.equalsIgnoreCase(PropertyDetailFragment.class.getName())){
                 Properties properties = MakaanEventPayload.beginBatch();
-                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
-                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBack);
-                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickPropertyCallConnect);
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.PropertyInCaps);
+                properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(source));
+                if(multipleSellers){
+                    properties.put(MakaanEventPayload.VALUE, mLeadFormPresenter.getMultipleSellerIds().length);
+                }else {
+                    properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+                }
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.leadStoredGetCallBack);
             }
+            else if(source!=null && source.equalsIgnoreCase(ShortListFavoriteAdapter.class.getName())){
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCaps);
+                properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(source));
+                if(multipleSellers){
+                    properties.put(MakaanEventPayload.VALUE, mLeadFormPresenter.getMultipleSellerIds().length);
+                }else {
+                    properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+                }
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.leadStoredGetCallBack);
+            }
+            else if(source!=null && source.equalsIgnoreCase(ShortListRecentFragment.class.getName())){
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCaps);
+                properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(source));
+                if(multipleSellers){
+                    properties.put(MakaanEventPayload.VALUE, mLeadFormPresenter.getMultipleSellerIds().length);
+                }else {
+                    properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+                }
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.leadStoredGetCallBack);
+            }
+
             if(multipleSellers && !pyrPostResponse.getData().isOtpVerified()) {
                 mLeadFormPresenter.showPyrOtpFragment(pyrPostResponse.getData());
                 //fragment.setData(pyrPostResponse.getData());
             }else {
-                mLeadFormPresenter.showThankYouScreenFragment(false, false,2);
+                mLeadFormPresenter.showThankYouScreenFragment(false, false, 2);
             }
             setResult(RESULT_OK,new Intent().putExtra(KeyUtil.LISTING_ID, mListingId));
         }
@@ -263,24 +309,42 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
         }
         else if(instantCallbackResponse.getStatusCode().equals("2XX")){
             mLeadFormPresenter.instantCallSuccess();
-            if(source!=null && source.equalsIgnoreCase(SerpActivity.class.getName())){
+            if(source!=null && source.equalsIgnoreCase(SerpActivity.class.getName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
-                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
-                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.connectNow);
-                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickSerpCallConnect);
+                properties.put(MakaanEventPayload.CATEGORY, mLeadFormPresenter.getSerpSubCategory());
+                properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(source));
+                properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.leadStoredConnectNow);
             }
             else if(source!=null && source.equalsIgnoreCase(ProjectFragment.class.getName())){
                 Properties properties = MakaanEventPayload.beginBatch();
-                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
-                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.connectNow);
-                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProjectCallConnect);
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.project);
+                properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(source));
+                properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.leadStoredConnectNow);
             }
             else if(source!=null && source.equalsIgnoreCase(PropertyDetailFragment.class.getName())){
                 Properties properties = MakaanEventPayload.beginBatch();
-                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
-                properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.connectNow);
-                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickPropertyCallConnect);
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.PropertyInCaps);
+                properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(source));
+                properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.leadStoredConnectNow);
             }
+            else if(source!=null && source.equalsIgnoreCase(ShortListFavoriteAdapter.class.getName())){
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCaps);
+                properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(source));
+                properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.leadStoredConnectNow);
+            }
+            else if(source!=null && source.equalsIgnoreCase(ShortListRecentFragment.class.getName())){
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCaps);
+                properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(source));
+                properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+                MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.leadStoredConnectNow);
+            }
+
 
             mLeadFormPresenter.showThankYouScreenFragment(false, false,2);
             setResult(RESULT_OK, new Intent().putExtra(KeyUtil.LISTING_ID, mListingId));

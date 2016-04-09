@@ -70,6 +70,11 @@ public class PyrPagePresenter {
     private boolean fromProject;
     private Integer mCityId=null;
     ArrayList<TopAgent> mTopAgentsDatas;
+    public static final String SCREEN_NAME_PROJECT = "project";
+    public static final String SCREEN_NAME_LOCALITY = "locality";
+    public static final String SCREEN_NAME_CITY = "city";
+    public static final String BUYER_DASHBOARD="buyerdashboard";
+    public static final String JARVIS="jarvis";
 
     public ArrayList<TopAgent> getmTopAgentsDatas() {
         return mTopAgentsDatas;
@@ -799,27 +804,29 @@ public class PyrPagePresenter {
     public Action getScreenNameAction(String screenName){
 
         Action action=null;
-        switch (screenName){
+        if(!TextUtils.isEmpty(screenName)) {
+            switch (screenName.toLowerCase()) {
 
-            case "City":{
-                action= Action.submitCityTypePyr;
-                break;
-            }
-            case "Locality":{
-                action=Action.submitLocalityTypePyr;
-                break;
-            }
-            case "Project":{
-                action= Action.submitProjectTypePyr;
-                break;
-            }
-            case "BuyerDashboard":{
-                action=Action.submitDashboardTypePyr;
-                break;
-            }
-            case "Jarvis":{
-                action=Action.submitJarvisTypePyr;
-                break;
+                case SCREEN_NAME_CITY: {
+                    action = Action.submitCityTypePyr;
+                    break;
+                }
+                case SCREEN_NAME_LOCALITY: {
+                    action = Action.submitLocalityTypePyr;
+                    break;
+                }
+                case SCREEN_NAME_PROJECT: {
+                    action = Action.submitProjectTypePyr;
+                    break;
+                }
+                case BUYER_DASHBOARD: {
+                    action = Action.submitDashboardTypePyr;
+                    break;
+                }
+                case JARVIS: {
+                    action = Action.submitJarvisTypePyr;
+                    break;
+                }
             }
         }
         return action;
@@ -828,27 +835,29 @@ public class PyrPagePresenter {
     public Action getSelectSellersAction(String screenName){
 
         Action action=null;
-        switch (screenName){
+        if(!TextUtils.isEmpty(screenName)) {
+            switch (screenName) {
 
-            case "City":{
-                action= Action.selectCityPyrSellers;
-                break;
-            }
-            case "Locality":{
-                action=Action.selectLocalityPyrSellers;
-                break;
-            }
-            case "Project":{
-                action= Action.selectProjectPyrSellers;
-                break;
-            }
-            case "BuyerDashboard":{
-                action=Action.selectBuyerDashboardPyrSellers;
-                break;
-            }
-            case "Jarvis":{
-                action=Action.selectJarvisPyrSellers;
-                break;
+                case SCREEN_NAME_CITY: {
+                    action = Action.selectCityPyrSellers;
+                    break;
+                }
+                case SCREEN_NAME_LOCALITY: {
+                    action = Action.selectLocalityPyrSellers;
+                    break;
+                }
+                case SCREEN_NAME_PROJECT: {
+                    action = Action.selectProjectPyrSellers;
+                    break;
+                }
+                case BUYER_DASHBOARD: {
+                    action = Action.selectBuyerDashboardPyrSellers;
+                    break;
+                }
+                case JARVIS: {
+                    action = Action.selectJarvisPyrSellers;
+                    break;
+                }
             }
         }
         return action;
@@ -857,27 +866,29 @@ public class PyrPagePresenter {
     public Action getViewSellersAction(String screenName){
 
         Action action=null;
-        switch (screenName){
+        if(!TextUtils.isEmpty(screenName)) {
+            switch (screenName) {
 
-            case "City":{
-                action= Action.viewCityPyrSellers;
-                break;
-            }
-            case "Locality":{
-                action=Action.viewLocalityPyrSellers;
-                break;
-            }
-            case "Project":{
-                action= Action.viewProjectPyrSellers;
-                break;
-            }
-            case "BuyerDashboard":{
-                action=Action.viewBuyerDashboardPyrSellers;
-                break;
-            }
-            case "Jarvis":{
-                action=Action.viewJarvisPyrSellers;
-                break;
+                case SCREEN_NAME_CITY: {
+                    action = Action.viewCityPyrSellers;
+                    break;
+                }
+                case SCREEN_NAME_LOCALITY: {
+                    action = Action.viewLocalityPyrSellers;
+                    break;
+                }
+                case SCREEN_NAME_PROJECT: {
+                    action = Action.viewProjectPyrSellers;
+                    break;
+                }
+                case BUYER_DASHBOARD: {
+                    action = Action.viewBuyerDashboardPyrSellers;
+                    break;
+                }
+                case JARVIS: {
+                    action = Action.viewJarvisPyrSellers;
+                    break;
+                }
             }
         }
         return action;
@@ -886,29 +897,90 @@ public class PyrPagePresenter {
     public Action getOtpAction(String screenName){
 
         Action action=null;
-        switch (screenName){
+        if(!TextUtils.isEmpty(screenName)) {
+            switch (screenName) {
 
-            case "City":{
-                action= Action.selectCityPyrOtp;
-                break;
-            }
-            case "Locality":{
-                action=Action.selectLocalityPyrOtp;
-                break;
-            }
-            case "Project":{
-                action= Action.selectProjectPyrOtp;
-                break;
-            }
-            case "BuyerDashboard":{
-                action=Action.selectBuyerDashboardPyrOtp;
-                break;
-            }
-            case "Jarvis":{
-                action=Action.selectJarvisPyrOtp;
-                break;
+                case SCREEN_NAME_CITY: {
+                    action = Action.selectCityPyrOtp;
+                    break;
+                }
+                case SCREEN_NAME_LOCALITY: {
+                    action = Action.selectLocalityPyrOtp;
+                    break;
+                }
+                case SCREEN_NAME_PROJECT: {
+                    action = Action.selectProjectPyrOtp;
+                    break;
+                }
+                case BUYER_DASHBOARD: {
+                    action = Action.selectBuyerDashboardPyrOtp;
+                    break;
+                }
+                case JARVIS: {
+                    action = Action.selectJarvisPyrOtp;
+                    break;
+                }
             }
         }
         return action;
     }
+
+
+    public Category getCategoryForPyrSubmit(String screenName){
+        Category category=null;
+        if(!TextUtils.isEmpty(screenName)) {
+            switch (screenName.toLowerCase()) {
+
+                case SCREEN_NAME_CITY: {
+                    category = Category.city;
+                    break;
+                }
+                case SCREEN_NAME_LOCALITY: {
+                    category = Category.locality;
+                    break;
+                }
+                case SCREEN_NAME_PROJECT: {
+                    category = Category.project;
+                    break;
+                }
+                case BUYER_DASHBOARD: {
+                    category = Category.buyerDashboard;
+                    break;
+                }
+                case JARVIS: {
+                    category = Category.jarvis;
+                    break;
+                }
+            }
+        }
+        return category;
+    }
+
+    public String getLabelStringForPyrSubmit(PyrRequest pyrRequest){
+        StringBuilder builder=new StringBuilder();
+        String underScore="_";
+        String comma=",";
+        if(pyrRequest.getSalesType()!=null && pyrRequest.getSalesType().equals("buy")){
+            builder.append("Buy");
+            builder.append(underScore);
+        }
+        else if(pyrRequest.getSalesType()!=null&& pyrRequest.getSalesType().equals("rent")){
+            builder.append("Rent");
+            builder.append(underScore);
+        }
+
+        if(pyrRequest.getLocalityIds()!=null && pyrRequest.getLocalityIds().length>0){
+            builder.append(Arrays.toString(pyrRequest.getLocalityIds()));
+            builder.append(underScore);
+        }
+        else {
+            builder.append(" ");
+            builder.append(underScore);
+        }
+        if(mCityId!=null){
+            builder.append(mCityId);
+        }
+        return builder.toString();
+    }
+
 }

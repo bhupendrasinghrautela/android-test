@@ -22,8 +22,11 @@ import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.listing.PropertyDetailFragment;
 import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.shortlist.ShortListFavoriteAdapter;
+import com.makaan.activity.shortlist.ShortListRecentFragment;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.MakaanMessageDialogFragment;
@@ -84,6 +87,7 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
     private List<CountryCodeResponse.CountryCodeData> mCountries;
     private static final int MOSTLY_USED_COUNTRIES = 7;
     private boolean mobileFlag=true,defaultCountry=false;
+    private static final int SINGLE_SELLER=1;
 
     @Override
     protected int getContentViewId() {
@@ -152,6 +156,8 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
             }catch (Exception e){
                 //No impact don't do anything
             }
+            sendCallLaterEvent();
+
             mInstantCallButton.setText(getResources().getString(R.string.connecting));
             mInstantCallButton.setClickable(false);
             ((LeadInstantCallbackService) MakaanServiceFactory.getInstance().getService(LeadInstantCallbackService.class)).makeInstantCallbackRequest(
@@ -176,6 +182,18 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                 properties.put(MakaanEventPayload.LABEL, getActivity().getResources().getString(R.string.invalid_phone_no_toast));
                 MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickPropertyCallConnect);
+            }
+            else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(ShortListFavoriteAdapter.class.getName())) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                properties.put(MakaanEventPayload.LABEL, getActivity().getResources().getString(R.string.invalid_phone_no_toast));
+                MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickShortListFavCallConnect);
+            }
+            else if(bundle!=null && bundle.getString("source").equalsIgnoreCase(ShortListRecentFragment.class.getName())) {
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                properties.put(MakaanEventPayload.LABEL, getActivity().getResources().getString(R.string.invalid_phone_no_toast));
+                MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickShortListRecentCallConnect);
             }
             if(mNumber.getText().toString().trim().length()>0) {
                 /*Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.invalid_phone_no_toast),
@@ -262,26 +280,38 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = getArguments();
-                if (bundle != null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())&& defaultCountry) {
+                if (bundle != null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName()) && defaultCountry) {
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
                     properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.country);
                     MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillSerpCall);
 
-                } else if (bundle != null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName())&& defaultCountry) {
+                } else if (bundle != null && bundle.getString("source").equalsIgnoreCase(ProjectFragment.class.getName()) && defaultCountry) {
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProjectCall);
                     properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.country);
                     MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillProjectCall);
 
-                } else if (bundle != null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName())&& defaultCountry) {
+                } else if (bundle != null && bundle.getString("source").equalsIgnoreCase(PropertyDetailFragment.class.getName()) && defaultCountry) {
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                     properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.country);
                     MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillPropertyCall);
 
+                } else if (bundle != null && bundle.getString("source").equalsIgnoreCase(ShortListFavoriteAdapter.class.getName()) && defaultCountry) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                    properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.country);
+                    MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillShortListFavCall);
+
+                } else if (bundle != null && bundle.getString("source").equalsIgnoreCase(ShortListRecentFragment.class.getName()) && defaultCountry) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+                    properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.country);
+                    MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillShortListRecentCall);
+
                 }
-                defaultCountry=true;
+                defaultCountry = true;
                 if (position > MOSTLY_USED_COUNTRIES) {
                     position--;
                 }
@@ -322,6 +352,22 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
 
 
         }
+        else if (bundle != null && bundle.getString("source").equalsIgnoreCase(ShortListFavoriteAdapter.class.getName()) && mobileFlag) {
+            mobileFlag = false;
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.mobile);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillShortListFavCall);
+
+        } else if (bundle != null && bundle.getString("source").equalsIgnoreCase(ShortListRecentFragment.class.getName()) && mobileFlag) {
+            mobileFlag = false;
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.mobile);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.fillShortListRecentCall);
+
+
+        }
     }
 
     public void setSellerImage() {
@@ -334,7 +380,7 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
                     width, height, false), new CustomImageLoaderListener() {
                 @Override
                 public void onResponse(final ImageLoader.ImageContainer imageContainer, boolean b) {
-                    if(!isVisible()){
+                    if (!isVisible()) {
                         return;
                     }
                     if (b && imageContainer.getBitmap() == null) {
@@ -370,6 +416,45 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
     public void errorInInstantResponse(){
         mInstantCallButton.setClickable(true);
         mInstantCallButton.setText(getResources().getString(R.string.connect_now));
+    }
+
+    public void sendCallLaterEvent(){
+        Bundle bundle=getArguments();
+        if(bundle!=null && SerpActivity.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, mLeadFormPresenter.getSerpSubCategory());
+            properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(bundle.getString("source")));
+            properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.leadSubmitConnectNow);
+        }
+        else if(bundle!=null && ProjectFragment.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.project);
+            properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(bundle.getString("source")));
+            properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.leadSubmitConnectNow);
+        }
+        else if(bundle!=null && PropertyDetailFragment.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.PropertyInCaps);
+            properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(bundle.getString("source")));
+            properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.leadSubmitConnectNow);
+        }
+        else if(bundle!=null && ShortListFavoriteAdapter.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCaps);
+            properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(bundle.getString("source")));
+            properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.leadSubmitConnectNow);
+        }
+        else if(bundle!=null && ShortListRecentFragment.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCaps);
+            properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(bundle.getString("source")));
+            properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.leadSubmitConnectNow);
+        }
     }
 
 }

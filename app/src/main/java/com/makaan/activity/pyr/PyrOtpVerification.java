@@ -341,6 +341,11 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerPyr);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.success);
                 MakaanEventPayload.endBatch(getContext(), mPyrPagePresenter.getOtpAction(mPyrPagePresenter.getSourceScreenName()));
+
+                Properties properties1 = MakaanEventPayload.beginBatch();
+                properties1.put(MakaanEventPayload.CATEGORY, mPyrPagePresenter.getCategoryForPyrSubmit(mPyrPagePresenter.getSourceScreenName()));
+                properties1.put(MakaanEventPayload.LABEL, mPyrPagePresenter.getLabelStringForPyrSubmit(mPyrPagePresenter.getPyrRequestObject()));
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.pyrOtpSubmit);
             }
 
             if ((mPyrPagePresenter!=null && mPyrPagePresenter.isMakkanAssist())) {

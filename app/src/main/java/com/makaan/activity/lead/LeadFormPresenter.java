@@ -1,13 +1,23 @@
 package com.makaan.activity.lead;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 
+import com.makaan.activity.listing.PropertyDetailFragment;
+import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.pyr.PyrOtpVerification;
+import com.makaan.activity.shortlist.ShortListFavoriteAdapter;
+import com.makaan.activity.shortlist.ShortListRecentFragment;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.fragment.pyr.ThankYouScreenFragment;
 import com.makaan.request.pyr.PyrRequest;
 import com.makaan.response.pyr.PyrData;
+import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by proptiger on 7/1/16.
@@ -39,10 +49,19 @@ public class LeadFormPresenter {
     String sellerImageUrl;
     String cityName,salesType;
     String projectName;
+    String serpSubCategory;
     Long localityId;
     Long projectId;
     Long propertyId;
     Long userId;
+
+    public String getSerpSubCategory() {
+        return serpSubCategory;
+    }
+
+    public void setSerpSubCategory(String serpSubCategory) {
+        this.serpSubCategory = serpSubCategory;
+    }
 
     public Long getUserId() {
         return userId;
@@ -304,5 +323,32 @@ public class LeadFormPresenter {
         this.temporaryPhoneNo = temporaryPhoneNo;
     }
 
+    public String getSubmitStoredLabel(String source){
+        String string="";
+        if(!TextUtils.isEmpty(source)) {
+            if (source.equalsIgnoreCase(SerpActivity.class.getName())) {
+                return String.format("%s_%s_%s", projectOrListingId,cityId,id);
+            }
+            else if (source.equalsIgnoreCase(ProjectFragment.class.getName())) {
+                if(multipleSellerIds!=null && multipleSellerIds.length>0){
+                    return String.format("%s_%s_%s", projectId, cityId, Arrays.toString(multipleSellerIds));
+                }
+                return String.format("%s_%s_%s", projectId, cityId, id);
+            }
+            else if (source.equalsIgnoreCase(PropertyDetailFragment.class.getName())) {
+                if(multipleSellerIds!=null && multipleSellerIds.length>0){
+                    return String.format("%s_%s_%s", projectOrListingId, cityId, Arrays.toString(multipleSellerIds));
+                }
+                return String.format("%s_%s_%s", propertyId, cityId, id);
+            }
+            else if (source.equalsIgnoreCase(ShortListFavoriteAdapter.class.getName())) {
+                return String.format("%s_%s_%s", projectOrListingId, cityId, id);
+            }
+            else if (source.equalsIgnoreCase(ShortListRecentFragment.class.getName())){
+                return String.format("%s_%s_%s", projectOrListingId, cityId, id);
+            }
+        }
+        return string;
+    }
 
 }

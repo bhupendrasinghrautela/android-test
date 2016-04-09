@@ -26,6 +26,7 @@ import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.jarvis.analytics.AnalyticsConstants;
 import com.makaan.jarvis.analytics.AnalyticsService;
@@ -428,6 +429,17 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                         card.setOnApplyClickListener(new SerpFilterCard.OnApplyClickListener() {
                             @Override
                             public void onApplyClick() {
+                                 /*-------------------track------------------event-------------------*/
+                                Properties properties = MakaanEventPayload.beginBatch();
+                                if(getCityId()!=null) {
+                                    properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY,getCityId()));
+                                }else {
+                                    properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY,""));
+                                }
+                                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.jarvis);
+                                MakaanEventPayload.endBatch(BaseJarvisActivity.this, MakaanTrackerConstants.Action.pyrFormOpen);
+                                /*-------------------------------------------------------------------*/
+
                                 Intent pyrIntent = new Intent(BaseJarvisActivity.this, PyrPageActivity.class);
                                 pyrIntent.putExtra(PyrPageActivity.SOURCE_SCREEN_NAME, "Jarvis");
 
@@ -528,7 +540,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
     private boolean shouldTrackUserActiveness(){
         // todo discuss if we need to omit PropertyActivity
         return this instanceof SerpActivity || (this instanceof OverviewActivity
-                && !OverviewActivity.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(getScreenName()));
+                && !ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(getScreenName()));
 
     }
 

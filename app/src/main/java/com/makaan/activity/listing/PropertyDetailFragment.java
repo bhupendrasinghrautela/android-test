@@ -33,6 +33,7 @@ import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.constants.ImageConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.image.ImagesGetEvent;
 import com.makaan.event.listing.ListingByIdGetEvent;
@@ -273,11 +274,6 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
 
     @OnClick(R.id.contact_seller)
     public void openContactSeller(){
-        Properties properties = MakaanEventPayload.beginBatch();
-        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.contactSeller);
-        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
-        MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyOverview);
-
         if(mListingDetail != null &&
                 mListingDetail.companySeller != null &&
                 mListingDetail.companySeller.user !=null) {
@@ -312,12 +308,45 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
                     intent.putExtra(KeyUtil.LISTING_ID_LEAD_FORM, mListingDetail.id);
                 }
                 if(mListingDetail!=null && mListingDetail.listingCategory!=null && !TextUtils.isEmpty(mListingDetail.listingCategory)){
+                    /*-------------------track------------------event-------------------*/
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.PropertyInCaps);
+                    /*-------------------------------------------------------------------*/
                     if(mListingDetail.listingCategory.equalsIgnoreCase("primary")||mListingDetail.listingCategory.equalsIgnoreCase("resale")){
                         intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, "buy");
+                        /*-------------------track------------------event-------------------*/
+                        if(mListingDetail.propertyId!=null) {
+                            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY, mListingDetail.propertyId));
+                        }else {
+                            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY, ""));
+                        }
+                        /*-------------------------------------------------------------------*/
+
                     }
                     else if(mListingDetail.listingCategory.equalsIgnoreCase("rental")){
                         intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, "rent");
+                        /*-------------------track------------------event-------------------*/
+                        if(mListingDetail.propertyId!=null) {
+                            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.RENT, mListingDetail.propertyId));
+                        }else {
+                            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.RENT, ""));
+                        }
+                        /*-------------------------------------------------------------------*/
                     }
+                    MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.leadFormOpen);
+                }
+                else {
+                    /*-------------------track------------------event-------------------*/
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.PropertyInCaps);
+                    if(mListingDetail!=null && mListingDetail.id!=null) {
+                        properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", "", mListingDetail.id));
+                    }else {
+                        properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", "", ""));
+                    }
+                    MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.leadFormOpen);
+                    /*-------------------------------------------------------------------*/
+
                 }
 
                 if(mListingDetail!=null && mListingDetail.property!=null && mListingDetail.property.project!=null &&
