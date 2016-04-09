@@ -350,11 +350,11 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
         String launchPage=getScreenName();
         if(!TextUtils.isEmpty(launchPage)) {
             switch (launchPage.toLowerCase()) {
-                case "project":
-                case "listing detail":
-                case "serp":
-                case "city":
-                case "locality":
+                case ScreenNameConstants.SCREEN_NAME_PROJECT:
+                case ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL:
+                case ScreenNameConstants.SCREEN_NAME_SERP:
+                case ScreenNameConstants.SCREEN_NAME_CITY:
+                case ScreenNameConstants.SCREEN_NAME_LOCALITY:
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMManual);
                     properties.put(MakaanEventPayload.LABEL, launchPage.toLowerCase());

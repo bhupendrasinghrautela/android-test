@@ -45,6 +45,7 @@ import com.makaan.adapter.listing.SearchAdapter;
 import com.makaan.adapter.listing.SelectedSearchAdapter;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.cookie.Session;
 import com.makaan.fragment.MakaanMessageDialogFragment;
@@ -438,7 +439,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         if(mSerpContext==SERP_CONTEXT_BUY){
 
             switch(getScreenName().toLowerCase()){
-                case "home":{
+                case ScreenNameConstants.SCREEN_NAME_HOME:{
 
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerHome);
@@ -461,7 +462,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                     MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchHomeBuyRank);
                     break;
                 }
-                case "project":{
+                case ScreenNameConstants.SCREEN_NAME_PROJECT:{
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
                     properties.put(MakaanEventPayload.KEYWORD, mSearchEditText.getText().toString());
@@ -483,7 +484,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                     MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchProjectBuyRank);
                     break;
                 }
-                case "listing detail":{
+                case ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL:{
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                     properties.put(MakaanEventPayload.KEYWORD, mSearchEditText.getText().toString());
@@ -504,7 +505,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                     MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchPropertyBuyRank);
                     break;
                 }
-                case "serp":{
+                case ScreenNameConstants.SCREEN_NAME_SERP:{
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
                     properties.put(MakaanEventPayload.KEYWORD, mSearchEditText.getText().toString());
@@ -533,7 +534,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         else if(mSerpContext==SERP_CONTEXT_RENT)  {
 
             switch(getScreenName().toLowerCase()){
-                case "home":{
+                case ScreenNameConstants.SCREEN_NAME_HOME:{
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerHome);
                     properties.put(MakaanEventPayload.KEYWORD, mSearchEditText.getText().toString());
@@ -554,7 +555,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                     MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchHomeRentRank);
                     break;
                 }
-                case "project":{
+                case ScreenNameConstants.SCREEN_NAME_PROJECT:{
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
                     properties.put(MakaanEventPayload.KEYWORD, mSearchEditText.getText().toString());
@@ -575,7 +576,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                     MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchProjectRentRank);
                     break;
                 }
-                case "listing detail":{
+                case ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL:{
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                     properties.put(MakaanEventPayload.KEYWORD, mSearchEditText.getText().toString());
@@ -596,7 +597,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                     MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.searchPropertyRentRank);
                     break;
                 }
-                case "serp":{
+                case ScreenNameConstants.SCREEN_NAME_SERP:{
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
                     properties.put(MakaanEventPayload.KEYWORD, mSearchEditText.getText().toString());
@@ -770,22 +771,22 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     @OnClick({R.id.activity_search_base_layout_search_bar_back_layout,
             R.id.activity_search_base_layout_search_bar_back_button})
     public void onUpPressed(View view) {
-        switch(getScreenName()){
-            case "Project":{
+        switch(getScreenName().toLowerCase()){
+            case ScreenNameConstants.SCREEN_NAME_HOME:{
                 Properties properties=MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.backToHome);
                 MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProject);
                 break;
             }
-            case "Listing detail":{
+            case ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL:{
                 Properties properties=MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.backToHome);
                 MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProperty);
                 break;
             }
-            case "serp":{
+            case ScreenNameConstants.SCREEN_NAME_SERP:{
                 Properties properties=MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.backToHome);
@@ -1287,22 +1288,22 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     @OnClick(R.id.activity_search_toolbar_profile_icon)
     public void click(){
 //        Log.e("screen ","name"+getScreenName());
-        switch(getScreenName()){
-            case "Project":{
+        switch(getScreenName().toLowerCase()){
+            case ScreenNameConstants.SCREEN_NAME_PROJECT:{
                 Properties properties= MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.myAccount);
                 MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProject);
                 break;
             }
-            case "Listing detail":{
+            case ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL:{
                 Properties properties=MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.myAccount);
                 MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProperty);
                 break;
             }
-            case "serp":{
+            case ScreenNameConstants.SCREEN_NAME_SERP:{
                 Properties properties=MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.myAccount);

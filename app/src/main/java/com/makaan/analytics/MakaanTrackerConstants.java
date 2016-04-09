@@ -104,9 +104,10 @@ public class MakaanTrackerConstants {
         clickShortListFavCallConnect("CLICK_ShortList_Favourite_Call Connect time"), clickShortListRecentCallConnect("CLICK_ShortList_Recent_Call Connect time"),
         fillShortListFavGetCallBack("FILL_ShortList_Favourite_Get Call Back"), fillShortListRecentGetCallBack("FILL_ShortList_Recent_Get Call Back"),
         fillShortListFavCall("FILL_ShortList_Favourite_Call"),fillShortListRecentCall("FILL_ShortList_Recent_Call"),
-        screenName("screenName"),leadFormOpen("lead_form_open"),leadSubmitCallNow("lead_submit_call_now"),leadSubmitgetCallBAck("lead_submit_get_callback"),
+        screenName("screenName"),leadFormOpen("Lead Form Open"),leadSubmitCallNow("lead_submit_call_now"),leadSubmitgetCallBAck("lead_submit_get_callback"),
         leadSubmitConnectNow("lead_submit_connect_now"),leadStoredConnectNow("lead_stored_connect_now"),leadStoredGetCallBack("lead_stored_get_callback"),
-        pyrFormOpen("pyr_form_open"),pyrSubmit("pyr_submit"),pyrOtpSubmit("pyr_otp_submit"),leadStoredPyr("lead_stored_pyr");
+        pyrFormOpen("PYR Form Open"),pyrSubmit("pyr_submit"),pyrOtpSubmit("pyr_otp_submit"),leadStoredPyr("lead_stored_pyr"),setAlertSubmit("set_alert_submit"),
+        setAlertOpen("Set Alert Open");
 
         private String value;
 

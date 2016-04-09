@@ -975,12 +975,13 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             startActivityForResult(intent, LeadFormActivity.LEAD_DROP_REQUEST);
 
         } else if(type == REQUEST_SET_ALERT) {
+            sendSetAlertEvent();
             FragmentTransaction ft = this.getFragmentManager().beginTransaction();
             SetAlertsDialogFragment dialog = new SetAlertsDialogFragment();
             if(mSerpBackStack.peek() != null) {
-                dialog.setData(mFilterGroups, mSerpBackStack.peek(), mSerpContext == SERP_CONTEXT_BUY, this);
+                dialog.setData(mFilterGroups, mSerpBackStack.peek(), mSerpContext == SERP_CONTEXT_BUY, this, getSerpSubCategory());
             } else {
-                dialog.setData(mFilterGroups, mListingGetEvent, mSerpContext == SERP_CONTEXT_BUY, this);
+                dialog.setData(mFilterGroups, mListingGetEvent, mSerpContext == SERP_CONTEXT_BUY, this , getSerpSubCategory());
             }
             dialog.show(ft, "Set Alerts");
         } else if(type == REQUEST_MPLUS_POPUP) {
@@ -1336,6 +1337,41 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         }
     }
 
+    public String getSerpSubCategory(){
+        String string="";
+        if (mSerpRequestType != 0) {
+
+            switch (mSerpRequestType & MASK_LISTING_TYPE) {
+
+                case TYPE_BUILDER:{
+                    return  MakaanTrackerConstants.Category.serpBuilder.getValue();
+                }
+                case TYPE_SELLER :{
+                    return MakaanTrackerConstants.Category.serpSeller.getValue();
+                }
+                case TYPE_CITY:{
+                    return  MakaanTrackerConstants.Category.serpCity.getValue();
+                }
+                case TYPE_PROJECT:{
+                    return  MakaanTrackerConstants.Category.serpProject.getValue();
+                }
+                case TYPE_SEARCH: {
+                    return  MakaanTrackerConstants.Category.serpLocality.getValue();
+                }
+                case TYPE_NEARBY: {
+                    return  MakaanTrackerConstants.Category.serpMap.getValue();
+                }
+                case TYPE_GPID: {
+                    return   MakaanTrackerConstants.Category.serpLandMark.getValue();
+                }
+                case TYPE_CLUSTER: {
+                    return  MakaanTrackerConstants.Category.serpChild.getValue();
+                }
+            }
+        }
+        return string;
+    }
+
     public void getSerpContextLabel(Properties properties){
         if(mSerpContext==SERP_CONTEXT_BUY){
             properties.put(MakaanEventPayload.LABEL, String.format("%s_%s",
@@ -1346,5 +1382,19 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                     ScreenNameConstants.RENT,properties.get(MakaanEventPayload.LABEL)));
         }
     }
+
+    private void sendSetAlertEvent() {
+         /*--------------------track-----------------events------------*/
+        Properties properties = MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY, getSerpSubCategory());
+        if(mSerpContext==SERP_CONTEXT_BUY) {
+            properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.BUY);
+        }else {
+            properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.RENT);
+        }
+        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.setAlertOpen);
+        /*---------------------------------------------------------------------*/
+    }
+
 
 }

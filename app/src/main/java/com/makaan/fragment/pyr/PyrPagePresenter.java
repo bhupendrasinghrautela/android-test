@@ -10,6 +10,7 @@ import com.makaan.activity.pyr.PyrOtpVerification;
 
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.notification.GcmPreferences;
 import com.makaan.pojo.ProjectConfigItem;
 import com.makaan.pojo.SerpRequest;
@@ -807,19 +808,19 @@ public class PyrPagePresenter {
         if(!TextUtils.isEmpty(screenName)) {
             switch (screenName.toLowerCase()) {
 
-                case SCREEN_NAME_CITY: {
+                case ScreenNameConstants.SCREEN_NAME_CITY: {
                     action = Action.submitCityTypePyr;
                     break;
                 }
-                case SCREEN_NAME_LOCALITY: {
+                case ScreenNameConstants.SCREEN_NAME_LOCALITY: {
                     action = Action.submitLocalityTypePyr;
                     break;
                 }
-                case SCREEN_NAME_PROJECT: {
+                case ScreenNameConstants.SCREEN_NAME_PROJECT: {
                     action = Action.submitProjectTypePyr;
                     break;
                 }
-                case BUYER_DASHBOARD: {
+                case ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD: {
                     action = Action.submitDashboardTypePyr;
                     break;
                 }
@@ -838,19 +839,19 @@ public class PyrPagePresenter {
         if(!TextUtils.isEmpty(screenName)) {
             switch (screenName) {
 
-                case SCREEN_NAME_CITY: {
+                case  ScreenNameConstants.SCREEN_NAME_CITY: {
                     action = Action.selectCityPyrSellers;
                     break;
                 }
-                case SCREEN_NAME_LOCALITY: {
+                case ScreenNameConstants.SCREEN_NAME_LOCALITY: {
                     action = Action.selectLocalityPyrSellers;
                     break;
                 }
-                case SCREEN_NAME_PROJECT: {
+                case ScreenNameConstants.SCREEN_NAME_PROJECT: {
                     action = Action.selectProjectPyrSellers;
                     break;
                 }
-                case BUYER_DASHBOARD: {
+                case ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD: {
                     action = Action.selectBuyerDashboardPyrSellers;
                     break;
                 }
@@ -869,19 +870,19 @@ public class PyrPagePresenter {
         if(!TextUtils.isEmpty(screenName)) {
             switch (screenName) {
 
-                case SCREEN_NAME_CITY: {
+                case ScreenNameConstants.SCREEN_NAME_CITY: {
                     action = Action.viewCityPyrSellers;
                     break;
                 }
-                case SCREEN_NAME_LOCALITY: {
+                case ScreenNameConstants.SCREEN_NAME_LOCALITY: {
                     action = Action.viewLocalityPyrSellers;
                     break;
                 }
-                case SCREEN_NAME_PROJECT: {
+                case ScreenNameConstants.SCREEN_NAME_PROJECT: {
                     action = Action.viewProjectPyrSellers;
                     break;
                 }
-                case BUYER_DASHBOARD: {
+                case ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD: {
                     action = Action.viewBuyerDashboardPyrSellers;
                     break;
                 }
@@ -900,19 +901,19 @@ public class PyrPagePresenter {
         if(!TextUtils.isEmpty(screenName)) {
             switch (screenName) {
 
-                case SCREEN_NAME_CITY: {
+                case ScreenNameConstants.SCREEN_NAME_CITY: {
                     action = Action.selectCityPyrOtp;
                     break;
                 }
-                case SCREEN_NAME_LOCALITY: {
+                case ScreenNameConstants.SCREEN_NAME_LOCALITY: {
                     action = Action.selectLocalityPyrOtp;
                     break;
                 }
-                case SCREEN_NAME_PROJECT: {
+                case ScreenNameConstants.SCREEN_NAME_PROJECT: {
                     action = Action.selectProjectPyrOtp;
                     break;
                 }
-                case BUYER_DASHBOARD: {
+                case ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD: {
                     action = Action.selectBuyerDashboardPyrOtp;
                     break;
                 }
@@ -931,19 +932,19 @@ public class PyrPagePresenter {
         if(!TextUtils.isEmpty(screenName)) {
             switch (screenName.toLowerCase()) {
 
-                case SCREEN_NAME_CITY: {
+                case ScreenNameConstants.SCREEN_NAME_CITY: {
                     category = Category.city;
                     break;
                 }
-                case SCREEN_NAME_LOCALITY: {
+                case ScreenNameConstants.SCREEN_NAME_LOCALITY: {
                     category = Category.locality;
                     break;
                 }
-                case SCREEN_NAME_PROJECT: {
+                case ScreenNameConstants.SCREEN_NAME_PROJECT: {
                     category = Category.project;
                     break;
                 }
-                case BUYER_DASHBOARD: {
+                case ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD: {
                     category = Category.buyerDashboard;
                     break;
                 }
