@@ -113,7 +113,7 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment implements Sho
                                 enquiry.type = EnquiryType.SUBURB;
                                 // todo change to suburb call
                                 ((SuburbService) MakaanServiceFactory.getInstance().getService(SuburbService.class)).getSuburbByIdForEnquiry(propertyRequirement.suburbId);
-                            } else if (propertyRequirement.bedroom != null) {
+                            } else if (propertyRequirement.bedrooms != null && propertyRequirement.bedrooms.length > 0) {
                                 enquiry.type = EnquiryType.BEDROOM;
                             } /*else if (propertyRequirement.areaUnitTypeId != null) {
                                 enquiry.type = EnquiryType.UNIT_TYPE;

@@ -1097,7 +1097,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         }
 
 
-        if(null==searchResultEvent || null!=searchResultEvent.error) {
+        if (null == searchResultEvent || null == searchResultEvent.searchResponse || null != searchResultEvent.error) {
             if(searchResultEvent.error != null && !TextUtils.isEmpty(searchResultEvent.error.msg)) {
                 addErrorSearchItem(searchResultEvent.error.msg);
             } else {
