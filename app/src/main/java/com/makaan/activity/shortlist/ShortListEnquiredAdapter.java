@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
@@ -18,6 +20,7 @@ import android.widget.DatePicker;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.activity.shortlist.ShortListEnquiredViewHolder.ScheduleSiteVisit;
@@ -42,6 +45,7 @@ import com.makaan.util.CommonUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.JsonBuilder;
 import com.segment.analytics.Properties;
+import com.makaan.util.StringUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,6 +53,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Created by makaanuser on 2/2/16.
@@ -121,17 +126,22 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
                 shortListEnquiredViewHolder.mAddress.setText("");
             }
         } else if (enquiry.type == EnquiryType.BEDROOM) {
-            // todo change this image
-            shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.seller_placeholder);
-            if (enquiry.propertyRequirement != null && enquiry.propertyRequirement.bedroom != null) {
-                // todo bedroom value is wrong, need change from icrm team
-                shortListEnquiredViewHolder.mAddress.setText(enquiry.propertyRequirement.bedroom + "bhk");
+            shortListEnquiredViewHolder.mMainImage.setLocalImageBitmap(getRandomPlaceholder(position));
+            if (enquiry.propertyRequirement != null && enquiry.propertyRequirement.bedrooms != null && enquiry.propertyRequirement.bedrooms.length > 0) {
+                String separator = "";
+                StringBuilder builder = new StringBuilder();
+                for(int bedroom : enquiry.propertyRequirement.bedrooms) {
+                    builder.append(separator);
+                    builder.append(String.valueOf(bedroom));
+                    separator = ",";
+                }
+                builder.append(" bhk");
+                shortListEnquiredViewHolder.mAddress.setText(builder.toString());
             } else {
                 shortListEnquiredViewHolder.mAddress.setText("");
             }
         } /*else if (enquiry.type == EnquiryType.UNIT_TYPE) {
-            // todo change this image
-            shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.seller_placeholder);
+            shortListEnquiredViewHolder.mMainImage.setLocalImageBitmap(getRandomPlaceholder());
             if (enquiry.propertyRequirement != null && enquiry.propertyRequirement.areaUnitTypeId != null) {
                 // todo bedroom value is wrong, need change from icrm team
                 shortListEnquiredViewHolder.mAddress.setText(String.valueOf(enquiry.propertyRequirement.areaUnitTypeId) + "(unit)");
@@ -139,22 +149,21 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
                 shortListEnquiredViewHolder.mAddress.setText("");
             }
         }*/ else if (enquiry.type == EnquiryType.BUDGET) {
-            // todo change this image
-            shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.seller_placeholder);
+            shortListEnquiredViewHolder.mMainImage.setLocalImageBitmap(getRandomPlaceholder(position));
             if (enquiry.propertyRequirement != null) {
                 if (enquiry.propertyRequirement.minBudget != null
                         && enquiry.propertyRequirement.maxBudget != null) {
                     if(enquiry.propertyRequirement.minBudget.equals(enquiry.propertyRequirement.maxBudget)) {
-                        shortListEnquiredViewHolder.mAddress.setText("\u20B9".concat(String.valueOf(enquiry.propertyRequirement.minBudget)));
+                        shortListEnquiredViewHolder.mAddress.setText(StringUtil.getDisplayPrice(enquiry.propertyRequirement.minBudget));
                     } else {
                         shortListEnquiredViewHolder.mAddress.setText(
-                                "\u20B9".concat(String.valueOf(enquiry.propertyRequirement.minBudget))
-                                        .concat(" - ").concat(String.valueOf(enquiry.propertyRequirement.maxBudget)));
+                                StringUtil.getDisplayPrice(enquiry.propertyRequirement.minBudget)
+                                        .concat(" - ").concat(StringUtil.getDisplayPrice(enquiry.propertyRequirement.maxBudget)));
                     }
                 } else if (enquiry.propertyRequirement.minBudget != null) {
-                    shortListEnquiredViewHolder.mAddress.setText("\u20B9".concat(String.valueOf(enquiry.propertyRequirement.minBudget)));
+                    shortListEnquiredViewHolder.mAddress.setText(StringUtil.getDisplayPrice(enquiry.propertyRequirement.minBudget));
                 } else if (enquiry.propertyRequirement.maxBudget != null) {
-                    shortListEnquiredViewHolder.mAddress.setText("\u20B9".concat(String.valueOf(enquiry.propertyRequirement.maxBudget)));
+                    shortListEnquiredViewHolder.mAddress.setText(StringUtil.getDisplayPrice(enquiry.propertyRequirement.maxBudget));
                 } else {
                     shortListEnquiredViewHolder.mAddress.setText("");
                 }
@@ -162,8 +171,7 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
                 shortListEnquiredViewHolder.mAddress.setText("");
             }
         } else if (enquiry.type == EnquiryType.SIZE) {
-            // todo change this image
-            shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.seller_placeholder);
+            shortListEnquiredViewHolder.mMainImage.setLocalImageBitmap(getRandomPlaceholder(position));
             if (enquiry.propertyRequirement != null) {
                 if (enquiry.propertyRequirement.minSize != null
                         && enquiry.propertyRequirement.maxSize != null) {
@@ -179,8 +187,7 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
                 shortListEnquiredViewHolder.mAddress.setText("");
             }
         } else if (enquiry.type == EnquiryType.LAT_LON) {
-            // todo change this image
-            shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.seller_placeholder);
+            shortListEnquiredViewHolder.mMainImage.setLocalImageBitmap(getRandomPlaceholder(position));
             if (enquiry.propertyRequirement != null) {
                 if (enquiry.propertyRequirement.latitude != null
                         && enquiry.propertyRequirement.longitude != null) {
@@ -197,8 +204,7 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
                 shortListEnquiredViewHolder.mAddress.setText("");
             }
         } else if (enquiry.type == EnquiryType.RADIUS) {
-            // todo change this image
-            shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.seller_placeholder);
+            shortListEnquiredViewHolder.mMainImage.setLocalImageBitmap(getRandomPlaceholder(position));
             if (enquiry.propertyRequirement != null && enquiry.propertyRequirement.radiusKm != null) {
                 if (enquiry.propertyRequirement.latitude != null
                         && enquiry.propertyRequirement.longitude != null) {
@@ -208,7 +214,7 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
             } else {
                 shortListEnquiredViewHolder.mAddress.setText("");
             }
-        } else if(enquiry.type == EnquiryType.SELLER){
+        } else if(enquiry.type == EnquiryType.SELLER) {
             shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.seller_placeholder);
 
             shortListEnquiredViewHolder.mAddress.setText("");
@@ -217,6 +223,43 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
         }
 
         populateCompanyInfo(shortListEnquiredViewHolder, enquiry);
+    }
+
+
+    private Bitmap getRandomPlaceholder(int position) {
+        int id;
+        String imageName;
+        switch (position % 5) {
+            case 0:
+                id = R.drawable.luxury_properties;
+                imageName = "luxury_properties";
+                break;
+            case 1:
+                id = R.drawable.recent_properties;
+                imageName = "recent_properties";
+                break;
+            case 2:
+                id = R.drawable.budget_homes;
+                imageName = "budget_homes";
+                break;
+            case 3:
+                id = R.drawable.popular_properties;
+                imageName = "popular_properties";
+                break;
+            default:
+                id = R.drawable.new_rental_properties;
+                imageName = "new_rental_properties";
+                break;
+        }
+
+        Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap(imageName);
+        if (bitmap != null) {
+            return bitmap;
+        } else {
+            Bitmap b = BitmapFactory.decodeResource(mContext.getResources(), id);
+            MakaanBuyerApplication.bitmapCache.putBitmap(imageName, b);
+            return b;
+        }
     }
 
     private void populateSuburbDetail(Suburb suburb, ShortListEnquiredViewHolder holder) {
@@ -285,11 +328,15 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
         StringBuilder name = new StringBuilder();
         if (listingDetail.property != null) {
             Property property = listingDetail.property;
-            if (property.bedrooms != null) {
-                name.append(property.bedrooms).append("bhk ");
-            }
-            if (property.unitType != null) {
-                name.append(property.unitType);
+            if(property.unitType != null && "plot".equalsIgnoreCase(property.unitType)) {
+                name.append("residential plot");
+            } else {
+                if (property.bedrooms != null) {
+                    name.append(property.bedrooms).append("bhk ");
+                }
+                if (property.unitType != null) {
+                    name.append(property.unitType);
+                }
             }
             name.append("\n");
             if (property.project != null && property.project.locality != null) {

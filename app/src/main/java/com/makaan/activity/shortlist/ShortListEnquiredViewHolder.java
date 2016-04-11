@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
+import com.makaan.ui.CustomNetworkImageView;
 import com.makaan.ui.view.CustomRatingBar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -15,7 +16,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by makaanuser on 2/2/16.
  */
 public class ShortListEnquiredViewHolder extends RecyclerView.ViewHolder {
-    public FadeInNetworkImageView mMainImage;
+    public CustomNetworkImageView mMainImage;
     public TextView mAddress;
     public TextView mName;
     public TextView mSellerText;
@@ -32,7 +33,7 @@ public class ShortListEnquiredViewHolder extends RecyclerView.ViewHolder {
 
     public ShortListEnquiredViewHolder(View itemView) {
         super(itemView);
-        mMainImage = (FadeInNetworkImageView) itemView.findViewById(R.id.iv_content);
+        mMainImage = (CustomNetworkImageView) itemView.findViewById(R.id.iv_content);
         mAddress = (TextView) itemView.findViewById(R.id.address);
         mName = (TextView) itemView.findViewById(R.id.name);
         mSellerImage = (CircleImageView) itemView.findViewById(R.id.seller_image_view);
