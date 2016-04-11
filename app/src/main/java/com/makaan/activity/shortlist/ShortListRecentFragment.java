@@ -179,14 +179,14 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
                                     Properties properties1 = MakaanEventPayload.beginBatch();
                                     properties1.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCaps);
 
-                                    if(dataObject.listingCategory.equalsIgnoreCase("primary")||dataObject.listingCategory.equalsIgnoreCase("resale")){
+                                    if("primary".equalsIgnoreCase(dataObject.listingCategory)||"resale".equalsIgnoreCase(dataObject.listingCategory)){
                                         intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, "buy");
                                         if(dataObject.id!=0) {
                                             properties1.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY,
                                                     dataObject.id));
                                         }
                                     }
-                                    else if(dataObject.listingCategory.equalsIgnoreCase("rental")){
+                                    else if(("rental").equalsIgnoreCase(dataObject.listingCategory)){
                                         intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, "rent");
                                         if(dataObject.id!=0) {
                                             properties1.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.RENT,

@@ -77,7 +77,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
 
     // data to be used to create serp selector, String value
     // should be in form {filter1}:{filter_value_1},{filter_value_2};{filter2}:{filter_value_2_1},{filter_value_2_2}
-    // except for TYPE_SUGGESTION, where data itself should be selector stringhand
+    // except for TYPE_SUGGESTION, where data itself should be selector string
     public static final String REQUEST_DATA = "data";
 
     public static final String REQUEST_CONTEXT = "context";

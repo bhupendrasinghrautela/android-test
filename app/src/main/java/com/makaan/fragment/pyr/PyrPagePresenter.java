@@ -961,11 +961,11 @@ public class PyrPagePresenter {
         StringBuilder builder=new StringBuilder();
         String underScore="_";
         String comma=",";
-        if(pyrRequest.getSalesType()!=null && pyrRequest.getSalesType().equals("buy")){
+        if(pyrRequest.getSalesType()!=null && "buy".equalsIgnoreCase(pyrRequest.getSalesType())){
             builder.append("Buy");
             builder.append(underScore);
         }
-        else if(pyrRequest.getSalesType()!=null&& pyrRequest.getSalesType().equals("rent")){
+        else if(pyrRequest.getSalesType()!=null&& "rent".equalsIgnoreCase(pyrRequest.getSalesType())){
             builder.append("Rent");
             builder.append(underScore);
         }
