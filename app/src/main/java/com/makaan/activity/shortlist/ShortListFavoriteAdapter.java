@@ -16,6 +16,7 @@ import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.response.project.Project;
@@ -193,6 +194,25 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
                     properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", wishList.get(position).project.projectId,
                             MakaanTrackerConstants.Label.getCallBack));
                     MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.click);
+
+                    Properties properties1 = MakaanEventPayload.beginBatch();
+                    WishList wishListValue = wishList.get(position);
+                    if (wishListValue!=null && wishListValue.listing!=null && (("primary").equalsIgnoreCase(wishListValue.listing.listingCategory) ||
+                            "resale".equalsIgnoreCase(wishListValue.listing.listingCategory))) {
+
+                        properties1.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY,
+                                wishList.get(position).project.projectId));
+                    }
+                    else if(wishListValue!=null && wishListValue.listing!=null && "rental".equalsIgnoreCase(wishListValue.listing.listingCategory)) {
+
+                        properties1.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.RENT,
+                                wishList.get(position).project.projectId));
+                    }
+                    else {
+                        properties1.put(MakaanEventPayload.LABEL, String.format("%s_%s", "",wishList.get(position).project.projectId));
+                    }
+                    properties1.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCaps);
+                    MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.leadFormOpen);
                 }
                 /*-------------------------*/
                 Intent intent = new Intent(mContext, LeadFormActivity.class);
@@ -217,10 +237,10 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
 
                     if (wishListValue.listing != null && wishListValue.listing.listingCategory != null &&
                             !TextUtils.isEmpty(wishListValue.listing.listingCategory)) {
-                        if (wishListValue.listing.listingCategory.equalsIgnoreCase("primary") ||
-                                wishListValue.listing.listingCategory.equalsIgnoreCase("resale")) {
+                        if ("primary".equalsIgnoreCase(wishListValue.listing.listingCategory) ||
+                           "resale".equalsIgnoreCase(wishListValue.listing.listingCategory)) {
                             intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, "buy");
-                        } else if (wishListValue.listing.listingCategory.equalsIgnoreCase("rental")) {
+                        } else if ("rental".equalsIgnoreCase(wishListValue.listing.listingCategory)) {
                             intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, "rent");
                         }
                     }

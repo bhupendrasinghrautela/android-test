@@ -24,6 +24,7 @@ import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
 import com.makaan.event.user.UserLogoutEvent;
@@ -161,22 +162,22 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity implements Noti
         if("login".equals(mLoginButton.getText().toString())) {
             if(getIntent() != null && getIntent().getExtras() != null) {
                 String screenName = this.getIntent().getExtras().getString("screenName");
-                switch (screenName) {
-                    case "Project": {
+                switch (screenName.toLowerCase()) {
+                    case ScreenNameConstants.SCREEN_NAME_PROJECT: {
                         Properties properties = MakaanEventPayload.beginBatch();
                         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
                         properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
                         MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProject);
                         break;
                     }
-                    case "Listing detail": {
+                    case ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL: {
                         Properties properties = MakaanEventPayload.beginBatch();
                         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                         properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
                         MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProperty);
                         break;
                     }
-                    case "serp": {
+                    case ScreenNameConstants.SCREEN_NAME_SERP: {
                         Properties properties = MakaanEventPayload.beginBatch();
                         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
                         properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);

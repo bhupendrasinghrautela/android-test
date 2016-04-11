@@ -29,9 +29,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.lead.LeadFormActivity;
+import com.makaan.activity.listing.PropertyDetailFragment;
 import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
+import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.jarvis.BaseJarvisActivity;
 import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
@@ -73,13 +76,13 @@ public class ViewSellersDialogFragment extends DialogFragment {
         if(selectSeller.isChecked()){
             Bundle bundle=this.getArguments();
             for(SellerCard sellerCard : mSellerCards){
-                if (OverviewActivity.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity)getActivity()).getScreenName())) {
+                if (ScreenNameConstants.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity)getActivity()).getScreenName())) {
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
                     properties.put(MakaanEventPayload.LABEL, bundle.get(MakaanEventPayload.PROJECT_ID) + "_" + sellerCard.sellerId + "_all");
                     MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectViewOtherSellers);
                 }
-                else if (OverviewActivity.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity)getActivity()).getScreenName())) {
+                else if (ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity)getActivity()).getScreenName())) {
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                     properties.put(MakaanEventPayload.LABEL, bundle.get(MakaanEventPayload.PROJECT_ID) + "_" + sellerCard.sellerId + "_all");
@@ -134,6 +137,50 @@ public class ViewSellersDialogFragment extends DialogFragment {
             }*/
             //intent.putExtra("phone",sellerCard.contactNo);//todo: not available in pojo
             //intent.putExtra("id", sellerCard.sellerId.toString());
+
+            /*------------lead form ---------open ---track-----event*/
+            Properties properties = MakaanEventPayload.beginBatch();
+            if(bundle!=null) {
+
+
+                if(!TextUtils.isEmpty(bundle.getString(KeyUtil.SOURCE_LEAD_FORM)))
+                {
+                    if(PropertyDetailFragment.class.getName().equalsIgnoreCase(bundle.getString(KeyUtil.SOURCE_LEAD_FORM))){
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                        if (!TextUtils.isEmpty(bundle.getString(KeyUtil.SALE_TYPE_LEAD_FORM)) &&
+                                "buy".equalsIgnoreCase(bundle.getString(KeyUtil.SALE_TYPE_LEAD_FORM))) {
+                            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY,
+                                    bundle.getLong(KeyUtil.PROPERTY_Id_LEAD_FORM)));
+                        } else if(!TextUtils.isEmpty(bundle.getString(KeyUtil.SALE_TYPE_LEAD_FORM)) &&
+                                "rent".equalsIgnoreCase(bundle.getString(KeyUtil.SALE_TYPE_LEAD_FORM))){
+                            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.RENT,
+                                    bundle.getLong(KeyUtil.PROPERTY_Id_LEAD_FORM)));
+                        }
+                        else {
+                            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", "",""));
+                        }
+
+                    }
+                    else if(ProjectFragment.class.getName().equalsIgnoreCase(bundle.getString(KeyUtil.SOURCE_LEAD_FORM))){
+                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.project);
+                        if (!TextUtils.isEmpty(bundle.getString(KeyUtil.SALE_TYPE_LEAD_FORM)) &&
+                                "buy".equalsIgnoreCase(bundle.getString(KeyUtil.SALE_TYPE_LEAD_FORM))) {
+                            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY,
+                                    bundle.getLong(KeyUtil.PROJECT_ID_LEAD_FORM)));
+                        } else if(!TextUtils.isEmpty(bundle.getString(KeyUtil.SALE_TYPE_LEAD_FORM)) &&
+                                "rent".equalsIgnoreCase(bundle.getString(KeyUtil.SALE_TYPE_LEAD_FORM))){
+                            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.RENT,
+                                    bundle.getLong(KeyUtil.PROJECT_ID_LEAD_FORM)));
+                        }
+                        else {
+                            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", "",""));
+                        }
+                    }
+                }
+            }
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.leadFormOpen);
+            /*--------------------------------------------------------------event*/
+
             intent.putIntegerArrayListExtra("multipleSellerIds", ids);
             if(bundle!=null){
                 intent.putExtra(KeyUtil.CITY_NAME_LEAD_FORM,bundle.getString(KeyUtil.CITY_NAME_LEAD_FORM));
@@ -145,7 +192,7 @@ public class ViewSellersDialogFragment extends DialogFragment {
                 intent.putExtra(KeyUtil.LOCALITY_ID_LEAD_FORM, bundle.getLong(KeyUtil.LOCALITY_ID_LEAD_FORM));
                 intent.putExtra(KeyUtil.SOURCE_LEAD_FORM, bundle.getString(KeyUtil.SOURCE_LEAD_FORM));
                 intent.putExtra(KeyUtil.PROJECT_LEAD_FORM, bundle.getString(KeyUtil.PROJECT_LEAD_FORM));
-                intent.putExtra(KeyUtil.PROJECT_ID_LEAD_FORM, bundle.getString(KeyUtil.PROJECT_ID_LEAD_FORM));
+                intent.putExtra(KeyUtil.PROJECT_ID_LEAD_FORM, bundle.getLong(KeyUtil.PROJECT_ID_LEAD_FORM));
                 intent.putExtra(KeyUtil.PROJECT_NAME_LEAD_FORM, bundle.getString(KeyUtil.PROJECT_NAME_LEAD_FORM));
                 intent.putExtra(KeyUtil.SALE_TYPE_LEAD_FORM, bundle.getString(KeyUtil.SALE_TYPE_LEAD_FORM));
                 intent.putExtra("builder", bundle.getString("builder"));
@@ -346,14 +393,14 @@ public class ViewSellersDialogFragment extends DialogFragment {
             holder.mSellerCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked && OverviewActivity.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity)getActivity()).getScreenName())) {
+                    if (isChecked && ScreenNameConstants.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity)getActivity()).getScreenName())) {
                         Bundle bundle = getArguments();
                         Properties properties = MakaanEventPayload.beginBatch();
                         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
                         properties.put(MakaanEventPayload.LABEL, bundle.get(MakaanEventPayload.PROJECT_ID) + "_" +
                                 mSellerCards.get((int) buttonView.getTag() - 1).sellerId + "_" + buttonView.getTag() + "_" + MakaanTrackerConstants.Label.checked);
                         MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectViewOtherSellers);
-                    } else if (OverviewActivity.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity)getActivity()).getScreenName())) {
+                    } else if (ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity)getActivity()).getScreenName())) {
                         Bundle bundle = getArguments();
                         Properties properties = MakaanEventPayload.beginBatch();
                         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);

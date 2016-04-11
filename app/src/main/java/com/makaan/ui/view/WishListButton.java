@@ -19,6 +19,7 @@ import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.event.wishlist.WishListResultEvent;
 import com.makaan.fragment.MakaanMessageDialogFragment;
 import com.makaan.jarvis.BaseJarvisActivity;
@@ -126,7 +127,7 @@ public class WishListButton extends BaseLinearLayout<WishListButton.WishListDto>
     public void onCheckedChanged(CompoundButton compoundButton, final boolean isChecked) {
 
         if(null!=MasterDataCache.getInstance().getUserData()) {
-            if (OverviewActivity.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity)mContext).getScreenName()) && mWishListDto.listingId != null) {
+            if (ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity)mContext).getScreenName()) && mWishListDto.listingId != null) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 if(isChecked) {
                     properties.put(MakaanEventPayload.LABEL, String.valueOf(mWishListDto.listingId) + "_Shortlist");

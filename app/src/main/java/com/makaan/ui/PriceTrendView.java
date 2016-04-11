@@ -14,6 +14,7 @@ import com.makaan.R;
 import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.jarvis.BaseJarvisActivity;
 import com.makaan.response.trend.LocalityPriceTrendDto;
 import com.segment.analytics.Properties;
@@ -77,12 +78,12 @@ public class PriceTrendView extends BaseLinearLayout<LocalityPriceTrendDto> {
             @Override
             public void onTabSelected(Tab tab) {
                 /*----- track events----------------------------*/
-                if (OverviewActivity.SCREEN_NAME_LOCALITY.equalsIgnoreCase(((BaseJarvisActivity)getContext()).getScreenName())) {
+                if (ScreenNameConstants.SCREEN_NAME_LOCALITY.equalsIgnoreCase(((BaseJarvisActivity)getContext()).getScreenName())) {
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
                     properties.put(MakaanEventPayload.LABEL, TRENDS_MONTH.values()[tab.getPosition()].toString().replace("\n", ""));
                     MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickLocalityPriceTrends);
-                } else if (OverviewActivity.SCREEN_NAME_CITY.equalsIgnoreCase(((BaseJarvisActivity)getContext()).getScreenName())) {
+                } else if (ScreenNameConstants.SCREEN_NAME_CITY.equalsIgnoreCase(((BaseJarvisActivity)getContext()).getScreenName())) {
                     Properties properties = MakaanEventPayload.beginBatch();
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerCity);
                     properties.put(MakaanEventPayload.LABEL, TRENDS_MONTH.values()[tab.getPosition()].toString().replace("\n", ""));

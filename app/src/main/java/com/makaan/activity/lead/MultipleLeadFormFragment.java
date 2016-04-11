@@ -14,8 +14,15 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.makaan.R;
+import com.makaan.activity.listing.PropertyDetailFragment;
+import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.shortlist.ShortListFavoriteAdapter;
+import com.makaan.activity.shortlist.ShortListRecentFragment;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.MakaanMessageDialogFragment;
+import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.request.pyr.PyrEnquiryType;
 import com.makaan.request.pyr.PyrRequest;
 import com.makaan.response.country.CountryCodeResponse;
@@ -24,11 +31,13 @@ import com.makaan.service.PyrService;
 import com.makaan.util.JsonParser;
 import com.makaan.util.StringUtil;
 import com.makaan.util.ValidationUtil;
+import com.segment.analytics.Properties;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
@@ -53,6 +62,7 @@ public class MultipleLeadFormFragment extends MakaanBaseFragment {
     private List<CountryCodeResponse.CountryCodeData> mCountries;
     private static final int MOSTLY_USED_COUNTRIES = 7;
     private Integer mCountryId;
+    private static final int SINGLE_SELLER=1;
 
 
     @Override
@@ -93,6 +103,8 @@ public class MultipleLeadFormFragment extends MakaanBaseFragment {
             }
         }
         else{
+            sendCallLaterEvent();
+
             PyrRequest mPyrRequest = new PyrRequest();
             PyrEnquiryType mPyrEnquiryType = new PyrEnquiryType();
             mPyrEnquiryType.setId(5);
@@ -110,11 +122,15 @@ public class MultipleLeadFormFragment extends MakaanBaseFragment {
             mPyrRequest.setPageType(null);
             mPyrRequest.setSendOtp(true);
             mPyrRequest.setLocalityIds(new int[]{mLeadFormPresenter.getLocalityId().intValue()});
-            mPyrRequest.setListingId(mLeadFormPresenter.getProjectOrListingId());
-            mPyrRequest.setProjectId(mLeadFormPresenter.getProjectId());
-//            mPyrRequest.setPropertyId(mLeadFormPresenter.getPropertyId());
-            mPyrRequest.setProjectName(mLeadFormPresenter.getProjectName());
-            /*
+            if(mLeadFormPresenter.getProjectOrListingId()!=null && mLeadFormPresenter.getProjectOrListingId()!=0) {
+                mPyrRequest.setListingId(mLeadFormPresenter.getProjectOrListingId());
+            }
+            if(mLeadFormPresenter.getProjectId()!=null && mLeadFormPresenter.getProjectId()!=0) {
+                mPyrRequest.setProjectId(mLeadFormPresenter.getProjectId());
+            }
+            if(!TextUtils.isEmpty(mLeadFormPresenter.getProjectName())) {
+                mPyrRequest.setProjectName(mLeadFormPresenter.getProjectName());
+            }            /*
             Bundle bundle =getArguments();
             if(bundle!=null && bundle.getString("source").equalsIgnoreCase(SerpActivity.class.getName())) {
                 mPyrRequest.setListingId(mLeadFormPresenter.getProjectOrListingId());
@@ -240,6 +256,65 @@ public class MultipleLeadFormFragment extends MakaanBaseFragment {
     @Override
     protected int getContentViewId() {
         return R.layout.lead_form_multiple_seller;
+    }
+
+    public void sendCallLaterEvent(){
+        Bundle bundle=getArguments();
+        if(bundle!=null && SerpActivity.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, mLeadFormPresenter.getSerpSubCategory());
+            properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(bundle.getString("source")));
+            if(mLeadFormPresenter.getMultipleSellerIds()!=null &&mLeadFormPresenter.getMultipleSellerIds().length>0 ){
+                properties.put(MakaanEventPayload.VALUE, mLeadFormPresenter.getMultipleSellerIds().length);
+            }else {
+                properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+            }
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.leadSubmitgetCallBAck);
+        }
+        else if(bundle!=null && ProjectFragment.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.project);
+            properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(bundle.getString("source")));
+            if(mLeadFormPresenter.getMultipleSellerIds()!=null &&mLeadFormPresenter.getMultipleSellerIds().length>0 ){
+                properties.put(MakaanEventPayload.VALUE, mLeadFormPresenter.getMultipleSellerIds().length);
+            }else {
+                properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+            }
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.leadSubmitgetCallBAck);
+        }
+        else if(bundle!=null && PropertyDetailFragment.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.PropertyInCaps);
+            properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(bundle.getString("source")));
+            if(mLeadFormPresenter.getMultipleSellerIds()!=null &&mLeadFormPresenter.getMultipleSellerIds().length>0 ){
+                properties.put(MakaanEventPayload.VALUE, mLeadFormPresenter.getMultipleSellerIds().length);
+            }else {
+                properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+            }
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.leadSubmitgetCallBAck);
+        }
+        else if(bundle!=null && ShortListFavoriteAdapter.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCaps);
+            properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(bundle.getString("source")));
+            if(mLeadFormPresenter.getMultipleSellerIds()!=null &&mLeadFormPresenter.getMultipleSellerIds().length>0 ){
+                properties.put(MakaanEventPayload.VALUE, mLeadFormPresenter.getMultipleSellerIds().length);
+            }else {
+                properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+            }
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.leadSubmitgetCallBAck);
+        }
+        else if(bundle!=null && ShortListRecentFragment.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCaps);
+            properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(bundle.getString("source")));
+            if(mLeadFormPresenter.getMultipleSellerIds()!=null &&mLeadFormPresenter.getMultipleSellerIds().length>0 ){
+                properties.put(MakaanEventPayload.VALUE, mLeadFormPresenter.getMultipleSellerIds().length);
+            }else {
+                properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+            }
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.leadSubmitgetCallBAck);
+        }
     }
 
 }

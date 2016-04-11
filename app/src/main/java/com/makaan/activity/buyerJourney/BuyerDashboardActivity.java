@@ -14,6 +14,7 @@ import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.LeadPhaseConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.fragment.WebViewFragment;
 import com.makaan.fragment.buyerJourney.BlogContentFragment;
 import com.makaan.fragment.buyerJourney.ClientCompanyLeadFragment;
@@ -24,6 +25,7 @@ import com.makaan.fragment.buyerJourney.RewardsFragment;
 import com.makaan.fragment.buyerJourney.SaveSearchFragment;
 import com.makaan.fragment.buyerJourney.UploadDocumentsFragment;
 import com.makaan.fragment.pyr.ThankYouScreenFragment;
+import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.request.buyerjourney.PhaseChange;
 import com.makaan.service.ClientEventsService;
 import com.makaan.service.MakaanServiceFactory;
@@ -74,7 +76,7 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
 
     @Override
     public String getScreenName() {
-        return "BuyerDashboard";
+        return ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD;
     }
 
 

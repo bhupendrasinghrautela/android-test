@@ -30,6 +30,7 @@ import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.adapter.project.KeyDetailsAdapter;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.image.ImagesGetEvent;
 import com.makaan.event.locality.NearByLocalitiesEvent;
@@ -165,6 +166,17 @@ public class ProjectFragment extends OverviewFragment{
             }
         }
         if(sellerCard!=null) {
+            /*-------------------track------------------event-------------------*/
+            Properties properties = MakaanEventPayload.beginBatch();
+            if(project!=null && project.projectId!=null) {
+                properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY, project.projectId));
+            }else {
+                properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY, ""));
+            }
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.project);
+            MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.leadFormOpen);
+            /*-------------------------------------------------------------------*/
+
             Intent intent = new Intent(getActivity(), LeadFormActivity.class);
             try {
                 intent.putExtra(KeyUtil.NAME_LEAD_FORM, sellerCard.name);
@@ -333,6 +345,17 @@ public class ProjectFragment extends OverviewFragment{
     }
 
     private void startPyrActivity(ProjectConfigItemClickListener configItemClickListener) {
+        /*-------------------track------------------event-------------------*/
+        Properties properties = MakaanEventPayload.beginBatch();
+        if(project!=null && project.projectId!=null) {
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY, project.projectId));
+        }else {
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY, ""));
+        }
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.project);
+        MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.pyrFormOpen);
+        /*-------------------------------------------------------------------*/
+
         Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
         if(project.locality.cityId != null && project.locality.cityId > 0) {
             pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, project.locality.cityId);
@@ -354,6 +377,17 @@ public class ProjectFragment extends OverviewFragment{
             return;
 
         }
+        /*-------------------track------------------event-------------------*/
+        Properties properties = MakaanEventPayload.beginBatch();
+        if(project!=null && project.projectId!=null) {
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY, project.projectId));
+        }else {
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY, ""));
+        }
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.project);
+        MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.pyrFormOpen);
+        /*-------------------------------------------------------------------*/
+
         Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
         if(project.locality.cityId != null && project.locality.cityId > 0) {
             pyrIntent.putExtra(PyrPageActivity.KEY_CITY_Id, project.locality.cityId);

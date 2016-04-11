@@ -9,6 +9,7 @@ import com.makaan.R;
 import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.jarvis.BaseJarvisActivity;
 import com.segment.analytics.Properties;
 
@@ -35,22 +36,22 @@ public class CompressedTextView extends BaseLinearLayout<String> {
     @OnClick(R.id.read_more) void click(){
         workedOnce = true;
         if (isCollapsed) {
-            if (OverviewActivity.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity) mContext).getScreenName())) {
+            if (ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity) mContext).getScreenName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.descriptionMore);
                 MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyOverview);
-            } else if (OverviewActivity.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity) mContext).getScreenName())) {
+            } else if (ScreenNameConstants.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity) mContext).getScreenName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.descriptionMore);
                 MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickProjectOverView);
-            } else if (OverviewActivity.SCREEN_NAME_CITY.equalsIgnoreCase(((BaseJarvisActivity) mContext).getScreenName())) {
+            } else if (ScreenNameConstants.SCREEN_NAME_CITY.equalsIgnoreCase(((BaseJarvisActivity) mContext).getScreenName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerCity);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.descriptionMore);
                 MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickCityOverView);
-            } else if (OverviewActivity.SCREEN_NAME_LOCALITY.equalsIgnoreCase(((BaseJarvisActivity) mContext).getScreenName())) {
+            } else if (ScreenNameConstants.SCREEN_NAME_LOCALITY.equalsIgnoreCase(((BaseJarvisActivity) mContext).getScreenName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.descriptionMore);
@@ -60,22 +61,22 @@ public class CompressedTextView extends BaseLinearLayout<String> {
             mReadMore.setText(mContext.getString(R.string.read_less));
             mContentText.setMaxLines(Integer.MAX_VALUE);
         } else {
-            if (OverviewActivity.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity) mContext).getScreenName())) {
+            if (ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity) mContext).getScreenName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.descriptionLess);
                 MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickPropertyOverview);
-            } else if (OverviewActivity.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity) mContext).getScreenName())) {
+            } else if (ScreenNameConstants.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity) mContext).getScreenName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.descriptionLess);
                 MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickProjectOverView);
-            } else if (OverviewActivity.SCREEN_NAME_CITY.equalsIgnoreCase(((BaseJarvisActivity) mContext).getScreenName())) {
+            } else if (ScreenNameConstants.SCREEN_NAME_CITY.equalsIgnoreCase(((BaseJarvisActivity) mContext).getScreenName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerCity);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.descriptionLess);
                 MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickCityOverView);
-            } else if (OverviewActivity.SCREEN_NAME_LOCALITY.equalsIgnoreCase(((BaseJarvisActivity) mContext).getScreenName())) {
+            } else if (ScreenNameConstants.SCREEN_NAME_LOCALITY.equalsIgnoreCase(((BaseJarvisActivity) mContext).getScreenName())) {
                 Properties properties = MakaanEventPayload.beginBatch();
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.descriptionLess);

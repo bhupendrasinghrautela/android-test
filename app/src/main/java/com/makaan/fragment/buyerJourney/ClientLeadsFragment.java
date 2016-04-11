@@ -24,6 +24,7 @@ import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
 import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.event.buyerjourney.ClientLeadsByGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.response.buyerjourney.ClientLead;

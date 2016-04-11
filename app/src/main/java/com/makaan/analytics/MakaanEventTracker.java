@@ -95,6 +95,7 @@ public class MakaanEventTracker {
                     Analytics.with(context).flush();
                     break;
                 }
+
                 default: {
                     Analytics.with(context).track(action.getValue(), makaanEventPayload);
                     Analytics.with(context).flush();

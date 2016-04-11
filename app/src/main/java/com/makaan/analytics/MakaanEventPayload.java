@@ -12,6 +12,7 @@ public class MakaanEventPayload {
     public static final String CATEGORY = "Category";
     public static final String KEYWORD = "Keywords";
     public static final String LABEL="Label";
+    public static final String VALUE="Value";
     public static final String LISTING_POSITION = "Listing position";
     public static final String LISTING_ID="ListingId";
     public static final String PROJECT_ID="ProjectId";
@@ -65,4 +66,5 @@ public class MakaanEventPayload {
             }
         }
     }
+
 }
