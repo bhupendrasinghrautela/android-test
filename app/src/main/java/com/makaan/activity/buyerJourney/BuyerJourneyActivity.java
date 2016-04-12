@@ -121,6 +121,12 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity implements Noti
         super.onCreate(savedInstanceState);
 //        overridePendingTransition(R.anim.do_not_move, R.anim.do_not_move);
 //        setContentView(R.layout.fragment_buyer_profile);
+        /*---------------track-------------events------------------*/
+        Properties properties = MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD);
+        properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD);
+        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+        /*------------------------------------------------------------*/
         initViews();
 
         setupAppBar();

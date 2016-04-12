@@ -162,6 +162,7 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
                     mEntityInfo = new NeighborhoodMapFragment.EntityInfo(name, lat, lon);
                 }
             }
+            sendScreenNameEvent(mType);
             switch (mType) {
                 case PROPERTY:
                     mFragment = new PropertyDetailFragment();
@@ -518,4 +519,65 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
         }
         return true;
     }
+
+    private void sendScreenNameEvent(OverviewItemType type) {
+        switch (type){
+
+        case PROPERTY: {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL);
+            properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL);
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+            break;
+        }
+        case PROJECT:{
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_PROJECT);
+            properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_PROJECT);
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+            break;
+        }
+        case LOCALITY:{
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_LOCALITY);
+            properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_LOCALITY);
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+            break;
+        }
+        case CITY:{
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_CITY);
+            properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_CITY);
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+            break;
+        }
+        case PROPERTY_MAP:{
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL);
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s",ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL,
+                    ScreenNameConstants.MAP));
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+            break;
+        }
+        case PROJECT_MAP:{
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_PROJECT);
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s",ScreenNameConstants.SCREEN_NAME_PROJECT,
+                    ScreenNameConstants.MAP));
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+            break;
+        }
+        case LOCALITY_MAP:{
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_LOCALITY);
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s",ScreenNameConstants.SCREEN_NAME_LOCALITY,
+                    ScreenNameConstants.MAP));
+            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+            break;
+        }
+    }
+
+
+    }
+
 }

@@ -310,6 +310,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             SerpRequest request = intent.getParcelableExtra(REQUEST_DATA);
 
             if((type & MASK_LISTING_TYPE) > 0) {
+                sendScreenNameEvent(type);
                 if(type == TYPE_SELLER) {
                     SearchResponseItem item = new SearchResponseItem();
                     item.type = SearchSuggestionType.SELLER.getValue();
@@ -532,6 +533,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 updateListings(listingGetEvent, null);
                 mChildSerpListFragment.updateListings(mChildListings, null, this, mSerpRequestType, mChildListingCount, mSerpContext == SERP_CONTEXT_BUY);
             }
+            sendScreenNameEvent(mSerpRequestType);
         } else {
             mListingGetEvent = listingGetEvent;
             // for buider, seller and normal serp
@@ -685,7 +687,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                     @Override
                     public void sortSelected(String sort, String fieldName, String value, int i) {
                         Properties properties = MakaanEventPayload.beginBatch();
-                        if(!TextUtils.isEmpty(fieldName)) {
+                        if (!TextUtils.isEmpty(fieldName)) {
                             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
                             if (fieldName.equalsIgnoreCase(MakaanEventPayload.PRICE)) {
                                 properties.put(MakaanEventPayload.LABEL, sort);
@@ -1394,6 +1396,68 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         }
         MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.setAlertOpen);
         /*---------------------------------------------------------------------*/
+    }
+
+    private void sendScreenNameEvent(int type) {
+            switch (type & MASK_LISTING_TYPE) {
+
+                case TYPE_BUILDER:{
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_SERP);
+                    properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_SERP_BUILDER);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+                    break;
+                }
+                case TYPE_SELLER :{
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_SERP);
+                    properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_SERP_SELLER);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+                    break;
+                }
+                case TYPE_CITY:{
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_SERP);
+                    properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_SERP_CITY);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+                    break;
+                }
+                case TYPE_PROJECT:{
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_SERP);
+                    properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_SERP_PROJECT);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+                    break;
+                }
+                case TYPE_SEARCH: {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_SERP);
+                    properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_SERP_LOCALITY);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+                    break;
+                }
+                case TYPE_NEARBY: {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_SERP);
+                    properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_SERP_NEARBY);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+                    break;
+                }
+                case TYPE_GPID: {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_SERP);
+                    properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_SERP_LANDMARK);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+                    break;
+                }
+                case TYPE_CLUSTER: {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_SERP);
+                    properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_SERP_CHILD);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+                    break;
+                }
+            }
     }
 
 
