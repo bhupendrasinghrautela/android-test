@@ -155,7 +155,7 @@ public class TopSellersFragment extends Fragment {
         if(pyrPostResponse.getStatusCode()!=null && pyrPostResponse.getStatusCode().equals("2XX")) {
             Properties properties1 = MakaanEventPayload.beginBatch();
             properties1.put(MakaanEventPayload.CATEGORY, mPyrPagePresenter.getCategoryForPyrSubmit(mPyrPagePresenter.getSourceScreenName()));
-            properties1.put(MakaanEventPayload.LABEL, mPyrPagePresenter.getLabelStringForPyrSubmit(mPyrPagePresenter.getPyrRequestObject()));
+            properties1.put(MakaanEventPayload.LABEL, mPyrPagePresenter.getLabelStringOnNextClick(mPyrPagePresenter.getPyrRequestObject()));
             properties1.put(MakaanEventPayload.VALUE, mPyrPagePresenter.getPyrRequestObject().getMultipleCompanyIds().length);
             MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.leadStoredPyr);
 
