@@ -81,6 +81,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
     private boolean isAfterLoginInitiated;
     private boolean isSubmitInitiated;
     private String serpSubCategory;
+    private String bedroom,propertyType,budget,idForSetAlertEvent;
 
     public void setData(ArrayList<FilterGroup> grps, SerpGetEvent listingGetEvent, boolean serpContext, Context context, String serpSubCategory) {
         mGroups = grps;
@@ -111,9 +112,10 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
             showContent();
 
             populateData();
-            mSetAlertsNameEditText.setText(handleSearchName(null));
+            mSetAlertsNameEditText.setText(handleSearchName(new SaveSearch.JSONDump()));
             mSetAlertsNameEditText.setSelection(mSetAlertsNameEditText.getText().length());
             mSetAlertsNameEditText.requestFocus();
+            sendSetAlertEvent();
         } else {
             // get saved searches
             SaveSearchService saveSearchService =
@@ -143,14 +145,21 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                         if (searches.get(0).city != null) {
                             jsonDump.cityName = searches.get(0).city;
                         }
+                        setIdForSetAlertEvent(SearchSuggestionType.LOCALITY, searches.get(0).entityId);
                     } else if (SearchSuggestionType.CITY.getValue().equalsIgnoreCase(searches.get(0).type)) {
                         jsonDump.cityName = searches.get(0).entityName;
+                        setIdForSetAlertEvent(SearchSuggestionType.CITY, searches.get(0).entityId);
                     } else if (SearchSuggestionType.BUILDER.getValue().equalsIgnoreCase(searches.get(0).type)) {
                         jsonDump.builderName = searches.get(0).entityName;
+                        setIdForSetAlertEvent(SearchSuggestionType.BUILDER, searches.get(0).entityId);
+
                     } else if (SearchSuggestionType.SELLER.getValue().equalsIgnoreCase(searches.get(0).type)) {
                         jsonDump.sellerName = searches.get(0).entityName;
+                        setIdForSetAlertEvent(SearchSuggestionType.SELLER, searches.get(0).entityId);
+
                     } else if (SearchSuggestionType.PROJECT.getValue().equalsIgnoreCase(searches.get(0).type)) {
                         jsonDump.projectName = searches.get(0).displayText;
+                        setIdForSetAlertEvent(SearchSuggestionType.PROJECT, searches.get(0).entityId);
                     }
                 }
                 name = searches.get(0).displayText;
@@ -159,6 +168,11 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                     jsonDump.localityName = String.format("%s + %d", searches.get(0).entityName, (searches.size() - 1));
                 }
                 name = searches.get(0).displayText + " + " + (searches.size() - 1);
+                ArrayList<String>ids=new ArrayList<String>();
+                for (SearchResponseItem searchItem : searches) {
+                    ids.add(searchItem.entityId);
+                }
+                setIdForSetAlertEvent(SearchSuggestionType.LOCALITY, ids.toString());
             }
         } else if (mListingGetEvent != null) {
             name = mListingGetEvent.listingData.facets != null ? mListingGetEvent.listingData.facets.getSearchName() : null;
@@ -246,6 +260,11 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                     builder.append(filter.displayName);
                     separator = ",";
                 }
+                if("i_beds".equalsIgnoreCase(grp.internalName)) {
+                    bedroom=builder.toString();
+                } else if("i_property_type".equalsIgnoreCase(grp.internalName)){
+                    propertyType=builder.toString();
+                }
             }
 
             for (RangeFilter filter : grp.rangeFilterValues) {
@@ -263,6 +282,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                         builder.append(filter.selectedMaxValue);
                     }
                     separator = ",";
+                    budget=String.format("%s-%s",filter.selectedMinValue ,filter.selectedMaxValue);
                 }
             }
 
@@ -587,9 +607,10 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                     showContent();
 
                     populateData();
-                    mSetAlertsNameEditText.setText(handleSearchName(null));
+                    mSetAlertsNameEditText.setText(handleSearchName(new SaveSearch.JSONDump()));
                     mSetAlertsNameEditText.setSelection(mSetAlertsNameEditText.getText().length());
                     mSetAlertsNameEditText.requestFocus();
+                    sendSetAlertEvent();
                 } else if (event != null && event.error != null && event.error.msg != null) {
                     showNoResults(event.error.msg);
                 } else {
@@ -604,12 +625,12 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                         /*--------------------track-----------------events------------*/
                         Properties properties = MakaanEventPayload.beginBatch();
                         properties.put(MakaanEventPayload.CATEGORY, serpSubCategory);
-                        if(mIsBuyContext) {
+                        if (mIsBuyContext) {
                             properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY,
-                                    mSetAlertsNameEditText.getText().toString()));
-                        }else {
+                                    getSetAlertSubmitString()));
+                        } else {
                             properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.RENT,
-                                    mSetAlertsNameEditText.getText().toString()));
+                                    getSetAlertSubmitString()));
                         }
                         MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.setAlertSubmit);
                         /*---------------------------------------------------------------------*/
@@ -639,10 +660,84 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 showContent();
 
                 populateData();
-                mSetAlertsNameEditText.setText(handleSearchName(null));
+                mSetAlertsNameEditText.setText(handleSearchName(new SaveSearch.JSONDump()));
                 mSetAlertsNameEditText.setSelection(mSetAlertsNameEditText.getText().length());
                 mSetAlertsNameEditText.requestFocus();
+                sendSetAlertEvent();
+            }
+        }
+
+    }
+
+    public String getSetAlertSubmitString(){
+        StringBuilder builder = new StringBuilder();
+        String semiColon = ";";
+        if (!TextUtils.isEmpty(idForSetAlertEvent)) {
+            builder.append(idForSetAlertEvent);
+            builder.append(semiColon);
+        }
+        if (!TextUtils.isEmpty(bedroom)) {
+            builder.append("Bedroom ");
+            builder.append(bedroom);
+            builder.append(semiColon);
+        }
+        if (!TextUtils.isEmpty(budget)) {
+            builder.append("Budget ");
+            builder.append(budget);
+            builder.append(semiColon);
+        }
+        if (!TextUtils.isEmpty(propertyType)) {
+            builder.append("Propertytype ");
+            builder.append(propertyType);
+        }
+        return builder.toString();
+    }
+
+
+    private void setIdForSetAlertEvent(SearchSuggestionType value, String entityId) {
+
+        switch (value) {
+            case LOCALITY: {
+                idForSetAlertEvent = String.format("%s %s", "LocalityId", entityId);
+                break;
+            }
+            case CITY: {
+                idForSetAlertEvent = String.format("%s %s", "CityId", entityId);
+                break;
+            }
+            case BUILDER: {
+                idForSetAlertEvent = String.format("%s %s", "BuilderId", entityId);
+                break;
+            }
+            case SELLER: {
+                idForSetAlertEvent = String.format("%s %s", "SellerId", entityId);
+                break;
+            }
+            case PROJECT: {
+                idForSetAlertEvent = String.format("%s %s", "ProjectId", entityId);
+                break;
             }
         }
     }
+
+    private void sendSetAlertEvent() {
+         /*--------------------track-----------------events------------*/
+        Properties properties = MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY, serpSubCategory);
+        if(mIsBuyContext) {
+            if(!TextUtils.isEmpty(idForSetAlertEvent)) {
+                properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY, idForSetAlertEvent));
+            }else {
+                properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY, ""));
+            }
+        }else {
+            if(!TextUtils.isEmpty(idForSetAlertEvent)) {
+                properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.RENT, idForSetAlertEvent));
+            }else {
+                properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.RENT, ""));
+            }        }
+        MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.setAlertOpen);
+        /*---------------------------------------------------------------------*/
+    }
+
 }

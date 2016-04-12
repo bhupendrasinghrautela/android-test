@@ -772,12 +772,17 @@ public class PyrPagePresenter {
             builder.append(underScore);
         }
 
+        if(mCityId!=null){
+            builder.append(mCityId);
+            builder.append(underScore);
+        }
+
         builder.append(pyrRequest.getMinBudget());
         builder.append("-");
         builder.append(pyrRequest.getMaxBudget());
         builder.append(underScore);
 
-        if(null!=pyrRequest.getLocalityIds() && pyrRequest.getLocalityIds().length>0) {
+        if(null!=pyrRequest.getLocalityIds() && pyrRequest.getLocalityIds().length > 0) {
             builder.append(Arrays.toString(pyrRequest.getLocalityIds()));
             builder.append(underScore);
         }else {

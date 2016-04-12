@@ -764,7 +764,7 @@ public class ProjectFragment extends OverviewFragment{
     }
 
     private void addPriceTrendsFragment(ArrayList<Locality> nearbyLocalities) {
-        if(project == null){
+        if(!isVisible() || project == null){
             return;
         }
         ArrayList<Long> localities = new ArrayList<>();
