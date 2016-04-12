@@ -111,6 +111,14 @@ public class PyrPagePresenter {
         return pyrFromProjectBuySelected;
     }
 
+    public void setAlreadySelectedMinBudget(double alreadySelectedMinBudget) {
+        this.alreadySelectedMinBudget = alreadySelectedMinBudget;
+    }
+
+    public void setAlreadySelectedMaxBudget(double alreadySelectedMaxBudget) {
+        this.alreadySelectedMaxBudget = alreadySelectedMaxBudget;
+    }
+
     public double getAlreadySelectedMinBudget() {
         return alreadySelectedMinBudget;
     }
