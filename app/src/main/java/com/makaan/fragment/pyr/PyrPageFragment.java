@@ -251,7 +251,7 @@ public class PyrPageFragment extends Fragment {
 
             Properties properties1 = MakaanEventPayload.beginBatch();
             properties1.put(MakaanEventPayload.CATEGORY, pyrPagePresenter.getCategoryForPyrSubmit(pyrPagePresenter.getSourceScreenName()));
-            properties1.put(MakaanEventPayload.LABEL, pyrPagePresenter.getLabelStringForPyrSubmit(pyrRequest));
+            properties1.put(MakaanEventPayload.LABEL, pyrPagePresenter.getLabelStringOnNextClick(pyrRequest));
             MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.pyrSubmit);
         }
 

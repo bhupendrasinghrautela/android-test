@@ -729,7 +729,7 @@ public class DefaultListingView extends AbstractListingView {
     @OnClick(R.id.serp_default_listing_call_button)
     public void onCallClicked(View view) {
         Properties properties = MakaanEventPayload.beginBatch();
-        properties.put(MakaanEventPayload.LABEL, mListing.propertyId+ "_" + (mPosition + 1));
+        properties.put(MakaanEventPayload.LABEL, mListing.lisitingId+ "_" + (mPosition + 1));
 
         Bundle bundle = new Bundle();
 

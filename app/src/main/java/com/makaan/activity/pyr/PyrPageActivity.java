@@ -75,7 +75,7 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
                     return;
                 }
             }
-            sendBuyerDashboardEvent(screenName, cityId);
+            sendPyrOpenFromBuyerDashboardEvent(screenName, cityId);
             mPagePresenter.setCityId(cityId!=null?cityId.intValue():0);
             mPagePresenter.prefillLocality(localityName, localityId, cityName ,
                     projectConfigItem, isBuySelected,screenName);
@@ -85,7 +85,7 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
         //mPagePresenter.setBuySelected(getIntent().getBooleanExtra(IS_BUY, false));
     }
 
-    private void sendBuyerDashboardEvent(String string, Long cityId) {
+    private void sendPyrOpenFromBuyerDashboardEvent(String string, Long cityId) {
         /*-------------------track------------------event-------------------*/
         if (!TextUtils.isEmpty(string) && string.equalsIgnoreCase(ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD)) {
             Properties properties = MakaanEventPayload.beginBatch();
