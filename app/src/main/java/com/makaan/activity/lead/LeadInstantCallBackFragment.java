@@ -99,7 +99,12 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
         super.onActivityCreated(savedInstanceState);
         mLeadFormPresenter= LeadFormPresenter.getLeadFormPresenter();
         mTextViewSellerName.setText(mLeadFormPresenter.getName().toLowerCase());
-        mRatingBarSeller.setRating(Float.valueOf(mLeadFormPresenter.getScore()));
+        if(!TextUtils.isEmpty(mLeadFormPresenter.getScore())) {
+            mRatingBarSeller.setVisibility(View.VISIBLE);
+            mRatingBarSeller.setRating(Float.valueOf(mLeadFormPresenter.getScore()));
+        } else {
+            mRatingBarSeller.setVisibility(View.INVISIBLE);
+        }
         mobileFlag=false;
         defaultCountry=false;
         initializeCountrySpinner();
@@ -408,14 +413,18 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
 
     }
 
-    public void successfulInstantResponse(){
-        mInstantCallButton.setClickable(true);
-        mInstantCallButton.setText(getResources().getString(R.string.connect_now));
+    public void successfulInstantResponse() {
+        if (mInstantCallButton != null) {
+            mInstantCallButton.setClickable(true);
+            mInstantCallButton.setText(getResources().getString(R.string.connect_now));
+        }
     }
 
-    public void errorInInstantResponse(){
-        mInstantCallButton.setClickable(true);
-        mInstantCallButton.setText(getResources().getString(R.string.connect_now));
+    public void errorInInstantResponse() {
+        if (mInstantCallButton != null) {
+            mInstantCallButton.setClickable(true);
+            mInstantCallButton.setText(getResources().getString(R.string.connect_now));
+        }
     }
 
     public void sendCallLaterEvent(){

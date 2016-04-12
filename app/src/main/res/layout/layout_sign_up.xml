@@ -70,7 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/input_top_margin"
-                    android:hint="@string/user_name"
+                    android:hint="@string/name"
                     android:maxLength="100"
                     android:paddingBottom="@dimen/edit_internal_padding"
                     android:paddingTop="@dimen/edit_internal_padding"

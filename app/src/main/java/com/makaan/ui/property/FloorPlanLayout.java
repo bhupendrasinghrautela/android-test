@@ -70,10 +70,10 @@ public class FloorPlanLayout extends LinearLayout {
     public void bindFloorPlan(ImagesGetEvent imagesGetEvent) {
         setVisibility(VISIBLE);
         mFloorPlanPagerAdapter.addData(imagesGetEvent);
-        if(imagesGetEvent.imageType.equals(ImageConstants.FLOOR_PLAN)){
+        if(ImageConstants.FLOOR_PLAN.equalsIgnoreCase(imagesGetEvent.imageType)){
             tabLayout.addTab(tabLayout.newTab().setText("2D"));
         }
-        else if(imagesGetEvent.imageType.equals(ImageConstants.THREED_FLOOR_PLAN)){
+        else if(ImageConstants.THREED_FLOOR_PLAN.equalsIgnoreCase(imagesGetEvent.imageType)){
             tabLayout.addTab(tabLayout.newTab().setText("3D"));
         }
     }

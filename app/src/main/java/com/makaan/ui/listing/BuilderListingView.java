@@ -81,6 +81,7 @@ public class BuilderListingView extends AbstractCardListingView {
 
         callback.requestApi(SerpActivity.REQUEST_BUILDER_API, "builderId");
         mSellerContentLinearLayout.setVisibility(View.GONE);
+        mBuilderImageView.setImageResource(R.drawable.builder);
 
         /*Bitmap bitmap = null;
 

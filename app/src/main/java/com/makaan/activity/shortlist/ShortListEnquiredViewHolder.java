@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
+import com.makaan.constants.LeadPhaseConstants;
+import com.makaan.response.buyerjourney.ClientEvent;
 import com.makaan.ui.CustomNetworkImageView;
 import com.makaan.ui.view.CustomRatingBar;
 
@@ -25,6 +27,21 @@ public class ShortListEnquiredViewHolder extends RecyclerView.ViewHolder {
     public TextView mRequestSiteVisit;
     private int position;
     private ScheduleSiteVisit listener;
+    private int mPhaseId;
+
+    public void setPhaseAndCompanyId(int phaseId, Long companyId) {
+        if(companyId != null && companyId.equals(499L)) {
+            mRequestSiteVisit.setText(R.string.request_site_visit);
+            mRequestSiteVisit.setEnabled(false);
+        } else if(phaseId == LeadPhaseConstants.LEAD_PHASE_SITE_VIST) {
+            mRequestSiteVisit.setText(R.string.site_visit_already_requested);
+            mRequestSiteVisit.setEnabled(false);
+        } else {
+            mRequestSiteVisit.setText(R.string.request_site_visit);
+            mRequestSiteVisit.setEnabled(true);
+        }
+    }
+
     public interface ScheduleSiteVisit{
         void onSiteVisitClicked(int position);
 
@@ -43,7 +60,9 @@ public class ShortListEnquiredViewHolder extends RecyclerView.ViewHolder {
         mRequestSiteVisit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onSiteVisitClicked(position);
+                if(mPhaseId != LeadPhaseConstants.LEAD_PHASE_SITE_VIST) {
+                    listener.onSiteVisitClicked(position);
+                }
             }
         });
         itemView.setOnClickListener(new OnClickListener() {

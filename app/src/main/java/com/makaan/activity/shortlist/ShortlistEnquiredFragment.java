@@ -131,6 +131,9 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment implements Sho
                             if (enquiry != null) {
                                 enquiry.companyId = clientLead.companyId;
                                 enquiry.leadId = propertyRequirement.leadId;
+                                if(clientLead.clientActivity != null) {
+                                    enquiry.phaseId = clientLead.clientActivity.phaseId;
+                                }
                                 mEnquiryHashMap.put(enquiry.id, enquiry);
                             }
                         }

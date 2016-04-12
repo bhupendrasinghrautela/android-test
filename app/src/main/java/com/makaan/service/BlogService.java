@@ -9,7 +9,9 @@ import com.makaan.response.ResponseError;
 import com.makaan.response.content.BlogItem;
 import com.makaan.util.AppBus;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 /**
@@ -24,7 +26,12 @@ public class BlogService implements MakaanService {
      */
     public void getBlogs(final String tag) {
 
-        String blogUrl = ApiConstants.BLOG_URL.concat(tag);
+        String blogUrl = ApiConstants.BLOG_URL;
+        try {
+            blogUrl = blogUrl.concat(URLEncoder.encode(tag, "utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            blogUrl = blogUrl.concat(tag);
+        }
         Type type = new TypeToken<ArrayList<BlogItem>>() {
         }.getType();
         MakaanNetworkClient.getInstance().get(blogUrl, type, new ObjectGetCallback() {
