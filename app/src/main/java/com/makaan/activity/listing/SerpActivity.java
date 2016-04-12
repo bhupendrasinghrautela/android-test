@@ -22,6 +22,7 @@ import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.PreferenceConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.event.locality.GpByIdEvent;
 import com.makaan.event.serp.GroupSerpGetEvent;
 import com.makaan.event.serp.SerpGetEvent;
@@ -168,7 +169,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     private ArrayList<Listing> mChildListings;
     private int mChildListingCount;
     private int mChildListingPage;
-
     public Selector mSerpSelector = new Selector();
     private ArrayList<FilterGroup> mFilterGroups;
     private boolean mFilterDialogOpened;
@@ -349,6 +349,7 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 if(request.getSearches() != null && request.getSearches().size() > 0) {
                     applySearch(request.getSearches());
                 }
+
             }
             request.applySelector(mSerpSelector, mFilterGroups);
             if(type == TYPE_SUGGESTION || type == TYPE_NOTIFICATION) {
@@ -968,16 +969,19 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             startActivity(intent);
         } else if(type == REQUEST_LEAD_FORM) {
             Intent intent = new Intent(this, LeadFormActivity.class);
-            intent.putExtra(KeyUtil.SOURCE_LEAD_FORM,SerpActivity.class.getName());
+            intent.putExtra(KeyUtil.SOURCE_LEAD_FORM, SerpActivity.class.getName());
+            sendLeadCallNowTrack(bundle);
             intent.putExtras(bundle);
             startActivityForResult(intent, LeadFormActivity.LEAD_DROP_REQUEST);
+
         } else if(type == REQUEST_SET_ALERT) {
+            sendSetAlertEvent();
             FragmentTransaction ft = this.getFragmentManager().beginTransaction();
             SetAlertsDialogFragment dialog = new SetAlertsDialogFragment();
             if(mSerpBackStack.peek() != null) {
-                dialog.setData(mFilterGroups, mSerpBackStack.peek(), mSerpContext == SERP_CONTEXT_BUY, this);
+                dialog.setData(mFilterGroups, mSerpBackStack.peek(), mSerpContext == SERP_CONTEXT_BUY, this, getSerpSubCategory());
             } else {
-                dialog.setData(mFilterGroups, mListingGetEvent, mSerpContext == SERP_CONTEXT_BUY, this);
+                dialog.setData(mFilterGroups, mListingGetEvent, mSerpContext == SERP_CONTEXT_BUY, this , getSerpSubCategory());
             }
             dialog.show(ft, "Set Alerts");
         } else if(type == REQUEST_MPLUS_POPUP) {
@@ -1256,4 +1260,141 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public void setFilterString(Properties properties) {
         this.mProperties =properties;
     }
+
+
+
+    public void sendLeadCallNowTrack(Bundle bundle) {
+        if (mSerpRequestType != 0) {
+
+            switch (mSerpRequestType & MASK_LISTING_TYPE) {
+
+                case TYPE_BUILDER:{
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    getSerpContextLabel(properties);
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.serpBuilder);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.leadFormOpen);
+                    bundle.putString(KeyUtil.SERP_SUB_CATEGORY, MakaanTrackerConstants.Category.serpBuilder.getValue());
+                    break;
+                }
+                case TYPE_SELLER :{
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    getSerpContextLabel(properties);
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.serpSeller);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.leadFormOpen);
+                    bundle.putString(KeyUtil.SERP_SUB_CATEGORY, MakaanTrackerConstants.Category.serpSeller.getValue());
+
+                    break;
+                }
+                case TYPE_CITY:{
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    getSerpContextLabel(properties);
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.serpCity);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.leadFormOpen);
+                    bundle.putString(KeyUtil.SERP_SUB_CATEGORY, MakaanTrackerConstants.Category.serpCity.getValue());
+                    break;
+                }
+                case TYPE_PROJECT:{
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    getSerpContextLabel(properties);
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.serpProject);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.leadFormOpen);
+                    bundle.putString(KeyUtil.SERP_SUB_CATEGORY, MakaanTrackerConstants.Category.serpProject.getValue());
+                    break;
+                }
+                case TYPE_SEARCH: {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    getSerpContextLabel(properties);
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.serpLocality);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.leadFormOpen);
+                    bundle.putString(KeyUtil.SERP_SUB_CATEGORY, MakaanTrackerConstants.Category.serpLocality.getValue());
+                    break;
+                }
+                case TYPE_NEARBY: {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    getSerpContextLabel(properties);
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.serpMap);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.leadFormOpen);
+                    bundle.putString(KeyUtil.SERP_SUB_CATEGORY, MakaanTrackerConstants.Category.serpMap.getValue());
+                    break;
+                }
+                case TYPE_GPID: {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    getSerpContextLabel(properties);
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.serpLandMark);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.leadFormOpen);
+                    bundle.putString(KeyUtil.SERP_SUB_CATEGORY, MakaanTrackerConstants.Category.serpLandMark.getValue());
+                    break;
+                }
+                case TYPE_CLUSTER: {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    getSerpContextLabel(properties);
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.serpChild);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.leadFormOpen);
+                    bundle.putString(KeyUtil.SERP_SUB_CATEGORY, MakaanTrackerConstants.Category.serpChild.getValue());
+                    break;
+                }
+            }
+        }
+    }
+
+    public String getSerpSubCategory(){
+        String string="";
+        if (mSerpRequestType != 0) {
+
+            switch (mSerpRequestType & MASK_LISTING_TYPE) {
+
+                case TYPE_BUILDER:{
+                    return  MakaanTrackerConstants.Category.serpBuilder.getValue();
+                }
+                case TYPE_SELLER :{
+                    return MakaanTrackerConstants.Category.serpSeller.getValue();
+                }
+                case TYPE_CITY:{
+                    return  MakaanTrackerConstants.Category.serpCity.getValue();
+                }
+                case TYPE_PROJECT:{
+                    return  MakaanTrackerConstants.Category.serpProject.getValue();
+                }
+                case TYPE_SEARCH: {
+                    return  MakaanTrackerConstants.Category.serpLocality.getValue();
+                }
+                case TYPE_NEARBY: {
+                    return  MakaanTrackerConstants.Category.serpMap.getValue();
+                }
+                case TYPE_GPID: {
+                    return   MakaanTrackerConstants.Category.serpLandMark.getValue();
+                }
+                case TYPE_CLUSTER: {
+                    return  MakaanTrackerConstants.Category.serpChild.getValue();
+                }
+            }
+        }
+        return string;
+    }
+
+    public void getSerpContextLabel(Properties properties){
+        if(mSerpContext==SERP_CONTEXT_BUY){
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s",
+                    ScreenNameConstants.BUY,properties.get(MakaanEventPayload.LABEL)));
+        }
+        else if(mSerpContext==SERP_CONTEXT_RENT){
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s",
+                    ScreenNameConstants.RENT,properties.get(MakaanEventPayload.LABEL)));
+        }
+    }
+
+    private void sendSetAlertEvent() {
+         /*--------------------track-----------------events------------*/
+        Properties properties = MakaanEventPayload.beginBatch();
+        properties.put(MakaanEventPayload.CATEGORY, getSerpSubCategory());
+        if(mSerpContext==SERP_CONTEXT_BUY) {
+            properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.BUY);
+        }else {
+            properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.RENT);
+        }
+        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.setAlertOpen);
+        /*---------------------------------------------------------------------*/
+    }
+
+
 }

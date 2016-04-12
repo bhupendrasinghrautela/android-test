@@ -34,6 +34,7 @@ import com.makaan.activity.pyr.PyrPageActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.event.city.CityByIdEvent;
 import com.makaan.event.city.CityTopLocalityEvent;
 import com.makaan.event.city.CityTrendEvent;
@@ -555,6 +556,17 @@ public class CityOverViewFragment extends OverviewFragment {
 
     @OnClick(R.id.pyr_button_bottom)
     public void onBottomPyrClick(){
+        /*-------------------track------------------event-------------------*/
+        Properties properties = MakaanEventPayload.beginBatch();
+        if(mCity!=null && mCity.id!=null) {
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY, mCity.id));
+        }else {
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY, ""));
+        }
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.city);
+        MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.pyrFormOpen);
+        /*-------------------------------------------------------------------*/
+
         Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
         if(mCity!=null && mCity.label!=null) {
             pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, mCity.label);

@@ -30,6 +30,9 @@ import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.activity.pyr.PyrPageActivity;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.event.agents.callback.TopAgentsCallback;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.event.locality.LocalityByIdEvent;
@@ -61,6 +64,7 @@ import com.makaan.ui.view.MakaanProgressBar;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.LocalityUtil;
 import com.makaan.util.StringUtil;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -592,6 +596,17 @@ public class LocalityFragment extends OverviewFragment {
 
     @OnClick(R.id.pyr_button_bottom)
     public void onBottomPyrClick(){
+        /*-------------------track------------------event-------------------*/
+        Properties properties = MakaanEventPayload.beginBatch();
+        if(locality!=null && locality.localityId!=null) {
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY, locality.localityId));
+        }else {
+            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY, ""));
+        }
+        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.locality);
+        MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.pyrFormOpen);
+        /*-------------------------------------------------------------------*/
+
         Intent pyrIntent = new Intent(getActivity(), PyrPageActivity.class);
         pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, locality.suburb.city.label);
         if(locality.cityId != null && locality.cityId > 0) {

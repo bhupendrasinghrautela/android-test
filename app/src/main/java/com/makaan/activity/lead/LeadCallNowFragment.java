@@ -17,8 +17,11 @@ import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.listing.PropertyDetailFragment;
 import com.makaan.activity.listing.SerpActivity;
+import com.makaan.activity.shortlist.ShortListFavoriteAdapter;
+import com.makaan.activity.shortlist.ShortListRecentFragment;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.project.ProjectFragment;
 import com.makaan.network.CustomImageLoaderListener;
@@ -47,6 +50,7 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
     @Bind(R.id.iv_seller_image_call_now)
     de.hdodenhof.circleimageview.CircleImageView mSellerImage;
     private boolean mAlreadyLoaded=false;
+    private static final int SINGLE_SELLER=1;
 
     @Override
     protected int getContentViewId() {
@@ -84,21 +88,38 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
         Bundle bundle =getArguments();
         if(bundle!=null && SerpActivity.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
             Properties properties = MakaanEventPayload.beginBatch();
-            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
-            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.callNow);
-            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickSerpCallConnect);
+            properties.put(MakaanEventPayload.CATEGORY, mLeadFormPresenter.getSerpSubCategory());
+            properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(bundle.getString("source")));
+            properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.leadSubmitCallNow);
         }
         else if(bundle!=null && ProjectFragment.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
             Properties properties = MakaanEventPayload.beginBatch();
-            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
-            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.callNow);
-            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickProjectCallConnect);
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.project);
+            properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(bundle.getString("source")));
+            properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.leadSubmitCallNow);
         }
         else if(bundle!=null && PropertyDetailFragment.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
             Properties properties = MakaanEventPayload.beginBatch();
-            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
-            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.callNow);
-            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickPropertyCallConnect);
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.PropertyInCaps);
+            properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(bundle.getString("source")));
+            properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.leadSubmitCallNow);
+        }
+        else if(bundle!=null && ShortListFavoriteAdapter.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCaps);
+            properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(bundle.getString("source")));
+            properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.leadSubmitCallNow);
+        }
+        else if(bundle!=null && ShortListRecentFragment.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCaps);
+            properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(bundle.getString("source")));
+            properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.leadSubmitCallNow);
         }
         //TODO remove this hardcoded number
         if(PermissionManager.isPermissionRequestRequired(getActivity(), Manifest.permission.CALL_PHONE)) {
@@ -131,6 +152,19 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
             properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBackFromSeller);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickPropertyCallConnect);
         }
+        else if(bundle!=null && ShortListFavoriteAdapter.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBackFromSeller);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickShortListFavCallConnect);
+        }
+        else if(bundle!=null && ShortListRecentFragment.class.getName().equalsIgnoreCase(bundle.getString("source"))) {
+            Properties properties = MakaanEventPayload.beginBatch();
+            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboard);
+            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.getCallBackFromSeller);
+            MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickShortListRecentCallConnect);
+        }
+
         LeadFormPresenter.getLeadFormPresenter().showLeadLaterCallBAckFragment();
     }
 

@@ -1,76 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:layout_margin="@dimen/project_basic_detail_top_margin"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:font="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:font="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/tools">
-        <com.makaan.ui.view.FontTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_project_name"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/rl_builder_score"
-            android:textColor="@color/project_similar_projects_default_color"
-            android:textSize="@dimen/project_text_big"
-            font:fontName="comforta.ttf"
-            />
-        <com.makaan.ui.view.FontTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_project_name"
-            android:id="@+id/tv_project_location"
-            android:layout_marginTop="15dp"
-            android:layout_toLeftOf="@+id/rl_builder_score"
-            android:layout_alignParentLeft="true"
-            android:textColor="@color/project_similar_projects_default_color"
-            android:textSize="@dimen/locality_text_medium"
-            font:fontName="comforta.ttf"
-            />
+    android:layout_margin="@dimen/project_basic_detail_top_margin">
 
-        <RelativeLayout
-            android:layout_alignParentRight="true"
-            android:layout_width="100dp"
-            android:id="@+id/rl_builder_score"
-            android:layout_height="wrap_content">
+    <com.makaan.ui.view.FontTextView
+        android:id="@+id/tv_project_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/rl_builder_score"
+        android:textColor="@color/project_similar_projects_default_color"
+        android:textSize="@dimen/project_text_big"
+        font:fontName="comforta.ttf" />
+
+    <com.makaan.ui.view.FontTextView
+        android:id="@+id/tv_project_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/tv_project_name"
+        android:layout_marginTop="15dp"
+        android:layout_toLeftOf="@+id/rl_builder_score"
+        android:textColor="@color/project_similar_projects_default_color"
+        android:textSize="@dimen/locality_text_medium"
+        font:fontName="comforta.ttf" />
+
+    <RelativeLayout
+        android:id="@+id/rl_builder_score"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true">
 
         <FrameLayout
-            android:layout_width="wrap_content"
             android:id="@+id/frame_locality_score"
-            android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+
             <com.makaan.ui.view.MakaanProgressBar
+                android:id="@+id/project_score_progress"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="@dimen/locality_circular_progress_dimen"
                 android:layout_height="@dimen/locality_circular_progress_dimen"
-                font:isLocality="false"
-                android:id="@+id/project_score_progress"
-                android:progress="78"
-                android:secondaryProgress="100"
+                android:layout_gravity="center_vertical"
                 android:indeterminate="false"
+                android:progress="78"
                 android:progressDrawable="@drawable/circular_progress_drawable"
-                android:layout_gravity="center_vertical" />
+                android:secondaryProgress="100"
+                font:isLocality="false" />
+
             <com.makaan.ui.view.FontTextView
                 android:id="@+id/project_score_text"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                font:fontName="proxima.otf"
+                android:layout_gravity="center"
                 android:textColor="@color/project_similar_projects_default_color"
-                android:textSize="@dimen/project_text_medium"/>
+                android:textSize="@dimen/project_text_medium"
+                font:fontName="proxima.otf" />
         </FrameLayout>
-            <com.makaan.ui.view.FontTextView
+
+        <com.makaan.ui.view.FontTextView
             android:id="@+id/locality_score_label"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/frame_locality_score"
-            android:layout_height="wrap_content"
-            android:text="@string/project_score"
-                font:fontName="proxima.otf"
             android:layout_marginRight="10dp"
+            android:text="@string/project_score"
             android:textColor="@color/project_light_text"
-            android:textSize="@dimen/project_text_v_small"/>
-        </RelativeLayout>
+            android:textSize="@dimen/project_text_v_small"
+            font:fontName="proxima.otf" />
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -15,6 +15,7 @@ import com.makaan.R;
 import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.fragment.project.ProjectSpecificationPagerFragment;
 import com.makaan.jarvis.BaseJarvisActivity;
 import com.makaan.pojo.SpecificaitonsUI;
@@ -99,7 +100,7 @@ public class ProjectSpecificationView extends LinearLayout{
             @Override
             public void onPageSelected(int position) {
                 if(tabNames.size()>0) {
-                    if (OverviewActivity.SCREEN_NAME_LOCALITY.equalsIgnoreCase(((BaseJarvisActivity)mContext).getScreenName())) {
+                    if (ScreenNameConstants.SCREEN_NAME_LOCALITY.equalsIgnoreCase(((BaseJarvisActivity)mContext).getScreenName())) {
                         Properties properties = MakaanEventPayload.beginBatch();
                         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
                         properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.specifications+"_"+tabNames.get(position));

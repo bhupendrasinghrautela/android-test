@@ -248,6 +248,11 @@ public class PyrPageFragment extends Fragment {
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerPyr);
             properties.put(MakaanEventPayload.LABEL, pyrPagePresenter.getLabelStringOnNextClick(pyrRequest));
             MakaanEventPayload.endBatch(getContext(), pyrPagePresenter.getScreenNameAction(pyrPagePresenter.getSourceScreenName()));
+
+            Properties properties1 = MakaanEventPayload.beginBatch();
+            properties1.put(MakaanEventPayload.CATEGORY, pyrPagePresenter.getCategoryForPyrSubmit(pyrPagePresenter.getSourceScreenName()));
+            properties1.put(MakaanEventPayload.LABEL, pyrPagePresenter.getLabelStringForPyrSubmit(pyrRequest));
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.pyrSubmit);
         }
 
         if(makeRequest && pyrRequest.getSalesType().equals("buy")) {

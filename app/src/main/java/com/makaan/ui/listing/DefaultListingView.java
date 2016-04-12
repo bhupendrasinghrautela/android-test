@@ -729,9 +729,7 @@ public class DefaultListingView extends AbstractListingView {
     @OnClick(R.id.serp_default_listing_call_button)
     public void onCallClicked(View view) {
         Properties properties = MakaanEventPayload.beginBatch();
-        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
-        properties.put(MakaanEventPayload.LABEL, mListing.lisitingId + "_" + (mPosition + 1));
-        MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.callSerpProperty);
+        properties.put(MakaanEventPayload.LABEL, mListing.propertyId+ "_" + (mPosition + 1));
 
         Bundle bundle = new Bundle();
 
@@ -790,9 +788,6 @@ public class DefaultListingView extends AbstractListingView {
         else if(!TextUtils.isEmpty(mListing.lisitingPostedBy.profilePictureURL)) {
             bundle.putString(KeyUtil.SELLER_IMAGE_URL_LEAD_FORM, mListing.lisitingPostedBy.profilePictureURL);
         }
-
-        bundle.putString(KeyUtil.SOURCE_LEAD_FORM, SerpActivity.class.getName());
-
         mCallback.requestDetailPage(SerpActivity.REQUEST_LEAD_FORM, bundle);
     }
 

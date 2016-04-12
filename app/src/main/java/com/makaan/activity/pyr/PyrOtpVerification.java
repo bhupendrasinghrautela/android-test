@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ import butterknife.OnClick;
 /**
  * Created by makaanuser on 7/1/16.
  */
-public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerificationListener{
+public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerificationListener, View.OnFocusChangeListener, View.OnKeyListener {
 
     @Bind(R.id.et_first_digit)
     EditText mEditTextFirstDigit;
@@ -83,6 +84,16 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
         mEditTextSecondDigit.addTextChangedListener(secondDigitWatcher);
         mEditTextThirdDigit.addTextChangedListener(thirdDigitWatcher);
         mEditTextFourthDigit.addTextChangedListener(fourthDigitWatcher);
+
+        mEditTextFirstDigit.setOnFocusChangeListener(this);
+        mEditTextSecondDigit.setOnFocusChangeListener(this);
+        mEditTextThirdDigit.setOnFocusChangeListener(this);
+        mEditTextFourthDigit.setOnFocusChangeListener(this);
+
+        mEditTextFirstDigit.setOnKeyListener(this);
+        mEditTextSecondDigit.setOnKeyListener(this);
+        mEditTextThirdDigit.setOnKeyListener(this);
+        mEditTextFourthDigit.setOnKeyListener(this);
         return view;
     }
 
@@ -251,12 +262,6 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
             if(s.toString().length()>0)
             {
                 mEditTextThirdDigit.requestFocus();
-            }else {
-                mEditTextFirstDigit.requestFocus();
-            }
-            /*set focus to first editext*/
-            if (mEditTextFirstDigit.getText().length() == 0) {
-                mEditTextFirstDigit.requestFocus();
             }
         }
 
@@ -279,12 +284,6 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
             if(s.length()>0)
             {
                 mEditTextFourthDigit.requestFocus();
-            }else{
-                mEditTextSecondDigit.requestFocus();
-            }
-            /*set focus to first editext*/
-            if (mEditTextFirstDigit.getText().length() == 0) {
-                mEditTextFirstDigit.requestFocus();
             }
         }
 
@@ -303,22 +302,10 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if(s.length()==0)
-            {
-                mEditTextThirdDigit.requestFocus();
-            }
-            /*set focus to first editext*/
-            if (mEditTextFirstDigit.getText().length() == 0) {
-                mEditTextFirstDigit.requestFocus();
-            }
         }
 
         @Override
         public void afterTextChanged(Editable s) {
-            if(s.length()==0)
-            {
-                mEditTextThirdDigit.requestFocus();
-            }
         }
     };
 
@@ -341,6 +328,11 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerPyr);
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.success);
                 MakaanEventPayload.endBatch(getContext(), mPyrPagePresenter.getOtpAction(mPyrPagePresenter.getSourceScreenName()));
+
+                Properties properties1 = MakaanEventPayload.beginBatch();
+                properties1.put(MakaanEventPayload.CATEGORY, mPyrPagePresenter.getCategoryForPyrSubmit(mPyrPagePresenter.getSourceScreenName()));
+                properties1.put(MakaanEventPayload.LABEL, mPyrPagePresenter.getLabelStringForPyrSubmit(mPyrPagePresenter.getPyrRequestObject()));
+                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.pyrOtpSubmit);
             }
 
             if ((mPyrPagePresenter!=null && mPyrPagePresenter.isMakkanAssist())) {
@@ -368,4 +360,112 @@ public class PyrOtpVerification extends Fragment implements  SmsReceiver.OnVerif
         }
     }
 
+    @Override
+    public void onFocusChange(View view, boolean b) {
+        if(b) {
+            switch (view.getId()) {
+                case R.id.et_first_digit: {
+
+                    break;
+                }
+                case R.id.et_second_digit: {
+                    if("".equalsIgnoreCase(mEditTextFirstDigit.getText().toString())) {
+                        mEditTextSecondDigit.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mEditTextFirstDigit.requestFocus();
+                            }
+                        }, 500);
+                    }
+                    break;
+                }
+                case R.id.et_third_digit: {
+
+                    if("".equalsIgnoreCase(mEditTextFirstDigit.getText().toString())) {
+                        mEditTextSecondDigit.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mEditTextFirstDigit.requestFocus();
+                            }
+                        }, 500);
+                    } else if("".equalsIgnoreCase(mEditTextSecondDigit.getText().toString())) {
+                        mEditTextSecondDigit.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mEditTextSecondDigit.requestFocus();
+                            }
+                        }, 500);
+                    }
+                    break;
+                }
+                case R.id.et_fourth_digit: {
+
+
+                    if("".equalsIgnoreCase(mEditTextFirstDigit.getText().toString())) {
+                        mEditTextSecondDigit.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mEditTextFirstDigit.requestFocus();
+                            }
+                        }, 500);
+                    } else if("".equalsIgnoreCase(mEditTextSecondDigit.getText().toString())) {
+                        mEditTextSecondDigit.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mEditTextSecondDigit.requestFocus();
+                            }
+                        }, 500);
+                    } else if("".equalsIgnoreCase(mEditTextThirdDigit.getText().toString())) {
+                        mEditTextSecondDigit.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mEditTextThirdDigit.requestFocus();
+                            }
+                        }, 500);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean onKey(View view, int i, KeyEvent keyEvent) {
+        if(keyEvent.getKeyCode() == KeyEvent.KEYCODE_DEL
+                && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+            switch (view.getId()) {
+                case R.id.et_second_digit: {
+                    if("".equalsIgnoreCase(mEditTextSecondDigit.getText().toString())) {
+                        mEditTextFirstDigit.onKeyDown(KeyEvent.KEYCODE_DEL, keyEvent);
+                        mEditTextFirstDigit.onKeyUp(KeyEvent.KEYCODE_DEL, keyEvent);
+                        mEditTextFirstDigit.requestFocus();
+                        return true;
+                    }
+                    break;
+                }
+                case R.id.et_third_digit: {
+
+                    if("".equalsIgnoreCase(mEditTextThirdDigit.getText().toString())) {
+                        mEditTextSecondDigit.onKeyDown(KeyEvent.KEYCODE_DEL, keyEvent);
+                        mEditTextSecondDigit.onKeyUp(KeyEvent.KEYCODE_DEL, keyEvent);
+                        mEditTextSecondDigit.requestFocus();
+                        return true;
+                    }
+                    break;
+                }
+                case R.id.et_fourth_digit: {
+
+
+                    if("".equalsIgnoreCase(mEditTextFourthDigit.getText().toString())) {
+                        mEditTextThirdDigit.onKeyDown(KeyEvent.KEYCODE_DEL, keyEvent);
+                        mEditTextThirdDigit.onKeyUp(KeyEvent.KEYCODE_DEL, keyEvent);
+                        mEditTextThirdDigit.requestFocus();
+                        return true;
+                    }
+                    break;
+                }
+            }
+        }
+        return false;
+    }
 }

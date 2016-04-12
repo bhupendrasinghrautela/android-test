@@ -20,7 +20,10 @@ import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.userLogin.UserLoginActivity;
 import com.makaan.adapter.listing.FiltersViewAdapter;
+import com.makaan.analytics.MakaanEventPayload;
+import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.cache.MasterDataCache;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.event.saveSearch.SaveSearchGetEvent;
 import com.makaan.event.serp.SerpGetEvent;
 import com.makaan.event.user.UserLoginEvent;
@@ -41,6 +44,7 @@ import com.makaan.service.SaveSearchService;
 import com.makaan.util.JsonBuilder;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
+import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
@@ -76,19 +80,22 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
     private boolean isLoginInitiated;
     private boolean isAfterLoginInitiated;
     private boolean isSubmitInitiated;
+    private String serpSubCategory;
 
-    public void setData(ArrayList<FilterGroup> grps, SerpGetEvent listingGetEvent, boolean serpContext, Context context) {
+    public void setData(ArrayList<FilterGroup> grps, SerpGetEvent listingGetEvent, boolean serpContext, Context context, String serpSubCategory) {
         mGroups = grps;
         mListingGetEvent = listingGetEvent;
         mIsBuyContext = serpContext;
         mContext = context;
+        this.serpSubCategory=serpSubCategory;
     }
 
-    public void setData(ArrayList<FilterGroup> grps, SerpRequest serpRequest, boolean serpContext, Context context) {
+    public void setData(ArrayList<FilterGroup> grps, SerpRequest serpRequest, boolean serpContext, Context context, String serpSubCategory) {
         mGroups = grps;
         mSerpRequest = serpRequest;
         mIsBuyContext = serpContext;
         mContext = context;
+        this.serpSubCategory=serpSubCategory;
     }
 
     @Override
@@ -594,7 +601,18 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                 if (event.saveSearchArrayList != null && event.saveSearchArrayList.size() > 0) {
                     if (!TextUtils.isEmpty(event.saveSearchArrayList.get(0).name)
                             && mSetAlertsNameEditText.getText().toString().equalsIgnoreCase(event.saveSearchArrayList.get(0).name)) {
-
+                        /*--------------------track-----------------events------------*/
+                        Properties properties = MakaanEventPayload.beginBatch();
+                        properties.put(MakaanEventPayload.CATEGORY, serpSubCategory);
+                        if(mIsBuyContext) {
+                            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY,
+                                    mSetAlertsNameEditText.getText().toString()));
+                        }else {
+                            properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.RENT,
+                                    mSetAlertsNameEditText.getText().toString()));
+                        }
+                        MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.setAlertSubmit);
+                        /*---------------------------------------------------------------------*/
                         MasterDataCache.getInstance().clearSavedSearches();
 
                         MakaanMessageDialogFragment.showMessage(getFragmentManager(),

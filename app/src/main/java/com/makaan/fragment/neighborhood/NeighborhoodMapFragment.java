@@ -29,6 +29,7 @@ import com.makaan.R;
 import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.event.amenity.AmenityGetEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.jarvis.BaseJarvisActivity;
@@ -350,19 +351,19 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
 
     @Override
     public void onItemClick(int position, View v) {
-        if (OverviewActivity.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity) getActivity()).getScreenName())) {
+        if (ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL.equalsIgnoreCase(((BaseJarvisActivity) getActivity()).getScreenName())) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
             properties.put(MakaanEventPayload.LABEL, mAmenityClusters.get(position).name);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.mapPropertyLocality);
         }
-        if (OverviewActivity.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity) getActivity()).getScreenName())) {
+        if (ScreenNameConstants.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity) getActivity()).getScreenName())) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
             properties.put(MakaanEventPayload.LABEL, mAmenityClusters.get(position).name);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.mapProjectLocality);
         }
-        if (OverviewActivity.SCREEN_NAME_LOCALITY.equalsIgnoreCase(((BaseJarvisActivity) getActivity()).getScreenName())) {
+        if (ScreenNameConstants.SCREEN_NAME_LOCALITY.equalsIgnoreCase(((BaseJarvisActivity) getActivity()).getScreenName())) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
             properties.put(MakaanEventPayload.LABEL, mAmenityClusters.get(position).name);
