@@ -634,17 +634,23 @@ public class ProjectFragment extends OverviewFragment{
             scoreFrameLayout.setVisibility(View.GONE);
             mScoreLabel.setVisibility(View.GONE);
         }
-        projectNameTv.setText(project.getFullName().toLowerCase());
+        if(!TextUtils.isEmpty(project.getFullName())) {
+            projectNameTv.setText(project.getFullName().toLowerCase());
+        }
         if(getActivity() instanceof MakaanBaseSearchActivity) {
-            if(project.builder != null && !TextUtils.isEmpty(project.builder.name)) {
-                getActivity().setTitle(project.builder.name.toLowerCase() + " " + project.name.toLowerCase());
-            } else if(!TextUtils.isEmpty(project.builderName)) {
-                getActivity().setTitle(project.builderName.toLowerCase() + " " + project.name.toLowerCase());
-            } else {
-                getActivity().setTitle(project.name.toLowerCase());
+            if(!TextUtils.isEmpty(project.name)) {
+                if (project.builder != null && !TextUtils.isEmpty(project.builder.name)) {
+                    getActivity().setTitle(project.builder.name.toLowerCase() + " " + project.name.toLowerCase());
+                } else if (!TextUtils.isEmpty(project.builderName)) {
+                    getActivity().setTitle(project.builderName.toLowerCase() + " " + project.name.toLowerCase());
+                } else {
+                    getActivity().setTitle(project.name.toLowerCase());
+                }
             }
         }
-        projectLocationTv.setText(project.address.toLowerCase());
+        if(!TextUtils.isEmpty(project.address)) {
+            projectLocationTv.setText(project.address.toLowerCase());
+        }
     }
 
 
@@ -724,6 +730,9 @@ public class ProjectFragment extends OverviewFragment{
     }
 
     private void addPriceTrendsFragment(ArrayList<Locality> nearbyLocalities) {
+        if(project == null){
+            return;
+        }
         ArrayList<Long> localities = new ArrayList<>();
         if(localities.size()>0) {
             for (int i = 0; i < nearbyLocalities.size() && i < 3; i++) {
