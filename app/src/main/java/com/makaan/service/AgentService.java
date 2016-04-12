@@ -21,11 +21,18 @@ public class AgentService implements MakaanService{
     public void getTopAgentsForLocality(Long cityId, Long localityId, int noOfAgents, boolean isRental,TopAgentsCallback topAgentsCallback) {
         ArrayList<String> localityIds = new ArrayList<>();
         localityIds.add(localityId.toString());
-        getTopAgentsForLocality(cityId, localityIds, null, null, noOfAgents, null, topAgentsCallback);
+        getTopAgentsForLocality(cityId, localityIds, null, null, noOfAgents, null, topAgentsCallback, -1, -1);
     }
 
+   /* public void getTopAgentsForLocality(Long cityId, ArrayList<String> localityIdList, ArrayList<String> bedrooms, ArrayList<String> unitType,
+                                        Integer noOfAgents, Boolean isRental, TopAgentsCallback topAgentsCallback) {
+        ArrayList<String> localityIds = new ArrayList<>();
+        localityIds.add(localityId.toString());
+        getTopAgentsForLocality(cityId, localityIds, null, null, noOfAgents, null, topAgentsCallback);
+    }*/
 
-    public void getTopAgentsForLocality(Long cityId, ArrayList<String> localityIdList, ArrayList<String> bedrooms, ArrayList<String> unitType, Integer noOfAgents, Boolean isRental, TopAgentsCallback topAgentsCallback) {
+    public void getTopAgentsForLocality(Long cityId, ArrayList<String> localityIdList, ArrayList<String> bedrooms, ArrayList<String> unitType,
+                                        Integer noOfAgents, Boolean isRental, TopAgentsCallback topAgentsCallback, double minBudget, double maxBudget) {
 
         if (null != cityId) {
             StringBuilder topAgentsUrl = new StringBuilder(TOP_AGENTS_CITY);
@@ -45,6 +52,10 @@ public class AgentService implements MakaanService{
                 } else {
                     topAgentsSelector.term(LISTING_CATEGORY, new String[]{RESALE, PRIMARY});
                 }
+            }
+
+            if(minBudget!=-1 && maxBudget!=-1){
+                topAgentsSelector.range(PRICE, minBudget,maxBudget);
             }
 
             if (null != unitType && unitType.size()>0) {

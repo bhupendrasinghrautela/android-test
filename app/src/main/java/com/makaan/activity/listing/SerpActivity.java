@@ -977,7 +977,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
             startActivityForResult(intent, LeadFormActivity.LEAD_DROP_REQUEST);
 
         } else if(type == REQUEST_SET_ALERT) {
-            sendSetAlertEvent();
             FragmentTransaction ft = this.getFragmentManager().beginTransaction();
             SetAlertsDialogFragment dialog = new SetAlertsDialogFragment();
             if(mSerpBackStack.peek() != null) {
@@ -1385,19 +1384,6 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
         }
     }
 
-    private void sendSetAlertEvent() {
-         /*--------------------track-----------------events------------*/
-        Properties properties = MakaanEventPayload.beginBatch();
-        properties.put(MakaanEventPayload.CATEGORY, getSerpSubCategory());
-        if(mSerpContext==SERP_CONTEXT_BUY) {
-            properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.BUY);
-        }else {
-            properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.RENT);
-        }
-        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.setAlertOpen);
-        /*---------------------------------------------------------------------*/
-    }
-
     private void sendScreenNameEvent(int type) {
             switch (type & MASK_LISTING_TYPE) {
 
@@ -1459,6 +1445,5 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 }
             }
     }
-
 
 }

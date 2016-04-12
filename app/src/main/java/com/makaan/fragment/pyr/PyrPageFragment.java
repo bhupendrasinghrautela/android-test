@@ -251,18 +251,21 @@ public class PyrPageFragment extends Fragment {
 
             Properties properties1 = MakaanEventPayload.beginBatch();
             properties1.put(MakaanEventPayload.CATEGORY, pyrPagePresenter.getCategoryForPyrSubmit(pyrPagePresenter.getSourceScreenName()));
-            properties1.put(MakaanEventPayload.LABEL, pyrPagePresenter.getLabelStringForPyrSubmit(pyrRequest));
+            properties1.put(MakaanEventPayload.LABEL, pyrPagePresenter.getLabelStringOnNextClick(pyrRequest));
             MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.pyrSubmit);
         }
+
+        pyrPagePresenter.setAlreadySelectedMaxBudget(pyrRequest.getMaxBudget());
+        pyrPagePresenter.setAlreadySelectedMinBudget(pyrRequest.getMinBudget());
 
         if(makeRequest && pyrRequest.getSalesType().equals("buy")) {
             AgentService agentService = ((AgentService) (MakaanServiceFactory.getInstance().getService(AgentService.class)));
             agentService.getTopAgentsForLocality((long) pyrRequest.getCityId(), localities
-                    , bedrooms, propertyTypes, 20, false, new TopBuyAgentsPyrCallback());
+                    , bedrooms, propertyTypes, 20, false, new TopBuyAgentsPyrCallback(), pyrRequest.getMinBudget(), pyrRequest.getMaxBudget());
         }
         else if(makeRequest && pyrRequest.getSalesType().equals("rent")){
-            ((AgentService) (MakaanServiceFactory.getInstance().getService(AgentService.class))).getTopAgentsForLocality((long)pyrRequest.getCityId(), localities,
-                    bedrooms, propertyTypes, 20, true, new TopRentAgentsPyrCallback());
+            ((AgentService) (MakaanServiceFactory.getInstance().getService(AgentService.class))).getTopAgentsForLocality((long) pyrRequest.getCityId(), localities,
+                    bedrooms, propertyTypes, 20, true, new TopRentAgentsPyrCallback(), pyrRequest.getMinBudget(), pyrRequest.getMaxBudget());
         }
     }
 
