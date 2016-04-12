@@ -96,6 +96,8 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
         shortListEnquiredViewHolder.setPosition(position);
         Enquiry enquiry = mEnquiries.get(position);
 
+        shortListEnquiredViewHolder.setPhaseAndCompanyId(enquiry.phaseId, enquiry.companyId);
+
         if (enquiry.type == EnquiryType.LISTING) {
             shortListEnquiredViewHolder.mMainImage.setDefaultImageResId(R.drawable.property_placeholder);
             if (enquiry.listingDetail != null) {
@@ -291,10 +293,13 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
             if (enquiry.company.name != null) {
                 shortListEnquiredViewHolder.mName.setText(enquiry.company.name.toLowerCase());
             }
-            shortListEnquiredViewHolder.mRating.setRating(enquiry.company.score / 2);
+            if(enquiry.company.score == null) {
+                shortListEnquiredViewHolder.mRating.setVisibility(View.INVISIBLE);
+            } else {
+                shortListEnquiredViewHolder.mRating.setVisibility(View.VISIBLE);
+                shortListEnquiredViewHolder.mRating.setRating(enquiry.company.score / 2);
+            }
             showTextAsImage(shortListEnquiredViewHolder, enquiry.company.name);
-
-            shortListEnquiredViewHolder.mRating.setVisibility(View.VISIBLE);
         } else {
             shortListEnquiredViewHolder.mRating.setVisibility(View.INVISIBLE);
             shortListEnquiredViewHolder.mSellerText.setVisibility(View.INVISIBLE);
@@ -525,19 +530,27 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
         SiteVisit siteVisit = new SiteVisit();
         siteVisit.eventTypeId = 1;
         siteVisit.performTime = timeInMillis;
-        if (enquiry.type == EnquiryType.LISTING) {
+        if (enquiry.type == EnquiryType.LISTING && enquiry.listingDetail != null && enquiry.listingDetail.id != null) {
             siteVisit.listingDetails = new ArrayList<>();
             ListingDetails listingDetails = siteVisit.new ListingDetails();
-            listingDetails.listingId = enquiry.id;
+            listingDetails.listingId = enquiry.listingDetail.id;
             siteVisit.listingDetails.add(listingDetails);
             siteVisit.agentId = enquiry.listingDetail.companySeller.userId;
-        } else if (enquiry.type == EnquiryType.PROJECT) {
+        } else if (enquiry.type == EnquiryType.PROJECT && enquiry.project != null && enquiry.project.projectId != null) {
             ArrayList<Long> projectIds = new ArrayList<>();
-            projectIds.add(enquiry.id);
+            projectIds.add(enquiry.project.projectId);
             siteVisit.projectIds = projectIds;
-            siteVisit.agentId = enquiry.company.id;
+            if(enquiry.company != null && enquiry.company.id != null) {
+                siteVisit.agentId = enquiry.company.id;
+            } else if(enquiry.companyId != null) {
+                siteVisit.agentId = enquiry.companyId;
+            }
         } else {
-            siteVisit.agentId = enquiry.company.id;
+            if(enquiry.company != null && enquiry.company.id != null) {
+                siteVisit.agentId = enquiry.company.id;
+            } else if(enquiry.companyId != null) {
+                siteVisit.agentId = enquiry.companyId;
+            }
         }
         try {
             JSONObject jsonObject = JsonBuilder.toJson(siteVisit);
@@ -562,6 +575,7 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
         public com.makaan.response.buyerjourney.Company company;
         public EnquiryType type;
         public Long companyId;
+        public int phaseId;
     }
 
     public  interface OnSiteVisitRequestLitener{

@@ -113,7 +113,12 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
         super.onActivityCreated(savedInstanceState);
         mLeadFormPresenter= LeadFormPresenter.getLeadFormPresenter();
         mTextViewSellerName.setText(mLeadFormPresenter.getName().toLowerCase());
-        mRatingBarSeller.setRating(Float.valueOf(mLeadFormPresenter.getScore()));
+        if(!TextUtils.isEmpty(mLeadFormPresenter.getScore())) {
+            mRatingBarSeller.setVisibility(View.VISIBLE);
+            mRatingBarSeller.setRating(Float.valueOf(mLeadFormPresenter.getScore()));
+        } else {
+            mRatingBarSeller.setVisibility(View.INVISIBLE);
+        }
         mobileFlag=false;
         nameFlag=false;
         emailFlag=false;

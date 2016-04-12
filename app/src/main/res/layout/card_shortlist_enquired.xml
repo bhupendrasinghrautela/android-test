@@ -101,7 +101,7 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/layout_padding"
             android:text="@string/request_site_visit"
-            android:textColor="@color/appThemeRed"
+            android:textColor="@color/app_text_color"
             android:textSize="@dimen/title_text_size" />
 
     </RelativeLayout>

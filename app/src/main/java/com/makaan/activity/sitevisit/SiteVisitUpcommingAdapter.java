@@ -117,7 +117,12 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
                     if (enquiry.company.name != null) {
                         shortListEnquiredViewHolder.mName.setText(enquiry.company.name.toLowerCase());
                     }
-                    shortListEnquiredViewHolder.mRating.setRating(enquiry.company.score / 2);
+                    if(enquiry.company.score != null) {
+                        shortListEnquiredViewHolder.mRating.setVisibility(View.VISIBLE);
+                        shortListEnquiredViewHolder.mRating.setRating(enquiry.company.score / 2);
+                    } else {
+                        shortListEnquiredViewHolder.mRating.setVisibility(View.INVISIBLE);
+                    }
                     showTextAsImage(shortListEnquiredViewHolder, enquiry.company.name);
                 }
             } else {
@@ -131,7 +136,12 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
                 if (enquiry.company.name != null) {
                     shortListEnquiredViewHolder.mName.setText(enquiry.company.name.toLowerCase());
                 }
-                shortListEnquiredViewHolder.mRating.setRating(enquiry.company.score / 2);
+                if(enquiry.company.score != null) {
+                    shortListEnquiredViewHolder.mRating.setVisibility(View.VISIBLE);
+                    shortListEnquiredViewHolder.mRating.setRating(enquiry.company.score / 2);
+                } else {
+                    shortListEnquiredViewHolder.mRating.setVisibility(View.INVISIBLE);
+                }
                 showTextAsImage(shortListEnquiredViewHolder, enquiry.company.name);
             } else {
                 shortListEnquiredViewHolder.mAddress.setText("");

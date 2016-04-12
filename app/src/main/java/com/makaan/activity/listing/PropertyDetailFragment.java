@@ -528,7 +528,7 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
             mFloorPlanLayout.setVisibility(View.GONE);
         }
 
-        if(imagesGetEvent.imageType.equals(ImageService.COMBINED_IMAGES)) {
+        if(ImageService.COMBINED_IMAGES.equalsIgnoreCase(imagesGetEvent.imageType)) {
             if(imagesGetEvent.images.size()==0){
                 imagesGetEvent.images.add(getDummyImage());
             }
