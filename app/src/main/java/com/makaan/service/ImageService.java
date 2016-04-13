@@ -24,7 +24,7 @@ import static com.makaan.constants.ImageConstants.*;
 public class ImageService implements MakaanService {
 
 
-    public static String COMBINED_IMAGES = "combined";
+    public static final String COMBINED_IMAGES = "combined";
     public void getListingImages(final Long listingId,final Long projectId) {
         getImages(listingId, ENTITY_MAP.get(ImageConstants.LISTING),projectId,ENTITY_MAP.get(ImageConstants.PROJECT));
 

@@ -51,6 +51,13 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
         mPagePresenter=PyrPagePresenter.getPyrPagePresenter();
         mPagePresenter.setReplaceFragment(this);
 
+        /*--------------------track--------------code-------------*/
+        Properties properties1 = MakaanEventPayload.beginBatch();
+        properties1.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_LEAD_FORM);
+        properties1.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_PYR);
+        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+        /*--------------------------------------------------------*/
+
         if(null!=getIntent()) {
             long localityId = getIntent().getLongExtra(KEY_LOCALITY_ID, 0);
             String localityName = getIntent().getStringExtra(KEY_LOCALITY_NAME);

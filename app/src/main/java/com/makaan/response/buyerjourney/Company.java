@@ -6,5 +6,5 @@ package com.makaan.response.buyerjourney;
 public class Company {
     public Long id;
     public String name;
-    public float score;
+    public Float score;
 }

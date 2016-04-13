@@ -30,6 +30,11 @@ public class ScreenNameConstants {
     public static final String SCREEN_NAME_BUYER_DASHBOARD_POSSESSION = "buyerdashboard_possession";
     public static final String SCREEN_NAME_BUYER_DASHBOARD_REGISTRATION = "buyerdashboard_registration";
     public static final String SCREEN_NAME_BUYER_DASHBOARD_REWARDS = "buyerdashboard_rewards";
+    public static final String SCREEN_NAME_LEAD_CONNECT_NOW = "lead_connect_now";
+    public static final String SCREEN_NAME_LEAD_CONTACT_SELLER = "lead_contact_seller";
+    public static final String SCREEN_NAME_LEAD_SHARE_YOUR_DETAILS = "lead_share_your_details";
+    public static final String SCREEN_NAME_PYR_TOP_SELLER = "pyr_top_sellers";
+
     public static final String BUY= "Buy";
     public static final String RENT= "Rent";
     public static final String MAP= "Map";

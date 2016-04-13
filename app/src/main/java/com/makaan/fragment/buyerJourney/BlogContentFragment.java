@@ -56,7 +56,7 @@ public class BlogContentFragment extends MakaanBaseFragment {
     public static final String SHORTLIST = "shortlist";
     public static final String SITE_VISIT = "sitevisit";
     public static final String HOME_LOAN = "homeloan";
-    public static final String UNIT_BOOK = "unitbook";
+    public static final String UNIT_BOOK = "unit booking";
     public static final String POSSESSION = "possession";
     public static final String REGISTRATION = "registration";
     private String mType;

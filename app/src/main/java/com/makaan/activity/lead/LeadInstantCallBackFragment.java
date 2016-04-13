@@ -88,6 +88,7 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
     private static final int MOSTLY_USED_COUNTRIES = 7;
     private boolean mobileFlag=true,defaultCountry=false;
     private static final int SINGLE_SELLER=1;
+    private boolean mAlreadyLoaded=false;
 
     @Override
     protected int getContentViewId() {
@@ -97,9 +98,23 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        if(!mAlreadyLoaded){
+            Properties properties1 = MakaanEventPayload.beginBatch();
+            properties1.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_LEAD_FORM);
+            properties1.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_LEAD_CONNECT_NOW);
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
+            mAlreadyLoaded=true;
+        }
+
         mLeadFormPresenter= LeadFormPresenter.getLeadFormPresenter();
         mTextViewSellerName.setText(mLeadFormPresenter.getName().toLowerCase());
-        mRatingBarSeller.setRating(Float.valueOf(mLeadFormPresenter.getScore()));
+        if(!TextUtils.isEmpty(mLeadFormPresenter.getScore())) {
+            mRatingBarSeller.setVisibility(View.VISIBLE);
+            mRatingBarSeller.setRating(Float.valueOf(mLeadFormPresenter.getScore()));
+        } else {
+            mRatingBarSeller.setVisibility(View.INVISIBLE);
+        }
         mobileFlag=false;
         defaultCountry=false;
         initializeCountrySpinner();
@@ -408,14 +423,18 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
 
     }
 
-    public void successfulInstantResponse(){
-        mInstantCallButton.setClickable(true);
-        mInstantCallButton.setText(getResources().getString(R.string.connect_now));
+    public void successfulInstantResponse() {
+        if (mInstantCallButton != null) {
+            mInstantCallButton.setClickable(true);
+            mInstantCallButton.setText(getResources().getString(R.string.connect_now));
+        }
     }
 
-    public void errorInInstantResponse(){
-        mInstantCallButton.setClickable(true);
-        mInstantCallButton.setText(getResources().getString(R.string.connect_now));
+    public void errorInInstantResponse() {
+        if (mInstantCallButton != null) {
+            mInstantCallButton.setClickable(true);
+            mInstantCallButton.setText(getResources().getString(R.string.connect_now));
+        }
     }
 
     public void sendCallLaterEvent(){
