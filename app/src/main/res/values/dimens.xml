@@ -407,15 +407,16 @@
     <dimen name="activity_search_base_layout_search_bar_builder_image_view_margin_right">12dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_builder_image_view_margin_top">9dp</dimen>
 
-    <dimen name="activity_search_base_layout_search_bar_search_text_view_margin_top">20dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_search_text_view_margin_top">18dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_search_text_view_margin_left">0dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_search_text_view_text_size">16sp</dimen>
 
     <dimen name="activity_search_base_layout_search_bar_search_image_button_width">24dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_search_image_button_height">24dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_search_image_button_margin_right">18dp</dimen>
-    <dimen name="activity_search_base_layout_search_bar_search_image_button_margin_top">20dp</dimen>
-    <dimen name="base_search_profile_image_width_height">35dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_search_image_button_margin_top">16dp</dimen>
+    <dimen name="base_search_profile_image_width_width">38dp</dimen>
+    <dimen name="base_search_profile_image_width_height">38dp</dimen>
 
     <!-- filter fragment bar dimen values -->
     <dimen name="fragment_filters_filter_image_view_width">24dp</dimen>
@@ -846,7 +847,8 @@
 
     <dimen name="makaan_toolbar_login_text_view_text_size">16sp</dimen>
 
-    <dimen name="makaan_toolbar_profile_image_view_width">36dp</dimen>
+    <dimen name="makaan_toolbar_profile_image_view_width">38dp</dimen>
+    <dimen name="makaan_toolbar_profile_image_view_height">38dp</dimen>
 
     <dimen name="activity_home_search_text_view_height">96dp</dimen>
 

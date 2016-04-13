@@ -38,7 +38,7 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/activity_search_toolbar_profile_icon_image_view"
-                    android:layout_width="@dimen/base_search_profile_image_width_height"
+                    android:layout_width="@dimen/base_search_profile_image_width_width"
                     android:layout_height="@dimen/base_search_profile_image_width_height"
                     android:clickable="false"
                     android:src="@drawable/edit_avatar"
@@ -47,7 +47,7 @@
                 <TextView
                     android:id="@+id/activity_search_toolbar_profile_icon_text_view"
                     android:layout_width="@dimen/makaan_toolbar_profile_image_view_width"
-                    android:layout_height="@dimen/makaan_toolbar_profile_image_view_width"
+                    android:layout_height="@dimen/makaan_toolbar_profile_image_view_height"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/profile_image_drawable"
                     android:clickable="false"
