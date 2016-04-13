@@ -83,6 +83,13 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
             mButtonCall.setText("na");
             mButtonCall.setClickable(false);
         }
+        if(!mAlreadyLoaded){
+            Properties properties1 = MakaanEventPayload.beginBatch();
+            properties1.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_LEAD_FORM);
+            properties1.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_LEAD_CONTACT_SELLER);
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
+            mAlreadyLoaded=true;
+        }
         setSellerImage();
     }
 
