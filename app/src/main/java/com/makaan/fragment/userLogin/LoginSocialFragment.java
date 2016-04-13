@@ -82,7 +82,9 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mFacebookTokenInteractor.stopTracking();
+        if(mFacebookTokenInteractor != null) {
+            mFacebookTokenInteractor.stopTracking();
+        }
     }
 
     public void bindView(OnLoginWithMakaanSelectedListener listener, OnUserLoginListener onUserLoginListener, int loginType){
