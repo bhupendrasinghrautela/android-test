@@ -246,7 +246,7 @@ public class MakaanNetworkClient {
 
                                 } catch (JSONException | JsonSyntaxException | IllegalArgumentException e) {
 //                                    Log.e(TAG, "JSONException", e);
-                                    Crashlytics.log(inputUrl);
+                                    Crashlytics.log(urlToHit);
                                     Crashlytics.logException(e);
                                     objectGetCallback.onError(getResponseError(new VolleyError()));
                                 }
