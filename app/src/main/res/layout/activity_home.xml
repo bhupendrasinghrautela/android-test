@@ -139,8 +139,9 @@
                     android:textSize="@dimen/activity_home_search_text_text_size"
                     android:typeface="sans" />
 
-                <EditText
-                    android:layout_width="2dp"
+                <View
+                    android:id="@+id/activity_home_blinking_view"
+                    android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="@dimen/activity_home_empty_view_margin_top"
                     android:layout_marginLeft="@dimen/activity_home_empty_view_margin_start"
@@ -148,9 +149,7 @@
                     android:layout_marginTop="@dimen/activity_home_empty_view_margin_top"
                     android:layout_toEndOf="@id/activity_home_search_text_view"
                     android:layout_toRightOf="@id/activity_home_search_text_view"
-                    android:background="@null"
-                    android:textCursorDrawable="@drawable/search_view_red_cursor"
-                    android:textSize="50sp" />
+                    android:background="@drawable/search_view_red_cursor" />
             </RelativeLayout>
 
             <RadioGroup

@@ -1,6 +1,7 @@
 package com.makaan.analytics;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.segment.analytics.Properties;
 
@@ -67,4 +68,36 @@ public class MakaanEventPayload {
         }
     }
 
+    public void sendEvent(final Context context, final MakaanTrackerConstants.Action action,
+                          final String category, final String label, final String value,
+                          final String keyword) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Properties properties = MakaanEventPayload.beginBatch();
+                switch (action) {
+                    case searchHomeBuy:
+                        properties.put(MakaanEventPayload.CATEGORY, category);
+                        properties.put(MakaanEventPayload.KEYWORD, keyword);
+                        properties.put(MakaanEventPayload.CHARACTERS_LENGTH, value);
+                        properties.put(MakaanEventPayload.LABEL, label);
+                    break;
+                    default:
+                        if(!TextUtils.isEmpty(category)) {
+                            properties.put(MakaanEventPayload.CATEGORY, category);
+                        }
+                        if(!TextUtils.isEmpty(label)) {
+                            properties.put(MakaanEventPayload.LABEL, label);
+                        }
+                        if(!TextUtils.isEmpty(value)) {
+                            properties.put(MakaanEventPayload.CATEGORY, value);
+                        }
+                        break;
+                }
+
+                MakaanEventPayload.endBatch(context, action);
+            }
+        });
+        thread.run();
+    }
 }
