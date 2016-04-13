@@ -24,7 +24,6 @@ import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.notification.GcmRegister;
 import com.makaan.response.login.OnLoginWithMakaanSelectedListener;
 import com.makaan.response.login.OnUserLoginListener;
-
 import com.makaan.response.login.UserLoginPresenter;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.user.FacebookTokenInteractor;
@@ -72,11 +71,15 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
         mFacebookTokenInteractor = new FacebookTokenInteractor(getActivity(), this);
         mFacebookTokenInteractor.initFacebookSdk(savedInstanceState);
         parseLoginType(mLoginType);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
     }
 
     @Override

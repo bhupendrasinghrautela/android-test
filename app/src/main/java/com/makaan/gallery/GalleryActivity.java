@@ -94,7 +94,11 @@ public class GalleryActivity extends MakaanFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
-		
+
+		if(getIntent()==null || getIntent().getExtras() == null || !getIntent().hasExtra(KeyUtil.IMAGE_DATA_LIST)) {
+			finish();
+			return;
+		}
 		Bundle mData = getIntent().getExtras();
 		mContext = this;
 		List<Image> images = mData.getParcelableArrayList(KeyUtil.IMAGE_DATA_LIST);
