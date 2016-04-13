@@ -405,8 +405,15 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
     public void onBackPressed() {
         if ((mSerpRequestType & MASK_LISTING_TYPE) == SerpActivity.TYPE_CLUSTER) {
             super.onBackPressed();
-            mSerpRequestType = (mSerpBackStack.peek() == null) ?
-                    SerpRequest.UNEXPECTED_VALUE : mSerpBackStack.peek().getType();
+
+            if(null == mSerpBackStack.peek()){
+                if(!isActivityDead()){
+                    finish();
+                }
+                return;
+            }
+
+            mSerpRequestType = mSerpBackStack.peek().getType();
             setShowSearchBar(true, false);
             mFiltersFrameLayout.setVisibility(View.VISIBLE);
             mSimilarPropertiesFrameLayout.setVisibility(View.GONE);
