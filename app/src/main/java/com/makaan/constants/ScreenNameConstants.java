@@ -11,6 +11,7 @@ public class ScreenNameConstants {
     public static final String SCREEN_NAME_CITY = "city";
     public static final String SCREEN_NAME_HOME = "home";
     public static final String SCREEN_NAME_PYR = "pyr";
+    public static final String SCREEN_NAME_LOGIN = "login";
     public static final String SCREEN_NAME_OVERVIEW_ACTIVITY = "overview activity";
     public static final String SCREEN_NAME_LEAD_FORM = "lead";
     public static final String SCREEN_NAME_BUYER_DASHBOARD = "buyerdashboard";
@@ -34,6 +35,11 @@ public class ScreenNameConstants {
     public static final String SCREEN_NAME_LEAD_CONTACT_SELLER = "lead_contact_seller";
     public static final String SCREEN_NAME_LEAD_SHARE_YOUR_DETAILS = "lead_share_your_details";
     public static final String SCREEN_NAME_PYR_TOP_SELLER = "pyr_top_sellers";
+    public static final String SCREEN_NAME_LOGIN_EMAIL = "login_email";
+    public static final String SCREEN_NAME_LOGIN_SIGNUP = "login_signUp";
+    public static final String SCREEN_NAME_CHOOSE_MULTIPLE_SELLERS_LEAD_FORM = "configuration_sellers";
+    public static final String SCREEN_NAME_MULTIPLE_SELLERS_LEAD_FORM = "configuration_lead";
+    public static final String SCREEN_NAME_CHAT_SCREEN = "m_view";
 
     public static final String BUY= "Buy";
     public static final String RENT= "Rent";

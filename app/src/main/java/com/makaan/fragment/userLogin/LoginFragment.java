@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.makaan.R;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.event.user.UserLoginEvent;
 import com.makaan.response.login.OnSignUpSelectedListener;
@@ -68,7 +69,7 @@ public class LoginFragment extends Fragment implements TextWatcher {
     private OnUserLoginListener mOnUserLoginListener;
     private OnSignUpSelectedListener mSignUpSelectedListener;
     boolean mBound = false;
-
+    private boolean mAlreadyLoaded=false;
 
     @Nullable
     @Override
@@ -92,6 +93,19 @@ public class LoginFragment extends Fragment implements TextWatcher {
         mEditTextEmail.addTextChangedListener(this);
         mEditTextPassword.addTextChangedListener(this);
         return view;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(!mAlreadyLoaded){
+             /*--------------------track--------------code-------------*/
+            Properties properties1 = MakaanEventPayload.beginBatch();
+            properties1.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_LOGIN);
+            properties1.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_LOGIN_EMAIL);
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
+            /*--------------------------------------------------------*/
+        }
     }
 
     public void bindView(OnUserLoginListener listener, OnSignUpSelectedListener onSignUpSelectedListener){

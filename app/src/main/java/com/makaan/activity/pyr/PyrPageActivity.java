@@ -53,7 +53,7 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
 
         /*--------------------track--------------code-------------*/
         Properties properties1 = MakaanEventPayload.beginBatch();
-        properties1.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_LEAD_FORM);
+        properties1.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_PYR);
         properties1.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_PYR);
         MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
         /*--------------------------------------------------------*/

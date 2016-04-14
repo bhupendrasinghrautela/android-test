@@ -96,9 +96,9 @@ public class TopSellersFragment extends Fragment {
                 properties.put(MakaanEventPayload.LABEL, Arrays.toString(agentId));
                 MakaanEventPayload.endBatch(getContext(), mPyrPagePresenter.getViewSellersAction(mPyrPagePresenter.getSourceScreenName()));
 
-                 /*--------------------track--------------code-------------*/
+                /*--------------------track--------------code-------------*/
                 Properties properties1 = MakaanEventPayload.beginBatch();
-                properties1.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_LEAD_FORM);
+                properties1.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_PYR);
                 properties1.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_PYR_TOP_SELLER);
                 MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
                 /*--------------------------------------------------------*/
