@@ -99,21 +99,23 @@ public class GroupListingItemView extends RelativeLayout implements View.OnClick
         if(maxString.indexOf("\u20B9") == 0) {
             maxString = maxString.replace("\u20B9", "");
         }
+        String propertyType = "";
+        for(ApiIntLabel intLabel : MasterDataCache.getInstance().getBuyPropertyTypes()) {
+            if(intLabel.id.equals(mUnitId)) {
+                if(intLabel.name != null) {
+                    propertyType = intLabel.name.toLowerCase();
+                    mPropertyTypeTextView.setText(propertyType);
+                }
+                break;
+            }
+        }
 
         mPropertyPriceRangeTextView.setText(String.format(PRICE_RANGE_STRING, minString, maxString));
-        if( mBedrooms != null) {
+        if(mBedrooms != null && !"Residential Plot".equalsIgnoreCase(propertyType)) {
             mPropertySizeTextView.setVisibility(VISIBLE);
             mPropertySizeTextView.setText(String.format(PROPERTY_SIZE_STRING, mBedrooms));
         } else {
             mPropertySizeTextView.setVisibility(INVISIBLE);
-        }
-        for(ApiIntLabel intLabel : MasterDataCache.getInstance().getBuyPropertyTypes()) {
-            if(intLabel.id.equals(mUnitId)) {
-                if(intLabel.name != null) {
-                    mPropertyTypeTextView.setText(intLabel.name.toLowerCase());
-                }
-                break;
-            }
         }
         mPropertyCountTextView.setText(String.format(LISTING_SIZE_STRING, String.valueOf(item.groupedListings.size())));
 //        mPropertyCountTextView.setText("view properties");

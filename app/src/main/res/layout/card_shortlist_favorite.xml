@@ -57,7 +57,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:textColor="@color/white"
-                android:textSize="@dimen/shortlist_text_size_large" />
+                android:textSize="@dimen/shortlist_text_size_large"
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/tv_locality"
