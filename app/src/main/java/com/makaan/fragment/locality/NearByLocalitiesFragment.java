@@ -208,9 +208,10 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
     private List<NearByLocalities> getDataForTopBuilder(ArrayList<Builder> builders) {
         List<NearByLocalities> nearByLocalities = new ArrayList<>();
         this.cardType = CardType.TOPBUILDERS;
-        String url = "";
-        for(Builder builder: builders){
-            if(builder.images !=null && builder.images.size() >0){
+        String url;
+        for (Builder builder : builders) {
+            url = "";
+            if (builder.images != null && builder.images.size() > 0) {
                 url = builder.images.get(0).absolutePath;
             }
             if (builder.establishedDate != null) {
@@ -219,19 +220,19 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                 if (builder.projectCount != null) {
                     if (builder.projectStatusCount != null && builder.projectStatusCount.underConstruction > 0) {
                         nearByLocalities.add(new NearByLocalities(url, String.valueOf(builder.projectStatusCount.underConstruction),
-                                "" + builder.projectCount.intValue(), "experience : " + experience + " years", "" + builder.name, builder.id,null));
+                                "" + builder.projectCount.intValue(), "experience : " + experience + " years", "" + builder.name, builder.id, null));
                     } else {
                         nearByLocalities.add(new NearByLocalities(url, "0", "" + builder.projectCount.intValue(),
-                                "experience : " + experience + " years", "" + builder.name, builder.id,null));
+                                "experience : " + experience + " years", "" + builder.name, builder.id, null));
                     }
                 }
             } else {
                 if (builder.projectCount != null) {
                     if (builder.projectStatusCount != null && builder.projectStatusCount.underConstruction > 0) {
                         nearByLocalities.add(new NearByLocalities(url, String.valueOf(builder.projectStatusCount.underConstruction),
-                                "" + builder.projectCount.intValue(), "", "" + builder.name, builder.id,null));
+                                "" + builder.projectCount.intValue(), "", "" + builder.name, builder.id, null));
                     } else {
-                        nearByLocalities.add(new NearByLocalities(url, "0", "" + builder.projectCount.intValue(), "", "" + builder.name, builder.id,null));
+                        nearByLocalities.add(new NearByLocalities(url, "0", "" + builder.projectCount.intValue(), "", "" + builder.name, builder.id, null));
                     }
                 }
             }
@@ -436,7 +437,7 @@ public class NearByLocalitiesFragment extends MakaanBaseFragment implements View
                     break;
             }
 
-            if(nearByLocality.imgUrl!=null) {
+            if(!TextUtils.isEmpty(nearByLocality.imgUrl)) {
                 int width = getResources().getDimensionPixelSize(R.dimen.row_nearby_localities_width);
                 int height = getResources().getDimensionPixelSize(R.dimen.row_nearby_localities_image_height);
                 holder.localityIv.setImageUrl(ImageUtils.getImageRequestUrl(nearByLocality.imgUrl, width, height, true), MakaanNetworkClient.getInstance().getImageLoader());
