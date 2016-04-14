@@ -102,7 +102,6 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
     private String previousEmail="";
     private String previousNumber="";
     private static final int SINGLE_SELLER=1;
-    private boolean mAlreadyLoaded=false;
 
     @Override
     protected int getContentViewId() {
@@ -112,15 +111,6 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        if(!mAlreadyLoaded){
-            Properties properties1 = MakaanEventPayload.beginBatch();
-            properties1.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_LEAD_FORM);
-            properties1.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_LEAD_SHARE_YOUR_DETAILS);
-            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
-            mAlreadyLoaded=true;
-        }
-
         mLeadFormPresenter= LeadFormPresenter.getLeadFormPresenter();
         mTextViewSellerName.setText(mLeadFormPresenter.getName().toLowerCase());
         if(!TextUtils.isEmpty(mLeadFormPresenter.getScore())) {

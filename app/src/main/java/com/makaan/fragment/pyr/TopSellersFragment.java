@@ -19,7 +19,6 @@ import com.makaan.activity.pyr.PyrOtpVerification;
 import com.makaan.activity.pyr.SellerListingAdapter;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
-import com.makaan.constants.ScreenNameConstants;
 import com.makaan.network.VolleyErrorParser;
 import com.makaan.request.pyr.PyrEnquiryType;
 import com.makaan.request.pyr.PyrRequest;
@@ -95,14 +94,6 @@ public class TopSellersFragment extends Fragment {
                 properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerPyr);
                 properties.put(MakaanEventPayload.LABEL, Arrays.toString(agentId));
                 MakaanEventPayload.endBatch(getContext(), mPyrPagePresenter.getViewSellersAction(mPyrPagePresenter.getSourceScreenName()));
-
-                 /*--------------------track--------------code-------------*/
-                Properties properties1 = MakaanEventPayload.beginBatch();
-                properties1.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_LEAD_FORM);
-                properties1.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_PYR_TOP_SELLER);
-                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
-                /*--------------------------------------------------------*/
-
                 mAlreadyLoaded=true;
             }
             if(mTopAgentsDatas.size()<=DEFAULT_SELECTED_COUNT){
