@@ -134,12 +134,14 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        overridePendingTransition(0, 0);
         AppBus.getInstance().unregister(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        overridePendingTransition(0, 0);
         AppBus.getInstance().register(this);
     }
 
