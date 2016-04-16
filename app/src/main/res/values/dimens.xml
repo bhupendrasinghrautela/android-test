@@ -394,28 +394,29 @@
     <dimen name="fragment_listing_total_properties_text_view_text_size">14sp</dimen>
 
     <!-- search bar dimen values -->
-    <dimen name="activity_search_base_layout_search_bar_back_layout_padding_left">10dp</dimen>
-    <dimen name="activity_search_base_layout_search_bar_back_layout_padding_right">10dp</dimen>
 
-    <dimen name="activity_search_base_layout_search_bar_back_button_height">32dp</dimen>
-    <dimen name="activity_search_base_layout_search_bar_back_button_width">32dp</dimen>
-    <dimen name="activity_search_base_layout_search_bar_back_button_margin_top">8dp</dimen>
-    <dimen name="activity_search_base_layout_search_bar_back_button_margin_bottom">8dp</dimen>
+    <dimen name="back_button_height">48dp</dimen>
+    <dimen name="back_button_width">48dp</dimen>
+    <dimen name="back_button_margin_top">4dp</dimen>
+    <dimen name="back_button_margin_bottom">4dp</dimen>
+    <dimen name="back_button_margin_left">4dp</dimen>
+    <dimen name="back_button_margin_right">20dp</dimen>
 
     <dimen name="activity_search_base_layout_search_bar_builder_image_view_width">38dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_builder_image_view_height">38dp</dimen>
-    <dimen name="activity_search_base_layout_search_bar_builder_image_view_margin_right">10dp</dimen>
-    <dimen name="activity_search_base_layout_search_bar_builder_image_view_margin_top">7dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_builder_image_view_margin_right">12dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_builder_image_view_margin_top">9dp</dimen>
 
-    <dimen name="activity_search_base_layout_search_bar_search_text_view_margin_top">15dp</dimen>
-    <dimen name="activity_search_base_layout_search_bar_search_text_view_margin_left">22dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_search_text_view_margin_top">18dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_search_text_view_margin_left">0dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_search_text_view_text_size">16sp</dimen>
 
     <dimen name="activity_search_base_layout_search_bar_search_image_button_width">24dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_search_image_button_height">24dp</dimen>
     <dimen name="activity_search_base_layout_search_bar_search_image_button_margin_right">18dp</dimen>
-    <dimen name="activity_search_base_layout_search_bar_search_image_button_margin_top">14dp</dimen>
-    <dimen name="base_search_profile_image_width_height">35dp</dimen>
+    <dimen name="activity_search_base_layout_search_bar_search_image_button_margin_top">16dp</dimen>
+    <dimen name="base_search_profile_image_width_width">38dp</dimen>
+    <dimen name="base_search_profile_image_width_height">38dp</dimen>
 
     <!-- filter fragment bar dimen values -->
     <dimen name="fragment_filters_filter_image_view_width">24dp</dimen>
@@ -446,13 +447,7 @@
     <dimen name="fragment_dialog_filters_submit_button_text_size">18sp</dimen>
     <dimen name="fragment_dialog_filters_submit_button_empty_view_margin_bottom">5dp</dimen>
 
-    <dimen name="fragment_dialog_filters_back_button_width">28dp</dimen>
-    <dimen name="fragment_dialog_filters_back_button_height">28dp</dimen>
-    <dimen name="fragment_dialog_filters_back_button_margin_left">12dp</dimen>
-    <dimen name="fragment_dialog_filters_back_button_margin_top">10dp</dimen>
-    <dimen name="fragment_dialog_filters_back_button_margin_bottom">10dp</dimen>
-
-    <dimen name="fragment_dialog_filters_filter_text_margin_left">14dp</dimen>
+    <dimen name="fragment_dialog_filters_filter_text_margin_left">16dp</dimen>
     <dimen name="fragment_dialog_filters_filter_text_text_size">16sp</dimen>
 
     <dimen name="fragment_dialog_filters_reset_button_width">24dp</dimen>
@@ -852,7 +847,8 @@
 
     <dimen name="makaan_toolbar_login_text_view_text_size">16sp</dimen>
 
-    <dimen name="makaan_toolbar_profile_image_view_width">36dp</dimen>
+    <dimen name="makaan_toolbar_profile_image_view_width">38dp</dimen>
+    <dimen name="makaan_toolbar_profile_image_view_height">38dp</dimen>
 
     <dimen name="activity_home_search_text_view_height">96dp</dimen>
 
@@ -1045,10 +1041,6 @@
     <dimen name="normal_text">20sp</dimen>
     <dimen name="makaan_label_top_padding">66dp</dimen>
 
-    <dimen name="login_back_height">40dp</dimen>
-    <dimen name="login_back_width">40dp</dimen>
-    <dimen name="login_back_margin">10dp</dimen>
-
 
 
     <!--neighbor category view-->
@@ -1064,11 +1056,6 @@
     <dimen name="neighbor_category_drawable_radius">12dp</dimen>
 
     <!-- Buyer Journey Dimens -->
-    <dimen name="activity_base_buyer_journey_layout_back_button_width">32dp</dimen>
-    <dimen name="activity_base_buyer_journey_layout_back_button_height">32dp</dimen>
-    <dimen name="activity_base_buyer_journey_layout_back_button_margin_top">8dp</dimen>
-    <dimen name="activity_base_buyer_journey_layout_back_button_margin_left">16dp</dimen>
-    <dimen name="activity_base_buyer_journey_layout_back_button_margin_bottom">8dp</dimen>
 
     <dimen name="activity_base_buyer_journey_layout_user_image_view_width">42dp</dimen>
     <dimen name="activity_base_buyer_journey_layout_user_image_view_height">42dp</dimen>
@@ -1136,12 +1123,6 @@
     <dimen name="fragment_upload_documents_document_checklist_image_view_width">24dp</dimen>
     <dimen name="fragment_upload_documents_document_checklist_image_view_height">24dp</dimen>
 
-    <dimen name="fragment_dialog_contact_sellers_back_button_width">32dp</dimen>
-    <dimen name="fragment_dialog_contact_sellers_back_button_height">32dp</dimen>
-    <dimen name="fragment_dialog_contact_sellers_back_button_margin_left">10dp</dimen>
-    <dimen name="fragment_dialog_contact_sellers_back_button_margin_top">14dp</dimen>
-    <dimen name="fragment_dialog_contact_sellers_back_button_margin_bottom">12dp</dimen>
-
     <dimen name="fragment_dialog_contact_sellers_submit_button_height">50dp</dimen>
     <dimen name="fragment_dialog_contact_sellers_submit_button_text_size">18sp</dimen>
 
@@ -1169,15 +1150,12 @@
     <dimen name="fragment_set_alerts_button_bottom_margin">20dp</dimen>
     <dimen name="fragment_set_alerts_button_text_size">16sp</dimen>
 
-    <dimen name="fragment_set_alerts_top_bar_padding_left">20dp</dimen>
-    <dimen name="fragment_set_alerts_top_bar_padding_top">6dp</dimen>
-    <dimen name="fragment_set_alerts_top_bar_padding_bottom">6dp</dimen>
+    <dimen name="fragment_set_alerts_top_bar_padding_left">8dp</dimen>
+    <dimen name="fragment_set_alerts_top_bar_padding_top">4dp</dimen>
+    <dimen name="fragment_set_alerts_top_bar_padding_bottom">4dp</dimen>
 
     <dimen name="fragment_set_alerts_stay_informed_text_size">20sp</dimen>
-    <dimen name="fragment_set_alerts_stay_informed_text_margin_left">20dp</dimen>
-
-    <dimen name="fragment_set_alerts_back_button_width">28dp</dimen>
-    <dimen name="fragment_set_alerts_back_button_height">28dp</dimen>
+    <dimen name="fragment_set_alerts_stay_informed_text_margin_left">0dp</dimen>
 
     <dimen name="fragment_set_alerts_name_edit_text_margin_left">20dp</dimen>
     <dimen name="fragment_set_alerts_name_edit_text_margin_right">20dp</dimen>

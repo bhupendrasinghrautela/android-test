@@ -9,15 +9,17 @@
 
         <Button
             android:id="@+id/activity_base_buyer_journey_layout_back_button"
-            android:layout_width="@dimen/activity_base_buyer_journey_layout_back_button_width"
-            android:layout_height="@dimen/activity_base_buyer_journey_layout_back_button_height"
-            android:layout_marginTop="@dimen/activity_base_buyer_journey_layout_back_button_margin_top"
-            android:layout_marginBottom="@dimen/activity_base_buyer_journey_layout_back_button_margin_bottom"
-            android:layout_marginLeft="@dimen/activity_base_buyer_journey_layout_back_button_margin_left"
-            android:layout_marginStart="@dimen/activity_base_buyer_journey_layout_back_button_margin_left"
+            android:layout_width="@dimen/back_button_width"
+            android:layout_height="@dimen/back_button_height"
+            android:layout_marginTop="@dimen/back_button_margin_top"
+            android:layout_marginBottom="@dimen/back_button_margin_bottom"
+            android:layout_marginLeft="@dimen/back_button_margin_left"
+            android:layout_marginStart="@dimen/back_button_margin_left"
+            android:layout_marginRight="@dimen/back_button_margin_right"
+            android:layout_marginEnd="@dimen/back_button_margin_right"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:background="@drawable/back_arrow_white" />
+            android:background="@mipmap/back_white" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/activity_base_buyer_journey_layout_user_image_view"
@@ -37,7 +39,7 @@
             android:layout_toLeftOf="@id/activity_base_buyer_journey_layout_user_image_view"
             android:layout_toStartOf="@id/activity_base_buyer_journey_layout_user_image_view"
             android:layout_centerInParent="true"
-            android:gravity="center"
+            android:gravity="left"
             android:textColor="@color/white"
             android:text="unit booking"
             android:textSize="@dimen/activity_base_buyer_journey_layout_user_type_text_view_text_size"/>

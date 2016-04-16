@@ -5,32 +5,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/activity_search_base_layout_search_bar_background_color">
-
-        <FrameLayout
-            android:id="@+id/activity_search_base_layout_search_bar_back_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/activity_search_base_layout_search_bar_back_layout_padding_left"
-            android:paddingStart="@dimen/activity_search_base_layout_search_bar_back_layout_padding_left"
-            android:paddingRight="@dimen/activity_search_base_layout_search_bar_back_layout_padding_right"
-            android:paddingEnd="@dimen/activity_search_base_layout_search_bar_back_layout_padding_right">
-            <Button
-                android:id="@+id/activity_search_base_layout_search_bar_back_button"
-                android:layout_width="@dimen/activity_search_base_layout_search_bar_back_button_width"
-                android:layout_height="@dimen/activity_search_base_layout_search_bar_back_button_height"
-                android:layout_marginTop="@dimen/activity_search_base_layout_search_bar_back_button_margin_top"
-                android:layout_marginBottom="@dimen/activity_search_base_layout_search_bar_back_button_margin_bottom"
-                android:background="@drawable/back_arrow_white" />
-        </FrameLayout>
+        <Button
+            android:id="@+id/activity_search_base_layout_search_bar_back_button"
+            android:layout_width="@dimen/back_button_width"
+            android:layout_height="@dimen/back_button_height"
+            android:layout_marginTop="@dimen/back_button_margin_top"
+            android:layout_marginBottom="@dimen/back_button_margin_bottom"
+            android:layout_marginLeft="@dimen/back_button_margin_left"
+            android:layout_marginStart="@dimen/back_button_margin_left"
+            android:layout_marginRight="@dimen/back_button_margin_right"
+            android:layout_marginEnd="@dimen/back_button_margin_right"
+            android:background="@mipmap/back_white" />
 
         <RelativeLayout
             android:id="@+id/activity_search_base_layout_search_bar_description_relative_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/activity_search_base_layout_search_bar_back_layout"
-            android:layout_toEndOf="@id/activity_search_base_layout_search_bar_back_layout"
+            android:layout_toRightOf="@id/activity_search_base_layout_search_bar_back_button"
+            android:layout_toEndOf="@id/activity_search_base_layout_search_bar_back_button"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true">
+            android:layout_alignParentEnd="true" >
 
             <FrameLayout
                 android:id="@+id/activity_search_toolbar_profile_icon"
@@ -44,7 +38,7 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/activity_search_toolbar_profile_icon_image_view"
-                    android:layout_width="@dimen/base_search_profile_image_width_height"
+                    android:layout_width="@dimen/base_search_profile_image_width_width"
                     android:layout_height="@dimen/base_search_profile_image_width_height"
                     android:clickable="false"
                     android:src="@drawable/edit_avatar"
@@ -53,7 +47,7 @@
                 <TextView
                     android:id="@+id/activity_search_toolbar_profile_icon_text_view"
                     android:layout_width="@dimen/makaan_toolbar_profile_image_view_width"
-                    android:layout_height="@dimen/makaan_toolbar_profile_image_view_width"
+                    android:layout_height="@dimen/makaan_toolbar_profile_image_view_height"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/profile_image_drawable"
                     android:clickable="false"
@@ -100,8 +94,8 @@
             android:id="@+id/activity_search_base_layout_search_bar_search_relative_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/activity_search_base_layout_search_bar_back_layout"
-            android:layout_toEndOf="@id/activity_search_base_layout_search_bar_back_layout"
+            android:layout_toRightOf="@id/activity_search_base_layout_search_bar_back_button"
+            android:layout_toEndOf="@id/activity_search_base_layout_search_bar_back_button"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:visibility="gone">

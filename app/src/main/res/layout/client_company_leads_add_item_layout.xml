@@ -16,6 +16,7 @@
         android:src="@drawable/add_red"
         android:scaleType="centerCrop"/>
     <TextView
+        android:id="@+id/client_company_leads_add_item_layout_add_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
