@@ -104,7 +104,7 @@ public class SimpleGalleryThumbnailAdapter extends BaseAdapter {
         
         String title = data.getTitle();
         if(!TextUtils.isEmpty(title)) {
-        	h.title.setText(title);
+        	h.title.setText(title.toLowerCase());
         	h.title.setVisibility(View.VISIBLE);
         } else {
         	h.title.setText("");

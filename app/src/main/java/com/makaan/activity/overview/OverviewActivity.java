@@ -41,6 +41,8 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
     public static final String PLACE_NAME = "place_name";
+    public static final String PLACE_ID = "place_id";
+    public static final String DISPLAY_ID = "amenity_id";
 
     OverviewBackStack mOverviewBackStack = new OverviewBackStack();
 
@@ -128,6 +130,9 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
         }
         Bundle extras = intent.getExtras();
 
+        if(extras ==null){
+            return;
+        }
         if (extras.containsKey(TYPE) && extras.containsKey(ID)) {
             trackEvents();
             if(mType != null) {
@@ -152,12 +157,17 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
 
             mType = OverviewItemType.values()[type];
             mId = extras.getLong(ID, 0);
-
+            Integer displayId =null;
+            String placeName = null;
             if(mType == OverviewItemType.LOCALITY_MAP || mType == OverviewItemType.PROJECT_MAP
                     || mType == OverviewItemType.PROPERTY_MAP) {
                 String name = extras.getString(PLACE_NAME);
                 Double lat = extras.getDouble(LATITUDE);
                 Double lon = extras.getDouble(LONGITUDE);
+                if(intent.hasExtra(DISPLAY_ID) && intent.hasExtra(PLACE_ID)) {
+                    displayId = extras.getInt(DISPLAY_ID);
+                    placeName = extras.getString(PLACE_ID);
+                }
                 if(name != null && !Double.isNaN(lat) && !Double.isNaN(lon)) {
                     mEntityInfo = new NeighborhoodMapFragment.EntityInfo(name, lat, lon);
                 }
@@ -194,10 +204,16 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
                     if (mAmenityGetEvent != null) {
                         NeighborhoodMapFragment fragment = new NeighborhoodMapFragment();
                         fragment.setData(mEntityInfo, mAmenityGetEvent.amenityClusters, false);
+                        if(displayId!=null){
+                            fragment.setDataForPreSelection(displayId,placeName);
+                        }
                         initFragment(R.id.container, fragment, false);
                     } else {
                         NeighborhoodMapFragment fragment = new NeighborhoodMapFragment();
                         fragment.setData(mEntityInfo, null, false);
+                        if(displayId!=null){
+                            fragment.setDataForPreSelection(displayId,placeName);
+                        }
                         initFragment(R.id.container, fragment, false);
                     }
                     initUi(true);
@@ -206,10 +222,16 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
                     if (mAmenityGetEvent != null) {
                         NeighborhoodMapFragment fragment = new NeighborhoodMapFragment();
                         fragment.setData(mEntityInfo, mAmenityGetEvent.amenityClusters, false);
+                        if(displayId!=null){
+                            fragment.setDataForPreSelection(displayId,placeName);
+                        }
                         initFragment(R.id.container, fragment, false);
                     } else {
                         NeighborhoodMapFragment fragment = new NeighborhoodMapFragment();
                         fragment.setData(mEntityInfo, null, false);
+                        if(displayId!=null){
+                            fragment.setDataForPreSelection(displayId,placeName);
+                        }
                         initFragment(R.id.container, fragment, false);
                     }
                     initUi(true);
@@ -218,10 +240,16 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
                     if (mAmenityGetEvent != null) {
                         NeighborhoodMapFragment fragment = new NeighborhoodMapFragment();
                         fragment.setData(mEntityInfo, mAmenityGetEvent.amenityClusters, true);
+                        if(displayId!=null){
+                            fragment.setDataForPreSelection(displayId,placeName);
+                        }
                         initFragment(R.id.container, fragment, false);
                     } else {
                         NeighborhoodMapFragment fragment = new NeighborhoodMapFragment();
                         fragment.setData(mEntityInfo, null, true);
+                        if(displayId!=null){
+                            fragment.setDataForPreSelection(displayId,placeName);
+                        }
                         initFragment(R.id.container, fragment, false);
                     }
                     initUi(true);
@@ -260,6 +288,24 @@ public class OverviewActivity extends MakaanBaseSearchActivity implements Overvi
             mNeighborhoodMapFragment.setData(mEntityInfo, mAmenityGetEvent.amenityClusters);
             initFragment(R.id.container, mNeighborhoodMapFragment, true);
         }*/
+    }
+
+    @Override
+    public void showMapFragmentWithSpecificAmenity(int displayId, String placeName) {
+        Intent intent = new Intent(this, OverviewActivity.class);
+        Bundle extras = new Bundle();
+        extras.putLong(ID, mId);
+        if(mType == OverviewItemType.LOCALITY) {
+            extras.putInt(TYPE, OverviewItemType.LOCALITY_MAP.ordinal());
+        } else if(mType == OverviewItemType.PROJECT) {
+            extras.putInt(TYPE, OverviewItemType.PROJECT_MAP.ordinal());
+        } else if(mType == OverviewItemType.PROPERTY) {
+            extras.putInt(TYPE, OverviewItemType.PROPERTY_MAP.ordinal());
+        }
+        extras.putInt(DISPLAY_ID,displayId);
+        extras.putString(PLACE_ID,placeName);
+        intent.putExtras(extras);
+        startActivity(intent);
     }
 
     @Subscribe

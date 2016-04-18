@@ -76,14 +76,14 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <RelativeLayout
+            <FrameLayout
                 android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/drawable_top_padding"
                 android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/drawable_top_padding"
                     app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
                     android:id="@+id/til_login_password">
 
@@ -105,10 +105,10 @@
                     android:id="@+id/cb_password_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
+                    android:layout_marginTop="15dp"
+                    android:layout_gravity="right"
                     android:button="@drawable/checkbox_show_hide_pwd" />
-            </RelativeLayout>
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/tv_forgot_pwd"

@@ -10,6 +10,7 @@ public abstract class OverviewFragment extends MakaanBaseFragment {
 
     public interface OverviewActivityCallbacks {
         void showMapFragment();
+        void showMapFragmentWithSpecificAmenity(int displayId,String placeName);
         void imagesSeenCount(int count);
     }
 }

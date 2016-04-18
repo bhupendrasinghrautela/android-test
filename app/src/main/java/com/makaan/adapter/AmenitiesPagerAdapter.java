@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.makaan.R;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.ui.amenity.AmenityCardView;
+import com.makaan.ui.amenity.AmenityCardView.AmenityCardViewCallBack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class AmenitiesPagerAdapter extends PagerAdapter {
 
     private Context mContext;
     private List<AmenityCluster> mItems = new ArrayList<>();
+    private AmenityCardViewCallBack callback;
 
     public AmenitiesPagerAdapter(Context context) {
         this.mContext = context;
@@ -60,6 +62,7 @@ public class AmenitiesPagerAdapter extends PagerAdapter {
                 (AmenityCardView) mLayoutInflater.inflate(R.layout.amenity_cluster_view, null);
 
         amenityCardView.bindView(mContext, mItems.get(position));
+        amenityCardView.setCallback(callback);
         container.addView(amenityCardView);
         return amenityCardView;
 
@@ -70,4 +73,7 @@ public class AmenitiesPagerAdapter extends PagerAdapter {
         container.removeView((View) object);
     }
 
+    public void setCallback(AmenityCardViewCallBack callback) {
+        this.callback = callback;
+    }
 }
