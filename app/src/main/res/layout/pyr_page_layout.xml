@@ -30,20 +30,20 @@
         android:layout_marginRight="@dimen/pyr_page_margin_twenty"
         android:layout_gravity="center_horizontal" />
 
-    <include layout="@layout/pyr_property_card_layout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/pyr_location_and_property_card_height"
-        android:layout_marginTop="@dimen/pyr_page_margin_top"
-        android:layout_marginLeft="@dimen/pyr_page_margin_fifteen"
-        android:layout_marginRight="@dimen/pyr_page_margin_fifteen"
-        android:layout_gravity="center_horizontal"/>
-
     <include layout="@layout/pyr_bedroom_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/pyr_page_card_height"
         android:layout_marginTop="@dimen/pyr_page_margin_top"
         android:layout_marginLeft="@dimen/pyr_page_margin_twenty"
         android:layout_marginRight="@dimen/pyr_page_margin_twenty"
+        android:layout_gravity="center_horizontal"/>
+
+    <include layout="@layout/pyr_property_card_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pyr_location_and_property_card_height"
+        android:layout_marginTop="@dimen/pyr_page_margin_top"
+        android:layout_marginLeft="@dimen/pyr_page_margin_fifteen"
+        android:layout_marginRight="@dimen/pyr_page_margin_fifteen"
         android:layout_gravity="center_horizontal"/>
 
     <include layout="@layout/pyr_location_card_layout"

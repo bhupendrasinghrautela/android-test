@@ -14,6 +14,7 @@ public class ScreenNameConstants {
     public static final String SCREEN_NAME_OVERVIEW_ACTIVITY = "overview activity";
     public static final String SCREEN_NAME_LEAD_FORM = "lead";
     public static final String SCREEN_NAME_BUYER_DASHBOARD = "buyerdashboard";
+    public static final String SCREEN_NAME_NOTIFICATION = "notification";
     public static final String SCREEN_NAME_SERP_LOCALITY = "serp_locality";
     public static final String SCREEN_NAME_SERP_CHILD = "serp_child";
     public static final String SCREEN_NAME_SERP_CITY = "serp_city";
