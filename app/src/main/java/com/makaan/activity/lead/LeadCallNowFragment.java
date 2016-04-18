@@ -61,7 +61,11 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mLeadFormPresenter= LeadFormPresenter.getLeadFormPresenter();
-        mTextViewSellerName.setText(mLeadFormPresenter.getName().toLowerCase());
+        if(!TextUtils.isEmpty(mLeadFormPresenter.getName())) {
+            mTextViewSellerName.setText(mLeadFormPresenter.getName().toLowerCase());
+        }else {
+            mTextViewSellerName.setText("");
+        }
         if(!TextUtils.isEmpty(mLeadFormPresenter.getScore())) {
             mRatingBarSeller.setVisibility(View.VISIBLE);
             mRatingBarSeller.setRating(Float.valueOf(mLeadFormPresenter.getScore()));
@@ -82,13 +86,6 @@ public class LeadCallNowFragment extends MakaanBaseFragment {
             }
             mButtonCall.setText("na");
             mButtonCall.setClickable(false);
-        }
-        if(!mAlreadyLoaded){
-            Properties properties1 = MakaanEventPayload.beginBatch();
-            properties1.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_LEAD_FORM);
-            properties1.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_LEAD_CONTACT_SELLER);
-            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
-            mAlreadyLoaded=true;
         }
         setSellerImage();
     }

@@ -47,7 +47,9 @@
         android:text=" apartment"
         android:textColor="@color/white"
         android:textSize="@dimen/serp_listing_cluster_card_properties_info_text_size"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        android:ellipsize="end"
+        android:singleLine="true"/>
 
     <View
         android:id="@+id/serp_listing_cluster_group_empty_view_2"

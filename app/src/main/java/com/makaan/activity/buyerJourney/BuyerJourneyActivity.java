@@ -168,27 +168,43 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity implements Noti
         if("login".equals(mLoginButton.getText().toString())) {
             if(getIntent() != null && getIntent().getExtras() != null) {
                 String screenName = this.getIntent().getExtras().getString("screenName");
-                switch (screenName.toLowerCase()) {
-                    case ScreenNameConstants.SCREEN_NAME_PROJECT: {
-                        Properties properties = MakaanEventPayload.beginBatch();
-                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
-                        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
-                        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProject);
-                        break;
-                    }
-                    case ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL: {
-                        Properties properties = MakaanEventPayload.beginBatch();
-                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
-                        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
-                        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProperty);
-                        break;
-                    }
-                    case ScreenNameConstants.SCREEN_NAME_SERP: {
-                        Properties properties = MakaanEventPayload.beginBatch();
-                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
-                        properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
-                        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickSerp);
-                        break;
+                if(!TextUtils.isEmpty(screenName)) {
+                    switch (screenName.toLowerCase()) {
+                        case ScreenNameConstants.SCREEN_NAME_PROJECT: {
+                            Properties properties = MakaanEventPayload.beginBatch();
+                            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
+                            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
+                            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProject);
+                            break;
+                        }
+                        case ScreenNameConstants.SCREEN_NAME_LISTING_DETAIL: {
+                            Properties properties = MakaanEventPayload.beginBatch();
+                            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.property);
+                            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
+                            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickProperty);
+                            break;
+                        }
+                        case ScreenNameConstants.SCREEN_NAME_SERP: {
+                            Properties properties = MakaanEventPayload.beginBatch();
+                            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+                            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
+                            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickSerp);
+                            break;
+                        }
+                        case ScreenNameConstants.SCREEN_NAME_HOME: {
+                            Properties properties = MakaanEventPayload.beginBatch();
+                            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerHome);
+                            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
+                            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickHome);
+                            break;
+                        }
+                        case ScreenNameConstants.SCREEN_NAME_NOTIFICATION: {
+                            Properties properties = MakaanEventPayload.beginBatch();
+                            properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerNotification);
+                            properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.login);
+                            MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.clickNotification);
+                            break;
+                        }
                     }
                 }
             }

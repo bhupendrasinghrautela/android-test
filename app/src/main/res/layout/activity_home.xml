@@ -110,6 +110,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="@dimen/activity_home_search_relative_view_left_margin"
                 android:layout_marginStart="@dimen/activity_home_search_relative_view_left_margin"
+                android:clipChildren="false"
                 android:background="@drawable/home_search_background">
 
                 <ImageView
@@ -139,8 +140,9 @@
                     android:textSize="@dimen/activity_home_search_text_text_size"
                     android:typeface="sans" />
 
-                <EditText
-                    android:layout_width="2dp"
+                <View
+                    android:id="@+id/activity_home_blinking_view"
+                    android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="@dimen/activity_home_empty_view_margin_top"
                     android:layout_marginLeft="@dimen/activity_home_empty_view_margin_start"
@@ -148,17 +150,17 @@
                     android:layout_marginTop="@dimen/activity_home_empty_view_margin_top"
                     android:layout_toEndOf="@id/activity_home_search_text_view"
                     android:layout_toRightOf="@id/activity_home_search_text_view"
-                    android:background="@null"
-                    android:textCursorDrawable="@drawable/search_view_red_cursor"
-                    android:textSize="50sp" />
+                    android:background="@drawable/search_view_red_cursor" />
             </RelativeLayout>
 
             <RadioGroup
                 android:id="@+id/activity_home_property_type_radio_group"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/buy_rent_radio_group_home_total_height"
+                android:clipChildren="false"
+                android:gravity="center_vertical"
                 android:layout_above="@id/activity_home_search_relative_view"
-                android:layout_marginBottom="-15dp"
+                android:layout_marginBottom="@dimen/buy_rent_radio_group_home_margin_bottom"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -181,7 +183,7 @@
                     android:id="@+id/activity_home_property_rent_radio_button"
                     android:layout_width="50dp"
                     android:layout_height="35dp"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginTop="@dimen/rent_button_home_margin_top"
                     android:background="@drawable/rent_radio_button_background_selector"
                     android:button="@null"
                     android:gravity="center"

@@ -15,6 +15,7 @@ import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.activity.pyr.PyrPageActivity;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.fragment.buyerJourney.BlogContentFragment;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.pojo.overview.OverviewItemType;
@@ -315,7 +316,8 @@ public class NotificationHelper {
         if (context instanceof BuyerJourneyActivity) {
             return null;
         } else {
-            return new Intent(context, BuyerJourneyActivity.class);
+            return new Intent(context, BuyerJourneyActivity.class).putExtra("screenName",
+                    ScreenNameConstants.SCREEN_NAME_NOTIFICATION);
         }
     }
 

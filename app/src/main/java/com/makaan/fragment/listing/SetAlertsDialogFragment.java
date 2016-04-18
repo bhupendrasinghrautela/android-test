@@ -104,6 +104,10 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
+        if(mGroups == null){
+            dismiss();
+            return view;
+        }
         if (MasterDataCache.getInstance().getSavedSearch() != null && MasterDataCache.getInstance().getSavedSearch().size() > 0) {
             /*SaveSearchService saveSearchService =
                     (SaveSearchService) MakaanServiceFactory.getInstance().getService(SaveSearchService.class);

@@ -57,6 +57,9 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(getIntent() == null || getIntent().getExtras() == null) {
+            finish();
+        }
         String name=this.getIntent().getExtras().getString(KeyUtil.NAME_LEAD_FORM);
         String id=this.getIntent().getExtras().getString(KeyUtil.SINGLE_SELLER_ID);
         ArrayList<Integer> multipleSellerids=this.getIntent().getExtras().getIntegerArrayList(KeyUtil.MULTIPLE_SELLER_IDS);

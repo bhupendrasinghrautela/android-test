@@ -182,9 +182,9 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        mSearchImageViewX = size.x - (this.getResources().getDimensionPixelSize(R.dimen.activity_search_base_layout_search_bar_back_button_width)
-                + this.getResources().getDimensionPixelSize(R.dimen.activity_search_base_layout_search_bar_back_layout_padding_left)
-                + this.getResources().getDimensionPixelSize(R.dimen.activity_search_base_layout_search_bar_back_layout_padding_right)
+        mSearchImageViewX = size.x - (this.getResources().getDimensionPixelSize(R.dimen.back_button_width)
+                + this.getResources().getDimensionPixelSize(R.dimen.back_button_margin_left)
+                + this.getResources().getDimensionPixelSize(R.dimen.back_button_margin_right)
                 + this.getResources().getDimensionPixelSize(R.dimen.activity_search_base_layout_search_bar_search_text_view_margin_left)
                 + this.getResources().getDimensionPixelSize(R.dimen.activity_search_base_layout_search_bar_search_image_button_width)
                 + this.getResources().getDimensionPixelSize(R.dimen.activity_search_base_layout_search_bar_search_image_button_margin_right));
@@ -768,8 +768,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         }
     }
 
-    @OnClick({R.id.activity_search_base_layout_search_bar_back_layout,
-            R.id.activity_search_base_layout_search_bar_back_button})
+    @OnClick(R.id.activity_search_base_layout_search_bar_back_button)
     public void onUpPressed(View view) {
         switch(getScreenName().toLowerCase()){
             case ScreenNameConstants.SCREEN_NAME_HOME:{

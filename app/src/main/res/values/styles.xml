@@ -13,8 +13,8 @@
         <item name="colorPrimary">@color/appThemeRed</item>
         <item name="colorPrimaryDark">@color/status_bar_color</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:homeAsUpIndicator">@drawable/back_arrow_white</item>
-        <item name="homeAsUpIndicator">@drawable/back_arrow_white</item>
+        <item name="android:homeAsUpIndicator">@mipmap/back_white</item>
+        <item name="homeAsUpIndicator">@mipmap/back_white</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@null</item>
         <item name="windowNoTitle">true</item>

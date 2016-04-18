@@ -12,7 +12,7 @@
         android:padding="6dp"
         android:layout_margin="6dp"
         android:layout_gravity="top|right"
-        android:src="@drawable/chat_close"/>
+        android:src="@drawable/close_black"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/conversation_list_view"

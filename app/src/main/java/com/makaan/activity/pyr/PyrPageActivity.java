@@ -94,7 +94,7 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
 
     private void sendPyrOpenFromBuyerDashboardEvent(String string, Long cityId) {
         /*-------------------track------------------event-------------------*/
-        if (!TextUtils.isEmpty(string) && string.equalsIgnoreCase(ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD)) {
+        if (!TextUtils.isEmpty(string) && ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD.equalsIgnoreCase(string)) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.LABEL, String.format("%s_%s", ScreenNameConstants.BUY, cityId));
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerDashboardCaps);
@@ -130,7 +130,7 @@ public class PyrPageActivity extends MakaanFragmentActivity implements PyrReplac
         if(shouldAddToBackStack) {
             mFragmentTransaction.addToBackStack(fragment.getClass().getName());
         }
-        mFragmentTransaction.commit();
+        mFragmentTransaction.commitAllowingStateLoss();
     }
 
     @Override

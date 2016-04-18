@@ -1,5 +1,6 @@
 package com.makaan.activity;
 
+import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -8,10 +9,13 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -42,6 +46,7 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
 import com.makaan.service.WishListService;
 import com.makaan.util.CommonPreference;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.JsonParser;
 import com.makaan.util.PermissionManager;
@@ -68,6 +73,11 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     CircleImageView mImageViewBuyer;
     @Bind(R.id.makaan_toolbar_profile_icon_text_view)
     TextView  mTextViewBuyerInitials;
+
+    @Bind(R.id.activity_home_blinking_view)
+    View mBlinkingView;
+
+    private boolean mShouldBlink;
 
 
     @Override
@@ -140,23 +150,27 @@ public class HomeActivity extends MakaanBaseSearchActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.activity_home_property_buy_radio_button: {
-                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) buyRadioButton.getLayoutParams();
-                        params.setMargins(0, 0, 1, 0);
-                        buyRadioButton.setLayoutParams(params);
+                        ObjectAnimator anim = ObjectAnimator.ofFloat(rentRadioButton, View.TRANSLATION_Y,
+                                CommonUtil.dpToPixel(HomeActivity.this, 0));
+                        anim.setDuration(200);                  // Duration in milliseconds
+                        anim.start();
 
-                        params = (LinearLayout.LayoutParams) rentRadioButton.getLayoutParams();
-                        params.setMargins(0, 10, 0, 0);
-                        rentRadioButton.setLayoutParams(params);
+                        ObjectAnimator anim2 = ObjectAnimator.ofFloat(buyRadioButton, View.TRANSLATION_Y,
+                                CommonUtil.dpToPixel(HomeActivity.this, 0));
+                        anim2.setDuration(200);                  // Duration in milliseconds
+                        anim2.start();
                         break;
                     }
                     case R.id.activity_home_property_rent_radio_button: {
-                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) rentRadioButton.getLayoutParams();
-                        params.setMargins(0, 0, 1, 0);
-                        rentRadioButton.setLayoutParams(params);
+                        ObjectAnimator anim = ObjectAnimator.ofFloat(rentRadioButton, View.TRANSLATION_Y,
+                                CommonUtil.dpToPixel(HomeActivity.this, -6));
+                        anim.setDuration(200);                  // Duration in milliseconds
+                        anim.start();
 
-                        params = (LinearLayout.LayoutParams) buyRadioButton.getLayoutParams();
-                        params.setMargins(0, 10, 0, 0);
-                        buyRadioButton.setLayoutParams(params);
+                        ObjectAnimator anim2 = ObjectAnimator.ofFloat(buyRadioButton, View.TRANSLATION_Y,
+                                CommonUtil.dpToPixel(HomeActivity.this, 6));
+                        anim2.setDuration(200);                  // Duration in milliseconds
+                        anim2.start();
                         break;
                     }
                 }
@@ -239,6 +253,41 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     protected void onStart() {
         super.onStart();
         setUserData();
+        startBlinking();
+    }
+
+    private void startBlinking() {
+        mShouldBlink = true;
+        final Handler handler = new Handler();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(mShouldBlink) {
+                            if (mBlinkingView.getVisibility() == View.VISIBLE) {
+                                mBlinkingView.setVisibility(View.INVISIBLE);
+                            } else {
+                                mBlinkingView.setVisibility(View.VISIBLE);
+                            }
+                            startBlinking();
+                        }
+                    }
+                }, 600);
+            }
+        }).start();
+
+    }
+
+    private void stopBlinking() {
+        mShouldBlink = false;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopBlinking();
     }
 
     private void setUserData() {
@@ -351,6 +400,7 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     public void onLoginCLick() {
 //        if(CookiePreferences.isUserLoggedIn(this)){
         Intent intent = new Intent(HomeActivity.this, BuyerJourneyActivity.class);
+        intent.putExtra("screenName", ScreenNameConstants.SCREEN_NAME_HOME);
         startActivity(intent);
 //        }else{
 //            Intent intent = new Intent(HomeActivity.this, UserLoginActivity.class);

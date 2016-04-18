@@ -7,12 +7,18 @@
     <Button
 
         android:id="@+id/btn_back_toolbar"
-        android:layout_width="@dimen/activity_base_buyer_journey_layout_back_button_width"
-        android:layout_height="@dimen/activity_base_buyer_journey_layout_back_button_height"
+        android:layout_width="@dimen/back_button_width"
+        android:layout_height="@dimen/back_button_height"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:layout_margin="5dp"
-        android:background="@drawable/back_arrow_white" />
+        android:layout_marginLeft="@dimen/back_button_margin_left"
+        android:layout_marginStart="@dimen/back_button_margin_left"
+        android:layout_marginRight="@dimen/back_button_margin_right"
+        android:layout_marginEnd="@dimen/back_button_margin_right"
+        android:layout_marginTop="@dimen/back_button_margin_top"
+        android:layout_marginBottom="@dimen/back_button_margin_bottom"
+        android:background="@mipmap/back_white" />
 
     <TextView
         android:id="@+id/tv_toolbar"

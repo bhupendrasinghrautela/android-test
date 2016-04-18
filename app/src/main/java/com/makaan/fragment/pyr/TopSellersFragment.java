@@ -102,7 +102,6 @@ public class TopSellersFragment extends Fragment {
                 properties1.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_PYR_TOP_SELLER);
                 MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
                 /*--------------------------------------------------------*/
-
                 mAlreadyLoaded=true;
             }
             if(mTopAgentsDatas.size()<=DEFAULT_SELECTED_COUNT){
