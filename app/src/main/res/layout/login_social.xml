@@ -98,12 +98,16 @@
 
     <ImageView
         android:id="@+id/iv_back"
-        android:layout_width="@dimen/login_back_width"
-        android:layout_height="@dimen/login_back_height"
-        android:layout_marginLeft="@dimen/login_back_margin"
-        android:layout_marginTop="@dimen/login_back_margin"
+        android:layout_width="@dimen/back_button_width"
+        android:layout_height="@dimen/back_button_height"
+        android:layout_marginLeft="@dimen/back_button_margin_left"
+        android:layout_marginStart="@dimen/back_button_margin_left"
+        android:layout_marginTop="@dimen/back_button_margin_top"
+        android:layout_marginRight="@dimen/back_button_margin_right"
+        android:layout_marginEnd="@dimen/back_button_margin_right"
+        android:layout_marginBottom="@dimen/back_button_margin_bottom"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
-        android:src="@drawable/back_arrow_white"
+        android:src="@mipmap/back_white"
         android:tint="@color/app_grey" />
 </RelativeLayout>

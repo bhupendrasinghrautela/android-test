@@ -49,6 +49,9 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
     @Bind(R.id.fragment_client_company_leads_next_button)
     Button mNextButton;
 
+    @Bind(R.id.fragment_client_company_leads_for_property_text_view)
+    TextView mPropertyTextView;
+
     ClientCompanyLeadsAdapter mAdapter;
     private int mSelected = 0;
     private ArrayList<ListingByIdsGetEvent.Listing> mItems;
@@ -68,22 +71,28 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
         showProgress();
 
         Bundle bundle = getArguments();
-        if(bundle != null) {
-            Long companyId = bundle.getLong(COMPANY_ID);
-            ArrayList<String> listingIds = bundle.getStringArrayList(LISTING_IDS);
-
-            if(companyId > 0) {
-                ((ListingService) MakaanServiceFactory.getInstance().getService(ListingService.class)).getListingDetailByIds(listingIds);
-            }
-        } else {
-            // TODO
-        }
 
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mAdapter = new ClientCompanyLeadsAdapter();
 
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mAdapter);
+
+        if(bundle != null) {
+            Long companyId = bundle.getLong(COMPANY_ID);
+            ArrayList<String> listingIds = bundle.getStringArrayList(LISTING_IDS);
+
+            if(companyId > 0 && listingIds != null && listingIds.size() > 0) {
+                mPropertyTextView.setVisibility(View.VISIBLE);
+                ((ListingService) MakaanServiceFactory.getInstance().getService(ListingService.class)).getListingDetailByIds(listingIds);
+            } else {
+                showContent();
+                mPropertyTextView.setVisibility(View.GONE);
+                mAdapter.setData(new ArrayList<ListingByIdsGetEvent.Listing>());
+            }
+        } else {
+            // TODO
+        }
         return view;
     }
 
@@ -128,7 +137,13 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
             return;
         }
         mItems = listingByIdsGetEvent.items;
-        mAdapter.setData(listingByIdsGetEvent.items);
+        if(mItems == null || mItems.size() == 0) {
+            mPropertyTextView.setVisibility(View.GONE);
+            mAdapter.setData(new ArrayList<ListingByIdsGetEvent.Listing>());
+        } else {
+            mPropertyTextView.setVisibility(View.VISIBLE);
+            mAdapter.setData(listingByIdsGetEvent.items);
+        }
         mNextButton.setEnabled(true);
         showContent();
     }
@@ -220,6 +235,12 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
                     radioButton = (RadioButton) itemView.findViewById(R.id.client_company_leads_item_layout_radio_button);
                     radioButton.setOnCheckedChangeListener(this);
                 }
+
+                if(getItemCount() == 1 && viewType == TYPE_ADD) {
+                    ((TextView)itemView.findViewById(R.id.client_company_leads_add_item_layout_add_text_view)).setText("add a property");
+                } else if(viewType == TYPE_ADD) {
+                    ((TextView)itemView.findViewById(R.id.client_company_leads_add_item_layout_add_text_view)).setText("add another property");
+                }
             }
 
             @Override
@@ -228,9 +249,6 @@ public class ClientCompanyLeadFragment extends MakaanBaseFragment {
                     mSelected = position;
                     notifyDataSetChanged();
                 } else if(viewType == TYPE_ADD) {
-
-
-
                     if(getActivity() instanceof BuyerDashboardCallbacks) {
                         if(mObj != null) {
 //                            mObj.listingDetail = mItems.get(position).listing;

@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -68,6 +69,11 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     CircleImageView mImageViewBuyer;
     @Bind(R.id.makaan_toolbar_profile_icon_text_view)
     TextView  mTextViewBuyerInitials;
+
+    @Bind(R.id.activity_home_blinking_view)
+    View mBlinkingView;
+
+    private boolean mShouldBlink;
 
 
     @Override
@@ -239,6 +245,41 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     protected void onStart() {
         super.onStart();
         setUserData();
+        startBlinking();
+    }
+
+    private void startBlinking() {
+        mShouldBlink = true;
+        final Handler handler = new Handler();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(mShouldBlink) {
+                            if (mBlinkingView.getVisibility() == View.VISIBLE) {
+                                mBlinkingView.setVisibility(View.INVISIBLE);
+                            } else {
+                                mBlinkingView.setVisibility(View.VISIBLE);
+                            }
+                            startBlinking();
+                        }
+                    }
+                }, 600);
+            }
+        }).start();
+
+    }
+
+    private void stopBlinking() {
+        mShouldBlink = false;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopBlinking();
     }
 
     private void setUserData() {
