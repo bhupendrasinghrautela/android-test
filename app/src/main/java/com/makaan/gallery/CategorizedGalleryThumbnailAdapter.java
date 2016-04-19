@@ -1,6 +1,7 @@
 package com.makaan.gallery;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +73,10 @@ public class CategorizedGalleryThumbnailAdapter extends BaseAdapter {
 		String url = ImageUtils.getThumbnailUrl(data.overViewImage.getAbsolutePath());
 		CommonUtil.TLog("Image Url: " + url);
         h.imageView.setImageUrl(url, mImageLoader);
-        h.categoryName.setText(mContext.getString(data.titleId));
+		String title = mContext.getString(data.titleId);
+		if(!TextUtils.isEmpty(title)) {
+			h.categoryName.setText(title.toLowerCase());
+		}
         h.imageCount.setText(String.valueOf(data.count) + " photos");
 		return convertView;	
 	}

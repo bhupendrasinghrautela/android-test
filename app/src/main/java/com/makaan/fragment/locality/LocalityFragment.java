@@ -60,6 +60,7 @@ import com.makaan.service.LocalityService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.TaxonomyService;
 import com.makaan.ui.CompressedTextView;
+import com.makaan.ui.CompressedTextView.CompressTextViewCollapseCallback;
 import com.makaan.ui.view.MakaanProgressBar;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.LocalityUtil;
@@ -78,7 +79,7 @@ import butterknife.OnClick;
 /**
  * Created by tusharchaudhary on 1/21/16.
  */
-public class LocalityFragment extends OverviewFragment {
+public class LocalityFragment extends OverviewFragment implements CompressTextViewCollapseCallback {
     @Bind(R.id.main_city_image)
     FadeInNetworkImageView mMainCityImage;
     @Bind(R.id.blurred_city_image)
@@ -268,8 +269,10 @@ public class LocalityFragment extends OverviewFragment {
         final Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/comforta.ttf");
         mCityCollapseToolbar.setCollapsedTitleTypeface(tf);
         mCityCollapseToolbar.setExpandedTitleTypeface(tf);
-        if(locality.description !=null && !locality.description.isEmpty())
+        if(locality.description !=null && !locality.description.isEmpty()) {
+            compressedTv.setCallback(this);
             overviewContentTV.setText(Html.fromHtml(locality.description).toString().toLowerCase());
+        }
         else {
             compressedTv.setVisibility(View.GONE);
         }
@@ -623,5 +626,10 @@ public class LocalityFragment extends OverviewFragment {
     @Override
     public void bindView(OverviewActivityCallbacks activityCallbacks) {
         mActivityCallbacks = activityCallbacks;
+    }
+
+    @Override
+    public void onCollapsed() {
+        mCityScrollView.scrollTo(0,compressedTv.getTop());
     }
 }

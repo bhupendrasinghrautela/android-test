@@ -307,7 +307,7 @@
     <string name="notification_deletion_error">unable to delete notification, please try again later</string>
     <string name="please_wait">please wait...</string>
 
-    <string name="gallery">Gallery</string>
+    <string name="gallery">gallery</string>
     <string name="tab_projectgallery_photo">Photo Gallery</string>
     <string name="all_photos">All Photos</string>
     <string name="tab_projectgallery_floor_plan">Floor Plan</string>

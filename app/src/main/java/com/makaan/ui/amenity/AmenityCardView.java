@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,14 +21,18 @@ import butterknife.Bind;
 /**
  * Created by sunil on 17/01/16.
  */
-public class AmenityCardView extends BaseCardView<AmenityCluster> {
+public class AmenityCardView extends BaseCardView<AmenityCluster> implements OnClickListener {
 
     @Bind(R.id.amenity_title)TextView mAmenityTitle;
     @Bind(R.id.amenity_logo)FadeInNetworkImageView mAmenityLogo;
     @Bind(R.id.amenity_list)LinearLayout mAmenityListLayout;
     private final static String URL = ApiConstants.HOSTED_IMAGE_URL;
+    public interface AmenityCardViewCallBack{
+        public void onAmenityDistanceClicked(String placeName);
+    }
 
     private Context mContext;
+    private AmenityCardViewCallBack callback;
 
     public AmenityCardView(Context context) {
         super(context);
@@ -69,10 +74,24 @@ public class AmenityCardView extends BaseCardView<AmenityCluster> {
                     if(amenity.name!=null) {
                         ((TextView) amenityItem.findViewById(R.id.amenity_name)).setText(amenity.name.toLowerCase());
                     }
-                    ((TextView) amenityItem.findViewById(R.id.amenity_distance)).setText(amenity.displayDistance);
+                    TextView amenityDistance = ((TextView) amenityItem.findViewById(R.id.amenity_distance));
+                    amenityDistance.setText(amenity.displayDistance);
+                    amenityDistance.setTag(amenity.name);
+                    amenityDistance.setOnClickListener(this);
                 }
                 mAmenityListLayout.addView(amenityItem);
         }
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(callback!=null) {
+            callback.onAmenityDistanceClicked((String) v.getTag());
+        }
+    }
+
+    public void setCallback(AmenityCardViewCallBack callback) {
+        this.callback = callback;
     }
 }

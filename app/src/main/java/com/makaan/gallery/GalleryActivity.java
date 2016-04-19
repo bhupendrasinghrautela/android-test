@@ -238,7 +238,7 @@ public class GalleryActivity extends MakaanFragmentActivity {
             	Image Image = mImages.get(currentPosition);
 
             	mActionBar.setTitle((Image.getTitle() == null ? " "
-                         : Image.getTitle()));
+                         : Image.getTitle().toLowerCase()));
 
             	mActionBar.setSubtitle(String.valueOf(currentPosition+1)
                         + "/" + String.valueOf(mImages.size()));
@@ -257,7 +257,7 @@ public class GalleryActivity extends MakaanFragmentActivity {
 		if(mSimpleGridViewSkipped) {
 			toggleGridViews(false);
 			mActionBar.setTitle(R.string.gallery);
-			mActionBar.setSubtitle(String.valueOf(mProjectAllImagesList.size()) + " Photos");
+			mActionBar.setSubtitle(String.valueOf(mProjectAllImagesList.size()) + " photos");
 		} else {
 			mActionBar.setTitle(mPrevTitle);
 			mActionBar.setSubtitle(mPrevSubtitle);
@@ -279,7 +279,7 @@ public class GalleryActivity extends MakaanFragmentActivity {
 		mGalleryType = GalleryType.CategorizedGridView;
 		
 		mActionBar.setTitle(R.string.gallery);
-		mActionBar.setSubtitle(String.valueOf(mProjectAllImagesList.size()) + " Photos");
+		mActionBar.setSubtitle(String.valueOf(mProjectAllImagesList.size()) + " photos");
 
 		if(mCategorizedImageOverViewList.size() == 1) {
 			openSimpleGridView(0);
@@ -306,7 +306,7 @@ public class GalleryActivity extends MakaanFragmentActivity {
 		mSimpleGridView.setAdapter(adapter);
 
 		mActionBar.setTitle(cData.titleId);
-		mActionBar.setSubtitle(String.valueOf(cData.count) + " Photos" );
+		mActionBar.setSubtitle(String.valueOf(cData.count) + " photos" );
 		
 		if(cData.imageList.size() == 1) {
 			openFullScreenImageView(0); // skip simple grid view

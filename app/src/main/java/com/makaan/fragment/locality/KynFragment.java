@@ -12,16 +12,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.makaan.R;
-//import com.makaan.event.project.OnSeeOnMapClicked;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.overview.OverviewFragment;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.ui.amenity.AmenityCardView;
+import com.makaan.ui.amenity.AmenityCardView.AmenityCardViewCallBack;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+
+//import com.makaan.event.project.OnSeeOnMapClicked;
 
 /**
  * Created by tusharchaudhary on 1/20/16.
@@ -83,13 +85,24 @@ public class KynFragment extends MakaanBaseFragment {
     private class KnowYourNeighbourhoodAdapter extends RecyclerView.Adapter<KnowYourNeighbourhoodAdapter.ViewHolder> {
         private List<AmenityCluster> amenityClusters;
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        public class ViewHolder extends RecyclerView.ViewHolder implements AmenityCardViewCallBack {
             // each data item is just a string in this case
             public AmenityCardView amenityCardView;
-
+            private int mPosition;
             public ViewHolder(View v) {
                 super(v);
                 amenityCardView = (AmenityCardView) v.findViewById(R.id.amenity_card_view);
+                amenityCardView.setCallback(this);
+            }
+
+            public void setPosition(int position){
+                mPosition = position;
+            }
+
+            @Override
+            public void onAmenityDistanceClicked(String placeName) {
+                AmenityCluster amenityCluster = amenityClusters.get(mPosition);
+                mActivityCallbacks.showMapFragmentWithSpecificAmenity(mPosition,placeName);
             }
         }
 
@@ -109,6 +122,7 @@ public class KynFragment extends MakaanBaseFragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             final AmenityCluster amenityCluster = amenityClusters.get(position);
+            holder.setPosition(position);
             holder.amenityCardView.bindView(context,amenityCluster);
         }
 

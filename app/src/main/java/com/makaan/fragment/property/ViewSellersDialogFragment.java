@@ -30,7 +30,6 @@ import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.listing.PropertyDetailFragment;
-import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.constants.ScreenNameConstants;
@@ -74,6 +73,10 @@ public class ViewSellersDialogFragment extends DialogFragment {
 
     @OnCheckedChanged(R.id.fragment_dialog_contact_sellers_select_all_checkbox)
     public void checkChanged(){
+        if(mSellerCards ==null){
+            dismiss();
+            return;
+        }
         if(selectSeller.isChecked()){
             Bundle bundle=this.getArguments();
             for(SellerCard sellerCard : mSellerCards){

@@ -24,6 +24,7 @@ import com.makaan.fragment.overview.OverviewFragment;
 import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.response.amenity.AmenityCluster;
 import com.makaan.ui.amenity.AmenityCardView;
+import com.makaan.ui.amenity.AmenityCardView.AmenityCardViewCallBack;
 import com.makaan.ui.view.MakaanProgressBar;
 import com.segment.analytics.Properties;
 
@@ -138,13 +139,19 @@ public class ProjectKynFragment extends MakaanBaseFragment{
     private class KnowYourNeighbourhoodAdapter extends RecyclerView.Adapter<KnowYourNeighbourhoodAdapter.ViewHolder> {
         private List<AmenityCluster> amenityClusters;
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        public class ViewHolder extends RecyclerView.ViewHolder implements AmenityCardViewCallBack {
             // each data item is just a string in this case
             public AmenityCardView amenityCardView;
 
             public ViewHolder(View v) {
                 super(v);
                 amenityCardView = (AmenityCardView) v.findViewById(R.id.amenity_card_view);
+                amenityCardView.setCallback(this);
+            }
+
+            @Override
+            public void onAmenityDistanceClicked(String placeName) {
+                mActivityCallbacks.showMapFragmentWithSpecificAmenity(getAdapterPosition(),placeName);
             }
         }
 

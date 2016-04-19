@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -57,6 +56,8 @@ import com.makaan.response.trend.PriceTrendKey;
 import com.makaan.service.CityService;
 import com.makaan.service.PriceTrendService;
 import com.makaan.service.TaxonomyService;
+import com.makaan.ui.CompressedTextView;
+import com.makaan.ui.CompressedTextView.CompressTextViewCollapseCallback;
 import com.makaan.ui.MakaanBarChartView;
 import com.makaan.ui.MakaanBarChartView.OnBarTouchListener;
 import com.makaan.ui.MultiSelectionSpinner;
@@ -83,7 +84,7 @@ import butterknife.OnClick;
 /**
  * Created by aishwarya on 01/01/16.
  */
-public class CityOverViewFragment extends OverviewFragment {
+public class CityOverViewFragment extends OverviewFragment implements CompressTextViewCollapseCallback {
 
     @Bind(R.id.main_city_image)
     FadeInNetworkImageView mMainCityImage;
@@ -108,7 +109,7 @@ public class CityOverViewFragment extends OverviewFragment {
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Bind(R.id.compressed_text_view)
-    LinearLayout mCompressedTextViewLayout;
+    CompressedTextView mCompressedTextViewLayout;
     @Bind(R.id.top_locality_layout)
     TopLocalityView mTopLocalityLayout;
     @Bind(R.id.property_range_layout)
@@ -293,6 +294,7 @@ public class CityOverViewFragment extends OverviewFragment {
             mRentalGrowth.setVisibility(View.GONE);
         }
         if(!TextUtils.isEmpty(mCity.description)) {
+            mCompressedTextViewLayout.setCallback(this);
             mCompressedTextViewLayout.setVisibility(View.VISIBLE);
             mCityDescription.setText(Html.fromHtml(mCity.description).toString().toLowerCase());
         }
@@ -580,5 +582,10 @@ public class CityOverViewFragment extends OverviewFragment {
     @Override
     public void bindView(OverviewActivityCallbacks activityCallbacks) {
 
+    }
+
+    @Override
+    public void onCollapsed() {
+        mCityScrollView.scrollTo(0,mCompressedTextViewLayout.getTop());
     }
 }

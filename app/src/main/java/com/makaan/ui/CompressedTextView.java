@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.makaan.R;
-import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.constants.ScreenNameConstants;
@@ -33,6 +32,12 @@ public class CompressedTextView extends BaseLinearLayout<String> {
     private Boolean isCollapsed = true;
     private static int MAX_LINE = 5;
     private boolean workedOnce = false;
+
+    public interface CompressTextViewCollapseCallback{
+        public void onCollapsed();
+    }
+    private CompressTextViewCollapseCallback mCallback;
+
     @OnClick(R.id.read_more) void click(){
         workedOnce = true;
         if (isCollapsed) {
@@ -82,9 +87,11 @@ public class CompressedTextView extends BaseLinearLayout<String> {
                 properties.put(MakaanEventPayload.LABEL, MakaanTrackerConstants.Label.descriptionLess);
                 MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.clickLocalityOverView);
             }
-
             mReadMore.setText(mContext.getString(R.string.more));
             mContentText.setMaxLines(MAX_LINE);
+            if(mCallback != null){
+                mCallback.onCollapsed();
+            }
         }
         isCollapsed=!isCollapsed;
     }
@@ -103,6 +110,10 @@ public class CompressedTextView extends BaseLinearLayout<String> {
 
     public CompressedTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    public void setCallback(CompressTextViewCollapseCallback callback){
+        mCallback = callback;
     }
 
     @Override

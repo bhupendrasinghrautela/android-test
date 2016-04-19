@@ -450,7 +450,7 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
         if(amenityGetEvent.amenityClusters == null){
             return;
         }
-        mAmenityViewPager.bindView();
+        mAmenityViewPager.bindView(mShowMapCallback);
         mAmenityClusters.clear();
         for(AmenityCluster cluster : amenityGetEvent.amenityClusters){
             if(null!=cluster && null!=cluster.cluster && cluster.cluster.size()>0){

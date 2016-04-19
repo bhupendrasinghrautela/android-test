@@ -26,7 +26,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
 import com.makaan.R;
-import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.constants.ScreenNameConstants;
@@ -61,6 +60,8 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
     private LinearLayoutManager mLayoutManager;
     private EntityInfo mEntityInfo;
     private Marker mEntityMarker;
+    private Integer preSelectDisplayId;
+    private String preSelectPlaceID;
 
     @Bind(R.id.neighborhood_map_view)
     MapView mMapView;
@@ -128,6 +129,11 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
                 }
             }
         }
+    }
+
+    public void setDataForPreSelection(Integer displayId,String placeId){
+        preSelectDisplayId = displayId;
+        preSelectPlaceID = placeId;
     }
 
     private void setCategoryPosition(int position){
@@ -214,7 +220,13 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
         mNeighborhoodCategoryView.setLayoutManager(mLayoutManager);
         mNeighborhoodCategoryView.setAdapter(mNeighborhoodCategoryAdapter);
         mNeighborhoodCategoryAdapter.setData(mAmenityClusters);
-        setCategoryPosition(0);
+        if(preSelectDisplayId!=null) {
+            mNeighborhoodCategoryAdapter.setSelectedPosition(preSelectDisplayId);
+            setCategoryPosition(preSelectDisplayId);
+        }
+        else{
+            setCategoryPosition(0);
+        }
     }
 
     private void populateMarker(AmenityCluster amenityCluster){
@@ -289,6 +301,12 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
 
         Marker marker = mPropertyMap.addMarker(markerOptions);
         latLngBoundsBuilder.include(new LatLng(lat, lng));
+        if(preSelectPlaceID!=null && preSelectPlaceID.equals(amenity.name)){
+            selectMarker(marker);
+            if(marker!=null){
+                marker.showInfoWindow();
+            }
+        }
         mAllMarkers.add(marker);
     }
 

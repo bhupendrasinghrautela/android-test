@@ -44,6 +44,10 @@ public class NeighborhoodCategoryAdapter extends RecyclerView.Adapter<RecyclerVi
         }
     }
 
+    public void setSelectedPosition(int position) {
+        selectedPosition = position;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())

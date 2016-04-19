@@ -199,6 +199,7 @@ public class ProjectConfigCallback extends JSONGetCallback {
                 projectConfigItems.add(projectConfigItem);
                 projectConfigItem.minPrice = minPrice;
                 lastConfigItem = projectConfigItem;
+                once = true;
             }
         }
 
