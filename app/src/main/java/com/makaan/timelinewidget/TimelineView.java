@@ -10,13 +10,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.makaan.R;
+import com.makaan.util.CommonUtil;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -205,7 +205,7 @@ public class TimelineView extends View{
             if(timelineDataItem.equals(timelineDataItemInList))
                 return i;
         }
-        Log.e("timeline","returning -1 for "+date.toString());
+        CommonUtil.TLog("timeline","returning -1 for "+date.toString());
         return -1;
     }
 
@@ -236,7 +236,7 @@ public class TimelineView extends View{
                         invalidate();
                         return true;
                     }catch (Exception e){
-                        Log.e("Timeline", ""+e);
+                        CommonUtil.TLog("Timeline", ""+e);
                         return false;
                     }
                 }

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
 import com.makaan.R;
@@ -217,7 +218,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 mSerpSelector.term(KeyUtil.LISTING_CATEGORY, new String[] {"Rental"});
                 mFilterGroups = getClonedFilterGroups(MasterDataCache.getInstance().getAllRentFilterGroups());
             }
-        } catch (CloneNotSupportedException ex) { }
+        } catch (CloneNotSupportedException ex) {
+            Crashlytics.logException(ex);
+        }
 
         super.onCreate(savedInstanceState);
 
@@ -1074,7 +1077,9 @@ public class SerpActivity extends MakaanBaseSearchActivity implements SerpReques
                 }
             }
 
-        }catch (Exception e){}
+        }catch (Exception e){
+            Crashlytics.logException(e);
+        }
         return null;
     }
 

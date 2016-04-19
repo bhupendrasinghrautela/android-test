@@ -2,6 +2,7 @@ package com.makaan.service;
 
 import android.net.Uri;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ApiConstants;
@@ -14,6 +15,7 @@ import com.makaan.network.StringRequestCallback;
 import com.makaan.request.buyerjourney.PhaseChange;
 import com.makaan.response.ResponseError;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
 
 import org.json.JSONException;
@@ -41,7 +43,9 @@ public class ClientEventsService implements MakaanService {
                         ClientEventsByGetEvent clientLeadsByGetEvent = MakaanBuyerApplication.gson.fromJson(data.toString(), clientLeadsType);
                         AppBus.getInstance().post(clientLeadsByGetEvent);
                     } catch (JSONException e) {
-                        e.printStackTrace();
+
+                        Crashlytics.logException(e);
+                        CommonUtil.TLog("exception", e);
                     }
                 }
             }
@@ -102,7 +106,8 @@ public class ClientEventsService implements MakaanService {
                 }
             }, TAG);
         } catch (JSONException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
+            CommonUtil.TLog("exception", e);
         }
     }
 }

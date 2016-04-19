@@ -1,8 +1,8 @@
 package com.makaan.service;
 
 import android.content.Context;
-import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.cache.MasterDataCache;
@@ -25,6 +25,7 @@ import com.makaan.response.master.PropertyAmenity;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.response.serp.ListingInfoMap;
 import com.makaan.util.CommonPreference;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
 
 import org.json.JSONArray;
@@ -274,7 +275,8 @@ public class MasterDataService implements MakaanService {
                         MasterDataCache.getInstance().addFilterGroupBuy(filterGroup);
                     }
                 } catch (JSONException je) {
-                    Log.e(TAG, "Unable to parse filters", je);
+                    Crashlytics.logException(je);
+                    CommonUtil.TLog(TAG, "Unable to parse filters", je);
                 }
 
             }
@@ -305,7 +307,8 @@ public class MasterDataService implements MakaanService {
                         MasterDataCache.getInstance().addFilterGroupRent(filterGroup);
                     }
                 } catch (JSONException je) {
-                    Log.e(TAG, "Unable to parse filters", je);
+                    Crashlytics.logException(je);
+                    CommonUtil.TLog(TAG, "Unable to parse filters", je);
                 }
 
             }
@@ -337,7 +340,8 @@ public class MasterDataService implements MakaanService {
                         MasterDataCache.getInstance().addPyrGroupBuy(filterGroup);
                     }
                 } catch (JSONException je) {
-                    Log.e(TAG, "Unable to parse pyr groups", je);
+                    Crashlytics.logException(je);
+                    CommonUtil.TLog(TAG, "Unable to parse pyr groups", je);
                 }
 
             }
@@ -368,7 +372,8 @@ public class MasterDataService implements MakaanService {
                         MasterDataCache.getInstance().addPyrGroupRent(filterGroup);
                     }
                 } catch (JSONException je) {
-                    Log.e(TAG, "Unable to parse pyr groups", je);
+                    Crashlytics.logException(je);
+                    CommonUtil.TLog(TAG, "Unable to parse pyr groups", je);
                 }
 
             }
@@ -398,7 +403,8 @@ public class MasterDataService implements MakaanService {
                         MasterDataCache.getInstance().addLocalityAmenityCluster(amenityCluster);
                     }
                 } catch (JSONException je) {
-                    Log.e(TAG, "Unable to parse filters", je);
+                    Crashlytics.logException(je);
+                    CommonUtil.TLog(TAG, "Unable to parse filters", je);
                 }
 
             }
@@ -428,7 +434,8 @@ public class MasterDataService implements MakaanService {
                         MasterDataCache.getInstance().addProjectAmenityCluster(amenityCluster);
                     }
                 } catch (JSONException je) {
-                    Log.e(TAG, "Unable to parse filters", je);
+                    Crashlytics.logException(je);
+                    CommonUtil.TLog(TAG, "Unable to parse filters", je);
                 }
 
             }
@@ -458,7 +465,8 @@ public class MasterDataService implements MakaanService {
                         MasterDataCache.getInstance().addConstructionStatus(constructionStatus);
                     }
                 } catch (JSONException je) {
-                    Log.e(TAG, "Unable to parse filters", je);
+                    Crashlytics.logException(je);
+                    CommonUtil.TLog(TAG, "Unable to parse filters", je);
                 }
 
             }
@@ -501,7 +509,8 @@ public class MasterDataService implements MakaanService {
                         MasterDataCache.getInstance().addSearchType(searchType.getKey(), data);
                     }*/
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Crashlytics.logException(e);
+                    CommonUtil.TLog("exception", e);
                 }
             }
         }, "searchResultType.json");
@@ -601,7 +610,8 @@ public class MasterDataService implements MakaanService {
                     ListingInfoMap listingInfoMap = MakaanBuyerApplication.gson.fromJson(object.toString(), listingInfoTypeList);
                     MasterDataCache.getInstance().addListingInfoMap(listingInfoMap);
                 } catch (JSONException je) {
-                    Log.e(TAG, "Unable to parse Listing info map", je);
+                    Crashlytics.logException(je);
+                    CommonUtil.TLog(TAG, "Unable to parse Listing info map", je);
                 }
 
             }
@@ -627,7 +637,8 @@ public class MasterDataService implements MakaanService {
                         MasterDataCache.getInstance().addDirection(obj.getInt(ResponseConstants.ID), obj.getString(ResponseConstants.DIRECTION));
                     }
                 } catch (JSONException je) {
-                    Log.e(TAG, "Unable to parse Direction info map", je);
+                    Crashlytics.logException(je);
+                    CommonUtil.TLog(TAG, "Unable to parse Direction info map", je);
                 }
             }
         }, null);
@@ -648,7 +659,8 @@ public class MasterDataService implements MakaanService {
                         MasterDataCache.getInstance().addOwnershipType(obj.getInt(ResponseConstants.ID), obj.getString(ResponseConstants.DISPLAY_NAME));
                     }
                 } catch (JSONException je) {
-                    Log.e(TAG, "Unable to parse Direction info map", je);
+                    Crashlytics.logException(je);
+                    CommonUtil.TLog(TAG, "Unable to parse Direction info map", je);
                 }
             }
         }, null);
@@ -670,6 +682,7 @@ public class MasterDataService implements MakaanService {
                     JSONObject  jsonObject = JsonBuilder.toJson(versionUpdate);
                     CommonPreference.saveMandatoryVersion(context, jsonObject.toString());
                 } catch (Exception e) {
+                    Crashlytics.logException(e);
                 }
             }
         });

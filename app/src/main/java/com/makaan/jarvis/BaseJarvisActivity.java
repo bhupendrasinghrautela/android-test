@@ -16,6 +16,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
@@ -43,6 +44,7 @@ import com.makaan.jarvis.ui.cards.SerpFilterCard;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
 import com.makaan.util.KeyUtil;
 import com.segment.analytics.Properties;
@@ -240,7 +242,8 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                                 (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
                         analyticsService.track(AnalyticsService.Type.track, jsonObject);
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        Crashlytics.logException(e);
+                        CommonUtil.TLog("exception", e);
                     }
 
                 }
@@ -482,8 +485,9 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                             JarvisConstants.JARVIS_ACTION_DISMISS_TIMEOUT);
                     createPopUpCardViewTrackEvent(message.properties.ctaType, message);
                 } catch (Exception e) {
+                    Crashlytics.logException(e);
                     //Some error with jarvis payload data, don't do anything
-                    e.printStackTrace();
+                    CommonUtil.TLog("exception", e);
                 }
             }
         });
@@ -580,7 +584,8 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                         (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
                 analyticsService.track(AnalyticsService.Type.track, jsonObject);
             } catch (JSONException e) {
-                e.printStackTrace();
+                Crashlytics.logException(e);
+                CommonUtil.TLog("exception", e);
             }
 
         }else {
@@ -656,7 +661,8 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                     (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
             analyticsService.track(AnalyticsService.Type.track, jsonObject);
         } catch (JSONException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
+            CommonUtil.TLog("exception", e);
         }
     }
 
@@ -670,7 +676,8 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                     (AnalyticsService) MakaanServiceFactory.getInstance().getService(AnalyticsService.class);
             analyticsService.track(AnalyticsService.Type.identify, jsonObject);
         } catch (JSONException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
+            CommonUtil.TLog("exception", e);
         }
 
 
@@ -734,7 +741,8 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                     try {
                         jsonArray = JsonBuilder.toJsonArray(message.properties.content);
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        Crashlytics.logException(e);
+                        CommonUtil.TLog("exception", e);
                     }
                     ArrayList<Content> contents=new ArrayList<Content>();
                     if(jsonArray!=null) {

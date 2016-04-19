@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.gallery.BasePagerAdapter.OnItemChangeListener;
@@ -246,7 +247,9 @@ public class GalleryActivity extends MakaanFragmentActivity {
             	try {
             		String photoName = Image.getTitle();
 					
-				} catch (Exception e) {}
+				} catch (Exception e) {
+					Crashlytics.logException(e);
+				}
             }
 		}
 		
@@ -471,7 +474,9 @@ public class GalleryActivity extends MakaanFragmentActivity {
                     // this means it has photos of only one category, so remove reduntant all photos
                     mCategorizedImageOverViewList.remove(0);
                 }
-            }catch(Exception e){}
+            } catch (Exception e) {
+                Crashlytics.logException(e);
+            }
 
 		}
 		

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.GoogleAuthUtil;
@@ -31,6 +32,7 @@ import com.makaan.service.user.GoogleTokenInteractor;
 import com.makaan.service.user.OnFacebookTokenListener;
 import com.makaan.service.user.OnGoogleTokenListener;
 import com.makaan.service.user.UserLoginService;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.NetworkUtil;
 import com.makaan.util.PermissionManager;
 import com.segment.analytics.Properties;
@@ -150,7 +152,8 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
 
                 startActivityForResult(intent, GOOGLE_ACCOUNT_PICKER_CODE);
             } catch (Exception e) {
-                e.printStackTrace();
+                Crashlytics.logException(e);
+                CommonUtil.TLog("exception", e);
             }
         }
     }

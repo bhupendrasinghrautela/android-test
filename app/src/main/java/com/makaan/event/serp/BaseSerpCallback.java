@@ -1,7 +1,6 @@
 package com.makaan.event.serp;
 
-import android.util.Log;
-
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ResponseConstants;
@@ -12,6 +11,7 @@ import com.makaan.response.listing.ListingData;
 import com.makaan.response.listing.ListingFacets;
 import com.makaan.response.parser.ListingParser;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 
 import static com.makaan.constants.ResponseConstants.*;
 import static com.makaan.constants.MessageConstants.*;
@@ -72,7 +72,8 @@ public class BaseSerpCallback extends JSONGetCallback {
 
                 }
             } catch (JSONException e) {
-                Log.e(TAG, "Unable to parse lisiting data", e);
+                Crashlytics.logException(e);
+                CommonUtil.TLog(TAG, "Unable to parse listing data", e);
             }
 
         } else {

@@ -1,7 +1,6 @@
 package com.makaan.event.serp;
 
-import android.util.Log;
-
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ResponseConstants;
@@ -10,6 +9,7 @@ import com.makaan.response.ResponseError;
 import com.makaan.response.listing.GroupListing;
 import com.makaan.response.listing.GroupListingData;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +50,8 @@ public class GroupSerpCallback extends JSONGetCallback {
                     groupSerpGetEvent.groupListingData = listingData;
                 }
             } catch (JSONException e) {
-                Log.e(TAG, "Unable to parse group lisiting data", e);
+                Crashlytics.logException(e);
+                CommonUtil.TLog(TAG, "Unable to parse group listing data", e);
             }
 
         } else {

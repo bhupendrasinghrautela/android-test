@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.adapter.pyr.SearchableListviewAdapter;
@@ -30,6 +31,7 @@ import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SearchService;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.Preference;
 import com.squareup.otto.Subscribe;
 
@@ -131,7 +133,8 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 			mMultiChoiceSearchTextView.setHint(getResources().getString(R.string.search_locality)+" "+(city!=null?city.toLowerCase():""));
 			return multiSelectionDialog;
 		} catch (Exception e) {
-			e.printStackTrace();
+			Crashlytics.logException(e);
+			CommonUtil.TLog("exception", e);
 			return null;
 		}
 	}
@@ -164,7 +167,7 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 				searchService.getSearchResults(cs.toString(), (isBuy ? "buy" : "rent"), city, SearchType.LOCALITY, false);
 			}
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			CommonUtil.TLog("exception", e);
 		}
 	}
 

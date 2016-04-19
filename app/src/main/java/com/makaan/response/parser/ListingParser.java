@@ -1,13 +1,13 @@
 package com.makaan.response.parser;
 
-import android.util.Log;
-
+import com.crashlytics.android.Crashlytics;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.response.listing.LisitingPostedBy;
 import com.makaan.response.listing.Listing;
 import com.makaan.response.listing.ListingImage;
 import com.makaan.response.master.ApiIntLabel;
 import com.makaan.response.project.Project;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.StringUtil;
 
 import org.json.JSONArray;
@@ -250,7 +250,8 @@ public class ListingParser {
             }
 
         } catch (JSONException e) {
-            Log.e(TAG, "Unable to parse lisiting data", e);
+            Crashlytics.logException(e);
+            CommonUtil.TLog(TAG, "Unable to parse listing data", e);
         }
 
         return listing;

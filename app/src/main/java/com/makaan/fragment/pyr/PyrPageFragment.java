@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.adapter.listing.ViewAdapterRings;
 import com.makaan.analytics.MakaanEventPayload;
@@ -43,6 +44,7 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.ui.pyr.PyrBudgetCardView;
 import com.makaan.ui.pyr.PyrPropertyCardView;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
 import com.makaan.util.JsonParser;
 import com.makaan.util.StringUtil;
@@ -167,7 +169,8 @@ public class PyrPageFragment extends Fragment {
                 }
             }*/
         } catch (CloneNotSupportedException ex) {
-            ex.printStackTrace();
+            Crashlytics.logException(ex);
+            CommonUtil.TLog("exception", ex);
         }
 
         initializeCountrySpinner();
@@ -211,7 +214,9 @@ public class PyrPageFragment extends Fragment {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("gcm_id", GcmPreferences.getGcmRegId(getContext()));
             pyrRequest.setJsonDump(jsonObject.toString());
-        }catch (Exception e){}
+        } catch (Exception e) {
+            Crashlytics.logException(e);
+        }
         try {
         UserResponse userResponse = CookiePreferences.getLastUserInfo(getContext());
         if(userResponse == null){
@@ -223,7 +228,8 @@ public class PyrPageFragment extends Fragment {
         userResponse.getData().contactNumber = mUserMobile.getText().toString().trim();
             CookiePreferences.setLastUserInfo(getActivity(), JsonBuilder.toJson(userResponse).toString());
         } catch (JSONException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
+            CommonUtil.TLog("exception", e);
         }
         if(null!=pyrRequest.getLocalityIds() && pyrRequest.getLocalityIds().length>0) {
             for (int value : pyrRequest.getLocalityIds()) {
@@ -437,7 +443,9 @@ public class PyrPageFragment extends Fragment {
                     mUserEmail.setText(pyrPagePresenter.getEmail());
                     mUserMobile.setText(pyrPagePresenter.getPhonNumber());
                 }
-        }catch (Exception e){}
+        } catch (Exception e) {
+            Crashlytics.logException(e);
+        }
     }
 
     public void setBedroomInfo(){

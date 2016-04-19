@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.pojo.VersionUpdate;
 import com.makaan.response.wishlist.WishList;
 import com.makaan.response.wishlist.WishListResponse;
@@ -76,7 +77,8 @@ public class CommonPreference {
             edit.putString(PREF_WISHLIST, json);
             edit.apply();
         } catch (JSONException e) {
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
+            Crashlytics.logException(e);
         }
     }
 
@@ -103,7 +105,8 @@ public class CommonPreference {
                     edit.putString(PREF_WISHLIST, json);
                     edit.apply();
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    CommonUtil.TLog("exception", e);
+                    Crashlytics.logException(e);
                 }
             }
 
@@ -138,7 +141,8 @@ public class CommonPreference {
             edit.putString(PREF_WISHLIST, json);
             edit.apply();
         } catch (JSONException e) {
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
+            Crashlytics.logException(e);
         }
     }
 

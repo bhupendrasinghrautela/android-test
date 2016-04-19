@@ -2,6 +2,7 @@ package com.makaan.jarvis;
 
 import android.text.TextUtils;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.jarvis.event.ChatHistoryEvent;
 import com.makaan.jarvis.event.OutgoingMessageEvent;
@@ -152,7 +153,9 @@ public class JarvisClient {
                         }
                     }
 
-                }catch(Exception e){}
+                } catch(Exception e){
+                    Crashlytics.logException(e);
+                }
 
                 finally {
                     jarvisSocket.checkAvailable();

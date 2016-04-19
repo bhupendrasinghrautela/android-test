@@ -3,6 +3,7 @@ package com.makaan.service;
 import android.app.Activity;
 import android.content.Context;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.analytics.MakaanEventPayload;
@@ -18,6 +19,7 @@ import com.makaan.response.ResponseError;
 import com.makaan.response.buyerjourney.AgentRating;
 import com.makaan.response.buyerjourney.Company;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.segment.analytics.Properties;
 
 import org.json.JSONArray;
@@ -46,7 +48,8 @@ public class ClientLeadsService implements MakaanService {
                         ClientLeadsByGetEvent clientLeadsByGetEvent = MakaanBuyerApplication.gson.fromJson(data.toString(), clientLeadsType);
                         AppBus.getInstance().post(clientLeadsByGetEvent);
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        Crashlytics.logException(e);
+                        CommonUtil.TLog("exception", e);
                     }
                 }
             }
@@ -76,7 +79,8 @@ public class ClientLeadsService implements MakaanService {
                         PropertyRequirementsByGetEvent propertyRequirementsByGetEvent = MakaanBuyerApplication.gson.fromJson(data.toString(), propertyRequirementsType);
                         AppBus.getInstance().post(propertyRequirementsByGetEvent);
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        Crashlytics.logException(e);
+                        CommonUtil.TLog("exception", e);
                     }
                 }
             }
@@ -103,7 +107,8 @@ public class ClientLeadsService implements MakaanService {
                         ClientLeadsByGetEvent clientLeadsByGetEvent = MakaanBuyerApplication.gson.fromJson(data.toString(), clientLeadsType);
                         AppBus.getInstance().post(clientLeadsByGetEvent);
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        Crashlytics.logException(e);
+                        CommonUtil.TLog("exception", e);
                     }
                 }
             }
@@ -139,7 +144,8 @@ public class ClientLeadsService implements MakaanService {
                         ArrayList<Company> companies = MakaanBuyerApplication.gson.fromJson(data.toString(), companyType);
                         AppBus.getInstance().post(companies);
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        Crashlytics.logException(e);
+                        CommonUtil.TLog("exception", e);
                     }
                 }
             }

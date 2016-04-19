@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
@@ -266,7 +267,8 @@ public class ReviewAgentFragment extends MakaanBaseFragment {
                                 .postSellerRating(JsonBuilder.toJson(rating), getActivity(), mRatingBar.getRating(),
                                         mCommentEditText.getText().toString(), sellerId);
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        Crashlytics.logException(e);
+                        CommonUtil.TLog("exception", e);
                     }
                     ((BuyerDashboardCallbacks)getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_UPLOAD_DOCUMENTS, true, null, null, mObj);
                 }

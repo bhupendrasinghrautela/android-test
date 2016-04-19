@@ -18,6 +18,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.util.KeyUtil;
 
@@ -51,6 +52,7 @@ public class WebViewFragment extends MakaanBaseFragment {
             try {
                 loadUrl(url);
             } catch (Exception e) {
+                Crashlytics.logException(e);
                 getActivity().onBackPressed();
             }
         }
@@ -107,6 +109,7 @@ public class WebViewFragment extends MakaanBaseFragment {
                         Intent i = newEmailIntent(activity, mt.getTo(), mt.getSubject(), mt.getBody(), mt.getCc());
                         activity.startActivity(i);
                     } catch (Exception e) {
+                        Crashlytics.logException(e);
                     }
                     return true;
                 }

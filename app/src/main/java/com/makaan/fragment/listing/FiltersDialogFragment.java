@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
@@ -26,6 +27,7 @@ import com.makaan.request.selector.Selector;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.ui.view.ExpandableHeightGridView;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
@@ -57,7 +59,8 @@ public class FiltersDialogFragment extends MakaanBaseDialogFragment {
             ArrayList<FilterGroup> filterGroups = SerpObjects.getFilterGroups(getActivity());
             populateFilters(getClonedFilterGroups(filterGroups));
         } catch (CloneNotSupportedException ex) {
-            ex.printStackTrace();
+            Crashlytics.logException(ex);
+            CommonUtil.TLog("exception", ex);
         }
 
         return view;

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.userLogin.UserLoginActivity;
@@ -41,6 +42,7 @@ import com.makaan.response.serp.RangeMinMaxFilter;
 import com.makaan.response.serp.TermFilter;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
@@ -507,7 +509,8 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
         try {
             saveSearch.jsonDump = JsonBuilder.toJson(jsonDump).toString();
         } catch (JSONException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
+            CommonUtil.TLog("exception", e);
         }
     }
 

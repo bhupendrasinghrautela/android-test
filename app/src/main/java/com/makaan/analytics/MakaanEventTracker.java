@@ -3,8 +3,10 @@ package com.makaan.analytics;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.analytics.MakaanTrackerConstants.Action;
 import com.makaan.jarvis.JarvisConstants;
+import com.makaan.util.CommonUtil;
 import com.segment.analytics.Analytics;
 import com.segment.analytics.Properties;
 
@@ -108,6 +110,8 @@ public class MakaanEventTracker {
                 }
             }
         }catch (Exception e){
+            Crashlytics.logException(e);
+            CommonUtil.TLog("exception", e);
             //Catch tracking exceptions
             //do nothing
         }

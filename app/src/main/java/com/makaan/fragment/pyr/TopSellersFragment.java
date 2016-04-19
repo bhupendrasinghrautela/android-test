@@ -6,13 +6,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.makaan.R;
 import com.makaan.activity.pyr.PyrOtpVerification;
@@ -28,6 +28,7 @@ import com.makaan.response.pyr.PyrPostResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PyrService;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
@@ -144,12 +145,13 @@ public class TopSellersFragment extends Fragment {
         PyrEnquiryType pyrEnquiryType = new PyrEnquiryType();
         pyrRequest.setEnquiryType(pyrEnquiryType);
         String str= new Gson().toJson(pyrRequest);
-        Log.e("string==>> ", str);
+        CommonUtil.TLog("string==>> ", str);
         JSONObject jsonObject = null;
         try {
             jsonObject = new JSONObject(str);
         } catch (JSONException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
+            CommonUtil.TLog("exception", e);
         }
         if(jsonObject!=null)
         ((PyrService) (MakaanServiceFactory.getInstance().getService(PyrService.class))).makePyrRequest(jsonObject);

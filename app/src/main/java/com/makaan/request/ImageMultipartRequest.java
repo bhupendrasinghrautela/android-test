@@ -118,7 +118,7 @@ public class ImageMultipartRequest<T> extends Request<T> {
                 mErrorListener.onErrorResponse(new VolleyError());
             }*/
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
     }
 }

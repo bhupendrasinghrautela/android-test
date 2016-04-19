@@ -1,8 +1,9 @@
 package com.makaan.ui.anim;
 
 import android.support.v4.view.ViewPager.PageTransformer;
-import android.util.Log;
 import android.view.View;
+
+import com.makaan.util.CommonUtil;
 
 /**
  * Created by aishwarya on 14/01/16.
@@ -59,6 +60,6 @@ public class StackLikePagerTransform implements PageTransformer {
             // This page is way off-screen to the right.
             view.setAlpha(0);
         }*/
-        Log.d("alpha",position+"  ");
+        CommonUtil.TLog("alpha",position+"  ");
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.pyr.PyrOtpVerification;
 
@@ -22,6 +23,7 @@ import com.makaan.response.serp.RangeFilter;
 import com.makaan.response.serp.TermFilter;
 import com.makaan.ui.pyr.FilterableMultichoiceDialogFragment;
 import com.makaan.ui.pyr.PyrBudgetCardView;
+import com.makaan.util.CommonUtil;
 import com.segment.analytics.Properties;
 
 import java.text.DecimalFormat;
@@ -706,7 +708,8 @@ public class PyrPagePresenter {
                 return filterGroups;
             }
         } catch (CloneNotSupportedException ex) {
-            ex.printStackTrace();
+            Crashlytics.logException(ex);
+            CommonUtil.TLog("exception", ex);
         }
         return null;
     }

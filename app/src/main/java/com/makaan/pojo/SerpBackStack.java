@@ -2,6 +2,9 @@ package com.makaan.pojo;
 
 import android.content.Context;
 
+import com.crashlytics.android.Crashlytics;
+import com.makaan.util.CommonUtil;
+
 import java.util.Stack;
 
 /**
@@ -18,8 +21,8 @@ public class SerpBackStack {
                 try {
                     return singleSerpBackstacks.peek().addToBackstack(request.clone());
                 } catch (CloneNotSupportedException e) {
-                    // TODO
-                    e.printStackTrace();
+                    Crashlytics.logException(e);
+                    CommonUtil.TLog("exception", e);
                     return null;
                 }
             } else {

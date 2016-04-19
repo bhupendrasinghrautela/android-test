@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
@@ -20,6 +21,7 @@ import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.project.Builder;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.StringUtil;
 import com.squareup.otto.Subscribe;
@@ -76,7 +78,7 @@ public class BuilderListingView extends AbstractCardListingView {
         try {
             AppBus.getInstance().register(this);
         } catch(IllegalArgumentException ex) {
-            ex.printStackTrace();
+            CommonUtil.TLog("exception", ex);
         }
 
         callback.requestApi(SerpActivity.REQUEST_BUILDER_API, "builderId");
@@ -123,7 +125,11 @@ public class BuilderListingView extends AbstractCardListingView {
         try {
             mBuilderExperienceTextView.setText(StringUtil.getAgeFromTimeStamp(Long.valueOf(builder.establishedDate), Calendar.YEAR));
         } catch(NumberFormatException ex) {
-            ex.printStackTrace();
+            if(!TextUtils.isEmpty(builder.name)) {
+                Crashlytics.log(builder.name);
+            }
+            Crashlytics.logException(ex);
+            CommonUtil.TLog("exception", ex);
         }
 
         if(builder.projectStatusCount.underConstruction == 0) {

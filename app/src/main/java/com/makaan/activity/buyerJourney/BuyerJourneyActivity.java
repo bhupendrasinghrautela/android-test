@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.userLogin.UserLoginActivity;
@@ -217,6 +218,8 @@ public class BuyerJourneyActivity extends MakaanFragmentActivity implements Noti
             } catch (Exception e) {
                 /*Toast.makeText(BuyerJourneyActivity.this,
                         getResources().getString(R.string.generic_error), Toast.LENGTH_SHORT).show();*/
+
+                Crashlytics.logException(e);
                 if(!isFinishing()) {
                     MakaanMessageDialogFragment.showMessage(getFragmentManager(),
                             getString(R.string.generic_error), "ok");

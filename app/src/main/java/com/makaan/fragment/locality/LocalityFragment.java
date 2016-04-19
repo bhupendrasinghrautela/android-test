@@ -15,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +61,7 @@ import com.makaan.service.TaxonomyService;
 import com.makaan.ui.CompressedTextView;
 import com.makaan.ui.CompressedTextView.CompressTextViewCollapseCallback;
 import com.makaan.ui.view.MakaanProgressBar;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.LocalityUtil;
 import com.makaan.util.StringUtil;
@@ -346,7 +346,7 @@ public class LocalityFragment extends OverviewFragment implements CompressTextVi
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 alpha = (float) scrollY / (float) BLUR_EFFECT_HEIGHT;
-                Log.e("value", scrollY + " " + oldScrollY + " " + alpha);
+                CommonUtil.TLog("value", scrollY + " " + oldScrollY + " " + alpha);
                 if (alpha > 1) {
                     alpha = 1;
                     if(locality!=null && locality.label != null) {

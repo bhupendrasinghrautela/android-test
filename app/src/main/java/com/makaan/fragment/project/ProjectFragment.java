@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.activity.MakaanFragmentActivity;
@@ -70,6 +71,7 @@ import com.makaan.ui.property.PropertyImageViewPager;
 import com.makaan.ui.view.FontTextView;
 import com.makaan.ui.view.MakaanProgressBar;
 import com.makaan.util.AppUtils;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
@@ -220,6 +222,7 @@ public class ProjectFragment extends OverviewFragment{
                 }
                 getActivity().startActivity(intent);
             } catch (NullPointerException e) {
+                Crashlytics.logException(e);
             }
         }
     }
@@ -465,7 +468,8 @@ public class ProjectFragment extends OverviewFragment{
             } else {
                 mPropertyImageViewPager.setVisibility(View.GONE);
             }
-        }catch (Exception e){
+        } catch (Exception e){
+            Crashlytics.logException(e);
             if(mPropertyImageViewPager!=null) {
                 mPropertyImageViewPager.setVisibility(View.GONE);
             }
@@ -643,7 +647,7 @@ public class ProjectFragment extends OverviewFragment{
                             int lines = l.getLineCount();
                             if (lines > 0) {
                                 if (l.getEllipsisCount(lines - 1) > 0) {
-                                    Log.d("test", "Text is ellipsized");
+                                    CommonUtil.TLog(Log.DEBUG, "test", "Text is ellipsized");
                                 } else {
                                     mCompressedDescriptionLayout.removeMore(true);
                                 }
@@ -814,7 +818,7 @@ public class ProjectFragment extends OverviewFragment{
     }
 
     private void addProjectAboutLocalityFragment(List<AmenityCluster> amenityClusterList) {
-        if(amenityClusterList == null || amenityClusterList.size() == 0){
+        if(amenityClusterList == null || amenityClusterList.size() == 0 || project == null) {
             return;
         }
         List<AmenityCluster> mAmenityClusters = new ArrayList<>();

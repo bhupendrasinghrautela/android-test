@@ -1,6 +1,7 @@
 package com.makaan.service;
 
 import com.android.volley.Request;
+import com.crashlytics.android.Crashlytics;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ApiConstants;
@@ -11,6 +12,7 @@ import com.makaan.response.wishlist.WishListResponseUICallback;
 import com.makaan.response.wishlist.WishListResultCallback;
 import com.makaan.ui.view.WishListButton;
 import com.makaan.util.CommonPreference;
+import com.makaan.util.CommonUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +41,8 @@ public class WishListService implements MakaanService {
             add(wishListPayload, new WishListResultCallback(Request.Method.POST, callback));
 
         } catch (JSONException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
+            CommonUtil.TLog("exception", e);
         }
     }
 
@@ -55,7 +58,8 @@ public class WishListService implements MakaanService {
             add(wishListPayload, new WishListResultCallback(Request.Method.POST,callback));
 
         } catch (JSONException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
+            CommonUtil.TLog("exception", e);
         }
     }
 
@@ -91,7 +95,9 @@ public class WishListService implements MakaanService {
                         new WishListResultCallback(Request.Method.POST), TAG);
             }
 
-        }catch (Exception e){}
+        } catch (Exception e){
+            Crashlytics.logException(e);
+        }
     }
 
     private void add(JSONObject wishListPayload, WishListResultCallback callback){

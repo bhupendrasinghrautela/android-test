@@ -1,11 +1,10 @@
 package com.makaan.event.pyr;
 
-import android.util.Log;
-
 import com.makaan.network.StringRequestCallback;
 import com.makaan.response.ResponseError;
 import com.makaan.response.pyr.PyrPostResponse;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonParser;
 
 /**
@@ -15,7 +14,7 @@ public class PyrPostCallBack extends StringRequestCallback {
 
     @Override
     public void onSuccess(String response) {
-        Log.e("Success pyr", response);
+        CommonUtil.TLog("Success pyr", response);
         PyrPostResponse pyrPostResponse = (PyrPostResponse)
                 JsonParser.parseJson(response, PyrPostResponse.class);
         AppBus.getInstance().post(pyrPostResponse);

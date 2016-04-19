@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +31,7 @@ import com.makaan.response.content.BlogItem;
 import com.makaan.service.BlogService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.ui.CustomNetworkImageView;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;
 import com.segment.analytics.Properties;
@@ -333,7 +333,7 @@ public class BlogContentFragment extends MakaanBaseFragment {
             View.OnClickListener listener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.e("article ","clicked");
+                    CommonUtil.TLog("article ","clicked");
                     if(articleId!=null) {
                         createDashBoardEvent(articleId);
                     }

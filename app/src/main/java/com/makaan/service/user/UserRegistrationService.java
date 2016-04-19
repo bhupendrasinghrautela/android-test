@@ -1,5 +1,6 @@
 package com.makaan.service.user;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.constants.ApiConstants;
 import com.makaan.event.user.UserRegistrationCallback;
 import com.makaan.network.MakaanNetworkClient;
@@ -38,6 +39,7 @@ public class UserRegistrationService implements MakaanService{
             MakaanNetworkClient.getInstance().loginRegisterPost(ApiConstants.REGISTER, userRegistrationPayload,
                     new UserRegistrationCallback(), TAG);
         } catch (JSONException e) {
+            Crashlytics.logException(e);
         }
     }
 

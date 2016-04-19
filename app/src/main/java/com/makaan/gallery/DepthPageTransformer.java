@@ -3,6 +3,8 @@ package com.makaan.gallery;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.crashlytics.android.Crashlytics;
+
 
 public class DepthPageTransformer implements ViewPager.PageTransformer {
     private static float MIN_SCALE = 0.75f;
@@ -39,6 +41,7 @@ public class DepthPageTransformer implements ViewPager.PageTransformer {
                 view.setAlpha(0);
             }
         } catch (Exception e) {
+            Crashlytics.logException(e);
         }
     }
 }

@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.adapter.PaginatedBaseAdapter;
 
 import java.util.List;
@@ -57,6 +58,7 @@ public class PaginatedListView extends RecyclerView {
         try{
             super.dispatchDraw(canvas);
         }catch(Exception e){
+            Crashlytics.logException(e);
         }
     }
 
@@ -64,7 +66,8 @@ public class PaginatedListView extends RecyclerView {
     public boolean dispatchTouchEvent(MotionEvent ev) {
         try{
             return super.dispatchTouchEvent(ev);
-        }catch(Exception e){
+        } catch (Exception e) {
+            Crashlytics.logException(e);
             return true;
         }
     }

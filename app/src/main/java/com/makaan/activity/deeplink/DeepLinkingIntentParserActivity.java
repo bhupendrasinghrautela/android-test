@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.HomeActivity;
 import com.makaan.network.StringRequestCallback;
@@ -30,10 +31,11 @@ public class DeepLinkingIntentParserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.deeplinking_intent_parsing_activity_layout);
-        try{
+        try {
             mUri = getIntent().getData();
             resolveIntent(mUri);
-        }catch(Exception e){
+        } catch (Exception e) {
+            Crashlytics.logException(e);
             finish();
         }
 

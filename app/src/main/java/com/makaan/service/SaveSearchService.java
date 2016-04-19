@@ -3,6 +3,7 @@ package com.makaan.service;
 import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ApiConstants;
@@ -17,6 +18,7 @@ import com.makaan.request.selector.Selector;
 import com.makaan.response.ResponseError;
 import com.makaan.response.saveSearch.SaveSearch;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
 
 import org.json.JSONException;
@@ -80,7 +82,9 @@ public class SaveSearchService implements MakaanService {
                     event.totalCount = data;
                     AppBus.getInstance().post(event);
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Crashlytics.logException(e);
+                    CommonUtil.TLog("exception", e);
+
                     NewMatchesGetEvent event = new NewMatchesGetEvent();
                     ResponseError error = new ResponseError();
                     error.error = new VolleyError(e);
@@ -217,7 +221,8 @@ public class SaveSearchService implements MakaanService {
                 }
             }, TAG, false);
         } catch (JSONException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
+            CommonUtil.TLog("exception", e);
         }
     }
 
@@ -261,7 +266,8 @@ public class SaveSearchService implements MakaanService {
                 }
             }, TAG, false);
         } catch (JSONException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
+            CommonUtil.TLog("exception", e);
         }
     }
 }

@@ -14,6 +14,7 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.BuildConfig;
 import com.makaan.gallery.GalleryActivity;
 import com.makaan.R;
@@ -47,16 +48,72 @@ public class CommonUtil {
         return list.iterator();
     }
 
-    public static final void TLog(String msg){
-        if(DEBUG){
-            Log.e(TAG, msg);
+    public static void TLog(String msg) {
+        TLog(msg, Log.ERROR);
+    }
+
+    public static void TLog(String tag, String msg) {
+        TLog(Log.ERROR, tag, msg);
+    }
+
+    public static void TLog(String msg, int type) {
+        TLog(type, TAG, msg, null);
+    }
+
+    public static void TLog(int type, String tag, String msg) {
+        TLog(type, tag, msg, null);
+    }
+
+    public static void TLog(int type, String tag, String msg, Exception e) {
+        if (DEBUG) {
+            if (e == null) {
+                switch (type) {
+                    case Log.VERBOSE:
+                        Log.v(tag, msg);
+                        break;
+                    case Log.DEBUG:
+                        Log.d(tag, msg);
+                        break;
+                    case Log.INFO:
+                        Log.i(tag, msg);
+                        break;
+                    case Log.WARN:
+                        Log.w(tag, msg);
+                        break;
+                    case Log.ERROR:
+                    default:
+                        Log.e(tag, msg);
+                        break;
+                }
+            } else {
+                switch (type) {
+                    case Log.VERBOSE:
+                        Log.v(tag, msg, e);
+                        break;
+                    case Log.DEBUG:
+                        Log.d(tag, msg, e);
+                        break;
+                    case Log.INFO:
+                        Log.i(tag, msg, e);
+                        break;
+                    case Log.WARN:
+                        Log.w(tag, msg, e);
+                        break;
+                    case Log.ERROR:
+                    default:
+                        Log.e(tag, msg, e);
+                        break;
+                }
+            }
         }
     }
 
-    public static final void TLog(String msg, Exception e){
-        if(DEBUG){
-            Log.e(TAG, msg, e);
-        }
+    public static void TLog(String msg, Exception e) {
+        TLog(Log.ERROR, TAG, msg, e);
+    }
+
+    public static void TLog(String tag, String msg, Exception e) {
+        TLog(Log.ERROR, tag, msg, e);
     }
 
     public static int pixelToDp(Context context, int px) {
@@ -99,6 +156,7 @@ public class CommonUtil {
                 }
             } catch(JSONException e) {
                 //Handle exception here
+                Crashlytics.logException(e);
             }
         }
         return json;

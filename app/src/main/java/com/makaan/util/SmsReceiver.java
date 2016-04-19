@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
-import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -28,7 +27,7 @@ public class SmsReceiver extends BroadcastReceiver {
     }
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.e("Sms","Received");
+        CommonUtil.TLog("Sms","Received");
         Bundle extras = intent.getExtras();
         if(extras !=null) {
             Object[] smsExtra = (Object[]) extras.get(SMS_EXTRA_NAME);

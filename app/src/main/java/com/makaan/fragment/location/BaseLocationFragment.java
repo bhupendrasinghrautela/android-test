@@ -6,6 +6,7 @@ import android.location.LocationManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.location.LocationListener;
 import com.makaan.location.LocationServiceConnectionListener;
 import com.makaan.location.MakaanLocationManager;
@@ -86,6 +87,7 @@ public class BaseLocationFragment extends Fragment implements LocationListener {
                 return false;
             }
         } catch (Exception ex) {
+            Crashlytics.logException(ex);
             return false;
         }
 
@@ -104,7 +106,9 @@ public class BaseLocationFragment extends Fragment implements LocationListener {
         super.onResume();
         try {
             startLocationUpdate();
-        }catch(Exception e){}
+        }catch(Exception e){
+            Crashlytics.logException(e);
+        }
     }
 
     @Override
@@ -112,7 +116,9 @@ public class BaseLocationFragment extends Fragment implements LocationListener {
         super.onPause();
         try {
             stopLocationUpdate(BaseLocationFragment.this);
-        }catch(Exception e){}
+        } catch(Exception e){
+            Crashlytics.logException(e);
+        }
     }
 
     @Override
@@ -140,7 +146,9 @@ public class BaseLocationFragment extends Fragment implements LocationListener {
                 == MakaanLocationManager.LocationUpdateMode.ONCE) {
             try {
                 stopLocationUpdate(BaseLocationFragment.this);
-            }catch(Exception e){}
+            } catch(Exception e){
+                Crashlytics.logException(e);
+            }
         }
     }
 }

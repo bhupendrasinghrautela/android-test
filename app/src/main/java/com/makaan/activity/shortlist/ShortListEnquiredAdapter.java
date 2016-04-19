@@ -20,6 +20,7 @@ import android.widget.DatePicker;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.crashlytics.android.Crashlytics;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 import com.makaan.activity.overview.OverviewActivity;
@@ -85,6 +86,7 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
             shortListEnquiredViewHolder.setListener(this);
             return shortListEnquiredViewHolder;
         } catch (InflateException ex) {
+            Crashlytics.logException(ex);
             return null;
         }
 
@@ -556,7 +558,8 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
             JSONObject jsonObject = JsonBuilder.toJson(siteVisit);
             ClientEventsService.postSiteVisitSchedule(jsonObject, enquiry.leadId);
         } catch (JSONException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
+            CommonUtil.TLog("exception", e);
         }
     }
 

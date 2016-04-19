@@ -2,6 +2,7 @@ package com.makaan.service.user;
 
 import android.text.TextUtils;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.constants.ApiConstants;
 import com.makaan.event.user.UserLoginCallback;
 import com.makaan.network.MakaanNetworkClient;
@@ -40,6 +41,7 @@ public class UserLoginService implements MakaanService{
             String requestUrl = buildGoogleSignInRequest(token);
             MakaanNetworkClient.getInstance().post(requestUrl,null,new UserLoginCallback(),TAG);
         } catch (IllegalArgumentException e) {
+            Crashlytics.logException(e);
             //TODO Display an error here
         }
     }
@@ -53,6 +55,7 @@ public class UserLoginService implements MakaanService{
             String requestUrl = buildFacebookSignInRequest(token);
             MakaanNetworkClient.getInstance().post(requestUrl, null, new UserLoginCallback(), TAG);
         } catch (IllegalArgumentException e) {
+            Crashlytics.logException(e);
             //TODO Display an error here
         }
     }

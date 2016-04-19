@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.overview.OverviewActivity;
@@ -281,9 +282,8 @@ public class ShortListFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.
                         intent.putExtra(KeyUtil.SELLER_IMAGE_URL_LEAD_FORM, wishList.get(position).listing.companySeller.company.logo);
                     }
                     mContext.startActivity(intent);
-                } catch (NullPointerException npe) {
-                    Toast.makeText(mContext, "Seller data not available", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
+                    Crashlytics.logException(e);
                     Toast.makeText(mContext, "Seller data not available", Toast.LENGTH_SHORT).show();
                 }
             }

@@ -7,12 +7,12 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.gcm.GcmListenerService;
 import com.makaan.database.NotificationDbHelper;
 import com.makaan.network.MakaanNetworkClient;
@@ -32,7 +32,7 @@ public class MakaanBuyerGcmListenerService extends GcmListenerService {
     public void onMessageReceived(String from, Bundle data) {
         super.onMessageReceived(from, data);
 
-        Log.e("Gcm","receive");
+        CommonUtil.TLog("Gcm","receive");
 
         String message = "";
         String title = "";
@@ -86,8 +86,8 @@ public class MakaanBuyerGcmListenerService extends GcmListenerService {
                 notification.createNotification(context, attributes);
                 storeNotification(context, attributes);
             }
-        }catch(Exception e){
-            //do nothing as there might be some issue with the data
+        } catch (Exception e) {
+            Crashlytics.logException(e);
         }
     }
 
@@ -118,7 +118,9 @@ public class MakaanBuyerGcmListenerService extends GcmListenerService {
             payload = (NotificationPayload) JsonParser.parseJson(
                     CommonUtil.bundletoJSONObject(params).toString(), NotificationPayload.class);
             return payload;
-        }catch(Exception e){
+        } catch (Exception e) {
+
+            Crashlytics.logException(e);
             CommonUtil.TLog("Exception e : " + e);
         }
         return payload;

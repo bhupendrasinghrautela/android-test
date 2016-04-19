@@ -65,7 +65,9 @@ public class ShortListFavoriteFragment extends MakaanBaseFragment{
                 }
 
                 showProgress();
-                mCallback.updateCount(mPosition, wishListData.size());
+                if(mCallback != null) {
+                    mCallback.updateCount(mPosition, wishListData.size());
+                }
                 ArrayList<String> wishListIds = new ArrayList<>();
                 for(WishList wishList : wishListData) {
                     if(wishList.listingId != null && wishList.listingId > 0) {
@@ -104,7 +106,9 @@ public class ShortListFavoriteFragment extends MakaanBaseFragment{
         if(wishListResponse!=null && wishListResponse.data!=null && wishListResponse.data.size()>0){
             favoriteRecyclerView.setVisibility(View.VISIBLE);
             favoriteRecyclerView.setAdapter(new ShortListFavoriteAdapter(getActivity(), wishListResponse.data));
-            mCallback.updateCount(mPosition, wishListResponse.data.size());
+            if(mCallback != null) {
+                mCallback.updateCount(mPosition, wishListResponse.data.size());
+            }
             showContent();
         }else{
             showNoResults(ErrorUtil.getErrorMessageId(ErrorUtil.STATUS_CODE_NO_CONTENT, false));

@@ -23,6 +23,7 @@ import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.crashlytics.android.Crashlytics;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.util.CommonUtil;
 
@@ -65,6 +66,7 @@ public class UrlTouchImageView extends RelativeLayout {
             mImageView.setImageUrl(imageUrl, mImageLoader);
     		
         } catch (Exception e) {
+			Crashlytics.logException(e);
         }
     }
 }

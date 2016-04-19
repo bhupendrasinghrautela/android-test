@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.listing.PropertyDetailFragment;
 import com.makaan.activity.listing.SerpActivity;
@@ -39,6 +40,7 @@ import com.makaan.response.user.UserResponse;
 import com.makaan.response.user.UserResponse.UserData;
 import com.makaan.service.LeadInstantCallbackService;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.JsonBuilder;
 import com.makaan.util.JsonParser;
@@ -125,8 +127,9 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
                 }
             }
             mobileFlag=true;
-        }catch (Exception e){
+        } catch (Exception e) {
             //No impact don't do anything
+            Crashlytics.logException(e);
         }
 
         setSellerImage();
@@ -151,7 +154,8 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
                 jsonObject.put("applicationType", "MobileAndroidApp");
                 jsonObject.put("cityId", mLeadFormPresenter.getCityId());
             } catch (JSONException e) {
-                e.printStackTrace();
+                CommonUtil.TLog("exception", e);
+                Crashlytics.logException(e);
             }
 
             //User data prefill
@@ -165,6 +169,7 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
                 CookiePreferences.setLastUserInfo(getActivity(), JsonBuilder.toJson(userResponse).toString());
             }catch (Exception e){
                 //No impact don't do anything
+                Crashlytics.logException(e);
             }
             sendCallLaterEvent();
 

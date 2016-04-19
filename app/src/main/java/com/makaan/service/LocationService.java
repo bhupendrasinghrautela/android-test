@@ -2,6 +2,7 @@ package com.makaan.service;
 
 import android.text.TextUtils;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ApiConstants;
@@ -19,6 +20,7 @@ import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.SearchSuggestionType;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,7 +66,8 @@ public class LocationService implements MakaanService {
                         Session.apiLocation = location;
                         AppBus.getInstance().post(new LocationGetEvent(location));
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        Crashlytics.logException(e);
+                        CommonUtil.TLog("exception", e);
                     }
                 }
             }
@@ -155,7 +158,8 @@ public class LocationService implements MakaanService {
                         event.searchResponse = response;
                         AppBus.getInstance().post(event);
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        Crashlytics.logException(e);
+                        CommonUtil.TLog("exception", e);
 
                         SearchResultEvent searchResultEvent = new SearchResultEvent();
                         AppBus.getInstance().post(searchResultEvent);
@@ -227,7 +231,8 @@ public class LocationService implements MakaanService {
                     event.searchResponse = response;
                     AppBus.getInstance().post(event);
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Crashlytics.logException(e);
+                    CommonUtil.TLog("exception", e);
                     SearchResultEvent event = new SearchResultEvent();
                     AppBus.getInstance().post(event);
                 }

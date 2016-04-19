@@ -251,10 +251,14 @@ public class ShortlistEnquiredFragment extends MakaanBaseFragment implements Sho
         if (!isVisible()) {
             return;
         }
-    if (companies != null && companies.size() > 0) {
+
+        if (mEnquiryHashMap == null) {
+            mEnquiryHashMap = new LinkedHashMap<>();
+        }
+        if (companies != null && companies.size() > 0) {
             for (Company company : companies) {
-                for(Enquiry enquiry : mEnquiryHashMap.values()) {
-                    if(enquiry.companyId != null && enquiry.companyId.equals(company.id)) {
+                for (Enquiry enquiry : mEnquiryHashMap.values()) {
+                    if (enquiry.companyId != null && enquiry.companyId.equals(company.id)) {
                         enquiry.company = company;
                     }
                 }

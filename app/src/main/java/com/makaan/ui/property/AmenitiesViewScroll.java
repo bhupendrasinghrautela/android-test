@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.adapter.listing.CustomAbstractHorizontalScrollViewAdapter;
 import com.makaan.cache.MasterDataCache;
@@ -165,10 +166,8 @@ public class AmenitiesViewScroll extends BaseLinearLayout {
                     amenityItem.name = amenityId;
                     mAmenityItems.add(amenityItem);
                 }
-            }catch (NumberFormatException e){
-
-            }catch (Exception e){
-
+            } catch (Exception e) {
+                Crashlytics.logException(e);
             }
         }
     }

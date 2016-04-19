@@ -1,5 +1,6 @@
 package com.makaan.service;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ApiConstants;
@@ -18,6 +19,7 @@ import com.makaan.response.ResponseError;
 import com.makaan.response.listing.ListingOtherSellersCallback;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonParser;
 
 import org.json.JSONException;
@@ -148,7 +150,8 @@ public class ListingService implements MakaanService {
                             ListingByIdsGetEvent listingByIdsGetEvent = MakaanBuyerApplication.gson.fromJson(data.toString(), type);
                             AppBus.getInstance().post(listingByIdsGetEvent);
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            Crashlytics.logException(e);
+                            CommonUtil.TLog("exception", e);
                         }
                     }
                 }
@@ -179,7 +182,12 @@ public class ListingService implements MakaanService {
                     SimilarListingGetEvent similarListingGetEvent = (SimilarListingGetEvent) JsonParser.parseJson(responseObject, SimilarListingGetEvent.class);
 
                     //listingDetail.description = AppUtils.stripHtml(listingDetail.description);
-                    AppBus.getInstance().post(similarListingGetEvent);
+                    if(similarListingGetEvent != null) {
+                        AppBus.getInstance().post(similarListingGetEvent);
+                    } else {
+                        similarListingGetEvent = new SimilarListingGetEvent();
+                        AppBus.getInstance().post(similarListingGetEvent);
+                    }
                 }
             });
 
@@ -298,7 +306,8 @@ public class ListingService implements MakaanService {
                         ListingByIdsGetEvent listingByIdsGetEvent = MakaanBuyerApplication.gson.fromJson(data.toString(), type);
                         AppBus.getInstance().post(listingByIdsGetEvent);
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        Crashlytics.logException(e);
+                        CommonUtil.TLog("exception", e);
                         ListingByIdsGetEvent listingByIdsGetEvent = new ListingByIdsGetEvent();
                         AppBus.getInstance().post(listingByIdsGetEvent);
                     }
