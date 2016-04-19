@@ -186,7 +186,7 @@ public class MakaanBuyerApplication extends Application {
         CookieHandler.setDefault(cookieManager);
 
         if(!TextUtils.isEmpty(JarvisConstants.DELIVERY_ID)) {
-            Analytics analytics = new Analytics.Builder(this, MakaanTrackerConstants.segmentSdkKey).build();
+            Analytics analytics = new Analytics.Builder(this, getResources().getString(R.string.analytics_write_key)).build();
             Analytics.setSingletonInstance(analytics);
             Analytics.with(this).identify(JarvisConstants.DELIVERY_ID);
             Analytics.with(this).flush();

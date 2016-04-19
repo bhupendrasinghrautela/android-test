@@ -818,7 +818,7 @@ public class ProjectFragment extends OverviewFragment{
     }
 
     private void addProjectAboutLocalityFragment(List<AmenityCluster> amenityClusterList) {
-        if(amenityClusterList == null || amenityClusterList.size() == 0){
+        if(amenityClusterList == null || amenityClusterList.size() == 0 || project == null) {
             return;
         }
         List<AmenityCluster> mAmenityClusters = new ArrayList<>();

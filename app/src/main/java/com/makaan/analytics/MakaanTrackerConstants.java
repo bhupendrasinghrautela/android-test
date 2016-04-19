@@ -7,8 +7,6 @@ import com.makaan.BuildConfig;
  */
 public class MakaanTrackerConstants {
 
-    public static final String segmentSdkKey = BuildConfig.SEGMENT_KEY;
-
     public static final String SCREEN_NAME = "Screen name";
     public static final String KEYWORD = "Keywords";
     public static final String LISTING_POSITION = "Listing position";
