@@ -89,6 +89,7 @@
                 android:background="@drawable/filled_red"
                 android:paddingLeft="@dimen/redeem_button_padding"
                 android:paddingRight="@dimen/redeem_button_padding"
+                android:layout_marginBottom="20dp"
                 android:text="@string/redeem_now"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"

@@ -261,7 +261,7 @@
     <string name="get_15000">\u20B9 15,000 cashback</string>
     <string name="on_brokerage">from makaan.com</string>
     <string name="how_it_works_heading">how it works</string>
-    <string name="how_it_works">1. contact seller on makaan.com\n2. provide feedback\n3. share booking details</string>
+    <string name="how_it_works">1. get in touch with seller on makaan.com\n2. book through seller contacted on makaan.com\n3. provide feedback and booking details for seller confirmation</string>
     <string name="redeem_now">get cashback</string>
 
     <string name="password_recovery">please check your mail for password recovery details</string>
