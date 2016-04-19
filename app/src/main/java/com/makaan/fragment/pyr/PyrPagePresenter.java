@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.pyr.PyrOtpVerification;
 
@@ -706,6 +707,7 @@ public class PyrPagePresenter {
                 return filterGroups;
             }
         } catch (CloneNotSupportedException ex) {
+            Crashlytics.logException(ex);
             ex.printStackTrace();
         }
         return null;

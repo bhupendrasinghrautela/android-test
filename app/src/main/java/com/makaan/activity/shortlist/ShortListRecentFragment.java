@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.lead.LeadFormActivity;
 import com.makaan.activity.overview.OverviewActivity;
@@ -203,9 +204,8 @@ public class ShortListRecentFragment extends MakaanBaseFragment {
                                     intent.putExtra(KeyUtil.CITY_ID_LEAD_FORM, dataObject.cityId);
                                 }
                                 getActivity().startActivity(intent);
-                            } catch (NullPointerException npe) {
-                                Toast.makeText(getActivity(), "Seller data not available", Toast.LENGTH_SHORT).show();
                             } catch (Exception e) {
+                                Crashlytics.logException(e);
                                 Toast.makeText(getActivity(), "Seller data not available", Toast.LENGTH_SHORT).show();
                             }
                         }

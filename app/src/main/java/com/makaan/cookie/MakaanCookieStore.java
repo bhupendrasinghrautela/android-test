@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.text.TextUtils;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.constants.ApiConstants;
 
 import java.net.CookieStore;
@@ -69,12 +70,14 @@ public class MakaanCookieStore implements CookieStore {
                 }
             }
 
-            try{
-                if(replacedCookie!=null){
+            try {
+                if (replacedCookie != null) {
                     cookies.remove(replacedCookie);
                     map.put(uri.getHost(), cookies);
                 }
-            }catch(Exception e){}
+            } catch (Exception e) {
+                Crashlytics.logException(e);
+            }
 
         }
         cookies.add(cookie);
@@ -108,6 +111,7 @@ public class MakaanCookieStore implements CookieStore {
         try {
             uris.add(new URI(ApiConstants.BASE_URL));
         } catch (Exception e) {
+            Crashlytics.logException(e);
         }
         return uris;
 

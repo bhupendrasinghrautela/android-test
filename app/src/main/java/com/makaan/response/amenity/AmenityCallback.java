@@ -2,6 +2,7 @@ package com.makaan.response.amenity;
 
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ResponseConstants;
 import com.makaan.event.amenity.AmenityGetEvent;
@@ -94,6 +95,8 @@ public class AmenityCallback extends JSONGetCallback {
                     amenityGetEvent.message = NO_AMENITY;
                 }
             } catch (JSONException e) {
+
+                Crashlytics.logException(e);
                 Log.e(TAG, "Unable to parse amenity data", e);
             }
 

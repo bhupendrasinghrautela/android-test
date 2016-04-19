@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Spinner;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.adapter.listing.FiltersViewAdapter;
 import com.makaan.cache.MasterDataCache;
@@ -82,6 +83,7 @@ public class AskReqCard extends BaseView<Message> {
             filterGroups = getClonedFilterGroups(filterGroups);
             populateFilters(filterGroups);
         } catch (CloneNotSupportedException ex) {
+            Crashlytics.logException(ex);
             ex.printStackTrace();
         }
 
@@ -206,7 +208,9 @@ public class AskReqCard extends BaseView<Message> {
             try {
                 messageBuilder.append((messageBuilder.toString().isEmpty() ? "" : ", ") +
                         StringUtil.getDisplayPrice(Double.valueOf(mPrice.getText().toString())));
-            }catch (Exception e){}
+            } catch (Exception e){
+                Crashlytics.logException(e);
+            }
         }
 
         if(!TextUtils.isEmpty(selectedPropertyType)) {

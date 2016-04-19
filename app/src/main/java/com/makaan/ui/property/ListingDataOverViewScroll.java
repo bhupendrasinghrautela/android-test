@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.adapter.listing.CustomAbstractHorizontalScrollViewAdapter;
 import com.makaan.cache.MasterDataCache;
@@ -154,7 +155,9 @@ public class ListingDataOverViewScroll extends BaseLinearLayout<ListingDetail> {
                     overViewItem.resourceId = R.drawable.age_property;
                     overViewItem.value = ageYrs.concat(" yrs");
                 }
-            }catch (NumberFormatException e){}
+            }catch (NumberFormatException e){
+                Crashlytics.logException(e);
+            }
         }
         if(mProject.dominantUnitType !=null){
             HorizontalScrollItem overViewItem = new HorizontalScrollItem();

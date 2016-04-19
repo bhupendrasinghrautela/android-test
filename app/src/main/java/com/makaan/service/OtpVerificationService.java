@@ -1,5 +1,6 @@
 package com.makaan.service;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.activity.pyr.PyrOtpVerification;
 import com.makaan.constants.ApiConstants;
 import com.makaan.event.pyr.OtpVerificationCallBack;
@@ -33,6 +34,7 @@ public class OtpVerificationService implements MakaanService {
                 jsonObject.put("phone", phone);
                 jsonObject.put("userId", userId);
             } catch (JSONException e) {
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
         }
@@ -56,6 +58,7 @@ public class OtpVerificationService implements MakaanService {
                 jsonObject.put("phoneToVerify", phone);
                 jsonObject.put("userId", userId);
             } catch (JSONException e) {
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
         }

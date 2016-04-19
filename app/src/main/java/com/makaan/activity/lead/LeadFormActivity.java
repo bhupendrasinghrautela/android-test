@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
 import com.makaan.activity.listing.PropertyDetailFragment;
@@ -156,9 +157,11 @@ public class LeadFormActivity extends MakaanFragmentActivity implements LeadForm
             mLeadFormPresenter.setCityId(cityId);
             mLeadFormPresenter.setProjectOrListingId(projectOrListingId);
         }
-            try {
+        try {
             mListingId = this.getIntent().getExtras().getLong(KeyUtil.LISTING_ID);
-        }catch (Exception e){}
+        } catch (Exception e) {
+            Crashlytics.logException(e);
+        }
 
         if(null!=multipleSellerids && multipleSellerids.size()>0) {
             mLeadFormPresenter.showMultipleLeadsFragment();

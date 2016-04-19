@@ -2,6 +2,7 @@ package com.makaan.response.parser;
 
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.response.listing.LisitingPostedBy;
 import com.makaan.response.listing.Listing;
@@ -250,7 +251,8 @@ public class ListingParser {
             }
 
         } catch (JSONException e) {
-            Log.e(TAG, "Unable to parse lisiting data", e);
+            Crashlytics.logException(e);
+            Log.e(TAG, "Unable to parse listing data", e);
         }
 
         return listing;

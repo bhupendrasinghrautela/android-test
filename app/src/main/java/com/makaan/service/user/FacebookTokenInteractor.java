@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -41,7 +42,9 @@ public class FacebookTokenInteractor {
             if (mContext != null) {
                 AppEventsLogger.activateApp(mContext, mContext.getResources().getString(R.string.app_FB_id));
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            Crashlytics.logException(e);
+        }
 
         FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
         mCallbackManager = CallbackManager.Factory.create();

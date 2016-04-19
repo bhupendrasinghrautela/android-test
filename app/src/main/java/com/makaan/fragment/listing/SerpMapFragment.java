@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -512,6 +513,7 @@ public class SerpMapFragment extends MakaanBaseFragment {
                             .fromBitmap(icon));
                 }
             } catch (Exception e) {
+                Crashlytics.logException(e);
             }
         }
 

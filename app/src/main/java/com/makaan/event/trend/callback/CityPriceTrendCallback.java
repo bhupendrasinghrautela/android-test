@@ -2,6 +2,7 @@ package com.makaan.event.trend.callback;
 
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ResponseConstants;
@@ -65,7 +66,8 @@ public class CityPriceTrendCallback extends JSONGetCallback {
             } else {
                 AppBus.getInstance().post(new CityPriceTrendEvent());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
+            Crashlytics.logException(e);
             AppBus.getInstance().post(new CityPriceTrendEvent());
             Log.e(TAG, "Error parsing locality trends", e);
         }

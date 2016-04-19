@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.makaan.R;
 import com.makaan.activity.listing.PropertyDetailFragment;
@@ -166,6 +167,7 @@ public class MultipleLeadFormFragment extends MakaanBaseFragment {
                 jsonObject = new JSONObject(str);
             } catch (JSONException e) {
                 e.printStackTrace();
+                Crashlytics.logException(e);
             }
             if (jsonObject != null)
                 ((PyrService) (MakaanServiceFactory.getInstance().getService(PyrService.class))).makePyrRequest(jsonObject);

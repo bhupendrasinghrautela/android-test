@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.FadeInNetworkImageView;
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.overview.OverviewActivity;
 import com.makaan.analytics.MakaanEventPayload;
@@ -169,6 +170,7 @@ public class AboutBuilderExpandedLayout extends BaseLinearLayout<Builder> {
                     isDataPresent = true;
                 }
                 catch (NumberFormatException e){
+                    Crashlytics.logException(e);
                     mBuilderExperienceLayout.setVisibility(GONE);
                 }
             }

@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
@@ -71,6 +72,7 @@ public class SiteVisitUpcommingAdapter extends RecyclerView.Adapter<RecyclerView
             siteVisitViewHolder.setCallback(this);
             return siteVisitViewHolder;
         } catch (InflateException ex) {
+            Crashlytics.logException(ex);
             return null;
         }
 

@@ -1,5 +1,6 @@
 package com.makaan.service.user;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.constants.ApiConstants;
 import com.makaan.event.user.ForgotPasswordCallBack;
 import com.makaan.network.MakaanNetworkClient;
@@ -34,7 +35,7 @@ public class ForgotPasswordService implements MakaanService{
                     , params, new ForgotPasswordCallBack(), TAG);
 
         } catch (Exception e) {
-            //TODO Display an error here
+            Crashlytics.logException(e);
         }
     }
 

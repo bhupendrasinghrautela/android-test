@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.listing.SerpRequestCallback;
@@ -123,6 +124,10 @@ public class BuilderListingView extends AbstractCardListingView {
         try {
             mBuilderExperienceTextView.setText(StringUtil.getAgeFromTimeStamp(Long.valueOf(builder.establishedDate), Calendar.YEAR));
         } catch(NumberFormatException ex) {
+            if(!TextUtils.isEmpty(builder.name)) {
+                Crashlytics.log(builder.name);
+            }
+            Crashlytics.logException(ex);
             ex.printStackTrace();
         }
 

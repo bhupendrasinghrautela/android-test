@@ -14,6 +14,7 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.BuildConfig;
 import com.makaan.gallery.GalleryActivity;
 import com.makaan.R;
@@ -99,6 +100,7 @@ public class CommonUtil {
                 }
             } catch(JSONException e) {
                 //Handle exception here
+                Crashlytics.logException(e);
             }
         }
         return json;

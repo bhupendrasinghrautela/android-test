@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.makaan.R;
 import com.makaan.activity.pyr.PyrOtpVerification;
@@ -149,6 +150,7 @@ public class TopSellersFragment extends Fragment {
         try {
             jsonObject = new JSONObject(str);
         } catch (JSONException e) {
+            Crashlytics.logException(e);
             e.printStackTrace();
         }
         if(jsonObject!=null)

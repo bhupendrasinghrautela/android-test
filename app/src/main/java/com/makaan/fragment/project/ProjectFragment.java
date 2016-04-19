@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.activity.MakaanFragmentActivity;
@@ -220,6 +221,7 @@ public class ProjectFragment extends OverviewFragment{
                 }
                 getActivity().startActivity(intent);
             } catch (NullPointerException e) {
+                Crashlytics.logException(e);
             }
         }
     }
@@ -465,7 +467,8 @@ public class ProjectFragment extends OverviewFragment{
             } else {
                 mPropertyImageViewPager.setVisibility(View.GONE);
             }
-        }catch (Exception e){
+        } catch (Exception e){
+            Crashlytics.logException(e);
             if(mPropertyImageViewPager!=null) {
                 mPropertyImageViewPager.setVisibility(View.GONE);
             }

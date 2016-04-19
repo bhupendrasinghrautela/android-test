@@ -205,8 +205,7 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
                     if(obj != null) {
                         ClientCompanyLeadFragment.ClientCompanyLeadsObject leadsObject = (ClientCompanyLeadFragment.ClientCompanyLeadsObject)obj;
                         if(leadsObject.clientLeadObject != null && leadsObject.clientLeadObject.clientLead != null
-                                && leadsObject.clientLeadObject.clientLead.id != null
-                                && leadsObject.listingDetail.id != null) {
+                                && leadsObject.clientLeadObject.clientLead.id != null) {
                             PhaseChange change = new PhaseChange();
                             change.agentId = leadsObject.clientLeadObject.clientLead.companyId;
                             change.eventTypeId = LeadPhaseConstants.LEAD_EVENT_SITE_VIST_DONE;

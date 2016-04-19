@@ -2,6 +2,7 @@ package com.makaan.jarvis.analytics;
 
 import android.text.TextUtils;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ApiConstants;
 import com.makaan.jarvis.JarvisClient;
@@ -55,6 +56,7 @@ public class AnalyticsService implements MakaanService {
             track(AnalyticsService.Type.track, jsonObject);
 
         } catch (JSONException e) {
+            Crashlytics.logException(e);
             e.printStackTrace();
         }
     }
@@ -66,7 +68,9 @@ public class AnalyticsService implements MakaanService {
             jsonObject.put(AnalyticsConstants.KEY_EXTRA, JsonBuilder.toJson(jarvisTrackExtraData));
 
             track(AnalyticsService.Type.track, jsonObject);
-        }catch (Exception e){}
+        } catch (Exception e){
+            Crashlytics.logException(e);
+        }
     }
 
     public synchronized void track(Type type, JSONObject object){
@@ -96,7 +100,9 @@ public class AnalyticsService implements MakaanService {
             MakaanNetworkClient.getInstance().postTrack(getUrl(), data, null, TAG);
 
             JarvisClient.getInstance().refreshJarvisSocket();
-        }catch (Exception e){}
+        } catch (Exception e){
+            Crashlytics.logException(e);
+        }
     }
 
 

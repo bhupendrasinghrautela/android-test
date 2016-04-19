@@ -2,6 +2,7 @@ package com.makaan.event.serp;
 
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ResponseConstants;
@@ -72,7 +73,8 @@ public class BaseSerpCallback extends JSONGetCallback {
 
                 }
             } catch (JSONException e) {
-                Log.e(TAG, "Unable to parse lisiting data", e);
+                Crashlytics.logException(e);
+                Log.e(TAG, "Unable to parse listing data", e);
             }
 
         } else {

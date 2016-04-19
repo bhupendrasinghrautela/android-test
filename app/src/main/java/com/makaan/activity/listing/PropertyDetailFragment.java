@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.MakaanBaseSearchActivity;
 import com.makaan.activity.MakaanFragmentActivity;
@@ -396,6 +397,7 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
 
                 getActivity().startActivity(intent);
             } catch (NullPointerException e) {
+                Crashlytics.logException(e);
             }
         }
     }

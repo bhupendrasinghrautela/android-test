@@ -10,6 +10,7 @@ import android.provider.Settings;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 /**
  *  Enable location prompt dialog
@@ -46,6 +47,7 @@ public class EnableLocationSettingsDialogFragment extends DialogFragment {
                                 mContext.startActivity(myIntent);
                             }
                         } catch (Exception e) {
+                            Crashlytics.logException(e);
                         }
                     }
 

@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
@@ -39,7 +40,9 @@ public class PropertyPager extends ViewPager {
         JSONArray jsonArray = null;
         try {
             jsonArray = JsonBuilder.toJsonArray(content);
-        }catch (Exception e){}
+        } catch (Exception e){
+            Crashlytics.logException(e);
+        }
 
         if (jsonArray==null) {
             setVisibility(View.GONE);

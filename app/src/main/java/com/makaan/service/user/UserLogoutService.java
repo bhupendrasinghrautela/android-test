@@ -1,5 +1,6 @@
 package com.makaan.service.user;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.constants.ApiConstants;
 import com.makaan.event.user.UserLogoutCallback;
 import com.makaan.network.MakaanNetworkClient;
@@ -16,7 +17,8 @@ public class UserLogoutService implements MakaanService {
     public void makeLogoutRequest() {
         try{
             MakaanNetworkClient.getInstance().post(ApiConstants.LOGOUT, null, new UserLogoutCallback(), TAG);
-        }catch (Exception e){
+        } catch (Exception e) {
+            Crashlytics.logException(e);
             //TODO Display Error
         }
     }

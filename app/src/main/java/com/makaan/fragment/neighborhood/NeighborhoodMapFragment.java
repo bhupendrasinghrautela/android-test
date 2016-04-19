@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -357,7 +358,9 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
                 marker.setIcon(BitmapDescriptorFactory
                         .fromBitmap(icon));
             }
-        }catch(Exception e){}
+        }catch(Exception e){
+            Crashlytics.logException(e);
+        }
     }
 
     private Bitmap getMarkerBitmap(boolean isSelected, Amenity amenity){

@@ -2,6 +2,7 @@ package com.makaan.service;
 
 import android.text.TextUtils;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ApiConstants;
@@ -64,6 +65,7 @@ public class LocationService implements MakaanService {
                         Session.apiLocation = location;
                         AppBus.getInstance().post(new LocationGetEvent(location));
                     } catch (JSONException e) {
+                        Crashlytics.logException(e);
                         e.printStackTrace();
                     }
                 }
@@ -155,6 +157,7 @@ public class LocationService implements MakaanService {
                         event.searchResponse = response;
                         AppBus.getInstance().post(event);
                     } catch (JSONException e) {
+                        Crashlytics.logException(e);
                         e.printStackTrace();
 
                         SearchResultEvent searchResultEvent = new SearchResultEvent();
@@ -227,6 +230,7 @@ public class LocationService implements MakaanService {
                     event.searchResponse = response;
                     AppBus.getInstance().post(event);
                 } catch (JSONException e) {
+                    Crashlytics.logException(e);
                     e.printStackTrace();
                     SearchResultEvent event = new SearchResultEvent();
                     AppBus.getInstance().post(event);

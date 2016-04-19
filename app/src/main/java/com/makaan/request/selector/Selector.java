@@ -2,6 +2,7 @@ package com.makaan.request.selector;
 
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.util.StringUtil;
 
@@ -319,6 +320,7 @@ public class Selector implements Cloneable {
             return SELECTOR.concat("=").concat(jsonBuilder.toString());
 
         } catch (Exception e) {
+            Crashlytics.logException(e);
             Log.e(TAG, "Error while building Selector", e);
         }
 

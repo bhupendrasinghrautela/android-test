@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.appsflyer.AppsFlyerLib;
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
 import com.makaan.analytics.MakaanEventPayload;
@@ -86,7 +87,9 @@ public class HomeActivity extends MakaanBaseSearchActivity {
 
         try {
             AppsFlyerLib.getInstance().init(this, getString(R.string.app_appsflyer_id));
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            Crashlytics.logException(e);
+        }
 
         PermissionManager.begin().addRequest(PermissionManager.ACCOUNTS_REQUEST).request(this);
 

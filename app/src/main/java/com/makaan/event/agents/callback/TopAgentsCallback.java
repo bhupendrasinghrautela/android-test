@@ -2,6 +2,7 @@ package com.makaan.event.agents.callback;
 
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.network.JSONGetCallback;
@@ -33,6 +34,7 @@ public abstract class TopAgentsCallback extends JSONGetCallback {
             ArrayList<TopAgent> topAgentArrayList = MakaanBuyerApplication.gson.fromJson(dataResponse.getJSONArray(DATA).toString(), topAgentListType);
             onTopAgentsRcvd(topAgentArrayList);
         } catch (Exception e) {
+            Crashlytics.logException(e);
             Log.e(TAG, "Error parsing top agents data", e);
         }
 

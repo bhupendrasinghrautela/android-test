@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.listing.PropertyDetailFragment;
 import com.makaan.activity.listing.SerpActivity;
@@ -125,8 +126,9 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
                 }
             }
             mobileFlag=true;
-        }catch (Exception e){
+        } catch (Exception e) {
             //No impact don't do anything
+            Crashlytics.logException(e);
         }
 
         setSellerImage();
@@ -152,6 +154,7 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
                 jsonObject.put("cityId", mLeadFormPresenter.getCityId());
             } catch (JSONException e) {
                 e.printStackTrace();
+                Crashlytics.logException(e);
             }
 
             //User data prefill
@@ -165,6 +168,7 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
                 CookiePreferences.setLastUserInfo(getActivity(), JsonBuilder.toJson(userResponse).toString());
             }catch (Exception e){
                 //No impact don't do anything
+                Crashlytics.logException(e);
             }
             sendCallLaterEvent();
 

@@ -1,5 +1,6 @@
 package com.makaan.event.user;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.network.StringRequestCallback;
 import com.makaan.response.ResponseError;
@@ -16,7 +17,8 @@ public class UserLogoutCallback extends StringRequestCallback {
         try {
             MasterDataCache.getInstance().setUserData(null);
             mLogoutEvent.setIsLogoutSuccessfull(true);
-        }catch (Exception e){
+        } catch (Exception e) {
+            Crashlytics.logException(e);
             //TODO Show error message
         }
         AppBus.getInstance().post(mLogoutEvent);

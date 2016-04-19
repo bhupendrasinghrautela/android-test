@@ -37,6 +37,7 @@ import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.location.LocationListener;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerJourneyActivity;
@@ -223,7 +224,9 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         super.onPause();
         try {
             stopLocationUpdate(this);
-        }catch(Exception e){}
+        } catch (Exception e) {
+            Crashlytics.logException(e);
+        }
     }
 
     @Override
@@ -231,7 +234,9 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
         super.onResume();
         try {
             startLocationUpdate();
-        } catch(Exception e) {}
+        } catch(Exception e) {
+            Crashlytics.logException(e);
+        }
     }
 
     @Override
@@ -306,7 +311,9 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 == MakaanLocationManager.LocationUpdateMode.ONCE) {
             try {
                 stopLocationUpdate(this);
-            }catch(Exception e){}
+            } catch (Exception e) {
+                Crashlytics.logException(e);
+            }
         }
         if(mSearchResultFrameLayout.getVisibility() == View.VISIBLE && mSearchAdapter != null) {
             mSearchAdapter.notifyDataSetChanged();
@@ -1123,6 +1130,10 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                             SearchResponseHelper.getType(search);
                         } catch (Exception ex) {
                             iterator.remove();
+                            if(search.type != null) {
+                                Crashlytics.log(search.type);
+                            }
+                            Crashlytics.logException(ex);
                         }
                     }
                 }
@@ -1204,6 +1215,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 }
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
+                Crashlytics.logException(e);
             }
             // handle visibility of delete/cross button
             mDeleteButton.setBackgroundResource(R.drawable.close_white);

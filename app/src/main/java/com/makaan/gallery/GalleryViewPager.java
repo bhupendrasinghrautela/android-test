@@ -23,6 +23,8 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import com.crashlytics.android.Crashlytics;
+
 /**
  * This class implements method to help <b>TouchImageView</b> fling, draggin and
  * scaling.
@@ -85,6 +87,7 @@ public class GalleryViewPager extends ViewPager {
                 }
             }
         } catch (Exception e) {
+			Crashlytics.logException(e);
         }
 
 		return false;
@@ -124,7 +127,7 @@ public class GalleryViewPager extends ViewPager {
 				}
 			}
 		} catch (Exception e) {
-
+            Crashlytics.logException(e);
 		}
 		return false;
 	}

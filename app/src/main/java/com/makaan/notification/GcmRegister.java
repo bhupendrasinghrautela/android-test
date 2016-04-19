@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -136,6 +137,8 @@ public class GcmRegister{
                     subscribeTopics(context, sRegid);
 
                 } catch (Exception ex) {
+                    Crashlytics.log("Error while registering for GCM:" + ex.getMessage());
+                    Crashlytics.logException(ex);
                     msg = "Error while registering for GCM:" + ex.getMessage();
                 }
                 return msg;
@@ -156,7 +159,7 @@ public class GcmRegister{
             String requestUrl = ApiConstants.GCM;
             MakaanNetworkClient.getInstance().post(requestUrl, jObject, null, "Android");
         }catch(IllegalArgumentException e){} catch (JSONException e) {
-            // TODO Auto-generated catch block
+            Crashlytics.logException(e);
             e.printStackTrace();
         }
 

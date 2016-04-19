@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.database.NotificationDbHelper;
 import com.makaan.notification.NotificationAttributes;
@@ -57,7 +58,8 @@ public class NotificationsAdapter extends RecyclerView.Adapter<RecyclerView.View
                             , Toast.LENGTH_SHORT).show();
                     mNotifications.remove(position);
                     notifyDataSetChanged();
-                }catch (Exception e){
+                } catch (Exception e) {
+                    Crashlytics.logException(e);
                     Toast.makeText(mContext, mContext.getString(R.string.notification_deletion_error)
                             , Toast.LENGTH_SHORT).show();
                 }

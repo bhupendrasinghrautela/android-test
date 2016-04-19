@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.makaan.R;
 import com.makaan.activity.listing.PropertyDetailFragment;
@@ -203,8 +204,9 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
                 userResponse.getData().contactNumber = mNumber.getText().toString().trim();
             }
             CookiePreferences.setLastUserInfo(getActivity(), JsonBuilder.toJson(userResponse).toString());
-        }catch (Exception e){
+        } catch (Exception e) {
             //No impact don't do anything
+            Crashlytics.logException(e);
         }
         mLeadFormPresenter.setTemporaryPhoneNo(mNumber.getText().toString().trim());
     }
@@ -338,8 +340,9 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
                 userResponse.getData().email = mEmail.getText().toString();
                 userResponse.getData().contactNumber = mNumber.getText().toString().trim();
                 CookiePreferences.setLastUserInfo(getActivity(), JsonBuilder.toJson(userResponse).toString());
-            }catch (Exception e){
+            } catch (Exception e) {
                 //No impact don't do anything
+                Crashlytics.logException(e);
             }
 
             sendCallLaterEvent();
@@ -360,7 +363,9 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("gcm_id", GcmPreferences.getGcmRegId(getContext()));
                 mPyrRequest.setJsonDump(jsonObject.toString());
-            }catch (Exception e){}
+            } catch (Exception e) {
+                Crashlytics.logException(e);
+            }
 
             mPyrRequest.setCityId(mLeadFormPresenter.getCityId());
             mPyrRequest.setCityName(mLeadFormPresenter.getCityName());
@@ -386,6 +391,7 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
                 jsonObject = new JSONObject(str);
             } catch (JSONException e) {
                 e.printStackTrace();
+                Crashlytics.logException(e);
             }
             if (jsonObject != null) {
                 mCallLaterButton.setText(getResources().getString(R.string.submitting_info));

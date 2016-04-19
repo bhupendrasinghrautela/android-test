@@ -2,6 +2,7 @@ package com.makaan.response.listing;
 
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.constants.ResponseConstants;
@@ -104,6 +105,7 @@ public class ListingOtherSellersCallback extends JSONGetCallback {
 
             AppBus.getInstance().post(new OtherSellersGetEvent(sellerMap.values()));
         } catch (JSONException e) {
+            Crashlytics.logException(e);
             Log.e(TAG, "Error parsing project config", e);
         }
     }

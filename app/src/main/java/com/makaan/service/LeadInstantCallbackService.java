@@ -3,6 +3,7 @@ package com.makaan.service;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.event.lead.LeadInstantCallback;
 import com.makaan.network.MakaanNetworkClient;
 
@@ -37,6 +38,7 @@ public class LeadInstantCallbackService implements MakaanService {
             mJsonObject.put("jsonDump", jsonDump.toString());
             Log.e("json ", "Dump " + jsonDump.toString());
         } catch (JSONException e) {
+            Crashlytics.logException(e);
             e.printStackTrace();
         }
 

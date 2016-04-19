@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.text.TextUtils;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.response.user.UserResponse;
 import com.makaan.util.JsonParser;
 
@@ -144,7 +145,9 @@ public class CookiePreferences {
                                 try{
                                     cookieSet.remove();
                                     //CommonUtil.TLog("Removed older cookie to refresh cookie store " + cookieString);
-                                }catch(Exception e){}
+                                }catch(Exception e){
+                                    Crashlytics.logException(e);
+                                }
                             }
                         }
                     }

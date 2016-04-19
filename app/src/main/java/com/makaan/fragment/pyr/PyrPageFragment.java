@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.adapter.listing.ViewAdapterRings;
 import com.makaan.analytics.MakaanEventPayload;
@@ -167,6 +168,7 @@ public class PyrPageFragment extends Fragment {
                 }
             }*/
         } catch (CloneNotSupportedException ex) {
+            Crashlytics.logException(ex);
             ex.printStackTrace();
         }
 
@@ -211,7 +213,9 @@ public class PyrPageFragment extends Fragment {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("gcm_id", GcmPreferences.getGcmRegId(getContext()));
             pyrRequest.setJsonDump(jsonObject.toString());
-        }catch (Exception e){}
+        } catch (Exception e) {
+            Crashlytics.logException(e);
+        }
         try {
         UserResponse userResponse = CookiePreferences.getLastUserInfo(getContext());
         if(userResponse == null){
@@ -223,6 +227,7 @@ public class PyrPageFragment extends Fragment {
         userResponse.getData().contactNumber = mUserMobile.getText().toString().trim();
             CookiePreferences.setLastUserInfo(getActivity(), JsonBuilder.toJson(userResponse).toString());
         } catch (JSONException e) {
+            Crashlytics.logException(e);
             e.printStackTrace();
         }
         if(null!=pyrRequest.getLocalityIds() && pyrRequest.getLocalityIds().length>0) {
@@ -437,7 +442,9 @@ public class PyrPageFragment extends Fragment {
                     mUserEmail.setText(pyrPagePresenter.getEmail());
                     mUserMobile.setText(pyrPagePresenter.getPhonNumber());
                 }
-        }catch (Exception e){}
+        } catch (Exception e) {
+            Crashlytics.logException(e);
+        }
     }
 
     public void setBedroomInfo(){

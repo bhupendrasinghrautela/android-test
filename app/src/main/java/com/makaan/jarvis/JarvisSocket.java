@@ -3,6 +3,7 @@ package com.makaan.jarvis;
 import android.os.Handler;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Ack;
 import com.github.nkzawa.socketio.client.IO;
@@ -81,6 +82,7 @@ public class JarvisSocket {
                     mUserInactiveTimeoutHandler.removeCallbacks(mUserInactiveTimeoutRunnable);
 
                 } catch (JSONException e) {
+                    Crashlytics.logException(e);
                     e.printStackTrace();
                 }
 
@@ -120,6 +122,7 @@ public class JarvisSocket {
                 try {
                     mSocket = IO.socket(JarvisConstants.CHAT_SERVER_URL);
                 } catch (URISyntaxException e) {
+                    Crashlytics.logException(e);
                     e.printStackTrace();
                 }
             }
@@ -149,6 +152,7 @@ public class JarvisSocket {
                     }
                 });
             } catch (Exception e) {
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
     }
@@ -166,6 +170,7 @@ public class JarvisSocket {
                 }
             });
         } catch (JSONException e) {
+            Crashlytics.logException(e);
             e.printStackTrace();
         }
     }
@@ -187,6 +192,7 @@ public class JarvisSocket {
                 }
             });
         } catch (JSONException e) {
+            Crashlytics.logException(e);
             e.printStackTrace();
         }
     }
@@ -201,6 +207,7 @@ public class JarvisSocket {
                 }
             });
         } catch (Exception e) {
+            Crashlytics.logException(e);
             e.printStackTrace();
         }
     }
@@ -220,6 +227,7 @@ public class JarvisSocket {
                 }
             });
         } catch (Exception e) {
+            Crashlytics.logException(e);
             e.printStackTrace();
         }
     }
@@ -244,6 +252,7 @@ public class JarvisSocket {
 
 
             } catch (Exception e) {
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
             handleMessage(args);
@@ -306,6 +315,7 @@ public class JarvisSocket {
                     }
                 }
             } catch (JSONException e) {
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
         }

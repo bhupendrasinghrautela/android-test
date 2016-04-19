@@ -118,6 +118,8 @@ public class MakaanNetworkClient {
 
                     writeMockFileToDisk(mockFileResponse, mockFile);
                 } catch (Exception e) {
+                    Crashlytics.log(mockFile);
+                    Crashlytics.logException(e);
                     Log.e(TAG, "Exception", e);
                 }
             }
@@ -158,6 +160,9 @@ public class MakaanNetworkClient {
             outputStream.write(mockFileResponse.toString().getBytes());
             outputStream.close();
         } catch (Exception e) {
+
+            Crashlytics.log(mockFile);
+            Crashlytics.logException(e);
             e.printStackTrace();
         }
     }
@@ -186,11 +191,16 @@ public class MakaanNetworkClient {
                     JSONObject diskFileResponse = new JSONObject(text.toString());
                     return diskFileResponse;
                 } catch (JSONException e) {
+
+                    Crashlytics.log(mockFile);
+                    Crashlytics.logException(e);
                     e.printStackTrace();
                 }
             }
             catch (IOException e) {
-                //You'll need to add proper error handling here
+
+                Crashlytics.log(mockFile);
+                Crashlytics.logException(e);
             }
         }
 
@@ -220,6 +230,9 @@ public class MakaanNetworkClient {
                 objectGetCallback.onSuccess(objResponse);
 
             } catch (Exception e) {
+
+                Crashlytics.log(mockFile);
+                Crashlytics.logException(e);
                 Log.e(TAG, "Exception", e);
             }
         } else {
@@ -573,6 +586,9 @@ public class MakaanNetworkClient {
                                 objectGetCallback.onSuccess(objResponse);
 
                             } catch (JSONException e) {
+
+                                Crashlytics.log(urlToHit);
+                                Crashlytics.logException(e);
                                 Log.e(TAG, "JSONException", e);
                             }
                         }

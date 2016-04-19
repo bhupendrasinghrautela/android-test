@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.network.JSONGetCallback;
@@ -115,11 +116,12 @@ public class DownloadAssetService extends Service {
                     JSONObject mockFileResponse = new JSONObject(text.toString());
                     mLocalVersionCodes = MakaanBuyerApplication.gson.fromJson(mockFileResponse.toString(), versionCodesType);
                 } catch (JSONException e) {
+                    Crashlytics.logException(e);
                     e.printStackTrace();
                 }
             }
             catch (IOException e) {
-                //You'll need to add proper error handling here
+                Crashlytics.logException(e);
             }
         }
     }
@@ -132,6 +134,7 @@ public class DownloadAssetService extends Service {
             outputStream.write(text.getBytes());
             outputStream.close();
         } catch (Exception e) {
+            Crashlytics.logException(e);
             e.printStackTrace();
         }
     }
