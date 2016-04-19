@@ -45,6 +45,7 @@ import com.makaan.response.user.UserResponse;
 import com.makaan.response.user.UserResponse.UserData;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.PyrService;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.JsonBuilder;
 import com.makaan.util.JsonParser;
@@ -390,7 +391,7 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
             try {
                 jsonObject = new JSONObject(str);
             } catch (JSONException e) {
-                e.printStackTrace();
+                CommonUtil.TLog("exception", e);
                 Crashlytics.logException(e);
             }
             if (jsonObject != null) {

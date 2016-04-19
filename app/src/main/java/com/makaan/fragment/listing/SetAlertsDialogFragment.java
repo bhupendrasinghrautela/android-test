@@ -42,6 +42,7 @@ import com.makaan.response.serp.RangeMinMaxFilter;
 import com.makaan.response.serp.TermFilter;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SaveSearchService;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.StringUtil;
@@ -509,7 +510,7 @@ public class SetAlertsDialogFragment extends MakaanBaseDialogFragment {
             saveSearch.jsonDump = JsonBuilder.toJson(jsonDump).toString();
         } catch (JSONException e) {
             Crashlytics.logException(e);
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
     }
 

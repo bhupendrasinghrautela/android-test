@@ -18,6 +18,7 @@ import com.makaan.request.selector.Selector;
 import com.makaan.response.ResponseError;
 import com.makaan.response.saveSearch.SaveSearch;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
 
 import org.json.JSONException;
@@ -82,7 +83,8 @@ public class SaveSearchService implements MakaanService {
                     AppBus.getInstance().post(event);
                 } catch (JSONException e) {
                     Crashlytics.logException(e);
-                    e.printStackTrace();
+                    CommonUtil.TLog("exception", e);
+
                     NewMatchesGetEvent event = new NewMatchesGetEvent();
                     ResponseError error = new ResponseError();
                     error.error = new VolleyError(e);
@@ -220,7 +222,7 @@ public class SaveSearchService implements MakaanService {
             }, TAG, false);
         } catch (JSONException e) {
             Crashlytics.logException(e);
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
     }
 
@@ -265,7 +267,7 @@ public class SaveSearchService implements MakaanService {
             }, TAG, false);
         } catch (JSONException e) {
             Crashlytics.logException(e);
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
     }
 }

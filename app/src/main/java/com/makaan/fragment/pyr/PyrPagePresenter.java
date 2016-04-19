@@ -23,6 +23,7 @@ import com.makaan.response.serp.RangeFilter;
 import com.makaan.response.serp.TermFilter;
 import com.makaan.ui.pyr.FilterableMultichoiceDialogFragment;
 import com.makaan.ui.pyr.PyrBudgetCardView;
+import com.makaan.util.CommonUtil;
 import com.segment.analytics.Properties;
 
 import java.text.DecimalFormat;
@@ -708,7 +709,7 @@ public class PyrPagePresenter {
             }
         } catch (CloneNotSupportedException ex) {
             Crashlytics.logException(ex);
-            ex.printStackTrace();
+            CommonUtil.TLog("exception", ex);
         }
         return null;
     }

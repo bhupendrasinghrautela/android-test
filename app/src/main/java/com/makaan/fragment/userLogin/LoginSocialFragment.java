@@ -32,6 +32,7 @@ import com.makaan.service.user.GoogleTokenInteractor;
 import com.makaan.service.user.OnFacebookTokenListener;
 import com.makaan.service.user.OnGoogleTokenListener;
 import com.makaan.service.user.UserLoginService;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.NetworkUtil;
 import com.makaan.util.PermissionManager;
 import com.segment.analytics.Properties;
@@ -152,7 +153,7 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
                 startActivityForResult(intent, GOOGLE_ACCOUNT_PICKER_CODE);
             } catch (Exception e) {
                 Crashlytics.logException(e);
-                e.printStackTrace();
+                CommonUtil.TLog("exception", e);
             }
         }
     }

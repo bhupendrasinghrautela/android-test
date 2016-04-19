@@ -31,6 +31,7 @@ import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SearchService;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.Preference;
 import com.squareup.otto.Subscribe;
 
@@ -133,7 +134,7 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 			return multiSelectionDialog;
 		} catch (Exception e) {
 			Crashlytics.logException(e);
-			e.printStackTrace();
+			CommonUtil.TLog("exception", e);
 			return null;
 		}
 	}
@@ -166,7 +167,7 @@ public class FilterableMultichoiceDialogFragment extends DialogFragment {
 				searchService.getSearchResults(cs.toString(), (isBuy ? "buy" : "rent"), city, SearchType.LOCALITY, false);
 			}
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			CommonUtil.TLog("exception", e);
 		}
 	}
 

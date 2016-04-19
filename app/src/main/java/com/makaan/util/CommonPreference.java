@@ -77,7 +77,7 @@ public class CommonPreference {
             edit.putString(PREF_WISHLIST, json);
             edit.apply();
         } catch (JSONException e) {
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
             Crashlytics.logException(e);
         }
     }
@@ -105,7 +105,7 @@ public class CommonPreference {
                     edit.putString(PREF_WISHLIST, json);
                     edit.apply();
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    CommonUtil.TLog("exception", e);
                     Crashlytics.logException(e);
                 }
             }
@@ -141,7 +141,7 @@ public class CommonPreference {
             edit.putString(PREF_WISHLIST, json);
             edit.apply();
         } catch (JSONException e) {
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
             Crashlytics.logException(e);
         }
     }

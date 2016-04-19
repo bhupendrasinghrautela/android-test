@@ -27,6 +27,7 @@ import com.makaan.request.selector.Selector;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.ui.view.ExpandableHeightGridView;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class FiltersDialogFragment extends MakaanBaseDialogFragment {
             populateFilters(getClonedFilterGroups(filterGroups));
         } catch (CloneNotSupportedException ex) {
             Crashlytics.logException(ex);
-            ex.printStackTrace();
+            CommonUtil.TLog("exception", ex);
         }
 
         return view;

@@ -21,6 +21,7 @@ import com.makaan.network.CustomImageLoaderListener;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.project.Builder;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.StringUtil;
 import com.squareup.otto.Subscribe;
@@ -77,7 +78,7 @@ public class BuilderListingView extends AbstractCardListingView {
         try {
             AppBus.getInstance().register(this);
         } catch(IllegalArgumentException ex) {
-            ex.printStackTrace();
+            CommonUtil.TLog("exception", ex);
         }
 
         callback.requestApi(SerpActivity.REQUEST_BUILDER_API, "builderId");
@@ -128,7 +129,7 @@ public class BuilderListingView extends AbstractCardListingView {
                 Crashlytics.log(builder.name);
             }
             Crashlytics.logException(ex);
-            ex.printStackTrace();
+            CommonUtil.TLog("exception", ex);
         }
 
         if(builder.projectStatusCount.underConstruction == 0) {

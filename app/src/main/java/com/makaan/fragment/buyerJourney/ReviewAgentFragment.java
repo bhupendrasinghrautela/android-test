@@ -268,7 +268,7 @@ public class ReviewAgentFragment extends MakaanBaseFragment {
                                         mCommentEditText.getText().toString(), sellerId);
                     } catch (JSONException e) {
                         Crashlytics.logException(e);
-                        e.printStackTrace();
+                        CommonUtil.TLog("exception", e);
                     }
                     ((BuyerDashboardCallbacks)getActivity()).loadFragment(BuyerDashboardActivity.LOAD_FRAGMENT_UPLOAD_DOCUMENTS, true, null, null, mObj);
                 }

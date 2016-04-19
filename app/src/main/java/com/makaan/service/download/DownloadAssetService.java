@@ -14,6 +14,7 @@ import com.makaan.network.JSONGetCallback;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.ResponseError;
 import com.makaan.response.assets.VersionCodes;
+import com.makaan.util.CommonUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +41,7 @@ public class DownloadAssetService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("DEBUG", "DownloadAssetService, oncreate");
+        CommonUtil.TLog(Log.DEBUG, "DEBUG", "DownloadAssetService, oncreate");
     }
 
     @Override
@@ -117,7 +118,7 @@ public class DownloadAssetService extends Service {
                     mLocalVersionCodes = MakaanBuyerApplication.gson.fromJson(mockFileResponse.toString(), versionCodesType);
                 } catch (JSONException e) {
                     Crashlytics.logException(e);
-                    e.printStackTrace();
+                    CommonUtil.TLog("exception", e);
                 }
             }
             catch (IOException e) {
@@ -135,7 +136,7 @@ public class DownloadAssetService extends Service {
             outputStream.close();
         } catch (Exception e) {
             Crashlytics.logException(e);
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
     }
 

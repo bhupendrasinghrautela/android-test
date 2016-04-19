@@ -19,6 +19,7 @@ import com.makaan.ui.MakaanProgressDialog;
 import com.makaan.util.AnimationUtils;
 import com.makaan.util.AppBus;
 import com.makaan.util.AppUtils;
+import com.makaan.util.CommonUtil;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -123,7 +124,7 @@ public abstract class MakaanFragmentActivity extends BaseJarvisActivity {
                 progressDialog.dismiss();
             }
         } catch (Exception e) {
-            Log.e(this.getClass().getSimpleName(), "Not able to launch activity and dismiss progressbar", e);
+            CommonUtil.TLog(this.getClass().getSimpleName(), "Not able to launch activity and dismiss progressbar", e);
         }
     }
 

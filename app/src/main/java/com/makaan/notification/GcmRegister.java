@@ -160,7 +160,7 @@ public class GcmRegister{
             MakaanNetworkClient.getInstance().post(requestUrl, jObject, null, "Android");
         }catch(IllegalArgumentException e){} catch (JSONException e) {
             Crashlytics.logException(e);
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
 
     }

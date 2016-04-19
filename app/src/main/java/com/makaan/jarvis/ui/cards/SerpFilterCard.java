@@ -18,6 +18,7 @@ import com.makaan.pojo.SerpRequest;
 import com.makaan.request.selector.Selector;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.ui.view.ExpandableHeightGridView;
+import com.makaan.util.CommonUtil;
 import com.segment.analytics.Properties;
 
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class SerpFilterCard extends BaseCtaView<ExposeMessage>{
             ArrayList<FilterGroup> filterGroups = SerpObjects.getFilterGroups(getContext());
             populateFilters(getClonedFilterGroups(filterGroups), internalName);
         } catch (CloneNotSupportedException ex) {
-            ex.printStackTrace();
+            CommonUtil.TLog("exception", ex);
         }
 
     }

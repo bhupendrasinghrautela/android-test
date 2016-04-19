@@ -17,6 +17,7 @@ import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
 import com.segment.analytics.Properties;
 
@@ -94,7 +95,7 @@ public class RichContentCard extends BaseCtaView<ExposeMessage> {
                 }
             });
         } catch (JSONException e) {
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
     }
 

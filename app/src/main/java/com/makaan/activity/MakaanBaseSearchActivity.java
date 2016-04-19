@@ -64,6 +64,7 @@ import com.makaan.service.LocationService;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SearchService;
 import com.makaan.ui.listing.CustomFlowLayout;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.ErrorUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.PermissionManager;
@@ -1214,7 +1215,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                     }
                 }
             } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+                CommonUtil.TLog("exception", e);
                 Crashlytics.logException(e);
             }
             // handle visibility of delete/cross button

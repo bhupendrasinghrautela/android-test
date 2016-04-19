@@ -4,7 +4,6 @@ package com.makaan.network;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -22,6 +21,7 @@ import com.makaan.constants.RequestConstants;
 import com.makaan.constants.ResponseConstants;
 import com.makaan.request.CustomRequest;
 import com.makaan.response.ResponseError;
+import com.makaan.util.CommonUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -120,7 +120,7 @@ public class MakaanNetworkClient {
                 } catch (Exception e) {
                     Crashlytics.log(mockFile);
                     Crashlytics.logException(e);
-                    Log.e(TAG, "Exception", e);
+                    CommonUtil.TLog(TAG, "Exception", e);
                 }
             }
 
@@ -141,7 +141,7 @@ public class MakaanNetworkClient {
                         public void onErrorResponse(VolleyError error) {
                             completeRequestInQueue(urlToHit);
                             jsonGetCallback.onError(getResponseError(error));
-                            Log.e(TAG, "Network error", error);
+                            CommonUtil.TLog(TAG, "Network error", error);
                         }
                     });
             addToRequestQueue(jsonRequest, tag);
@@ -163,7 +163,7 @@ public class MakaanNetworkClient {
 
             Crashlytics.log(mockFile);
             Crashlytics.logException(e);
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
     }
 
@@ -194,7 +194,7 @@ public class MakaanNetworkClient {
 
                     Crashlytics.log(mockFile);
                     Crashlytics.logException(e);
-                    e.printStackTrace();
+                    CommonUtil.TLog("exception", e);
                 }
             }
             catch (IOException e) {
@@ -233,7 +233,7 @@ public class MakaanNetworkClient {
 
                 Crashlytics.log(mockFile);
                 Crashlytics.logException(e);
-                Log.e(TAG, "Exception", e);
+                CommonUtil.TLog(TAG, "Exception", e);
             }
         } else {
 
@@ -270,7 +270,7 @@ public class MakaanNetworkClient {
                         public void onErrorResponse(VolleyError error) {
                             completeRequestInQueue(urlToHit);
                             objectGetCallback.onError(getResponseError(error));
-                            Log.e(TAG, "Network error", error);
+                            CommonUtil.TLog(TAG, "Network error", error);
                         }
                     });
 
@@ -295,7 +295,7 @@ public class MakaanNetworkClient {
                     public void onErrorResponse(VolleyError error) {
                         completeRequestInQueue(urlToHit);
                         stringRequestCallback.onError(getResponseError(error));
-                        Log.e(TAG, "Network error", error);
+                        CommonUtil.TLog(TAG, "Network error", error);
                     }
                 });
         addToRequestQueue(stringRequest, tag);
@@ -317,7 +317,7 @@ public class MakaanNetworkClient {
                     public void onErrorResponse(VolleyError error) {
                         completeRequestInQueue(urlToHit);
                         stringRequestCallback.onError(getResponseError(error));
-                        Log.e(TAG, "Network error", error);
+                        CommonUtil.TLog(TAG, "Network error", error);
                     }
                 });
         addToRequestQueue(stringRequest, tag);
@@ -466,7 +466,7 @@ public class MakaanNetworkClient {
                     public void onErrorResponse(VolleyError error) {
                         if(null!=error && null!=error.networkResponse) {
                             String errorString = new String(error.networkResponse.data);
-                            Log.e("Error : ", errorString);
+                            CommonUtil.TLog("Error : ", errorString);
                         }
                         completeRequestInQueue(urlToHit);
                         stringRequestCallback.onError(getResponseError(error));
@@ -499,7 +499,7 @@ public class MakaanNetworkClient {
                     public void onErrorResponse(VolleyError error) {
                         if(null!=error && null!=error.networkResponse) {
                             String errorString = new String(error.networkResponse.data);
-                            Log.e("Error : ", errorString);
+                            CommonUtil.TLog("Error : ", errorString);
                         }
                         completeRequestInQueue(urlToHit);
                         stringRequestCallback.onError(getResponseError(error));
@@ -534,7 +534,7 @@ public class MakaanNetworkClient {
                         if(null!=stringRequestCallback) {
                             stringRequestCallback.onError(getResponseError(error));
                         }
-                        Log.e("Analytics error : ", VolleyErrorParser.getMessage(error));
+                        CommonUtil.TLog("Analytics error : ", VolleyErrorParser.getMessage(error));
                     }
                 });
         addToRequestQueue(stringRequest, tag);
@@ -589,7 +589,7 @@ public class MakaanNetworkClient {
 
                                 Crashlytics.log(urlToHit);
                                 Crashlytics.logException(e);
-                                Log.e(TAG, "JSONException", e);
+                                CommonUtil.TLog(TAG, "JSONException", e);
                             }
                         }
                     }
@@ -640,7 +640,7 @@ public class MakaanNetworkClient {
         }
 
         cancelFromRequestQueue(req, tag);
-        Log.e(TAG, "URL: -> " + req.getUrl());
+        CommonUtil.TLog(TAG, "URL: -> " + req.getUrl());
 
         makaanGetRequestQueue.add(req);
     }

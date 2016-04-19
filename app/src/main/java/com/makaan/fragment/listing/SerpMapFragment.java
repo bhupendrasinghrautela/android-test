@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -354,7 +353,6 @@ public class SerpMapFragment extends MakaanBaseFragment {
                             .fromBitmap(mapIcon));
 
             Marker newMarker = mPropertyMap.addMarker(markerOptions);
-            Log.d("DEBUG", "lat = " + lat + ", lng = " + lng);
 
             if(clubbedMarker != null) {
                 clubbedMarker.markers.add(newMarker);

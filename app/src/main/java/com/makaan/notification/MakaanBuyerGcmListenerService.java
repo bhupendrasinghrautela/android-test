@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -33,7 +32,7 @@ public class MakaanBuyerGcmListenerService extends GcmListenerService {
     public void onMessageReceived(String from, Bundle data) {
         super.onMessageReceived(from, data);
 
-        Log.e("Gcm","receive");
+        CommonUtil.TLog("Gcm","receive");
 
         String message = "";
         String title = "";

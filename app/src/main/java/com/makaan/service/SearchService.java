@@ -6,6 +6,7 @@ import com.makaan.constants.ApiConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.search.SearchResultCallback;
 import com.makaan.response.search.SearchType;
+import com.makaan.util.CommonUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -74,7 +75,7 @@ public class SearchService implements MakaanService {
         try {
             key = URLEncoder.encode(key, "utf-8");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
 
         if(type.length == 1 && type[0] == SearchType.ALL) {

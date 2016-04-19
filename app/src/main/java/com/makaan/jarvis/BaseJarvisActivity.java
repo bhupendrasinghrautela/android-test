@@ -44,6 +44,7 @@ import com.makaan.jarvis.ui.cards.SerpFilterCard;
 import com.makaan.pojo.SerpObjects;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
 import com.makaan.util.KeyUtil;
 import com.segment.analytics.Properties;
@@ -242,7 +243,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                         analyticsService.track(AnalyticsService.Type.track, jsonObject);
                     } catch (JSONException e) {
                         Crashlytics.logException(e);
-                        e.printStackTrace();
+                        CommonUtil.TLog("exception", e);
                     }
 
                 }
@@ -486,7 +487,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                 } catch (Exception e) {
                     Crashlytics.logException(e);
                     //Some error with jarvis payload data, don't do anything
-                    e.printStackTrace();
+                    CommonUtil.TLog("exception", e);
                 }
             }
         });
@@ -584,7 +585,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                 analyticsService.track(AnalyticsService.Type.track, jsonObject);
             } catch (JSONException e) {
                 Crashlytics.logException(e);
-                e.printStackTrace();
+                CommonUtil.TLog("exception", e);
             }
 
         }else {
@@ -661,7 +662,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
             analyticsService.track(AnalyticsService.Type.track, jsonObject);
         } catch (JSONException e) {
             Crashlytics.logException(e);
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
     }
 
@@ -676,7 +677,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
             analyticsService.track(AnalyticsService.Type.identify, jsonObject);
         } catch (JSONException e) {
             Crashlytics.logException(e);
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
 
 
@@ -741,7 +742,7 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                         jsonArray = JsonBuilder.toJsonArray(message.properties.content);
                     } catch (JSONException e) {
                         Crashlytics.logException(e);
-                        e.printStackTrace();
+                        CommonUtil.TLog("exception", e);
                     }
                     ArrayList<Content> contents=new ArrayList<Content>();
                     if(jsonArray!=null) {

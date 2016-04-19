@@ -19,6 +19,7 @@ import com.makaan.response.ResponseError;
 import com.makaan.response.buyerjourney.AgentRating;
 import com.makaan.response.buyerjourney.Company;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.segment.analytics.Properties;
 
 import org.json.JSONArray;
@@ -48,7 +49,7 @@ public class ClientLeadsService implements MakaanService {
                         AppBus.getInstance().post(clientLeadsByGetEvent);
                     } catch (JSONException e) {
                         Crashlytics.logException(e);
-                        e.printStackTrace();
+                        CommonUtil.TLog("exception", e);
                     }
                 }
             }
@@ -79,7 +80,7 @@ public class ClientLeadsService implements MakaanService {
                         AppBus.getInstance().post(propertyRequirementsByGetEvent);
                     } catch (JSONException e) {
                         Crashlytics.logException(e);
-                        e.printStackTrace();
+                        CommonUtil.TLog("exception", e);
                     }
                 }
             }
@@ -107,7 +108,7 @@ public class ClientLeadsService implements MakaanService {
                         AppBus.getInstance().post(clientLeadsByGetEvent);
                     } catch (JSONException e) {
                         Crashlytics.logException(e);
-                        e.printStackTrace();
+                        CommonUtil.TLog("exception", e);
                     }
                 }
             }
@@ -144,7 +145,7 @@ public class ClientLeadsService implements MakaanService {
                         AppBus.getInstance().post(companies);
                     } catch (JSONException e) {
                         Crashlytics.logException(e);
-                        e.printStackTrace();
+                        CommonUtil.TLog("exception", e);
                     }
                 }
             }

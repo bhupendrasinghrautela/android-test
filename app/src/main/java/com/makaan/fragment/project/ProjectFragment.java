@@ -71,6 +71,7 @@ import com.makaan.ui.property.PropertyImageViewPager;
 import com.makaan.ui.view.FontTextView;
 import com.makaan.ui.view.MakaanProgressBar;
 import com.makaan.util.AppUtils;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.KeyUtil;
 import com.makaan.util.RecentPropertyProjectManager;
 import com.makaan.util.StringUtil;
@@ -646,7 +647,7 @@ public class ProjectFragment extends OverviewFragment{
                             int lines = l.getLineCount();
                             if (lines > 0) {
                                 if (l.getEllipsisCount(lines - 1) > 0) {
-                                    Log.d("test", "Text is ellipsized");
+                                    CommonUtil.TLog(Log.DEBUG, "test", "Text is ellipsized");
                                 } else {
                                     mCompressedDescriptionLayout.removeMore(true);
                                 }

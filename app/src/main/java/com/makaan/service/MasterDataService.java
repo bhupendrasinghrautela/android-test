@@ -1,7 +1,6 @@
 package com.makaan.service;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.reflect.TypeToken;
@@ -26,6 +25,7 @@ import com.makaan.response.master.PropertyAmenity;
 import com.makaan.response.serp.FilterGroup;
 import com.makaan.response.serp.ListingInfoMap;
 import com.makaan.util.CommonPreference;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
 
 import org.json.JSONArray;
@@ -276,7 +276,7 @@ public class MasterDataService implements MakaanService {
                     }
                 } catch (JSONException je) {
                     Crashlytics.logException(je);
-                    Log.e(TAG, "Unable to parse filters", je);
+                    CommonUtil.TLog(TAG, "Unable to parse filters", je);
                 }
 
             }
@@ -308,7 +308,7 @@ public class MasterDataService implements MakaanService {
                     }
                 } catch (JSONException je) {
                     Crashlytics.logException(je);
-                    Log.e(TAG, "Unable to parse filters", je);
+                    CommonUtil.TLog(TAG, "Unable to parse filters", je);
                 }
 
             }
@@ -341,7 +341,7 @@ public class MasterDataService implements MakaanService {
                     }
                 } catch (JSONException je) {
                     Crashlytics.logException(je);
-                    Log.e(TAG, "Unable to parse pyr groups", je);
+                    CommonUtil.TLog(TAG, "Unable to parse pyr groups", je);
                 }
 
             }
@@ -373,7 +373,7 @@ public class MasterDataService implements MakaanService {
                     }
                 } catch (JSONException je) {
                     Crashlytics.logException(je);
-                    Log.e(TAG, "Unable to parse pyr groups", je);
+                    CommonUtil.TLog(TAG, "Unable to parse pyr groups", je);
                 }
 
             }
@@ -404,7 +404,7 @@ public class MasterDataService implements MakaanService {
                     }
                 } catch (JSONException je) {
                     Crashlytics.logException(je);
-                    Log.e(TAG, "Unable to parse filters", je);
+                    CommonUtil.TLog(TAG, "Unable to parse filters", je);
                 }
 
             }
@@ -435,7 +435,7 @@ public class MasterDataService implements MakaanService {
                     }
                 } catch (JSONException je) {
                     Crashlytics.logException(je);
-                    Log.e(TAG, "Unable to parse filters", je);
+                    CommonUtil.TLog(TAG, "Unable to parse filters", je);
                 }
 
             }
@@ -466,7 +466,7 @@ public class MasterDataService implements MakaanService {
                     }
                 } catch (JSONException je) {
                     Crashlytics.logException(je);
-                    Log.e(TAG, "Unable to parse filters", je);
+                    CommonUtil.TLog(TAG, "Unable to parse filters", je);
                 }
 
             }
@@ -510,7 +510,7 @@ public class MasterDataService implements MakaanService {
                     }*/
                 } catch (Exception e) {
                     Crashlytics.logException(e);
-                    e.printStackTrace();
+                    CommonUtil.TLog("exception", e);
                 }
             }
         }, "searchResultType.json");
@@ -611,7 +611,7 @@ public class MasterDataService implements MakaanService {
                     MasterDataCache.getInstance().addListingInfoMap(listingInfoMap);
                 } catch (JSONException je) {
                     Crashlytics.logException(je);
-                    Log.e(TAG, "Unable to parse Listing info map", je);
+                    CommonUtil.TLog(TAG, "Unable to parse Listing info map", je);
                 }
 
             }
@@ -638,7 +638,7 @@ public class MasterDataService implements MakaanService {
                     }
                 } catch (JSONException je) {
                     Crashlytics.logException(je);
-                    Log.e(TAG, "Unable to parse Direction info map", je);
+                    CommonUtil.TLog(TAG, "Unable to parse Direction info map", je);
                 }
             }
         }, null);
@@ -660,7 +660,7 @@ public class MasterDataService implements MakaanService {
                     }
                 } catch (JSONException je) {
                     Crashlytics.logException(je);
-                    Log.e(TAG, "Unable to parse Direction info map", je);
+                    CommonUtil.TLog(TAG, "Unable to parse Direction info map", je);
                 }
             }
         }, null);

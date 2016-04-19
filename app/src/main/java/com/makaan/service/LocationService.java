@@ -20,6 +20,7 @@ import com.makaan.response.search.SearchResponseItem;
 import com.makaan.response.search.SearchSuggestionType;
 import com.makaan.response.search.event.SearchResultEvent;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,7 +67,7 @@ public class LocationService implements MakaanService {
                         AppBus.getInstance().post(new LocationGetEvent(location));
                     } catch (JSONException e) {
                         Crashlytics.logException(e);
-                        e.printStackTrace();
+                        CommonUtil.TLog("exception", e);
                     }
                 }
             }
@@ -158,7 +159,7 @@ public class LocationService implements MakaanService {
                         AppBus.getInstance().post(event);
                     } catch (JSONException e) {
                         Crashlytics.logException(e);
-                        e.printStackTrace();
+                        CommonUtil.TLog("exception", e);
 
                         SearchResultEvent searchResultEvent = new SearchResultEvent();
                         AppBus.getInstance().post(searchResultEvent);
@@ -231,7 +232,7 @@ public class LocationService implements MakaanService {
                     AppBus.getInstance().post(event);
                 } catch (JSONException e) {
                     Crashlytics.logException(e);
-                    e.printStackTrace();
+                    CommonUtil.TLog("exception", e);
                     SearchResultEvent event = new SearchResultEvent();
                     AppBus.getInstance().post(event);
                 }

@@ -5,6 +5,7 @@ import com.makaan.activity.pyr.PyrOtpVerification;
 import com.makaan.constants.ApiConstants;
 import com.makaan.event.pyr.OtpVerificationCallBack;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.util.CommonUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,7 +36,7 @@ public class OtpVerificationService implements MakaanService {
                 jsonObject.put("userId", userId);
             } catch (JSONException e) {
                 Crashlytics.logException(e);
-                e.printStackTrace();
+                CommonUtil.TLog("exception", e);
             }
         }
 
@@ -59,7 +60,7 @@ public class OtpVerificationService implements MakaanService {
                 jsonObject.put("userId", userId);
             } catch (JSONException e) {
                 Crashlytics.logException(e);
-                e.printStackTrace();
+                CommonUtil.TLog("exception", e);
             }
         }
 

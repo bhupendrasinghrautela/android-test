@@ -4,6 +4,7 @@ import com.crashlytics.android.Crashlytics;
 import com.google.gson.annotations.SerializedName;
 import com.makaan.adapter.listing.FiltersViewAdapter;
 import com.makaan.constants.RequestConstants;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.KeyUtil;
 
 import org.json.JSONArray;
@@ -112,12 +113,12 @@ public class SelectorParser {
                     }
                 } catch (JSONException e) {
                     Crashlytics.logException(e);
-                    e.printStackTrace();
+                    CommonUtil.TLog("exception", e);
                 }
             }
         } catch (JSONException e) {
             Crashlytics.logException(e);
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
     }
 

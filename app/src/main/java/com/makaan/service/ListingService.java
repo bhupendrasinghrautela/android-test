@@ -19,6 +19,7 @@ import com.makaan.response.ResponseError;
 import com.makaan.response.listing.ListingOtherSellersCallback;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonParser;
 
 import org.json.JSONException;
@@ -150,7 +151,7 @@ public class ListingService implements MakaanService {
                             AppBus.getInstance().post(listingByIdsGetEvent);
                         } catch (JSONException e) {
                             Crashlytics.logException(e);
-                            e.printStackTrace();
+                            CommonUtil.TLog("exception", e);
                         }
                     }
                 }
@@ -306,7 +307,7 @@ public class ListingService implements MakaanService {
                         AppBus.getInstance().post(listingByIdsGetEvent);
                     } catch (JSONException e) {
                         Crashlytics.logException(e);
-                        e.printStackTrace();
+                        CommonUtil.TLog("exception", e);
                         ListingByIdsGetEvent listingByIdsGetEvent = new ListingByIdsGetEvent();
                         AppBus.getInstance().post(listingByIdsGetEvent);
                     }

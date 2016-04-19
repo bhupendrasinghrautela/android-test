@@ -10,6 +10,7 @@ import com.makaan.jarvis.JarvisConstants;
 import com.makaan.jarvis.event.JarvisTrackExtraData;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.service.MakaanService;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
 
 import org.json.JSONException;
@@ -57,7 +58,7 @@ public class AnalyticsService implements MakaanService {
 
         } catch (JSONException e) {
             Crashlytics.logException(e);
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
     }
 

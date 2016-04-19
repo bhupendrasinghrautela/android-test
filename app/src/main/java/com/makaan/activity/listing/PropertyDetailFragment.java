@@ -681,7 +681,7 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
                                 int lines = l.getLineCount();
                                 if (lines > 0) {
                                     if (l.getEllipsisCount(lines - 1) > 0) {
-                                        Log.d("test", "Text is ellipsized");
+                                        CommonUtil.TLog(Log.DEBUG, "test", "Text is ellipsized");
                                     } else {
                                         mCompressedDescriptionLayout.removeMore(true);
                                     }

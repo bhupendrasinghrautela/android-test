@@ -12,6 +12,7 @@ import com.makaan.response.wishlist.WishListResponseUICallback;
 import com.makaan.response.wishlist.WishListResultCallback;
 import com.makaan.ui.view.WishListButton;
 import com.makaan.util.CommonPreference;
+import com.makaan.util.CommonUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,7 +42,7 @@ public class WishListService implements MakaanService {
 
         } catch (JSONException e) {
             Crashlytics.logException(e);
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
     }
 
@@ -58,7 +59,7 @@ public class WishListService implements MakaanService {
 
         } catch (JSONException e) {
             Crashlytics.logException(e);
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
     }
 

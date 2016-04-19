@@ -40,6 +40,7 @@ import com.makaan.response.user.UserResponse;
 import com.makaan.response.user.UserResponse.UserData;
 import com.makaan.service.LeadInstantCallbackService;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.JsonBuilder;
 import com.makaan.util.JsonParser;
@@ -153,7 +154,7 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
                 jsonObject.put("applicationType", "MobileAndroidApp");
                 jsonObject.put("cityId", mLeadFormPresenter.getCityId());
             } catch (JSONException e) {
-                e.printStackTrace();
+                CommonUtil.TLog("exception", e);
                 Crashlytics.logException(e);
             }
 

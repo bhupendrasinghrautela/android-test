@@ -25,9 +25,9 @@ public final class FontTypeface {
             staticField.setAccessible(true);
             staticField.set(null, newTypeface);
         } catch (NoSuchFieldException e) {
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
     }
 }

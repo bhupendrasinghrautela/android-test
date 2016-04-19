@@ -44,6 +44,7 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.ui.pyr.PyrBudgetCardView;
 import com.makaan.ui.pyr.PyrPropertyCardView;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
 import com.makaan.util.JsonParser;
 import com.makaan.util.StringUtil;
@@ -169,7 +170,7 @@ public class PyrPageFragment extends Fragment {
             }*/
         } catch (CloneNotSupportedException ex) {
             Crashlytics.logException(ex);
-            ex.printStackTrace();
+            CommonUtil.TLog("exception", ex);
         }
 
         initializeCountrySpinner();
@@ -228,7 +229,7 @@ public class PyrPageFragment extends Fragment {
             CookiePreferences.setLastUserInfo(getActivity(), JsonBuilder.toJson(userResponse).toString());
         } catch (JSONException e) {
             Crashlytics.logException(e);
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
         if(null!=pyrRequest.getLocalityIds() && pyrRequest.getLocalityIds().length>0) {
             for (int value : pyrRequest.getLocalityIds()) {

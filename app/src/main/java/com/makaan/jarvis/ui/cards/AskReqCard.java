@@ -23,6 +23,7 @@ import com.makaan.response.serp.TermFilter;
 import com.makaan.ui.view.BaseView;
 import com.makaan.ui.view.ExpandableHeightGridView;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.StringUtil;
 
 import java.util.ArrayList;
@@ -84,7 +85,7 @@ public class AskReqCard extends BaseView<Message> {
             populateFilters(filterGroups);
         } catch (CloneNotSupportedException ex) {
             Crashlytics.logException(ex);
-            ex.printStackTrace();
+            CommonUtil.TLog("exception", ex);
         }
 
         setupPropertyTypeSpinner();

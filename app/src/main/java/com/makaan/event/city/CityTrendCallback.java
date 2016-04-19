@@ -1,7 +1,5 @@
 package com.makaan.event.city;
 
-import android.util.Log;
-
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
@@ -10,6 +8,7 @@ import com.makaan.network.JSONGetCallback;
 import com.makaan.response.ResponseError;
 import com.makaan.response.city.CityTrendData;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -67,7 +66,7 @@ public class CityTrendCallback extends JSONGetCallback {
 
         } catch (Exception e) {
             Crashlytics.logException(e);
-            Log.e(TAG, "Error parsing city Trend Data", e);
+            CommonUtil.TLog(TAG, "Error parsing city Trend Data", e);
         }
     }
 

@@ -1,7 +1,6 @@
 package com.makaan.jarvis;
 
 import android.os.Handler;
-import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.github.nkzawa.emitter.Emitter;
@@ -17,6 +16,7 @@ import com.makaan.jarvis.message.JoinUser;
 import com.makaan.jarvis.message.Message;
 import com.makaan.jarvis.message.SocketMessage;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
 import com.makaan.util.JsonParser;
 
@@ -83,7 +83,7 @@ public class JarvisSocket {
 
                 } catch (JSONException e) {
                     Crashlytics.logException(e);
-                    e.printStackTrace();
+                    CommonUtil.TLog("exception", e);
                 }
 
             }
@@ -123,7 +123,7 @@ public class JarvisSocket {
                     mSocket = IO.socket(JarvisConstants.CHAT_SERVER_URL);
                 } catch (URISyntaxException e) {
                     Crashlytics.logException(e);
-                    e.printStackTrace();
+                    CommonUtil.TLog("exception", e);
                 }
             }
             close();
@@ -153,7 +153,7 @@ public class JarvisSocket {
                 });
             } catch (Exception e) {
                 Crashlytics.logException(e);
-                e.printStackTrace();
+                CommonUtil.TLog("exception", e);
             }
     }
 
@@ -162,7 +162,7 @@ public class JarvisSocket {
             mSocket.emit("join-user", JsonBuilder.toJson(new JoinUser(agentData, isAcquired)), new Ack() {
                 @Override
                 public void call(Object... args) {
-                    Log.e("join user", "user");
+                    CommonUtil.TLog("join user", "user");
                     if(null!=mUserInactiveTimeoutHandler) {
                         mUserInactiveTimeoutHandler.removeCallbacks(mUserInactiveTimeoutRunnable);
                         mUserInactiveTimeoutHandler.postDelayed(mUserInactiveTimeoutRunnable, USER_INACTIVE_TIMEOUT);
@@ -171,7 +171,7 @@ public class JarvisSocket {
             });
         } catch (JSONException e) {
             Crashlytics.logException(e);
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
     }
 
@@ -193,7 +193,7 @@ public class JarvisSocket {
             });
         } catch (JSONException e) {
             Crashlytics.logException(e);
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
     }
 
@@ -208,7 +208,7 @@ public class JarvisSocket {
             });
         } catch (Exception e) {
             Crashlytics.logException(e);
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
     }
 
@@ -228,7 +228,7 @@ public class JarvisSocket {
             });
         } catch (Exception e) {
             Crashlytics.logException(e);
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
     }
 
@@ -253,7 +253,7 @@ public class JarvisSocket {
 
             } catch (Exception e) {
                 Crashlytics.logException(e);
-                e.printStackTrace();
+                CommonUtil.TLog("exception", e);
             }
             handleMessage(args);
         }
@@ -316,7 +316,7 @@ public class JarvisSocket {
                 }
             } catch (JSONException e) {
                 Crashlytics.logException(e);
-                e.printStackTrace();
+                CommonUtil.TLog("exception", e);
             }
         }
     };
@@ -342,7 +342,7 @@ public class JarvisSocket {
 
 
     private void handleMessage(Object... args)  {
-        Log.e("Handle message : " , args.toString());
+        CommonUtil.TLog("Handle message : " , args.toString());
     }
 
     private SocketMessage parseMessage(JSONObject object){

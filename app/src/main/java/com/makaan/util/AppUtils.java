@@ -51,7 +51,7 @@ public class AppUtils {
         try {
             return System.currentTimeMillis() / 1000L;
         } catch (Exception e) {
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
         return 0L;
     }

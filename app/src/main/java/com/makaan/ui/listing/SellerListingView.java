@@ -98,7 +98,7 @@ public class SellerListingView extends AbstractCardListingView {
         try {
             AppBus.getInstance().register(this);
         } catch(IllegalArgumentException ex) {
-            ex.printStackTrace();
+            CommonUtil.TLog("exception", ex);
         }
 
         callback.requestApi(SerpActivity.REQUEST_SELLER_API, "listingCompanyId");

@@ -1,11 +1,10 @@
 package com.makaan.event.pyr;
 
-import android.util.Log;
-
 import com.makaan.network.StringRequestCallback;
 import com.makaan.response.ResponseError;
 import com.makaan.response.pyr.OtpVerificationResponse;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonParser;
 
 /**
@@ -14,7 +13,7 @@ import com.makaan.util.JsonParser;
 public class OtpVerificationCallBack extends StringRequestCallback {
     @Override
     public void onSuccess(String response) {
-        Log.e("Success otp verifi", response);
+        CommonUtil.TLog("Success otp verifi", "Error parsing city Trend Data");
         OtpVerificationResponse otpVerificationResponse = (OtpVerificationResponse)
                 JsonParser.parseJson(response, OtpVerificationResponse.class);
         AppBus.getInstance().post(otpVerificationResponse);

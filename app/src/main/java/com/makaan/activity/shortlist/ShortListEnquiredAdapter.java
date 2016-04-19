@@ -559,7 +559,7 @@ public class ShortListEnquiredAdapter extends RecyclerView.Adapter<RecyclerView.
             ClientEventsService.postSiteVisitSchedule(jsonObject, enquiry.leadId);
         } catch (JSONException e) {
             Crashlytics.logException(e);
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
     }
 

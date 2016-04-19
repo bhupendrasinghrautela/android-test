@@ -1,7 +1,5 @@
 package com.makaan.event.trend.callback;
 
-import android.util.Log;
-
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
@@ -12,6 +10,7 @@ import com.makaan.response.ResponseError;
 import com.makaan.response.trend.ApiPriceTrendData;
 import com.makaan.response.trend.ProjectPriceTrendDto;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 
 import org.json.JSONObject;
 
@@ -62,12 +61,10 @@ public class ProjectTrendChartCallback  extends JSONGetCallback {
                 }
                 AppBus.getInstance().post(new ProjectPriceTrendEvent(projectPriceTrendDto));
 
-            } else {
-
             }
         } catch (Exception e) {
             Crashlytics.logException(e);
-            Log.e(TAG, "Error parsing locality trends", e);
+            CommonUtil.TLog(TAG, "Error parsing locality trends", e);
         }
 
     }

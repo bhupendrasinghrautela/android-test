@@ -36,7 +36,7 @@ public class ImageUtils {
 	 */
 	public static void storeImage(Bitmap image, File pictureFile) {
 		if (pictureFile == null) {
-			Log.d(TAG, "Error creating media file, check storage permissions: ");
+			CommonUtil.TLog(Log.DEBUG, TAG, "Error creating media file, check storage permissions: ");
 			return;
 		}
 		try {
@@ -44,9 +44,9 @@ public class ImageUtils {
 			image.compress(Bitmap.CompressFormat.PNG, 90, fos);
 			fos.close();
 		} catch (FileNotFoundException e) {
-			Log.d(TAG, "File not found: " + e.getMessage());
+			CommonUtil.TLog(Log.DEBUG, TAG, "File not found: " + e.getMessage());
 		} catch (IOException e) {
-			Log.d(TAG, "Error accessing file: " + e.getMessage());
+			CommonUtil.TLog(Log.DEBUG, TAG, "Error accessing file: " + e.getMessage());
 		}
 	}
 

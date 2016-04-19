@@ -1,7 +1,5 @@
 package com.makaan.response.amenity;
 
-import android.util.Log;
-
 import com.crashlytics.android.Crashlytics;
 import com.makaan.cache.MasterDataCache;
 import com.makaan.constants.ResponseConstants;
@@ -10,6 +8,7 @@ import com.makaan.network.JSONGetCallback;
 import com.makaan.response.ResponseError;
 import com.makaan.service.AmenityService;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -97,7 +96,7 @@ public class AmenityCallback extends JSONGetCallback {
             } catch (JSONException e) {
 
                 Crashlytics.logException(e);
-                Log.e(TAG, "Unable to parse amenity data", e);
+                CommonUtil.TLog(TAG, "Unable to parse amenity data", e);
             }
 
         } else {

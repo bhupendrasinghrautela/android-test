@@ -15,6 +15,7 @@ import com.makaan.network.StringRequestCallback;
 import com.makaan.request.buyerjourney.PhaseChange;
 import com.makaan.response.ResponseError;
 import com.makaan.util.AppBus;
+import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
 
 import org.json.JSONException;
@@ -44,7 +45,7 @@ public class ClientEventsService implements MakaanService {
                     } catch (JSONException e) {
 
                         Crashlytics.logException(e);
-                        e.printStackTrace();
+                        CommonUtil.TLog("exception", e);
                     }
                 }
             }
@@ -106,7 +107,7 @@ public class ClientEventsService implements MakaanService {
             }, TAG);
         } catch (JSONException e) {
             Crashlytics.logException(e);
-            e.printStackTrace();
+            CommonUtil.TLog("exception", e);
         }
     }
 }
