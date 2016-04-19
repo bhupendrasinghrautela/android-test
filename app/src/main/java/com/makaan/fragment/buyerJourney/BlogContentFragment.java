@@ -24,6 +24,7 @@ import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.event.content.BlogByTagEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
@@ -94,7 +95,7 @@ public class BlogContentFragment extends MakaanBaseFragment {
         TextView titleTextView = (TextView)view.findViewById(R.id.fragment_blog_title_text_view);
         TextView subTitleTextView = (TextView)view.findViewById(R.id.fragment_blog_subtitle_text_view);
         TextView actionTextView = (TextView)view.findViewById(R.id.fragment_blog_action_text_view);
-
+        sendScreenNameEvent(mType);
         switch (mType) {
             case SEARCH:
                 titleTextView.setVisibility(View.VISIBLE);
@@ -389,4 +390,61 @@ public class BlogContentFragment extends MakaanBaseFragment {
                 break;
         }
     }
-}
+
+    private void sendScreenNameEvent(String type) {
+        if (!TextUtils.isEmpty(type)) {
+            switch (mType) {
+                case SEARCH: {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD);
+                    properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD_SAVED_SEARCH);
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
+                    break;
+                }
+                case SHORTLIST: {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD);
+                    properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD_SHORTLIST);
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
+                    break;
+                }
+                case SITE_VISIT: {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD);
+                    properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD_SITE_VISIT);
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
+                    break;
+                }
+                case HOME_LOAN: {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD);
+                    properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD_HOMELOAN);
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
+                    break;
+                }
+                case UNIT_BOOK: {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD);
+                    properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD_UNIT_BOOKING);
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
+                    break;
+                }
+                case POSSESSION: {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD);
+                    properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD_POSSESSION);
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
+                    break;
+                }
+                case REGISTRATION: {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD);
+                    properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD_REGISTRATION);
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
+                    break;
+                }
+            }
+
+        }
+    }
+    }

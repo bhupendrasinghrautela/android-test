@@ -29,11 +29,11 @@
     <string name="select_locality_search_hint">Search Location</string>
     <string name="selected_items_count_text">See your selection below</string>
     <string name="empty_selection_text">search items for addition</string>
-    <string name="pyr_locality_value_string">select locality</string>
+    <string name="pyr_locality_value_string">search locality</string>
     <string name="pyr_location_string">location</string>
     <string name="pyr_bedroom_string">bedrooms</string>
     <string name="pyr_property_string">property</string>
-    <string name="pyr_property_value_string">residential property apartment</string>
+    <string name="pyr_property_value_string">select property type</string>
     <string name="search_locality">search locality in </string>
 
     <string name="pyr_budget_string">budget</string>

@@ -867,7 +867,9 @@
 
     <dimen name="activity_home_search_relative_view_left_margin">10dp</dimen>
     <dimen name="activity_home_search_relative_view_bottom_margin">100dp</dimen>
-
+    <dimen name="buy_rent_radio_group_home_total_height">60dp</dimen>
+    <dimen name="buy_rent_radio_group_home_margin_bottom">-20dp</dimen>
+    <dimen name="rent_button_home_margin_top">6dp</dimen>
 
     <!-- selected search item values -->
     <dimen name="selected_search_item_view_padding_top">4dp</dimen>

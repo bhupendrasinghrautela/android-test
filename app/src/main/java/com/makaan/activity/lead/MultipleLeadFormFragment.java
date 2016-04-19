@@ -20,6 +20,7 @@ import com.makaan.activity.shortlist.ShortListFavoriteAdapter;
 import com.makaan.activity.shortlist.ShortListRecentFragment;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.fragment.MakaanMessageDialogFragment;
 import com.makaan.fragment.project.ProjectFragment;
@@ -63,6 +64,7 @@ public class MultipleLeadFormFragment extends MakaanBaseFragment {
     private static final int MOSTLY_USED_COUNTRIES = 7;
     private Integer mCountryId;
     private static final int SINGLE_SELLER=1;
+    private boolean mAlreadyLoaded=false;
 
 
     @Override
@@ -71,6 +73,15 @@ public class MultipleLeadFormFragment extends MakaanBaseFragment {
         mLeadFormPresenter= LeadFormPresenter.getLeadFormPresenter();
         initializeCountrySpinner();
         setData();
+        if(!mAlreadyLoaded){
+             /*--------------------track--------------code-------------*/
+            Properties properties1 = MakaanEventPayload.beginBatch();
+            properties1.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_MULTIPLE_SELLERS_LEAD_FORM);
+            properties1.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_MULTIPLE_SELLERS_LEAD_FORM);
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
+            /*--------------------------------------------------------*/
+            mAlreadyLoaded=true;
+        }
         super.onActivityCreated(savedInstanceState);
     }
 

@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.makaan.R;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.event.user.UserLoginEvent;
 import com.makaan.event.user.UserRegistrationEvent;
 import com.makaan.response.login.OnUserLoginListener;
@@ -55,6 +56,7 @@ public class SignUpFragment extends Fragment {
     TextInputLayout mTilEmail;
     @Bind(R.id.til_signup_password)
     TextInputLayout mTilPassword;
+    private boolean mAlreadyLoaded=false;
 
     private OnUserRegistrationListener mOnUserRegistrationListener;
     private UserRegistrationDto userRegistrationDto;
@@ -69,11 +71,25 @@ public class SignUpFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(!mAlreadyLoaded){
+             /*--------------------track--------------code-------------*/
+            Properties properties1 = MakaanEventPayload.beginBatch();
+            properties1.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_LOGIN);
+            properties1.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_LOGIN_SIGNUP);
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
+            /*--------------------------------------------------------*/
+            mAlreadyLoaded=true;
+        }
+
+    }
+
     public void bindView(OnUserRegistrationListener listener, OnUserLoginListener loginListener){
         mOnUserRegistrationListener = listener;
         mOnUserLoginListener = loginListener;
     }
-
 
     @OnClick(R.id.sign_up_button)
     public void onLoginClick() {

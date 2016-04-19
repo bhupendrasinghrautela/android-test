@@ -69,6 +69,7 @@ public class ViewSellersDialogFragment extends DialogFragment {
     CheckBox selectSeller;
     @Bind(R.id.fragment_dialog_contact_sellers_submit_button)
     Button mSubmitButton;
+    private boolean mAlreadyLoaded=false;
 
 
     @OnCheckedChanged(R.id.fragment_dialog_contact_sellers_select_all_checkbox)
@@ -228,6 +229,15 @@ public class ViewSellersDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(!mAlreadyLoaded){
+             /*--------------------track--------------code-------------*/
+            Properties properties1 = MakaanEventPayload.beginBatch();
+            properties1.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_CHOOSE_MULTIPLE_SELLERS_LEAD_FORM);
+            properties1.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_CHOOSE_MULTIPLE_SELLERS_LEAD_FORM);
+            MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
+            /*--------------------------------------------------------*/
+            mAlreadyLoaded=true;
+        }
         setStyle(DialogFragment.STYLE_NORMAL, R.style.fullscreen_dialog_fragment_theme);
     }
 

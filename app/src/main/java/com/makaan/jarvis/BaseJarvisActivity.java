@@ -359,6 +359,12 @@ public abstract class BaseJarvisActivity extends AppCompatActivity{
                     properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerMManual);
                     properties.put(MakaanEventPayload.LABEL, launchPage.toLowerCase());
                     MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.view);
+
+                    Properties properties1 = MakaanEventPayload.beginBatch();
+                    properties1.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_CHAT_SCREEN);
+                    properties1.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_CHAT_SCREEN);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+
                     break;
             }
         }

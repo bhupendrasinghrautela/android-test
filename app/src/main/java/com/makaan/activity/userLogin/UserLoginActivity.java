@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.makaan.R;
 import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
+import com.makaan.constants.ScreenNameConstants;
 import com.makaan.cookie.CookiePreferences;
 import com.makaan.fragment.userLogin.LoginSocialFragment;
 import com.makaan.fragment.userLogin.ReplaceFragment;
@@ -41,6 +42,15 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /*--------------------track--------------code-------------*/
+        Properties properties1 = MakaanEventPayload.beginBatch();
+        properties1.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_LOGIN);
+        properties1.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_LOGIN);
+        MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+        /*--------------------------------------------------------*/
+
+
         setContentView(R.layout.user_login_activity);
         Intent intent = getIntent();
         int loginType = UserLoginPresenter.LOGIN_NONE;

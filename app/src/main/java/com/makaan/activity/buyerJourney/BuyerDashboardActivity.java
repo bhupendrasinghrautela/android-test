@@ -25,6 +25,7 @@ import com.makaan.fragment.buyerJourney.RewardsFragment;
 import com.makaan.fragment.buyerJourney.SaveSearchFragment;
 import com.makaan.fragment.buyerJourney.UploadDocumentsFragment;
 import com.makaan.fragment.pyr.ThankYouScreenFragment;
+import com.makaan.jarvis.analytics.AnalyticsService;
 import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.request.buyerjourney.PhaseChange;
 import com.makaan.service.ClientEventsService;
@@ -63,7 +64,6 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
     public static final int LOAD_THANK_YOU_FRAGMENT = 12;
     private boolean mOnlySellerRating;
 
-
     @Override
     protected int getContentViewId() {
         return R.layout.activity_base_buyer_journey;
@@ -86,6 +86,7 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
         Intent intent = getIntent();
         if(intent.hasExtra(TYPE)) {
             int type = intent.getIntExtra(TYPE, LOAD_FRAGMENT_CONTENT);
+            sendScreenNameEvent(type);
             switch (type) {
                 case LOAD_FRAGMENT_CONTENT:
                     BlogContentFragment fragment = new BlogContentFragment();
@@ -289,5 +290,42 @@ public class BuyerDashboardActivity extends MakaanFragmentActivity implements Bu
     @Override
     public void setTitle(int titleId) {
         mTitleTextView.setText(getResources().getString(titleId));
+    }
+
+    private void sendScreenNameEvent(int type) {
+        if (type != 0) {
+            switch (type) {
+                case LOAD_FRAGMENT_SHORTLIST: {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD);
+                    properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD_SHORTLIST);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+                    break;
+                }
+                case LOAD_FRAGMENT_SAVE_SEARCH:{
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD);
+                    properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD_SAVED_SEARCH);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+                    break;
+                }
+                case LOAD_FRAGMENT_REWARDS:{
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD);
+                    properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD_REWARDS);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+                    break;
+                }
+                case LOAD_FRAGMENT_SITE_VISIT:{
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD);
+                    properties.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_BUYER_DASHBOARD_SITE_VISIT);
+                    MakaanEventPayload.endBatch(this, MakaanTrackerConstants.Action.screenName);
+                    break;
+                }
+            }
+        }
+
+
     }
 }

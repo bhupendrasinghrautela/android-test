@@ -96,6 +96,12 @@ public class MakaanEventTracker {
                     break;
                 }
 
+                case screenName:{
+                    Analytics.with(context).screen(makaanEventPayload.get(MakaanEventPayload.CATEGORY).toString(),
+                            makaanEventPayload.get(MakaanEventPayload.LABEL).toString());
+                    Analytics.with(context).flush();
+                    break;
+                }
                 default: {
                     Analytics.with(context).track(action.getValue(), makaanEventPayload);
                     Analytics.with(context).flush();
