@@ -236,6 +236,7 @@ public class ViewSellersDialogFragment extends DialogFragment {
             properties1.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_CHOOSE_MULTIPLE_SELLERS_LEAD_FORM);
             MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
             /*--------------------------------------------------------*/
+            mAlreadyLoaded=true;
         }
         setStyle(DialogFragment.STYLE_NORMAL, R.style.fullscreen_dialog_fragment_theme);
     }

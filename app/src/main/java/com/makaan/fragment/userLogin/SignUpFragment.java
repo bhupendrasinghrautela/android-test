@@ -81,6 +81,7 @@ public class SignUpFragment extends Fragment {
             properties1.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_LOGIN_SIGNUP);
             MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
             /*--------------------------------------------------------*/
+            mAlreadyLoaded=true;
         }
 
     }

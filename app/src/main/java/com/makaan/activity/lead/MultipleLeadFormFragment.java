@@ -80,6 +80,7 @@ public class MultipleLeadFormFragment extends MakaanBaseFragment {
             properties1.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_MULTIPLE_SELLERS_LEAD_FORM);
             MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
             /*--------------------------------------------------------*/
+            mAlreadyLoaded=true;
         }
         super.onActivityCreated(savedInstanceState);
     }

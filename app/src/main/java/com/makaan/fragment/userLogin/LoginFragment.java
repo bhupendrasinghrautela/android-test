@@ -105,6 +105,7 @@ public class LoginFragment extends Fragment implements TextWatcher {
             properties1.put(MakaanEventPayload.LABEL, ScreenNameConstants.SCREEN_NAME_LOGIN_EMAIL);
             MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.screenName);
             /*--------------------------------------------------------*/
+            mAlreadyLoaded=true;
         }
     }
 
