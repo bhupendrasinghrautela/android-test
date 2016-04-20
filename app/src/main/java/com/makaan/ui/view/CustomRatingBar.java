@@ -14,6 +14,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.widget.RatingBar;
 
+import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
 
 /**
@@ -71,10 +72,27 @@ public class CustomRatingBar extends RatingBar {
             a.recycle();
         }
 
-        mProgressBitmap = BitmapFactory.decodeResource(getResources(), mProgressDrawable);
+        String savedId = String.valueOf(mProgressDrawable);
+
+        Bitmap bitmap = MakaanBuyerApplication.bitmapCache.getBitmap(savedId);
+        if (bitmap != null) {
+            mProgressBitmap = bitmap;
+        } else {
+            Bitmap b = BitmapFactory.decodeResource(getResources(), mProgressDrawable);
+            mProgressBitmap = b;
+            MakaanBuyerApplication.bitmapCache.putBitmap(savedId, b);
+        }
         mScaledProgressBitmap = Bitmap.createScaledBitmap(mProgressBitmap, mItemWidth, mItemHeight, true);
 
-        mIntermediateProgressBitmap = BitmapFactory.decodeResource(getResources(), mIntermediateProgressDrawable);
+        savedId = String.valueOf(mIntermediateProgressDrawable);
+        bitmap = MakaanBuyerApplication.bitmapCache.getBitmap(savedId);
+        if (bitmap != null) {
+            mIntermediateProgressBitmap = bitmap;
+        } else {
+            Bitmap b = BitmapFactory.decodeResource(getResources(), mIntermediateProgressDrawable);
+            mIntermediateProgressBitmap = b;
+            MakaanBuyerApplication.bitmapCache.putBitmap(savedId, b);
+        }
         mScaledIntermediateProgressBitmap = Bitmap.createScaledBitmap(mIntermediateProgressBitmap, mItemWidth, mItemHeight, true);
     }
 
