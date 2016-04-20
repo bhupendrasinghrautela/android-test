@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.android.volley.VolleyError;
+import com.facebook.FacebookAuthorizationException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.GoogleAuthUtil;
@@ -23,6 +25,7 @@ import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.event.user.UserLoginEvent;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.notification.GcmRegister;
+import com.makaan.response.ResponseError;
 import com.makaan.response.login.OnLoginWithMakaanSelectedListener;
 import com.makaan.response.login.OnUserLoginListener;
 import com.makaan.response.login.UserLoginPresenter;
@@ -130,7 +133,7 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
             ))).loginWithFacebookAccount(AccessToken.getCurrentAccessToken().getToken());
         }*/
 
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email","public_profile", "user_friends"));
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile", "user_friends"));
     }
 
     @OnClick(R.id.gmail_login)
@@ -183,23 +186,53 @@ public class LoginSocialFragment extends MakaanBaseFragment implements OnGoogleT
 
     @Override
     public void onFacebookTokenSuccess(String token) {
-        mOnUserLoginListener.onUserLoginBegin();
-        ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
-        ))).loginWithFacebookAccount(token);
+        if(!isVisible()) {
+            return;
+        }
+
+        if(null!=mOnUserLoginListener) {
+            mOnUserLoginListener.onUserLoginBegin();
+            ((UserLoginService) (MakaanServiceFactory.getInstance().getService(UserLoginService.class
+            ))).loginWithFacebookAccount(token);
+        }
     }
 
     @Override
-    public void onFacebookLoginManagerCallback() {
-
-    }
-
-    @Override
-    public void onFacebookTokenFail() {
+    public void onFacebookTokenFail(Exception exception) {
         Toast.makeText(getActivity(), getString(R.string.generic_error), Toast.LENGTH_SHORT).show();
+
+        if(!isVisible()){
+            return;
+        }
+
+        if(null != exception) {
+            if (exception instanceof FacebookAuthorizationException) {
+                LoginManager.getInstance().logOut();
+                LoginManager.getInstance().logInWithReadPermissions(
+                        this, Arrays.asList("email", "public_profile", "user_friends"));
+                return;
+            }
+        }
+
+        if(null == mOnUserLoginListener){
+            return;
+        }
+
+        ResponseError responseError = new ResponseError();
+        responseError.error = new VolleyError();
+
+        mOnUserLoginListener.onUserLoginError(responseError);
     }
 
     @Override
-    public void onFaceboookCancel() {
+    public void onFacebookCancel() {
+        if(!isVisible()) {
+            return;
+        }
+
+        if(null!=mOnUserLoginListener) {
+            mOnUserLoginListener.onUserLoginCancel();
+        }
 
     }
 

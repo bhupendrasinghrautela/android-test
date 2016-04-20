@@ -1,6 +1,7 @@
 package com.makaan.activity.userLogin;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,6 +16,8 @@ import com.makaan.cookie.CookiePreferences;
 import com.makaan.fragment.userLogin.LoginSocialFragment;
 import com.makaan.fragment.userLogin.ReplaceFragment;
 import com.makaan.fragment.userLogin.SignUpFragment;
+import com.makaan.jarvis.BaseJarvisActivity;
+import com.makaan.network.VolleyErrorParser;
 import com.makaan.response.ResponseError;
 import com.makaan.response.login.OnUserLoginListener;
 import com.makaan.response.login.OnUserRegistrationListener;
@@ -32,7 +35,7 @@ import com.segment.analytics.Properties;
 /**
  * Created by sunil on 29/12/15.
  */
-public class UserLoginActivity extends AppCompatActivity implements ReplaceFragment, OnUserLoginListener,OnUserRegistrationListener,OnFacebookTokenListener {
+public class UserLoginActivity extends BaseJarvisActivity implements ReplaceFragment, OnUserLoginListener,OnUserRegistrationListener {
 
     private FragmentTransaction mFragmentTransaction;
     private UserLoginPresenter mUserLoginPresenter;
@@ -65,16 +68,22 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
 
     @Override
     public void replaceFragment(Fragment fragment, boolean shouldAddToBackStack) {
+        super.onPostResume();
+
         mFragmentTransaction = getSupportFragmentManager().beginTransaction();
         mFragmentTransaction.replace(R.id.fragment_holder, fragment, fragment.getClass().getName());
         if(shouldAddToBackStack) {
             mFragmentTransaction.addToBackStack(fragment.getClass().getName());
         }
-        mFragmentTransaction.commit();
+        mFragmentTransaction.commitAllowingStateLoss();
     }
 
     @Override
     public void onUserLoginSuccess(UserResponse userResponse, String response) {
+        if(isActivityDead()){
+            return;
+        }
+
         cancelProgressDialog();
         CookiePreferences.setUserInfo(this, response);
         CookiePreferences.setUserLoggedIn(this);
@@ -85,15 +94,32 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
 
     @Override
     public void onUserLoginError(ResponseError error) {
+        if(isActivityDead()){
+            return;
+        }
+
         cancelProgressDialog();
-        if(error.msg!=null || !error.msg.isEmpty()) {
-            Toast.makeText(this, error.msg.toLowerCase(), Toast.LENGTH_SHORT).show();
+        if(error!=null && error.error!=null ) {
+            Toast.makeText(this, VolleyErrorParser.getMessage(error.error), Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onUserLoginBegin() {
-            mProgressDialog.showDialog(this, PLEASE_WAIT);
+        if(isActivityDead()){
+            return;
+        }
+
+        mProgressDialog.showDialog(this, PLEASE_WAIT);
+    }
+
+    @Override
+    public void onUserLoginCancel() {
+        if(isActivityDead()){
+            return;
+        }
+
+        cancelProgressDialog();
     }
 
     @Override
@@ -117,10 +143,9 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
             myFragmnt=null;
         }
 
-        if (getSupportFragmentManager().getBackStackEntryCount() > 1 ){
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0 ){
             getSupportFragmentManager().popBackStack();
         } else {
-            super.onBackPressed();
             super.onBackPressed();
         }
     }
@@ -172,28 +197,19 @@ public class UserLoginActivity extends AppCompatActivity implements ReplaceFragm
         wishListService.get();
     }
 
-    @Override
-    public void onFacebookTokenSuccess(String token) {
-        cancelProgressDialog();
-    }
-
-    @Override
-    public void onFacebookLoginManagerCallback() {
-        cancelProgressDialog();
-    }
-
-    @Override
-    public void onFacebookTokenFail() {
-        cancelProgressDialog();
-    }
-
-    @Override
-    public void onFaceboookCancel() {
-        cancelProgressDialog();
-    }
-
     private void cancelProgressDialog(){
         if(mProgressDialog !=null)
             mProgressDialog.dismissDialog();
     }
+
+    @Override
+    public boolean isJarvisSupported() {
+        return false;
+    }
+
+    @Override
+    public String getScreenName() {
+        return ScreenNameConstants.SCREEN_NAME_LOGIN;
+    }
+
 }

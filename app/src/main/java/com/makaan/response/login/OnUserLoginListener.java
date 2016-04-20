@@ -11,4 +11,5 @@ public interface OnUserLoginListener {
     void onUserLoginSuccess(UserResponse userResponse, String response);
     void onUserLoginError(ResponseError error);
     void onUserLoginBegin();
+    void onUserLoginCancel();
 }

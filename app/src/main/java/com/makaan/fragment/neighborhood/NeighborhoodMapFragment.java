@@ -14,12 +14,11 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
 import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -51,6 +50,12 @@ import butterknife.OnClick;
  */
 public class NeighborhoodMapFragment extends MakaanBaseFragment implements NeighborhoodCategoryAdapter.CategoryClickListener {
 
+    @Bind(R.id.neighborhood_map_view)
+    MapView mMapView;
+
+    @Bind(R.id.neighborhood_category)
+    RecyclerView mNeighborhoodCategoryView;
+
     private GoogleMap mPropertyMap;
     private List<Marker> mAllMarkers = new ArrayList<Marker>();
     private LatLngBounds.Builder mLatLngBoundsBuilder;
@@ -63,12 +68,6 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
     private Marker mEntityMarker;
     private Integer preSelectDisplayId;
     private String preSelectPlaceID;
-
-    @Bind(R.id.neighborhood_map_view)
-    MapView mMapView;
-
-    @Bind(R.id.neighborhood_category)
-    RecyclerView mNeighborhoodCategoryView;
     private boolean mIsLocality;
 
     @Override
@@ -79,30 +78,23 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mNeighborhoodCategoryAdapter = new NeighborhoodCategoryAdapter(getActivity(), this);
+
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);int status =
-                GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
+        super.onActivityCreated(savedInstanceState);
 
-        if(status == ConnectionResult.SUCCESS) {
-            initMap(savedInstanceState);
-
-        }else{
-            GooglePlayServicesUtil.getErrorDialog(status, getActivity(), status);
-            // todo
-            mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-
-            mNeighborhoodCategoryView.setLayoutManager(mLayoutManager);
-        }
+        initCategoryRecyclerView();
+        initMap(savedInstanceState);
     }
 
     @Override
     public void onResume() {
-        mMapView.onResume();
+        if(mMapView != null) {
+            mMapView.onResume();
+        }
         super.onResume();
     }
 
@@ -117,7 +109,9 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mMapView.onLowMemory();
+        if(mMapView != null) {
+            mMapView.onLowMemory();
+        }
     }
 
     public void setData(EntityInfo entityInfo, List<AmenityCluster> amenityClusters, boolean isLocality){
@@ -137,61 +131,61 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
         preSelectPlaceID = placeId;
     }
 
-    private void setCategoryPosition(int position){
-        if(mAmenityClusters == null || mAmenityClusters.isEmpty() || mPropertyMap == null){
-            return;
+    private void initCategoryRecyclerView(){
+
+        if(null==mLayoutManager || null == mNeighborhoodCategoryAdapter) {
+            mNeighborhoodCategoryAdapter = new NeighborhoodCategoryAdapter(getActivity(), this);
+            mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+            mNeighborhoodCategoryView.setLayoutManager(mLayoutManager);
+            mNeighborhoodCategoryView.setAdapter(mNeighborhoodCategoryAdapter);
         }
-        populateMarker(mAmenityClusters.get(position));
     }
 
-/*    @Subscribe
-    public void onResults(AmenityGetEvent amenityGetEvent) {
-        if(amenityGetEvent == null || amenityGetEvent.amenityClusters == null){
-            return;
-        }
-        //mAmenityClusters = amenityGetEvent.amenityClusters;
-        for(AmenityCluster cluster : amenityGetEvent.amenityClusters){
-            if(null!=cluster && null!=cluster.cluster && cluster.cluster.size()>0){
-                mAmenityClusters.add(cluster);
-            }
-        }
-        mNeighborhoodCategoryAdapter.setData(mAmenityClusters);
-        setCategoryPosition(0);
-    }*/
 
     private void initMap(@Nullable Bundle savedInstanceState) {
 
         mMapView.onCreate(savedInstanceState);
         MapsInitializer.initialize(this.getActivity());
-        mPropertyMap = mMapView.getMap();
 
-        if(mPropertyMap==null){
-            return;
-        }
-        mPropertyMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
-            public boolean onMarkerClick(Marker marker) {
-                if(null==mEntityMarker || !marker.getTitle().equalsIgnoreCase(mEntityMarker.getTitle() )) {
-                    selectMarker(marker);
+            public void onMapReady(GoogleMap googleMap) {
+                if (null == googleMap) {
+                    return;
                 }
-                return false;
+
+                mPropertyMap = googleMap;
+                mPropertyMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        if (null == mEntityMarker || !marker.getTitle().equalsIgnoreCase(mEntityMarker.getTitle())) {
+                            selectMarker(marker);
+                        }
+                        return false;
+                    }
+                });
+
+                if (mAmenityClusters != null && mAmenityClusters.size() > 0) {
+                    mapAmenityCluster();
+                } else {
+                    if (mEntityInfo != null) {
+                        ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class))
+                                .getAmenitiesByLocation(mEntityInfo.mPlaceLat, mEntityInfo.mPlaceLon, 3,
+                                        mIsLocality ? AmenityService.EntityType.LOCALITY : AmenityService.EntityType.PROJECT);
+                        showProgress();
+                    } else {
+                        showNoResults();
+                    }
+                }
+
+                if (mEntityInfo != null && !TextUtils.isEmpty(mEntityInfo.mPlaceName)) {
+                    getActivity().setTitle(mEntityInfo.mPlaceName);
+                }
+
             }
         });
-        if(mAmenityClusters != null && mAmenityClusters.size() > 0) {
-            mapAmenityCluster();
-        } else {
-            if(mEntityInfo != null) {
-                ((AmenityService) MakaanServiceFactory.getInstance().getService(AmenityService.class))
-                        .getAmenitiesByLocation(mEntityInfo.mPlaceLat, mEntityInfo.mPlaceLon, 3,
-                                mIsLocality ? AmenityService.EntityType.LOCALITY :AmenityService.EntityType.PROJECT);
-                showProgress();
-            } else {
-                showNoResults();
-            }
-        }
-        if(mEntityInfo != null && !TextUtils.isEmpty(mEntityInfo.mPlaceName)) {
-            getActivity().setTitle(mEntityInfo.mPlaceName);
-        }
+
+
     }
 
     @Subscribe
@@ -203,39 +197,36 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
         if (amenityGetEvent == null || amenityGetEvent.amenityClusters == null) {
             return;
         }
+
         mAmenityClusters = amenityGetEvent.amenityClusters;
         mapAmenityCluster();
         showContent();
-        /*if(mType == OverviewItemType.LOCALITY_MAP || mType == OverviewItemType.PROJECT_MAP
-                || mType == OverviewItemType.PROPERTY_MAP) {
-            NeighborhoodMapFragment fragment = new NeighborhoodMapFragment();
-            fragment.setData(mEntityInfo, mAmenityGetEvent.amenityClusters);
-            initFragment(R.id.container, fragment, false);
-            showContent();
-        }*/
     }
 
     private void mapAmenityCluster() {
-        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
 
-        mNeighborhoodCategoryView.setLayoutManager(mLayoutManager);
-        mNeighborhoodCategoryView.setAdapter(mNeighborhoodCategoryAdapter);
+        if (mAmenityClusters == null || mAmenityClusters.isEmpty()) {
+            return;
+        }
+
+        initCategoryRecyclerView();
         mNeighborhoodCategoryAdapter.setData(mAmenityClusters);
+
         if(preSelectDisplayId!=null) {
             mNeighborhoodCategoryAdapter.setSelectedPosition(preSelectDisplayId);
-            setCategoryPosition(preSelectDisplayId);
-        }
-        else{
-            setCategoryPosition(0);
+            populateMarker(preSelectDisplayId);
+        } else{
+            populateMarker(0);
         }
     }
 
-    private void populateMarker(AmenityCluster amenityCluster){
-        if(amenityCluster == null){
+    private void populateMarker(int selectedCategoryPosition){
+        if(mAmenityClusters == null || mAmenityClusters.isEmpty() || mPropertyMap == null){
             return;
         }
-        mSelectedAmenityCluster = amenityCluster;
-        List<Amenity> amenities = amenityCluster.cluster;
+
+        mSelectedAmenityCluster = mAmenityClusters.get(selectedCategoryPosition);
+        List<Amenity> amenities = mSelectedAmenityCluster.cluster;
         mAllMarkers.clear();
         clearMap();
 
@@ -378,19 +369,21 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
             properties.put(MakaanEventPayload.LABEL, mAmenityClusters.get(position).name);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.mapPropertyLocality);
         }
+
         if (ScreenNameConstants.SCREEN_NAME_PROJECT.equalsIgnoreCase(((BaseJarvisActivity) getActivity()).getScreenName())) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerProject);
             properties.put(MakaanEventPayload.LABEL, mAmenityClusters.get(position).name);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.mapProjectLocality);
         }
+
         if (ScreenNameConstants.SCREEN_NAME_LOCALITY.equalsIgnoreCase(((BaseJarvisActivity) getActivity()).getScreenName())) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
             properties.put(MakaanEventPayload.LABEL, mAmenityClusters.get(position).name);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.mapLocalityNeighbourhood);
         }
-        populateMarker(mAmenityClusters.get(position));
+        populateMarker(position);
     }
 
     private class SelectedMarker {

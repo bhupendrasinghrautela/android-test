@@ -39,7 +39,7 @@ public class UserLoginPresenter implements
     public void showLoginChooserFragment(int loginType){
         mLoginSocialFragment = new LoginSocialFragment();
         mLoginSocialFragment.bindView(this, mOnUserLoginListener, loginType);
-        mReplaceFragment.replaceFragment(mLoginSocialFragment, true);
+        mReplaceFragment.replaceFragment(mLoginSocialFragment, false);
     }
 
     public void showLoginWithMakaanFragment(){

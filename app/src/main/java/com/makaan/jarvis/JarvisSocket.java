@@ -3,10 +3,7 @@ package com.makaan.jarvis;
 import android.os.Handler;
 
 import com.crashlytics.android.Crashlytics;
-import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.socketio.client.Ack;
-import com.github.nkzawa.socketio.client.IO;
-import com.github.nkzawa.socketio.client.Socket;
+
 import com.makaan.cache.MasterDataCache;
 import com.makaan.jarvis.event.OnExposeEvent;
 import com.makaan.jarvis.message.ChatObject;
@@ -25,6 +22,11 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.util.Map;
+
+import io.socket.client.Ack;
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 
 /**
  * Created by sunil on 07/01/16.
@@ -223,7 +225,8 @@ public class JarvisSocket {
             mSocket.emit("done-rating", data, new Ack() {
                 @Override
                 public void call(Object... args) {
-
+                    //TODO might require to refresh the socket
+                    //isRefreshRequired = true;
                 }
             });
         } catch (Exception e) {
