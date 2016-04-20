@@ -7,7 +7,7 @@ public class ApiConstants {
 
 
     //public static final String BASE_URL = "https://mp-qa2.makaan-ws.com";
-    public static final String BASE_URL = "http://www.makaan.com";
+    public static final String BASE_URL = "https://www.makaan.com";
     //public static final String BASE_URL = "https://mp-qa1.makaan-ws.com";
     //public static final String BASE_URL = "https://preprod.makaan-ws.com";
 

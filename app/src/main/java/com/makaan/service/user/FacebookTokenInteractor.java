@@ -66,24 +66,26 @@ public class FacebookTokenInteractor {
 
                     @Override
                     public void onSuccess(final LoginResult loginResult) {
-                        mOnFacebookTokenListener.onFacebookLoginManagerCallback();
-
                         GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
                                 new GraphRequest.GraphJSONObjectCallback() {
                                     @Override
                                     public void onCompleted(
                                             JSONObject object,
                                             GraphResponse response) {
+                                        if(null == mOnFacebookTokenListener) {
+                                            return;
+                                        }
+
                                         if (object != null) {
                                             try {
                                                 mOnFacebookTokenListener.onFacebookTokenSuccess(loginResult.getAccessToken().getToken());
                                                 AccessToken.setCurrentAccessToken(loginResult.getAccessToken());
                                             } catch (Exception e) {
-                                                mOnFacebookTokenListener.onFacebookTokenFail();
+                                                mOnFacebookTokenListener.onFacebookTokenFail(e);
                                             }
                                             //mUserId=object.optString("email");
                                         } else {
-                                            mOnFacebookTokenListener.onFacebookTokenFail();
+                                            mOnFacebookTokenListener.onFacebookTokenFail(new RuntimeException());
                                         }
                                     }
                                 });
@@ -95,12 +97,16 @@ public class FacebookTokenInteractor {
 
                     @Override
                     public void onCancel() {
-                        mOnFacebookTokenListener.onFaceboookCancel();
+                        if(null != mOnFacebookTokenListener) {
+                            mOnFacebookTokenListener.onFacebookCancel();
+                        }
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
-                        mOnFacebookTokenListener.onFacebookTokenFail();
+                        if(null!=mOnFacebookTokenListener) {
+                            mOnFacebookTokenListener.onFacebookTokenFail(exception);
+                        }
                     }
                 });
     }

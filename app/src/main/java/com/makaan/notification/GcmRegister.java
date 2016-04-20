@@ -34,7 +34,6 @@ import java.io.IOException;
 public class GcmRegister{
 	private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String APP_IDENTIFIER = "MakaanBuyer";
-	private static GoogleCloudMessaging sGcm;
     private static String sRegid;
     private static Context sContext;
     private static String sUserKey;
@@ -51,43 +50,17 @@ public class GcmRegister{
      * @param userId
      * */
     public static void checkAndSetGcmId(Context context, String userId){
-        if (checkPlayServices(context)) {
-            sUserKey = userId;
-            sGcm = GoogleCloudMessaging.getInstance(context);
-            sRegid = getRegistrationId(context);
-            if (sRegid.isEmpty()) {
-                registerInBackground(context);
-            }else{
-                JarvisConstants.DELIVERY_ID = sRegid;
+        sContext = context;
+        sUserKey = userId;
+        sRegid = getRegistrationId(context);
+        if (sRegid.isEmpty()) {
+            registerInBackground(context);
+        }else{
+            JarvisConstants.DELIVERY_ID = sRegid;
 
-                //not required, but just to make sure gcm is registered on makaan server
-                sendRegistrationIdToBackend(sRegid);
-            }
+            //not required, but just to make sure gcm is registered on makaan server
+            sendRegistrationIdToBackend(sRegid);
         }
-    }
-
-
-    private static boolean checkPlayServices(Context context) {
-    	sContext = context;
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                try {
-                    if(context==null || ((Activity) context).isFinishing()
-                            || context instanceof MakaanBaseSearchActivity){
-                        return false;
-                    }
-                    GooglePlayServicesUtil.getErrorDialog(resultCode, (Activity) context,
-                            PLAY_SERVICES_RESOLUTION_REQUEST).show();
-                } catch (Exception e) {
-                	
-                }
-            } else {
-                ((Activity) context).finish();
-            }
-            return false;
-        }
-        return true;
     }
 
     private static String getRegistrationId(Context context) {
@@ -123,11 +96,6 @@ public class GcmRegister{
                             GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
 
                     JarvisConstants.DELIVERY_ID = sRegid;
-
-                    /*if (sGcm == null) {
-                        sGcm = GoogleCloudMessaging.getInstance(context);
-                    }
-                    sRegid = sGcm.register(SENDER_ID);*/
 
                     JarvisClient.getInstance().openSocketAndFetchHistory();
                     msg = "Device registered, registration ID = " + sRegid;
@@ -171,8 +139,6 @@ public class GcmRegister{
             pubSub.subscribe(token, "/topics/" + topic, null);
         }
     }
-
-
 
     private static GcmRegistrationDto getGcmRegistrationDto(String regId){
 

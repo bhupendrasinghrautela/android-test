@@ -14,12 +14,11 @@ import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -56,7 +55,6 @@ public class SerpMapFragment extends MakaanBaseFragment {
     @Bind(R.id.serp_map_view)
     MapView mMapView;
     private SerpRequestCallback mCallback;
-    private boolean mGooglePlayServicesAvailable = false;
 
     @Override
     protected int getContentViewId() {
@@ -72,36 +70,15 @@ public class SerpMapFragment extends MakaanBaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
-        if (status == ConnectionResult.SUCCESS) {
-            mGooglePlayServicesAvailable = true;
-            try {
-                initMap(savedInstanceState);
-            }catch(Exception e){
-                return;
-            }
-            initPager();
-            if (mListings != null) {
-                adapter.populateMarker(mListings);
-                if((adapter.listings == null || adapter.listings.size() == 0) && mTotalCount <= mListings.size()) {
-                    showNoResults("there are no listings matching your search criteria");
-                } else {
-                    showContent();
-                    mProjectViewPager.setData(adapter.listings, mTotalCount > mListings.size(), mCallback);
-                    adapter.displayProject();
-                    // display first property be default
-//                adapter.setSelectedMarkerPosition(0, true);
-                }
-            }
-        } else {
-            GooglePlayServicesUtil.getErrorDialog(status, getActivity(), status).show();
-        }
+        initMap(savedInstanceState);
 
     }
 
     @Override
     public void onResume() {
-        mMapView.onResume();
+        if (mMapView != null) {
+            mMapView.onResume();
+        }
         mProjectViewPager.notifyDataSetChanged();
         super.onResume();
     }
@@ -117,7 +94,9 @@ public class SerpMapFragment extends MakaanBaseFragment {
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mMapView.onLowMemory();
+        if (mMapView != null) {
+            mMapView.onLowMemory();
+        }
     }
 
     public void setData(ArrayList<Listing> listings, int count, SerpRequestCallback callback, int requestType) {
@@ -131,7 +110,7 @@ public class SerpMapFragment extends MakaanBaseFragment {
         mCallback = callback;
         mListings.addAll(listings);
 
-        if (mProjectViewPager != null && mGooglePlayServicesAvailable) {
+        if (mProjectViewPager != null) {
             adapter.populateMarker(mListings);
 
             if((adapter.listings == null || adapter.listings.size() == 0) && mTotalCount <= mListings.size()) {
@@ -153,29 +132,49 @@ public class SerpMapFragment extends MakaanBaseFragment {
 
         mMapView.onCreate(savedInstanceState);
         MapsInitializer.initialize(this.getActivity());
-        mPropertyMap = mMapView.getMap();
-
-        if (mPropertyMap == null) {
-            return;
-        }
-        mPropertyMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
-            public boolean onMarkerClick(Marker marker) {
-                adapter.displayProject(marker);
-                return false;
+            public void onMapReady(GoogleMap googleMap) {
+                if (null == googleMap) {
+                    return;
+                }
+
+                mPropertyMap = googleMap;
+
+                mPropertyMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        adapter.displayProject(marker);
+                        return false;
+                    }
+                });
+
+                mMapView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        return false;
+                    }
+                });
+
+                initPager();
+                if (mListings != null) {
+                    adapter.populateMarker(mListings);
+                    if((adapter.listings == null || adapter.listings.size() == 0) && mTotalCount <= mListings.size()) {
+                        showNoResults("there are no listings matching your search criteria");
+                    } else {
+                        showContent();
+                        mProjectViewPager.setData(adapter.listings, mTotalCount > mListings.size(), mCallback);
+                        adapter.displayProject();
+                    }
+                }
+
             }
         });
 
-        mMapView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                /*if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    adapter.unselectMarker();
-                }*/
-                return false;
-            }
-        });
+
+
+
     }
 
     private void initPager() {
@@ -318,6 +317,10 @@ public class SerpMapFragment extends MakaanBaseFragment {
 
         private void addMarker(LatLngBounds.Builder latLngBoundsBuilder,
                                double lat, double lng, Listing listing) {
+            if(null == mMapView || null == mPropertyMap){
+                return;
+            }
+
             ClubbedMarker clubbedMarker = null;
             Marker marker = checkIfAlreadyExists(lat, lng);
             if(marker != null) {
@@ -421,46 +424,50 @@ public class SerpMapFragment extends MakaanBaseFragment {
 
         private void animateToLocation(final LatLngBounds.Builder latLngBoundsBuilder) {
 
-            if (mMapView == null) {
+            if (null == mMapView || null == mPropertyMap) {
                 return;
             }
 
             //TODO calculate padding
             final int mapPadding = 180;
 
-            final LatLngBounds current_LatLngBounds = latLngBoundsBuilder.build();
+            final LatLngBounds currentLatLngBounds = latLngBoundsBuilder.build();
             try {
-                mPropertyMap.animateCamera(
+                mPropertyMap.moveCamera(
                         CameraUpdateFactory.newLatLngBounds(
-                                current_LatLngBounds, mapPadding));
+                                currentLatLngBounds, mapPadding));
 
             } catch (Exception e) {
                 if (mMapView.getViewTreeObserver().isAlive()) {
                     mMapView.getViewTreeObserver().addOnGlobalLayoutListener(
-                            new ViewTreeObserver.OnGlobalLayoutListener() {
+                        new ViewTreeObserver.OnGlobalLayoutListener() {
 
-                                @SuppressWarnings("deprecation")
-                                @SuppressLint("NewApi")
-                                @Override
-                                public void onGlobalLayout() {
-                                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                                        mMapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                                    } else {
-                                        mMapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                                    }
-                                    try {
-                                        mPropertyMap.animateCamera(
-                                                CameraUpdateFactory.newLatLngBounds(
-                                                        current_LatLngBounds, mapPadding));
-                                    } catch (Exception e) {
-                                    }
+                            @SuppressWarnings("deprecation")
+                            @SuppressLint("NewApi")
+                            @Override
+                            public void onGlobalLayout() {
+                                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                                    mMapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                                } else {
+                                    mMapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                                 }
-                            });
+                                try {
+                                    mPropertyMap.moveCamera(
+                                            CameraUpdateFactory.newLatLngBounds(
+                                                    currentLatLngBounds, mapPadding));
+                                } catch (Exception e) {
+                                }
+                            }
+                        });
                 }
             }
         }
 
         private void displayProject(Marker marker) {
+            if(null==markers || markers.isEmpty() ||null==marker){
+                return;
+            }
+
             if (markers.contains(marker)) {
                 int pos = markers.indexOf(marker);
                 mProjectViewPager.setCurrentItem(pos, true);
@@ -469,6 +476,9 @@ public class SerpMapFragment extends MakaanBaseFragment {
         }
 
         private void displayProject(int pos) {
+            if(null==markers || markers.isEmpty()){
+                return;
+            }
             if (pos < markers.size()) {
                 mProjectViewPager.setCurrentItem(pos, true);
                 selectMarker(pos);
@@ -476,6 +486,11 @@ public class SerpMapFragment extends MakaanBaseFragment {
         }
 
         void setSelectedMarkerPosition(int position, boolean displayProperty) {
+            if(null==markers || markers.isEmpty() ||
+                    null==listings || listings.isEmpty()){
+                return;
+            }
+
             unselectMarker(selectedMarkerPosition);
 
             if (position < markers.size()) {
@@ -490,8 +505,12 @@ public class SerpMapFragment extends MakaanBaseFragment {
 
                 if(listings.get(selectedMarkerPosition).latitude != null
                         && listings.get(selectedMarkerPosition).longitude != null) {
-                    LatLng projectLocation = new LatLng(listings.get(selectedMarkerPosition).latitude, listings.get(selectedMarkerPosition).longitude);
-                    mPropertyMap.animateCamera(CameraUpdateFactory.newLatLng(projectLocation));
+                    LatLng projectLocation = new LatLng(listings.get(selectedMarkerPosition).latitude,
+                            listings.get(selectedMarkerPosition).longitude);
+
+                    if(null!=mPropertyMap) {
+                        mPropertyMap.animateCamera(CameraUpdateFactory.newLatLng(projectLocation));
+                    }
 
                     handleMarkerAlpha(markers.get(selectedMarkerPosition));
                 }
@@ -524,6 +543,11 @@ public class SerpMapFragment extends MakaanBaseFragment {
 
 
         private boolean unselectMarker(int i) {
+            if(null==markers || markers.isEmpty() ||
+                    null==listings || listings.isEmpty()){
+                return false;
+            }
+
             if(i < listings.size()) {
                 Bitmap markerBitmap = getMarkerBitmap(false, listings.get(i));
                 setMarkerIcon(markers.get(i), markerBitmap);
@@ -533,6 +557,11 @@ public class SerpMapFragment extends MakaanBaseFragment {
         }
 
         private boolean selectMarker(int i) {
+            if(null==markers || markers.isEmpty() ||
+                    null==listings || listings.isEmpty()){
+                return false;
+            }
+
             if(i < listings.size()) {
                 Bitmap markerBitmap = getMarkerBitmap(true, listings.get(i));
                 setMarkerIcon(markers.get(i), markerBitmap);
