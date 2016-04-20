@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.makaan.R;
 import com.makaan.activity.HomeActivity;
 import com.makaan.util.AppBus;
@@ -27,6 +29,8 @@ import butterknife.OnClick;
  * Created by rohitgarg on 1/9/16.
  */
 public abstract class MakaanBaseFragment extends Fragment {
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 101;
+
     @Bind(R.id.fragment_makaan_base_no_result_image_view)
     ImageView mNoResultsImageView;
     @Bind(R.id.fragment_makaan_base_no_result_layout)
@@ -188,5 +192,21 @@ public abstract class MakaanBaseFragment extends Fragment {
 
     protected boolean isFragmentVisible() {
         return isAdded() && !isHidden() && getActivity() != null && !getActivity().isFinishing();
+    }
+
+    public boolean checkPlayServices() {
+        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
+        int result = googleAPI.isGooglePlayServicesAvailable(getActivity());
+
+        if(result != ConnectionResult.SUCCESS) {
+            if(googleAPI.isUserResolvableError(result)) {
+                googleAPI.getErrorDialog(getActivity(), result,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            }
+
+            return false;
+        }
+
+        return true;
     }
 }
