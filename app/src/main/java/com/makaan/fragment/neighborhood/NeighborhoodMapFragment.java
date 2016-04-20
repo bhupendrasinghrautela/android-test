@@ -132,10 +132,13 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
     }
 
     private void initCategoryRecyclerView(){
-        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        mNeighborhoodCategoryAdapter = new NeighborhoodCategoryAdapter(getActivity(), this);
-        mNeighborhoodCategoryView.setLayoutManager(mLayoutManager);
-        mNeighborhoodCategoryView.setAdapter(mNeighborhoodCategoryAdapter);
+
+        if(null==mLayoutManager || null == mNeighborhoodCategoryAdapter) {
+            mNeighborhoodCategoryAdapter = new NeighborhoodCategoryAdapter(getActivity(), this);
+            mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+            mNeighborhoodCategoryView.setLayoutManager(mLayoutManager);
+            mNeighborhoodCategoryView.setAdapter(mNeighborhoodCategoryAdapter);
+        }
     }
 
 
@@ -202,10 +205,11 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
 
     private void mapAmenityCluster() {
 
-        if (mAmenityClusters == null && mAmenityClusters.isEmpty()) {
+        if (mAmenityClusters == null || mAmenityClusters.isEmpty()) {
             return;
         }
 
+        initCategoryRecyclerView();
         mNeighborhoodCategoryAdapter.setData(mAmenityClusters);
 
         if(preSelectDisplayId!=null) {
