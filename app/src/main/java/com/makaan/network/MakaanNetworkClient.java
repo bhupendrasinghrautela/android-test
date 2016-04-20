@@ -681,7 +681,7 @@ public class MakaanNetworkClient {
      */
     public ImageLoader getImageLoader() {
         if (mImageLoader == null) {
-            mImageLoader = new ImageLoader(this.makaanGetRequestQueue, new LruBitmapCache());
+            mImageLoader = new ImageLoader(this.makaanGetRequestQueue, new LruBitmapCache(12));
         }
         return this.mImageLoader;
     }

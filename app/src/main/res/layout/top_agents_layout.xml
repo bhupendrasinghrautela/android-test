@@ -17,7 +17,6 @@
             android:id="@+id/agent_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/agent_image_height"
-            android:src="@drawable/temp_builder"
             android:scaleType="fitXY"/>
 
         <TextView
