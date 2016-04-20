@@ -541,7 +541,7 @@ public class CityOverViewFragment extends OverviewFragment implements CompressTe
             bundle.putString("title", getResources().getString(R.string.properties_in) + " " + mCity.label);
             newFragment.setArguments(bundle);
             initFragment(R.id.container_nearby_localities_props, newFragment, false);
-            newFragment.setData(taxonomyCardList);
+            newFragment.setData(taxonomyCardList, getActivity());
         }
     }
 

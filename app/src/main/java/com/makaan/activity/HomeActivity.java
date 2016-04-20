@@ -68,6 +68,9 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     TextView tvSearch;
     FrameLayout topBar;
 
+    @Bind(R.id.container)
+    View mContainer;
+
     @Bind(R.id.makaan_toolbar_login_text_view)
     TextView tvUserName;
     @Bind(R.id.makaan_toolbar_profile_icon_image_view)
@@ -255,6 +258,7 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        mContainer.setBackgroundResource(R.drawable.mobile_home);
         setUserData();
         startBlinking();
     }
@@ -290,6 +294,7 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        mContainer.setBackground(null);
         stopBlinking();
     }
 

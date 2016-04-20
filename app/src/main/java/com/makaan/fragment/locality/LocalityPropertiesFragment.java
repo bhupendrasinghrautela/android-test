@@ -1,5 +1,6 @@
 package com.makaan.fragment.locality;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -59,15 +60,16 @@ public class LocalityPropertiesFragment extends MakaanBaseFragment {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    public void setData(List<TaxonomyCard> taxonomyCardList) {
-        mAdapter = new PropertiesAdapter(taxonomyCardList);
+    public void setData(List<TaxonomyCard> taxonomyCardList, Context context) {
+        mAdapter = new PropertiesAdapter(taxonomyCardList, context);
         if (mRecyclerView != null)
             mRecyclerView.setAdapter(mAdapter);
     }
 
 
-    private class PropertiesAdapter
+    private static class PropertiesAdapter
             extends RecyclerView.Adapter<PropertiesAdapter.ViewHolder> {
+        private final Context mContext;
         private List<TaxonomyCard> taxonomyCardList;
 
         public class ViewHolder extends RecyclerView.ViewHolder {
@@ -86,18 +88,19 @@ public class LocalityPropertiesFragment extends MakaanBaseFragment {
                     @Override
                     public void onClick(View view) {
                         TaxonomyCard taxonomyCard = taxonomyCardList.get(getAdapterPosition());
-                        taxonomyCard.serpRequest.launchSerp(getActivity());
+                        taxonomyCard.serpRequest.launchSerp(mContext);
                         Properties properties = MakaanEventPayload.beginBatch();
                         properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
                         properties.put(MakaanEventPayload.LABEL, taxonomyCard.label1+"_"+(getAdapterPosition()+1));
-                        MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.selectPropertiesLocality);
+                        MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.selectPropertiesLocality);
                     }
                 });
             }
         }
 
-        public PropertiesAdapter(List<TaxonomyCard> taxonomyCardList) {
+        public PropertiesAdapter(List<TaxonomyCard> taxonomyCardList, Context context) {
             this.taxonomyCardList = taxonomyCardList;
+            mContext = context;
         }
 
         @Override
@@ -154,7 +157,7 @@ public class LocalityPropertiesFragment extends MakaanBaseFragment {
             if (bitmap != null) {
                 return bitmap;
             } else {
-                Bitmap b = BitmapFactory.decodeResource(getResources(), id);
+                Bitmap b = BitmapFactory.decodeResource(mContext.getResources(), id);
                 MakaanBuyerApplication.bitmapCache.putBitmap(imageName, b);
                 return b;
             }

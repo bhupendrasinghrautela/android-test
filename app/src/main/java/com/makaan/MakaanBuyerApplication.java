@@ -100,7 +100,7 @@ public class MakaanBuyerApplication extends Application {
         GcmRegister.checkAndSetGcmId(this,null);
 
         Fabric.with(this, new Crashlytics());
-        bitmapCache = new LruBitmapCache();
+        bitmapCache = new LruBitmapCache(24);
 
         // leak canary to detect memory leaks
         // comment below line to disable leak canary

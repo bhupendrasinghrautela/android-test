@@ -511,7 +511,7 @@ public class LocalityFragment extends OverviewFragment implements CompressTextVi
             bundle.putString("title", getResources().getString(R.string.locality_properties_label) + " " + locality.label);
             newFragment.setArguments(bundle);
             initFragment(R.id.container_nearby_localities_props, newFragment, false);
-            newFragment.setData(taxonomyCardList);
+            newFragment.setData(taxonomyCardList, getActivity());
         }
     }
 

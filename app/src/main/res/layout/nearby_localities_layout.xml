@@ -18,7 +18,6 @@
         android:id="@+id/locality_image"
         android:layout_width="match_parent"
         android:layout_height="@dimen/nearby_locality_image_height"
-        android:src="@drawable/temp_bulding"
         android:scaleType="fitXY"/>
 
     <com.makaan.ui.view.FontTextView

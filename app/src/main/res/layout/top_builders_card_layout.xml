@@ -17,7 +17,6 @@
             android:id="@+id/builder_group_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/top_builders_image_height"
-            android:src="@drawable/temp_bulding"
             android:scaleType="fitXY"/>
 
         <TextView
