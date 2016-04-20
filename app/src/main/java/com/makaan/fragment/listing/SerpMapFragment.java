@@ -70,7 +70,10 @@ public class SerpMapFragment extends MakaanBaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initMap(savedInstanceState);
+
+        if(checkPlayServices()) {
+            initMap(savedInstanceState);
+        }
 
     }
 
@@ -523,6 +526,10 @@ public class SerpMapFragment extends MakaanBaseFragment {
         }
 
         private void setMarkerIcon(Marker marker, Bitmap icon) {
+            if(null==mPropertyMap) {
+                return;
+            }
+
             try {
                 if (marker != null) {
                     marker.hideInfoWindow();

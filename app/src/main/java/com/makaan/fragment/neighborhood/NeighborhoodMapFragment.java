@@ -86,8 +86,10 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        initCategoryRecyclerView();
-        initMap(savedInstanceState);
+        if(checkPlayServices()) {
+            initCategoryRecyclerView();
+            initMap(savedInstanceState);
+        }
     }
 
     @Override
@@ -275,6 +277,7 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
         if(null==mEntityInfo){
             return;
         }
+
         if(mEntityInfo.mPlaceLat>0 && mEntityInfo.mPlaceLon>0) {
             mEntityMarker = mPropertyMap.addMarker(new MarkerOptions()
                     .position(new LatLng(mEntityInfo.mPlaceLat, mEntityInfo.mPlaceLon))
@@ -284,6 +287,10 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
 
     private void addMarker(LatLngBounds.Builder latLngBoundsBuilder,
                            double lat, double lng, Amenity amenity) {
+
+        if(null == latLngBoundsBuilder || null == mPropertyMap || null==amenity){
+            return;
+        }
 
         MarkerOptions markerOptions = new MarkerOptions()
                 .position(new LatLng(lat, lng))
@@ -304,7 +311,7 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
 
     private void animateToLocation(final LatLngBounds.Builder latLngBoundsBuilder) {
 
-        if(mMapView==null){
+        if(mMapView==null || null == mPropertyMap){
             return;
         }
 
@@ -343,6 +350,9 @@ public class NeighborhoodMapFragment extends MakaanBaseFragment implements Neigh
     }
 
     private void setMarkerIcon(Marker marker, Bitmap icon){
+        if(null == mPropertyMap){
+            return;
+        }
         try {
             if (marker != null) {
                 marker.hideInfoWindow();
