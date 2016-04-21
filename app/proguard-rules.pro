@@ -65,6 +65,7 @@
 -dontwarn android.**
 -dontwarn io.fabric.**
 -dontwarn lecho.lib.**
+-dontwarn okio.**
 
 
 -keep public class * extends android.app.Activity
