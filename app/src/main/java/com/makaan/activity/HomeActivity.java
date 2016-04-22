@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -89,7 +90,9 @@ public class HomeActivity extends MakaanBaseSearchActivity {
         super.onCreate(savedInstanceState);
 
         try {
-            AppsFlyerLib.getInstance().init(this, getString(R.string.app_appsflyer_id));
+            AppsFlyerLib.getInstance().setGCMProjectID(this, getString(R.string.project_id));
+            AppsFlyerLib.getInstance().startTracking(this.getApplication(), getString(R.string.app_appsflyer_id));
+            AppsFlyerLib.getInstance().setGCMProjectID(this, getString(R.string.project_id));
         } catch (Exception e) {
             Crashlytics.logException(e);
         }
@@ -294,7 +297,9 @@ public class HomeActivity extends MakaanBaseSearchActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        mContainer.setBackground(null);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mContainer.setBackground(null);
+        }
         stopBlinking();
     }
 
