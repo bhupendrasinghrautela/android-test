@@ -13,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -99,6 +101,8 @@ public class PyrPageFragment extends Fragment {
     @Bind(R.id.leadform_mobileno_edittext)EditText mUserMobile;
     @Bind(R.id.property_value)TextView mPropertyString;
     @Bind(R.id.location_value)TextView mLocationString;
+    @Bind(R.id.rent)RadioButton mRentButton;
+    @Bind(R.id.buy_rent_radiogroup)RadioGroup mRadioGroup;
 
     private Integer mCountryId;
     private ArrayAdapter<String> mCountryAdapter;
@@ -516,6 +520,12 @@ public class PyrPageFragment extends Fragment {
 
     public void setBuySelected(boolean selected) {
         ArrayList<FilterGroup> grps = selected ? mGroupsBuy : mGroupsRent;
+        if(!selected){
+            mRentButton.setChecked(true);
+        }
+        else {
+            mRentButton.setChecked(false);
+        }
         mIsBuySelected = selected;
         for(FilterGroup group : grps) {
             String name = group.internalName;
