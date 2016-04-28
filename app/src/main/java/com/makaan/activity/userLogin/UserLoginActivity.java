@@ -68,7 +68,6 @@ public class UserLoginActivity extends BaseJarvisActivity implements ReplaceFrag
 
     @Override
     public void replaceFragment(Fragment fragment, boolean shouldAddToBackStack) {
-        super.onPostResume();
 
         mFragmentTransaction = getSupportFragmentManager().beginTransaction();
         mFragmentTransaction.replace(R.id.fragment_holder, fragment, fragment.getClass().getName());
