@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/line_chart_height">
 
-        <lecho.lib.hellocharts.view.LineChartView
+        <com.makaan.ui.linechart.CustomLineChartView
             android:id="@+id/line_chart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

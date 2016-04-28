@@ -31,6 +31,15 @@ public class PriceTrendView extends BaseLinearLayout<LocalityPriceTrendDto> {
     MakaanLineChartView mTrendsChart;
     private Long cityId, localityId;
 
+    public void onDestroyView() {
+        if(mPriceRangeTabs != null) {
+            mPriceRangeTabs.setOnTabSelectedListener(null);
+        }
+        if(mTrendsChart != null) {
+            mTrendsChart.onDestroyView();
+        }
+    }
+
 
     private enum TRENDS_MONTH{
         SIX("6 \n months",7),

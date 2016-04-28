@@ -19,8 +19,7 @@
             android:id="@+id/iv_localitites_props"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/locality_placeholder" />
+            android:scaleType="centerCrop" />
 
         <View
             android:layout_width="match_parent"

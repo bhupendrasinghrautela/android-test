@@ -49,6 +49,9 @@ public class ListingViewPager extends ViewPager implements ListingPagerAdapter.P
 
     public void setData(List<Listing> listings, boolean needLoadMore, SerpRequestCallback callback){
         mCallback = callback;
+        if(mListingPagerAdapter == null) {
+            bindView();
+        }
         mListingPagerAdapter.setData(listings, needLoadMore);
     }
 

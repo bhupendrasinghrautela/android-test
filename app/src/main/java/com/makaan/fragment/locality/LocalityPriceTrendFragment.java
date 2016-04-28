@@ -264,4 +264,12 @@ public class LocalityPriceTrendFragment extends MakaanBaseFragment{
         request.setLocalityId(localityId);
         request.launchSerp(getActivity());
     }
+
+    @Override
+    public void onDestroyView() {
+        if(priceTrendView != null) {
+            priceTrendView.onDestroyView();
+        }
+        super.onDestroyView();
+    }
 }

@@ -57,7 +57,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by rohitgarg on 1/7/16.
  */
 public class DefaultListingView extends AbstractListingView {
-
     @Bind(R.id.serp_default_listing_property_shortlist_checkbox)
     public WishListButton mPropertyWishListCheckbox;
 
@@ -298,14 +297,22 @@ public class DefaultListingView extends AbstractListingView {
         }
 
         // set property address info {project_name},{localityName}_{cityName}
-        if(!TextUtils.isEmpty(mListing.project.name)
-                && (mListing.project.activeStatus == null || !"dummy".equalsIgnoreCase(mListing.project.activeStatus))) {
-            if(!TextUtils.isEmpty(mListing.project.builderName)) {
-                mPropertyAddressTextView.setText(Html.fromHtml(String.format("<font color=\"#E71C28\">%s %s</font>, %s, %s", mListing.project.builderName,
-                        mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase()), TextView.BufferType.SPANNABLE);
+        if(!TextUtils.isEmpty(mListing.project.name)) {
+            if(mListing.project.activeStatus == null || !KeyUtil.DUMMY.equalsIgnoreCase(mListing.project.activeStatus)) {
+                if(KeyUtil.ACTIVE.equalsIgnoreCase(mListing.project.activeStatus) || KeyUtil.ACTIVEINMAKAAN.equalsIgnoreCase(mListing.project.activeStatus)) {
+                    if (!TextUtils.isEmpty(mListing.project.builderName)) {
+                        mPropertyAddressTextView.setText(Html.fromHtml(String.format("<font color=\"#E71C28\">%s %s</font>, %s, %s", mListing.project.builderName,
+                                mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase()), TextView.BufferType.SPANNABLE);
+                    } else {
+                        mPropertyAddressTextView.setText(Html.fromHtml(String.format("<font color=\"#E71C28\">%s</font>, %s, %s", mListing.project.name, mListing.localityName,
+                                mListing.cityName).toLowerCase()), TextView.BufferType.SPANNABLE);
+                    }
+                } else {
+                    mPropertyAddressTextView.setText(String.format("%s, %s, %s", mListing.project.name, mListing.localityName,
+                                mListing.cityName).toLowerCase());
+                }
             } else {
-                mPropertyAddressTextView.setText(Html.fromHtml(String.format("<font color=\"#E71C28\">%s</font>, %s, %s", mListing.project.name, mListing.localityName,
-                        mListing.cityName).toLowerCase()), TextView.BufferType.SPANNABLE);
+                mPropertyAddressTextView.setText(String.format("%s, %s", mListing.localityName, mListing.cityName).toLowerCase());
             }
         } else {
             mPropertyAddressTextView.setText(String.format("%s, %s", mListing.localityName, mListing.cityName).toLowerCase());
@@ -711,17 +718,19 @@ public class DefaultListingView extends AbstractListingView {
     @OnClick(R.id.serp_default_listing_property_address_frame_layout)
     public void onProjectClicked(View view) {
         if(!TextUtils.isEmpty(mListing.project.name)
-                && (mListing.project.activeStatus == null || !"dummy".equalsIgnoreCase(mListing.project.activeStatus))) {
-            if (mListing.projectId != null && mListing.projectId != 0) {
-                Properties properties = MakaanEventPayload.beginBatch();
-                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
-                properties.put(MakaanEventPayload.LABEL, mListing.lisitingId + "_" + (mPosition + 1)+"_" + mListing.projectId);
-                MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickProject);
+                && (mListing.project.activeStatus == null || !KeyUtil.DUMMY.equalsIgnoreCase(mListing.project.activeStatus))) {
+            if(KeyUtil.ACTIVE.equalsIgnoreCase(mListing.project.activeStatus) || KeyUtil.ACTIVEINMAKAAN.equalsIgnoreCase(mListing.project.activeStatus)) {
+                if (mListing.projectId != null && mListing.projectId != 0) {
+                    Properties properties = MakaanEventPayload.beginBatch();
+                    properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerSerp);
+                    properties.put(MakaanEventPayload.LABEL, mListing.lisitingId + "_" + (mPosition + 1)+"_" + mListing.projectId);
+                    MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.clickProject);
 
-                Bundle bundle = new Bundle();
-                bundle.putLong(OverviewActivity.ID, mListing.projectId);
-                bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROJECT.ordinal());
-                mCallback.requestDetailPage(SerpActivity.REQUEST_PROJECT_PAGE, bundle);
+                    Bundle bundle = new Bundle();
+                    bundle.putLong(OverviewActivity.ID, mListing.projectId);
+                    bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROJECT.ordinal());
+                    mCallback.requestDetailPage(SerpActivity.REQUEST_PROJECT_PAGE, bundle);
+                }
             }
         }
     }

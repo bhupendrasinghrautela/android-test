@@ -132,13 +132,15 @@ public class BuilderListingView extends AbstractCardListingView {
             CommonUtil.TLog("exception", ex);
         }
 
-        if(builder.projectStatusCount.underConstruction == 0) {
-            mOngoingProjectsTextView.setText("na");
+        int totalOngoingProjects = builder.projectStatusCount.underConstruction
+                + builder.projectStatusCount.launch + builder.projectStatusCount.preLaunch;
+        if(totalOngoingProjects == 0) {
+            mOngoingProjectsTextView.setText("0");
         } else {
-            mOngoingProjectsTextView.setText(String.valueOf(builder.projectStatusCount.underConstruction));
+            mOngoingProjectsTextView.setText(String.valueOf(totalOngoingProjects));
         }
         if(builder.projectStatusCount.completed == 0) {
-            mBuilderPastProjectsTextView.setText("na");
+            mBuilderPastProjectsTextView.setText("0");
         } else {
             mBuilderPastProjectsTextView.setText(String.valueOf(builder.projectStatusCount.completed));
         }

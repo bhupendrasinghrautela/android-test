@@ -72,4 +72,7 @@ public class KeyUtil {
     public static final String KEY_FULL_SCREEN_SRC_NAME = "full_screen_src_name";
     public static final String KEY_PROJECT_IMAGES_CLICKED_POSITION = "project_image_clicked_position";
 
+    public static final String DUMMY = "dummy";
+    public static final String ACTIVEINMAKAAN = "ACTIVEINMAKAAN";
+    public static final String ACTIVE = "ACTIVE";
 }
