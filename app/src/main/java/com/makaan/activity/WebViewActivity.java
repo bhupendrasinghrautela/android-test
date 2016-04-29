@@ -37,14 +37,14 @@ public class WebViewActivity extends MakaanFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        WebViewFragment fragment = new WebViewFragment();
-        Bundle data = getIntent().getExtras();
-        if (data != null) {
-            fragment.setArguments(data);
-            initFragment(R.id.activity_webview_frame, fragment, false);
-        }else{
+        if (null==getIntent() || null==getIntent().getExtras()) {
             Toast.makeText(this,R.string.generic_error, Toast.LENGTH_SHORT).show();
             finish();
+
+        }else{
+            WebViewFragment fragment = new WebViewFragment();
+            fragment.setArguments(getIntent().getExtras());
+            initFragment(R.id.activity_webview_frame, fragment, false);
         }
 
 
