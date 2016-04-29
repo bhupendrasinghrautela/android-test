@@ -66,7 +66,8 @@
             android:textColor="@color/white"
             android:textSize="@dimen/serp_listing_item_seller_name_text_view_text_size"
             android:typeface="sans"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/serp_listing_item_seller_company_name_text_view"

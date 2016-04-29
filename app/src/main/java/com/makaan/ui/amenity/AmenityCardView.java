@@ -8,12 +8,12 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.constants.ApiConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.amenity.Amenity;
 import com.makaan.response.amenity.AmenityCluster;
+import com.makaan.ui.FadeInNetworkImageView;
 import com.makaan.ui.listing.BaseCardView;
 
 import butterknife.Bind;

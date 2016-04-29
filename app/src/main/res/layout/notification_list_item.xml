@@ -31,7 +31,7 @@
                 android:textSize="@dimen/notification_card_desc_text_size"
                 android:typeface="serif" />
 
-            <com.android.volley.toolbox.FadeInNetworkImageView
+            <com.makaan.ui.FadeInNetworkImageView
                 android:id="@+id/iv_notifications"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/notifications_image_height"

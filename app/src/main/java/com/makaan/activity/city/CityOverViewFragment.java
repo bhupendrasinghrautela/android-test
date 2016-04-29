@@ -24,7 +24,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader.ImageContainer;
 import com.makaan.R;
 import com.makaan.activity.MakaanFragmentActivity;
@@ -58,6 +57,7 @@ import com.makaan.service.PriceTrendService;
 import com.makaan.service.TaxonomyService;
 import com.makaan.ui.CompressedTextView;
 import com.makaan.ui.CompressedTextView.CompressTextViewCollapseCallback;
+import com.makaan.ui.FadeInNetworkImageView;
 import com.makaan.ui.MakaanBarChartView;
 import com.makaan.ui.MakaanBarChartView.OnBarTouchListener;
 import com.makaan.ui.MultiSelectionSpinner;

@@ -31,7 +31,8 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
+
+import com.makaan.ui.FadeInNetworkImageView;
 
 import java.lang.ref.WeakReference;
 import java.util.Timer;

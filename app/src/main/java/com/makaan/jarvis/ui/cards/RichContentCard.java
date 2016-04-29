@@ -9,7 +9,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.google.gson.reflect.TypeToken;
 import com.makaan.MakaanBuyerApplication;
 import com.makaan.R;
@@ -17,6 +16,7 @@ import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.jarvis.message.ExposeMessage;
 import com.makaan.network.MakaanNetworkClient;
+import com.makaan.ui.FadeInNetworkImageView;
 import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
 import com.segment.analytics.Properties;
