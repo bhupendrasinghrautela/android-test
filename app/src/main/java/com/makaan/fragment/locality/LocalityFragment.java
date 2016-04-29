@@ -24,7 +24,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
@@ -61,6 +60,7 @@ import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.TaxonomyService;
 import com.makaan.ui.CompressedTextView;
 import com.makaan.ui.CompressedTextView.CompressTextViewCollapseCallback;
+import com.makaan.ui.FadeInNetworkImageView;
 import com.makaan.ui.view.MakaanProgressBar;
 import com.makaan.util.CommonUtil;
 import com.makaan.util.ImageUtils;
@@ -636,11 +636,13 @@ public class LocalityFragment extends OverviewFragment implements CompressTextVi
 
     @Override
     public void onDestroyView() {
-        mMainCityImage.setBackground(null);
-        mMainCityImage.setImageBitmap(null);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mMainCityImage.setBackground(null);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             mBlurredCityImage.setBackground(null);
         }
+        mMainCityImage.setImageBitmap(null);
         mBlurredCityImage.setImageBitmap(null);
         super.onDestroyView();
     }

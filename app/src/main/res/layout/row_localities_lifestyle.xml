@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/row_localities_lifestyle_height">
 
-            <com.android.volley.toolbox.FadeInNetworkImageView
+            <com.makaan.ui.FadeInNetworkImageView
                 android:id="@+id/iv_localitites_props"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/row_localities_lifestyle_height"

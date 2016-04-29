@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.adapter.listing.CustomAbstractHorizontalScrollViewAdapter;
@@ -16,6 +15,7 @@ import com.makaan.pojo.HorizontalScrollItem;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.response.project.Project;
 import com.makaan.ui.BaseLinearLayout;
+import com.makaan.ui.FadeInNetworkImageView;
 import com.makaan.ui.listing.CustomHorizontalScrollView;
 import com.makaan.util.AppUtils;
 import com.makaan.util.ListingUtil;

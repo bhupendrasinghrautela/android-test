@@ -9,7 +9,7 @@
     app:cardElevation="@dimen/card_elevation_small"
     app:cardPreventCornerOverlap="false">
 
-    <com.android.volley.toolbox.FadeInNetworkImageView
+    <com.makaan.ui.FadeInNetworkImageView
         android:id="@+id/property_imageview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

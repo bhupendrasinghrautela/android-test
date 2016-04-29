@@ -14,7 +14,6 @@ import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.activity.buyerJourney.BuyerDashboardActivity;
 import com.makaan.activity.buyerJourney.BuyerDashboardCallbacks;
@@ -26,6 +25,7 @@ import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.listing.detail.ListingDetail;
 import com.makaan.service.ListingService;
 import com.makaan.service.MakaanServiceFactory;
+import com.makaan.ui.FadeInNetworkImageView;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.StringUtil;
 import com.segment.analytics.Properties;

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/jarvis_card_brief_height">
 
-    <com.android.volley.toolbox.FadeInNetworkImageView
+    <com.makaan.ui.FadeInNetworkImageView
         android:id="@+id/image"
         android:scaleType="fitXY"
         android:background="@drawable/chat_card_rounded_corner_gray_bg"

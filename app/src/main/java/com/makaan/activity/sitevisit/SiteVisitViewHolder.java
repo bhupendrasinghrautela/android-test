@@ -6,8 +6,8 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
+import com.makaan.ui.FadeInNetworkImageView;
 import com.makaan.ui.view.CustomRatingBar;
 
 import de.hdodenhof.circleimageview.CircleImageView;

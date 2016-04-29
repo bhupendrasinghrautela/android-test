@@ -11,8 +11,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.JsonSyntaxException;
 import com.makaan.MakaanBuyerApplication;
@@ -20,6 +18,8 @@ import com.makaan.cache.LruBitmapCache;
 import com.makaan.constants.RequestConstants;
 import com.makaan.constants.ResponseConstants;
 import com.makaan.request.CustomRequest;
+import com.makaan.request.JsonObjectRequest;
+import com.makaan.request.StringRequest;
 import com.makaan.response.ResponseError;
 import com.makaan.util.CommonUtil;
 
@@ -61,7 +61,13 @@ public class MakaanNetworkClient {
     }
 
     public static void init(Context appContext) {
-        instance = new MakaanNetworkClient(appContext);
+        if(instance == null) {
+            synchronized (MakaanNetworkClient.class) {
+                if(instance == null) {
+                    instance = new MakaanNetworkClient(appContext);
+                }
+            }
+        }
     }
 
 

@@ -9,11 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.city.EntityDesc;
+import com.makaan.ui.FadeInNetworkImageView;
 import com.makaan.util.ImageUtils;
 
 import java.util.ArrayList;
