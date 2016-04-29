@@ -41,6 +41,7 @@ import com.makaan.service.PyrService;
 import com.makaan.service.SaveSearchService;
 import com.makaan.service.SearchService;
 import com.makaan.service.SellerService;
+import com.makaan.service.SeoService;
 import com.makaan.service.SuburbService;
 import com.makaan.service.TaxonomyService;
 import com.makaan.service.UserService;
@@ -153,6 +154,7 @@ public class MakaanBuyerApplication extends Application {
         MakaanServiceFactory.getInstance().registerService(ClientLeadsService.class, new ClientLeadsService());
         MakaanServiceFactory.getInstance().registerService(ClientEventsService.class, new ClientEventsService());
         MakaanServiceFactory.getInstance().registerService(ChatHistoryService.class, new ChatHistoryService());
+        MakaanServiceFactory.getInstance().registerService(SeoService.class, new SeoService());
 
         ((MasterDataService) (MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populateApiLabels();
         ((MasterDataService)(MakaanServiceFactory.getInstance().getService(MasterDataService.class))).populatePropertyStatus();
