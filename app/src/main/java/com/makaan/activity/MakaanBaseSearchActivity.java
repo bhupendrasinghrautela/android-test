@@ -893,40 +893,42 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 mSearchImageView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        PropertyValuesHolder propx = PropertyValuesHolder.ofFloat("translationX", 0);
+                        if(mSearchImageView != null) {
+                            PropertyValuesHolder propx = PropertyValuesHolder.ofFloat("translationX", 0);
 
-                        ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(mSearchImageView, propx);
-                        animator.setDuration(400);
-                        animator.start();
-                        animator.addListener(new Animator.AnimatorListener() {
-                            @Override
-                            public void onAnimationStart(Animator animation) {
+                            ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(mSearchImageView, propx);
+                            animator.setDuration(400);
+                            animator.start();
+                            animator.addListener(new Animator.AnimatorListener() {
+                                @Override
+                                public void onAnimationStart(Animator animation) {
 
-                            }
-
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                if(mDeleteButton != null) {
-                                    mDeleteButton.setVisibility(View.VISIBLE);
                                 }
-                                if(mSearchImageView != null) {
-                                    mSearchImageView.setVisibility(View.GONE);
+
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    if (mDeleteButton != null) {
+                                        mDeleteButton.setVisibility(View.VISIBLE);
+                                    }
+                                    if (mSearchImageView != null) {
+                                        mSearchImageView.setVisibility(View.GONE);
+                                    }
+                                    if (hintText != null && mSearchEditText != null) {
+                                        mSearchEditText.setHint(hintText);
+                                    }
                                 }
-                                if(hintText != null && mSearchEditText != null) {
-                                    mSearchEditText.setHint(hintText);
+
+                                @Override
+                                public void onAnimationCancel(Animator animation) {
+
                                 }
-                            }
 
-                            @Override
-                            public void onAnimationCancel(Animator animation) {
+                                @Override
+                                public void onAnimationRepeat(Animator animation) {
 
-                            }
-
-                            @Override
-                            public void onAnimationRepeat(Animator animation) {
-
-                            }
-                        });
+                                }
+                            });
+                        }
                     }
                 }, 800);
             } else {
@@ -942,39 +944,41 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
                 mSearchImageView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        PropertyValuesHolder propx = PropertyValuesHolder.ofFloat("translationX", -mSearchImageButtonX);
+                        if(mSearchImageView != null) {
+                            PropertyValuesHolder propx = PropertyValuesHolder.ofFloat("translationX", -mSearchImageButtonX);
 
-                        ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(mSearchImageView, propx);
-                        animator.setDuration(400);
-                        animator.start();
-                        animator.addListener(new Animator.AnimatorListener() {
-                            @Override
-                            public void onAnimationStart(Animator animation) {
+                            ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(mSearchImageView, propx);
+                            animator.setDuration(400);
+                            animator.start();
+                            animator.addListener(new Animator.AnimatorListener() {
+                                @Override
+                                public void onAnimationStart(Animator animation) {
 
-                            }
+                                }
 
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                if(!mSearchEditTextVisible) {
-                                    if (mSearchDescriptionRelativeView != null) {
-                                        mSearchDescriptionRelativeView.setVisibility(View.VISIBLE);
-                                    }
-                                    if (mSearchRelativeView != null) {
-                                        mSearchRelativeView.setVisibility(View.GONE);
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    if (!mSearchEditTextVisible) {
+                                        if (mSearchDescriptionRelativeView != null) {
+                                            mSearchDescriptionRelativeView.setVisibility(View.VISIBLE);
+                                        }
+                                        if (mSearchRelativeView != null) {
+                                            mSearchRelativeView.setVisibility(View.GONE);
+                                        }
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void onAnimationCancel(Animator animation) {
+                                @Override
+                                public void onAnimationCancel(Animator animation) {
 
-                            }
+                                }
 
-                            @Override
-                            public void onAnimationRepeat(Animator animation) {
+                                @Override
+                                public void onAnimationRepeat(Animator animation) {
 
-                            }
-                        });
+                                }
+                            });
+                        }
                     }
                 }, 800);
             } else {
