@@ -308,7 +308,7 @@ public abstract class MakaanBaseSearchActivity extends MakaanFragmentActivity im
     @Override
     public void onLocationChanged(Location location) {
         Session.phoneLocation = location;
-        if(mMakaanLocationManager.getLocationUpdateMode()
+        if(mMakaanLocationManager != null && mMakaanLocationManager.getLocationUpdateMode()
                 == MakaanLocationManager.LocationUpdateMode.ONCE) {
             try {
                 stopLocationUpdate(this);

@@ -138,4 +138,11 @@ public class ProjectPriceTrendsFragment extends MakaanBaseFragment {
         priceTrendViewl.setVisibility(View.GONE);
     }
 
+    @Override
+    public void onDestroyView() {
+        if(priceTrendView != null) {
+            priceTrendView.onDestroyView();
+        }
+        super.onDestroyView();
+    }
 }

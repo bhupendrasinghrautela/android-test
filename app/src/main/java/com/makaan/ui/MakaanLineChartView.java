@@ -13,6 +13,7 @@ import com.makaan.analytics.MakaanEventPayload;
 import com.makaan.analytics.MakaanTrackerConstants;
 import com.makaan.response.trend.PriceTrendData;
 import com.makaan.response.trend.PriceTrendKey;
+import com.makaan.ui.linechart.CustomLineChartView;
 import com.makaan.ui.view.FontTextView;
 import com.makaan.util.DateUtil;
 import com.makaan.util.StringUtil;
@@ -36,7 +37,6 @@ import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.ValueShape;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.util.ChartUtils;
-import lecho.lib.hellocharts.view.LineChartView;
 
 /**
  * Created by aishwarya on 06/01/16.
@@ -44,7 +44,7 @@ import lecho.lib.hellocharts.view.LineChartView;
 public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey, List<PriceTrendData>>> {
 
     @Bind(R.id.line_chart)
-    LineChartView mLineChartView;
+    CustomLineChartView mLineChartView;
     @Bind(R.id.legends_grid)
     GridView mLegendsGrid;
     LineChartData mLineChartData;
@@ -343,4 +343,13 @@ public class MakaanLineChartView extends BaseLinearLayout<HashMap<PriceTrendKey,
         this.projectId = projectId;
     }
 
+    public void onDestroyView() {
+        if(mLegendsGrid != null && mLegendsGrid.getAdapter() instanceof LegendAdapter) {
+            ((LegendAdapter)mLegendsGrid.getAdapter()).setLegendTouchListener(null);
+        }
+
+        if(mLineChartView != null) {
+            mLineChartView.destroyView();
+        }
+    }
 }

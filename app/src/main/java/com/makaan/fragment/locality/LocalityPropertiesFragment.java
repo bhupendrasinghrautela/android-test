@@ -66,6 +66,34 @@ public class LocalityPropertiesFragment extends MakaanBaseFragment {
             mRecyclerView.setAdapter(mAdapter);
     }
 
+    private static class ClickListener implements View.OnClickListener {
+
+        private final List<TaxonomyCard> taxonomyCardList;
+        private final Context context;
+        private int mPosition;
+
+        public ClickListener(List<TaxonomyCard> taxonomyCardList, Context context) {
+            super();
+            this.taxonomyCardList = taxonomyCardList;
+            this.context = context;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(taxonomyCardList != null && taxonomyCardList.size() > mPosition) {
+                TaxonomyCard taxonomyCard = taxonomyCardList.get(mPosition);
+                taxonomyCard.serpRequest.launchSerp(context);
+                Properties properties = MakaanEventPayload.beginBatch();
+                properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
+                properties.put(MakaanEventPayload.LABEL, taxonomyCard.label1+"_"+(mPosition+1));
+                MakaanEventPayload.endBatch(context, MakaanTrackerConstants.Action.selectPropertiesLocality);
+            }
+        }
+
+        public void setPosition(int position) {
+            mPosition = position;
+        }
+    }
 
     private static class PropertiesAdapter
             extends RecyclerView.Adapter<PropertiesAdapter.ViewHolder> {
@@ -77,6 +105,7 @@ public class LocalityPropertiesFragment extends MakaanBaseFragment {
             public TextView descriptionTv;
             public TextView typeTv;
             public ImageView localityIv;
+            ClickListener clickListener;
 
             public ViewHolder(View view) {
                 super(view);
@@ -84,17 +113,12 @@ public class LocalityPropertiesFragment extends MakaanBaseFragment {
                 typeTv = (TextView) view.findViewById(R.id.tv_localities_props_label_type);
                 localityIv = (ImageView) view.findViewById(R.id.iv_localitites_props);
 
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        TaxonomyCard taxonomyCard = taxonomyCardList.get(getAdapterPosition());
-                        taxonomyCard.serpRequest.launchSerp(mContext);
-                        Properties properties = MakaanEventPayload.beginBatch();
-                        properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.buyerLocality);
-                        properties.put(MakaanEventPayload.LABEL, taxonomyCard.label1+"_"+(getAdapterPosition()+1));
-                        MakaanEventPayload.endBatch(mContext, MakaanTrackerConstants.Action.selectPropertiesLocality);
-                    }
-                });
+                clickListener = new ClickListener(taxonomyCardList, mContext);
+                view.setOnClickListener(clickListener);
+            }
+
+            public void setPosition(int position) {
+                clickListener.setPosition(position);
             }
         }
 
@@ -126,6 +150,7 @@ public class LocalityPropertiesFragment extends MakaanBaseFragment {
 
 
             holder.localityIv.setImageBitmap(getImage(position));
+            holder.setPosition(position);
         }
         private Bitmap getImage(int position) {
             int id = R.drawable.locality_placeholder;

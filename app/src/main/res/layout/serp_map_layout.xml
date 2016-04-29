@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/serp_map_layout_view_pager_height"
         android:background="@color/transparent"
-        android:layout_gravity="bottom"/>
+        android:layout_gravity="bottom"
+        android:saveEnabled="false"/>
 
 </FrameLayout>

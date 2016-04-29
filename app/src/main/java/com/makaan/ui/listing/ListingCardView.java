@@ -139,13 +139,22 @@ public class ListingCardView extends AbstractListingView {
         }
 
         // set property address info {project_name},{localityName}_{cityName}
-        if(!TextUtils.isEmpty(mListing.project.name)
-                && (mListing.project.activeStatus == null || !"dummy".equalsIgnoreCase(mListing.project.activeStatus))) {
-            if(!TextUtils.isEmpty(mListing.project.builderName)) {
-                mPropertyAddressTextView.setText(Html.fromHtml(String.format("<font color=\"#E71C28\">%s %s</font>, %s, %s", mListing.project.builderName,
-                        mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase()));
+        if(!TextUtils.isEmpty(mListing.project.name)) {
+            if(mListing.project.activeStatus == null || !KeyUtil.DUMMY.equalsIgnoreCase(mListing.project.activeStatus)) {
+                if(KeyUtil.ACTIVE.equalsIgnoreCase(mListing.project.activeStatus) || KeyUtil.ACTIVEINMAKAAN.equalsIgnoreCase(mListing.project.activeStatus)) {
+                    if (!TextUtils.isEmpty(mListing.project.builderName)) {
+                        mPropertyAddressTextView.setText(Html.fromHtml(String.format("<font color=\"#E71C28\">%s %s</font>, %s, %s", mListing.project.builderName,
+                                mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase()), TextView.BufferType.SPANNABLE);
+                    } else {
+                        mPropertyAddressTextView.setText(Html.fromHtml(String.format("<font color=\"#E71C28\">%s</font>, %s, %s", mListing.project.name, mListing.localityName,
+                                mListing.cityName).toLowerCase()), TextView.BufferType.SPANNABLE);
+                    }
+                } else {
+                    mPropertyAddressTextView.setText(String.format("%s, %s, %s", mListing.project.name, mListing.localityName,
+                            mListing.cityName).toLowerCase());
+                }
             } else {
-                mPropertyAddressTextView.setText(Html.fromHtml(String.format("<font color=\"#E71C28\">%s</font>, %s, %s", mListing.project.name, mListing.localityName, mListing.cityName).toLowerCase()));
+                mPropertyAddressTextView.setText(String.format("%s, %s", mListing.localityName, mListing.cityName).toLowerCase());
             }
         } else {
             mPropertyAddressTextView.setText(String.format("%s, %s", mListing.localityName, mListing.cityName).toLowerCase());
@@ -202,15 +211,17 @@ public class ListingCardView extends AbstractListingView {
     @OnClick(R.id.listing_brief_view_layout_address_relative_view)
     public void onProjectClicked(View view) {
         if(!TextUtils.isEmpty(mListing.project.name)
-                && (mListing.project.activeStatus == null || !"dummy".equalsIgnoreCase(mListing.project.activeStatus))) {
-            if (mListing.projectId != null && mListing.projectId != 0) {
-                Bundle bundle = new Bundle();
-                bundle.putLong(OverviewActivity.ID, mListing.projectId);
-                bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROJECT.ordinal());
+                && (mListing.project.activeStatus == null || !KeyUtil.DUMMY.equalsIgnoreCase(mListing.project.activeStatus))) {
+            if(KeyUtil.ACTIVE.equalsIgnoreCase(mListing.project.activeStatus) || KeyUtil.ACTIVEINMAKAAN.equalsIgnoreCase(mListing.project.activeStatus)) {
+                if (mListing.projectId != null && mListing.projectId != 0) {
+                    Bundle bundle = new Bundle();
+                    bundle.putLong(OverviewActivity.ID, mListing.projectId);
+                    bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROJECT.ordinal());
 
-                Intent intent = new Intent(getContext(), OverviewActivity.class);
-                intent.putExtras(bundle);
-                getContext().startActivity(intent);
+                    Intent intent = new Intent(getContext(), OverviewActivity.class);
+                    intent.putExtras(bundle);
+                    getContext().startActivity(intent);
+                }
             }
         }
     }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -631,5 +632,16 @@ public class LocalityFragment extends OverviewFragment implements CompressTextVi
     @Override
     public void onCollapsed() {
         mCityScrollView.scrollTo(0,compressedTv.getTop());
+    }
+
+    @Override
+    public void onDestroyView() {
+        mMainCityImage.setBackground(null);
+        mMainCityImage.setImageBitmap(null);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mBlurredCityImage.setBackground(null);
+        }
+        mBlurredCityImage.setImageBitmap(null);
+        super.onDestroyView();
     }
 }

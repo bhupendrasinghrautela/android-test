@@ -588,4 +588,12 @@ public class CityOverViewFragment extends OverviewFragment implements CompressTe
     public void onCollapsed() {
         mCityScrollView.scrollTo(0,mCompressedTextViewLayout.getTop());
     }
+
+    @Override
+    public void onDestroyView() {
+        if(mPriceTrendView != null) {
+            mPriceTrendView.onDestroyView();
+        }
+        super.onDestroyView();
+    }
 }

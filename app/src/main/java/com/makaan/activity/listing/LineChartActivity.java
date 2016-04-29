@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.makaan.R;
+import com.makaan.ui.linechart.CustomLineChartView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class LineChartActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
-        private LineChartView chart;
+        private CustomLineChartView chart;
         private LineChartData data;
         private int numberOfLines = 4;
         private int maxNumberOfLines = 4;
@@ -72,7 +73,7 @@ public class LineChartActivity extends ActionBarActivity {
             setHasOptionsMenu(true);
             View rootView = inflater.inflate(R.layout.fragment_line_chart, container, false);
 
-            chart = (LineChartView) rootView.findViewById(R.id.chart);
+            chart = (CustomLineChartView) rootView.findViewById(R.id.chart);
             chart.setOnValueTouchListener(new ValueTouchListener());
 
             // Generate some randome values.
