@@ -5,12 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.activity.HomeActivity;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.overview.OverviewActivity;
+import com.makaan.constants.RequestConstants;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.pojo.overview.OverviewItemType;
 import com.makaan.response.seo.SeoUrlResponse;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -26,6 +31,7 @@ public class DeepLinkHelper {
         MAKAAN_BUILDER_BHK,MAKAAN_CITY_BUILDER,MAKAAN_COMPANY_URL
     }
 
+
     /**
      * Returns appropriate intent based on SEO url api response
      * @param context
@@ -38,63 +44,69 @@ public class DeepLinkHelper {
             return false;
         }
 
-        if(TextUtils.isEmpty(seoUrlResponse.data.templateId)){
+        SeoUrlResponse.UrlDetail urlDetail = seoUrlResponse.data.urlDetail;
+
+        if(TextUtils.isEmpty(urlDetail.templateId)){
             return false;
         }
 
-        if(TemplateId.MAKAAN_CITY_OVERVIEW.name().equalsIgnoreCase(seoUrlResponse.data.templateId)){
+        if(TemplateId.MAKAAN_CITY_OVERVIEW.name().equalsIgnoreCase(urlDetail.templateId)){
             Intent intent = new Intent(context, OverviewActivity.class);
 
             Bundle bundle = new Bundle();
-            bundle.putLong(OverviewActivity.ID, seoUrlResponse.data.urlDetail.cityId);
+            bundle.putLong(OverviewActivity.ID, urlDetail.cityId);
             bundle.putInt(OverviewActivity.TYPE, OverviewItemType.CITY.ordinal());
 
             intent.putExtras(bundle);
             context.startActivity(intent);
             return true;
 
-        }else if(TemplateId.MAKAAN_LOCALITY_OVERVIEW.name().equalsIgnoreCase(seoUrlResponse.data.templateId)||
-                TemplateId.MAKAAN_SUBURB_OVERVIEW.name().equalsIgnoreCase(seoUrlResponse.data.templateId)){
+        }else if(TemplateId.MAKAAN_LOCALITY_OVERVIEW.name().equalsIgnoreCase(urlDetail.templateId)){
             Intent intent = new Intent(context, OverviewActivity.class);
 
             Bundle bundle = new Bundle();
-            intent.putExtra(OverviewActivity.ID, seoUrlResponse.data.urlDetail.localityId);
+            intent.putExtra(OverviewActivity.ID, urlDetail.localityId);
             bundle.putInt(OverviewActivity.TYPE, OverviewItemType.LOCALITY.ordinal());
 
             intent.putExtras(bundle);
             context.startActivity(intent);
             return true;
 
-        }else if(TemplateId.MAKAAN_PROJECT_OVERVIEW.name().equalsIgnoreCase(seoUrlResponse.data.templateId)){
+        }else if(TemplateId.MAKAAN_PROJECT_OVERVIEW.name().equalsIgnoreCase(urlDetail.templateId)){
             Intent intent = new Intent(context, OverviewActivity.class);
 
             Bundle bundle = new Bundle();
-            intent.putExtra(OverviewActivity.ID, seoUrlResponse.data.urlDetail.projectId);
+            intent.putExtra(OverviewActivity.ID, urlDetail.projectId);
             bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROJECT.ordinal());
 
             intent.putExtras(bundle);
             context.startActivity(intent);
             return true;
 
-        }else if(TemplateId.MAKAAN_PROPERTY_BUY.name().equalsIgnoreCase(seoUrlResponse.data.templateId)||
-                TemplateId.MAKAAN_PROPERTY_RENT.name().equalsIgnoreCase(seoUrlResponse.data.templateId)){
+        }else if(TemplateId.MAKAAN_PROPERTY_BUY.name().equalsIgnoreCase(urlDetail.templateId)||
+                TemplateId.MAKAAN_PROPERTY_RENT.name().equalsIgnoreCase(urlDetail.templateId)){
             Intent intent = new Intent(context, OverviewActivity.class);
 
             Bundle bundle = new Bundle();
-            intent.putExtra(OverviewActivity.ID, seoUrlResponse.data.urlDetail.listingId);
+            intent.putExtra(OverviewActivity.ID, urlDetail.listingId);
             bundle.putInt(OverviewActivity.TYPE, OverviewItemType.PROPERTY.ordinal());
 
             intent.putExtras(bundle);
             context.startActivity(intent);
             return true;
 
-        }else if(TemplateId.MAKAAN_HOME_PAGE.name().equalsIgnoreCase(seoUrlResponse.data.templateId)){
+        }else if(TemplateId.MAKAAN_HOME_PAGE.name().equalsIgnoreCase(urlDetail.templateId)){
             Intent intent = new Intent(context, HomeActivity.class);
             context.startActivity(intent);
             return true;
 
-        }else if(isSerpPage(seoUrlResponse)){
-            String serpFilterUrl = seoUrlResponse.data.urlDetail.listingFilter;
+        }else if(isSerpPage(urlDetail)){
+
+            String serpFilterUrl = getFilters(urlDetail.listingFilter);
+            if(TextUtils.isEmpty(serpFilterUrl)){
+                return false;
+            }
+
             SerpRequest request = new SerpRequest(SerpActivity.TYPE_NOTIFICATION);
             request.launchSerp(context, serpFilterUrl);
             return true;
@@ -104,21 +116,34 @@ public class DeepLinkHelper {
         return false;
     }
 
-    private static boolean isSerpPage(SeoUrlResponse seoUrlResponse){
+    private static boolean isSerpPage(SeoUrlResponse.UrlDetail urlDetail){
 
-        return ((seoUrlResponse.data.templateId.contains("MAKAAN") &&
-                seoUrlResponse.data.templateId.contains("RENT") &&
-                seoUrlResponse.data.templateId.contains("BUY"))
+        if(null==urlDetail || TextUtils.isEmpty(urlDetail.templateId) || TextUtils.isEmpty(urlDetail.listingFilter)){
+            return false;
+        }else {
+            return true;
+        }
 
-                || (TemplateId.MAKAAN_BUILDER.name().equalsIgnoreCase(seoUrlResponse.data.templateId))
+    }
 
-                || (TemplateId.MAKAAN_BUILDER_BHK.name().equalsIgnoreCase(seoUrlResponse.data.templateId))
+    private static String getFilters(String filter){
+        if(TextUtils.isEmpty(filter)){
+            return null;
+        }
 
-                || (TemplateId.MAKAAN_CITY_BUILDER.name().equalsIgnoreCase(seoUrlResponse.data.templateId))
+        if(filter.contains(RequestConstants.FILTERS)){
+            return filter;
+        }
 
-                || (TemplateId.MAKAAN_COMPANY_URL.name().equalsIgnoreCase(seoUrlResponse.data.templateId)))
-
-                && !TextUtils.isEmpty(seoUrlResponse.data.urlDetail.listingFilter);
+        try {
+            JSONObject object = new JSONObject(filter);
+            JSONObject filterObject = new JSONObject();
+            filterObject.put(RequestConstants.FILTERS, object);
+            return filterObject.toString();
+        } catch (JSONException e) {
+            Crashlytics.logException(e);
+            return null;
+        }
 
     }
 }

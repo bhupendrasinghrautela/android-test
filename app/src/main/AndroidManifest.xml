@@ -139,6 +139,30 @@
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.NoActionBarTheme">
         </activity>
+
+        <activity
+            android:name="com.makaan.activity.deeplink.DeepLinkingIntentParserActivity"
+            android:theme="@style/Theme.NoActionBarTheme"
+            android:screenOrientation="portrait" >
+
+            <intent-filter android:label="Makaan" >
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="www.makaan.com"
+                    android:scheme="https" />
+
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.makaan.activity.WebViewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NoActionBarTheme" >
+        </activity>
+
+
         <service android:name=".jarvis.JarvisService"/>
         <!--<service android:name=".service.leakcanary.TemporaryLeakUploadService"-->/>
         <service android:name=".service.download.DownloadAssetService"

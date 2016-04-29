@@ -10,12 +10,14 @@ import android.text.TextUtils;
 import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.HomeActivity;
+import com.makaan.activity.WebViewActivity;
 import com.makaan.network.StringRequestCallback;
 import com.makaan.response.ResponseError;
 import com.makaan.response.seo.SeoUrlResponse;
 import com.makaan.service.MakaanServiceFactory;
 import com.makaan.service.SeoService;
 import com.makaan.util.JsonParser;
+import com.makaan.util.KeyUtil;
 
 
 /**
@@ -84,10 +86,12 @@ public class DeepLinkingIntentParserActivity extends AppCompatActivity {
 
             if(!DeepLinkHelper.resolveDeepLink(DeepLinkingIntentParserActivity.this, seoUrlResponse)){
                 try {
-                    Uri uri = Uri.parse(mUri.toString());
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
+                    Intent browserIntent = new Intent(DeepLinkingIntentParserActivity.this, WebViewActivity.class);
+                    browserIntent.putExtra(KeyUtil.KEY_REQUEST_URL, mUri.toString());
                     DeepLinkingIntentParserActivity.this.startActivity(browserIntent);
-                }catch (ActivityNotFoundException e){}
+                }catch (Exception e){
+                    Crashlytics.logException(e);
+                }
             }
 
             finish();
