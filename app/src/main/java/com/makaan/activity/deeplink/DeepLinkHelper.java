@@ -61,8 +61,7 @@ public class DeepLinkHelper {
             context.startActivity(intent);
             return true;
 
-        }else if(TemplateId.MAKAAN_LOCALITY_OVERVIEW.name().equalsIgnoreCase(urlDetail.templateId)||
-                TemplateId.MAKAAN_SUBURB_OVERVIEW.name().equalsIgnoreCase(urlDetail.templateId)){
+        }else if(TemplateId.MAKAAN_LOCALITY_OVERVIEW.name().equalsIgnoreCase(urlDetail.templateId)){
             Intent intent = new Intent(context, OverviewActivity.class);
 
             Bundle bundle = new Bundle();
