@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.lead.LeadFormActivity;
@@ -24,6 +23,7 @@ import com.makaan.constants.ScreenNameConstants;
 import com.makaan.fragment.MakaanBaseFragment;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.overview.OverviewItemType;
+import com.makaan.ui.FadeInNetworkImageView;
 import com.makaan.util.ErrorUtil;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.KeyUtil;

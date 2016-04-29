@@ -3,7 +3,8 @@ package com.makaan.network;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
+import com.makaan.ui.FadeInNetworkImageView;
+
 
 /**
  * Created by rohitgarg on 3/10/16.

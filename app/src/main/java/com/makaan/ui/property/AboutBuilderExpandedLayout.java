@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
 import com.makaan.activity.overview.OverviewActivity;
@@ -22,6 +21,7 @@ import com.makaan.response.project.Project;
 import com.makaan.response.project.ProjectStatusCount;
 import com.makaan.ui.BaseLinearLayout;
 import com.makaan.ui.ExpandableLinearLayout;
+import com.makaan.ui.FadeInNetworkImageView;
 import com.makaan.util.DateUtil;
 import com.makaan.util.ImageUtils;
 import com.segment.analytics.Properties;

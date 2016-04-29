@@ -8,7 +8,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.activity.listing.SerpActivity;
 import com.makaan.activity.overview.OverviewActivity;
@@ -17,6 +16,7 @@ import com.makaan.jarvis.message.MessageType;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.pojo.SerpRequest;
 import com.makaan.pojo.overview.OverviewItemType;
+import com.makaan.ui.FadeInNetworkImageView;
 import com.makaan.ui.view.BaseView;
 
 import butterknife.Bind;

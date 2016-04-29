@@ -6,11 +6,11 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.notification.NotificationAttributes;
 import com.makaan.ui.BaseLinearLayout;
+import com.makaan.ui.FadeInNetworkImageView;
 import com.makaan.util.DateUtil;
 
 import butterknife.Bind;

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.android.volley.toolbox.FadeInNetworkImageView
+        <com.makaan.ui.FadeInNetworkImageView
             android:id="@+id/iv_content"
             android:layout_width="match_parent"
             android:layout_height="@dimen/enq_card_height"

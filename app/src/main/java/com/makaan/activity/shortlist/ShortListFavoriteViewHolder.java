@@ -5,8 +5,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
+import com.makaan.ui.FadeInNetworkImageView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

@@ -12,11 +12,11 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.android.volley.toolbox.ImageLoader;
 import com.makaan.R;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.image.Image;
+import com.makaan.ui.FadeInNetworkImageView;
 import com.makaan.util.CommonUtil;
 import com.makaan.util.ImageUtils;
 

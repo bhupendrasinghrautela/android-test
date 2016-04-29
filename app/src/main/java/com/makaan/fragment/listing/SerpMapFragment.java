@@ -449,16 +449,19 @@ public class SerpMapFragment extends MakaanBaseFragment {
                             @SuppressLint("NewApi")
                             @Override
                             public void onGlobalLayout() {
-                                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                                    mMapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                                } else {
-                                    mMapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                                if(mMapView != null && mMapView.getViewTreeObserver() != null) {
+                                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                                        mMapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                                    } else {
+                                        mMapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                                    }
                                 }
                                 try {
                                     mPropertyMap.moveCamera(
                                             CameraUpdateFactory.newLatLngBounds(
                                                     currentLatLngBounds, mapPadding));
                                 } catch (Exception e) {
+                                    Crashlytics.logException(e);
                                 }
                             }
                         });

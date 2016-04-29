@@ -9,10 +9,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.image.Image;
+import com.makaan.ui.FadeInNetworkImageView;
 import com.makaan.util.ImageUtils;
 import com.makaan.util.StringUtil;
 

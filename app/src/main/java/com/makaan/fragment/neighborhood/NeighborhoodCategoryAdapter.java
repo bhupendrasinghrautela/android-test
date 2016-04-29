@@ -8,11 +8,11 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
 import com.makaan.R;
 import com.makaan.constants.ApiConstants;
 import com.makaan.network.MakaanNetworkClient;
 import com.makaan.response.amenity.AmenityCluster;
+import com.makaan.ui.FadeInNetworkImageView;
 
 import java.util.ArrayList;
 import java.util.List;

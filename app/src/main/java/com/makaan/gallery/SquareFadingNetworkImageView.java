@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.android.volley.toolbox.FadeInNetworkImageView;
+import com.makaan.ui.FadeInNetworkImageView;
 import com.makaan.util.ImageUtils;
 
 public class SquareFadingNetworkImageView extends FadeInNetworkImageView {

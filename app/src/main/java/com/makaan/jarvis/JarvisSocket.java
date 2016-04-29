@@ -317,6 +317,12 @@ public class JarvisSocket {
                         mTimeoutHandler.postDelayed(mTimeoutRunnable, AUTOMATIC_AGENT_TRANSFER_TIMEOUT);
                     }
                 }
+            } catch (ClassCastException e) {
+                if(args.length > 0 && args[0] != null) {
+                    Crashlytics.log(args[0].toString());
+                }
+                Crashlytics.logException(e);
+                CommonUtil.TLog("exception", e);
             } catch (JSONException e) {
                 Crashlytics.logException(e);
                 CommonUtil.TLog("exception", e);
