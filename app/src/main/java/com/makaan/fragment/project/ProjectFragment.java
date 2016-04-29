@@ -368,7 +368,12 @@ public class ProjectFragment extends OverviewFragment{
         pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, project.locality.suburb.city.label);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_ID, project.locality.localityId);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_NAME, project.locality.label);
-        pyrIntent.putExtra(PyrPageActivity.BEDROOM_AND_BUDGET, configItemClickListener.projectConfigItem);
+        if(null!=configItemClickListener && null!=configItemClickListener.projectConfigItem){
+            pyrIntent.putExtra(PyrPageActivity.BEDROOM_AND_BUDGET, configItemClickListener.projectConfigItem);
+        }
+        else {
+            pyrIntent.putExtra(PyrPageActivity.BEDROOM_AND_BUDGET, new ProjectConfigItem());
+        }
         pyrIntent.putExtra(PyrPageActivity.BUY_SELECTED, !configItemClickListener.isRent);
         pyrIntent.putExtra(PyrPageActivity.SOURCE_SCREEN_NAME, ((BaseJarvisActivity) getActivity()).getScreenName());
         getActivity().startActivity(pyrIntent);
@@ -400,6 +405,8 @@ public class ProjectFragment extends OverviewFragment{
         pyrIntent.putExtra(PyrPageActivity.KEY_CITY_NAME, project.locality.suburb.city.label);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_ID, project.locality.localityId);
         pyrIntent.putExtra(PyrPageActivity.KEY_LOCALITY_NAME, project.locality.label);
+        pyrIntent.putExtra(PyrPageActivity.BEDROOM_AND_BUDGET, new ProjectConfigItem());
+        pyrIntent.putExtra(PyrPageActivity.SOURCE_SCREEN_NAME, ((BaseJarvisActivity) getActivity()).getScreenName());
 
         getActivity().startActivity(pyrIntent);
     }
