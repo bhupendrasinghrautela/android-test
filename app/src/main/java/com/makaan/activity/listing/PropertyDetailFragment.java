@@ -753,6 +753,9 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     super.onErrorResponse(volleyError);
+                    if(!isVisible()){
+                        return;
+                    }
                     showTextAsImage(finalName);
                 }
             });
@@ -775,6 +778,9 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
 
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
+                    if(!isVisible()){
+                        return;
+                    }
                     showTextAsImage(finalName);
                 }
             });
@@ -784,6 +790,9 @@ public class PropertyDetailFragment extends OverviewFragment implements OpenList
     }
 
     private void showTextAsImage(String finalName) {
+        if(mSellerImageView == null) {
+            return;
+        }
         mSellerImageView.setVisibility(View.GONE);
         // show seller first character as logo
 

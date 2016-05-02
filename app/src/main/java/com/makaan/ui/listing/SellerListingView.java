@@ -155,7 +155,7 @@ public class SellerListingView extends AbstractCardListingView {
                     }
                 }
                 if(properties != 0) {
-                    mSellerPropertiesCountTextView.setText(String.format("%d properties", properties));
+                    mSellerPropertiesCountTextView.setText(String.format("%d properties in all", properties));
                 } else {
                     mSellerPropertiesCountTextView.setText("na");
                 }
