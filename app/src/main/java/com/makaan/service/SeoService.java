@@ -20,7 +20,7 @@ public class SeoService implements MakaanService {
     private String buildSeoApiUrl(String path){
         StringBuilder requestBuilder = new StringBuilder();
         requestBuilder.append(ApiConstants.BASE_URL);
-        requestBuilder.append("/seo/data/v2/url?url=");
+        requestBuilder.append("/dawnstar/data/v2/url?url=");
         requestBuilder.append(path);
 
         return requestBuilder.toString();

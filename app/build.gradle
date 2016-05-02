@@ -24,8 +24,8 @@ android {
         applicationId 'com.makaan'
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 8
-        versionName "0.52"
+        versionCode 9
+        versionName "0.53"
         multiDexEnabled true
     }
     signingConfigs {

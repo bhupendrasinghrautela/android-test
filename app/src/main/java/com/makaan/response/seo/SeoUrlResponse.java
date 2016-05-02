@@ -12,8 +12,6 @@ public class SeoUrlResponse extends BaseResponse {
     public Data data;
 
     public static class Data {
-
-        public String templateId;
         public UrlDetail urlDetail;
 
     }
@@ -25,7 +23,7 @@ public class SeoUrlResponse extends BaseResponse {
         public long localityId;
         public String listingFilter;
         public String cityName;
-
+        public String templateId;
     }
 
 }
