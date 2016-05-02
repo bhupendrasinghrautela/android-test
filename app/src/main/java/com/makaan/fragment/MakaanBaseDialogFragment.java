@@ -106,6 +106,7 @@ public abstract class MakaanBaseDialogFragment extends DialogFragment {
     public void onDestroyView() {
         super.onDestroyView();
         AppBus.getInstance().unregister(this);
+        ButterKnife.unbind(this);
     }
 
     protected abstract int getContentViewId();
