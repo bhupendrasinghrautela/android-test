@@ -1042,6 +1042,7 @@
     <dimen name="dialog_padding">10dp</dimen>
     <dimen name="normal_text">20sp</dimen>
     <dimen name="makaan_label_top_padding">66dp</dimen>
+    <dimen name="sign_up_fragment_makaan_banner_top_margin">-38dp</dimen>
 
 
 

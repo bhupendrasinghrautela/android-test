@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
@@ -39,7 +41,7 @@ import butterknife.OnClick;
 /**
  * Created by proptiger on 29/1/16.
  */
-public class SignUpFragment extends Fragment {
+public class SignUpFragment extends Fragment implements View.OnFocusChangeListener,TextWatcher {
 
     public  static String TAG=SignUpFragment.class.getSimpleName();
     @Bind(R.id.sign_up_username)
@@ -57,7 +59,6 @@ public class SignUpFragment extends Fragment {
     @Bind(R.id.til_signup_password)
     TextInputLayout mTilPassword;
     private boolean mAlreadyLoaded=false;
-
     private OnUserRegistrationListener mOnUserRegistrationListener;
     private UserRegistrationDto userRegistrationDto;
     private OnUserLoginListener mOnUserLoginListener;
@@ -68,6 +69,10 @@ public class SignUpFragment extends Fragment {
         View view = inflater.inflate(R.layout.layout_sign_up,container,false);
         ButterKnife.bind(this, view);
         AppBus.getInstance().register(this);
+        mEditTextEmail.setOnFocusChangeListener(this);
+        mEditTextName.setOnFocusChangeListener(this);
+        mEditTextPassword.setOnFocusChangeListener(this);
+        mEditTextPassword.addTextChangedListener(this);
         return view;
     }
 
@@ -102,16 +107,16 @@ public class SignUpFragment extends Fragment {
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorBuyer);
             properties.put(MakaanEventPayload.LABEL, getString(R.string.enter_username));
             MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.errorSignUp);
-
             mTilUsername.setError(getString(R.string.enter_username));
+
             //Toast.makeText(getActivity(),getString(R.string.enter_username),Toast.LENGTH_SHORT).show();
         }else if(!CommonUtil.isValidEmail(email)) {
             Properties properties = MakaanEventPayload.beginBatch();
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorBuyer);
             properties.put(MakaanEventPayload.LABEL, getString(R.string.enter_valid_email));
             MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.errorSignUp);
-
             mTilEmail.setError(getString(R.string.enter_valid_email));
+
             //Toast.makeText(getActivity(), getString(R.string.enter_valid_email), Toast.LENGTH_SHORT).show();
         }else if(TextUtils.isEmpty(pwd)) {
             Properties properties = MakaanEventPayload.beginBatch();
@@ -192,4 +197,53 @@ public class SignUpFragment extends Fragment {
     }
 
 
+    @Override
+    public void onFocusChange(View view, boolean focusGain) {
+        EditText editText=(EditText)view;
+        if(null!=editText) {
+            switch (editText.getId()){
+                case R.id.sign_up_username:{
+                    if(!focusGain && TextUtils.isEmpty(mEditTextName.getText().toString().trim())){
+                        mTilUsername.setError(getString(R.string.enter_username));
+                    }else {
+                        mTilUsername.setErrorEnabled(false);
+                    }
+                    break;
+                }
+                case R.id.sign_up_email:{
+                    if(!focusGain && !CommonUtil.isValidEmail(mEditTextEmail.getText().toString().trim())){
+                        mTilEmail.setError(getString(R.string.enter_valid_email));
+                    }else {
+                        mTilEmail.setErrorEnabled(false);
+                    }
+
+                    break;
+                }
+                case R.id.sign_up_password:{
+                        if(!focusGain &&  TextUtils.isEmpty(mEditTextPassword.getText().toString().trim())){
+                            mTilPassword.setError(getString(R.string.enter_password));
+                        }
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        if (mEditTextPassword.getText().length() > 0)
+            mTilPassword.setErrorEnabled(false);
+        else
+            mTilPassword.setErrorEnabled(true);
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
+    }
 }
