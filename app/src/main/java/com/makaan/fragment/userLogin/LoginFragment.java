@@ -42,7 +42,7 @@ import butterknife.OnClick;
 /**
  * Created by makaanuser on 29/12/15.
  */
-public class LoginFragment extends Fragment implements TextWatcher {
+public class LoginFragment extends Fragment implements TextWatcher,View.OnFocusChangeListener {
 
     public  static String TAG=LoginFragment.class.getSimpleName();
     @Bind(R.id.et_email)
@@ -92,6 +92,9 @@ public class LoginFragment extends Fragment implements TextWatcher {
 
         mEditTextEmail.addTextChangedListener(this);
         mEditTextPassword.addTextChangedListener(this);
+        mEditTextEmail.setOnFocusChangeListener(this);
+        mTilEmail.setErrorEnabled(false);
+        mTilPassword.setErrorEnabled(false);
         return view;
     }
 
@@ -130,7 +133,6 @@ public class LoginFragment extends Fragment implements TextWatcher {
             properties.put(MakaanEventPayload.CATEGORY, MakaanTrackerConstants.Category.errorBuyer);
             properties.put(MakaanEventPayload.LABEL, getString(R.string.invalid_email));
             MakaanEventPayload.endBatch(getContext(), MakaanTrackerConstants.Action.errorLogin);
-            mTilEmail.setError(getString(R.string.invalid_email));
 
         }else if(TextUtils.isEmpty(pwd)) {
             Properties properties = MakaanEventPayload.beginBatch();
@@ -212,5 +214,20 @@ public class LoginFragment extends Fragment implements TextWatcher {
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean focusGain) {
+        EditText editText=(EditText)view;
+        if(null!=editText) {
+            switch (editText.getId()){
+                case R.id.et_email:{
+                        if(!focusGain && !CommonUtil.isValidEmail(mEditTextEmail.getText().toString().trim())){
+                            mTilEmail.setError(getString(R.string.invalid_email));
+                        }
+                    break;
+                }
+            }
+        }
     }
 }

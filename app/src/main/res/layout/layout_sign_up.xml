@@ -5,10 +5,6 @@
     android:layout_width="match_parent"
     android:fillViewport="true"
     android:layout_height="match_parent">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,8 +12,22 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/back_button_width"
+            android:layout_height="@dimen/back_button_height"
+            android:layout_marginLeft="@dimen/back_button_margin_left"
+            android:layout_marginStart="@dimen/back_button_margin_left"
+            android:layout_marginRight="@dimen/back_button_margin_right"
+            android:layout_marginEnd="@dimen/back_button_margin_right"
+            android:background="?android:selectableItemBackground"
+            android:clickable="true"
+            android:src="@mipmap/back_white"
+            android:tint="@color/app_grey" />
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="160dp"
+            android:layout_marginTop="@dimen/sign_up_fragment_makaan_banner_top_margin"
             android:layout_gravity="center"
             android:src="@drawable/makaan_banner" />
 
@@ -198,20 +208,4 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/iv_back"
-        android:layout_width="@dimen/back_button_width"
-        android:layout_height="@dimen/back_button_height"
-        android:layout_marginLeft="@dimen/back_button_margin_left"
-        android:layout_marginStart="@dimen/back_button_margin_left"
-        android:layout_marginTop="@dimen/back_button_margin_top"
-        android:layout_marginRight="@dimen/back_button_margin_right"
-        android:layout_marginEnd="@dimen/back_button_margin_right"
-        android:layout_marginBottom="@dimen/back_button_margin_bottom"
-        android:background="?android:selectableItemBackground"
-        android:clickable="true"
-        android:src="@mipmap/back_white"
-        android:tint="@color/app_grey" />
-</RelativeLayout>
     </ScrollView>
