@@ -1014,6 +1014,10 @@
     <dimen name="lead_instant_call_left_right_padding">15dp</dimen>
     <dimen name="share_your_details_text_size">18sp</dimen>
     <dimen name="lead_form_seller_name_padding">10dp</dimen>
+    <dimen name="profile_image_and_seller_name_height">255dp</dimen>
+    <dimen name="country_spinner_height">48dp</dimen>
+    <dimen name="country_spinner_margin_bottom">12dp</dimen>
+    <dimen name="connect_now_margin_top">5dp</dimen>
 
     <!--Shortlist card dimensions-->
     <dimen name="fav_card_height">220dp</dimen>

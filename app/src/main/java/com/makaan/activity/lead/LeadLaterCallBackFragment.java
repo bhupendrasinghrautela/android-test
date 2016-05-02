@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -67,7 +69,7 @@ import butterknife.OnTextChanged;
 /**
  * Created by makaanuser on 23/1/16.
  */
-public class LeadLaterCallBackFragment extends MakaanBaseFragment {
+public class LeadLaterCallBackFragment extends MakaanBaseFragment implements View.OnFocusChangeListener{
 
     @Bind(R.id.select_country_spinner)
     Spinner mCountrySpinner;
@@ -90,7 +92,10 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
     de.hdodenhof.circleimageview.CircleImageView mSellerImage;
     @Bind(R.id.btn_call_later)
     Button mCallLaterButton;
-
+    @Bind(R.id.lead_from_user_email)TextInputLayout mUserEmailTextInputLayout;
+    @Bind(R.id.lead_from_user_mobile)TextInputLayout mUserMobileNumberTextInputLayout;
+    @Bind(R.id.lead_from_username)TextInputLayout mUserNameTextInputLayout;
+    @Bind(R.id.lead_later_scroll_view)ScrollView mScrollView;
     private Integer mCountryId;
     private ArrayAdapter<String> mCountryAdapter;
     private List<String> mCountryNames;
@@ -151,6 +156,9 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
             //No impact don't do anything
         }
         setSellerImage();
+        mName.setOnFocusChangeListener(this);
+        mEmail.setOnFocusChangeListener(this);
+        mNumber.setOnFocusChangeListener(this);
     }
 
     @OnClick(R.id.tv_do_connect_now)
@@ -247,11 +255,12 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
                 properties.put(MakaanEventPayload.LABEL, getActivity().getResources().getString(R.string.add_user_name_toast));
                 MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickShortListRecentCallConnect);
             }
+            mUserNameTextInputLayout.setError(getActivity().getResources().getString(R.string.add_user_name_toast));
             /*Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.add_user_name_toast),
                     Toast.LENGTH_SHORT).show();*/
 
-            MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
-                    getActivity().getResources().getString(R.string.add_user_name_toast), "ok");
+            /*MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
+                    getActivity().getResources().getString(R.string.add_user_name_toast), "ok");*/
         }
         else if(!ValidationUtil.isValidEmail(mEmail.getText().toString().trim())){
             Bundle bundle =getArguments();
@@ -285,11 +294,12 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
                 properties.put(MakaanEventPayload.LABEL, getActivity().getResources().getString(R.string.invalid_email));
                 MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickShortListRecentCallConnect);
             }
+            mUserEmailTextInputLayout.setError(getActivity().getResources().getString(R.string.invalid_email));
             /*Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.invalid_email_toast),
                     Toast.LENGTH_SHORT).show();*/
 
-            MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
-                    getActivity().getResources().getString(R.string.invalid_email), "ok");
+            /*MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
+                    getActivity().getResources().getString(R.string.invalid_email), "ok");*/
         }
         else if(!ValidationUtil.isValidPhoneNumber(mNumber.getText().toString().trim(),mCountrySpinner.getSelectedItem().toString())){
             Bundle bundle =getArguments();
@@ -323,10 +333,12 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
                 properties.put(MakaanEventPayload.LABEL, getActivity().getResources().getString(R.string.invalid_phone_no_toast));
                 MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.clickShortListRecentCallConnect);
             }
+
+            mUserMobileNumberTextInputLayout.setError(getActivity().getResources().getString(R.string.invalid_phone_no_toast));
             /*Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.invalid_phone_no_toast),
                     Toast.LENGTH_SHORT).show();*/
-            MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
-                    getActivity().getResources().getString(R.string.invalid_phone_no_toast), "ok");
+            /*MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
+                    getActivity().getResources().getString(R.string.invalid_phone_no_toast), "ok");*/
         }
         else {
 
@@ -745,6 +757,43 @@ public class LeadLaterCallBackFragment extends MakaanBaseFragment {
             properties.put(MakaanEventPayload.LABEL, mLeadFormPresenter.getSubmitStoredLabel(bundle.getString("source")));
             properties.put(MakaanEventPayload.VALUE, SINGLE_SELLER);
             MakaanEventPayload.endBatch(getActivity(), MakaanTrackerConstants.Action.leadSubmitgetCallBAck);
+        }
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean focusGain) {
+        /*mScrollView.setEnabled(true);
+        mScrollView.set*/
+
+        EditText editText=(EditText)view;
+        if(null!=editText) {
+            switch (editText.getId()){
+
+                case R.id.leadform_name:{
+                    if(!focusGain && mName!=null && mName.getText()!=null && mUserNameTextInputLayout!=null &&
+                            mName.getText().toString().trim().length()==0){
+                        mUserNameTextInputLayout.setError(getActivity().getResources().getString(R.string.add_user_name_toast));
+                    }else if(mUserNameTextInputLayout!=null) {
+                        mUserNameTextInputLayout.setErrorEnabled(false);
+                    }
+                    break;
+                }
+                case R.id.leadform_email:{
+                    if(!focusGain && mEmail!=null && mEmail.getText()!=null && mUserEmailTextInputLayout!=null &&
+                            !ValidationUtil.isValidEmail(mEmail.getText().toString().trim())){
+                        mUserEmailTextInputLayout.setError(getActivity().getResources().getString(R.string.invalid_email));
+                    }else if(mUserEmailTextInputLayout!=null){
+                        mUserEmailTextInputLayout.setErrorEnabled(false);
+                    }
+                    break;
+                }
+                case R.id.leadform_mobileno_edittext:{
+                    if(focusGain && mUserMobileNumberTextInputLayout!=null){
+                        mUserMobileNumberTextInputLayout.setErrorEnabled(false);
+                    }
+                    break;
+                }
+            }
         }
     }
 }

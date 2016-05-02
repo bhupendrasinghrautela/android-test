@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +64,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by makaanuser on 23/1/16.
  */
-public class LeadInstantCallBackFragment extends MakaanBaseFragment {
+public class LeadInstantCallBackFragment extends MakaanBaseFragment implements View.OnFocusChangeListener{
 
     @Bind(R.id.select_country_spinner)
     Spinner mCountrySpinner;
@@ -82,6 +83,8 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
     CircleImageView mSellerImage;
     @Bind(R.id.btn_get_instant_call)
     Button mInstantCallButton;
+    @Bind(R.id.connect_now_mobile_no)
+    TextInputLayout mMobileNoTextInputLayout;
 
     private Integer mCountryId;
     private ArrayAdapter<String> mCountryAdapter;
@@ -114,6 +117,7 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
         }
         mobileFlag=false;
         defaultCountry=false;
+        mNumber.setOnFocusChangeListener(this);
         initializeCountrySpinner();
         //User data prefill
         try{
@@ -214,18 +218,24 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
                 /*Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.invalid_phone_no_toast),
                         Toast.LENGTH_SHORT).show();*/
 
-                if(getActivity() != null) {
+                if(mMobileNoTextInputLayout!=null) {
+                    mMobileNoTextInputLayout.setError(getActivity().getResources().getString(R.string.invalid_phone_no_toast));
+                }
+                /*if(getActivity() != null) {
                     MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
                             getActivity().getString(R.string.invalid_phone_no_toast), "ok");
-                }
+                }*/
             }
             else if(mNumber.getText().toString().trim().length()==0){
                 /*Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.please_enter_phone_no),
                         Toast.LENGTH_SHORT).show();*/
-                if(getActivity() != null) {
+                if(mMobileNoTextInputLayout!=null) {
+                    mMobileNoTextInputLayout.setError(getActivity().getResources().getString(R.string.invalid_phone_no_toast));
+                }
+                /*if(getActivity() != null) {
                     MakaanMessageDialogFragment.showMessage(getActivity().getFragmentManager(),
                             getActivity().getString(R.string.please_enter_phone_no), "ok");
-                }
+                }*/
             }
         }
     }
@@ -476,4 +486,26 @@ public class LeadInstantCallBackFragment extends MakaanBaseFragment {
         }
     }
 
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        EditText editText=(EditText)v;
+        if(null!=editText) {
+            switch (editText.getId()){
+                case R.id.leadform_mobileno_edittext:{
+                    if(mNumber!=null && mNumber.getText()!=null && mCountrySpinner!=null && mCountrySpinner.getSelectedItem()!=null &&
+                            !hasFocus && ValidationUtil.isValidPhoneNumber(mNumber.getText().toString().trim(),
+                            mCountrySpinner.getSelectedItem().toString())){
+                        if(mMobileNoTextInputLayout!=null) {
+                            mMobileNoTextInputLayout.setError(getActivity().getResources().getString(R.string.invalid_phone_no_toast));
+                        }
+                    }else {
+                        if(mMobileNoTextInputLayout!=null) {
+                            mMobileNoTextInputLayout.setErrorEnabled(false);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+    }
 }
