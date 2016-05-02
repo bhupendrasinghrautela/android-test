@@ -1,5 +1,6 @@
 package com.makaan.request;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -10,6 +11,8 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by rohitgarg on 4/29/16.
@@ -59,5 +62,10 @@ public class StringRequest extends Request<String> {
             VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", new Object[]{this.mRequestBody, "utf-8"});
             return null;
         }
+    }
+
+    @Override
+    public String getBodyContentType() {
+        return "application/json; charset=" + getParamsEncoding();
     }
 }

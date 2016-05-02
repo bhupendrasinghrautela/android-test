@@ -56,4 +56,9 @@ public class CustomRequest extends Request<String> {
 	protected void deliverResponse(String response) {
 		listener.onResponse(response);
 	}
+
+	@Override
+	public String getBodyContentType() {
+		return "application/json; charset=" + getParamsEncoding();
+	}
 }
