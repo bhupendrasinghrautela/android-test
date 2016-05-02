@@ -28,7 +28,7 @@ public class StringRequest extends Request<String> {
     public StringRequest(int method, String url, Response.Listener<String> listener, JSONObject jsonRequest, Response.ErrorListener errorListener) {
         super(method, url, errorListener);
         this.mListener = listener;
-        this.mRequestBody = jsonRequest == null?null:jsonRequest.toString();
+        this.mRequestBody = jsonRequest == null ? null : jsonRequest.toString();
     }
 
     public StringRequest(String url, Response.Listener<String> listener, Response.ErrorListener errorListener) {
@@ -54,10 +54,15 @@ public class StringRequest extends Request<String> {
 
     public byte[] getBody() {
         try {
-            return this.mRequestBody == null?null:this.mRequestBody.getBytes("utf-8");
+            return this.mRequestBody == null ? null : this.mRequestBody.getBytes("utf-8");
         } catch (UnsupportedEncodingException var2) {
             VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", new Object[]{this.mRequestBody, "utf-8"});
             return null;
         }
+    }
+
+    @Override
+    public String getBodyContentType() {
+        return "application/json; charset=" + getParamsEncoding();
     }
 }
