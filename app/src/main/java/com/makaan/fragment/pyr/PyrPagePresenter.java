@@ -79,6 +79,12 @@ public class PyrPagePresenter {
     public static final String BUYER_DASHBOARD="buyerdashboard";
     public static final String JARVIS="jarvis";
 
+    public interface OnUserInfoErrorListener{
+        public void errorInUserName();
+        public void errorInUserEmail();
+        public void errorInUserPhoneNo();
+    }
+
     public ArrayList<TopAgent> getmTopAgentsDatas() {
         return mTopAgentsDatas;
     }
@@ -413,7 +419,8 @@ public class PyrPagePresenter {
         return mPyrRequest;
     }
 
-    public boolean makePartialPyrRequest(Context context, PyrRequest pyrRequest, ArrayList<FilterGroup> groups){
+    public boolean makePartialPyrRequest(Context context, PyrRequest pyrRequest, ArrayList<FilterGroup> groups,
+                                        OnUserInfoErrorListener onUserInfoErrorListener){
 
         if(mCityContext!=null && !TextUtils.isEmpty(mCityContext)){
             pyrRequest.setCityName(mCityContext);
@@ -426,8 +433,11 @@ public class PyrPagePresenter {
             properties.put(MakaanEventPayload.CATEGORY, Category.errorBuyer);
             properties.put(MakaanEventPayload.LABEL, Label.nameRequired);
             MakaanEventPayload.endBatch(context, Action.errorPyr);
-            Toast.makeText(context, context.getResources().getString(R.string.add_user_name_toast),
-                    Toast.LENGTH_SHORT).show();
+/*            Toast.makeText(context, context.getResources().getString(R.string.add_user_name_toast),
+                    Toast.LENGTH_SHORT).show();*/
+            if(null!=onUserInfoErrorListener) {
+                onUserInfoErrorListener.errorInUserName();
+            }
             return false;
         }
 
@@ -445,8 +455,11 @@ public class PyrPagePresenter {
                 properties.put(MakaanEventPayload.LABEL, "email Invalid");
                 MakaanEventPayload.endBatch(context, Action.errorPyr);
             }
-            Toast.makeText(context,context.getResources().getString(R.string.invalid_email),
-                    Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(context,context.getResources().getString(R.string.invalid_email),
+                    Toast.LENGTH_SHORT).show();*/
+            if(null!=onUserInfoErrorListener) {
+                onUserInfoErrorListener.errorInUserEmail();
+            }
             return false;
         }
 
@@ -467,8 +480,11 @@ public class PyrPagePresenter {
                 properties.put(MakaanEventPayload.LABEL, Label.phoneNumberInvalid);
                 MakaanEventPayload.endBatch(context, Action.errorPyr);
             }
-            Toast.makeText(context,context.getResources().getString(R.string.invalid_phone_no_toast),
-                    Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(context,context.getResources().getString(R.string.invalid_phone_no_toast),
+                    Toast.LENGTH_SHORT).show();*/
+            if(null!=onUserInfoErrorListener) {
+                onUserInfoErrorListener.errorInUserPhoneNo();
+            }
             return false;
         }
 

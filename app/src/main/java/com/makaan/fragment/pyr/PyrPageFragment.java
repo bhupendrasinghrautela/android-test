@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +51,7 @@ import com.makaan.util.CommonUtil;
 import com.makaan.util.JsonBuilder;
 import com.makaan.util.JsonParser;
 import com.makaan.util.StringUtil;
+import com.makaan.util.ValidationUtil;
 import com.segment.analytics.Properties;
 import com.squareup.otto.Subscribe;
 
@@ -78,7 +80,7 @@ import com.makaan.ui.pyr.PyrBudgetCardView;
 /**
  * Created by proptiger on 8/1/16.
  */
-public class PyrPageFragment extends Fragment {
+public class PyrPageFragment extends Fragment implements View.OnFocusChangeListener ,PyrPagePresenter.OnUserInfoErrorListener{
     @Bind(R.id.post_requirements)
     TextView mPostRequirements;
 
@@ -103,6 +105,9 @@ public class PyrPageFragment extends Fragment {
     @Bind(R.id.location_value)TextView mLocationString;
     @Bind(R.id.rent)RadioButton mRentButton;
     @Bind(R.id.buy_rent_radiogroup)RadioGroup mRadioGroup;
+    @Bind(R.id.pyr_user_name)TextInputLayout mPyrNameTextInputLayout;
+    @Bind(R.id.pyr_user_email)TextInputLayout mPyrEmailTextInputLayout;
+    @Bind(R.id.pyr_user_mobile_no)TextInputLayout mPyrMobileTextInputLayout;
 
     private Integer mCountryId;
     private ArrayAdapter<String> mCountryAdapter;
@@ -128,6 +133,9 @@ public class PyrPageFragment extends Fragment {
         mGridView = (GridView) view.findViewById(R.id.pyr_bedroom_grid_view);
         mBudgetCardView = (PyrBudgetCardView) view.findViewById(R.id.pyr_budget_card_view);
         mPropertyCardView = (PyrPropertyCardView) view.findViewById(R.id.select_property_layout);
+        mUserEmail.setOnFocusChangeListener(this);
+        mUserName.setOnFocusChangeListener(this);
+        mUserMobile.setOnFocusChangeListener(this);
 
         pyrPagePresenter=PyrPagePresenter.getPyrPagePresenter();
 
@@ -213,7 +221,8 @@ public class PyrPageFragment extends Fragment {
         ArrayList<String>propertyTypes=new ArrayList<>();
 
         PyrRequest pyrRequest=new PyrRequest();
-        boolean makeRequest=pyrPagePresenter.makePartialPyrRequest(getActivity() ,pyrRequest, (mIsBuySelected ? mGroupsBuy : mGroupsRent));
+        boolean makeRequest=pyrPagePresenter.makePartialPyrRequest(getActivity() ,pyrRequest,
+                (mIsBuySelected ? mGroupsBuy : mGroupsRent), this);
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("gcm_id", GcmPreferences.getGcmRegId(getContext()));
@@ -554,6 +563,61 @@ public class PyrPageFragment extends Fragment {
                 }
               mBudgetCardView.setValues(group.rangeFilterValues);
             }
+        }
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        EditText editText=(EditText)v;
+        if(null!=editText) {
+            switch (editText.getId()){
+
+                case R.id.pyr_page_name:{
+                    if(!hasFocus && mUserName!=null && mUserName.getText()!=null && mPyrNameTextInputLayout!=null &&
+                            mUserName.getText().toString().trim().length()==0){
+                        mPyrNameTextInputLayout.setError(getActivity().getResources().getString(R.string.add_user_name_toast));
+                    }else if(mPyrNameTextInputLayout!=null) {
+                        mPyrNameTextInputLayout.setErrorEnabled(false);
+                    }
+                    break;
+                }
+                case R.id.pyr_page_email:{
+                    if(!hasFocus && mUserEmail!=null && mUserEmail.getText()!=null && mPyrEmailTextInputLayout!=null &&
+                            !ValidationUtil.isValidEmail(mUserEmail.getText().toString().trim())){
+                        mPyrEmailTextInputLayout.setError(getActivity().getResources().getString(R.string.invalid_email));
+                    }else if(mPyrEmailTextInputLayout!=null){
+                        mPyrEmailTextInputLayout.setErrorEnabled(false);
+                    }
+                    break;
+                }
+                case R.id.leadform_mobileno_edittext:{
+                    if(hasFocus && mPyrMobileTextInputLayout!=null){
+                        mPyrMobileTextInputLayout.setErrorEnabled(false);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void errorInUserName() {
+        if(mPyrNameTextInputLayout!=null) {
+            mPyrNameTextInputLayout.setError(getActivity().getResources().getString(R.string.add_user_name_toast));
+        }
+    }
+
+    @Override
+    public void errorInUserEmail() {
+        if(mPyrEmailTextInputLayout!=null){
+            mPyrEmailTextInputLayout.setError(getActivity().getResources().getString(R.string.invalid_email));
+        }
+    }
+
+    @Override
+    public void errorInUserPhoneNo() {
+        if(mPyrMobileTextInputLayout!=null){
+            mPyrMobileTextInputLayout.setError(getActivity().getResources().getString(R.string.invalid_phone_no_toast));
         }
     }
 }

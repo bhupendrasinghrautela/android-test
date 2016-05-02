@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/pyr_main_page_background"
     android:scrollbars="none"
@@ -54,11 +55,18 @@
         android:layout_marginRight="@dimen/pyr_page_margin_fifteen"
         android:layout_gravity="center_horizontal"/>
 
-    <android.support.design.widget.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/pyr_page_edit_text_margin_left"
+        >
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/pyr_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@color/pyr_main_page_background">
+        android:background="@color/pyr_main_page_background"
+        app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
         <EditText
             android:id="@+id/pyr_page_name"
@@ -71,15 +79,21 @@
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="@dimen/pyr_page_edit_text_text_size"
-            android:layout_marginLeft="@dimen/pyr_page_edit_text_margin_left"
             android:layout_marginTop="@dimen/pyr_page_edit_text_margin_top"/>
 
     </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginLeft="@dimen/pyr_page_edit_text_margin_left">
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/pyr_user_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
         <EditText
             android:id="@+id/pyr_page_email"
@@ -92,10 +106,10 @@
             android:background="@drawable/edittext_bg_bottom_border"
             android:textColor="@color/black"
             android:textSize="@dimen/pyr_page_edit_text_text_size"
-            android:layout_marginLeft="@dimen/pyr_page_edit_text_margin_left"
             android:layout_marginTop="@dimen/pyr_page_edit_text_margin_top"/>
 
     </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
 
     <LinearLayout
 
@@ -122,8 +136,9 @@
             android:layout_height="match_parent"
             android:padding="1dp"
             android:layout_marginLeft="@dimen/mobile_no_layout_margin_left"
+            android:layout_marginTop="10dp"
             android:weightSum="1"
-            android:gravity="center"
+            android:gravity="bottom"
             android:orientation="horizontal" >
             <TextView
                 android:id="@+id/leadform_country_code_textview"
@@ -136,12 +151,19 @@
                 android:textSize="@dimen/mobile_no_text_size"
                 android:typeface="sans"
                 android:layout_height="match_parent" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/pyr_user_mobile_no"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+
             <EditText
                 android:id="@+id/leadform_mobileno_edittext"
-                android:layout_width="0dp"
-                android:layout_weight="0.7"
-                android:layout_height="match_parent"
-                android:layout_gravity="left|center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|bottom"
                 android:inputType="number"
                 android:background="@drawable/edittext_bg_bottom_border"
                 android:hint="@string/pyr_mobile"
@@ -150,6 +172,8 @@
                 android:textSize="@dimen/mobile_no_text_size"
                 android:typeface="sans"
                 android:maxLength="10"/>
+            </android.support.design.widget.TextInputLayout>
+
         </LinearLayout>
     </LinearLayout>
 

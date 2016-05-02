@@ -123,24 +123,32 @@
                     android:paddingTop="@dimen/lead_form_seller_image_margin_bottom"
                     android:text="+91-"
                     android:textColor="@android:color/black"
-
                     android:textSize="@dimen/button_text_size" />
 
-                <EditText
-                    android:id="@+id/leadform_mobileno_edittext"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/connect_now_mobile_no"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="bottom"
                     android:layout_weight="0.7"
-                    android:background="@drawable/edittext_bg_bottom_border"
-                    android:hint="@string/pyr_mobile"
-                    android:inputType="number"
-                    android:maxLength="12"
-                    android:paddingBottom="@dimen/lead_form_seller_image_margin_bottom"
-                    android:paddingTop="@dimen/lead_form_seller_image_margin_bottom"
-                    android:singleLine="true"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/button_text_size" />
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+
+                    <EditText
+                        android:id="@+id/leadform_mobileno_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:background="@drawable/edittext_bg_bottom_border"
+                        android:hint="@string/pyr_mobile"
+                        android:inputType="number"
+                        android:maxLength="12"
+                        android:paddingBottom="@dimen/lead_form_seller_image_margin_bottom"
+                        android:paddingTop="@dimen/lead_form_seller_image_margin_bottom"
+                        android:singleLine="true"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/button_text_size" />
+
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
         </LinearLayout>
 
