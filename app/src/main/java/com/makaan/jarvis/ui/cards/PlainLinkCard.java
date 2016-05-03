@@ -1,6 +1,5 @@
 package com.makaan.jarvis.ui.cards;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,7 +8,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.makaan.R;
+import com.makaan.activity.deeplink.DeepLinkingIntentParserActivity;
 import com.makaan.jarvis.message.Message;
 import com.makaan.ui.view.BaseView;
 
@@ -41,7 +42,7 @@ public class PlainLinkCard extends BaseView<Message> {
     }
 
     @Override
-    public void bindView(Context context, final Message item) {
+    public void bindView(final Context context, final Message item) {
         if(null!=item || null!=item.message){
             mPlainLink.setText(Html.fromHtml(item.message).toString().toLowerCase());
         }
@@ -54,9 +55,12 @@ public class PlainLinkCard extends BaseView<Message> {
                     if (!item.chatObj.link.startsWith("http://") && !item.chatObj.link.startsWith("https://")) {
                         uri = Uri.parse("http://" + item.chatObj.link);
                     }
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
-                    mContext.startActivity(browserIntent);
-                }catch (ActivityNotFoundException e){}
+                    Intent deepLinkResolverIntent = new Intent(context, DeepLinkingIntentParserActivity.class);
+                    deepLinkResolverIntent.setData(uri);
+                    mContext.startActivity(deepLinkResolverIntent);
+                }catch (Exception e){
+                    Crashlytics.logException(e);
+                }
             }
         });
     }

@@ -1351,6 +1351,27 @@ public class SerpRequest implements Parcelable, Cloneable {
             } else {
                 intent.putExtra(SerpActivity.REQUEST_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_BUY);
             }
+        } else if(termMap != null && termMap.size() > 0) {
+            ArrayList<String> serpTypes = termMap.get("listingCategory");
+            if(serpTypes != null && serpTypes.size() > 0) {
+                for (String serpType : serpTypes) {
+                    if ("primary".equalsIgnoreCase(serpType)) {
+                        serpContext |= CONTEXT_PRIMARY;
+                    } else if ("resale".equalsIgnoreCase(serpType)) {
+                        serpContext |= CONTEXT_RESALE;
+                    } else if ("rental".equalsIgnoreCase(serpType)) {
+                        serpContext |= CONTEXT_RENT;
+                    }
+                }
+
+                if (this.serpContext != UNEXPECTED_VALUE) {
+                    if ((this.serpContext & CONTEXT_RENT) > 0) {
+                        intent.putExtra(SerpActivity.REQUEST_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_RENT);
+                    } else {
+                        intent.putExtra(SerpActivity.REQUEST_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_BUY);
+                    }
+                }
+            }
         }
         context.startActivity(intent);
 
@@ -1368,6 +1389,27 @@ public class SerpRequest implements Parcelable, Cloneable {
                 intent.putExtra(SerpActivity.REQUEST_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_RENT);
             } else {
                 intent.putExtra(SerpActivity.REQUEST_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_BUY);
+            }
+        } else if(termMap != null && termMap.size() > 0) {
+            ArrayList<String> serpTypes = termMap.get("listingCategory");
+            if(serpTypes != null && serpTypes.size() > 0) {
+                for (String serpType : serpTypes) {
+                    if ("primary".equalsIgnoreCase(serpType)) {
+                        serpContext |= CONTEXT_PRIMARY;
+                    } else if ("resale".equalsIgnoreCase(serpType)) {
+                        serpContext |= CONTEXT_RESALE;
+                    } else if ("rental".equalsIgnoreCase(serpType)) {
+                        serpContext |= CONTEXT_RENT;
+                    }
+                }
+
+                if (this.serpContext != UNEXPECTED_VALUE) {
+                    if ((this.serpContext & CONTEXT_RENT) > 0) {
+                        intent.putExtra(SerpActivity.REQUEST_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_RENT);
+                    } else {
+                        intent.putExtra(SerpActivity.REQUEST_CONTEXT, MakaanBaseSearchActivity.SERP_CONTEXT_BUY);
+                    }
+                }
             }
         }
         return intent;
